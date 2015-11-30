@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2014 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+--><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="launcher_preference">விருப்பம்</string>
+    <string name="multi_select_full">அது நிரம்பியது.</string>
+    <string name="wallpaper_show_theme_center">தீம்</string>
+    <string name="wallpaper_other_app">மற்றவை</string>
+    <string name="editmode_add_widget">விட்ஜெட்களைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="editmode_set_wallpaper">வால்பேப்பரைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="quick_share_target_label">பகிர்</string>
+    <string name="quick_share_searching_label">தேடுகிறது...</string>
+    <string name="quick_share_to">\"%s\"-ஐப் பகிர்:</string>
+<string name="home_screen_settings">முகப்புத் திரை அமைப்புகள்</string>
+<string name="drawer_settings">இழுப்பான் அமைப்புகள்</string>
+<string name="scrolling_wallpaper">வால்பேப்பர் உருட்டல்</string>
+<string name="scroll_effect_text">நிலைமாற்ற அனிமேஷன்</string>
+<string name="multi_selecting_tips">ஒழுங்கமைக்க ஒரு பயன்பாட்டு படவுருவை தொடவும்</string>
+<string name="desktop_style">இயல்புநிலை துவக்குநர்</string>
+</resources>

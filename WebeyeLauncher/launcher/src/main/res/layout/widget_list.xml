@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.WidgetListViewSwitcher 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:inAnimation="@anim/slide_in_bottom"
+    android:outAnimation="@anim/slide_out_bottom"
+    >
+
+    <com.android.launcher3.WidgetListHorizontalRecyclerView
+        android:id="@+id/widget_list_first"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </com.android.launcher3.WidgetListHorizontalRecyclerView>
+
+    <com.android.launcher3.WidgetListHorizontalRecyclerView
+        android:id="@+id/widget_list_second"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </com.android.launcher3.WidgetListHorizontalRecyclerView>
+
+</com.android.launcher3.WidgetListViewSwitcher>

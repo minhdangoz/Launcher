@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Lenovo added strings -->
+    <string name="loading_worksapce">"Зареждане..."</string>
+<string name="backup_preference_before_yesterday">Онзи ден </string>
+<string name="backup_preference_today">Днес </string>
+<string name="backup_preference_yesterday">Вчера </string>
+<string name="backup_toast_fail">Неуспешно архивиране – опитайте отново.</string>
+<string name="lastest_backup_tips">Последно архивиране: %s</string>
+<string name="local_backup">Локално архивиране</string>
+<string name="local_backup_msg_first">Работният плот се архивира – не го използвайте.</string>
+<string name="local_backup_msg_other">Архивирането ще замести последното архивно копие.</string>
+<string name="local_backup_process_msg">Изчакайте, докато работният плот се архивира.</string>
+<string name="local_location">Местоположение: </string>
+<string name="local_restore">Локално възстановяване</string>
+<string name="local_restore_msg">Архивираният работен плот се възстановява – не го използвайте.</string>
+<string name="menu_desktop_settings">"Настр.раб.плот"</string>
+<string name="menu_sense_settings">"Архивиране и възстановяване на работния плот"</string>
+<string name="no_profile_num">Няма архивно копие</string>
+<string name="no_profile_num_restore_toast">Първо извършете архивиране.</string>
+<string name="restore_toast_fail">Неуспешно възстановяване – опитайте отново.</string>
+<string name="auto_reorder_title">"Автом. подрежд. на иконите"</string>
+<string name="cannot_be_placed_on_dockview">Изпълнимите модули не могат да се преместят като пакет</string>
+<string name="cannot_be_placed_on_dockview_folder">Папките не могат да се преместят като пакет</string>
+<string name="dockview_out_of_space">"Няма място"</string>
+<string name="folder_out_of_space">"Папката е пълна"</string>
+<string name="select_item_count">%s избрани артикули</string>
+<string name="auto_reorder_summary">"Когато това е разрешено, иконите на екрана ще бъдат поставени близо една до друга (освен на основния екран)"</string>
+<string name="extend_settings">РАЗШИРЕНИ НАСТРОЙКИ</string>
+<string name="local_backup_toast_ok">Архивирането е изпълнено.</string>
+<string name="normal_settings">Общи настройки</string>
+<string name="workspace_loop_settings_title">Безкрайно превъртане</string>
+
+<string name="launcher_preference">Предпочитание</string>
+<string name="multi_select_full">Пълно е.</string>
+<string name="wallpaper_show_theme_center">Тема</string>
+<string name="wallpaper_other_app">Други</string>
+<string name="editmode_add_widget">Избор на изпълними модули</string>
+<string name="editmode_set_wallpaper">Изберете тапет</string>
+<string name="quick_share_target_label">"Споделяне"</string>
+<string name="quick_share_searching_label">"Търси се..."</string>
+<string name="quick_share_to">Споделяне на \"%s\" в</string>
+<string name="home_screen_settings">Настройки на началния екран</string>
+<string name="drawer_settings">Настройки Чекмедже</string>
+<string name="scrolling_wallpaper">Превъртане на тапета</string>
+<string name="scroll_effect_text">Анимация за обръщане на страници на работния плот</string>
+<string name="multi_selecting_tips">Докоснете икона на приложение, за да организирате</string>
+<string name="desktop_style">Стартов екран по подразбиране</string>
+
+<!-- 从XLauncher升级后首次启动提示框 -->
+<string name="workspace_cling_longpress_title_migrate_from_xlauncher">"Поддръжка на Android и Vibeui два стила"</string>
+<string name="workspace_cling_longpress_description_migrate_from_xlauncher">"Промяна на стила в предпочитанието на работния плот от себе си"</string>
+</resources>

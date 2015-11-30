@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.settings.SettingPanel xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/settings_list_bg_color"
+    android:orientation="horizontal">
+    <view
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        class="com.android.launcher3.list.PinnedHeaderListView"
+        android:id="@+id/settings_home_screen_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fastScrollEnabled="true"
+        android:focusable="true"/>
+    <LinearLayout
+        android:id="@+id/dark_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_dark"
+        android:visibility="gone"
+        android:orientation="horizontal" />
+</com.android.launcher3.settings.SettingPanel>

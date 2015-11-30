@@ -1,0 +1,18 @@
+<resources>
+    <bool name="is_tablet">true</bool>
+    <bool name="allow_rotation">true</bool>
+
+<!-- DragController -->
+    <integer name="config_flingToDeleteMinVelocity">-1000</integer>
+
+    <!-- Camera distance for the overscroll effect. We use a higher value here because the 
+         workspace screens run nearly flush to the edge of the screen-->
+    <integer name="config_cameraDistance">14000</integer>
+    
+    <!-- Lenovo-SW zhaoxin5 20150326 blade layout config
+    	将blade8寸的hotseat从右侧移动下方
+    	START -->
+    <bool name="is_large_tablet">true</bool><!-- Hotseat -->
+    <bool name="hotseat_transpose_layout_with_orientation">false</bool>
+    <!-- Lenovo-SW zhaoxin5 20150326 blade layout config END -->
+</resources>

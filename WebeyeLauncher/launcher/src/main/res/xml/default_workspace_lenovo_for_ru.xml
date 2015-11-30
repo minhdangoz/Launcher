@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2015 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<favorites xmlns:launcher="http://schemas.android.com/apk/res-auto">
+    
+    <!-- Screen[1] -->
+    <!-- 第一行 -->
+    <appwidget
+        packageName="com.magic.googlesearch.com.google.android.googlequicksearchbox"
+        className="com.magic.googlesearch.com.google.android.googlequicksearchbox.SearchWidgetProvider"
+        screen="1"
+        x="0"
+        y="0"
+        spanX="4"
+        spanY="1" />    
+    <appwidget
+        packageName="com.lenovo.lewea"
+        className="com.lenovo.lewea.widget.WeatherWidget"
+        screen="1"
+        x="0"
+        y="1"
+        spanX="4"
+        spanY="2" />        
+    
+    <!-- 第五行 -->
+    <folder 
+        screen="1" x="0" y="3" title="@string/google_title">
+        <favorite
+            className="com.google.android.googlequicksearchbox.SearchActivity"
+            packageName="com.google.android.googlequicksearchbox" />
+        <favorite
+            className="com.google.android.gm.ConversationListActivityGmail"
+            packageName="com.google.android.gm" /> 
+        <favorite
+            className="com.google.android.maps.MapsActivity"
+            packageName="com.google.android.apps.maps" />                   
+        <favorite
+            className="com.google.android.youtube.app.honeycomb.Shell$HomeActivity"
+            packageName="com.google.android.youtube" />        
+        <favorite
+            className="com.google.android.apps.docs.app.NewMainProxyActivity"
+            packageName="com.google.android.apps.docs" />            
+        <favorite
+            className="com.android.music.activitymanagement.TopLevelActivity"
+            packageName="com.google.android.music" />
+        <favorite
+            className="com.google.android.youtube.videos.EntryPoint"
+            packageName="com.google.android.videos" /> 
+        <favorite
+            className="com.google.android.talk.SigningInActivity"
+            packageName="com.google.android.talk" />                   
+        <favorite
+            className="com.google.android.apps.photos.home.HomeActivity"
+            packageName="com.google.android.apps.photos" />        
+        <favorite
+            className="com.google.android.apps.plus.phone.HomeActivity"
+            packageName="com.google.android.apps.plus" />         
+        <favorite
+            className="com.google.android.apps.books.app.BooksActivity"
+            packageName="com.google.android.apps.books" />         
+        <favorite
+            className="com.google.apps.dots.android.app.activity.CurrentsStartActivity"
+            packageName="com.google.android.apps.magazines" />    
+        <favorite
+            className="com.google.android.gms.games.ui.destination.main.MainActivity"
+            packageName="com.google.android.play.games" />         
+        <favorite
+            className="com.google.android.gms.app.settings.GoogleSettingsActivity"
+            packageName="com.google.android.gms" />         
+        <favorite
+            className="com.google.android.apps.inputmethod.libs.framework.core.LauncherActivity"
+            packageName="com.google.android.inputmethod.pinyin" /> 
+        <favorite
+            className="com.android.inputmethod.latin.setup.SetupActivity"
+            packageName="com.google.android.inputmethod.latin" />                                     
+    </folder>
+         
+	<!-- 第四行 --> 
+    <favorite
+        packageName="com.lenovo.gallery"
+        className="com.lenovo.gallery.app.GalleryActivity"
+        screen="1"
+        x="1"
+        y="3" /><!-- Gallery --> 
+    <favorite
+        packageName="com.lenovo.scg"
+        className="com.lenovo.scg.camera.CameraLauncher"
+        screen="1"
+        x="2"
+        y="3" /><!-- Camera -->         	
+    <favorite
+        packageName="com.android.settings"
+        className="com.android.settings.Settings"
+        screen="1"
+        x="3"
+        y="3" /><!-- Settings -->    
+
+	<!-- 第五行 --> 
+    <favorite
+        packageName="com.android.vending"
+        className="com.android.vending.AssetBrowserActivity"
+        screen="1"
+        x="0"
+        y="4" /><!-- Google Play --> 	
+    <favorite
+        packageName="com.lenovo.leos.cloud.sync.row"
+        className="com.lenovo.leos.cloud.sync.row.common.activity.SplashScreenActivity"
+        screen="1"
+        x="1"
+        y="4" /><!-- Gallery --> 
+    <favorite
+        packageName="com.lenovo.anyshare.gps"
+        className="com.lenovo.anyshare.ApMainActivity"
+        screen="1"
+        x="2"
+        y="4" /><!-- Camera -->         	
+    <favorite
+        packageName="com.guvera.android"
+        className="com.guvera.universal.ui.SplashActivity"
+        screen="1"
+        x="3"
+        y="4" /><!-- Google Play -->         
+        
+         
+             
+    <!-- Hotseat (We use the screen as the position of the item in the hotseat) -->
+    <favorite
+        packageName="com.lenovo.ideafriend"
+        className="com.lenovo.ideafriend.alias.DialtactsActivity"
+        container="-101"
+        screen="0"
+        x="0"
+        y="0" /><!-- Dialer -->
+	<favorite
+        packageName="com.lenovo.ideafriend" 
+        className="com.lenovo.ideafriend.alias.PeopleActivity"
+        container="-101"
+        screen="1"
+        x="1"
+        y="0" /><!-- 联系人 -->     
+    <favorite
+        packageName="com.lenovo.ideafriend"
+        className="com.lenovo.ideafriend.alias.MmsActivity"
+        container="-101"
+        screen="3"
+        x="3"
+        y="0" /><!-- 短信 -->  
+        
+    <favorite
+        packageName="com.android.chrome"
+        className="com.google.android.apps.chrome.Main"
+        container="-101"
+        screen="4"
+        x="4"
+        y="0" /><!-- Chrome -->  
+</favorites>

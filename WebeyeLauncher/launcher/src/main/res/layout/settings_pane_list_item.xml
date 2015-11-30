@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|bottom"
+    android:addStatesFromChildren="true"
+    android:background="@drawable/listitem_bg"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/overview_panel_list_padding"
+    android:paddingEnd="@dimen/overview_panel_list_padding"
+    android:paddingStart="@dimen/overview_panel_list_padding"
+    android:paddingTop="@dimen/overview_panel_list_padding" >
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawablePadding="4dp"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/item_state"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawablePadding="4dp"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="right"
+        android:singleLine="true" />
+
+</LinearLayout>

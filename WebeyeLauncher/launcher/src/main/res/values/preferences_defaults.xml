@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Lenovo-SW zhaoxin5 20150121 default to hide the google search widget START -->
+    <bool name="preferences_interface_homescreen_search_default">false</bool>
+    <!-- Lenovo-SW zhaoxin5 20150121 default to hide the google search widget END -->
+    <!-- Lenovo-SW zhaoxin5 20150626 set default transition effect to stack START -->
+    <string name="preferences_interface_homescreen_scrolling_transition_effect">none</string>
+    <!-- Lenovo-SW zhaoxin5 20150626 set default transition effect to stack END -->
+    <bool name="preferences_interface_homescreen_scrolling_wallpaper_scroll_default">true</bool>
+    <bool name="preferences_interface_homescreen_scrolling_page_outlines_default">@bool/config_workspaceDefaultShowOutlines</bool>
+    <bool name="preferences_interface_homescreen_scrolling_fade_adjacent_default">@@bool/config_workspaceFadeAdjacentScreens</bool>
+    <bool name="preferences_interface_homescreen_hide_icon_labels_default">false</bool>
+    <!-- Lenovo-SW zhaoxin5 20150626 set default transition effect to stack START -->
+    <string name="preferences_interface_drawer_scrolling_transition_effect">none</string>
+    <!-- Lenovo-SW zhaoxin5 20150626 set default transition effect to stack END -->
+    <bool name="preferences_interface_drawer_scrolling_fade_adjacent_default">false</bool>
+    <bool name="preferences_interface_drawer_remove_hidden_apps_shortcuts_default">true</bool>
+    <bool name="preferences_interface_drawer_remove_hidden_apps_widgets_default">true</bool>
+    <bool name="preferences_interface_drawer_hide_icon_labels_default">false</bool>
+    <bool name="preferences_interface_general_icons_large_default">@bool/config_largeIcons</bool>
+    <string name="preferences_interface_general_icons_text_font_family_default">sans-serif-condensed</string>
+    <integer name="preferences_interface_general_icons_text_font_style_default">0</integer>
+    <integer name="preferences_interface_drawer_type_default">1</integer>
+     <!-- Lenovo-sw:zhangyj19, Add folder sort function function.  begin-->
+    <integer name="preferences_interface_Folder_sort_type_default">1</integer>
+     <!-- Lenovo-sw:zhangyj19, Add folder sort function function.  end-->
+
+    <bool name="preferences_interface_auto_reorder_default">false</bool>
+    <bool name="preferences_ui_disable_all_apps_default">true</bool>
+    <string name="preferences_interface_backup_path_default">"/storage/sdcard0/.IdeaDesktop/.backup/.localbackup"</string>
+    <bool name="preferences_interface_workspace_loop_default">true</bool>
+    <!-- Lenovo-sw zhangyj19 add 2015/09/09 add search app definition begin-->
+    <bool name="preferences_search_app_default">false</bool>
+     <!-- Lenovo-sw zhangyj19 add 2015/09/09 add search app definitionend-->
+    
+    <!-- Lenovo_SW zhaoxin5 20150924 add for migrate from xlauncher support START -->
+    <bool name="preferences_first_migrate_from_xlauncher">true</bool>
+    <!-- Lenovo_SW zhaoxin5 20150924 add for migrate from xlauncher support END -->
+    
+    <!-- Lenovo-SW zhaoxin5 20151117 add for Reaper Function START -->
+    <bool name="preferences_reaper_tag_reaper">false</bool>
+    <!-- Lenovo-SW zhaoxin5 20151117 add for Reaper Function END -->
+</resources>

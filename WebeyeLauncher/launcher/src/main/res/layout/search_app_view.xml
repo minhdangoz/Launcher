@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.lenovosearch.SearchAppView 
+	  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/search_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/app_search_edittext_size"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/app_search_edittext_margintop"
+        android:background="@drawable/quantum_panel"
+        android:labelFor="@id/search_title"
+        android:singleLine="true"
+        android:focusable="true"
+        android:textSize="18sp" 
+        android:hint="@string/search_tip"
+        android:textColor="@color/quantum_panel_text_color"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_title"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <GridView
+            android:id="@+id/search_result_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/grid_search_padding"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="4"
+            android:paddingLeft="@dimen/grid_search_padding"
+            android:paddingRight="@dimen/grid_search_padding"
+            android:requiresFadingEdge="vertical"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbars="vertical"
+            android:verticalSpacing="@dimen/grid_search_padding"
+            android:background="@drawable/quantum_panel">
+        </GridView>
+    </LinearLayout>
+
+</com.android.launcher3.lenovosearch.SearchAppView>

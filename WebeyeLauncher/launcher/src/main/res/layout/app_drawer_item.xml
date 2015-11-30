@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2015 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:autofit="http://schemas.android.com/apk/res-auto"
+              android:splitMotionEvents="false"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <View
+        android:id="@+id/fading_background_back"
+        android:alpha="0"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignTop="@+id/drawer_item_flow"
+        android:layout_alignBottom="@+id/drawer_item_flow"
+        android:background="@color/app_drawer_drag_background" />
+
+    <!-- Layout in back to front render order -->
+    <LinearLayout
+            android:id="@+id/drawer_item_flow"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/drawer_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+    <View
+        android:id="@+id/fading_background_front"
+        android:alpha="0"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignTop="@id/drawer_item_flow"
+        android:layout_alignBottom="@id/drawer_item_flow"
+        android:background="@color/app_drawer_drag_background" />
+
+    <com.android.launcher3.AutoFitTextView
+        android:id="@+id/drawer_item_title"
+        android:layout_width="27dp"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="6dp"
+        android:layout_alignTop="@id/drawer_item_flow"
+        android:layout_alignBottom="@id/drawer_item_flow"
+        android:layout_centerVertical="true"
+        android:includeFontPadding="false"
+        android:gravity="center"
+        android:singleLine="true"
+        autofit:minTextSize="8sp"
+        android:textSize="24sp"
+        android:layout_gravity="center"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@android:color/white"
+        android:shadowRadius="4.0"
+        android:shadowDy="2"
+        android:shadowColor="#b0000000"/>
+
+</RelativeLayout>

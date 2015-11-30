@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2014 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+--><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+        <string name="launcher_preference">Preferencia</string>
+    <string name="multi_select_full">Se ha llenado</string>
+    <string name="wallpaper_show_theme_center">Tema</string>
+    <string name="wallpaper_other_app">Ajustes de número de teléfono y llamada en espera</string>
+    <string name="editmode_add_widget">Seleccionar widgets</string>
+    <string name="editmode_set_wallpaper">Seleccionar fondo de pantalla</string>
+    <string name="quick_share_to">Compartir \"%s\" en</string>
+    <string name="quick_share_target_label">"Compartir"</string>
+    <string name="quick_share_searching_label">"Buscando..."</string>
+<string name="home_screen_settings">Configuración de pantalla de inicio</string>
+<string name="drawer_settings">Configuración de cajón</string>
+<string name="scrolling_wallpaper">Desplazar el tapiz con la pantalla</string>
+<string name="scroll_effect_text">Animación de cambio de página del escritorio</string>
+<string name="multi_selecting_tips">Tocar un icono de aplicación para organizar</string>
+<string name="desktop_style">Selector predeterminado</string>
+
+<!-- 从XLauncher升级后首次启动提示框 -->
+<string name="workspace_cling_longpress_title_migrate_from_xlauncher">"Android y Apoyo Vibeui dos estilos"</string>
+<string name="workspace_cling_longpress_description_migrate_from_xlauncher">"Cambio de estilo en la preferencia de escritorio por su cuenta"</string>
+</resources>

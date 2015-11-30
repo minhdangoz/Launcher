@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2010 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+
+<!-- App-wide preferences -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="normal_settings_key"
+        android:title="@string/normal_settings" >
+        <ListPreference
+            android:dialogTitle="@string/desktop_style"
+            android:entries="@array/launcher_desktop_style_entries"
+            android:entryValues="@array/launcher_desktop_style_entries_values"
+            android:key="desktop_style_key"
+            android:summary="@string/switch_2_single_layer_shortcut"
+            android:title="@string/desktop_style" />
+        <SwitchPreference
+          android:defaultValue="true"
+          android:key="pref_workspace_loop"
+          android:enabled="true"
+          android:title="@string/workspace_loop_settings_title" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="extend_settings_key"
+        android:title="@string/extend_settings" >
+        <Preference
+            android:key="home_screen_key"
+            android:title="@string/home_screen_settings"
+            android:widgetLayout="@layout/sec_pref_widget_more" >
+        </Preference>
+        <Preference
+            android:key="drawer_settings_key"
+            android:title="@string/drawer_settings"
+            android:widgetLayout="@layout/sec_pref_widget_more" >
+        </Preference>
+        <Preference
+            android:key="backup_restore_key"
+            android:title="@string/menu_sense_settings"
+            android:widgetLayout="@layout/sec_pref_widget_more" >
+        </Preference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

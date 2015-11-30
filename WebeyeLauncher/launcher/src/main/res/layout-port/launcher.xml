@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2007 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!-- Full screen view projects under the status bar and contains the background -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:launcher="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/launcher"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/workspace_bg">
+
+    <com.android.launcher3.DragLayer
+        android:id="@+id/drag_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.android.launcher3.FocusIndicatorView
+            android:id="@+id/focus_indicator"
+            android:layout_width="52dp"
+            android:layout_height="52dp" />
+
+        <!-- The workspace contains 5 screens of cells -->
+        <com.android.launcher3.Workspace
+            android:id="@+id/workspace"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            launcher:defaultScreen="@integer/config_workspaceDefaultScreen"
+            launcher:pageIndicator="@+id/page_indicator">
+        </com.android.launcher3.Workspace>
+
+        <include layout="@layout/hotseat"
+            android:id="@+id/hotseat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Keep these behind the workspace so that they are not visible when
+             we go into AllApps -->
+        <include
+            android:id="@+id/page_indicator"
+            layout="@layout/page_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <include
+            android:id="@+id/search_drop_target_bar"
+            layout="@layout/search_drop_target_bar" />
+
+        <!-- This is the search bar voice button proxy view.  It allows us to have a larger
+             touch target than the microphone constrained by the search bar bounds. -->
+        <com.android.launcher3.DrawableStateProxyView
+            android:id="@+id/voice_button_proxy"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="top|end"
+            android:clickable="true"
+            android:onClick="onClickVoiceButton"
+            android:importantForAccessibility="no"
+            launcher:sourceViewId="@+id/voice_button" />
+
+        <include layout="@layout/apps_customize_pane"
+            android:id="@+id/apps_customize_pane"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
+
+        <!-- Lenovo-sw:yuanyl2, Add edit mode function. Begin. -->
+        <include layout="@layout/overview_panel"
+            android:id="@+id/overview_panel"
+            android:visibility="gone" />
+
+        <include layout="@layout/multi_select_panel"
+            android:id="@+id/multi_select_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:visibility="invisible" />
+
+        <!-- Lenovo-SW luyy1 20150910 add for primary home sreen Begin.-->
+        <LinearLayout
+            android:id="@+id/default_home_screen_panel_overview_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@android:color/transparent"
+            android:paddingTop="@dimen/overview_panel_top_padding"
+            android:visibility="gone" >
+            <ImageView
+                android:id="@+id/default_home_screen_button"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@drawable/default_screen_button"
+                android:scaleType="fitCenter"
+                android:gravity="top"
+                android:paddingLeft="@dimen/overview_panel_button_spacing"
+                android:paddingRight="@dimen/overview_panel_button_spacing"/>
+        </LinearLayout>
+        <!-- Lenovo-SW luyy1 20150910 add for primary home sreen End.-->
+
+        <include layout="@layout/editing_entry_panel"
+            android:id="@+id/editing_entry_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editing_panel_height"
+            android:layout_gravity="bottom"
+            android:visibility="gone" />
+
+        <!-- Lenovo-sw:yuanyl2, Add edit mode function. End. -->
+
+        <include layout = "@layout/settings"
+            android:id="@+id/settings_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <include layout="@layout/app_drawer_container"
+            android:id="@+id/app_drawer_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+        
+	    <!-- Lenovo-SW zhaoxin5 20150617 add for qucik share START -->
+	    <include 
+	        layout="@layout/quick_share_zone"
+	    	android:id="@+id/quick_share_zone"
+	        />
+	    <!-- Lenovo-SW zhaoxin5 20150617 add for qucik share END -->
+    </com.android.launcher3.DragLayer>
+</FrameLayout>
