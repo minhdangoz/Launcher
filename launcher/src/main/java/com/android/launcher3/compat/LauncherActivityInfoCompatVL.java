@@ -18,14 +18,13 @@ package com.android.launcher3.compat;
 
 import java.lang.reflect.Field;
 
-import com.lenovo.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.LauncherLog;
 
 import android.content.ComponentName;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.LauncherActivityInfo;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 public class LauncherActivityInfoCompatVL extends LauncherActivityInfoCompat {
     private LauncherActivityInfo mLauncherActivityInfo;

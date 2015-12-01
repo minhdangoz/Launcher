@@ -1,4 +1,4 @@
-package com.lenovo.launcher.ext;
+package com.webeye.launcher.ext;
 
 import android.util.Log;
 

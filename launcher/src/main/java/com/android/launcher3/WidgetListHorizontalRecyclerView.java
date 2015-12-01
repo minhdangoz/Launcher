@@ -3,11 +3,8 @@ package com.android.launcher3;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.android.launcher3.AppInfo;
-import com.android.launcher3.Launcher;
-import com.android.launcher3.Utilities;
 import com.android.launcher3.WidgetListViewSwitcher.ShowType;
-import com.lenovo.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.LauncherLog;
 import com.webeye.launcher.R;
 
 import android.appwidget.AppWidgetProviderInfo;

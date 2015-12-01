@@ -1,12 +1,12 @@
-package com.lenovo.launcher3.reorder;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.webeye.launcher.reorder;
 
 import android.graphics.Point;
 
-import com.lenovo.launcher3.reorder.Reorder.SwapItem;
-import com.lenovo.launcher3.reorder.Reorder.Type;
+import com.webeye.launcher.reorder.Reorder.SwapItem;
+import com.webeye.launcher.reorder.Reorder.Type;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 全部应用的Z排序

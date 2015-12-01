@@ -1,6 +1,6 @@
-package com.lenovo.launcher3.reorder;
+package com.webeye.launcher.reorder;
 
-import com.lenovo.launcher3.reorder.Reorder.SwapItem;
+import com.webeye.launcher.reorder.Reorder.SwapItem;
 
 
 interface ReoderInterface {

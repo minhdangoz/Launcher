@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.android.launcher3.Launcher.QuickShareState;
 import com.android.launcher3.QuickShareDropTarget.ShareInfo;
-import com.lenovo.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.LauncherLog;
 import com.webeye.launcher.R;
 
 import android.content.ComponentName;

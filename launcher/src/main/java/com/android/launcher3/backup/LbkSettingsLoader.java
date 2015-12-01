@@ -1,45 +1,22 @@
 package com.android.launcher3.backup;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import org.xmlpull.v1.XmlPullParser;
 
-import com.android.launcher3.AutoInstallsLayout;
 import com.android.launcher3.FolderTitle;
 import com.android.launcher3.LauncherAppState;
-import com.android.launcher3.LauncherModel;
 import com.android.launcher3.LauncherProvider;
-import com.android.launcher3.LauncherSettings;
 import com.android.launcher3.ModeSwitchHelper;
-import com.android.launcher3.AutoInstallsLayout.LayoutParserCallback;
-import com.android.launcher3.LauncherProvider.WorkspaceLoader;
-import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.android.launcher3.settings.SettingsValue;
-import com.lenovo.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.LauncherLog;
 
-import android.appwidget.AppWidgetHost;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
-import android.provider.ContactsContract.Directory;
-import android.text.TextUtils;
 import android.util.Xml;
 
 /**

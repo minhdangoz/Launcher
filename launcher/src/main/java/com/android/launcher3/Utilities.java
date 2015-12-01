@@ -47,8 +47,8 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.Toast;
 
-import com.lenovo.launcher.ext.LauncherLog;
-import com.lenovo.launcher.ext.SystemProperties;
+import com.webeye.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.SystemProperties;
 import com.webeye.launcher.R;
 
 import java.util.ArrayList;

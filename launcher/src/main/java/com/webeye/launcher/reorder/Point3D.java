@@ -1,4 +1,4 @@
-package com.lenovo.launcher3.reorder;
+package com.webeye.launcher.reorder;
 
 import android.graphics.Point;
 import android.os.Parcel;

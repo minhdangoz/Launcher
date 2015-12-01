@@ -1,16 +1,16 @@
 package com.android.launcher3;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.graphics.Point;
 import android.view.View;
 
-import com.lenovo.launcher.ext.LauncherLog;
-import com.lenovo.launcher3.reorder.All_Z_Reorder;
-import com.lenovo.launcher3.reorder.Reorder;
-import com.lenovo.launcher3.reorder.Reorder.SwapItem;
-import com.lenovo.launcher3.reorder.Reorder.Type;
+import com.webeye.launcher.ext.LauncherLog;
+import com.webeye.launcher.reorder.All_Z_Reorder;
+import com.webeye.launcher.reorder.Reorder;
+import com.webeye.launcher.reorder.Reorder.SwapItem;
+import com.webeye.launcher.reorder.Reorder.Type;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 用于整理的界面操作

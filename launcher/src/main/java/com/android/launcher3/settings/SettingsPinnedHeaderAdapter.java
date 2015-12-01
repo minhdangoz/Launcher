@@ -2,11 +2,9 @@ package com.android.launcher3.settings;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.util.TypedValue;
@@ -23,18 +21,14 @@ import com.android.launcher3.AppsCustomizePagedView;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAppState;
-import com.android.launcher3.ModeSwitchHelper;
 import com.android.launcher3.ModeSwitchHelper.Mode;
-import com.android.launcher3.OverviewSettingsPanel;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.backup.LbkLoader;
 import com.android.launcher3.backup.LbkPackager;
 import com.android.launcher3.backup.LbkUtil;
 import com.android.launcher3.backup.LbkPackager.BackupListener;
 import com.android.launcher3.list.PinnedHeaderListAdapter;
-import com.android.launcher3.settings.SettingsController;
-import com.android.launcher3.settings.SettingsProvider;
-import com.lenovo.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.LauncherLog;
 import com.webeye.launcher.R;
 
 @SuppressWarnings("unused")

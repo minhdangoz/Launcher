@@ -22,7 +22,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 import com.android.launcher3.settings.SettingsProvider;
-import com.lenovo.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.LauncherLog;
 import com.webeye.launcher.R;
 
 import java.util.ArrayList;

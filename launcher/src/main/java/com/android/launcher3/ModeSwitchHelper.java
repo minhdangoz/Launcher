@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
-import com.lenovo.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.LauncherLog;
 import com.webeye.launcher.R;
 
 import android.app.AlertDialog;

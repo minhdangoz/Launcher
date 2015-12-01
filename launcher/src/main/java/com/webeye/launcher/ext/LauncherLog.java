@@ -35,11 +35,11 @@
  * any receiver's applicable license agreements with MediaTek Inc.
  */
 
-package com.lenovo.launcher.ext;
-
-import com.android.launcher3.LauncherApplication;
+package com.webeye.launcher.ext;
 
 import android.util.Log;
+
+import com.android.launcher3.LauncherApplication;
 
 //import com.mediatek.xlog.Log;
 

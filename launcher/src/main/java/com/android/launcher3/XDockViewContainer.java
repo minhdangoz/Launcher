@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.lenovo.launcher.ext.LauncherLog;
 import com.webeye.launcher.R;
 
 /**

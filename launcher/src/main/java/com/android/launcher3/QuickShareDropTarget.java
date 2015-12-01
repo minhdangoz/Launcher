@@ -41,7 +41,7 @@ import com.android.launcher3.Launcher.QuickShareState;
 import com.android.launcher3.compat.LauncherActivityInfoCompat;
 import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.compat.UserHandleCompat;
-import com.lenovo.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.LauncherLog;
 import com.webeye.launcher.R;
 
 interface OnShareToApkFileSearchEndListener {

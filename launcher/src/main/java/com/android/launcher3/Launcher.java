@@ -129,8 +129,8 @@ import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsController;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
-import com.lenovo.launcher.ext.LauncherLog;
-import com.lenovo.launcher.ext.ThemeResourceUtils;
+import com.webeye.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.ThemeResourceUtils;
 import com.webeye.launcher.R;
 
 import java.io.DataInputStream;

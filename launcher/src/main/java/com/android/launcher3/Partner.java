@@ -25,7 +25,7 @@ import android.util.Pair;
 import java.io.File;
 
 import com.android.launcher3.ModeSwitchHelper.Mode;
-import com.lenovo.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.LauncherLog;
 
 /**
  * Utilities to discover and interact with partner customizations. There can

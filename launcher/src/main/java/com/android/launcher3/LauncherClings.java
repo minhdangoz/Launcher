@@ -29,7 +29,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.UserManager;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +39,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.accessibility.AccessibilityManager;
 
 import com.android.launcher3.settings.SettingsValue;
-import com.lenovo.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.LauncherLog;
 import com.webeye.launcher.R;
 
 class LauncherClings implements OnClickListener {

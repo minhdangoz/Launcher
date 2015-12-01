@@ -1,4 +1,4 @@
-package com.lenovo.launcher.ext;
+package com.webeye.launcher.ext;
 
 import android.view.View;
 import android.webkit.WebSettings;

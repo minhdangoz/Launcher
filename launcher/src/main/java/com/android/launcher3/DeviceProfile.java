@@ -43,7 +43,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import com.android.launcher3.settings.SettingsProvider;
-import com.lenovo.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.LauncherLog;
 import com.webeye.launcher.R;
 
 class DeviceProfileQuery {

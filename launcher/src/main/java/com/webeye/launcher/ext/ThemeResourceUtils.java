@@ -1,4 +1,4 @@
-package com.lenovo.launcher.ext;
+package com.webeye.launcher.ext;
 
 import android.content.Context;
 import android.content.res.Resources;

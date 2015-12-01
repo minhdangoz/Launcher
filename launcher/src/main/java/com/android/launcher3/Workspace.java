@@ -68,7 +68,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.launcher3.FolderIcon.FolderRingAnimator;
@@ -79,7 +78,7 @@ import com.android.launcher3.compat.PackageInstallerCompat.PackageInstallInfo;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
-import com.lenovo.launcher.ext.LauncherLog;
+import com.webeye.launcher.ext.LauncherLog;
 import com.webeye.launcher.R;
 
 import java.util.ArrayList;
