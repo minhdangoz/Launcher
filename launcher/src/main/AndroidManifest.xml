@@ -96,7 +96,7 @@
         android:requiredForAllUsers="true">
 
         <activity
-            android:name="com.lenovo.launcher.ext.CustomLauncher"
+            android:name="com.lenovo.launcher.ext.WeLauncher"
             android:launchMode="singleTask"
             android:clearTaskOnLaunch="true"
             android:stateNotNeeded="true"

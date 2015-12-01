@@ -8,7 +8,7 @@ import android.webkit.WebViewClient;
 import com.android.launcher3.Launcher;
 import com.webeye.launcher.R;
 
-public class CustomLauncher extends Launcher {
+public class WeLauncher extends Launcher {
 	
 	@Override
 	protected boolean hasCustomContentToLeft() {
