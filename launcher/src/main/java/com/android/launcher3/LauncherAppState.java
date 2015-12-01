@@ -31,9 +31,9 @@ import android.util.Log;
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.compat.PackageInstallerCompat.PackageInstallInfo;
-import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
 import com.webeye.launcher.R;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
@@ -336,4 +336,14 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
     	return sContext.getResources().getBoolean(R.bool.is_tablet);
     }
     /** Lenovo-SW zhaoxin5 20150727 add partnet for phone END */
+
+     /* Lenovo-SW zhaoxin5 20150116 add Theme support */
+    private boolean mNeedApplyTheme = true;
+    public boolean needApplyTheme(){
+        return mNeedApplyTheme;
+    }
+    public void setNeedApplyTheme(boolean value){
+        mNeedApplyTheme = value;
+    }
+    /* Lenovo-SW zhaoxin5 20150116 add Theme support */
 }

@@ -38,6 +38,7 @@ import com.android.launcher3.compat.LauncherActivityInfoCompat;
 import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.compat.UserManagerCompat;
+import com.webeye.launcher.ext.LauncherLog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -336,6 +337,16 @@ public class IconCache {
 
             mCache.put(cacheKey, entry);
 
+            /* Lenovo-SW zhaoxin5 20150116 add Theme support */
+            /*entry.icon = Utilities.createIconBitmap(
+                    getFullResIcon(info), mContext);*/
+            Bitmap themeBmp = null;
+            if (((LauncherApplication) mContext).getThemeController().getTheme() != null && info.getActivityInfo() != null) {
+                LauncherLog.i("xixia", info.getLabel() + ", getTheme != null && info.getActivityInfo() != null");
+                themeBmp = ((LauncherApplication) mContext).getThemeController().getTheme().getIconBitmap(info.getActivityInfo());
+            }
+            /* Lenovo-SW zhaoxin5 20150116 add Theme support */
+
             if (info != null) {
                 ComponentName labelKey = info.getComponentName();
                 if (labelCache != null && labelCache.containsKey(labelKey)) {
@@ -349,10 +360,12 @@ public class IconCache {
 
                 entry.contentDescription = mUserManager.getBadgedLabelForUser(entry.title, user);
                 //Lenovo-sw zhangyj19 add 2015/07/22 modify theme
-                entry.icon = Utilities.createIconBitmap(
-                        info.getBadgedIcon(mIconDpi), mContext, unreadNum);
+//                entry.icon = Utilities.createIconBitmap(
+//                        info.getBadgedIcon(mIconDpi), mContext, unreadNum);
                 /*entry.icon = Utilities.createIconBitmap(
                         info.getIcon(mIconDpi), mContext, unreadNum);*/
+                entry.icon = Utilities.createIconBitmap(
+                        themeBmp != null ? new BitmapDrawable(themeBmp) : info.getBadgedIcon(mIconDpi), mContext, unreadNum);
             } else {
                 entry.title = "";
                 Bitmap preloaded = getPreloadedIcon(componentName, user);

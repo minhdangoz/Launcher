@@ -60,7 +60,7 @@ public class ApkThemeUtils {
                 		launcherContext, findingIconPkg, hasBgBitmap, iconIdInFindingIconPkg);
             } 
         } catch (NotFoundException e) {
-            ThemeLog.e(TAG, "findCustomIconById NotFoundException.");
+            ThemeLog.e(TAG, "findCustomIconById  .");
         } catch (OutOfMemoryError e) {
             ThemeLog.e(TAG, "findCustomIconById OutOfMemoryError.");
         }

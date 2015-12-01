@@ -16,10 +16,10 @@
 
 package com.android.launcher3;
 
-import com.webeye.launcher.R;
-
-
 import android.app.Application;
+
+import com.lenovo.theme.ThemeController;
+import com.webeye.launcher.R;
 
 public class LauncherApplication extends Application {
     public static boolean LAUNCHER_SHOW_UNREAD_NUMBER;
@@ -41,6 +41,10 @@ public class LauncherApplication extends Application {
         SHOW_CTAPP_FEATURE = getResources().getBoolean(R.bool.config_launcher_page);
         LauncherAppState.setApplicationContext(this);
         LauncherAppState.getInstance();
+
+        /* Lenovo-SW zhaoxin5 20150116 add Theme support */
+        initTheme();
+        /* Lenovo-SW zhaoxin5 20150116 add Theme support */
     }
 
     @Override
@@ -48,4 +52,15 @@ public class LauncherApplication extends Application {
         super.onTerminate();
         LauncherAppState.getInstance().onTerminate();
     }
+
+    /* Lenovo-SW zhaoxin5 20150116 add Theme support */
+    ThemeController mThemeController = null;
+    public void initTheme(){
+        mThemeController = new ThemeController(getApplicationContext());
+    }
+
+    public ThemeController getThemeController(){
+        return mThemeController;
+    }
+    /* Lenovo-SW zhaoxin5 20150116 add Theme support */
 }

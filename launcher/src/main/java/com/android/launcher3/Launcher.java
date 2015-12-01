@@ -129,9 +129,10 @@ import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsController;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
+import com.lenovo.theme.ThemeController;
+import com.webeye.launcher.R;
 import com.webeye.launcher.ext.LauncherLog;
 import com.webeye.launcher.ext.ThemeResourceUtils;
-import com.webeye.launcher.R;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -627,6 +628,9 @@ public class Launcher extends Activity
         /** Lenovo-SW zhaoxin5 20150721 add for auto-reorder support START */
         LauncherAppState.getLauncherProvider().setLauncherProviderChangeListener(this);
         /** Lenovo-SW zhaoxin5 20150721 add for auto-reorder support END */
+
+        // Support theme
+        applyDefaultTheme();
     }
 
     @Override
@@ -6717,6 +6721,31 @@ public class Launcher extends Activity
                 SettingsProvider.SETTINGS_UI_HOMESCREEN_SEARCH,
                 R.bool.preferences_interface_homescreen_search_default);
     }
+
+    /* Lenovo-SW zhaoxin5 20150127 after Launcher onCreate finished, to apply the default theme START */
+    private void applyDefaultTheme(){
+    	/*String[] parameters = Placement.getDefaultThemeParameters(this);*/
+        String[] parameters = new String[]{"apk", "com.lenovo.launcher.theme.hotsport"};
+        boolean needApplyTheme = LauncherAppState.getInstance().needApplyTheme();
+        boolean enableThemeMask = !Utilities.isRowProduct();
+        if(null != parameters && needApplyTheme){
+            Intent intent = new Intent();
+            if(parameters[0].equals("apk")){
+                Log.i(TAG, "apply default apk theme : " + parameters[1]);
+                intent.setAction(ThemeController.ACTION_LAUNCHER_THEME_APK);
+                intent.putExtra(ThemeController.ACTION_LAUNCHER_THEME_PACKAGE, parameters[1]);
+            }
+            if(parameters[0].equals("zip")){
+                Log.i(TAG, "apply default zip theme : " + parameters[1]);
+                intent.setAction(ThemeController.ACTION_LAUNCHER_THEME_ZIP);
+                intent.putExtra(ThemeController.ACTION_LAUNCHER_THEME_PATH, parameters[1]);
+            }
+            intent.putExtra(ThemeController.EXTRA_LAUNCHER_THEME_ENABLE_THEME_MASK, enableThemeMask);
+            this.sendBroadcast(intent);
+            LauncherAppState.getInstance().setNeedApplyTheme(false);
+        }
+    }
+    /* Lenovo-SW zhaoxin5 20150127 after Launcher onCreate finished, to apply the default theme END */
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Lenovo-sw:yuanyl2, Add edit mode function. Begin.
