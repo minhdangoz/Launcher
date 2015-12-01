@@ -85,7 +85,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="android-support-v7-recyclerview" level="project" />
     <orderEntry type="library" exported="" name="icu-classes" level="project" />
-    <orderEntry type="library" exported="" name="lenovo-analytics-sdk-2.9" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.0" level="project" />
