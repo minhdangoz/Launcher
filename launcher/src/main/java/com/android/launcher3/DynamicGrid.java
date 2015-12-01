@@ -68,6 +68,10 @@ public class DynamicGrid {
                                : R.xml.default_workspace_4x4;
         DEFAULT_ICON_SIZE_PX = pxFromDp(DEFAULT_ICON_SIZE_DP, dm);
         // Our phone profiles include the bar sizes in each orientation
+        deviceProfiles.add(new DeviceProfile("HuaWei 5X4",
+                335, 567,  5, 4,  (useLargeIcons ? DEFAULT_ICON_SIZE_DP : 56), 13, (hasAA ? 5 : 5),
+                (useLargeIcons ? 60 : 48), fourByFourDefaultLayout,
+                R.xml.default_workspace_4x4_no_all_apps));
         deviceProfiles.add(new DeviceProfile("Super Short Stubby",
                 255, 300,  2, 3,  (useLargeIcons ? 58 : 46), 13, (hasAA ? 3 : 5),
                 (useLargeIcons ? 58 : 46), fourByFourDefaultLayout,

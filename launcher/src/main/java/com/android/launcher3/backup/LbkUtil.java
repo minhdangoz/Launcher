@@ -127,12 +127,13 @@ public class LbkUtil {
 	public static boolean isPreloadLbkFileExist() {
 		// 判断预置的LBK文件是否存在
 		// 从XLauncher的备份路径中读取LBK文件
-    	File preloadLbkFile = new File(getPreloadLbkFilePath());
-    	if(preloadLbkFile.exists()) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+		return true;
+//		File preloadLbkFile = new File(getPreloadLbkFilePath());
+//		if (preloadLbkFile.exists()) {
+//			return true;
+//		} else {
+//			return false;
+//		}
 	}
 	
 	public static byte[] inputStream2ByteArray(InputStream inStream) {
@@ -172,11 +173,33 @@ public class LbkUtil {
 		return data;
 	}
 	
-	public static File getLbkFileFromPreloadDirectory() { 
-		if(!isPreloadLbkFileExist()) {
+	public static File getLbkFileFromPreloadDirectory() {
+		Context context = LauncherAppState.getInstance().getContext();
+		File cacheFile = new File(context.getCacheDir(), "default.lbk");
+		try {
+			InputStream inputStream = context.getAssets().open("default.lbk");
+			try {
+				FileOutputStream outputStream = new FileOutputStream(cacheFile);
+				try {
+					byte[] buf = new byte[1024];
+					int len;
+					while ((len = inputStream.read(buf)) > 0) {
+						outputStream.write(buf, 0, len);
+					}
+				} finally {
+					outputStream.close();
+				}
+			} finally {
+				inputStream.close();
+			}
+		} catch (IOException e) {
 			return null;
 		}
-		return new File(getPreloadLbkFilePath());
+		return cacheFile;
+//		if(!isPreloadLbkFileExist()) {
+//			return null;
+//		}
+//		return new File(getPreloadLbkFilePath());
 	}
 
     public static boolean isXLauncherBackupLbkFileExist() {
