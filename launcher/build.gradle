@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.webeye.launcher"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 21
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
@@ -25,5 +25,9 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:21.0.3'
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile files('libs/lenovo-analytics-sdk-2.9.jar')
+    compile files('libs/libprotobuf-java-2.3.0-nano.jar')
+    compile files('libs/picasso-2.5.0.jar')
     provided files('dynamic_lib/icu-classes.jar')
 }
