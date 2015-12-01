@@ -5,16 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.SwitchPreference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.view.MenuItem;
 
 import com.android.launcher3.AppsCustomizePagedView;
-import com.android.launcher3.Launcher;
-import com.android.launcher3.LauncherAppState;
-import com.android.launcher3.LauncherModel;
-import com.android.launcher3.ModeSwitchHelper.Mode;
-import com.android.launcher3.reaper.Reaper;
 import com.webeye.launcher.R;
 
 public class DrawerActivity extends SettingBaseActivity implements OnPreferenceClickListener {
@@ -49,14 +43,6 @@ public class DrawerActivity extends SettingBaseActivity implements OnPreferenceC
 				@Override
 				public boolean onPreferenceChange(Preference preference, Object newValue) {
 					setDrawerSort(newValue);
-					/** Lenovo-SW zhaoxin5 20151118 add for Reaper support START */
-					final int index = mDrawerSorting.findIndexOfValue(newValue.toString());
-			        Reaper.processReaper( DrawerActivity.this, 
-			        	   Reaper.REAPER_EVENT_CATEGORY_OLAUNCHER_ALLAPPS_SETTINGS, 
-			        	   Reaper.getAllAppsSortAction(getResources(), mDrawerSorting.getEntries()[index]),
-						   Reaper.REAPER_NO_LABEL_VALUE, 
-						   Reaper.REAPER_NO_INT_VALUE );
-					/** Lenovo-SW zhaoxin5 20151118 add for Reaper support END */
 					return true;
 				}
 			});

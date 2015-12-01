@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.ModeSwitchHelper;
 import com.android.launcher3.ModeSwitchHelper.Mode;
-import com.android.launcher3.reaper.Reaper;
 import com.webeye.launcher.R;
 
 public class LauncherSettingActivity extends SettingBaseActivity implements OnPreferenceClickListener {
@@ -80,24 +79,10 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 			LauncherAppState.getInstance().setCurrentLayoutMode(Mode.VIBEUI);
 			SettingsValue.setDisableAllApps(mLauncher, true);
 			ModeSwitchHelper.loadDefaultDesktop(mLauncher);
-			/** Lenovo-SW zhaoxin5 20151118 add for Reaper support START */
-            Reaper.processReaper( this, 
-            	   Reaper.REAPER_EVENT_CATEGORY_OLAUNCHER_STYLE_SWITCH, 
-				   Reaper.REAPER_EVENT_ACTION_OLAUNCHER_STYLE_SWITCH_VIBEUI,
-				   Reaper.REAPER_NO_LABEL_VALUE, 
-				   Reaper.REAPER_NO_INT_VALUE );
-			/** Lenovo-SW zhaoxin5 20151118 add for Reaper support END */
 		} else if (index == 1 && mode != Mode.ANDROID) {
 			LauncherAppState.getInstance().setCurrentLayoutMode(Mode.ANDROID);
 			SettingsValue.setDisableAllApps(mLauncher, false);
 			ModeSwitchHelper.loadDefaultDesktop(mLauncher);
-			/** Lenovo-SW zhaoxin5 20151118 add for Reaper support START */
-            Reaper.processReaper( this, 
-            	   Reaper.REAPER_EVENT_CATEGORY_OLAUNCHER_STYLE_SWITCH, 
-				   Reaper.REAPER_EVENT_ACTION_OLAUNCHER_STYLE_SWITCH_ANDROID,
-				   Reaper.REAPER_NO_LABEL_VALUE, 
-				   Reaper.REAPER_NO_INT_VALUE );
-			/** Lenovo-SW zhaoxin5 20151118 add for Reaper support END */
 		}
 		finish();
 		return;
@@ -119,14 +104,6 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 	private void setWorkspaceLoop() {
 		boolean current = SettingsValue.isWorkspaceLoop(this);
 		SettingsValue.setWorkspaceLoop(this, !current);
-		/** Lenovo-SW zhaoxin5 20151118 add for Reaper support START */
-        Reaper.processReaper( this, 
-        	   Reaper.REAPER_EVENT_CATEGORY_OLAUNCHER_DESKTOP_SETTINGS, 
-			   !current ? Reaper.REAPER_EVENT_ACTION_OLAUNCHER_DESKTOP_SETTINGS_DESKTOP_LOOP_OPEN 
-					    : Reaper.REAPER_EVENT_ACTION_OLAUNCHER_DESKTOP_SETTINGS_DESKTOP_LOOP_NOT_OPEN,
-			   Reaper.REAPER_NO_LABEL_VALUE, 
-			   Reaper.REAPER_NO_INT_VALUE );
-		/** Lenovo-SW zhaoxin5 20151118 add for Reaper support END */
 		/*Lenovo-sw zhangyj19 add 2015/09/09 add search app definition begin */
 		mCount++;
 		if(mCount == 5){

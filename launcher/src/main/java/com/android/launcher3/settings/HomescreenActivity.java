@@ -11,7 +11,6 @@ import android.view.MenuItem;
 
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.ModeSwitchHelper.Mode;
-import com.android.launcher3.reaper.Reaper;
 import com.webeye.launcher.R;
 
 public class HomescreenActivity extends SettingBaseActivity implements OnPreferenceClickListener {
@@ -65,14 +64,6 @@ public class HomescreenActivity extends SettingBaseActivity implements OnPrefere
 					boolean current = SettingsValue.isScrollingWallpaper(mLauncher);
 					SettingsValue.setScrollingWallpaperState(mLauncher, !current);
 					mLauncher.setUpdateDynamicGrid();
-					/** Lenovo-SW zhaoxin5 20151118 add for Reaper support START */
-			        Reaper.processReaper( HomescreenActivity.this, 
-			        	   Reaper.REAPER_EVENT_CATEGORY_OLAUNCHER_DESKTOP_SETTINGS, 
-						   !current ? Reaper.REAPER_EVENT_ACTION_OLAUNCHER_DESKTOP_SETTINGS_WALLPAPER_SCROLL_OPEN 
-								    : Reaper.REAPER_EVENT_ACTION_OLAUNCHER_DESKTOP_SETTINGS_WALLPAPER_SCROLL_NOT_OPEN,
-						   Reaper.REAPER_NO_LABEL_VALUE, 
-						   Reaper.REAPER_NO_INT_VALUE );
-					/** Lenovo-SW zhaoxin5 20151118 add for Reaper support END */
 					return true;
 				}
 			});
@@ -121,14 +112,6 @@ public class HomescreenActivity extends SettingBaseActivity implements OnPrefere
 	private void setAutoReorder() {
 		boolean current = SettingsValue.isAutoReorderEnabled(this);
 		SettingsValue.setAutoReorderState(this, !current);
-		/** Lenovo-SW zhaoxin5 20151118 add for Reaper support START */
-        Reaper.processReaper( HomescreenActivity.this, 
-        	   Reaper.REAPER_EVENT_CATEGORY_OLAUNCHER_DESKTOP_SETTINGS, 
-			   !current ? Reaper.REAPER_EVENT_ACTION_OLAUNCHER_DESKTOP_SETTINGS_AUTO_SORT_OPEN 
-					    : Reaper.REAPER_EVENT_ACTION_OLAUNCHER_DESKTOP_SETTINGS_AUTO_SORT_NOT_OPEN,
-			   Reaper.REAPER_NO_LABEL_VALUE, 
-			   Reaper.REAPER_NO_INT_VALUE );
-		/** Lenovo-SW zhaoxin5 20151118 add for Reaper support END */
 		if (SettingsValue.isAutoReorderEnabled(this)) {
 			// need call Launcher to start a auto-reorder
 			new AsyncTask<Void, Void, Void>() {

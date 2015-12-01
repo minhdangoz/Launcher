@@ -1,12 +1,5 @@
 package com.android.launcher3.settings;
 
-import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Calendar;
-import java.util.Date;
-
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Dialog;
@@ -34,9 +27,15 @@ import com.android.launcher3.backup.LbkLoader;
 import com.android.launcher3.backup.LbkPackager;
 import com.android.launcher3.backup.LbkPackager.BackupListener;
 import com.android.launcher3.backup.LbkUtil;
-import com.android.launcher3.reaper.Reaper;
 import com.lenovo.launcher.ext.LauncherLog;
 import com.webeye.launcher.R;
+
+import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Calendar;
+import java.util.Date;
 
 public class BackupRestoreActivity extends SettingBaseActivity implements OnPreferenceClickListener {
 	private static final String PREFERENCE_BACKUP = "local_backup_key";
@@ -185,14 +184,8 @@ public class BackupRestoreActivity extends SettingBaseActivity implements OnPref
 				LbkPackager.startBackup(mContext, new BackupListener() {
 					@Override
 					public void onBackupStart() {
-						showBootProgressDialog(mContext.getResources().getString(R.string.local_backup_process_msg), R.style.Theme_Launcher_ProgressDialog);
-						/** Lenovo-SW zhaoxin5 20151118 add for Reaper support START */
-			            Reaper.processReaper( mContext, 
-			            	   Reaper.REAPER_EVENT_CATEGORY_OLAUNCHER_BACKUP_RECOVERY, 
-							   Reaper.REAPER_EVENT_ACTION_OLAUNCHER_BACKUP_RECOVERY_BACKUP,
-							   Reaper.REAPER_NO_LABEL_VALUE, 
-							   Reaper.REAPER_NO_INT_VALUE );
-						/** Lenovo-SW zhaoxin5 20151118 add for Reaper support END */
+						showBootProgressDialog(mContext.getResources().getString(R.string.local_backup_process_msg),
+								R.style.Theme_Launcher_ProgressDialog);
 					}
 					@Override
 					public void onBackupEnd(boolean success) {
@@ -278,13 +271,6 @@ public class BackupRestoreActivity extends SettingBaseActivity implements OnPref
 							mLauncher.getWorkspace().exitOverviewMode(true);
 							mLauncher.onWorkspaceShown(true, false); // Lenovo-SW zhaoxin5 20150910 KOLEOSROW-2314
 						}
-						/** Lenovo-SW zhaoxin5 20151118 add for Reaper support START */
-			            Reaper.processReaper( mContext, 
-			            	   Reaper.REAPER_EVENT_CATEGORY_OLAUNCHER_BACKUP_RECOVERY, 
-							   Reaper.REAPER_EVENT_ACTION_OLAUNCHER_BACKUP_RECOVERY_RECOVERY,
-							   Reaper.REAPER_NO_LABEL_VALUE, 
-							   Reaper.REAPER_NO_INT_VALUE );
-						/** Lenovo-SW zhaoxin5 20151118 add for Reaper support END */
                     }
 				}
 

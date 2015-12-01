@@ -1,10 +1,7 @@
 package com.android.launcher3.settings;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
-import com.android.launcher3.Launcher;
-import com.android.launcher3.reaper.Reaper;
 import com.webeye.launcher.R;
 
 /**
@@ -101,35 +98,5 @@ public class SettingsValue {
     	SettingsProvider.putBoolean(c, SettingsProvider.SETTINGS_FIRST_MIGRATE_FROM_XLAUNCHER, value);
     }
     /** Lenovo_SW zhaoxin5 20150924 add for migrate from xlauncher support END */
-    
-    /*** Lenovo-SW zhaoxin5 20151117 add for Reaper Function START */
-    
-    public static boolean isTagReaperEnabled(Context c) {
-    	return SettingsProvider.getBoolean(c, 
-    			Reaper.PREF_REAPER, R.bool.preferences_reaper_tag_reaper);
-    }
-    
-    /**
-     * @param c Context of launcher
-     * @return 是否为海外版本
-     */
-    public static boolean getVerisonWWConfiguration(Context c) {
-        return isVerisonWWConfiguration;
-    }
 
-    private static boolean isVerisonWWConfiguration = false;
-    
-    public static boolean isNetworkEnabled(Context c) {
-//      if (isWifiProduct())
-//          return true;
-//      if (!sIsNetworkSync) {
-//          sIsNetworkSync = true;
-//          SharedPreferences sharedPreferences = android.preference.PreferenceManager
-//                  .getDefaultSharedPreferences(c);
-//          mIsNetworkEnabled = sharedPreferences.getBoolean(PREF_NETWORK_ENABLER, true);
-//      }
-//      return mIsNetworkEnabled;
-      return true;
-  }
-  /*** Lenovo-SW zhaoxin5 20151117 add for Reaper Function END */
 }

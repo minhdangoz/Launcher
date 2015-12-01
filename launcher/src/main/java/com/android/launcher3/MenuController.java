@@ -12,7 +12,6 @@ import android.widget.ViewSwitcher;
 
 import com.android.launcher3.interpolator.BackInterpolator;
 import com.android.launcher3.interpolator.CubicInterpolator;
-import com.android.launcher3.reaper.Reaper;
 import com.android.launcher3.settings.LauncherSettingActivity;
 import com.webeye.launcher.R;
 
@@ -50,13 +49,6 @@ public class MenuController {
             public void onClick(View view) {
                 showMenuItem(mLauncher.getWidgetListPanel());
                 mToolTipBar.updateToolTip(R.string.editmode_add_widget);
-    			/** Lenovo-SW zhaoxin5 20151118 add for Reaper support START */
-                Reaper.processReaper( mLauncher, 
-                	   Reaper.REAPER_EVENT_CATEGORY_OLAUNCHER_FIRST_MENU, 
-    				   Reaper.REAPER_EVENT_ACTION_OLAUNCHER_FIRST_MENU_ADD_WIDGET,
-    				   Reaper.REAPER_NO_LABEL_VALUE, 
-    				   Reaper.REAPER_NO_INT_VALUE );
-    			/** Lenovo-SW zhaoxin5 20151118 add for Reaper support END */
             }
         });
         widgetButton.setOnTouchListener(mLauncher.getHapticFeedbackTouchListener());
@@ -67,13 +59,6 @@ public class MenuController {
             public void onClick(View view) {
                 showMenuItem(mMenu.findViewById(R.id.wallpaper_list));
                 mLauncher.getSearchBar().updateToolTip(R.string.editmode_set_wallpaper);
-    			/** Lenovo-SW zhaoxin5 20151118 add for Reaper support START */
-                Reaper.processReaper( mLauncher, 
-                	   Reaper.REAPER_EVENT_CATEGORY_OLAUNCHER_FIRST_MENU, 
-    				   Reaper.REAPER_EVENT_ACTION_OLAUNCHER_FIRST_MENU_WALLPAPER,
-    				   Reaper.REAPER_NO_LABEL_VALUE, 
-    				   Reaper.REAPER_NO_INT_VALUE );
-    			/** Lenovo-SW zhaoxin5 20151118 add for Reaper support END */
             }
         });
         wallpaperButton.setOnTouchListener(mLauncher.getHapticFeedbackTouchListener());
@@ -91,13 +76,6 @@ public class MenuController {
                 //mLauncher.showSettingsPanel();
                 Intent intent = new Intent(mLauncher, LauncherSettingActivity.class);
                 mLauncher.startActivity(intent);
-    			/** Lenovo-SW zhaoxin5 20151118 add for Reaper support START */
-                Reaper.processReaper( mLauncher, 
-                	   Reaper.REAPER_EVENT_CATEGORY_OLAUNCHER_FIRST_MENU, 
-    				   Reaper.REAPER_EVENT_ACTION_OLAUNCHER_FIRST_MENU_DESKTOP_SETTINGS,
-    				   Reaper.REAPER_NO_LABEL_VALUE, 
-    				   Reaper.REAPER_NO_INT_VALUE );
-    			/** Lenovo-SW zhaoxin5 20151118 add for Reaper support END */
                 /*Lenovo-sw zhangyj19 20150806 add setting function end*/
             }
         });

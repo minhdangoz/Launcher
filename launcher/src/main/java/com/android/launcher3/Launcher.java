@@ -16,26 +16,6 @@
 
 package com.android.launcher3;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
@@ -146,13 +126,32 @@ import com.android.launcher3.compat.PackageInstallerCompat;
 import com.android.launcher3.compat.PackageInstallerCompat.PackageInstallInfo;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.compat.UserManagerCompat;
-import com.android.launcher3.reaper.Reaper;
 import com.android.launcher3.settings.SettingsController;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
 import com.lenovo.launcher.ext.LauncherLog;
 import com.lenovo.launcher.ext.ThemeResourceUtils;
 import com.webeye.launcher.R;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Default launcher application.
@@ -624,11 +623,7 @@ public class Launcher extends Activity
                 "cyanogenmod.intent.action.PROTECTED_COMPONENT_UPDATE");
         registerReceiver(protectedAppsChangedReceiver, protectedAppsFilter,
                 "cyanogenmod.permission.PROTECTED_APP", null);
-        
-        /* RK_ID: RK_LELAUNCHER_REAPER_INIT. AUT: zhangdxa DATE: 2013-03-04 S*/
-        initReaper();
-        /* RK_ID: RK_LELAUNCHER_REAPER_INIT. AUT: zhangdxa DATE: 2013-03-04 E*/
-        
+
         /** Lenovo-SW zhaoxin5 20150721 add for auto-reorder support START */
         LauncherAppState.getLauncherProvider().setLauncherProviderChangeListener(this);
         /** Lenovo-SW zhaoxin5 20150721 add for auto-reorder support END */
@@ -1769,13 +1764,6 @@ public class Launcher extends Activity
         if (mWorkspace.isInOverviewMode()) {
             mWorkspace.exitOverviewMode(false);
         }
-		/** Lenovo-SW zhaoxin5 20151118 add for Reaper support START */
-        Reaper.processReaper( this, 
-        	   Reaper.REAPER_EVENT_CATEGORY_OLAUNCHER_FIRST_MENU, 
-			   Reaper.REAPER_EVENT_ACTION_OLAUNCHER_FIRST_MENU_SETTINGS,
-			   Reaper.REAPER_NO_LABEL_VALUE, 
-			   Reaper.REAPER_NO_INT_VALUE );
-		/** Lenovo-SW zhaoxin5 20151118 add for Reaper support END */
     }
 
     public interface QSBScroller {
@@ -5873,7 +5861,6 @@ public class Launcher extends Activity
      * Restores a pending widget.
      *
      * @param appWidgetId The app widget id
-     * @param cellInfo    The position on screen where to create the widget.
      */
     private void completeRestoreAppWidget(final int appWidgetId) {
         LauncherAppWidgetHostView view = mWorkspace.getWidgetForAppWidgetId(appWidgetId);
@@ -8458,18 +8445,6 @@ public class Launcher extends Activity
 		}
 	}
     /*Lenovo-sw zhangyj19 add 2015/09/06 add search app modify end*/
-	
-	 /* RK_ID: RK_LELAUNCHER_REAPER_INIT. AUT: zhangdxa DATE: 2013-03-04 S*/
-    private void initReaper(){
-    	Log.i("Reaper","XLauncher.initReaper()");
-		boolean bTagReaper = SettingsValue.isTagReaperEnabled(getApplicationContext());
-        if( bTagReaper ) {
-        	Reaper.processReaperInitForce(this);
-        }else if( Reaper.reaperNetworkEnable(this) ){
-        	Reaper.processReaperInitCmccForce(this);
-        }
-    }
-    /* RK_ID: RK_LELAUNCHER_REAPER_INIT. AUT: zhangdxa DATE: 2013-03-04 E*/
 }
 
 interface LauncherTransitionable {

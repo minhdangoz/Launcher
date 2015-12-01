@@ -257,7 +257,7 @@
         <!-- Intent received used to uninstall shortcuts from other applications -->
         <receiver
             android:name="com.android.launcher3.UninstallShortcutReceiver"
-            android:permission="com.android.launcher.permission.UNINSTALL_SHORTCUT">
+            android:permission="com. android.launcher.permission.UNINSTALL_SHORTCUT">
             <intent-filter>
                 <action android:name="com.android.launcher.action.UNINSTALL_SHORTCUT" />
             </intent-filter>
@@ -299,28 +299,6 @@
                 <action android:name="org.cyanogenmod.intent.action.THEME_CHANGED"/>
             </intent-filter>
         </receiver>
-
-        <!-- RK_ID: RK_LELAUNCHER_REAPER. AUT: zhangdxa DATE: 2012-03-01 S -->
-        <meta-data android:name="lenovo:applicationToken" android:value="RT3N00LZP3B8" />
-        <meta-data android:name="lenovo:eventReportNumThreshold" android:value="5" />
-        <!--This is only for inner use of lenovo, please not merge into bu version. -->
-        <meta-data android:name="lenovo:channel" android:value="ZM38001" />
-        <meta-data android:name="lenovo:isTestMode" android:value="true" />
-        <!-- meta-data android:name="lenovo:customReaperServer" android:value="http://fsr.dev.surepush.cn/" /-->
-        <!--meta-data android:value="4f829d1c527015463b000067" android:name="UMENG_APPKEY"> </meta-data> -->
-        <receiver android:name="com.android.launcher3.reaper.ReaperReceiver">
-            <intent-filter>
-                <action android:name="com.lenovo.action.ACTION_REAPER" />
-                <action android:name="com.lenovo.action.ACTION_REAPER_MAP" />
-                <action android:name="com.lenovo.action.ACTION_REAPER_INIT" />
-                <action android:name="com.lenovo.action.ACTION_REAPER_INIT_AGAIN"/>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="com.lenovo.action.ACTION_NETWORK_ENABLER_CHANGED" />
-                <action android:name="com.lenovo.action.ACTION_REAPER_INIT_FORCE" />
-                <action android:name="com.lenovo.action.ACTION_REAPER_INIT_CMCC_FORCE" />
-            </intent-filter>
-        </receiver>
-        <!-- RK_ID: RK_LELAUNCHER_REAPER. AUT: zhangdxa DATE: 2012-03-01 E -->
         
         <!-- The settings provider contains Home's data, like the workspace favorites -->
         <provider
