@@ -5504,7 +5504,7 @@ public class Launcher extends Activity
      * Implementation of the method from LauncherModel.Callbacks.
      */
     public void loadResource() {
-       ThemeResourceUtils.loadThemeResource(this);
+       ThemeResourceUtils.loadThemeResource(this, "com.lenovo.launcher.theme.hotsport");
     }
     /*Lenovo-sw zhangyj19 add 2015/07/29 modify theme start*/
     /**

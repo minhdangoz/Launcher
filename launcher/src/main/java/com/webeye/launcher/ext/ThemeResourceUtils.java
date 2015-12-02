@@ -1,6 +1,7 @@
 package com.webeye.launcher.ext;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +21,9 @@ import com.android.launcher3.FolderIcon.FolderRingAnimator;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.PageIndicator.PageMarkerResources;
 import com.android.launcher3.backup.LbkUtil;
+import com.lenovo.theme.Utilities;
+import com.lenovo.theme.apktheme.ApkThemeUtils;
+import com.lenovo.theme.util.ThemeLog;
 import com.webeye.launcher.R;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -223,6 +227,14 @@ public class ThemeResourceUtils {
             mThemeBgBitmap[i] = findIconBitmapByIdName(name);
             LbkUtil.closeUnZipFile();
         }
+        setResource();
+        if (DEBUG_LOADERS) {
+            Log.d(TAG, "theme Resource in "
+                    + (SystemClock.uptimeMillis() - loadTime) + "ms");
+        }
+    }
+
+    private static void setResource() {
         Resources r = mLauncher.getResources();
         int newWidth = (int) r.getDimension(R.dimen.page_indicator_size);
         int newHeight = (int) r.getDimension(R.dimen.def_home_point_height);
@@ -239,20 +251,48 @@ public class ThemeResourceUtils {
             PageMarkerResources.mInactiveDrawable = new BitmapDrawable(r, mThemeBgBitmap[3]);
         } else {
             if(mThemeBgBitmap[5] != null){
-               PageMarkerResources.mInactiveDrawable = resizeImage(mThemeBgBitmap[5], newWidth, newHeight);
+                PageMarkerResources.mInactiveDrawable = resizeImage(mThemeBgBitmap[5], newWidth, newHeight);
             }
         }
         if (mThemeBgBitmap[4] != null) {
             PageMarkerResources.mActiveDrawable = new BitmapDrawable(r, mThemeBgBitmap[4]);
         } else {
             if(mThemeBgBitmap[6] != null){
-               PageMarkerResources.mActiveDrawable = resizeImage(mThemeBgBitmap[6], newWidth, newHeight);
+                PageMarkerResources.mActiveDrawable = resizeImage(mThemeBgBitmap[6], newWidth, newHeight);
             }
         }
+    }
 
-        if (DEBUG_LOADERS) {
-            Log.d(TAG, "theme Resource in "
-                    + (SystemClock.uptimeMillis() - loadTime) + "ms");
+    /**
+     * 从APK theme 中读取Launcher 文件夹样式及page indicator 样式
+     * @param launcher
+     * @param apkThemeName
+     */
+    public static void loadThemeResource(Launcher launcher, String apkThemeName) {
+        if (launcher == null) {
+            return;
         }
+        mLauncher = launcher;
+
+        Context themeContext;
+        try {
+            themeContext = launcher.createPackageContext(apkThemeName, Context.CONTEXT_IGNORE_SECURITY);
+        } catch (PackageManager.NameNotFoundException e) {
+            ThemeLog.e(TAG, "theme " + apkThemeName + " not found! ", e);
+            return;
+        }
+
+        ThemeLog.i(TAG, "find theme " + apkThemeName);
+        int i = 0;
+        for (String resName : THEME_ICON_NAME) {
+            Drawable drawable = ApkThemeUtils.findDrawableByResourceName(resName, themeContext);
+            if (null == drawable) {
+                mThemeBgBitmap[i] = null;
+            } else {
+                mThemeBgBitmap[i] = Utilities.createIconBitmap(drawable, launcher);
+            }
+            i++;
+        }
+        setResource();
     }
 }

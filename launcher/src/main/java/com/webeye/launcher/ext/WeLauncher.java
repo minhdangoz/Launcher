@@ -1,7 +1,6 @@
 package com.webeye.launcher.ext;
 
 import android.view.View;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -12,7 +11,7 @@ public class WeLauncher extends Launcher {
 	
 	@Override
 	protected boolean hasCustomContentToLeft() {
-		return true;
+		return false;
 	}
 
 	@Override
