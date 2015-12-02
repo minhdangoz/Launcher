@@ -22,7 +22,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 
 public class LbkUtil {
@@ -30,7 +32,7 @@ public class LbkUtil {
 	private final static String TAG = "LbkUtil";
 	public final static String DEFAULT_WALLPAPER = "wallpaper.png";
     public final static String DESC_FILE = "desc.xml";
-    public final static String VIBEUI_BACKUP_LBK = "vibeui_backup.lbk";
+    public final static String VIBEUI_BACKUP_LBK = "HUAWEI-RIO-AL00.lbk";
     public final static String ANDROID_BACKUP_LBK = "android_backup.lbk";
     public final static String getBackupLBKName() {
     	if(LauncherAppState.getInstance().getCurrentLayoutMode() == Mode.ANDROID) {
@@ -175,9 +177,14 @@ public class LbkUtil {
 	
 	public static File getLbkFileFromPreloadDirectory() {
 		Context context = LauncherAppState.getInstance().getContext();
-		File cacheFile = new File(context.getCacheDir(), "default.lbk");
+		String lbk = Build.MODEL.replace(" ","-");
+		File cacheFile = new File(context.getCacheDir(), lbk + ".lbk");
+		Log.d(TAG, "cacheFile = " + cacheFile.getName());
+		if (cacheFile.exists()) {
+			return cacheFile;
+		}
 		try {
-			InputStream inputStream = context.getAssets().open("default.lbk");
+			InputStream inputStream = context.getAssets().open(lbk + ".lbk");
 			try {
 				FileOutputStream outputStream = new FileOutputStream(cacheFile);
 				try {
