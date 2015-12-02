@@ -221,6 +221,9 @@ public class ThemeResourceUtils {
         if (mThemePath == null) {
             mThemePath = parseLenovoThemeConfig();
         }
+        if (mThemePath == null) {
+            return;
+        }
         initDpi();
         for (int i = 0; i < THEME_ICON_NAME.length; i++) {
             String name = THEME_ICON_NAME[i];

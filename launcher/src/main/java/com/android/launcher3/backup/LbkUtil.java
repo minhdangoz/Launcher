@@ -176,10 +176,11 @@ public class LbkUtil {
 	}
 	
 	public static File getLbkFileFromPreloadDirectory() {
+		LauncherLog.i(TAG, "getLbkFileFromPreloadDirectory start!!!");
 		Context context = LauncherAppState.getInstance().getContext();
 		String model = Build.MODEL.replace(" ", "-");
+		LauncherLog.i(TAG, "model = " + model);
 		File cacheFile = new File(context.getCacheDir(), model + ".lbk");
-		Log.d(TAG, "cacheFile = " + cacheFile.getName());
 		if (cacheFile.exists()) {
 			return cacheFile;
 		}
