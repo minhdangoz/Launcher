@@ -28,6 +28,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.Surface;
@@ -341,6 +342,9 @@ public class DeviceProfile {
         // calculate correct top padding according to invisible icon label height
         float scaleFactorForItem = getOverviewModeScale();
         dockviewTopPaddingPx = (int) ((dockviewBarHeightPx - iconSizePx * scaleFactorForItem) / 2);
+        Log.e("wcrow", "mProfile = " + closestProfile.name);
+        Log.e("wcrow", "iconSize = " + iconSize);
+        Log.e("wcrow", "hotseatIconSize = " + hotseatIconSize);
     }
 
     /* Lenovo-SW zhaoxin5 20150326 config for balde layout START */
