@@ -583,7 +583,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
 
         Animator openFolderAnim = null;
         final Runnable onCompleteRunnable;
-        if (!Utilities.isLmpOrAbove()) {
+        // Fix bug with folder animation
+        if (false) {
             positionAndSizeAsIcon();
             centerAboutIcon();
 

@@ -69,6 +69,10 @@ public class DynamicGrid {
                                : R.xml.default_workspace_4x4;
         DEFAULT_ICON_SIZE_PX = pxFromDp(DEFAULT_ICON_SIZE_DP, dm);
         // Our phone profiles include the bar sizes in each orientation
+        deviceProfiles.add(new DeviceProfile("G666 4X4",
+                335, 615,  4, 4,  (useLargeIcons ? 58 : 46), 13, (hasAA ? 5 : 5),
+                (useLargeIcons ? 58 : 46), fourByFourDefaultLayout,
+                R.xml.default_workspace_4x4_no_all_apps));
         deviceProfiles.add(new DeviceProfile("Lenovo 4X4",
                 294, 554,  4, 4,  (useLargeIcons ? 58 : 46), 13, (hasAA ? 5 : 5),
                 (useLargeIcons ? 58 : 46), fourByFourDefaultLayout,
