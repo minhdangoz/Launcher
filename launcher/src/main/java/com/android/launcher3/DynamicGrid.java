@@ -18,6 +18,7 @@ package com.android.launcher3;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -69,14 +70,22 @@ public class DynamicGrid {
                                : R.xml.default_workspace_4x4;
         DEFAULT_ICON_SIZE_PX = pxFromDp(DEFAULT_ICON_SIZE_DP, dm);
         // Our phone profiles include the bar sizes in each orientation
+        if (Build.MODEL.equals("BM002-G5")) {
+            deviceProfiles.add(new DeviceProfile("BM002-G5 5X4",
+                    335, 615, 5, 4, (useLargeIcons ? 58 : 46), 13, (hasAA ? 5 : 5),
+                    (useLargeIcons ? 58 : 46), fourByFourDefaultLayout,
+                    R.xml.default_workspace_4x4_no_all_apps));
+        }
         deviceProfiles.add(new DeviceProfile("Xiaomi 5X4",
                 340, 620,  5, 4,  (useLargeIcons ? 60 : 48), 13, (hasAA ? 5 : 5),
                 (useLargeIcons ? 60 : 48), fourByFourDefaultLayout,
                 R.xml.default_workspace_4x4_no_all_apps));
-        deviceProfiles.add(new DeviceProfile("G666 4X4",
-                335, 615,  4, 4,  (useLargeIcons ? 58 : 46), 13, (hasAA ? 5 : 5),
-                (useLargeIcons ? 58 : 46), fourByFourDefaultLayout,
-                R.xml.default_workspace_4x4_no_all_apps));
+        if (Build.MODEL.equals("G666")) {
+            deviceProfiles.add(new DeviceProfile("G666 4X4",
+                    335, 615, 4, 4, (useLargeIcons ? 58 : 46), 13, (hasAA ? 5 : 5),
+                    (useLargeIcons ? 58 : 46), fourByFourDefaultLayout,
+                    R.xml.default_workspace_4x4_no_all_apps));
+        }
         deviceProfiles.add(new DeviceProfile("Lenovo 4X4",
                 294, 554,  4, 4,  (useLargeIcons ? 58 : 46), 13, (hasAA ? 5 : 5),
                 (useLargeIcons ? 58 : 46), fourByFourDefaultLayout,
