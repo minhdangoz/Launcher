@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lenovo.theme.settings;
+package com.webeye.theme.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;

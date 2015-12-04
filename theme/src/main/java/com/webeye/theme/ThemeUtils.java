@@ -1,10 +1,10 @@
-package com.lenovo.theme;
+package com.webeye.theme;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
-import com.lenovo.theme.util.ThemeLog;
+import com.webeye.theme.util.ThemeLog;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.WallpaperManager;

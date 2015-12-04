@@ -1,4 +1,4 @@
-package com.lenovo.theme.apktheme;
+package com.webeye.theme.apktheme;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -6,9 +6,9 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 
-import com.lenovo.theme.ITheme;
-import com.lenovo.theme.ThemeUtils;
-import com.lenovo.theme.util.ThemeLog;
+import com.webeye.theme.ITheme;
+import com.webeye.theme.ThemeUtils;
+import com.webeye.theme.util.ThemeLog;
 
 import java.io.IOException;
 import java.io.InputStream;

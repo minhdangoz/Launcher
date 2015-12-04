@@ -1,4 +1,4 @@
-package com.lenovo.theme.ziptheme;
+package com.webeye.theme.ziptheme;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,9 +10,9 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import com.lenovo.theme.ThemeUtils;
-import com.lenovo.theme.Utilities;
-import com.lenovo.theme.util.ThemeLog;
+import com.webeye.theme.ThemeUtils;
+import com.webeye.theme.Utilities;
+import com.webeye.theme.util.ThemeLog;
 
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;

@@ -1,4 +1,4 @@
-package com.lenovo.theme;
+package com.webeye.theme;
 
 import android.content.Context;
 import android.content.res.Resources;

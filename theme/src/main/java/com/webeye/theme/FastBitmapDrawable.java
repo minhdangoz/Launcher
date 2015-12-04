@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lenovo.theme;
+package com.webeye.theme;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

@@ -1,13 +1,13 @@
-package com.lenovo.theme.ziptheme;
+package com.webeye.theme.ziptheme;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
-import com.lenovo.theme.ITheme;
-import com.lenovo.theme.ThemeUtils;
-import com.lenovo.theme.util.ThemeLog;
+import com.webeye.theme.ITheme;
+import com.webeye.theme.ThemeUtils;
+import com.webeye.theme.util.ThemeLog;
 
 import java.io.File;
 import java.io.FileInputStream;

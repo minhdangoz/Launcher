@@ -1,9 +1,9 @@
-package com.lenovo.theme;
+package com.webeye.theme;
 
-import com.lenovo.theme.apktheme.ApkTheme;
-import com.lenovo.theme.settings.SettingsProvider;
-import com.lenovo.theme.util.ThemeLog;
-import com.lenovo.theme.ziptheme.ZipTheme;
+import com.webeye.theme.apktheme.ApkTheme;
+import com.webeye.theme.settings.SettingsProvider;
+import com.webeye.theme.util.ThemeLog;
+import com.webeye.theme.ziptheme.ZipTheme;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

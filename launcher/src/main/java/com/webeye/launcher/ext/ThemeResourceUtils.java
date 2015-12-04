@@ -21,9 +21,9 @@ import com.android.launcher3.FolderIcon.FolderRingAnimator;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.PageIndicator.PageMarkerResources;
 import com.android.launcher3.backup.LbkUtil;
-import com.lenovo.theme.Utilities;
-import com.lenovo.theme.apktheme.ApkThemeUtils;
-import com.lenovo.theme.util.ThemeLog;
+import com.webeye.theme.Utilities;
+import com.webeye.theme.apktheme.ApkThemeUtils;
+import com.webeye.theme.util.ThemeLog;
 import com.webeye.launcher.R;
 
 import org.xmlpull.v1.XmlPullParser;

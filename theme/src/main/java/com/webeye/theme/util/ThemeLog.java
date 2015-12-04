@@ -35,7 +35,7 @@
  * any receiver's applicable license agreements with MediaTek Inc.
  */
 
-package com.lenovo.theme.util;
+package com.webeye.theme.util;
 
 import android.util.Log;
 

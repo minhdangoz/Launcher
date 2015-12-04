@@ -18,7 +18,7 @@ package com.android.launcher3;
 
 import android.app.Application;
 
-import com.lenovo.theme.ThemeController;
+import com.webeye.theme.ThemeController;
 import com.webeye.launcher.R;
 
 public class LauncherApplication extends Application {

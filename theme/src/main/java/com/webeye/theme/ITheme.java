@@ -1,7 +1,6 @@
-package com.lenovo.theme;
+package com.webeye.theme;
 
 import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 
 import java.io.InputStream;

@@ -129,7 +129,7 @@ import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsController;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
-import com.lenovo.theme.ThemeController;
+import com.webeye.theme.ThemeController;
 import com.webeye.launcher.R;
 import com.webeye.launcher.ext.LauncherLog;
 import com.webeye.launcher.ext.ThemeResourceUtils;
