@@ -4881,6 +4881,7 @@ public class LauncherModel extends BroadcastReceiver
     }
     
     private String filterPackages[] = new String[]{
+            "com.webeye.launcher",
     		"com.lenovo.xlauncher",
     		"com.lenovo.launcher"}; 
     

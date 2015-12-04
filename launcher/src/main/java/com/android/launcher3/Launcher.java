@@ -5504,7 +5504,7 @@ public class Launcher extends Activity
      * Implementation of the method from LauncherModel.Callbacks.
      */
     public void loadResource() {
-       ThemeResourceUtils.loadThemeResource(this, "com.lenovo.launcher.theme.hotsport");
+       ThemeResourceUtils.loadThemeResource(this, DEFAULT_THEME_PKG);
     }
     /*Lenovo-sw zhangyj19 add 2015/07/29 modify theme start*/
     /**
@@ -6722,10 +6722,11 @@ public class Launcher extends Activity
                 R.bool.preferences_interface_homescreen_search_default);
     }
 
+    private static final String DEFAULT_THEME_PKG = "com.webeye.theme.colorful";
     /* Lenovo-SW zhaoxin5 20150127 after Launcher onCreate finished, to apply the default theme START */
     private void applyDefaultTheme(){
     	/*String[] parameters = Placement.getDefaultThemeParameters(this);*/
-        String[] parameters = new String[]{"apk", "com.lenovo.launcher.theme.hotsport"};
+        String[] parameters = new String[]{"apk", DEFAULT_THEME_PKG};
         boolean needApplyTheme = LauncherAppState.getInstance().needApplyTheme();
         boolean enableThemeMask = !Utilities.isRowProduct();
         if(null != parameters && needApplyTheme){
