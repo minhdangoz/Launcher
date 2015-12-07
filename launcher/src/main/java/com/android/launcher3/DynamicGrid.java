@@ -70,6 +70,12 @@ public class DynamicGrid {
                                : R.xml.default_workspace_4x4;
         DEFAULT_ICON_SIZE_PX = pxFromDp(DEFAULT_ICON_SIZE_DP, dm);
         // Our phone profiles include the bar sizes in each orientation
+        if (Build.MODEL.equals("HUAWEI Y635-TL00")) {
+            deviceProfiles.add(new DeviceProfile("HUAWEI Y635-TL00",
+                    294, 544,  5, 4,  (useLargeIcons ? 60 : 56), 11, (hasAA ? 5 : 5),
+                    (useLargeIcons ? 60 : 56), fourByFourDefaultLayout,
+                    R.xml.default_workspace_4x4_no_all_apps));
+        }
         if (Build.MODEL.equals("2014813")) {
             deviceProfiles.add(new DeviceProfile("HM2014813 5X4",
                     335, 615, 5, 4, (useLargeIcons ? 60 : 60), 12, (hasAA ? 5 : 5),
