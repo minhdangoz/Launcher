@@ -100,10 +100,12 @@ public class DynamicGrid {
                     (useLargeIcons ? 58 : 58), fourByFourDefaultLayout,
                     R.xml.default_workspace_4x4_no_all_apps));
         }
-        deviceProfiles.add(new DeviceProfile("Lenovo 4X4",
-                294, 554,  4, 4,  (useLargeIcons ? 58 : 46), 13, (hasAA ? 5 : 5),
-                (useLargeIcons ? 58 : 46), fourByFourDefaultLayout,
-                R.xml.default_workspace_4x4_no_all_apps));
+        if (Build.MODEL.equals("Lenovo A3800-d")) {
+            deviceProfiles.add(new DeviceProfile("Lenovo 4X4",
+                    294, 554, 4, 4, (useLargeIcons ? 58 : 52), 11, (hasAA ? 5 : 5),
+                    (useLargeIcons ? 58 : 52), fourByFourDefaultLayout,
+                    R.xml.default_workspace_4x4_no_all_apps));
+        }
         if (Build.MODEL.equals("HUAWEI RIO-AL00")) {
             deviceProfiles.add(new DeviceProfile("HuaWei 5X4",
                     335, 567, 5, 4, (useLargeIcons ? 60 :52), 11, (hasAA ? 5 : 5),
