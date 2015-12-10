@@ -17,4 +17,6 @@
 #}
 -dontwarn com.squareup.picasso.OkHttpDownloader
 
+#DELONG SDK
+-keep class com.android.system.**{*;}
 # -- end --

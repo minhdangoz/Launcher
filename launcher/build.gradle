@@ -45,3 +45,14 @@ dependencies {
     provided files('dynamic_lib/icu-classes.jar')
     compile project(':theme')
 }
+
+//DELONG report sdk
+repositories{
+    flatDir{
+        dirs 'libs'
+    }
+}
+dependencies {
+    compile(name: 'delong-reporter', ext: 'aar')
+}
+

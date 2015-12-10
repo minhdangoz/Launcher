@@ -310,5 +310,10 @@
 
         <meta-data android:name="android.nfc.disable_beam_default"
                        android:value="true" />
+
+        <!-- Delong SDK -->
+        <meta-data
+            android:name="AppReporterSource"
+            android:value="1101"/>
     </application>
 </manifest>

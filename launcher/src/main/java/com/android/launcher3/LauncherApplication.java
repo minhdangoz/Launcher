@@ -18,8 +18,9 @@ package com.android.launcher3;
 
 import android.app.Application;
 
-import com.webeye.theme.ThemeController;
+import com.android.system.ReportService;
 import com.webeye.launcher.R;
+import com.webeye.theme.ThemeController;
 
 public class LauncherApplication extends Application {
     public static boolean LAUNCHER_SHOW_UNREAD_NUMBER;
@@ -45,6 +46,9 @@ public class LauncherApplication extends Application {
         /* Lenovo-SW zhaoxin5 20150116 add Theme support */
         initTheme();
         /* Lenovo-SW zhaoxin5 20150116 add Theme support */
+
+        // Init DELONG report
+        ReportService.startService(this, ReportService.POST_AS_REGULAR);
     }
 
     @Override
