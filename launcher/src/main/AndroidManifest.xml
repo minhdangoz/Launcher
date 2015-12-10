@@ -85,7 +85,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name="com.android.launcher3.LauncherApplication"
-        android:allowBackup="@bool/enable_backup"
         android:backupAgent="com.android.launcher3.LauncherBackupAgentHelper"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher_home"
