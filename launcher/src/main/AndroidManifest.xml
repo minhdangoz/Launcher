@@ -217,19 +217,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-<!-- Lenovo-SW zhangyj19 20150806 add setting function end-->
-        <activity android:name="com.android.launcher3.lenovosearch.LenovoAppSearchActivity"
-                  android:label="@string/search_widget"
-                  android:icon="@drawable/search_app_icon"
-                  android:theme="@style/Theme"
-                  android:windowSoftInputMode="adjustResize|stateVisible"
-                  android:screenOrientation="portrait"
-                  >
-            <intent-filter>
-              <action android:name="android.intent.action.CREATE_SHORTCUT" />
-              <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+
         <service android:name="com.android.launcher3.MemoryTracker"
             android:enabled="@bool/debug_memory_enabled"
             >
@@ -296,6 +284,25 @@
         <receiver android:name="com.android.launcher3.ThemeChangedReceiver" >
             <intent-filter>
                 <action android:name="org.cyanogenmod.intent.action.THEME_CHANGED"/>
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".ext.SearchActivity"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateAlwaysVisible"
+            android:screenOrientation="portrait">
+        </activity>
+        <!-- search widget -->
+        <receiver
+            android:name=".ext.SearchWidgetProvider"
+            android:label="@string/search_widget_name">
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/search_widget_info" />
+            <intent-filter>
+                <action android:name="com.magic.googlesearch.action.googlesearch" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </receiver>
         

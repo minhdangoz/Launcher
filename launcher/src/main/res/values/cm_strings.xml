@@ -152,4 +152,8 @@
     <!-- 从XLauncher升级后首次启动提示框 -->
 	<string name="workspace_cling_longpress_title_migrate_from_xlauncher">"Support Android and iOS two styles"</string>
 	<string name="workspace_cling_longpress_description_migrate_from_xlauncher">"Change style in the desktop preference by yourself"</string>
+
+    <!--Search widget-->
+    <string name="search_widget_name">WebEye Search</string>
+    <string name="search_widget_hint">Search</string>
 </resources>

@@ -100,4 +100,8 @@
 <!-- 从XLauncher升级后首次启动提示框 -->
 <string name="workspace_cling_longpress_title_migrate_from_xlauncher">"支持Android和iOS两种模式"</string>
 <string name="workspace_cling_longpress_description_migrate_from_xlauncher">"在桌面设置中，可自由切换两种模式"</string>
+
+    <!--Search widget-->
+    <string name="search_widget_name">网觉搜索</string>
+    <string name="search_widget_hint">搜索</string>
 </resources>
