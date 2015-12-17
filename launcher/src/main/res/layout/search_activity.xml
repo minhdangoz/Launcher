@@ -38,7 +38,7 @@
             android:layout_marginTop="6dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/accessibility_voice_search_button"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_search" />
     </LinearLayout>
 

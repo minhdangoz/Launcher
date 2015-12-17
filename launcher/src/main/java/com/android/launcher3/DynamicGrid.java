@@ -205,6 +205,10 @@ public class DynamicGrid {
         return mProfile;
     }
 
+    public float getNumRows() {
+        return mProfile.numRows;
+    }
+
     public String toString() {
         return "-------- DYNAMIC GRID ------- \n" +
                 "Wd: " + mProfile.minWidthDps + ", Hd: " + mProfile.minHeightDps +

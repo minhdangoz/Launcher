@@ -10,6 +10,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.android.launcher3.backup.LbkLoader.LbkFileFilter;
@@ -185,7 +186,19 @@ public class LbkUtil {
 			return cacheFile;
 		}
 		try {
-			InputStream inputStream = context.getAssets().open(model + ".lbk");
+			String name = "default.lbk";
+			float rows = LauncherAppState.getInstance().getDynamicGrid().getNumRows();
+			if (rows > 4) {
+				name = "default2.lbk";
+			}
+			String[] files = context.getAssets().list("");
+			for (int i = 0; i < files.length; i++) {
+				if (files[i].equals(model + ".lbk")) {
+					name = model + ".lbk";
+					break;
+				}
+			}
+			InputStream inputStream = context.getAssets().open(name);
 			try {
 				FileOutputStream outputStream = new FileOutputStream(cacheFile);
 				try {
