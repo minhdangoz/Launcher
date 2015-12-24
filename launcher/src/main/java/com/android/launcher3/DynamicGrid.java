@@ -70,10 +70,46 @@ public class DynamicGrid {
                                : R.xml.default_workspace_4x4;
         DEFAULT_ICON_SIZE_PX = pxFromDp(DEFAULT_ICON_SIZE_DP, dm);
         // Our phone profiles include the bar sizes in each orientation
+        if (Build.MODEL.equals("vivo X5Pro D")) {
+            deviceProfiles.add(new DeviceProfile("vivo-X5Pro-D",
+                    337, 617,  5, 4,  (useLargeIcons ? 60 : 60), 11, (hasAA ? 5 : 5),
+                    (useLargeIcons ? 60 : 60), fourByFourDefaultLayout,
+                    R.xml.default_workspace_4x4_no_all_apps));
+        }
+        if (Build.MODEL.equals("SM-A8000")) {
+            deviceProfiles.add(new DeviceProfile("SM-A8000",
+                    335, 615,  5, 5,  (useLargeIcons ? 60 : 52), 11, (hasAA ? 6 : 6),
+                    (useLargeIcons ? 60 : 52), fourByFourDefaultLayout,
+                    R.xml.default_workspace_4x4_no_all_apps));
+        }
+        if (Build.MODEL.equals("M.PARTY LT1")) {
+            deviceProfiles.add(new DeviceProfile("M.PARTY-LT1",
+                    295, 544,  5, 4,  (useLargeIcons ? 60 : 52), 11, (hasAA ? 5 : 5),
+                    (useLargeIcons ? 60 : 52), fourByFourDefaultLayout,
+                    R.xml.default_workspace_4x4_no_all_apps));
+        }
+        if (Build.MODEL.equals("FNNI P8")) {
+            deviceProfiles.add(new DeviceProfile("FNNI P8",
+                    295, 544,  5, 4,  (useLargeIcons ? 60 : 52), 11, (hasAA ? 5 : 5),
+                    (useLargeIcons ? 60 : 52), fourByFourDefaultLayout,
+                    R.xml.default_workspace_4x4_no_all_apps));
+        }
+        if (Build.MODEL.equals("G20")) {
+            deviceProfiles.add(new DeviceProfile("G20",
+                    295, 544,  5, 4,  (useLargeIcons ? 60 : 52), 11, (hasAA ? 5 : 5),
+                    (useLargeIcons ? 60 : 52), fourByFourDefaultLayout,
+                    R.xml.default_workspace_4x4_no_all_apps));
+        }
         if (Build.MODEL.equals("HUAWEI Y635-TL00")) {
             deviceProfiles.add(new DeviceProfile("HUAWEI Y635-TL00",
                     294, 544,  5, 4,  (useLargeIcons ? 60 : 56), 11, (hasAA ? 5 : 5),
                     (useLargeIcons ? 60 : 56), fourByFourDefaultLayout,
+                    R.xml.default_workspace_4x4_no_all_apps));
+        }
+        if (Build.MODEL.equals("2014821")) {
+            deviceProfiles.add(new DeviceProfile("Xiaomi2014821 5X4",
+                    335, 615, 5, 4, (useLargeIcons ? 60 : 60), 12, (hasAA ? 5 : 5),
+                    (useLargeIcons ? 60 : 60), fourByFourDefaultLayout,
                     R.xml.default_workspace_4x4_no_all_apps));
         }
         if (Build.MODEL.equals("2014813")) {
@@ -101,6 +137,10 @@ public class DynamicGrid {
                     R.xml.default_workspace_4x4_no_all_apps));
         }
         if (Build.MODEL.equals("G666")) {
+            deviceProfiles.add(new DeviceProfile("G666 4X4",
+                    295, 544, 4, 4, (useLargeIcons ? 58 : 58), 11, (hasAA ? 5 : 5),
+                    (useLargeIcons ? 58 : 58), fourByFourDefaultLayout,
+                    R.xml.default_workspace_4x4_no_all_apps));
             deviceProfiles.add(new DeviceProfile("G666 4X4",
                     335, 615, 4, 4, (useLargeIcons ? 58 : 58), 11, (hasAA ? 5 : 5),
                     (useLargeIcons ? 58 : 58), fourByFourDefaultLayout,

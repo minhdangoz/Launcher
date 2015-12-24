@@ -180,7 +180,7 @@ public class LbkUtil {
 		LauncherLog.i(TAG, "getLbkFileFromPreloadDirectory start!!!");
 		Context context = LauncherAppState.getInstance().getContext();
 		String model = Build.MODEL.replace(" ", "-");
-		LauncherLog.i(TAG, "model = " + model);
+		LauncherLog.i("wcrow", "model = " + model);
 		File cacheFile = new File(context.getCacheDir(), model + ".lbk");
 		if (cacheFile.exists()) {
 			return cacheFile;
