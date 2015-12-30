@@ -63,3 +63,7 @@ dependencies {
     compile(name: 'delong-reporter', ext: 'aar')
 }
 
+// umeng sdk
+dependencies {
+    compile 'com.umeng.analytics:analytics:latest.integration'
+}

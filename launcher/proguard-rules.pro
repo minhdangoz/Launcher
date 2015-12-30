@@ -20,3 +20,13 @@
 #DELONG SDK
 -keep class com.android.system.**{*;}
 # -- end --
+
+#Umeng SDK
+-keepclassmembers class * {
+   public (org.json.JSONObject);
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}

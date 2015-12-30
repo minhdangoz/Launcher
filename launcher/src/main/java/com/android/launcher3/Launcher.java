@@ -129,6 +129,7 @@ import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsController;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
+import com.umeng.analytics.MobclickAgent;
 import com.webeye.theme.ThemeController;
 import com.webeye.launcher.R;
 import com.webeye.launcher.ext.LauncherLog;
@@ -1342,6 +1343,9 @@ public class Launcher extends Activity
         }
         super.onResume();
 
+        // Umeng Analytics SDK
+        MobclickAgent.onResume(this);
+
         // Restore the previous launcher state
         if (mOnResumeState == State.WORKSPACE) {
             showWorkspace(false);
@@ -1491,6 +1495,9 @@ public class Launcher extends Activity
             mDefaultHomeScreenPanel.setVisibility(View.INVISIBLE);
         }
         /** Lenovo-SW luyy1 20150910 change for primary home screen END */
+
+        // Umeng Analytics SDK
+        MobclickAgent.onPause(this);
     }
 
     QSBScroller mQsbScroller = new QSBScroller() {

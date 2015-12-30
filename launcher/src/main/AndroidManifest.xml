@@ -83,6 +83,12 @@
 	<uses-permission android:name="com.lenovo.launcher.permission.WRITE_SETTINGS" />
     <!-- Lenovo-SW zhaoxin5 20150529 add for 2 layer support  -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--Umeng permission-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
     <application
         android:name="com.android.launcher3.LauncherApplication"
         android:backupAgent="com.android.launcher3.LauncherBackupAgentHelper"
@@ -321,5 +327,8 @@
         <meta-data
             android:name="AppReporterSource"
             android:value="1101"/>
+        <!-- Umeng SDK -->
+        <meta-data android:value="568337bfe0f55a167b000012" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="delong" android:name="UMENG_CHANNEL"/>
     </application>
 </manifest>
