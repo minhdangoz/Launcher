@@ -4960,7 +4960,6 @@ public class LauncherModel extends BroadcastReceiver
     Runnable mCheckUnreadBroadcast = new Runnable() {
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
 			Context context = mApp.getContext();
 			LauncherLog.i(TAG, "mCheckUnreadBroadcast");
 			if (null != context) {

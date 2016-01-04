@@ -1,2 +1,2 @@
-include ':launcher'
+include ':launcher', ':notifier'
 include ':theme'
