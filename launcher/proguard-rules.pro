@@ -22,8 +22,9 @@
 # -- end --
 
 #Umeng SDK
+-ignorewarnings
 -keepclassmembers class * {
-   public (org.json.JSONObject);
+    public <init>(org.json.JSONObject);
 }
 
 -keepclassmembers enum * {
