@@ -51,6 +51,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     provided files('dynamic_lib/icu-classes.jar')
     compile project(':theme')
+    compile project(':notifier')
 }
 
 //DELONG report sdk

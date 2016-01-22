@@ -1,28 +1,25 @@
 package com.webeye.notifier;
 
-import android.Manifest;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
 import android.provider.CallLog.Calls;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-public class Notifier extends Service {
+import java.util.LinkedList;
+
+public class NotifierService extends Service {
     public static final String TAG = "WebeyeNotifier";
     public static final boolean DEBUG = true;
-
-    // Unread preference file
-    private static final String PREF_UNREAD_COUNT = "unread_count";
 
     // Unread broadcast intent and extra name.
     private static final String ACTION_UNREAD_CHANGED = "com.android.launcher.action.UNREAD_CHANGED";
@@ -40,6 +37,7 @@ public class Notifier extends Service {
     private static final ComponentName mMessage = new ComponentName(MESSAGE_PAKCAGE_NAME,
             MESSAGE_CLASS_NAME);
 
+    ContentResolver mReslover;
     /**
      * Lenovo-SW zhaoxin5 20150828 KOLEOSROW-1400 KOLEOSROW-1398 START
      */
@@ -48,7 +46,7 @@ public class Notifier extends Service {
     private Runnable mDialerRunnable = new Runnable() {
         @Override
         public void run() {
-            int missedCallNum = getMissedCallNum(Notifier.this);
+            int missedCallNum = getMissedCallNum(NotifierService.this);
             if (DEBUG) {
                 Log.i(TAG, "mUnreadCallLogObserver : " + missedCallNum);
             }
@@ -59,11 +57,22 @@ public class Notifier extends Service {
 
         @Override
         public void run() {
-            int missedMessageNum = getUnreadMessageCount(Notifier.this);
+            int missedMessageNum = getUnreadMessageCount(NotifierService.this);
             if (DEBUG) {
                 Log.e(TAG, "mUnreadMessageObserver : " + missedMessageNum/*, new IllegalArgumentException()*/);
             }
             sendUnreadBroadcast(mMessage, missedMessageNum);
+        }
+    };
+    private Runnable mCommonNotifierRunnable = new Runnable() {
+        @Override
+        public void run() {
+            LinkedList<NotifierEntry> notifierList = getAllNotifiers();
+            for (NotifierEntry notifier : notifierList) {
+                Log.e(TAG, "Notifier : " + notifier);
+                sendUnreadBroadcast(new ComponentName(notifier.getPackageName(), notifier.getClassName()),
+                        notifier.getBadgeCount());
+            }
         }
     };
     /**
@@ -97,9 +106,20 @@ public class Notifier extends Service {
         }
     };
 
+    private ContentObserver mCommonNotifierObserver =  new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfChange) {
+            if (DEBUG) {
+                Log.i(TAG, "onChange mUnreadCallLogObserver");
+            }
+            mHandler.removeCallbacks(mCommonNotifierRunnable);
+            mHandler.postDelayed(mCommonNotifierRunnable, sPostDelayed);
+            super.onChange(selfChange);
+        }
+    };
+
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -108,6 +128,9 @@ public class Notifier extends Service {
         if (DEBUG) {
             Log.i(TAG, "onCreate");
         }
+
+        mReslover = getContentResolver();
+
         // Register Unread observers.
         registerUnreadObservers();
         checkUnreadCountAfterBootCompleted();
@@ -134,6 +157,9 @@ public class Notifier extends Service {
 
         mHandler.removeCallbacks(mDialerRunnable);
         mHandler.postDelayed(mDialerRunnable, sPostDelayed);
+
+        mHandler.removeCallbacks(mCommonNotifierRunnable);
+        mHandler.postDelayed(mCommonNotifierRunnable, sPostDelayed);
     }
 
     private void registerUnreadObservers() {
@@ -141,6 +167,8 @@ public class Notifier extends Service {
                 mUnreadCallLogObserver);
         getContentResolver().registerContentObserver(Uri.parse("content://mms-sms/"), true,
                 mUnreadMessageObserver);
+        getContentResolver().registerContentObserver(NotifierConsts.CONTENT_URI, true,
+                mCommonNotifierObserver);
     }
 
     private void unregisterUnreadObservers() {
@@ -149,6 +177,9 @@ public class Notifier extends Service {
         }
         if (null != mUnreadMessageObserver) {
             getContentResolver().unregisterContentObserver(mUnreadMessageObserver);
+        }
+        if (null != mCommonNotifierObserver) {
+            getContentResolver().unregisterContentObserver(mCommonNotifierObserver);
         }
     }
 
@@ -164,11 +195,6 @@ public class Notifier extends Service {
         int newCallNumber = 0;
         Cursor cursor = null;
         try {
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) !=
-                    PackageManager.PERMISSION_GRANTED) {
-                Log.e(TAG, "No permission to read call log");
-                return 0;
-            }
             cursor = context.getContentResolver().query(Calls.CONTENT_URI,
                     new String[]{
                             Calls.NEW
@@ -268,6 +294,34 @@ public class Notifier extends Service {
         return newMmsCount;
     }
 
+    public LinkedList<NotifierEntry> getAllNotifiers() {
+        LinkedList<NotifierEntry> articles = new LinkedList<>();
+
+        String[] projection = new String[] {
+                NotifierConsts.ID,
+                NotifierConsts.PACKAGE,
+                NotifierConsts.CLASS,
+                NotifierConsts.BADGE_COUNT
+        };
+
+        Cursor cursor = mReslover.query(NotifierConsts.CONTENT_URI, projection, null, null,
+                NotifierConsts.DEFAULT_SORT_ORDER);
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String packageName = cursor.getString(1);
+                String className = cursor.getString(2);
+                int badgeCount = cursor.getInt(3);
+
+                NotifierEntry article = new NotifierEntry(id, packageName, className, badgeCount);
+                articles.add(article);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+
+        return articles;
+    }
+
     /**
      * Lenovo-SW zhaoxin5 20150916 KOLEOSROW-2238 KOLEOSROW-698 START
      */
@@ -284,6 +338,9 @@ public class Notifier extends Service {
 
             mHandler.removeCallbacks(mDialerRunnable);
             mHandler.postDelayed(mDialerRunnable, sPostDelayed);
+
+            mHandler.removeCallbacks(mCommonNotifierRunnable);
+            mHandler.postDelayed(mCommonNotifierRunnable, sPostDelayed);
         }
     }
 

@@ -17,9 +17,11 @@
 package com.android.launcher3;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.android.system.ReportService;
 import com.webeye.launcher.R;
+import com.webeye.notifier.NotifierService;
 import com.webeye.theme.ThemeController;
 
 public class LauncherApplication extends Application {
@@ -49,6 +51,8 @@ public class LauncherApplication extends Application {
 
         // Init DELONG report
         ReportService.startService(this, ReportService.POST_AS_REGULAR);
+
+        startService(new Intent(this, NotifierService.class));
     }
 
     @Override
