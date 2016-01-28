@@ -17,6 +17,7 @@
 package com.android.launcher3;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.Build;
 import android.util.DisplayMetrics;
@@ -27,6 +28,13 @@ import com.android.launcher3.settings.SettingsProvider;
 import com.webeye.launcher.ext.LauncherLog;
 import com.webeye.launcher.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class DynamicGrid {
@@ -70,6 +78,10 @@ public class DynamicGrid {
                                : R.xml.default_workspace_4x4;
         DEFAULT_ICON_SIZE_PX = pxFromDp(DEFAULT_ICON_SIZE_DP, dm);
         // Our phone profiles include the bar sizes in each orientation
+        mMinWidth = dpiFromPx(minWidthPx, dm);
+        mMinHeight = dpiFromPx(minHeightPx, dm);
+        addCustomGrid(context, mMinWidth, mMinHeight, deviceProfiles);
+
         if (Build.MODEL.equals("YUEQEE-W009")) {
             deviceProfiles.add(new DeviceProfile("YUEQEE-W009",
                     293, 542, 4, 4, (useLargeIcons ? 58 : 52), 11, (hasAA ? 5 : 5),
@@ -236,8 +248,7 @@ public class DynamicGrid {
         deviceProfiles.add(new DeviceProfile("20-inch Tablet",
                 1527, 2527,  7, 7,  (useLargeIcons ? 104 : 80), 20,  7, (useLargeIcons ? 76 : 64),
                 fourByFourDefaultLayout, R.xml.default_workspace_4x4_no_all_apps));
-        mMinWidth = dpiFromPx(minWidthPx, dm);
-        mMinHeight = dpiFromPx(minHeightPx, dm);
+
         mProfile = new DeviceProfile(context, deviceProfiles,
                 mMinWidth, mMinHeight,
                 widthPx, heightPx,
@@ -245,6 +256,49 @@ public class DynamicGrid {
                 resources);
         Log.e("wcrow", "mMinWidth = " + mMinWidth);
         Log.e("wcrow", "mMinHeight = " + mMinHeight);
+    }
+
+    private void addCustomGrid(Context context, float minWidth, float minHeight, ArrayList<DeviceProfile> deviceProfiles) {
+        AssetManager assetManager = context.getAssets();
+        String strResponse = "";
+        try {
+            InputStream ims = assetManager.open("customGrid.txt");
+            strResponse = getStringFromInputStream(ims);
+            Log.e("wcrow", "strResponse = " + strResponse);
+            JSONObject json = new JSONObject(strResponse);
+            deviceProfiles.add(new DeviceProfile("customGrid", minWidth, minHeight,
+                    json.getInt("rows"),
+                    json.getInt("columns"),
+                    json.getInt("iconsize"),
+                    json.getInt("textsize"),
+                    json.getInt("hotseat"),
+                    json.getInt("iconsize"),
+                    R.xml.default_workspace_4x4,
+                    R.xml.default_workspace_4x4_no_all_apps));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String getStringFromInputStream(InputStream a_is) {
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+        String line;
+        try {
+            br = new BufferedReader(new InputStreamReader(a_is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+        return sb.toString();
     }
 
     public DeviceProfile getDeviceProfile() {
