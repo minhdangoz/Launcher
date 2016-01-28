@@ -179,25 +179,25 @@ public class LbkUtil {
 	public static File getLbkFileFromPreloadDirectory() {
 		LauncherLog.i(TAG, "getLbkFileFromPreloadDirectory start!!!");
 		Context context = LauncherAppState.getInstance().getContext();
-		String model = Build.MODEL.replace(" ", "-");
-		LauncherLog.i("wcrow", "model = " + model);
-		File cacheFile = new File(context.getCacheDir(), model + ".lbk");
+		//String model = Build.MODEL.replace(" ", "-");
+		//LauncherLog.i("wcrow", "model = " + model);
+		String name = "default.lbk";
+		/*float rows = LauncherAppState.getInstance().getDynamicGrid().getNumRows();
+		if (rows > 4) {
+			name = "default2.lbk";
+		}*/
+		File cacheFile = new File(context.getCacheDir(), name);
 		if (cacheFile.exists()) {
 			return cacheFile;
 		}
 		try {
-			String name = "default.lbk";
-			float rows = LauncherAppState.getInstance().getDynamicGrid().getNumRows();
-			if (rows > 4) {
-				name = "default2.lbk";
-			}
-			String[] files = context.getAssets().list("");
+			/*String[] files = context.getAssets().list("");
 			for (int i = 0; i < files.length; i++) {
 				if (files[i].equals(model + ".lbk")) {
 					name = model + ".lbk";
 					break;
 				}
-			}
+			}*/
 			InputStream inputStream = context.getAssets().open(name);
 			try {
 				FileOutputStream outputStream = new FileOutputStream(cacheFile);
