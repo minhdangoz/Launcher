@@ -82,7 +82,7 @@ public class DynamicGrid {
         mMinHeight = dpiFromPx(minHeightPx, dm);
         addCustomGrid(context, mMinWidth, mMinHeight, deviceProfiles);
 
-        if (Build.MODEL.equals("YUEQEE-W009")) {
+        /*if (Build.MODEL.equals("YUEQEE-W009")) {
             deviceProfiles.add(new DeviceProfile("YUEQEE-W009",
                     293, 542, 4, 4, (useLargeIcons ? 58 : 52), 11, (hasAA ? 5 : 5),
                     (useLargeIcons ? 58 : 52), fourByFourDefaultLayout,
@@ -175,7 +175,7 @@ public class DynamicGrid {
                     335, 567, 5, 4, (useLargeIcons ? 60 :52), 11, (hasAA ? 5 : 5),
                     (useLargeIcons ? 60 : 52), fourByFourDefaultLayout,
                     R.xml.default_workspace_4x4_no_all_apps));
-        }
+        }*/
         deviceProfiles.add(new DeviceProfile("Super Short Stubby",
                 255, 300,  2, 3,  (useLargeIcons ? 58 : 46), 13, (hasAA ? 3 : 5),
                 (useLargeIcons ? 58 : 46), fourByFourDefaultLayout,
@@ -262,7 +262,7 @@ public class DynamicGrid {
         AssetManager assetManager = context.getAssets();
         String strResponse = "";
         try {
-            InputStream ims = assetManager.open("customGrid.txt");
+            InputStream ims = assetManager.open("workgrid.wks");
             strResponse = getStringFromInputStream(ims);
             Log.e("wcrow", "strResponse = " + strResponse);
             JSONObject json = new JSONObject(strResponse);
