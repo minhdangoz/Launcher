@@ -262,10 +262,16 @@ public class DynamicGrid {
         AssetManager assetManager = context.getAssets();
         String strResponse = "";
         try {
+
             InputStream ims = assetManager.open("workgrid.wks");
             strResponse = getStringFromInputStream(ims);
             Log.e("wcrow", "strResponse = " + strResponse);
             JSONObject json = new JSONObject(strResponse);
+            if (mMinHeight < 600) {
+                json = json.optJSONObject("4x4");
+            } else {
+                json = json.optJSONObject("5x4");
+            }
             deviceProfiles.add(new DeviceProfile("customGrid", minWidth, minHeight,
                     json.getInt("rows"),
                     json.getInt("columns"),

@@ -231,7 +231,7 @@ public class DeviceProfile {
         desiredWorkspaceLeftRightMarginPx = 2 * edgeMarginPx;
         /** Lenovo-SW zhaoxin5 20150910 XTHREEROW-1616 START */
         pageIndicatorHeightPx =
-                res.getDimensionPixelSize(R.dimen.dynamic_grid_page_indicator_height) / 2;
+                res.getDimensionPixelSize(R.dimen.dynamic_grid_page_indicator_height);
         /** Lenovo-SW zhaoxin5 20150910 XTHREEROW-1616 END */
         defaultPageSpacingPx =
                 res.getDimensionPixelSize(R.dimen.dynamic_grid_workspace_page_spacing);
@@ -616,7 +616,7 @@ public class DeviceProfile {
         
         hotseatCellWidthPx = iconSizePx;
         /** Lenovo-SW zhaoxin5 20150910 XTHREEROW-1616 START */
-        hotseatCellHeightPx = (int) (cellHeightPx * 0.8) + 2;
+        hotseatCellHeightPx = cellHeightPx;
         /** Lenovo-SW zhaoxin5 20150910 XTHREEROW-1616 END */
 
         // Folder
