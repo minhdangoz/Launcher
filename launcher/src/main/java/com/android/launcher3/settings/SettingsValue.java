@@ -74,7 +74,8 @@ public class SettingsValue {
     }
     
     public static int getDefaultPage(Context c) {
-    	return SettingsProvider.getIntCustomDefault(c, SettingsProvider.SETTINGS_DEFAULT_PAGE, 0);
+        // yanni: default screen hard code to 1 page
+    	return SettingsProvider.getIntCustomDefault(c, SettingsProvider.SETTINGS_DEFAULT_PAGE, 1);
     }
     /** Lenovo-SW zhaoxin5 20150814 KOLEOSROW-951 END */
     /*Lenovo-sw zhangyj19 add 2015/09/09 add search app definition begin */
