@@ -38,7 +38,6 @@ import com.android.launcher3.compat.LauncherActivityInfoCompat;
 import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.compat.UserManagerCompat;
-import com.webeye.launcher.R;
 import com.webeye.launcher.ext.LauncherLog;
 
 import java.io.ByteArrayOutputStream;
@@ -365,13 +364,8 @@ public class IconCache {
 //                        info.getBadgedIcon(mIconDpi), mContext, unreadNum);
                 /*entry.icon = Utilities.createIconBitmap(
                         info.getIcon(mIconDpi), mContext, unreadNum);*/
-
-                if (componentName.getPackageName().contains("com.miguan.market")) {
-                    entry.icon = Utilities.createIconBitmap(mContext.getDrawable(R.drawable.ic_mi_market), mContext, unreadNum);
-                } else {
-                    entry.icon = Utilities.createIconBitmap(
-                            themeBmp != null ? new BitmapDrawable(themeBmp) : info.getBadgedIcon(mIconDpi), mContext, unreadNum);
-                }
+                entry.icon = Utilities.createIconBitmap(
+                        themeBmp != null ? new BitmapDrawable(themeBmp) : info.getBadgedIcon(mIconDpi), mContext, unreadNum);
             } else {
                 entry.title = "";
                 Bitmap preloaded = getPreloadedIcon(componentName, user);
