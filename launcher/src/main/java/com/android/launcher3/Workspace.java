@@ -2267,8 +2267,7 @@ public class Workspace extends SmoothPagedView
                 // If default screen id no longer exists(such as first OTA upgrading, or just delete the
                 // empty primary screen), then we set the default screen again.
                 if (getPageIndexForScreenId(mDefaultScreenIdAndroid) < 0) {
-                    // yanni: default screen hard code to 1 page
-                    setDefaultPage(1);
+                    setDefaultPage(0);
                 }
                 defaultPageButton.setActivated(
                         getScreenIdForPageIndex(getPageNearestToCenterOfScreen()) == mDefaultScreenIdAndroid);
