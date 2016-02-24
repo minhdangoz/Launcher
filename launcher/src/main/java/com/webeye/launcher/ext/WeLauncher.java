@@ -30,7 +30,7 @@ public class WeLauncher extends Launcher {
     WebView mWebView;
     @Override
 	protected boolean hasCustomContentToLeft() {
-		return true;
+		return false;
 	}
 
 	@Override
