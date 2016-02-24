@@ -269,8 +269,10 @@ public class DynamicGrid {
             JSONObject json = new JSONObject(strResponse);
             if (mMinHeight < 600) {
                 json = json.optJSONObject("4x4");
-            } else {
+            } else if (minHeight < 650) {
                 json = json.optJSONObject("5x4");
+            } else {
+                json = json.optJSONObject("6x4");
             }
             deviceProfiles.add(new DeviceProfile("customGrid", minWidth, minHeight,
                     json.getInt("rows"),
