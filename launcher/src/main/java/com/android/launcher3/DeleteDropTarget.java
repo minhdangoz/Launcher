@@ -146,6 +146,14 @@ public class DeleteDropTarget extends ButtonDropTarget {
         return willAcceptDrop(d.dragInfo);
     }
 
+    private static final String[] PRIVATE_APP = new String[] {
+            "com.miguan.market", "com.android.cloudfolder", "com.cleanmaster.mguard_cn",
+            "com.tencent.qqpimsecure", "com.tencent.android.qqdownloader", "com.tencent.mtt",
+            "com.ss.android.article.news", "com.tencent.news", "com.baidu.searchbox",
+            "com.baidu.appsearch", "com.yidian.dk", "com.UCMobile", "com.sogou.activity.src",
+            "com.qiyi.video"
+    };
+
     public static boolean willAcceptDrop(Object info) {
 
         /* Lenovo-SW 20150514 zhaoxin5 add for launher single/double layer support */
@@ -161,6 +169,16 @@ public class DeleteDropTarget extends ButtonDropTarget {
             if (!LauncherAppState.isDisableAllApps() &&
                     item.itemType == LauncherSettings.Favorites.ITEM_TYPE_FOLDER) {
                 return true;
+            }
+
+            if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
+                // yanni: private apps
+                String packageName = item.getIntent().getComponent().getPackageName();
+                for (String pn : PRIVATE_APP) {
+                    if (packageName.contains(pn)) {
+                        return false;
+                    }
+                }
             }
 
             if (!LauncherAppState.isDisableAllApps() &&

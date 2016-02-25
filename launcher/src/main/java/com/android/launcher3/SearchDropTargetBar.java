@@ -48,7 +48,7 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
     private boolean mIsSearchBarHidden;
     private View mQSBSearchBar;
     private View mDropTargetBar;
-    private ButtonDropTarget mInfoDropTarget;
+    //private ButtonDropTarget mInfoDropTarget;
     private ButtonDropTarget mDeleteDropTarget;
     /** Lenovo-SW zhaoxin5 20150617 add for qucik share START */
     private ButtonDropTarget mQuickShareDropTarget;
@@ -72,9 +72,9 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
 
     public void setup(Launcher launcher, DragController dragController) {
         dragController.addDragListener(this);
-        dragController.addDragListener(mInfoDropTarget);
+        //dragController.addDragListener(mInfoDropTarget);
         dragController.addDragListener(mDeleteDropTarget);
-        dragController.addDropTarget(mInfoDropTarget);
+        //dragController.addDropTarget(mInfoDropTarget);
         dragController.addDropTarget(mDeleteDropTarget);
         /** Lenovo-SW zhaoxin5 20150617 add for qucik share START */
         dragController.addDragListener(mQuickShareDropTarget);
@@ -82,7 +82,7 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
         mQuickShareDropTarget.setLauncher(launcher);
         /** Lenovo-SW zhaoxin5 20150617 add for qucik share END */
         dragController.setFlingToDeleteDropTarget(mDeleteDropTarget);
-        mInfoDropTarget.setLauncher(launcher);
+        //mInfoDropTarget.setLauncher(launcher);
         mDeleteDropTarget.setLauncher(launcher);
 
         setupQSB(launcher);
@@ -122,13 +122,13 @@ public class SearchDropTargetBar extends FrameLayout implements DragController.D
 
         // Get the individual components
         mDropTargetBar = findViewById(R.id.drag_target_bar);
-        mInfoDropTarget = (ButtonDropTarget) mDropTargetBar.findViewById(R.id.info_target_text);
+        //mInfoDropTarget = (ButtonDropTarget) mDropTargetBar.findViewById(R.id.info_target_text);
         mDeleteDropTarget = (ButtonDropTarget) mDropTargetBar.findViewById(R.id.delete_target_text);
         /** Lenovo-SW zhaoxin5 20150617 add for qucik share START */
         mQuickShareDropTarget = (ButtonDropTarget) mDropTargetBar.findViewById(R.id.quick_share_target_text);
         /** Lenovo-SW zhaoxin5 20150617 add for qucik share END */
         
-        mInfoDropTarget.setSearchDropTargetBar(this);
+        //mInfoDropTarget.setSearchDropTargetBar(this);
         mDeleteDropTarget.setSearchDropTargetBar(this);
         /** Lenovo-SW zhaoxin5 20150617 add for qucik share START */
         mQuickShareDropTarget.setSearchDropTargetBar(this);

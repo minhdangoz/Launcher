@@ -25,17 +25,16 @@
             android:text="@string/delete_zone_label_workspace"
             android:drawableStart="@drawable/remove_target_selector" />
     </FrameLayout>
-    <FrameLayout
+    <!--<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/DropTargetButtonContainer"
         android:layout_weight="1">
-        <!-- Info target -->
         <com.android.launcher3.InfoDropTarget
             style="@style/DropTargetButton"
             android:id="@+id/info_target_text"
             android:text="@string/info_target_label"
             android:drawableStart="@drawable/info_target_selector" />
-    </FrameLayout>
+    </FrameLayout>-->
     <!-- Lenovo-SW zhaoxin5 20150617 add for qucik share START -->
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
