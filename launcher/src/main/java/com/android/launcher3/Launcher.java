@@ -6743,9 +6743,8 @@ public class Launcher extends Activity
     private void applyDefaultTheme(){
     	/*String[] parameters = Placement.getDefaultThemeParameters(this);*/
         String[] parameters = new String[]{"apk", DEFAULT_THEME_PKG};
-        boolean needApplyTheme = LauncherAppState.getInstance().needApplyTheme();
         boolean enableThemeMask = !Utilities.isRowProduct();
-        if(null != parameters && needApplyTheme){
+        if (null != parameters) {
             Intent intent = new Intent();
             if(parameters[0].equals("apk")){
                 Log.i(TAG, "apply default apk theme : " + parameters[1]);
@@ -6759,7 +6758,6 @@ public class Launcher extends Activity
             }
             intent.putExtra(ThemeController.EXTRA_LAUNCHER_THEME_ENABLE_THEME_MASK, enableThemeMask);
             this.sendBroadcast(intent);
-            LauncherAppState.getInstance().setNeedApplyTheme(false);
         }
     }
     /* Lenovo-SW zhaoxin5 20150127 after Launcher onCreate finished, to apply the default theme END */

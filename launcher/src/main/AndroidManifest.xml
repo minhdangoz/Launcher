@@ -338,13 +338,23 @@
             android:writePermission="com.webeye.launcher.permission.WRITE_SETTINGS"
             android:readPermission="com.webeye.launcher.permission.READ_SETTINGS" />
 
+        <receiver android:name="com.webeye.launcher.ext.KLauncherDeviceAdminReceiver"
+            android:label="@string/cm_application_name"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data android:name="android.app.device_admin"
+                android:resource="@xml/device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+
         <meta-data android:name="android.nfc.disable_beam_default"
                        android:value="true" />
-
         <!-- Delong SDK -->
         <meta-data
             android:name="AppReporterSource"
             android:value="1101"/>
+
         <!-- Umeng SDK -->
         <meta-data android:name="UMENG_APPKEY" android:value="568337bfe0f55a167b000012"/>
         <meta-data android:name="UMENG_CHANNEL" android:value="dl-xm"/>

@@ -147,11 +147,11 @@ public class DeleteDropTarget extends ButtonDropTarget {
     }
 
     private static final String[] PRIVATE_APP = new String[] {
-            "com.miguan.market", "com.android.cloudfolder", "com.cleanmaster.mguard_cn",
+            "com.miguan.market", "com.android.cloudfolder", "com.webeye.launcher",
             "com.tencent.qqpimsecure", "com.tencent.android.qqdownloader", "com.tencent.mtt",
             "com.ss.android.article.news", "com.tencent.news", "com.baidu.searchbox",
             "com.baidu.appsearch", "com.yidian.dk", "com.UCMobile", "com.sogou.activity.src",
-            "com.qiyi.video"
+            "com.qiyi.video", "com.cleanmaster.mguard_cn"
     };
 
     public static boolean willAcceptDrop(Object info) {
