@@ -4356,22 +4356,21 @@ public class LauncherModel extends BroadcastReceiver
         }
         info.setIcon(icon);
 
+        // from the db
+        if (info.title == null) {
+            if (c != null) {
+                info.title = c.getString(titleIndex);
+            }
+        }
         // From the cache.
-        if (labelCache != null) {
+        if (info.title == null && labelCache != null) {
             info.title = labelCache.get(componentName);
         }
-
         // from the resource
         if (info.title == null && lai != null) {
             info.title = lai.getLabel();
             if (labelCache != null) {
                 labelCache.put(componentName, info.title);
-            }
-        }
-        // from the db
-        if (info.title == null) {
-            if (c != null) {
-                info.title =  c.getString(titleIndex);
             }
         }
         // fall back to the class name of the activity
