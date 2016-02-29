@@ -23,6 +23,8 @@ public class ThemeController extends BroadcastReceiver{
     public static final String EXTRA_THEME_TYPE_APK = "ThemeTypeApk";
     public static final String EXTRA_THEME_APP_ICON_SIZE = "AppIconSize";
     public static final String EXTRA_THEME_APP_ICON_TEXTURE_SIZE = "AppIconTextureSize";
+
+	public static final String DEFAULT_THEME = "com.webeye.theme.colorful";
 	
     private ITheme mTheme = null;
     private Context mContext = null;
@@ -42,6 +44,12 @@ public class ThemeController extends BroadcastReceiver{
 		// apk theme
 		filter = new IntentFilter(ACTION_LAUNCHER_THEME_APK);
 		mContext.registerReceiver(this, filter);
+
+		try {
+			mTheme = new ApkTheme(mContext, DEFAULT_THEME);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
