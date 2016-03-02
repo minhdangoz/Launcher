@@ -739,11 +739,11 @@ public class LbkLoader implements LauncherProvider.WorkspaceLoader {
                             new String[] { packageName });
                     cn = new ComponentName(packages[0], className);
                 }
-                final Intent intent = new Intent(Intent.ACTION_MAIN, null)
-                    .addCategory(Intent.CATEGORY_LAUNCHER)
-                    .setComponent(cn)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+
+				final Intent intent = new Intent(Intent.ACTION_MAIN, null)
+						.addCategory(Intent.CATEGORY_LAUNCHER)
+						.setComponent(cn)
+						.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                 
                 mValues.put(Favorites.INTENT, intent.toUri(0));
                 mValues.put(Favorites.ITEM_TYPE, Favorites.ITEM_TYPE_APPLICATION);

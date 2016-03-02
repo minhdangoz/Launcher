@@ -31,6 +31,7 @@ import android.content.Intent;
 import android.content.Intent.ShortcutIconResource;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.LauncherApps;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
@@ -1214,6 +1215,10 @@ public class LauncherModel extends BroadcastReceiver
         final Intent intentWithPkg, intentWithoutPkg;
 
         if (intent.getComponent() != null) {
+            if ("com.android.settings.MainSettings".equals(intent.getComponent().getClassName()) ||
+                    context.getPackageName().equals(intent.getComponent().getPackageName())) {
+                return true;
+            }
             // If component is not null, an intent with null package will produce
             // the same result and should also be a match.
             if (intent.getPackage() != null) {
@@ -1228,6 +1233,7 @@ public class LauncherModel extends BroadcastReceiver
             intentWithPkg = intent;
             intentWithoutPkg = intent;
         }
+
     	if (!isInstallShortcut) {
     		return shortcutExistsForApp(context, intentWithPkg, intentWithoutPkg);
     	} 
