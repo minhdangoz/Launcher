@@ -16,7 +16,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="cm_application_name">K桌面</string>
+  <string name="cm_application_name">默认桌面</string>
   <string name="home_screen_settings">主屏幕设置</string>
   <string name="drawer_settings">抽屉设置</string>
   <string name="app_settings">应用设置</string>
@@ -102,6 +102,8 @@
 <string name="workspace_cling_longpress_description_migrate_from_xlauncher">"在桌面设置中，可自由切换两种模式"</string>
 
     <!--Search widget-->
-    <string name="search_widget_name">网觉搜索</string>
+    <string name="search_widget_name">搜索条</string>
     <string name="search_widget_hint">搜索</string>
+
+    <string name="clock_widget_name">桌面时钟</string>
 </resources>

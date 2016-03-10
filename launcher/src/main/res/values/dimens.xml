@@ -170,4 +170,7 @@
     <dimen name="search_widget_padding">8.0dip</dimen>
     <dimen name="search_edit_height">50dp</dimen>
     <dimen name="search_bar_text_size">16.0sp</dimen>
+
+    <dimen name="clock_widget_margin">10dip</dimen>
+    <dimen name="clock_widget_padding">4dip</dimen>
 </resources>

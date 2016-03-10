@@ -640,7 +640,6 @@ public class Launcher extends Activity
         mPushAgent.enable();
         PushAgent.getInstance(this).onAppStart();
         String device_token = UmengRegistrar.getRegistrationId(this);
-        Log.i("wenyan", "device_token:" + device_token);
     }
 
     @Override

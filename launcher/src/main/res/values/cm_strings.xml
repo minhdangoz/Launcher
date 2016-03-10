@@ -15,7 +15,7 @@
      limitations under the License.
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Application name -->
-    <string name="cm_application_name">Launcher</string>
+    <string name="cm_application_name">Launcher3</string>
     <!-- App version -->
     <string name="application_version" translatable="false">1.0</string>
 
@@ -156,4 +156,6 @@
     <!--Search widget-->
     <string name="search_widget_name">WebEye Search</string>
     <string name="search_widget_hint">Search</string>
+
+    <string name="clock_widget_name">DeskClock</string>
 </resources>

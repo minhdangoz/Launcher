@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -27,7 +29,8 @@ public class WeLauncher extends Launcher {
     private boolean firstRun = true;
     private boolean isShown = false;
 
-    WebView mWebView;
+    private WebView mWebView;
+
     @Override
 	protected boolean hasCustomContentToLeft() {
 		return false;
@@ -69,6 +72,13 @@ public class WeLauncher extends Launcher {
         
 		addToCustomContentPage(customView, callbacks, "custom-view");
 	}
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent service = new Intent(this, ClockWidgetService.class);
+        startService(service);
+    }
 
     @Override
     public void onBackPressed() {
