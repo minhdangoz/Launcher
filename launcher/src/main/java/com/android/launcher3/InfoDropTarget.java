@@ -27,8 +27,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.launcher3.compat.UserHandleCompat;
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.R;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.launcher.R;
 
 public class InfoDropTarget extends ButtonDropTarget {
 

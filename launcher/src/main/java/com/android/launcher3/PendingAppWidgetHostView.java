@@ -31,7 +31,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class PendingAppWidgetHostView extends LauncherAppWidgetHostView implements OnClickListener {
 

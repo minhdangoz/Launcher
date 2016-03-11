@@ -31,7 +31,6 @@ import android.content.Intent;
 import android.content.Intent.ShortcutIconResource;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.LauncherApps;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
@@ -63,8 +62,8 @@ import com.android.launcher3.compat.PackageInstallerCompat.PackageInstallInfo;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsProvider;
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.R;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.launcher.R;
 
 import java.lang.ref.WeakReference;
 import java.net.URISyntaxException;

@@ -6,7 +6,7 @@ import java.io.InputStream;
 import android.app.WallpaperManager;
 import android.content.Context;
 
-import com.webeye.launcher.ext.LauncherLog;
+import com.klauncher.ext.LauncherLog;
 
 public class LbkWallpaperLoader {
 	

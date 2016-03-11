@@ -132,10 +132,10 @@ import com.android.launcher3.settings.SettingsValue;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
-import com.webeye.theme.ThemeController;
-import com.webeye.launcher.R;
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.ext.ThemeResourceUtils;
+import com.klauncher.theme.ThemeController;
+import com.klauncher.launcher.R;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.ext.ThemeResourceUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

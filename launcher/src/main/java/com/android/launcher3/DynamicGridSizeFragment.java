@@ -45,7 +45,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.android.launcher3.settings.SettingsProvider;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 @SuppressWarnings("unused")
 public class DynamicGridSizeFragment extends Fragment

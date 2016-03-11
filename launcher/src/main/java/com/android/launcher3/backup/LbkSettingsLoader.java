@@ -13,7 +13,7 @@ import com.android.launcher3.LauncherProvider;
 import com.android.launcher3.ModeSwitchHelper;
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.android.launcher3.settings.SettingsValue;
-import com.webeye.launcher.ext.LauncherLog;
+import com.klauncher.ext.LauncherLog;
 
 import android.content.Context;
 import android.content.SharedPreferences;

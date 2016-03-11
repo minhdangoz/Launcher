@@ -29,8 +29,8 @@ import android.widget.Toast;
 
 import com.android.launcher3.FolderIcon.FolderRingAnimator;
 import com.android.launcher3.XDockViewAnimUtil.AlphaStatus;
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.R;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.launcher.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

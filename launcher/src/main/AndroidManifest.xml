@@ -19,7 +19,7 @@
 -->
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.webeye.launcher"
+    package="com.klauncher.launcher"
     android:versionName="1.8.0"
     android:versionCode="010300">
 
@@ -28,35 +28,35 @@
     <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="21" />
 
     <permission
-        android:name="com.webeye.launcher.permission.INSTALL_SHORTCUT"
+        android:name="com.klauncher.launcher.permission.INSTALL_SHORTCUT"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="dangerous"
         android:label="@string/permlab_install_shortcut"
         android:description="@string/permdesc_install_shortcut" />
     <permission
-        android:name="com.webeye.launcher.permission.UNINSTALL_SHORTCUT"
+        android:name="com.klauncher.launcher.permission.UNINSTALL_SHORTCUT"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="dangerous"
         android:label="@string/permlab_uninstall_shortcut"
         android:description="@string/permdesc_uninstall_shortcut"/>
     <permission
-        android:name="com.webeye.launcher.permission.READ_SETTINGS"
+        android:name="com.klauncher.launcher.permission.READ_SETTINGS"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="normal"
         android:label="@string/permlab_read_settings"
         android:description="@string/permdesc_read_settings"/>
     <permission
-        android:name="com.webeye.launcher.permission.WRITE_SETTINGS"
+        android:name="com.klauncher.launcher.permission.WRITE_SETTINGS"
         android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
         android:protectionLevel="signatureOrSystem"
         android:label="@string/permlab_write_settings"
         android:description="@string/permdesc_write_settings"/>
     <permission
-        android:name="com.webeye.launcher.permission.RECEIVE_LAUNCH_BROADCASTS"
+        android:name="com.klauncher.launcher.permission.RECEIVE_LAUNCH_BROADCASTS"
         android:protectionLevel="signature"
         />
     <permission
-        android:name="com.webeye.launcher.permission.RECEIVE_FIRST_LOAD_BROADCAST"
+        android:name="com.klauncher.launcher.permission.RECEIVE_FIRST_LOAD_BROADCAST"
         android:protectionLevel="signatureOrSystem" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -73,10 +73,10 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="com.webeye.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="com.webeye.launcher.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="com.webeye.launcher.permission.RECEIVE_LAUNCH_BROADCASTS" />
-    <uses-permission android:name="com.webeye.launcher.permission.RECEIVE_FIRST_LOAD_BROADCAST" />
+    <uses-permission android:name="com.klauncher.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.klauncher.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.klauncher.launcher.permission.RECEIVE_LAUNCH_BROADCASTS" />
+    <uses-permission android:name="com.klauncher.launcher.permission.RECEIVE_FIRST_LOAD_BROADCAST" />
     <uses-permission android:name="cyanogenmod.permission.PROTECTED_APP" />
     <!-- Lenovo-SW zhaoxin5 20150529 add for 2 layer support  -->
 	<uses-permission android:name="com.lenovo.launcher.permission.READ_SETTINGS" />
@@ -119,7 +119,7 @@
         android:requiredForAllUsers="true">
 
         <activity
-            android:name=".ext.WeLauncher"
+            android:name="com.klauncher.ext.KLauncher"
             android:launchMode="singleTask"
             android:clearTaskOnLaunch="true"
             android:stateNotNeeded="true"
@@ -260,18 +260,18 @@
         <!-- Intent received used to install shortcuts from other applications -->
         <receiver
             android:name="com.android.launcher3.InstallShortcutReceiver"
-            android:permission="com.webeye.launcher.permission.INSTALL_SHORTCUT">
+            android:permission="com.klauncher.launcher.permission.INSTALL_SHORTCUT">
             <intent-filter>
-                <action android:name="com.webeye.launcher.action.INSTALL_SHORTCUT" />
+                <action android:name="com.klauncher.launcher.action.INSTALL_SHORTCUT" />
             </intent-filter>
         </receiver>
 
         <!-- Intent received used to uninstall shortcuts from other applications -->
         <receiver
             android:name="com.android.launcher3.UninstallShortcutReceiver"
-            android:permission="com.webeye.launcher.permission.UNINSTALL_SHORTCUT">
+            android:permission="com.klauncher.launcher.permission.UNINSTALL_SHORTCUT">
             <intent-filter>
-                <action android:name="com.webeye.launcher.action.UNINSTALL_SHORTCUT" />
+                <action android:name="com.klauncher.launcher.action.UNINSTALL_SHORTCUT" />
             </intent-filter>
         </receiver>
 
@@ -312,13 +312,13 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ext.SearchActivity"
+        <activity android:name="com.klauncher.ext.SearchActivity"
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysVisible"
             android:screenOrientation="portrait">
         </activity>
         <receiver
-            android:name=".ext.ClockWidgetProvider"
+            android:name="com.klauncher.ext.ClockWidgetProvider"
             android:label="@string/clock_widget_name">
             <meta-data
                 android:name="android.appwidget.provider"
@@ -336,18 +336,18 @@
                 <action android:name="com.klauncher.action.ACTION_CLOCK_UPDATE" />
             </intent-filter>
         </receiver>
-        <service android:name="com.webeye.launcher.ext.ClockWidgetService"
+        <service android:name="com.klauncher.ext.ClockWidgetService"
             android:exported="false" />
         
         <!-- The settings provider contains Home's data, like the workspace favorites -->
         <provider
             android:name="com.android.launcher3.LauncherProvider"
-            android:authorities="com.webeye.launcher.settings"
+            android:authorities="com.klauncher.launcher.settings"
             android:exported="true"
-            android:writePermission="com.webeye.launcher.permission.WRITE_SETTINGS"
-            android:readPermission="com.webeye.launcher.permission.READ_SETTINGS" />
+            android:writePermission="com.klauncher.launcher.permission.WRITE_SETTINGS"
+            android:readPermission="com.klauncher.launcher.permission.READ_SETTINGS" />
 
-        <receiver android:name="com.webeye.launcher.ext.KLauncherDeviceAdminReceiver"
+        <receiver android:name="com.klauncher.ext.KLauncherDeviceAdminReceiver"
             android:label="@string/cm_application_name"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data android:name="android.app.device_admin"
@@ -418,7 +418,7 @@
             android:name="com.umeng.message.RegistrationReceiver"
             android:exported="false" >
             <intent-filter>
-                <action android:name="com.webeye.launcher.intent.action.COMMAND" />
+                <action android:name="com.klauncher.launcher.intent.action.COMMAND" />
             </intent-filter>
         </receiver>
         <receiver android:name="com.umeng.message.UmengMessageBootReceiver" >
@@ -435,10 +435,10 @@
             android:exported="true"
             android:process=":push" >
             <intent-filter>
-                <action android:name="com.webeye.launcher.intent.action.START" />
+                <action android:name="com.klauncher.launcher.intent.action.START" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.webeye.launcher.intent.action.COCKROACH" />
+                <action android:name="com.klauncher.launcher.intent.action.COCKROACH" />
             </intent-filter>
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.PING_V4" />

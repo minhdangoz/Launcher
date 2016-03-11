@@ -55,8 +55,8 @@ import android.widget.RelativeLayout;
 
 import com.android.launcher3.FolderIcon.FolderRingAnimator;
 import com.android.launcher3.interpolator.QuadInterpolator;
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.R;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.launcher.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

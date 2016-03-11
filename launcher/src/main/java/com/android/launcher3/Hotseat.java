@@ -30,7 +30,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import java.util.ArrayList;
 

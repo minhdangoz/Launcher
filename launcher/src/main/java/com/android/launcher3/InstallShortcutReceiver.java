@@ -30,7 +30,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.launcher3.compat.UserHandleCompat;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import org.json.JSONObject;
 import org.json.JSONStringer;

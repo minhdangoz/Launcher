@@ -14,7 +14,7 @@ import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherSettings;
 import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.ModeSwitchHelper.Mode;
-import com.webeye.launcher.ext.LauncherLog;
+import com.klauncher.ext.LauncherLog;
 
 import android.content.ComponentName;
 import android.content.ContentResolver;

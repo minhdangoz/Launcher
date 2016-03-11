@@ -24,7 +24,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.widget.Toast;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;

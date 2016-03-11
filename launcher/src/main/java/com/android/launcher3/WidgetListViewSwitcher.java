@@ -6,8 +6,8 @@ import java.util.HashMap;
 import com.android.launcher3.DropTarget.DragObject;
 import com.android.launcher3.compat.AppWidgetManagerCompat;
 import com.android.launcher3.settings.SettingsValue;
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.R;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.launcher.R;
 
 import android.appwidget.AppWidgetHostView;
 import android.appwidget.AppWidgetManager;

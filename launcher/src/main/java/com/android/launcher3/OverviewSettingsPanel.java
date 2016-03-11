@@ -11,7 +11,7 @@ import android.widget.ListView;
 import com.android.launcher3.list.PinnedHeaderListView;
 import com.android.launcher3.settings.LauncherSettingActivity;
 import com.android.launcher3.settings.SettingsPinnedHeaderAdapter;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class OverviewSettingsPanel {
     public static final String ANDROID_SETTINGS = "com.android.settings";

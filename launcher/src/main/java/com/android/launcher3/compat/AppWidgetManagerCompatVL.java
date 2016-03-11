@@ -38,7 +38,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.android.launcher3.IconCache;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import java.util.ArrayList;
 import java.util.List;

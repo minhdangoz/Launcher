@@ -12,7 +12,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.ScaleAnimation;
 
-import com.webeye.launcher.ext.LauncherLog;
+import com.klauncher.ext.LauncherLog;
 
 import java.util.ArrayList;
 

@@ -22,7 +22,7 @@ import com.android.launcher3.Launcher;
 import com.android.launcher3.OverviewSettingsPanel;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.settings.SettingsProvider;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
     private static final int PARTITION_TAG = 0;
     private static final int POSITION_TAG = 1;

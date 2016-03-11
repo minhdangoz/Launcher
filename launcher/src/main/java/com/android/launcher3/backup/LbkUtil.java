@@ -10,12 +10,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.android.launcher3.backup.LbkLoader.LbkFileFilter;
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.R;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.launcher.R;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -23,9 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Environment;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 
 public class LbkUtil {

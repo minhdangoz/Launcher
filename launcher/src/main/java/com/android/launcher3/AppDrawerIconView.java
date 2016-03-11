@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /**
  * AppDrawerIconView - represents icons in the vertical app drawer.

@@ -23,7 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.android.launcher3.PageIndicator.PageMarkerResources;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class PageIndicatorMarker extends FrameLayout {
     @SuppressWarnings("unused")

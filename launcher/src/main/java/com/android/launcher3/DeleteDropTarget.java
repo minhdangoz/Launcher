@@ -41,7 +41,7 @@ import android.view.animation.LinearInterpolator;
 
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.android.launcher3.compat.UserHandleCompat;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class DeleteDropTarget extends ButtonDropTarget {
     private static int DELETE_ANIMATION_DURATION = 285;
@@ -147,7 +147,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
     }
 
     private static final String[] PRIVATE_APP = new String[] {
-            "com.miguan.market", "com.android.cloudfolder", "com.webeye.launcher",
+            "com.miguan.market", "com.android.cloudfolder", "com.klauncher.launcher",
             "com.tencent.qqpimsecure", "com.tencent.android.qqdownloader", "com.tencent.mtt",
             "com.ss.android.article.news", "com.tencent.news", "com.baidu.searchbox",
             "com.baidu.appsearch", "com.yidian.dk", "com.UCMobile", "com.sogou.activity.src",

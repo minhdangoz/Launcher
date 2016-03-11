@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.android.launcher3.WidgetListViewSwitcher.ShowType;
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.R;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.launcher.R;
 
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;

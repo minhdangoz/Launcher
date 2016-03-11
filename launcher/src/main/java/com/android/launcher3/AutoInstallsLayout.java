@@ -38,7 +38,7 @@ import android.util.Patterns;
 import com.android.launcher3.LauncherProvider.SqlArguments;
 import com.android.launcher3.LauncherProvider.WorkspaceLoader;
 import com.android.launcher3.LauncherSettings.Favorites;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

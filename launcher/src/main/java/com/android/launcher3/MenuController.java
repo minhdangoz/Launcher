@@ -13,7 +13,7 @@ import android.widget.ViewSwitcher;
 import com.android.launcher3.interpolator.BackInterpolator;
 import com.android.launcher3.interpolator.CubicInterpolator;
 import com.android.launcher3.settings.LauncherSettingActivity;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /**
  * Created by yuanyl2 on 2015/5/30.

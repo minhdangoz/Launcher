@@ -18,7 +18,7 @@ package com.android.launcher3.compat;
 
 import java.lang.reflect.Field;
 
-import com.webeye.launcher.ext.LauncherLog;
+import com.klauncher.ext.LauncherLog;
 
 import android.content.ComponentName;
 import android.content.pm.ActivityInfo;

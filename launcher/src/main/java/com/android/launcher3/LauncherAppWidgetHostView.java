@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 import android.widget.RemoteViews;
 
 import com.android.launcher3.DragLayer.TouchCompleteListener;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /**
  * {@inheritDoc}

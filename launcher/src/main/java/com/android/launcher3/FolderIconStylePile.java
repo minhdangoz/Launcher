@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.android.launcher3.FolderIcon.FolderRingAnimator;
 import com.android.launcher3.FolderIconStyleBase.PreviewItemDrawingParams;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /**
  * 

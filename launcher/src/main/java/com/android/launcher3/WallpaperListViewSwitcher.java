@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import android.app.WallpaperManager;
 import android.content.ActivityNotFoundException;

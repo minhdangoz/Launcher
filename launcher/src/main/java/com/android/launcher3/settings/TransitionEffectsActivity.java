@@ -23,7 +23,7 @@ import android.widget.TextView;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherModel;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class TransitionEffectsActivity extends Activity {
 	public static final String PAGE_OR_DRAWER_SCROLL_SELECT = "pageOrDrawer";

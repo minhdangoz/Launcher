@@ -23,7 +23,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class DrawableStateProxyView extends LinearLayout {
 

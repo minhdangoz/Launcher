@@ -27,7 +27,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class HolographicLinearLayout extends LinearLayout {
     private final HolographicViewHelper mHolographicHelper;

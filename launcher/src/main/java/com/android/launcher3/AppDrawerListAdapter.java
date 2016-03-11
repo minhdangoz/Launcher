@@ -40,7 +40,7 @@ import android.widget.SectionIndexer;
 import com.android.launcher3.locale.LocaleSetManager;
 import com.android.launcher3.locale.LocaleUtils;
 import com.android.launcher3.settings.SettingsProvider;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import java.util.ArrayList;
 import java.util.Collections;

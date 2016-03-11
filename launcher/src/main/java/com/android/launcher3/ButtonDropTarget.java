@@ -25,7 +25,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 
 /**

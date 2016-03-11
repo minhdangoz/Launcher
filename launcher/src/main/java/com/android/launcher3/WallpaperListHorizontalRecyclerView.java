@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.android.launcher3.WallpaperListViewSwitcher.ShowType;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import android.app.WallpaperInfo;
 import android.app.WallpaperManager;

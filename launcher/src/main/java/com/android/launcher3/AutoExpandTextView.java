@@ -31,7 +31,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import java.util.ArrayList;
 

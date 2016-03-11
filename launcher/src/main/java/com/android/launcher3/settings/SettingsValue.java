@@ -2,7 +2,7 @@ package com.android.launcher3.settings;
 
 import android.content.Context;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /**
  * Created by LEI on 2015/6/30.

@@ -31,7 +31,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import java.util.List;
 

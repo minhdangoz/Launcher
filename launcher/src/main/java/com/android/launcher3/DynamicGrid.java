@@ -19,16 +19,14 @@ package com.android.launcher3;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 
 import com.android.launcher3.settings.SettingsProvider;
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.R;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.launcher.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;

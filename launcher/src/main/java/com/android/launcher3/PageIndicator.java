@@ -24,7 +24,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import java.util.ArrayList;
 

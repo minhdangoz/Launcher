@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.FrameLayout;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class AppsCustomizeTabHost extends FrameLayout implements LauncherTransitionable, Insettable  {
     static final String LOG_TAG = "AppsCustomizeTabHost";

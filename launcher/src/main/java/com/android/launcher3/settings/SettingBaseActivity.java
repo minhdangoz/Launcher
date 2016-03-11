@@ -5,7 +5,7 @@ import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherModel;
 import com.android.launcher3.backup.LbkLoader;
 import com.android.launcher3.backup.LbkUtil;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -18,5 +18,5 @@ package com.android.launcher3.config;
 
 public class ProviderConfig {
 
-    public static final String AUTHORITY = "com.webeye.launcher.settings";
+    public static final String AUTHORITY = "com.klauncher.launcher.settings";
 }

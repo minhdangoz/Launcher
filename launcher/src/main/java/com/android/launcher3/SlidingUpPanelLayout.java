@@ -25,7 +25,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 @SuppressWarnings("unused")
 public class SlidingUpPanelLayout extends ViewGroup {

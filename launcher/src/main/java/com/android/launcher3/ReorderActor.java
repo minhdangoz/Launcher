@@ -3,11 +3,11 @@ package com.android.launcher3;
 import android.graphics.Point;
 import android.view.View;
 
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.reorder.All_Z_Reorder;
-import com.webeye.launcher.reorder.Reorder;
-import com.webeye.launcher.reorder.Reorder.SwapItem;
-import com.webeye.launcher.reorder.Reorder.Type;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.reorder.All_Z_Reorder;
+import com.klauncher.reorder.Reorder;
+import com.klauncher.reorder.Reorder.SwapItem;
+import com.klauncher.reorder.Reorder.Type;
 
 import java.util.ArrayList;
 import java.util.List;

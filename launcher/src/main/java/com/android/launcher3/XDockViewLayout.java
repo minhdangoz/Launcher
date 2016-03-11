@@ -13,8 +13,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 
 import com.android.launcher3.interpolator.LenovoCubicBezierInterpolator;
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.R;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.launcher.R;
 
 /**
  * Created by YUANYL2 on 2015/6/1.

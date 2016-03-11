@@ -35,7 +35,7 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.TextView;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /**
  * TextView that draws a bubble behind the text. We cannot use a LineBackgroundSpan

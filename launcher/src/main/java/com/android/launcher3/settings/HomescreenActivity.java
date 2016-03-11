@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.ModeSwitchHelper.Mode;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class HomescreenActivity extends SettingBaseActivity implements OnPreferenceClickListener {
 	private static final String PREFERENCE_AUTO_RECORDER = "pref_auto_reorder";

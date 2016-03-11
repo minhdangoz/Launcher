@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.launcher3.FolderIcon.FolderRingAnimator;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /**
  * 

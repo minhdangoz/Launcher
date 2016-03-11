@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.ModeSwitchHelper;
 import com.android.launcher3.ModeSwitchHelper.Mode;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class LauncherSettingActivity extends SettingBaseActivity implements OnPreferenceClickListener {
 	// 定义相关变量

@@ -32,7 +32,7 @@ import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.compat.PackageInstallerCompat.PackageInstallInfo;
 import com.android.launcher3.settings.SettingsValue;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

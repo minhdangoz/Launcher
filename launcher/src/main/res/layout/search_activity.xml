@@ -14,7 +14,7 @@
         android:paddingLeft="18dp"
         android:paddingRight="18dp">
 
-        <com.webeye.launcher.ext.CleanableEditText
+        <com.klauncher.ext.CleanableEditText
             android:id="@+id/search_edit_text"
             android:layout_width="0dp"
             android:layout_height="52dp"

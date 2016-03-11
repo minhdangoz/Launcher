@@ -29,7 +29,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /*
  * Ths bar will manage the transition between the QSB search bar and the delete drop

@@ -25,7 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.widget.ImageView;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class HolographicViewHelper {
 

@@ -39,7 +39,7 @@ import android.widget.TextView;
 import java.lang.IllegalArgumentException;
 import java.util.ArrayList;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /**
  * AppDrawerScrubber

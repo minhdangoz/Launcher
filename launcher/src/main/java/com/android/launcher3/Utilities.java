@@ -47,9 +47,9 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.Toast;
 
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.ext.SystemProperties;
-import com.webeye.launcher.R;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.ext.SystemProperties;
+import com.klauncher.launcher.R;
 
 import java.util.ArrayList;
 

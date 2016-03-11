@@ -32,7 +32,7 @@ public class Stats {
     private static final boolean LOCAL_LAUNCH_LOG = true;
 
     public static final String ACTION_LAUNCH = "com.android.launcher3.action.LAUNCH";
-    public static final String PERM_LAUNCH = "com.webeye.launcher.permission.RECEIVE_LAUNCH_BROADCASTS";
+    public static final String PERM_LAUNCH = "com.klauncher.launcher.permission.RECEIVE_LAUNCH_BROADCASTS";
     public static final String EXTRA_INTENT = "intent";
     public static final String EXTRA_CONTAINER = "container";
     public static final String EXTRA_SCREEN = "screen";

@@ -20,9 +20,9 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.android.system.ReportService;
-import com.webeye.launcher.R;
-import com.webeye.notifier.NotifierService;
-import com.webeye.theme.ThemeController;
+import com.klauncher.launcher.R;
+import com.klauncher.notifier.NotifierService;
+import com.klauncher.theme.ThemeController;
 
 public class LauncherApplication extends Application {
     public static boolean LAUNCHER_SHOW_UNREAD_NUMBER;

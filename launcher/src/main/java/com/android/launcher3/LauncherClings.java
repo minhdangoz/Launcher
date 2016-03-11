@@ -39,8 +39,8 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.accessibility.AccessibilityManager;
 
 import com.android.launcher3.settings.SettingsValue;
-import com.webeye.launcher.ext.LauncherLog;
-import com.webeye.launcher.R;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.launcher.R;
 
 class LauncherClings implements OnClickListener {
     private static final String MIGRATION_CLING_DISMISSED_KEY = "cling_gel.migration.dismissed";

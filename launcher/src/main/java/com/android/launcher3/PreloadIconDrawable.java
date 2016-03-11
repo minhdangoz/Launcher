@@ -12,7 +12,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 class PreloadIconDrawable extends Drawable {
 

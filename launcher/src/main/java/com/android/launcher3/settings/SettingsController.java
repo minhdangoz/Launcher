@@ -10,7 +10,7 @@ import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.ModeSwitchHelper;
 import com.android.launcher3.list.PinnedHeaderListView;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /**
  * Created by LEI on 2015/6/10.

@@ -9,7 +9,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.view.MenuItem;
 
 import com.android.launcher3.AppsCustomizePagedView;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class DrawerActivity extends SettingBaseActivity implements OnPreferenceClickListener {
 	private static final String PREFERENCE_DRAWER_SCROLL_EFFECT = "drawer_scroll_effect_key";

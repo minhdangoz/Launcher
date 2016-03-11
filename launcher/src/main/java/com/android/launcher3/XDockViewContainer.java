@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /**
  * Created by YUANYL2 on 2015/6/1.

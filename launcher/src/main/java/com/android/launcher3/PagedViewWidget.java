@@ -31,7 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.launcher3.compat.AppWidgetManagerCompat;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /**
  * The linear layout used strictly for the widget/wallpaper tab of the customization tray

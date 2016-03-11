@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.TransitionEffectsActivity;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class TransitionEffectsFragment extends Fragment {
     public static final String PAGE_OR_DRAWER_SCROLL_SELECT = "pageOrDrawer";

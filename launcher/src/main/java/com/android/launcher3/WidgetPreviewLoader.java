@@ -30,7 +30,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.launcher3.compat.AppWidgetManagerCompat;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

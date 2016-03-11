@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ScrollView;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import java.util.ArrayList;
 import java.util.Collections;

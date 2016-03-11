@@ -29,7 +29,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 /**
  * A TextView that resizes it's text to be no larger than the width of the view.

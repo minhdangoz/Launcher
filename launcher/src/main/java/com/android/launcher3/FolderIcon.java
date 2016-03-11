@@ -42,7 +42,7 @@ import android.widget.TextView;
 import com.android.launcher3.DropTarget.DragObject;
 import com.android.launcher3.FolderInfo.FolderListener;
 import com.android.launcher3.settings.SettingsProvider;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import java.util.ArrayList;
 

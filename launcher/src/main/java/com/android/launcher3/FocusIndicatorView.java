@@ -23,7 +23,7 @@ import android.util.Pair;
 import android.view.View;
 import android.view.ViewParent;
 
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 public class FocusIndicatorView extends View implements View.OnFocusChangeListener {
 

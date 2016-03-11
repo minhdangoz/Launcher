@@ -52,7 +52,7 @@ import com.android.launcher3.DropTarget.DragObject;
 import com.android.launcher3.compat.AppWidgetManagerCompat;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
-import com.webeye.launcher.R;
+import com.klauncher.launcher.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
