@@ -5519,7 +5519,8 @@ public class Launcher extends Activity
      * Implementation of the method from LauncherModel.Callbacks.
      */
     public void loadResource() {
-       ThemeResourceUtils.loadThemeResource(this, ThemeController.DEFAULT_THEME);
+       //ThemeResourceUtils.loadThemeResource(this, ThemeController.DEFAULT_APK_THEME);
+        ThemeResourceUtils.loadThemeResource(this);
     }
     /*Lenovo-sw zhangyj19 add 2015/07/29 modify theme start*/
     /**
@@ -6740,7 +6741,8 @@ public class Launcher extends Activity
     /* Lenovo-SW zhaoxin5 20150127 after Launcher onCreate finished, to apply the default theme START */
     private void applyDefaultTheme(){
     	/*String[] parameters = Placement.getDefaultThemeParameters(this);*/
-        String[] parameters = new String[]{"apk", ThemeController.DEFAULT_THEME};
+        //String[] parameters = new String[]{"apk", ThemeController.DEFAULT_APK_THEME};
+        String[] parameters = new String[]{"zip", ThemeController.DEFAULT_ZIP_THEME};
         boolean enableThemeMask = !Utilities.isRowProduct();
         if (null != parameters) {
             Intent intent = new Intent();

@@ -2,6 +2,7 @@ package com.klauncher.theme.ziptheme;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -195,19 +196,19 @@ public class ZipThemeUtils {
     public static boolean copyThemePkgToLocal(File dest, String themePath) {
         //File dest = mLa.getApplicationContext().getFilesDir().getAbsoluteFile();
         File themeFolder = new File(dest.getAbsolutePath() + File.separator + THEME_FOLDER);
-        ThemeLog.i(TAG, "themeFolder  "+themeFolder.getAbsoluteFile());
-        if(themeFolder.exists()){
+        ThemeLog.i(TAG, "themeFolder  " + themeFolder.getAbsoluteFile());
+        if (themeFolder.exists()) {
         	ThemeLog.i(TAG, "--> theme folder exists");
-        }else{
+        } else {
         	ThemeLog.i(TAG, "--> theme folder not exists");
             themeFolder.mkdir();
         }
         File zipFile = new File(themeFolder.getAbsolutePath()+ File.separator + RES_ZIP_FILE);
-        if(zipFile.exists()){
+        if (zipFile.exists()) {
         	ThemeLog.d(TAG, "--> zipFile exists, delete it");
             zipFile.delete();
         }
-        ThemeLog.i(TAG, "zipFile  "+zipFile.getAbsoluteFile());
+        ThemeLog.i(TAG, "zipFile  " + zipFile.getAbsoluteFile());
         return copyFile(themePath, zipFile.getAbsolutePath());
     }
     
@@ -238,7 +239,7 @@ public class ZipThemeUtils {
     
     public static void unZipFileResDotZip(File dest) throws Exception{
         /*File dest = mLa.getApplicationContext().getFilesDir().getAbsoluteFile();*/
-        String themeFolderPath = dest.getAbsolutePath()+ File.separator + THEME_FOLDER;
+        String themeFolderPath = dest.getAbsolutePath() + File.separator + THEME_FOLDER;
         File themeFolder = new File(themeFolderPath);
         if(!themeFolder.exists()){
             throw new Exception("Error when unZip res.zip, caused by file copy error");

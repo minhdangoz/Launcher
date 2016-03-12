@@ -9,6 +9,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Environment;
+
+import java.io.File;
 
 public class ThemeController extends BroadcastReceiver{
 	public static final String LOGTAG = "ThemeController";
@@ -24,7 +27,9 @@ public class ThemeController extends BroadcastReceiver{
     public static final String EXTRA_THEME_APP_ICON_SIZE = "AppIconSize";
     public static final String EXTRA_THEME_APP_ICON_TEXTURE_SIZE = "AppIconTextureSize";
 
-	public static final String DEFAULT_THEME = "com.klauncher.theme.colorful";
+	//public static final String DEFAULT_APK_THEME = "com.klauncher.theme.colorful";
+	public static final String DEFAULT_ZIP_THEME_FOLDER = Environment.getExternalStorageDirectory() + File.separator + "ktheme";
+	public static final String DEFAULT_ZIP_THEME = DEFAULT_ZIP_THEME_FOLDER + File.separator + "default.ktm";
 	
     private ITheme mTheme = null;
     private Context mContext = null;
@@ -46,7 +51,8 @@ public class ThemeController extends BroadcastReceiver{
 		mContext.registerReceiver(this, filter);
 
 		try {
-			mTheme = new ApkTheme(mContext, DEFAULT_THEME);
+			//mTheme = new ApkTheme(mContext, DEFAULT_APK_THEME);
+			mTheme = new ZipTheme(mContext, DEFAULT_ZIP_THEME);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,7 +90,7 @@ public class ThemeController extends BroadcastReceiver{
             	// false表明第一次加载此主题,需要记录当前主题信息,同时需要重启Launcher
             	SettingsProvider.putString(mContext, SettingsProvider.SETTINGS_CURRENT_THEME, themeInfo);
         	}
-            mTheme.handleTheme(justRestartLauncher, enableThemeMask);	
+            mTheme.handleTheme(justRestartLauncher, enableThemeMask);
         }
 	}
 
