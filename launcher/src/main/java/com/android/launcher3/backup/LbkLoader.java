@@ -482,14 +482,32 @@ public class LbkLoader implements LauncherProvider.WorkspaceLoader {
         } else {
     		fillValuesForApp(className, packageName);	
         }
-		
-		if (mCallback.insertAndCheck(mDb, mValues) < 0) {
-            return -1;
-        } else {
-            return id;
-        }
+
+		if (containsPackage(packageName)) {
+			if (mCallback.insertAndCheck(mDb, mValues) < 0) {
+				return -1;
+			} else {
+				return id;
+			}
+		} else {
+			return -1;
+		}
 	}
-	
+
+	public boolean containsPackage(String packageName) {
+		String name = null;
+		try {
+			name = mPackageManager.getApplicationLabel(
+					mPackageManager.getApplicationInfo(packageName,
+							PackageManager.GET_META_DATA)).toString();
+		} catch (PackageManager.NameNotFoundException e) {
+			if (LOGD) {
+				LauncherLog.i(TAG, "No package named:" + packageName + " have installed on this device");
+			}
+		}
+		return name != null;
+	}
+
 	private void parseWidgets(XmlPullParser parser) {}
 	
 	private long parseWidget(XmlPullParser parser) {
@@ -643,7 +661,7 @@ public class LbkLoader implements LauncherProvider.WorkspaceLoader {
     				1, 1, title);
         } else {
         	fillValuesForAll(Integer.valueOf(cellX), Integer.valueOf(cellY), Integer.valueOf(screen), getContainerFormLbkAtrr(container), 
-    				1, 1, title);	
+    				1, 1, title);
         }
         
 		if(!isShortcut) {
