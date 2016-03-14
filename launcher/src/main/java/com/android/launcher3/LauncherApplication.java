@@ -24,12 +24,6 @@ import com.klauncher.launcher.R;
 import com.klauncher.notifier.NotifierService;
 import com.klauncher.theme.ThemeController;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 public class LauncherApplication extends Application {
     public static boolean LAUNCHER_SHOW_UNREAD_NUMBER;
     public static boolean LAUNCHER_SHORTCUT_ENABLED;
@@ -59,40 +53,6 @@ public class LauncherApplication extends Application {
         ReportService.startService(this, ReportService.POST_AS_REGULAR);
 
         startService(new Intent(this, NotifierService.class));
-        exportResource();
-    }
-
-    private void exportResource() {
-        File folder = new File(ThemeController.DEFAULT_ZIP_THEME_FOLDER);
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-
-        File file = new File(ThemeController.DEFAULT_ZIP_THEME);
-        if (!file.exists()) {
-            InputStream myInput = null;
-            OutputStream myOutput = null;
-            try {
-                myOutput = new FileOutputStream(ThemeController.DEFAULT_ZIP_THEME);
-                myInput = this.getAssets().open("default.ktm");
-                byte[] buffer = new byte[1024];
-                int length = myInput.read(buffer);
-                while (length > 0) {
-                    myOutput.write(buffer, 0, length);
-                    length = myInput.read(buffer);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    myOutput.flush();
-                    myInput.close();
-                    myOutput.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     @Override

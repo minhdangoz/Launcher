@@ -6,12 +6,16 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
 import com.klauncher.theme.ITheme;
+import com.klauncher.theme.ThemeController;
 import com.klauncher.theme.ThemeUtils;
 import com.klauncher.theme.util.ThemeLog;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 public class ZipTheme implements ITheme {
 
@@ -69,6 +73,46 @@ public class ZipTheme implements ITheme {
 			new ApplyZipThemeTask().execute(new Object[] { "", mZipThemeFilePath, "true"});
 		}
 	}
+
+    private void exportResource() {
+        File folder = new File(ThemeController.DEFAULT_ZIP_THEME_FOLDER);
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+
+        File file = new File(ThemeController.DEFAULT_ZIP_THEME);
+        if (!file.exists()) {
+            InputStream myInput = null;
+            OutputStream myOutput = null;
+            try {
+                myOutput = new FileOutputStream(ThemeController.DEFAULT_ZIP_THEME);
+                myInput = mContext.getAssets().open("default.ktm");
+                byte[] buffer = new byte[1024];
+                int length = myInput.read(buffer);
+                while (length > 0) {
+                    myOutput.write(buffer, 0, length);
+                    length = myInput.read(buffer);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    myOutput.flush();
+                    myInput.close();
+                    myOutput.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void cleanResource() {
+        File file = new File(ThemeController.DEFAULT_ZIP_THEME);
+        if (file.exists()) {
+            file.delete();
+        }
+    }
 	
     /**
      * async task for apply zip theme 
@@ -93,11 +137,13 @@ public class ZipTheme implements ITheme {
                 ZipThemeUtils.sendZipThemeApplyFailed();
                 return null;
             }
-            if(needCopy){
-               result = ZipThemeUtils.copyThemePkgToLocal(mContext.getFilesDir().getAbsoluteFile(), themePath);
+            if (needCopy) {
+                exportResource();
+                result = ZipThemeUtils.copyThemePkgToLocal(mContext.getFilesDir().getAbsoluteFile(), themePath);
             }
-            if(!result){
+            if (!result) {
             	ZipThemeUtils.sendZipThemeApplyFailed();
+                cleanResource();
                 return null; 
             }
             try {
@@ -105,6 +151,7 @@ public class ZipTheme implements ITheme {
             } catch (Exception e) {
             	ThemeLog.i(TAG, "ApplyZipThemeTask error happened!", e);
             	ZipThemeUtils.sendZipThemeApplyFailed();
+                cleanResource();
                 return null;
             }
             // mark and preparations.
@@ -131,6 +178,7 @@ public class ZipTheme implements ITheme {
             }else{
             	ZipThemeUtils.sendZipThemeApplySuccess();
             }*/
+            cleanResource();
             return null;
         }
    
