@@ -265,7 +265,7 @@ public class DynamicGrid {
             strResponse = getStringFromInputStream(ims);
             Log.e("wcrow", "strResponse = " + strResponse);
             JSONObject json = new JSONObject(strResponse);
-            if (mMinHeight < 600) {
+            if (mMinHeight < 560) {
                 json = json.optJSONObject("4x4");
             } else if (minHeight < 650) {
                 json = json.optJSONObject("5x4");

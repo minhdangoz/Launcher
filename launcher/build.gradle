@@ -26,6 +26,17 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
+            resources.srcDirs = ['src/main/res']
+            assets.srcDirs = ['src/main/assets']
+            res.srcDirs = ['src/main/res']
+        }
+        xiaomi {
+            assets.srcDirs = ['src/main/assets-xm']
+            res.srcDirs = ['src/main/res-xm']
+        }
+        huawei {
+            assets.srcDirs = ['src/main/assets-hw']
+            res.srcDirs = ['src/main/res-hw']
         }
     }
 
