@@ -15,6 +15,28 @@ import com.android.launcher3.Launcher;
 import com.klauncher.launcher.R;
 
 public class KLauncher extends Launcher {
+    public static final String[] PRIVATE_APP = new String[] {
+            "com.miguan.market",
+            "com.android.cloudfolder",
+            "com.klauncher.launcher",
+            "com.tencent.qqpimsecure",
+            "com.tencent.android.qqdownloader",
+            "com.tencent.mtt",
+            "com.tencent.qqlive",
+            "com.ss.android.article.news",
+            "com.tencent.news",
+            "com.baidu.searchbox",
+            "com.baidu.appsearch",
+            "com.yidian.dk",
+            "com.UCMobile",
+            "com.sogou.activity.src",
+            "com.qiyi.video",
+            "com.cleanmaster.mguard_cn",
+            "cn.kuwo.player",
+            "cn.ninegame.gamemanager",
+            "cn.etouch.ecalendar.cpa"
+    };
+
     private static final String TAG = "KLauncher";
 
 	private static final String HOME_PAGE = "file:///android_asset/home.html";

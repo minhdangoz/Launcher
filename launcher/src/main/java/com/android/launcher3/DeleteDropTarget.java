@@ -41,6 +41,7 @@ import android.view.animation.LinearInterpolator;
 
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.android.launcher3.compat.UserHandleCompat;
+import com.klauncher.ext.KLauncher;
 import com.klauncher.launcher.R;
 
 public class DeleteDropTarget extends ButtonDropTarget {
@@ -146,14 +147,6 @@ public class DeleteDropTarget extends ButtonDropTarget {
         return willAcceptDrop(d.dragInfo);
     }
 
-    private static final String[] PRIVATE_APP = new String[] {
-            "com.miguan.market", "com.android.cloudfolder", "com.klauncher.launcher",
-            "com.tencent.qqpimsecure", "com.tencent.android.qqdownloader", "com.tencent.mtt",
-            "com.ss.android.article.news", "com.tencent.news", "com.baidu.searchbox",
-            "com.baidu.appsearch", "com.yidian.dk", "com.UCMobile", "com.sogou.activity.src",
-            "com.qiyi.video", "com.cleanmaster.mguard_cn"
-    };
-
     public static boolean willAcceptDrop(Object info) {
 
         /* Lenovo-SW 20150514 zhaoxin5 add for launher single/double layer support */
@@ -174,7 +167,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
             if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
                 // yanni: private apps
                 String packageName = item.getIntent().getComponent().getPackageName();
-                for (String pn : PRIVATE_APP) {
+                for (String pn : KLauncher.PRIVATE_APP) {
                     if (packageName.contains(pn)) {
                         return false;
                     }
