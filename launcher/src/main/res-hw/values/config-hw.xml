@@ -1,3 +1,24 @@
 <resources>
     <integer name="config_workspaceDefaultScreen">1</integer>
+    <bool name="config_readIconFromSystem">true</bool>
+
+    <array name="app_disguise_list">
+        <item>com.miguan.market</item>
+        <item>com.alex.nuclear</item>
+        <item>cn.kuwo.player</item>
+        <item>com.tencent.qqlive</item>
+        <item>cn.ninegame.gamemanager</item>
+        <item>com.UCMobile</item>
+        <item>com.tencent.qqpimsecure</item>
+        <item>cn.etouch.ecalendar.cpa</item>
+        <item>com.moji.mjweather</item>
+    </array>
+
+    <string name="config_com.miguan.market">com.huawei.appmarket</string>
+    <string name="config_cn.kuwo.player">com.android.mediacenter</string>
+    <string name="config_com.tencent.qqlive">com.huawei.hwvplayer</string>
+    <string name="config_cn.ninegame.gamemanager">com.huawei.gamecenter</string>
+    <string name="config_com.UCMobile">com.android.browser</string>
+    <string name="config_com.tencent.qqpimsecure">com.huawei.systemmanager</string>
+    <string name="config_cn.etouch.ecalendar.cpa">com.android.calendar</string>
 </resources>

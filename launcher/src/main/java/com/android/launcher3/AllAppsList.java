@@ -21,7 +21,7 @@ import android.content.Context;
 import com.android.launcher3.compat.LauncherActivityInfoCompat;
 import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.compat.UserHandleCompat;
-import com.klauncher.ext.KLauncher;
+import com.klauncher.ext.KLauncherAppDisguise;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,10 +155,8 @@ class AllAppsList {
                     add(new AppInfo(context, info, user, mIconCache, null));
                 } else {
                     // add by yanni, cp not update
-                    for (String pn : KLauncher.PRIVATE_APP) {
-                        if (pn.equals(packageName)) {
-                            return;
-                        }
+                    if (KLauncherAppDisguise.getInstance().inPrivateAppList(packageName)) {
+                        return;
                     }
                     mIconCache.remove(applicationInfo.componentName, user);
                     mIconCache.getTitleAndIcon(applicationInfo, info, null);

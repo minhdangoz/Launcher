@@ -56,7 +56,7 @@ public class ZipTheme implements ITheme {
 		}
 	}
 
-	@Override
+    @Override
 	public Bitmap getIconBitmap(ActivityInfo info) {
         Bitmap bitmap = null;
         /* Lenovo-SW 20150413 zhaoxin5 fix bug that get activity icon is null START */

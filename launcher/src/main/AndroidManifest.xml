@@ -107,6 +107,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />;
     <!-- umeng permisson end -->
 
+    <uses-permission android:name="com.huawei.android.totemweather.permission.ACCESS_WEATHERCLOCK_PROVIDER"/>
+
     <application
         android:name="com.android.launcher3.LauncherApplication"
         android:backupAgent="com.android.launcher3.LauncherBackupAgentHelper"

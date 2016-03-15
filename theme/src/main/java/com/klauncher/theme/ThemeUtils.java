@@ -3,6 +3,7 @@ package com.klauncher.theme;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Locale;
 
 import com.klauncher.theme.util.ThemeLog;
@@ -17,6 +18,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 
 public class ThemeUtils {
+
 	private static final String TAG = "ThemeUtils";
 	
 	public static final String THEME_ICON_BG_NAME = "theme_appbg";

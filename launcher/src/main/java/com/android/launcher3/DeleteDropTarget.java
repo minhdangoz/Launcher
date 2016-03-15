@@ -41,8 +41,8 @@ import android.view.animation.LinearInterpolator;
 
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.android.launcher3.compat.UserHandleCompat;
-import com.klauncher.ext.KLauncher;
 import com.klauncher.launcher.R;
+import com.klauncher.ext.KLauncherAppDisguise;
 
 public class DeleteDropTarget extends ButtonDropTarget {
     private static int DELETE_ANIMATION_DURATION = 285;
@@ -167,10 +167,8 @@ public class DeleteDropTarget extends ButtonDropTarget {
             if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
                 // yanni: private apps
                 String packageName = item.getIntent().getComponent().getPackageName();
-                for (String pn : KLauncher.PRIVATE_APP) {
-                    if (packageName.contains(pn)) {
-                        return false;
-                    }
+                if (KLauncherAppDisguise.getInstance().inPrivateAppList(packageName)) {
+                    return false;
                 }
             }
 

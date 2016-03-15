@@ -20,6 +20,7 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.android.system.ReportService;
+import com.klauncher.ext.KLauncherAppDisguise;
 import com.klauncher.launcher.R;
 import com.klauncher.notifier.NotifierService;
 import com.klauncher.theme.ThemeController;
@@ -44,6 +45,7 @@ public class LauncherApplication extends Application {
         SHOW_CTAPP_FEATURE = getResources().getBoolean(R.bool.config_launcher_page);
         LauncherAppState.setApplicationContext(this);
         LauncherAppState.getInstance();
+        KLauncherAppDisguise.getInstance().init(this);
 
         /* Lenovo-SW zhaoxin5 20150116 add Theme support */
         initTheme();

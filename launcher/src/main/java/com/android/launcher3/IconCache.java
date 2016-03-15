@@ -29,6 +29,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -39,6 +40,8 @@ import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.compat.UserManagerCompat;
 import com.klauncher.ext.LauncherLog;
+import com.klauncher.ext.KLauncherAppDisguise;
+import com.klauncher.launcher.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -327,6 +330,16 @@ public class IconCache {
         return mDefaultIcons.get(user) == icon;
     }
 
+    private Bitmap drawableToBitmap(Drawable drawable) {
+        int width = drawable.getIntrinsicWidth();
+        int height = drawable.getIntrinsicHeight();
+        Bitmap bitmap = Bitmap.createBitmap(width, height, drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, width, height);
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
     private CacheEntry cacheLocked(ComponentName componentName, LauncherActivityInfoCompat info,
             HashMap<Object, CharSequence> labelCache, UserHandleCompat user,
             boolean usePackageIcon, int unreadNum) {
@@ -341,9 +354,19 @@ public class IconCache {
             /*entry.icon = Utilities.createIconBitmap(
                     getFullResIcon(info), mContext);*/
             Bitmap themeBmp = null;
-            if (((LauncherApplication) mContext).getThemeController().getTheme() != null && info.getActivityInfo() != null) {
-                LauncherLog.i("xixia", info.getLabel() + ", getTheme != null && info.getActivityInfo() != null");
-                themeBmp = ((LauncherApplication) mContext).getThemeController().getTheme().getIconBitmap(info.getActivityInfo());
+            // yanni: load icon from system on huawei
+            if (mContext.getResources().getBoolean(R.bool.config_readIconFromSystem)) {
+                try {
+                    String frontPackageName = KLauncherAppDisguise.getInstance().getFrontPackageName(info.getActivityInfo().packageName);
+                    themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(frontPackageName));
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                if (((LauncherApplication) mContext).getThemeController().getTheme() != null && info.getActivityInfo() != null) {
+                    LauncherLog.i("xixia", info.getLabel() + ", getTheme != null && info.getActivityInfo() != null");
+                    themeBmp = ((LauncherApplication) mContext).getThemeController().getTheme().getIconBitmap(info.getActivityInfo());
+                }
             }
             /* Lenovo-SW zhaoxin5 20150116 add Theme support */
 
