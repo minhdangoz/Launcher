@@ -134,5 +134,5 @@
     <integer name="config_folderMaxColumn">3</integer>
     <integer name="config_folderMaxRow">4</integer>
     <!-- Lenovo-sw:zhangyj19, modify folder default max num. -->
-    <integer name="config_folderMaxNum">36</integer>
+    <integer name="config_folderMaxNum">64</integer>
 </resources>

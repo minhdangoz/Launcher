@@ -22,7 +22,7 @@
     android:id="@+id/launcher"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="8dp"
+    android:paddingTop="16dp"
     android:background="@drawable/workspace_bg">
 
     <com.android.launcher3.DragLayer
@@ -40,6 +40,7 @@
             android:id="@+id/workspace"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
             launcher:defaultScreen="@integer/config_workspaceDefaultScreen"
             launcher:pageIndicator="@+id/page_indicator">
         </com.android.launcher3.Workspace>

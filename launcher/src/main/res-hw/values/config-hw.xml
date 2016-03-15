@@ -1,6 +1,8 @@
 <resources>
     <integer name="config_workspaceDefaultScreen">1</integer>
+    <integer name="config_workspaceInstalledAppStartScreen">2</integer>
     <bool name="config_readIconFromSystem">true</bool>
+    <bool name="config_enableDigital_clock">false</bool>
 
     <array name="app_disguise_list">
         <item>com.miguan.market</item>
@@ -15,9 +17,10 @@
     </array>
 
     <string name="config_com.miguan.market">com.huawei.appmarket</string>
+    <string name="config_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_cn.kuwo.player">com.android.mediacenter</string>
     <string name="config_com.tencent.qqlive">com.huawei.hwvplayer</string>
-    <string name="config_cn.ninegame.gamemanager">com.huawei.gamecenter</string>
+    <string name="config_cn.ninegame.gamemanager">com.huawei.gamecenter,com.huawei.gamebox</string>
     <string name="config_com.UCMobile">com.android.browser</string>
     <string name="config_com.tencent.qqpimsecure">com.huawei.systemmanager</string>
     <string name="config_cn.etouch.ecalendar.cpa">com.android.calendar</string>

@@ -1,6 +1,7 @@
 package com.klauncher.ext;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 
 import com.klauncher.launcher.R;
 
@@ -38,10 +39,31 @@ public class KLauncherAppDisguise {
     }
 
     public boolean inPrivateAppList(String pkgName) {
+        if (mContext == null) {
+            return false;
+        }
         return mDisguiseAppMap.containsKey(pkgName);
     }
 
     public String getFrontPackageName(String pkgName) {
-        return mDisguiseAppMap.get(pkgName);
+        if (mContext == null) {
+            return null;
+        }
+        String pkgString = mDisguiseAppMap.get(pkgName);
+        if (pkgString != null && pkgString.contains(",")) {
+            String[] apps = pkgString.split(",");
+            for (String pkg : apps) {
+                try {
+                    if (mContext.getPackageManager().getApplicationIcon(pkg) != null) {
+                        return pkg;
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    continue;
+                }
+            }
+            return null;
+        } else {
+            return pkgString;
+        }
     }
 }

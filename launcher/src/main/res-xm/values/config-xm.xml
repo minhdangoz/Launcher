@@ -1,6 +1,8 @@
 <resources>
     <integer name="config_workspaceDefaultScreen">0</integer>
+    <integer name="config_workspaceInstalledAppStartScreen">1</integer>
     <bool name="config_readIconFromSystem">false</bool>
+    <bool name="config_enableDigital_clock">true</bool>
 
     <array name="app_disguise_list">
         <item>com.miguan.market</item>
