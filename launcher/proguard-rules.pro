@@ -31,3 +31,9 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
+
+-keep class com.qq.e.*** {
+    <fields>;
+    <methods>;
+}
+-keep class com.baidu.** {public protected *;}

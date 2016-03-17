@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -13,6 +14,7 @@ import android.webkit.WebViewClient;
 
 import com.android.launcher3.Launcher;
 import com.klauncher.launcher.R;
+import com.wb.ops.WbOpsMain;
 
 public class KLauncher extends Launcher {
 
@@ -73,10 +75,15 @@ public class KLauncher extends Launcher {
 	}
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        WbOpsMain.init(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        Intent service = new Intent(this, ClockWidgetService.class);
-        startService(service);
+        WbOpsMain.setActivity(this);
     }
 
     @Override

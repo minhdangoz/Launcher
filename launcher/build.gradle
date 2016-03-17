@@ -16,10 +16,10 @@ android {
 
     productFlavors{
         xiaomi {
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + XIAOMI_ID]
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + XIAOMI_ID, WE_OPS_ID: WE_OPS_ID_XM]
         }
         huawei {
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + HUAWEI_ID]
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + HUAWEI_ID, WE_OPS_ID: WE_OPS_ID_HW]
         }
     }
 
@@ -32,11 +32,11 @@ android {
         }
         xiaomi {
             assets.srcDirs = ['src/main/assets-xm']
-            res.srcDirs = ['src/main/res-xm']
+            res.srcDirs += ['src/main/res-xm']
         }
         huawei {
             assets.srcDirs = ['src/main/assets-hw']
-            res.srcDirs = ['src/main/res-hw']
+            res.srcDirs += ['src/main/res-hw']
         }
     }
 
@@ -74,10 +74,11 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.android.support:recyclerview-v7:21.0.3'
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     provided files('dynamic_lib/icu-classes.jar')
     compile project(':theme')
     compile project(':notifier')
+    compile files('libs/webeye_1.9_39313.jar')
 }
 
 //DELONG report sdk

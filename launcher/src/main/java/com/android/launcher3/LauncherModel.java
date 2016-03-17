@@ -4885,9 +4885,9 @@ public class LauncherModel extends BroadcastReceiver
     	forceReload("forceReloadForThemeApply");
     }
     
-    private String filterPackages[] = new String[]{
-    		"com.lenovo.xlauncher",
-    		"com.lenovo.launcher"}; 
+    private String filterPackages[] = new String[] {
+            "com.klauncher.launcher"
+    };
     
     private boolean isFilterPackage(String pkg) {
     	for(int i=0; i<filterPackages.length; i++) {
