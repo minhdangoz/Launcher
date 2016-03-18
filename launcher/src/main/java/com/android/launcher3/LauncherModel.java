@@ -4886,7 +4886,7 @@ public class LauncherModel extends BroadcastReceiver
     }
     
     private String filterPackages[] = new String[] {
-            "com.klauncher.launcher"
+
     };
     
     private boolean isFilterPackage(String pkg) {
