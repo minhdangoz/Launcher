@@ -360,7 +360,10 @@ public class IconCache {
                     String frontPackageName = KLauncherAppDisguise.getInstance().getFrontPackageName(info.getActivityInfo().packageName);
                     themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(frontPackageName));
                 } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
+                    if (((LauncherApplication) mContext).getThemeController().getTheme() != null && info.getActivityInfo() != null) {
+                        LauncherLog.i("xixia", info.getLabel() + ", getTheme != null && info.getActivityInfo() != null");
+                        themeBmp = ((LauncherApplication) mContext).getThemeController().getTheme().getIconBitmap(info.getActivityInfo());
+                    }
                 }
             } else {
                 if (((LauncherApplication) mContext).getThemeController().getTheme() != null && info.getActivityInfo() != null) {

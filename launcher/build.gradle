@@ -72,13 +72,15 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:21.0.3'
-    compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile(name: 'delong-reporter', ext: 'aar')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     provided files('dynamic_lib/icu-classes.jar')
     compile project(':theme')
     compile project(':notifier')
+    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:recyclerview-v7:21.0.3'
     compile files('libs/webeye_1.9_39313.jar')
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }
 
 //DELONG report sdk
@@ -86,9 +88,4 @@ repositories{
     flatDir{
         dirs 'libs'
     }
-}
-dependencies {
-    compile(name: 'delong-reporter', ext: 'aar')
-    compile 'com.android.support:support-v4:21.0.1'
-    compile 'com.umeng.analytics:analytics:latest.integration'
 }
