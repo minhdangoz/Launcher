@@ -16,4 +16,6 @@
         <item>com.moji.mjweather</item>
         <item>com.yidian.dk</item>
     </array>
+
+    <string name="folder_system_tool">系统工具</string>
 </resources>

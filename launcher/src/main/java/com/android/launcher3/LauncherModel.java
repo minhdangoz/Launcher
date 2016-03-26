@@ -770,13 +770,36 @@ public class LauncherModel extends BroadcastReceiver
 								}
 							}
 						}
-                        if(!needSkip) {
-	                        // Add the shortcut to the db
-	                        addItemToDatabase(context, shortcutInfo,
-	                                LauncherSettings.Favorites.CONTAINER_DESKTOP,
-	                                screenId, cellX, cellY, false);
-	                        // Save the ShortcutInfo for binding in the workspace
-	                        addedShortcutsFinal.add(shortcutInfo);
+                        // modify by yanni: stk/utk special move into folder
+                        String packageName = null;
+                        try {
+                            packageName = shortcutInfo.getTargetComponent().getPackageName();
+                        } catch (Exception e) { }
+                        if ("com.android.stk".equals(packageName) || "com.android.utk".equals(packageName)) {
+                            LauncherLog.i(TAG, TAG_SDCARD + ": component=" + shortcutInfo.getTargetComponent().getClassName());
+                            final ShortcutInfo shortcut = shortcutInfo;
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Collection<FolderInfo> folderList = sBgFolders.values();
+                                    for (FolderInfo folderInfo : folderList) {
+                                        if (mApp.getContext().getResources().getString(R.string.folder_system_tool)
+                                                .equals(folderInfo.title)) {
+                                            folderInfo.add(shortcut);
+                                            break;
+                                        }
+                                    }
+                                }
+                            });
+                        } else {
+                            if(!needSkip) {
+                                // Add the shortcut to the db
+                                addItemToDatabase(context, shortcutInfo,
+                                        LauncherSettings.Favorites.CONTAINER_DESKTOP,
+                                        screenId, cellX, cellY, false);
+                                // Save the ShortcutInfo for binding in the workspace
+                                addedShortcutsFinal.add(shortcutInfo);
+                            }
                         }
                         /** Lenovo-SW zhaoxin5 20150824 add for XTHREEROW-942 END */
                     }
