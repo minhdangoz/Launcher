@@ -129,6 +129,7 @@ import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsController;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
+import com.klauncher.ping.PingManager;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
@@ -3922,6 +3923,7 @@ public class Launcher extends Activity
                 launcherApps.startActivityForProfile(intent.getComponent(), user,
                         intent.getSourceBounds(), optsBundle);
             }
+            PingManager.getInstance().reportUserAction4App("1", intent.getPackage());
             return true;
         } catch (SecurityException e) {
             Toast.makeText(this, R.string.activity_not_found, Toast.LENGTH_SHORT).show();

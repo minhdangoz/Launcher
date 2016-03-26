@@ -16,16 +16,11 @@
 
 package com.android.launcher3;
 
-import android.app.Application;
-import android.content.Intent;
-
-import com.android.system.ReportService;
-import com.klauncher.ext.KLauncherAppDisguise;
+import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.launcher.R;
-import com.klauncher.notifier.NotifierService;
 import com.klauncher.theme.ThemeController;
 
-public class LauncherApplication extends Application {
+public class LauncherApplication extends KLauncherApplication {
     public static boolean LAUNCHER_SHOW_UNREAD_NUMBER;
     public static boolean LAUNCHER_SHORTCUT_ENABLED;
     public static boolean SHOW_CTAPP_FEATURE;
@@ -45,16 +40,11 @@ public class LauncherApplication extends Application {
         SHOW_CTAPP_FEATURE = getResources().getBoolean(R.bool.config_launcher_page);
         LauncherAppState.setApplicationContext(this);
         LauncherAppState.getInstance();
-        KLauncherAppDisguise.getInstance().init(this);
 
         /* Lenovo-SW zhaoxin5 20150116 add Theme support */
         initTheme();
         /* Lenovo-SW zhaoxin5 20150116 add Theme support */
-
-        // Init DELONG report
-        ReportService.startService(this, ReportService.POST_AS_REGULAR);
-
-        startService(new Intent(this, NotifierService.class));
+        //startService(new Intent(this, NotifierService.class));
     }
 
     @Override
