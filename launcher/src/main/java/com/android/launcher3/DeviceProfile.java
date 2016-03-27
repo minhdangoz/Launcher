@@ -625,8 +625,8 @@ public class DeviceProfile {
         folderCellHeightPx = cellHeightPx + verticalEdgeMarginPx;
         /*Lenovo-sw zhangyj19 add 2015/07/08 modify folder default row and line end*/
 	   /*Lenovo-sw zhangyj19 add 2015/06/03 modify folder size begin */
-        folderBackgroundOffset = 0;//-edgeMarginPx;
-        folderIconSizePx = iconSizePx;// + 2 * -folderBackgroundOffset;
+        folderBackgroundOffset = edgeMarginPx * 3 / 4;//-edgeMarginPx;
+        folderIconSizePx = iconSizePx - edgeMarginPx;// + 2 * -folderBackgroundOffset;
 	   /*Lenovo-sw zhangyj19 add 2015/06/03 modify folder size end */
         // All Apps
         Rect padding = getWorkspacePadding(isLandscape ?

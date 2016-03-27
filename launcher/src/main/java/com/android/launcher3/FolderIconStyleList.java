@@ -169,7 +169,7 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 			mMaxPerspectiveShift = (int) (mIntrinsicIconSize * (mBaselineIconScale * 1 - 0.1f));
 			mOffsetX = (previewSize - mMaxPerspectiveShift * 3) / 10;
 			mPreviewOffsetX = (mTotalWidth - previewSize) / 2;
-			mPreviewOffsetY = mIcon.getPaddingTop();
+			mPreviewOffsetY = mIcon.getPaddingTop() + previewPadding / 3 * 2;
 		}
 	}
 
