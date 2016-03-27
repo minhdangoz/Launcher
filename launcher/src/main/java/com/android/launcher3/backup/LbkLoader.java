@@ -614,7 +614,22 @@ public class LbkLoader implements LauncherProvider.WorkspaceLoader {
 		String iconPackage = parser.getAttributeValue(null, LbkUtil.ShortCut.ATTR_ICON_PACKAGE);
 		String iconResource = parser.getAttributeValue(null, LbkUtil.ShortCut.ATTR_ICON_RESOURCE);
 		String icon = parser.getAttributeValue(null, LbkUtil.ShortCut.ATTR_ICON);
-		
+
+		if (packageName.contains(",")) {
+			String[] packages = packageName.split(",");
+			Intent launchIntent = mPackageManager.getLaunchIntentForPackage(packages[0]);
+			if (launchIntent != null) {
+				packageName = packages[0];
+			} else {
+				packageName = packages[1];
+			}
+		}
+		if (className == null) {
+			Intent launchIntent = mPackageManager.getLaunchIntentForPackage(packageName);
+			className = launchIntent.getComponent().getClassName();
+		}
+
+
 		if(LOGD) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("{ ");
