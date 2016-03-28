@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.android.launcher3.compat.UserHandleCompat;
 import com.klauncher.launcher.R;
+import com.klauncher.ping.PingManager;
 
 import org.json.JSONObject;
 import org.json.JSONStringer;
@@ -312,6 +313,8 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
                     ShortcutInfo info = getShortcutInfo(context, pendingInfo.data,
                             pendingInfo.launchIntent);
                     addShortcuts.add(info);
+                    PingManager.getInstance().reportUserAction4App(
+                            PingManager.USER_ACTION_INSTALL, packageName);
                 }
 
             }

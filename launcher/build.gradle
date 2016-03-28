@@ -14,6 +14,12 @@ android {
         }
     }
 
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
     productFlavors{
         xiaomi {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + XIAOMI_ID, WE_OPS_ID: WE_OPS_ID_XM]
@@ -64,15 +70,17 @@ android {
             shrinkResources true
             signingConfig  signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "PING_DOMAIN", "\"http://test.ping.klauncher.com\""
         }
         debug {
             minifyEnabled false
+            buildConfigField "String", "PING_DOMAIN", "\"http://test.ping.klauncher.com\""
         }
     }
 }
 
 dependencies {
-    compile(name: 'delong-reporter', ext: 'aar')
+    compile (name: 'delong-reporter', ext: 'aar')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     provided files('dynamic_lib/icu-classes.jar')
     compile project(':theme')
@@ -81,11 +89,4 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.3'
     compile files('libs/webeye_1.9_39313.jar')
     compile 'com.umeng.analytics:analytics:latest.integration'
-}
-
-//DELONG report sdk
-repositories{
-    flatDir{
-        dirs 'libs'
-    }
 }

@@ -115,7 +115,7 @@ public class LbkPackager {
 		mListener = l;
 	}
 	
-	public LbkPackager() {
+	private LbkPackager() {
 		// TODO Auto-generated constructor stub
 	}
 

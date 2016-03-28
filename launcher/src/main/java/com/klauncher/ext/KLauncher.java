@@ -13,8 +13,18 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.android.launcher3.Launcher;
+import com.android.launcher3.backup.LbkPackager;
+import com.android.launcher3.backup.LbkUtil;
 import com.klauncher.launcher.R;
+import com.klauncher.ping.PingManager;
 import com.wb.ops.WbOpsMain;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class KLauncher extends Launcher {
 
@@ -78,12 +88,44 @@ public class KLauncher extends Launcher {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WbOpsMain.init(this);
+        PingManager.getInstance().ping(4, null);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         WbOpsMain.setActivity(this);
+        PingManager.getInstance().ping(3, null);
+
+        if (PingManager.getInstance().needReportLauncherAppList()) {
+            LbkPackager.startBackup(this, new LbkPackager.BackupListener() {
+                @Override
+                public void onBackupStart() {
+                }
+
+                @Override
+                public void onBackupEnd(boolean success) {
+                    if (success) {
+                        File xmlFile = new File(LbkUtil.getXLauncherLbkBackupTempPath() + File.separator + LbkUtil.DESC_FILE);
+                        FileInputStream fis;
+                        StringBuilder sb = new StringBuilder();
+                        try {
+                            fis = new FileInputStream(xmlFile);
+                            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+                            String line;
+                            while ((line = br.readLine()) != null) {
+                                sb.append(line);
+                            }
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        PingManager.getInstance().reportLauncherAppList(sb.toString());
+                    }
+                }
+            });
+        }
     }
 
     @Override

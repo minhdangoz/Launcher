@@ -43,6 +43,7 @@ import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.klauncher.launcher.R;
 import com.klauncher.ext.KLauncherAppDisguise;
+import com.klauncher.ping.PingManager;
 
 public class DeleteDropTarget extends ButtonDropTarget {
     private static int DELETE_ANIMATION_DURATION = 285;
@@ -357,6 +358,8 @@ public class DeleteDropTarget extends ButtonDropTarget {
             AppInfo appInfo = (AppInfo) item;
             mLauncher.startApplicationUninstallActivity(appInfo.componentName, appInfo.flags,
                     appInfo.user);
+            PingManager.getInstance().reportUserAction4App(
+                    PingManager.USER_ACTION_UNINSTALL, appInfo.componentName.getPackageName());
         } else if (isUninstallFromWorkspace(d)) {
             ShortcutInfo shortcut = (ShortcutInfo) item;
             if (shortcut.intent != null && shortcut.intent.getComponent() != null) {
@@ -372,6 +375,8 @@ public class DeleteDropTarget extends ButtonDropTarget {
                 
                 mWaitingForUninstall = mLauncher.startApplicationUninstallActivity(
                         componentName, shortcut.flags, user);
+                PingManager.getInstance().reportUserAction4App(
+                        PingManager.USER_ACTION_UNINSTALL, componentName.getPackageName());
                 if (mWaitingForUninstall) {
                     final Runnable checkIfUninstallWasSuccess = new Runnable() {
                         @Override
