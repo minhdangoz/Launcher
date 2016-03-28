@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.android.homeshell"
+        applicationId "com.klauncher.launcher"
         minSdkVersion 16
         targetSdkVersion 21
         compileOptions {
