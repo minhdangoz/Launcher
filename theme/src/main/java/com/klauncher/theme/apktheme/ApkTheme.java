@@ -78,7 +78,27 @@ public class ApkTheme implements ITheme {
         return iconBitmap;
     }
 
-    @Override
+	@Override
+	public Bitmap getIconFromTheme(ActivityInfo activityInfo) {
+		Bitmap iconBitmap = null;
+
+		if (null == mLauncherContext || null == activityInfo) {
+			return null;
+		}
+        /* Lenovo-SW 20150413 zhaoxin5 fix bug that get activity icon is null START */
+		int iconId = activityInfo.getIconResource();
+        /* Lenovo-SW 20150413 zhaoxin5 fix bug that get activity icon is null END */
+		String pkgName = activityInfo.packageName;
+		try {
+			iconBitmap = ApkThemeUtils.findCustomIconById(iconId, mContext, mLauncherContext, pkgName, hasBgBitmap());
+		} catch (Exception e) {
+			ThemeLog.e(TAG, "getIconBitmap Failed", e);
+		}
+
+		return iconBitmap;
+	}
+
+	@Override
     public boolean hasBgBitmap() {
     	return sHasBgBitmap;
     }

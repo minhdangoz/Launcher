@@ -178,10 +178,14 @@ public class LbkUtil {
 		Context context = LauncherAppState.getInstance().getContext();
 		//String model = Build.MODEL.replace(" ", "-");
 		//LauncherLog.i("wcrow", "model = " + model);
-		String name = "default.lbk";
+		String name;
 		float rows = LauncherAppState.getInstance().getDynamicGrid().getNumRows();
-		if (rows > 5) {
+		if (rows < 5) {
+			name = "default4.lbk";
+		} else if (rows > 5) {
 			name = "default2.lbk";
+		} else {
+			name = "default.lbk";
 		}
 		File cacheFile = new File(context.getCacheDir(), name);
 		if (cacheFile.exists()) {

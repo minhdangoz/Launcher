@@ -16,6 +16,8 @@
 
 package com.android.launcher3;
 
+import android.os.Build;
+
 import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.launcher.R;
 import com.klauncher.theme.ThemeController;
@@ -55,11 +57,16 @@ public class LauncherApplication extends KLauncherApplication {
 
     /* Lenovo-SW zhaoxin5 20150116 add Theme support */
     ThemeController mThemeController = null;
-    public void initTheme(){
-        mThemeController = new ThemeController(getApplicationContext());
+    public void initTheme() {
+        boolean useUiTheme = false;
+        String[] keywords = getResources().getStringArray(R.array.config_theme_load_keywords);
+        for (String keyword : keywords) {
+            useUiTheme = Build.MODEL.contains(keyword);
+        }
+        mThemeController = new ThemeController(getApplicationContext(), useUiTheme);
     }
 
-    public ThemeController getThemeController(){
+    public ThemeController getThemeController() {
         return mThemeController;
     }
     /* Lenovo-SW zhaoxin5 20150116 add Theme support */

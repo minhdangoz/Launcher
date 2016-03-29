@@ -65,7 +65,16 @@ public class ZipTheme implements ITheme {
         return bitmap;
 	}
 
-	@Override
+    @Override
+    public Bitmap getIconFromTheme(ActivityInfo info) {
+        Bitmap bitmap = null;
+        /* Lenovo-SW 20150413 zhaoxin5 fix bug that get activity icon is null START */
+        bitmap = ZipThemeUtils.retrieveCustomIconFromZipFileOnly(info.getIconResource(), info.packageName, mContext);
+        /* Lenovo-SW 20150413 zhaoxin5 fix bug that get activity icon is null END */
+        return bitmap;
+    }
+
+    @Override
 	public void handleTheme(boolean justReloadLauncher, boolean enableThemeMask) {
 		if(justReloadLauncher){
             ThemeUtils.sendBroadcastToForceReloadLauncher(mContext, mZipThemeFilePath);
@@ -85,8 +94,10 @@ public class ZipTheme implements ITheme {
             InputStream myInput = null;
             OutputStream myOutput = null;
             try {
-                myOutput = new FileOutputStream(ThemeController.DEFAULT_ZIP_THEME);
-                myInput = mContext.getAssets().open("default.ktm");
+                String themeFile = mZipThemeFilePath.substring(
+                        ThemeController.DEFAULT_ZIP_THEME.lastIndexOf(File.separator) + 1);
+                myOutput = new FileOutputStream(mZipThemeFilePath);
+                myInput = mContext.getAssets().open(themeFile);
                 byte[] buffer = new byte[1024];
                 int length = myInput.read(buffer);
                 while (length > 0) {
@@ -97,9 +108,13 @@ public class ZipTheme implements ITheme {
                 e.printStackTrace();
             } finally {
                 try {
-                    myOutput.flush();
-                    myInput.close();
-                    myOutput.close();
+                    if (myOutput != null) {
+                        myOutput.flush();
+                        myOutput.close();
+                    }
+                    if (myInput != null) {
+                        myInput.close();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

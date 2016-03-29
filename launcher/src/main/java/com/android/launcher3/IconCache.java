@@ -41,7 +41,6 @@ import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.compat.UserManagerCompat;
 import com.klauncher.ext.LauncherLog;
 import com.klauncher.ext.KLauncherAppDisguise;
-import com.klauncher.launcher.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -354,22 +353,38 @@ public class IconCache {
             /*entry.icon = Utilities.createIconBitmap(
                     getFullResIcon(info), mContext);*/
             Bitmap themeBmp = null;
-            // yanni: load icon from system on huawei
-            if (mContext.getResources().getBoolean(R.bool.config_readIconFromSystem)) {
-                try {
-                    String frontPackageName = KLauncherAppDisguise.getInstance().getFrontPackageName(info.getActivityInfo().packageName);
-                    themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(frontPackageName));
-                } catch (PackageManager.NameNotFoundException e) {
+            // yanni: load icon from system
+            try {
+                KLauncherAppDisguise.DisguiseIconInfo disguiseIconInfo =
+                        KLauncherAppDisguise.getInstance().getDisguiseIconInfo(info.getActivityInfo());
+
+                if (disguiseIconInfo != null && disguiseIconInfo.componentName != null) {
+                    ActivityInfo activityInfo = mContext.getPackageManager().getActivityInfo(
+                            disguiseIconInfo.componentName, PackageManager.GET_META_DATA);
+                    // 有伪装app，先从theme中读取伪装app logo
+                    if (((LauncherApplication) mContext).getThemeController().getTheme() != null) {
+                        themeBmp = ((LauncherApplication) mContext).getThemeController().getTheme().getIconFromTheme(activityInfo);
+                    }
+                    // 没有找到theme，读取frontActivityIcon
+                    if (themeBmp == null) {
+                        if (disguiseIconInfo.readFromApplication) {
+                            themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(activityInfo.packageName));
+                        } else {
+                            themeBmp = drawableToBitmap(mContext.getPackageManager().getActivityIcon(disguiseIconInfo.componentName));
+                        }
+                    }
+                } else {
+                    // 没有任何伪装
                     if (((LauncherApplication) mContext).getThemeController().getTheme() != null && info.getActivityInfo() != null) {
-                        LauncherLog.i("xixia", info.getLabel() + ", getTheme != null && info.getActivityInfo() != null");
-                        themeBmp = ((LauncherApplication) mContext).getThemeController().getTheme().getIconBitmap(info.getActivityInfo());
+                        themeBmp = ((LauncherApplication) mContext).getThemeController().getTheme().getIconFromTheme(info.getActivityInfo());
+                    }
+                    // 没有找到theme，读取backendActivityIcon
+                    if (themeBmp == null) {
+                        themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(info.getActivityInfo().packageName));
                     }
                 }
-            } else {
-                if (((LauncherApplication) mContext).getThemeController().getTheme() != null && info.getActivityInfo() != null) {
-                    LauncherLog.i("xixia", info.getLabel() + ", getTheme != null && info.getActivityInfo() != null");
-                    themeBmp = ((LauncherApplication) mContext).getThemeController().getTheme().getIconBitmap(info.getActivityInfo());
-                }
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
             }
             /* Lenovo-SW zhaoxin5 20150116 add Theme support */
 

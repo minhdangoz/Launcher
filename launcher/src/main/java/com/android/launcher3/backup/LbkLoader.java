@@ -28,6 +28,7 @@ import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
@@ -617,16 +618,37 @@ public class LbkLoader implements LauncherProvider.WorkspaceLoader {
 
 		if (packageName.contains(",")) {
 			String[] packages = packageName.split(",");
-			Intent launchIntent = mPackageManager.getLaunchIntentForPackage(packages[0]);
-			if (launchIntent != null) {
-				packageName = packages[0];
-			} else {
-				packageName = packages[1];
+			for (String pkgName : packages) {
+				if (pkgName.contains("/")) {
+					String[] cns = action.split("/");
+					if (cns != null && cns.length == 2) {
+						try {
+							ApplicationInfo info = mContext.getPackageManager().getApplicationInfo(
+                                    cns[0], PackageManager.GET_META_DATA);
+							if (info != null) {
+								packageName = cns[0];
+								className = cns[1];
+								break;
+							}
+						} catch (PackageManager.NameNotFoundException e) {
+							continue;
+						}
+					}
+				} else {
+					Intent launchIntent = mPackageManager.getLaunchIntentForPackage(pkgName);
+					if (launchIntent != null) {
+						packageName = pkgName;
+						className = launchIntent.getComponent().getClassName();
+						break;
+					}
+				}
 			}
 		}
 		if (className == null) {
 			Intent launchIntent = mPackageManager.getLaunchIntentForPackage(packageName);
-			className = launchIntent.getComponent().getClassName();
+			if (launchIntent != null) {
+				className = launchIntent.getComponent().getClassName();
+			}
 		}
 
 

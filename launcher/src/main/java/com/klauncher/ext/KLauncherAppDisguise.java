@@ -1,6 +1,9 @@
 package com.klauncher.ext;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 
 import com.klauncher.launcher.R;
@@ -11,7 +14,13 @@ import java.util.HashMap;
  * Created by yanni on 16/3/15.
  */
 public class KLauncherAppDisguise {
-    private static final String DISGUISE_CONFIG_PREFIX = "config_";
+
+    public static class DisguiseIconInfo {
+        public ComponentName componentName;
+        public boolean readFromApplication;
+    }
+
+    private static final String DISGUISE_CONFIG_PREFIX = "config_icon_";
 
     private static KLauncherAppDisguise sInstance = new KLauncherAppDisguise();
     public static KLauncherAppDisguise getInstance() {
@@ -45,25 +54,65 @@ public class KLauncherAppDisguise {
         return mDisguiseAppMap.containsKey(pkgName);
     }
 
-    public String getFrontPackageName(String pkgName) {
+    public DisguiseIconInfo getDisguiseIconInfo(ActivityInfo info) {
+        if (info == null) {
+            return null;
+        }
+        ComponentName componentName = getFrontComponent(info.packageName);
+        DisguiseIconInfo iconInfo = new DisguiseIconInfo();
+        if (componentName != null) {
+            iconInfo.componentName = componentName;
+            iconInfo.readFromApplication = info.targetActivity == null ? true :
+                    componentName.getClassName().equals(info.targetActivity);
+        }
+        return iconInfo;
+    }
+
+    private ComponentName getFrontComponent(String backendPackageName) {
         if (mContext == null) {
             return null;
         }
-        String pkgString = mDisguiseAppMap.get(pkgName);
-        if (pkgString != null && pkgString.contains(",")) {
-            String[] apps = pkgString.split(",");
+        String frontPackageName = mDisguiseAppMap.get(backendPackageName);
+        if (frontPackageName == null) {
+            return null;
+        }
+        if (frontPackageName.contains(",")) {
+            String[] apps = frontPackageName.split(",");
             for (String pkg : apps) {
-                try {
-                    if (mContext.getPackageManager().getApplicationIcon(pkg) != null) {
-                        return pkg;
-                    }
-                } catch (PackageManager.NameNotFoundException e) {
-                    continue;
+                ComponentName componentName = getComponent(pkg);
+                if (componentName != null) {
+                    return componentName;
                 }
             }
             return null;
         } else {
-            return pkgString;
+            return getComponent(frontPackageName);
         }
+    }
+
+    private ComponentName getComponent(String action) {
+        ComponentName component = null;
+        if (action.contains("/")) {
+            String[] cns = action.split("/");
+            if (cns != null && cns.length == 2) {
+                component = new ComponentName(cns[0], cns[1]);
+            }
+        } else {
+            Intent launchIntent = mContext.getPackageManager().getLaunchIntentForPackage(action);
+            if (launchIntent != null) {
+                component = launchIntent.getComponent();
+            }
+        }
+        if (component != null) {
+            try {
+                ActivityInfo activityInfo = mContext.getPackageManager().getActivityInfo(
+                        component, PackageManager.GET_META_DATA);
+                if (activityInfo != null) {
+                    return component;
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+            }
+        }
+        return null;
     }
 }

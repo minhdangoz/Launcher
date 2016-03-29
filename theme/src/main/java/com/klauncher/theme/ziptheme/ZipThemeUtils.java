@@ -188,6 +188,38 @@ public class ZipThemeUtils {
         }
         return null;
     }
+
+    public static Bitmap retrieveCustomIconFromZipFileOnly(int iconId, String packageName,
+                                                       Context context) {
+        if (context == null || packageName == null || iconId == 0) {
+            ThemeLog.i(TAG, "launcherApplication == null || packageName == null || iconId == 0");
+            return null;
+        }
+        Resources res = ThemeUtils.getResourcesForApplication(context, packageName);
+        if (res != null) {
+            try {
+                // get icon id name
+                String iconName = res.getResourceName(iconId);
+                // parse the icon name
+                if (iconName != null) {
+                    String[] resName = new String[2];
+                    ThemeUtils.parseResourceName(iconName, resName, packageName);
+                    Drawable drawable = loadDrawable(resName[0], context);
+                    if (drawable == null && resName[1] != null && !resName[1].equals(resName[0])) {
+                        drawable = loadDrawable(resName[1], context);
+                    }
+                    if (drawable != null) {
+                        return Utilities.createIconBitmapForZipTheme(drawable, context);
+                    }
+                }
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 	
 	public static void applyWallpaper(Context context, InputStream is, String tag){
 		ThemeUtils.applyWallpaper(context, is, tag);

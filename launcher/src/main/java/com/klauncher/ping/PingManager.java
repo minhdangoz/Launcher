@@ -31,7 +31,7 @@ public class PingManager {
     public static final String USER_ACTION_UNINSTALL = "2";
     public static final String USER_ACTION_INSTALL = "3";
 
-    private static final int MAX_BUFFER_SIZE = 20;
+    private static final int MAX_BUFFER_SIZE = 10;
     private static final String SP_PING = "ping";
     private static final String KEY_PING_APPLIST_LAST_REPORT = "lst_rpt_app";
     private static final int MIN_REPORT_INTERVAL = 12 * 3600 * 1000; //12 hours
@@ -157,10 +157,9 @@ public class PingManager {
             pingMap.put("version_code", String.valueOf(packageInfo.versionCode));
             pingMap.put("crc", getApkFileSFCrc32(applicationInfo.sourceDir));
             pingMap.put("md5", getFileMD5(applicationInfo.sourceDir));
+            ping(1, pingMap);
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
         }
-        ping(1, pingMap);
     }
 
     public void reportLauncherAppList(String xml) {

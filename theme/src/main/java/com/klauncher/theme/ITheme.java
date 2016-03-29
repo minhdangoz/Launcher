@@ -22,6 +22,8 @@ public interface ITheme {
      * @return the icon of the specified packagename.
      */
     public Bitmap getIconBitmap(ActivityInfo info);
+
+    public Bitmap getIconFromTheme(ActivityInfo info);
     
     /**
      *  Do some work to apply the theme
