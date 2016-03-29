@@ -36,20 +36,23 @@ class PingHandler {
 
         @Override
         public String getRequestJsonData() {
+            JSONObject pingData = new JSONObject();
+            putGeneralData(pingData);
             JSONArray postArray = new JSONArray();
-            for (Map<String, String> map : mDataMap) {
-                JSONObject postData = new JSONObject();
-                putGeneralData(postData);
-                for (String key : map.keySet()) {
-                    try {
-                        postData.put(key, map.get(key));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+            try {
+                for (Map<String, String> map : mDataMap) {
+                    JSONObject postData = new JSONObject();
+                    for (String key : map.keySet()) {
+                            postData.put(key, map.get(key));
+
                     }
+                    postArray.put(postData);
                 }
-                postArray.put(postData);
+                pingData.put("data", postArray);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            return postArray.toString();
+            return pingData.toString();
         }
 
         @Override
