@@ -25,7 +25,10 @@ android {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + XIAOMI_ID, WE_OPS_ID: WE_OPS_ID_XM]
         }
         huawei {
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + HUAWEI_ID, WE_OPS_ID: WE_OPS_ID_HW]
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + HUAWEI_ID, WE_OPS_ID: WE_OPS_ID_HWS]
+        }
+        lenovo {
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + LENOVO_ID, WE_OPS_ID: WE_OPS_ID_LK]
         }
     }
 
@@ -43,6 +46,10 @@ android {
         huawei {
             assets.srcDirs = ['src/main/assets-hw']
             res.srcDirs += ['src/main/res-hw']
+        }
+        lenovo {
+            assets.srcDirs = ['src/main/assets-lx']
+            res.srcDirs += ['src/main/res-lx']
         }
     }
 
@@ -70,7 +77,7 @@ android {
             shrinkResources true
             signingConfig  signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "PING_DOMAIN", "\"http://test.ping.klauncher.com\""
+            buildConfigField "String", "PING_DOMAIN", "\"http://ping.klauncher.com\""
         }
         debug {
             minifyEnabled false

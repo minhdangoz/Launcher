@@ -617,16 +617,20 @@ public class LbkLoader implements LauncherProvider.WorkspaceLoader {
 
 		if (packageName.contains(",")) {
 			String[] packages = packageName.split(",");
-			Intent launchIntent = mPackageManager.getLaunchIntentForPackage(packages[0]);
-			if (launchIntent != null) {
-				packageName = packages[0];
-			} else {
-				packageName = packages[1];
+			for (String pkgName : packages) {
+				Intent launchIntent = mPackageManager.getLaunchIntentForPackage(pkgName);
+				if (launchIntent != null) {
+					packageName = pkgName;
+					className = launchIntent.getComponent().getClassName();
+					break;
+				}
 			}
 		}
 		if (className == null) {
 			Intent launchIntent = mPackageManager.getLaunchIntentForPackage(packageName);
-			className = launchIntent.getComponent().getClassName();
+			if (launchIntent != null) {
+				className = launchIntent.getComponent().getClassName();
+			}
 		}
 
 
