@@ -85,13 +85,14 @@ public class PingManager {
     }
 
     private boolean isNetworkAvailable() {
-         ConnectivityManager manager= (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-         NetworkInfo networkInfo= manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-         if (networkInfo != null && networkInfo.isAvailable()) {
+        ConnectivityManager manager= (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        // report under wifi & mobile
+        NetworkInfo networkInfo= manager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isAvailable()) {
             return true;
-         } else {
-             return false;
-         }
+        } else {
+            return false;
+        }
     }
 
     private String getApkFileSFCrc32(String sourceDir) {
