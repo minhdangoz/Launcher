@@ -29,6 +29,7 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.Surface;
@@ -624,10 +625,13 @@ public class DeviceProfile {
         folderCellWidthPx = cellWidthPx + horizontalEdgeMarginPx;
         folderCellHeightPx = cellHeightPx + verticalEdgeMarginPx;
         /*Lenovo-sw zhangyj19 add 2015/07/08 modify folder default row and line end*/
-	   /*Lenovo-sw zhangyj19 add 2015/06/03 modify folder size begin */
-        folderBackgroundOffset = edgeMarginPx * 3 / 4;//-edgeMarginPx;
-        folderIconSizePx = iconSizePx - edgeMarginPx;// + 2 * -folderBackgroundOffset;
-	   /*Lenovo-sw zhangyj19 add 2015/06/03 modify folder size end */
+	    /*Lenovo-sw zhangyj19 add 2015/06/03 modify folder size begin */
+        TypedValue outValue = new TypedValue();
+        resources.getValue(R.dimen.config_folder_background_ratio, outValue, true);
+        folderBackgroundOffset = (int) (edgeMarginPx * outValue.getFloat());
+        resources.getValue(R.dimen.config_folder_iconsize_ratio, outValue, true);
+        folderIconSizePx = (int) (iconSizePx - edgeMarginPx * outValue.getFloat());
+	    /*Lenovo-sw zhangyj19 add 2015/06/03 modify folder size end */
         // All Apps
         Rect padding = getWorkspacePadding(isLandscape ?
                 CellLayout.LANDSCAPE : CellLayout.PORTRAIT);

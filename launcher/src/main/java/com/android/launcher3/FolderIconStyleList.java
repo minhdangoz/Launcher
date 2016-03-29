@@ -17,6 +17,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
@@ -32,18 +33,19 @@ import com.klauncher.launcher.R;
  */
 public class FolderIconStyleList extends FolderIconStyleBase {
 	protected float mOffsetX;
+	private Resources mResources;
 
 	public FolderIconStyleList(Launcher launcher, FolderIcon icon) {
 		// TODO Auto-generated constructor stub
 		super(launcher, icon);
-		Resources res = mLauncher.getResources();
+		mResources = mLauncher.getResources();
 		mNumItems = 9;
 		mShiftFactor = 1f;
 		/* Lenovo-sw zhangyj19 add 2015/07/22 modify theme start */
 		if (FolderRingAnimator.sSharedInnerRingDrawable != null) {
 			mIcon.mPreviewBackground.setImageDrawable(FolderRingAnimator.sSharedInnerRingDrawable);
 		} else {
-			mIcon.mPreviewBackground.setImageDrawable(res.getDrawable(R.drawable.portal_ring_inner_holo));
+			mIcon.mPreviewBackground.setImageDrawable(mResources.getDrawable(R.drawable.portal_ring_inner_holo));
 		}
 		/* Lenovo-sw zhangyj19 add 2015/07/22 modify theme end */
 	}
@@ -169,7 +171,9 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 			mMaxPerspectiveShift = (int) (mIntrinsicIconSize * (mBaselineIconScale * 1 - 0.1f));
 			mOffsetX = (previewSize - mMaxPerspectiveShift * 3) / 10;
 			mPreviewOffsetX = (mTotalWidth - previewSize) / 2;
-			mPreviewOffsetY = mIcon.getPaddingTop() + previewPadding / 3 * 2;
+			TypedValue outValue = new TypedValue();
+			mResources.getValue(R.dimen.config_folder_preview_offsety_ratio, outValue, true);
+			mPreviewOffsetY = mIcon.getPaddingTop() + (int)(previewPadding * outValue.getFloat());
 		}
 	}
 

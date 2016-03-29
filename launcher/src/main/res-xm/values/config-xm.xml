@@ -3,6 +3,9 @@
     <integer name="config_workspaceInstalledAppStartScreen">1</integer>
     <bool name="config_readIconFromSystem">false</bool>
     <bool name="config_enableDigital_clock">true</bool>
+    <item name="config_folder_background_ratio" format="float" type="dimen">0</item>
+    <item name="config_folder_iconsize_ratio" format="float" type="dimen">0</item>
+    <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0</item>
 
     <array name="app_disguise_list">
         <item>com.miguan.market</item>
