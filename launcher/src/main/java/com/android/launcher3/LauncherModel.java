@@ -4909,7 +4909,7 @@ public class LauncherModel extends BroadcastReceiver
     }
     
     private String filterPackages[] = new String[] {
-
+        "com.android.launcher3"
     };
     
     private boolean isFilterPackage(String pkg) {
