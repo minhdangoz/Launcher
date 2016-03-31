@@ -22,13 +22,16 @@ android {
 
     productFlavors{
         xiaomi {
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + XIAOMI_ID, WE_OPS_ID: WE_OPS_ID_XM]
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + XIAOMI_ID, WE_OPS_ID: WE_OPS_ID_XMZ]
         }
         huawei {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + HUAWEI_ID, WE_OPS_ID: WE_OPS_ID_HWS]
         }
         lenovo {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + LENOVO_ID, WE_OPS_ID: WE_OPS_ID_LK]
+        }
+        kupai {
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + KUPAI_ID, WE_OPS_ID: WE_OPS_ID_LK]
         }
     }
 
@@ -50,6 +53,10 @@ android {
         lenovo {
             assets.srcDirs = ['src/main/assets-lx']
             res.srcDirs += ['src/main/res-lx']
+        }
+        kupai {
+            assets.srcDirs = ['src/main/assets-kp']
+            res.srcDirs += ['src/main/res-kp']
         }
     }
 

@@ -131,8 +131,6 @@ import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
 import com.klauncher.ping.PingManager;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.message.PushAgent;
-import com.umeng.message.UmengRegistrar;
 import com.klauncher.theme.ThemeController;
 import com.klauncher.launcher.R;
 import com.klauncher.ext.LauncherLog;
@@ -635,12 +633,6 @@ public class Launcher extends Activity
 
         // Support theme
         applyDefaultTheme();
-
-        PushAgent.getInstance(this).setDebugMode(true);
-        PushAgent mPushAgent = PushAgent.getInstance(this);
-        mPushAgent.enable();
-        PushAgent.getInstance(this).onAppStart();
-        String device_token = UmengRegistrar.getRegistrationId(this);
     }
 
     @Override

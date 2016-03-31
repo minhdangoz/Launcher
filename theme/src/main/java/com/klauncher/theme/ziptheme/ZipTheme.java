@@ -85,8 +85,10 @@ public class ZipTheme implements ITheme {
             InputStream myInput = null;
             OutputStream myOutput = null;
             try {
-                myOutput = new FileOutputStream(ThemeController.DEFAULT_ZIP_THEME);
-                myInput = mContext.getAssets().open("default.ktm");
+                String themeFile = mZipThemeFilePath.substring(
+                        ThemeController.DEFAULT_ZIP_THEME.lastIndexOf(File.separator) + 1);
+                myOutput = new FileOutputStream(mZipThemeFilePath);
+                myInput = mContext.getAssets().open(themeFile);
                 byte[] buffer = new byte[1024];
                 int length = myInput.read(buffer);
                 while (length > 0) {
