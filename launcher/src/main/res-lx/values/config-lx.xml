@@ -11,6 +11,10 @@
         <item>Lenovo K</item>
     </array>
 
+    <array name="config_dynamic_grid_keywords">
+        <item>Lenovo A</item>
+    </array>
+
     <array name="app_disguise_list">
         <item>com.miguan.market</item>
         <item>com.alex.nuclear</item>
