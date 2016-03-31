@@ -31,7 +31,7 @@ public class PingManager {
     public static final String USER_ACTION_UNINSTALL = "2";
     public static final String USER_ACTION_INSTALL = "3";
 
-    private static final int MAX_BUFFER_SIZE = 20;
+    private static final int MAX_BUFFER_SIZE = 10;
     private static final String SP_PING = "ping";
     private static final String KEY_PING_APPLIST_LAST_REPORT = "lst_rpt_app";
     private static final int MIN_REPORT_INTERVAL = 12 * 3600 * 1000; //12 hours
