@@ -4909,7 +4909,8 @@ public class LauncherModel extends BroadcastReceiver
     }
     
     private String filterPackages[] = new String[] {
-        "com.android.launcher3"
+            "com.android.launcher3",
+            "com.meizu.flyme.launcher"
     };
     
     private boolean isFilterPackage(String pkg) {
