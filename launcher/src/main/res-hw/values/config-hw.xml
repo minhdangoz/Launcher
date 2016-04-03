@@ -24,15 +24,15 @@
         <item>com.moji.mjweather</item>
     </array>
 
-    <string name="config_com.miguan.market">com.huawei.appmarket</string>
-    <string name="config_com.alex.nuclear">com.huawei.KoBackup</string>
-    <string name="config_cn.kuwo.player">com.android.mediacenter</string>
-    <string name="config_com.tencent.qqlive">com.huawei.hwvplayer</string>
+    <string name="config_icon_com.miguan.market">com.huawei.appmarket</string>
+    <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
+    <string name="config_icon_cn.kuwo.player">com.android.mediacenter</string>
+    <string name="config_icon_com.tencent.qqlive">com.huawei.hwvplayer</string>
     <!--<string name="config_cn.ninegame.gamemanager">com.huawei.gamecenter,com.huawei.gamebox</string>-->
-    <string name="config_com.UCMobile">com.android.browser</string>
-    <string name="config_com.tencent.qqpimsecure">com.huawei.systemmanager</string>
-    <string name="config_cn.etouch.ecalendar.cpa">com.android.calendar</string>
-    <string name="config_com.moji.mjweather">com.huawei.android.totemweather</string>
+    <string name="config_icon_com.UCMobile">com.android.browser</string>
+    <string name="config_icon_com.tencent.qqpimsecure">com.huawei.systemmanager</string>
+    <string name="config_icon_cn.etouch.ecalendar.cpa">com.android.calendar</string>
+    <string name="config_icon_com.moji.mjweather">com.huawei.android.totemweather</string>
 
     <string name="folder_system_tool">系统工具</string>
 </resources>

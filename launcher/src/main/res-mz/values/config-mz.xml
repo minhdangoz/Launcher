@@ -26,15 +26,15 @@
         <item>com.moji.mjweather</item>
     </array>
 
-    <string name="config_com.miguan.market">com.meizu.mstore</string>
-    <string name="config_com.alex.nuclear">com.android.launcher3,com.meizu.flyme.launcher</string>
-    <string name="config_cn.kuwo.player">com.meizu.media.music</string>
-    <string name="config_com.tencent.qqlive">com.meizu.media.video</string>
-    <string name="config_cn.ninegame.gamemanager">com.meizu.flyme.gamecenter</string>
-    <string name="config_com.UCMobile">com.android.browser</string>
-    <string name="config_com.tencent.qqpimsecure">com.meizu.safe</string>
-    <string name="config_cn.etouch.ecalendar.cpa">com.android.calendar</string>
-    <string name="config_com.moji.mjweather">com.meizu.flyme.weather</string>
+    <string name="config_icon_com.miguan.market">com.meizu.mstore</string>
+    <string name="config_icon_com.alex.nuclear">com.android.launcher3,com.meizu.flyme.launcher</string>
+    <string name="config_icon_cn.kuwo.player">com.meizu.media.music</string>
+    <string name="config_icon_com.tencent.qqlive">com.meizu.media.video</string>
+    <string name="config_icon_cn.ninegame.gamemanager">com.meizu.flyme.gamecenter</string>
+    <string name="config_icon_com.UCMobile">com.android.browser</string>
+    <string name="config_icon_com.tencent.qqpimsecure">com.meizu.safe</string>
+    <string name="config_icon_cn.etouch.ecalendar.cpa">com.android.calendar</string>
+    <string name="config_icon_com.moji.mjweather">com.meizu.flyme.weather</string>
 
     <string name="folder_system_tool">系统工具</string>
 </resources>
