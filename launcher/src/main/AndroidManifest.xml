@@ -20,8 +20,8 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.klauncher.launcher"
-    android:versionName="1.8.0"
-    android:versionCode="010300">
+    android:versionName="1.8.2"
+    android:versionCode="1604041220">
 
     <original-package android:name="com.android.launcher" />
 
