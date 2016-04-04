@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public class PingManager {
 
     public static final String KEY_PING_TYPE = "pty";
+    public static final String KEY_PING_TIMESTAMP = "ptm";
 
     public static final String USER_ACTION_CLICK = "1";
     public static final String USER_ACTION_UNINSTALL = "2";
@@ -66,6 +67,7 @@ public class PingManager {
             value = new HashMap<>();
         }
         value.put(KEY_PING_TYPE, String.valueOf(action));
+        value.put(KEY_PING_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
         synchronized (mPingDataList) {
             mPingDataList.add(value);
             if (needSend() && isNetworkAvailable()) {

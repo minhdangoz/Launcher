@@ -43,7 +43,7 @@ class PingHandler {
                 for (Map<String, String> map : mDataMap) {
                     JSONObject postData = new JSONObject();
                     for (String key : map.keySet()) {
-                            postData.put(key, map.get(key));
+                        postData.put(key, map.get(key));
 
                     }
                     postArray.put(postData);
