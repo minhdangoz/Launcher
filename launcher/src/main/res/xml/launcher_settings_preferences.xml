@@ -22,13 +22,13 @@
     <PreferenceCategory
         android:key="normal_settings_key"
         android:title="@string/normal_settings" >
-        <ListPreference
+        <!--<ListPreference
             android:dialogTitle="@string/desktop_style"
             android:entries="@array/launcher_desktop_style_entries"
             android:entryValues="@array/launcher_desktop_style_entries_values"
             android:key="desktop_style_key"
             android:summary="@string/switch_2_single_layer_shortcut"
-            android:title="@string/desktop_style" />
+            android:title="@string/desktop_style" />-->
         <SwitchPreference
           android:defaultValue="true"
           android:key="pref_workspace_loop"
