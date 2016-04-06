@@ -58,12 +58,16 @@ public class LauncherApplication extends KLauncherApplication {
     /* Lenovo-SW zhaoxin5 20150116 add Theme support */
     ThemeController mThemeController = null;
     public void initTheme() {
-        boolean useUiTheme = false;
         String[] keywords = getResources().getStringArray(R.array.config_theme_load_keywords);
+        String themeName = "default";
         for (String keyword : keywords) {
-            useUiTheme = Build.MODEL.contains(keyword);
+            String[] modelTheme = keyword.split(",");
+            if (Build.MODEL.contains(modelTheme[0])) {
+                themeName = modelTheme[1];
+                break;
+            }
         }
-        mThemeController = new ThemeController(getApplicationContext(), useUiTheme);
+        mThemeController = new ThemeController(getApplicationContext(), themeName);
     }
 
     public ThemeController getThemeController() {

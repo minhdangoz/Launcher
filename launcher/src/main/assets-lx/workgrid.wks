@@ -4,12 +4,12 @@
         "columns": "4",
         "iconsize": "52",
         "textsize": "11",
-        "hotseat": "4"
+        "hotseat": "5"
     },
     "5x4": {
         "rows": "5",
         "columns": "4",
-        "iconsize": "52",
+        "iconsize": "58",
         "textsize": "11",
         "hotseat": "5"
     },
@@ -17,13 +17,6 @@
         "rows": "6",
         "columns": "4",
         "iconsize": "52",
-        "textsize": "11",
-        "hotseat": "5"
-    },
-    "Lenovo A": {
-        "rows": "5",
-        "columns": "4",
-        "iconsize": "58",
         "textsize": "11",
         "hotseat": "5"
     }

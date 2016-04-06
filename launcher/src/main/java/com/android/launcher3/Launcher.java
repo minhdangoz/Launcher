@@ -6758,7 +6758,17 @@ public class Launcher extends Activity
     private void applyDefaultTheme(){
     	/*String[] parameters = Placement.getDefaultThemeParameters(this);*/
         //String[] parameters = new String[]{"apk", ThemeController.DEFAULT_APK_THEME};
-        String[] parameters = new String[]{"zip", ThemeController.DEFAULT_ZIP_THEME};
+
+        String[] keywords = getResources().getStringArray(R.array.config_theme_load_keywords);
+        String themeName = "default";
+        for (String keyword : keywords) {
+            String[] modelTheme = keyword.split(",");
+            if (Build.MODEL.contains(modelTheme[0])) {
+                themeName = modelTheme[1];
+                break;
+            }
+        }
+        String[] parameters = new String[]{"zip", ThemeController.UI_ZIP_THEME + themeName + ".ktm"};
         boolean enableThemeMask = !Utilities.isRowProduct();
         if (null != parameters) {
             Intent intent = new Intent();

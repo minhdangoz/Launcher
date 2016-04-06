@@ -30,21 +30,22 @@ public class ThemeController extends BroadcastReceiver{
 
 	//public static final String DEFAULT_APK_THEME = "com.klauncher.theme.colorful";
 	public static final String DEFAULT_ZIP_THEME_FOLDER = Environment.getExternalStorageDirectory() + File.separator + "ktheme";
-	public static final String DEFAULT_ZIP_THEME = DEFAULT_ZIP_THEME_FOLDER + File.separator + "default.ktm";
-	public static final String UI_ZIP_THEME = DEFAULT_ZIP_THEME_FOLDER + File.separator + "theme.ktm";
+	public static final String UI_ZIP_THEME = DEFAULT_ZIP_THEME_FOLDER + File.separator;
 	
     private ITheme mTheme = null;
     private Context mContext = null;
-	private boolean mUseUiTheme = false;
+	private String mThemeName = "default.ktm";
     
     public ITheme getTheme(){
     	return mTheme;
     }
     
-	public ThemeController(Context context, boolean useUiTheme) {
+	public ThemeController(Context context, String themeName) {
 		super();
 		mContext = context.getApplicationContext();
-		mUseUiTheme = useUiTheme;
+		if (themeName != null) {
+			mThemeName = themeName + ".ktm";
+		}
 		
 		// zip theme
 		IntentFilter filter = new IntentFilter(ACTION_LAUNCHER_THEME_ZIP);
@@ -56,11 +57,7 @@ public class ThemeController extends BroadcastReceiver{
 
 		try {
 			//mTheme = new ApkTheme(mContext, DEFAULT_APK_THEME);
-			if (useUiTheme) {
-				mTheme = new ZipTheme(mContext, UI_ZIP_THEME);
-			} else {
-				mTheme = new ZipTheme(mContext, DEFAULT_ZIP_THEME);
-			}
+			mTheme = new ZipTheme(mContext, UI_ZIP_THEME + mThemeName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,11 +75,7 @@ public class ThemeController extends BroadcastReceiver{
 	        	/* adb shell am broadcast -a action_themecenter_themechange_lelauncher_zip --es ThemePath data/data/com.lenovo.xlauncher/res.zip */
 	        	themeInfo = intent.getStringExtra(ACTION_LAUNCHER_THEME_PATH);
 	        	enableThemeMask = intent.getBooleanExtra(EXTRA_LAUNCHER_THEME_ENABLE_THEME_MASK, true);
-				if (mUseUiTheme) {
-					mTheme = new ZipTheme(mContext, UI_ZIP_THEME);
-				} else {
-					mTheme = new ZipTheme(mContext, DEFAULT_ZIP_THEME);
-				}
+				mTheme = new ZipTheme(mContext, themeInfo);
 	        }else if(ACTION_LAUNCHER_THEME_APK.equals(action)){
 	        	/* adb shell am broadcast -a action_themecenter_themechange_lelauncher_apk --es ThemePackage com.lenovo.launcher.theme.lovecorner */
 	        	themeInfo = intent.getStringExtra(ACTION_LAUNCHER_THEME_PACKAGE);

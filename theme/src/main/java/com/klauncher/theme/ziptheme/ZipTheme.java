@@ -89,13 +89,12 @@ public class ZipTheme implements ITheme {
             folder.mkdir();
         }
 
-        File file = new File(ThemeController.DEFAULT_ZIP_THEME);
+        File file = new File(mZipThemeFilePath);
         if (!file.exists()) {
             InputStream myInput = null;
             OutputStream myOutput = null;
             try {
-                String themeFile = mZipThemeFilePath.substring(
-                        ThemeController.DEFAULT_ZIP_THEME.lastIndexOf(File.separator) + 1);
+                String themeFile = mZipThemeFilePath.substring(mZipThemeFilePath.lastIndexOf(File.separator) + 1);
                 myOutput = new FileOutputStream(mZipThemeFilePath);
                 myInput = mContext.getAssets().open(themeFile);
                 byte[] buffer = new byte[1024];
@@ -123,7 +122,7 @@ public class ZipTheme implements ITheme {
     }
 
     private void cleanResource() {
-        File file = new File(ThemeController.DEFAULT_ZIP_THEME);
+        File file = new File(mZipThemeFilePath);
         if (file.exists()) {
             file.delete();
         }

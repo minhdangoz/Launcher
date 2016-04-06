@@ -266,26 +266,12 @@ public class DynamicGrid {
             Log.e("wcrow", "strResponse = " + strResponse);
             JSONObject json = new JSONObject(strResponse);
 
-            JSONObject specialGrid = null;
-            String[] keys = context.getResources().getStringArray(R.array.config_dynamic_grid_keywords);
-            if (keys != null && keys.length > 0) {
-                for (String key : keys) {
-                    specialGrid = json.optJSONObject(key);
-                    if (specialGrid != null) {
-                        json = specialGrid;
-                        break;
-                    }
-                }
-            }
-
-            if (specialGrid == null) {
-                if (mMinHeight < 560) {
-                    json = json.optJSONObject("4x4");
-                } else if (minHeight < 650) {
-                    json = json.optJSONObject("5x4");
-                } else {
-                    json = json.optJSONObject("6x4");
-                }
+            if (mMinHeight < 560) {
+                json = json.optJSONObject("4x4");
+            } else if (minHeight < 650) {
+                json = json.optJSONObject("5x4");
+            } else {
+                json = json.optJSONObject("6x4");
             }
             deviceProfiles.add(new DeviceProfile("customGrid", minWidth, minHeight,
                     json.getInt("rows"),

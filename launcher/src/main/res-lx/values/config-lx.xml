@@ -8,11 +8,9 @@
     <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0</item>
 
     <array name="config_theme_load_keywords">
-        <item>Lenovo K</item>
-    </array>
-
-    <array name="config_dynamic_grid_keywords">
-        <item>Lenovo A</item>
+        <item>Lenovo K,vibeui</item>
+        <item>Lenovo A2,mirage</item>
+        <item>Lenovo A3,mirage</item>
     </array>
 
     <array name="app_disguise_list">
@@ -20,7 +18,6 @@
         <item>com.alex.nuclear</item>
         <item>cn.kuwo.player</item>
         <item>com.tencent.qqlive</item>
-        <!--<item>cn.ninegame.gamemanager</item>-->
         <item>com.UCMobile</item>
         <item>com.tencent.qqpimsecure</item>
         <item>cn.etouch.ecalendar.cpa</item>
@@ -31,7 +28,6 @@
     <string name="config_icon_com.alex.nuclear">com.lenovo.onekeylock</string>
     <string name="config_icon_cn.kuwo.player">com.lenovo.music</string>
     <string name="config_icon_com.tencent.qqlive">com.lenovo.videoplayer,com.lenovo.video</string>
-    <!--<string name="config_cn.ninegame.gamemanager">com.huawei.gamecenter,com.huawei.gamebox</string>-->
     <string name="config_icon_com.UCMobile">com.lenovo.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.lenovo.safecenter,com.lenovo.security</string>
     <string name="config_icon_cn.etouch.ecalendar.cpa">com.lenovo.calendar</string>
