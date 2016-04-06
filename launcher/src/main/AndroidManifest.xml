@@ -342,8 +342,7 @@
         </activity>
         <receiver
             android:name="com.klauncher.ext.ClockWidgetProvider"
-            android:label="@string/clock_widget_name"
-            android:enabled="@bool/config_enableDigital_clock">
+            android:label="@string/clock_widget_name">
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/clock_widget_info" />

@@ -65,6 +65,7 @@ public class KLauncherAppDisguise {
             iconInfo.readFromApplication = info.targetActivity == null ? true :
                     componentName.getClassName().equals(info.targetActivity);
         }
+        android.util.Log.e("wenyan", "iconInfo=" + iconInfo.componentName + ", readFromApp=" + iconInfo.readFromApplication);
         return iconInfo;
     }
 

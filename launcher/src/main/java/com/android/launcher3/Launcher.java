@@ -129,6 +129,7 @@ import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsController;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
+import com.klauncher.ext.ClockWidgetProvider;
 import com.klauncher.ping.PingManager;
 import com.umeng.analytics.MobclickAgent;
 import com.klauncher.theme.ThemeController;
@@ -521,6 +522,25 @@ public class Launcher extends Activity
         }
     };
 
+    public class MockAppWidgetReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("wenyan", "MockAppWidgetReceiver");
+            AppWidgetProviderInfo widgetInfo = LauncherModel.findAppWidgetProviderInfoWithComponent(
+                    Launcher.this, new ComponentName(Launcher.this.getPackageName(), ClockWidgetProvider.class.getName()));
+            PendingAddWidgetInfo paddingWidgetInfo = new PendingAddWidgetInfo(widgetInfo, null, null);
+            addWidgetAfterAnimation(paddingWidgetInfo);
+        }
+    }
+
+    private void registerAppWidgetReceiver() {
+        MockAppWidgetReceiver receiver = new MockAppWidgetReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.klauncher.action.MOCK_APP_WIDGET");
+        registerReceiver(receiver, filter);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (DEBUG_STRICT_MODE) {
@@ -633,6 +653,7 @@ public class Launcher extends Activity
 
         // Support theme
         applyDefaultTheme();
+        registerAppWidgetReceiver();
     }
 
     @Override
