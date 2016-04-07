@@ -381,7 +381,11 @@ public class IconCache {
                     // 没有找到theme，读取backendActivityIcon
                     if (themeBmp == null) {
                         String pkgName = info.getActivityInfo().packageName;
-                        if (pkgName.contains("mms") || pkgName.contains("contacts") || pkgName.contains("settings") || pkgName.contains("ideafriend")) {
+                        android.util.Log.d("wenyan", "pkgName=" + pkgName);
+
+                        if (pkgName.contains("mms") || pkgName.contains("contacts") ||
+                                pkgName.contains("settings") || pkgName.contains("ideafriend") ||
+                                pkgName.contains("scgmtk")) {
                             themeBmp = drawableToBitmap(mContext.getPackageManager().getActivityIcon(info.getComponentName()));
                         } else {
                             themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(info.getActivityInfo().packageName));

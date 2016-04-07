@@ -10,13 +10,13 @@
     <array name="config_theme_load_keywords">
         <item>Lenovo K,vibeui</item>
         <item>Lenovo A2,mirage</item>
-        <item>Lenovo A3,mirage</item>
     </array>
 
     <array name="app_disguise_list">
         <item>com.miguan.market</item>
         <item>com.alex.nuclear</item>
         <item>cn.kuwo.player</item>
+        <item>com.duomi.android</item>
         <item>com.tencent.qqlive</item>
         <item>com.UCMobile</item>
         <item>com.tencent.qqpimsecure</item>
@@ -25,12 +25,12 @@
     </array>
 
     <string name="config_icon_com.miguan.market">com.lenovo.leos.appstore</string>
-    <string name="config_icon_com.alex.nuclear">com.lenovo.onekeylock</string>
-    <string name="config_icon_cn.kuwo.player">com.lenovo.music</string>
-    <string name="config_icon_com.tencent.qqlive">com.lenovo.videoplayer,com.lenovo.video</string>
-    <string name="config_icon_com.UCMobile">com.lenovo.browser</string>
+    <string name="config_icon_cn.kuwo.player">com.lenovo.music,com.android.music</string>
+    <string name="config_icon_com.duomi.android">com.lenovo.music,com.android.music</string>
+    <string name="config_icon_com.tencent.qqlive">com.lenovo.videoplayer,com.lenovo.video,com.ontim.videoplayer,com.mediatek.videoplayer</string>
+    <string name="config_icon_com.UCMobile">com.lenovo.browser,com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.lenovo.safecenter,com.lenovo.security</string>
-    <string name="config_icon_cn.etouch.ecalendar.cpa">com.lenovo.calendar</string>
+    <string name="config_icon_cn.etouch.ecalendar.cpa">com.lenovo.calendar,com.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">sina.mobile.tianqitong</string>
 
     <string name="folder_system_tool">系统工具</string>

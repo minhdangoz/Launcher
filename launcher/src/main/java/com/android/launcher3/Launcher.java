@@ -526,7 +526,6 @@ public class Launcher extends Activity
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("wenyan", "MockAppWidgetReceiver");
             AppWidgetProviderInfo widgetInfo = LauncherModel.findAppWidgetProviderInfoWithComponent(
                     Launcher.this, new ComponentName(Launcher.this.getPackageName(), ClockWidgetProvider.class.getName()));
             PendingAddWidgetInfo paddingWidgetInfo = new PendingAddWidgetInfo(widgetInfo, null, null);

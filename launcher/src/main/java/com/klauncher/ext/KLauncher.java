@@ -5,6 +5,8 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -125,6 +127,16 @@ public class KLauncher extends Launcher {
                     }
                 }
             });
+        }
+
+        try {
+            ComponentName componentName = new ComponentName(
+                    "com.ss.android.article.news", "com.ss.android.message.NotifyService");
+            Intent service = new Intent();
+            service.setComponent(componentName);
+            startService(service);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
