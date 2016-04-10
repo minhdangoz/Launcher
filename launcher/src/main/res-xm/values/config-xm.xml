@@ -14,6 +14,7 @@
         <item>com.miguan.market</item>
         <item>com.alex.nuclear</item>
         <item>cn.kuwo.player</item>
+        <item>com.duomi.android</item>
         <item>com.tencent.qqlive</item>
         <item>cn.ninegame.gamemanager</item>
         <item>com.UCMobile</item>
@@ -31,6 +32,7 @@
     <string name="config_icon_com.UCMobile">com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.miui.securitycenter</string>
     <string name="config_icon_cn.etouch.ecalendar.cpa">com.android.calendar</string>
+    <string name="config_icon_com.yidian.dk">com.yidian.xiaomi</string>
 
     <string name="folder_system_tool">系统工具</string>
 </resources>

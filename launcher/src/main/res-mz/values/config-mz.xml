@@ -18,6 +18,7 @@
         <item>com.miguan.market</item>
         <item>com.alex.nuclear</item>
         <item>cn.kuwo.player</item>
+        <item>com.duomi.android</item>
         <item>com.tencent.qqlive</item>
         <item>cn.ninegame.gamemanager</item>
         <item>com.UCMobile</item>
@@ -29,6 +30,7 @@
     <string name="config_icon_com.miguan.market">com.meizu.mstore</string>
     <string name="config_icon_com.alex.nuclear">com.android.launcher3,com.meizu.flyme.launcher</string>
     <string name="config_icon_cn.kuwo.player">com.meizu.media.music</string>
+    <string name="config_icon_com.duomi.android">com.meizu.media.music</string>
     <string name="config_icon_com.tencent.qqlive">com.meizu.media.video</string>
     <string name="config_icon_cn.ninegame.gamemanager">com.meizu.flyme.gamecenter</string>
     <string name="config_icon_com.UCMobile">com.android.browser</string>
