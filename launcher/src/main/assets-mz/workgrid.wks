@@ -7,10 +7,10 @@
         "hotseat": "4"
     },
     "5x4": {
-        "rows": "4",
+        "rows": "5",
         "columns": "4",
-        "iconsize": "62",
-        "textsize": "14",
-        "hotseat": "4"
+        "iconsize": "52",
+        "textsize": "12",
+        "hotseat": "5"
     }
 }
