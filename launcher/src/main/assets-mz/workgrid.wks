@@ -1,5 +1,12 @@
 {
-    "MX": {
+    "4x4": {
+        "rows": "4",
+        "columns": "4",
+        "iconsize": "62",
+        "textsize": "14",
+        "hotseat": "4"
+    },
+    "5x4": {
         "rows": "4",
         "columns": "4",
         "iconsize": "62",
