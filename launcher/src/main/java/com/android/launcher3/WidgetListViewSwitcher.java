@@ -237,6 +237,7 @@ public class WidgetListViewSwitcher extends ViewSwitcher implements DragSource, 
 	static final String GOOGLE_SEARCH_PACKAGE = "com.google.android.googlequicksearchbox";
 	static final String GOOGLE_SEARCH_CLASSNAME = "com.google.android.googlequicksearchbox.SearchActivity";
 	static final String GOOGLE_VOICE_SEARCH_CLASSNAME = "com.google.android.googlequicksearchbox.VoiceSearchActivity";
+	static final String HUAWEI_WEATHER_PACKAGE = "com.huawei.android.totemweather";
     
 	public void setApps(ArrayList<AppInfo> list) {
 		/** Lenovo-SW zhaoxin5 20150921 KOLEOSROW-2589 START */
@@ -248,26 +249,28 @@ public class WidgetListViewSwitcher extends ViewSwitcher implements DragSource, 
 		// 准备显示
 		int voiceIndex = -1;
 		int searchIndex = -1;
-		for(int i=0; i<mApps.size(); i++) {
+		int weatherIndex = -1;
+		for (int i = 0; i < mApps.size(); i++) {
 			AppInfo aInfo = mApps.get(i);
 			if (null != aInfo.componentName) {
-				if (aInfo.componentName.getPackageName().equals(GOOGLE_SEARCH_PACKAGE) && 
+				if (aInfo.componentName.getPackageName().equals(HUAWEI_WEATHER_PACKAGE)) {
+					weatherIndex = i;
+				}
+				if (aInfo.componentName.getPackageName().equals(GOOGLE_SEARCH_PACKAGE) &&
 						aInfo.componentName.getClassName().equals(GOOGLE_VOICE_SEARCH_CLASSNAME)) {
 					voiceIndex = i;
 				}
-				if (aInfo.componentName.getPackageName().equals(GOOGLE_SEARCH_PACKAGE) && 
+				if (aInfo.componentName.getPackageName().equals(GOOGLE_SEARCH_PACKAGE) &&
 						aInfo.componentName.getClassName().equals(GOOGLE_SEARCH_CLASSNAME)) {
 					searchIndex = i;
 				}
-				if ((voiceIndex>=0) && (searchIndex>=0)) {
-					mApps.remove(voiceIndex);
-					LauncherLog.i(TAG, "Not show voice search in the first layer of the widget list, mApps.size:"+mApps.size() + ",list.size:"+list.size());
-					// 找到要赶紧停止，否则会移除很多应用
-					/** Lenovo-SW zhaoxin5 20150928 KOLEOSROW-2868 START */
-					break;
-					/** Lenovo-SW zhaoxin5 20150928 KOLEOSROW-2868 END */
-				}
 			}
+		}
+		if ((voiceIndex >= 0) && (searchIndex >= 0)) {
+			mApps.remove(voiceIndex);
+		}
+		if (weatherIndex >= 0) {
+			mApps.remove(weatherIndex);
 		}
 		/** Lenovo-SW zhaoxin5 20150921 KOLEOSROW-2589 END */
 	}

@@ -354,45 +354,47 @@ public class IconCache {
                     getFullResIcon(info), mContext);*/
             Bitmap themeBmp = null;
             // yanni: load icon from system
-            try {
-                KLauncherAppDisguise.DisguiseIconInfo disguiseIconInfo =
-                        KLauncherAppDisguise.getInstance().getDisguiseIconInfo(info.getActivityInfo());
+            if (info != null) {
+                try {
+                    KLauncherAppDisguise.DisguiseIconInfo disguiseIconInfo =
+                            KLauncherAppDisguise.getInstance().getDisguiseIconInfo(info.getActivityInfo());
 
-                if (disguiseIconInfo != null && disguiseIconInfo.componentName != null) {
-                    ActivityInfo activityInfo = mContext.getPackageManager().getActivityInfo(
-                            disguiseIconInfo.componentName, PackageManager.GET_META_DATA);
-                    // 有伪装app，先从theme中读取伪装app logo
-                    if (((LauncherApplication) mContext).getThemeController().getTheme() != null) {
-                        themeBmp = ((LauncherApplication) mContext).getThemeController().getTheme().getIconFromTheme(activityInfo);
-                    }
-                    // 没有找到theme，读取frontActivityIcon
-                    if (themeBmp == null) {
-                        if (disguiseIconInfo.readFromApplication) {
-                            themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(activityInfo.packageName));
-                        } else {
-                            themeBmp = drawableToBitmap(mContext.getPackageManager().getActivityIcon(disguiseIconInfo.componentName));
+                    if (disguiseIconInfo != null && disguiseIconInfo.componentName != null) {
+                        ActivityInfo activityInfo = mContext.getPackageManager().getActivityInfo(
+                                disguiseIconInfo.componentName, PackageManager.GET_META_DATA);
+                        // 有伪装app，先从theme中读取伪装app logo
+                        if (((LauncherApplication) mContext).getThemeController().getTheme() != null) {
+                            themeBmp = ((LauncherApplication) mContext).getThemeController().getTheme().getIconFromTheme(activityInfo);
+                        }
+                        // 没有找到theme，读取frontActivityIcon
+                        if (themeBmp == null) {
+                            if (disguiseIconInfo.readFromApplication) {
+                                themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(activityInfo.packageName));
+                            } else {
+                                themeBmp = drawableToBitmap(mContext.getPackageManager().getActivityIcon(disguiseIconInfo.componentName));
+                            }
+                        }
+                    } else {
+                        // 没有任何伪装
+                        if (((LauncherApplication) mContext).getThemeController().getTheme() != null && info.getActivityInfo() != null) {
+                            themeBmp = ((LauncherApplication) mContext).getThemeController().getTheme().getIconFromTheme(info.getActivityInfo());
+                        }
+                        // 没有找到theme，读取backendActivityIcon
+                        if (themeBmp == null) {
+                            String pkgName = info.getActivityInfo().packageName;
+
+                            if (pkgName.contains("mms") || pkgName.contains("contacts") ||
+                                    pkgName.contains("settings") || pkgName.contains("ideafriend") ||
+                                    pkgName.contains("scgmtk")) {
+                                themeBmp = drawableToBitmap(mContext.getPackageManager().getActivityIcon(info.getComponentName()));
+                            } else {
+                                themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(info.getActivityInfo().packageName));
+                            }
                         }
                     }
-                } else {
-                    // 没有任何伪装
-                    if (((LauncherApplication) mContext).getThemeController().getTheme() != null && info.getActivityInfo() != null) {
-                        themeBmp = ((LauncherApplication) mContext).getThemeController().getTheme().getIconFromTheme(info.getActivityInfo());
-                    }
-                    // 没有找到theme，读取backendActivityIcon
-                    if (themeBmp == null) {
-                        String pkgName = info.getActivityInfo().packageName;
-
-                        if (pkgName.contains("mms") || pkgName.contains("contacts") ||
-                                pkgName.contains("settings") || pkgName.contains("ideafriend") ||
-                                pkgName.contains("scgmtk")) {
-                            themeBmp = drawableToBitmap(mContext.getPackageManager().getActivityIcon(info.getComponentName()));
-                        } else {
-                            themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(info.getActivityInfo().packageName));
-                        }
-                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
                 }
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
             }
             /* Lenovo-SW zhaoxin5 20150116 add Theme support */
 
