@@ -232,10 +232,10 @@ public class FolderIcon extends FrameLayout implements FolderListener {
                     sSharedOuterRingDrawable = res.getDrawable(R.drawable.portal_ring_outer_holo);
                 }
                 if(sSharedInnerRingDrawable == null){
-                    sSharedInnerRingDrawable = res.getDrawable(R.drawable.portal_ring_inner_holo);
+                    sSharedInnerRingDrawable = res.getDrawable(R.drawable.portal_ring_outer_holo);
                 }
                 if(sSharedFolderLeaveBehind == null){
-                    sSharedFolderLeaveBehind = res.getDrawable(R.drawable.portal_ring_inner_holo);
+                    sSharedFolderLeaveBehind = res.getDrawable(R.drawable.portal_ring_outer_holo);
                 }
 
                 sStaticValuesDirty = false;

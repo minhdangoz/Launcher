@@ -45,7 +45,7 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 		if (FolderRingAnimator.sSharedInnerRingDrawable != null) {
 			mIcon.mPreviewBackground.setImageDrawable(FolderRingAnimator.sSharedInnerRingDrawable);
 		} else {
-			mIcon.mPreviewBackground.setImageDrawable(mResources.getDrawable(R.drawable.portal_ring_inner_holo));
+			mIcon.mPreviewBackground.setImageDrawable(mResources.getDrawable(R.drawable.portal_ring_outer_holo));
 		}
 		/* Lenovo-sw zhangyj19 add 2015/07/22 modify theme end */
 	}
