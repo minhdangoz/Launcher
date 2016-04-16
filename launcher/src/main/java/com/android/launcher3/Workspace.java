@@ -6451,7 +6451,7 @@ public class Workspace extends SmoothPagedView
 //            // hotseat not anim
 //            return;
 //        }
-        if (mLauncher.isHotseatLayout(layout)) {
+        if (mLauncher.isHotseatLayout(layout) || layout == null) {
             return;
         }
 

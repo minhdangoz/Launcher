@@ -4903,14 +4903,21 @@ public class LauncherModel extends BroadcastReceiver
         return null;
     }
     /* Lenovo-SW zhaoxin5 20150116 add for theme support END */
-    public void forceReloadForThemeApply(){
+    public void forceReloadForThemeApply() {
     	mIconCache.flush();
     	forceReload("forceReloadForThemeApply");
     }
     
     private String filterPackages[] = new String[] {
             "com.android.launcher3",
-            "com.meizu.flyme.launcher"
+            "com.meizu.flyme.launcher",
+            "com.adfox.games",
+            "com.android.memorycleaner",
+            "com.mycheering.apps",
+            "cn.lt.game",
+            "net.dx.cloudgame",
+            "com.dx.agent2",
+            "com.shyz.desktop"
     };
     
     private boolean isFilterPackage(String pkg) {
