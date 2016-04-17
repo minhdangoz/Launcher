@@ -180,10 +180,15 @@ public class LbkUtil {
 		//LauncherLog.i("wcrow", "model = " + model);
 		String name;
 		float rows = LauncherAppState.getInstance().getDynamicGrid().getNumRows();
+		float columns = LauncherAppState.getInstance().getDynamicGrid().getNumColumns();
 		if (rows < 5) {
 			name = "default4.lbk";
 		} else if (rows > 5) {
-			name = "default2.lbk";
+			if (columns == 5) {
+				name = "default6x5.lbk";
+			} else {
+				name = "default2.lbk";
+			}
 		} else {
 			name = "default.lbk";
 		}
