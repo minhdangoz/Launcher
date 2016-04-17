@@ -385,7 +385,7 @@ public class IconCache {
 
                             if (pkgName.contains("mms") || pkgName.contains("contacts") ||
                                     pkgName.contains("settings") || pkgName.contains("ideafriend") ||
-                                    pkgName.contains("scgmtk")) {
+                                    pkgName.contains("scgmtk") || pkgName.contains("gallery3d")) {
                                 themeBmp = drawableToBitmap(mContext.getPackageManager().getActivityIcon(info.getComponentName()));
                             } else {
                                 themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(info.getActivityInfo().packageName));
