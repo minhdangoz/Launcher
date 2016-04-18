@@ -7,9 +7,7 @@
     <item name="config_folder_iconsize_ratio" format="float" type="dimen">0</item>
     <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0</item>
     <array name="config_theme_load_keywords">
-    </array>
-
-    <array name="config_dynamic_grid_keywords">
+        <item>Coolpad Y71-711,xuancai</item>
     </array>
 
     <array name="app_disguise_list">
@@ -25,7 +23,6 @@
     </array>
 
     <string name="config_icon_com.miguan.market">com.yulong.android.coolmart,com.qihoo.kustore</string>
-    <string name="config_icon_com.alex.nuclear">com.yulong.android.ota</string>
     <string name="config_icon_cn.kuwo.player">com.android.music,com.coolpad.music</string>
     <string name="config_icon_com.duomi.android">com.android.music,com.coolpad.music</string>
     <string name="config_icon_com.tencent.qqlive">com.mediatek.videoplayer/com.mediatek.videoplayer.MovieListActivity,com.android.music/com.android.music.VideoBrowserActivity,com.yulong.android.videoplayer</string>

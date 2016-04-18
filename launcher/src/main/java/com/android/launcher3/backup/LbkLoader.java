@@ -657,7 +657,6 @@ public class LbkLoader implements LauncherProvider.WorkspaceLoader {
 			}
 		}
 
-
 		if(LOGD) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("{ ");
