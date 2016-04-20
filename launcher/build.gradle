@@ -8,14 +8,12 @@ android {
         applicationId "com.klauncher.launcher"
         minSdkVersion 16
         targetSdkVersion 21
-        // dex突破65535的限制
         multiDexEnabled true
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
             targetCompatibility JavaVersion.VERSION_1_7
         }
     }
-    //移除lint检查的error(有任何的错误或者警告提示，都会终止构建，我们可以将其关掉)
     lintOptions {
         abortOnError false
         //disable 'MissingTranslation', 'ExtraTranslation'
@@ -31,7 +29,6 @@ android {
         exclude 'META-INF/maven/com.squareup.okio/okio/pom.xml'
         exclude 'META-INF/maven/com.squareup.okio/okio/pom.properties'
     }
-    //设置虚拟机堆内存空间大小，避免在编译期间OOM
     dexOptions {
         javaMaxHeapSize '2G'
     }
