@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview_advance"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="0dp">
+
+    <LinearLayout
+        android:id="@+id/card_news_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/kinflow_dimen_card_yidian_padding_leftOrRight"
+        android:paddingRight="@dimen/kinflow_dimen_card_yidian_padding_leftOrRight">
+
+        <!--第一条新闻-->
+        <include
+            android:id="@+id/yidian_head_1image"
+            layout="@layout/yidian_head_1image"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/yidian_head_3image"
+            layout="@layout/yidian_head_3image"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/line_header"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/kinflow_color_card_split_line_background" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/card_news_list_toutiao"
+            android:layout_width="match_parent"
+            android:layout_height="92dp" />
+
+        <View
+            android:id="@+id/line_footer"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/kinflow_color_card_split_line_background" />
+
+
+        <!--footer-->
+        <RelativeLayout
+            android:id="@+id/card_footer"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
+
+            <TextView
+                android:id="@+id/more_news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:id="@+id/change_news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:text="换一换" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

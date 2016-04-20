@@ -1,0 +1,5 @@
+<resources>
+    <item type="bool" name="is_large_screen">false</item>
+    <bool name="comment_adapter2_register_content_click_event">false</bool>
+    <bool name="comment_adapter2_show_last_hot_cell_divider">false</bool>
+</resources>

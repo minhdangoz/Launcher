@@ -63,7 +63,7 @@ class PreloadIconDrawable extends Drawable {
     @Override
     public void applyTheme(Theme t) {
         TypedArray ta = t.obtainStyledAttributes(R.styleable.PreloadIconDrawable);
-        mBgDrawable = ta.getDrawable(R.styleable.PreloadIconDrawable_background);
+        mBgDrawable = ta.getDrawable(R.styleable.PreloadIconDrawable_background1);
         mBgDrawable.setFilterBitmap(true);
         mPaint.setStrokeWidth(ta.getDimension(R.styleable.PreloadIconDrawable_indicatorSize, 0));
         mRingOutset = ta.getDimensionPixelSize(R.styleable.PreloadIconDrawable_ringOutset, 0);

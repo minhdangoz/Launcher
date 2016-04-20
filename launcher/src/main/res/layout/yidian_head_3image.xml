@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/first_news_yidian"
+    android:layout_width="match_parent"
+    android:layout_height="136dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/yidian_news_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:paddingTop="12dp"
+        android:singleLine="true"
+        android:layout_alignParentTop="true"
+        android:text="第一条新闻标题"
+        android:textColor="@color/color_black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/yidian_news_publish_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发布时间"
+        android:layout_alignParentBottom="true"
+        android:padding="6dp"/>
+
+    <LinearLayout
+        android:layout_below="@id/yidian_news_title"
+        android:layout_above="@id/yidian_news_publish_time"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/yidian_image_left"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/kinflow_dimen_card_image_height"
+            android:layout_weight="0.3"
+            android:background="#eee" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"/>
+
+        <ImageView
+            android:id="@+id/yidian_image_middle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/kinflow_dimen_card_image_height"
+            android:layout_weight="0.3"
+            android:background="#eee" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"/>
+
+        <ImageView
+            android:id="@+id/yidian_image_right"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/kinflow_dimen_card_image_height"
+            android:layout_weight="0.3"
+            android:background="#eee" />
+    </LinearLayout>
+</RelativeLayout>

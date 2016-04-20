@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:paddingTop="@dimen/overview_panel_top_padding">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingTop="@dimen/overview_panel_top_padding">
 
-    <WebView
+    <!--<WebView
         android:id="@+id/webcontent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" />-->
+    <!--com.klauncher.ext.HorizontalSlideLayout-->
+    <!--<include
+        layout="@layout/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />-->
+
+    <LinearLayout
+        android:id="@+id/layoutcontent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--<include
+            layout="@layout/activity_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />-->
+    </LinearLayout>
 
 </LinearLayout>

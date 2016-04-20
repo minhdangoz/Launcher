@@ -16,11 +16,19 @@
 
 package com.android.launcher3;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 
+import com.baidu.apistore.sdk.ApiStoreSDK;
 import com.klauncher.ext.KLauncherApplication;
+import com.klauncher.kinflow.common.utils.CacheHotWord;
+import com.klauncher.kinflow.common.utils.CacheNavigation;
+import com.klauncher.kinflow.common.utils.CommonShareData;
+import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.launcher.R;
 import com.klauncher.theme.ThemeController;
+import com.ss.android.sdk.minusscreen.SsNewsApi;
 
 public class LauncherApplication extends KLauncherApplication {
     public static boolean LAUNCHER_SHOW_UNREAD_NUMBER;
@@ -30,6 +38,10 @@ public class LauncherApplication extends KLauncherApplication {
     public static int mIndexLog = 0;
     public static String[] mLogArray = null;
     public static int mLoglength = 500;
+    //kinflow
+    String clientId = "delong";
+    public static String cid;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -47,6 +59,22 @@ public class LauncherApplication extends KLauncherApplication {
         initTheme();
         /* Lenovo-SW zhaoxin5 20150116 add Theme support */
         //startService(new Intent(this, NotifierService.class));
+        //init kinflow
+        //今日头条
+        SsNewsApi.init(getApplicationContext(), clientId, true);
+        //百度天气
+        ApiStoreSDK.init(this, Const.BAIDU_APIKEY);
+        //三个个缓存文件
+        CommonShareData.init(getApplicationContext());
+        CacheNavigation.getInstancce().createCacheFile(getApplicationContext());
+        CacheHotWord.getInstance().createCacheHotWord(getApplicationContext());
+        //getCid
+        try {
+            ApplicationInfo applicationInfo = this.getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            cid = applicationInfo.metaData.getString("KappChannel");
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
