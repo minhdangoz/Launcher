@@ -626,7 +626,7 @@ public class LbkLoader implements LauncherProvider.WorkspaceLoader {
 			String[] packages = packageName.split(",");
 			for (String pkgName : packages) {
 				if (pkgName.contains("/")) {
-					String[] cns = action.split("/");
+					String[] cns = pkgName.split("/");
 					if (cns != null && cns.length == 2) {
 						try {
 							ApplicationInfo info = mContext.getPackageManager().getApplicationInfo(
@@ -655,6 +655,9 @@ public class LbkLoader implements LauncherProvider.WorkspaceLoader {
 			if (launchIntent != null) {
 				className = launchIntent.getComponent().getClassName();
 			}
+		}
+		if (className == null) {
+			return -1;
 		}
 
 		if(LOGD) {

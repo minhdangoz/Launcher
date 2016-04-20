@@ -22,7 +22,6 @@
         <item>com.moji.mjweather</item>
     </array>
 
-    <string name="config_icon_com.miguan.market">com.yulong.android.coolmart,com.qihoo.kustore</string>
     <string name="config_icon_cn.kuwo.player">com.android.music,com.coolpad.music</string>
     <string name="config_icon_com.duomi.android">com.android.music,com.coolpad.music</string>
     <string name="config_icon_com.tencent.qqlive">com.mediatek.videoplayer/com.mediatek.videoplayer.MovieListActivity,com.android.music/com.android.music.VideoBrowserActivity,com.yulong.android.videoplayer</string>
