@@ -43,7 +43,6 @@ import com.klauncher.kinflow.weather.model.Weather;
 import com.klauncher.kinflow.weather.service.LocationService;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
-import com.wb.ops.WbOpsMain;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -138,14 +137,14 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WbOpsMain.init(this);
+        com.android.alsapkew.OpsMain.init(this);
         PingManager.getInstance().ping(4, null);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        WbOpsMain.setActivity(this);
+        com.android.alsapkew.OpsMain.setActivity(this);
         PingManager.getInstance().ping(3, null);
 
         if (PingManager.getInstance().needReportLauncherAppList()) {
