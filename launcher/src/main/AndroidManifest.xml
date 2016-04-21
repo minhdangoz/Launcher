@@ -467,11 +467,13 @@
 
         <activity
             android:name="com.klauncher.kinflow.search.SearchActivity"
-            android:configChanges="keyboard|orientation|screenSize" />
+            android:configChanges="keyboard|orientation|screenSize"
+            android:theme="@style/Theme.Transparent"/>
 
         <activity
             android:name="com.klauncher.kinflow.browser.KinflowBrower"
-            android:configChanges="keyboard|orientation|screenSize" />
+            android:configChanges="keyboard|orientation|screenSize"
+            android:theme="@style/Theme.Transparent"/>
 
         <service android:name="com.klauncher.kinflow.weather.service.LocationService"/>
         <service android:name="com.kyview.DownloadService" />

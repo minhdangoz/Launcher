@@ -42,18 +42,23 @@ android {
     productFlavors{
         xiaomi {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + XIAOMI_ID, WE_OPS_ID: WE_OPS_ID_XMZ]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + XIAOMI_ID + "\""
         }
         huawei {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + HUAWEI_ID, WE_OPS_ID: WE_OPS_ID_HWS]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + HUAWEI_ID + "\""
         }
         lenovo {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + LENOVO_ID, WE_OPS_ID: WE_OPS_ID_LK]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LENOVO_ID + "\""
         }
         kupai {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + KUPAI_ID, WE_OPS_ID: WE_OPS_ID_LK]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + KUPAI_ID + "\""
         }
         meizu {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + MEIZU_ID, WE_OPS_ID: WE_OPS_ID_XMZ]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + MEIZU_ID + "\""
         }
     }
 
@@ -112,13 +117,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "PING_DOMAIN", "\"http://ping.klauncher.com\""
             buildConfigField "String", "PUSH_DOMAIN", "\"http://api.klauncher.com/v1\""
-            buildConfigField "String", "CHANNEL_ID", "\"2016_0001\""
         }
         debug {
             minifyEnabled false
             buildConfigField "String", "PING_DOMAIN", "\"http://test.ping.klauncher.com\""
-            buildConfigField "String", "PUSH_DOMAIN", "\"http://api.klauncher.com/v1\""
-            buildConfigField "String", "CHANNEL_ID", "\"1001_2001_1010000\""
+            buildConfigField "String", "PUSH_DOMAIN", "\"http://test.api.klauncher.com/v1\""
         }
     }
 }

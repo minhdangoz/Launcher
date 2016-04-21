@@ -58,14 +58,14 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     private static final String TAG = "KLauncher";
 
-    private static final String HOME_PAGE = "file:///android_asset/home.html";
+    /*private static final String HOME_PAGE = "file:///android_asset/home.html";
     private static final String APP_NAME = "今日头题";
     private static final String NEWS_BAIDU = "http://m.baidu.com/news?fr=mohome&ssid=1dc073756e6c6169724503&from=&uid=&pu=sz%40224_220%2Cta%40iphone___3_537&bd_page_type=1";
     private static final String DEFAULT_APP_PACKAGENAME= "com.ss.android.article.news";
     private static final String DEFAULT_APP_CLASS ="com.ss.android.article.news.activity.SplashActivity";
     private static final String APP_DLD_LINK = "http://mobile.baidu.com/simple?action=content&type=soft&docid=8356755";
 
-    private boolean firstRun = true;
+    private boolean firstRun = true;*/
     private boolean isShown = false;
 
     //    private WebView mWebView;

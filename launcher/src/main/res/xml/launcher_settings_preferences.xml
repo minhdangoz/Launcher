@@ -57,7 +57,7 @@
         <SwitchPreference
             android:defaultValue="true"
             android:key="pref_kinflow_setingon"
-            android:enabled="true"
+            android:enabled="@bool/kinflow_switch"
             android:title="@string/kinflow_turn_setting" />
     </PreferenceCategory>
 

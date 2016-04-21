@@ -41,4 +41,5 @@
     <string name="config_icon_com.moji.mjweather">com.huawei.android.totemweather</string>
 
     <string name="folder_system_tool">系统工具</string>
+    <bool name="kinflow_switch">true</bool>
 </resources>

@@ -1,11 +1,6 @@
 package com.klauncher.kinflow.common.utils;
 
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-
-import com.android.launcher3.LauncherApplication;
 import com.klauncher.launcher.BuildConfig;
-import com.klauncher.kinflow.KinflowApplication;
 
 /**
  * Created by xixionghui on 2016/3/17.
