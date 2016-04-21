@@ -7,6 +7,7 @@ import android.os.Message;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.cards.model.yidian.YiDianModel;
+import com.klauncher.kinflow.cards.utils.CardUtils;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.task.AsynchronousGet;
 import com.klauncher.kinflow.common.utils.CommonShareData;
@@ -113,8 +114,8 @@ public class YDCardContentManager extends BaseCardContentManager {
 
 
     protected void handleObtainedData(Message msg) {
-            mYiDianModelList.clear();
-            mYiDianModelList = (List<YiDianModel>) msg.obj;
+        mYiDianModelList.clear();
+        mYiDianModelList = CardUtils.sortYiDianModelList((List<YiDianModel>) msg.obj);
     }
 
 }
