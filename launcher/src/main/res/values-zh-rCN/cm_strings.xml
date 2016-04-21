@@ -80,7 +80,7 @@
 <string name="local_backup_toast_ok">备份完成</string>
 <string name="normal_settings">基础设置</string>
 <string name="workspace_loop_settings_title">桌面循环显示</string>
-
+  <string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">桌面设置</string>
 <string name="multi_select_full">已满</string>
 <string name="wallpaper_show_theme_center">主题</string>

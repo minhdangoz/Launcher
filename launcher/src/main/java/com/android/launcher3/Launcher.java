@@ -702,15 +702,23 @@ public class Launcher extends Activity
      * To be overriden by subclasses to hint to Launcher that we have custom content
      */
     protected boolean hasCustomContentToLeft() {
-        return false;
+        //boolean kinflowSet  = SettingsValue.isKinflowSetOn(this);
+        /*if(!isAnimating() && !mModel.isLoadingWorkspace() &&
+                LauncherAppState.getInstance().isCurrentVibeuiMode()) {
+            autoReorder(true);
+        }*/
+        return true;
     }
+    /*protected boolean hasCustomContentToLeft() {
+        return false;
+    }*/
 
     /**
      * To be overridden by subclasses to populate the custom content container and call
      * {@link #addToCustomContentPage}. This will only be invoked if
      * {@link #hasCustomContentToLeft()} is {@code true}.
      */
-    protected void populateCustomContentContainer() {
+    public void populateCustomContentContainer() {
     }
 
     private void initializeScrubber() {
@@ -741,7 +749,8 @@ public class Launcher extends Activity
      * Invoked by subclasses to signal a change to the {@link #addCustomContentToLeft} value to
      * ensure the custom content page is added or removed if necessary.
      */
-    protected void invalidateHasCustomContentToLeft() {
+    //protected
+    public void invalidateHasCustomContentToLeft() {
         if (mWorkspace == null || mWorkspace.getScreenOrder().isEmpty()) {
             // Not bound yet, wait for bindScreens to be called.
             return;

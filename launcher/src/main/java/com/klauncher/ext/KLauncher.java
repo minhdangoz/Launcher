@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.backup.LbkPackager;
 import com.android.launcher3.backup.LbkUtil;
+import com.android.launcher3.settings.SettingsValue;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.klauncher.kinflow.cards.CardsListManager;
@@ -92,11 +93,13 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     protected boolean hasCustomContentToLeft() {
-        return true;
+        boolean bKinlowSet = SettingsValue.isKinflowSetOn(this);
+        return bKinlowSet;
+        //return true;
     }
 
     @Override
-    protected void populateCustomContentContainer() {
+    public void populateCustomContentContainer() {
         View customView = getLayoutInflater().inflate(R.layout.custom, null);
 
         /*mWebView = (WebView) customView.findViewById(R.id.webcontent);

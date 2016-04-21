@@ -44,6 +44,7 @@
 <string name="local_backup_toast_ok">Varnostno kopiranje končano.</string>
 <string name="normal_settings">Splošne nastavitve</string>
 <string name="workspace_loop_settings_title">Neskončno drsenje namizja</string>
+    <string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">Nastavitev</string>
 <string name="multi_select_full">Je napolnjeno.</string>
 <string name="wallpaper_show_theme_center">Teme</string>

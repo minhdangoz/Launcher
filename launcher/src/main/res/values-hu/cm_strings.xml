@@ -75,6 +75,7 @@
 <string name="local_backup_toast_ok">A biztonsági mentés kész.</string>
 <string name="normal_settings">Általános beállítások</string>
 <string name="workspace_loop_settings_title">Asztal ciklikus megjelenítése</string>
+  <string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">Beállítás</string>
 <string name="multi_select_full">Feltöltve.</string>
 <string name="wallpaper_show_theme_center">Téma</string>

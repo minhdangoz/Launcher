@@ -53,6 +53,12 @@
             android:title="@string/menu_sense_settings"
             android:widgetLayout="@layout/sec_pref_widget_more" >
         </Preference>
+        <!--信息流kinflow显示-->
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="pref_kinflow_setingon"
+            android:enabled="true"
+            android:title="@string/kinflow_turn_setting" />
     </PreferenceCategory>
 
 </PreferenceScreen>

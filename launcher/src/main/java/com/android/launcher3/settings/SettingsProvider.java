@@ -55,6 +55,7 @@ public final class SettingsProvider {
     public static final String SETTINGS_UI_AUTO_REORDER = "ui_auto_reorder";
     public static final String SETTINGS_UI_BACKUP_PATH = "ui_backup_path";
     public static final String SETTINGS_UI_WORKSPACE_LOOP = "ui_workspace_loop";
+    public static final String SETTINGS_UI_KINFLOW_SETON = "ui_kinflow_seton";
     /*Lenovo-sw zhangyj19 add 2015/09/09 add search app definition begin */
 	public static final String SETTINGS_UI_SEARCH_APP = "ui_search_app";
     /*Lenovo-sw zhangyj19 add 2015/09/09 add search app definition end */

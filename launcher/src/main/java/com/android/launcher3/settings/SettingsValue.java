@@ -57,6 +57,15 @@ public class SettingsValue {
     public static void setWorkspaceLoop(Context c, boolean loop) {
         SettingsProvider.putBoolean(c, SettingsProvider.SETTINGS_UI_WORKSPACE_LOOP, loop);
     }
+    //设置Kindflow开关
+    public static boolean isKinflowSetOn(Context c) {
+        return SettingsProvider.getBoolean(c, SettingsProvider.SETTINGS_UI_KINFLOW_SETON,
+                R.bool.preferences_interface_workspace_kinflow_default);
+    }
+
+    public static void setKinflowSetOn(Context c, boolean loop) {
+        SettingsProvider.putBoolean(c, SettingsProvider.SETTINGS_UI_KINFLOW_SETON, loop);
+    }
     
     /** Lenovo-SW zhaoxin5 20150813 add for KOLEOSROW-580 START */
     public static boolean isFirstLoadSettings(Context c) {

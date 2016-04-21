@@ -46,6 +46,7 @@
 <string name="local_backup_toast_ok">Sao lưu hoàn tất.</string>
 <string name="normal_settings">Cài đặt chung</string>
 <string name="workspace_loop_settings_title">Hiển thị xoay vòng màn hình</string>
+  <string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">Tùy chọn</string>
 <string name="multi_select_full">Tùy chọn đã đầy.</string>
 <string name="wallpaper_show_theme_center">"Chủ đề"</string>

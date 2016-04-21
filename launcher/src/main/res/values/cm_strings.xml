@@ -141,6 +141,7 @@
     <string name="auto_reorder_summary">"Automatically arranges all icons starting from the top left corner"</string>
     <string name="extend_settings">Advanced settings</string>
     <string name="workspace_loop_settings_title">Homescreen carousel scrolling</string>
+    <string name="kinflow_turn_setting">Kinflow setting</string>
     <!-- Lenovo-SW zhangyj19 20150806 add setting function end -->
     <!--Loading dialog -->
     <string name="loading_worksapce">Loading...</string>

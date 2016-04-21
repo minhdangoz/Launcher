@@ -49,6 +49,7 @@
 <string name="local_backup_toast_ok">Sigurnosno je kopiranje dovršeno.</string>
 <string name="normal_settings">Opće postavke</string>
 <string name="workspace_loop_settings_title">Beskonačno pomicanje na radnoj površini</string>
+    <string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">Preferenca</string>
 <string name="multi_select_full">Ispunjeno je.</string>
 <string name="wallpaper_show_theme_center">Tema</string>

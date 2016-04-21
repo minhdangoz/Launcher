@@ -44,7 +44,7 @@
 <string name="local_backup_toast_ok">ব্যাকআপ শেষ হয়েছে।</string>
 <string name="normal_settings">সাধারণ সেটিংস</string>
 <string name="workspace_loop_settings_title">হোমস্ক্রিন অসীম স্ক্রোলিং</string>
-
+<string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">পছন্দ</string>
 <string name="multi_select_full">এটি ভর্তি হয়েছে।</string>
 <string name="wallpaper_show_theme_center">থিম</string>

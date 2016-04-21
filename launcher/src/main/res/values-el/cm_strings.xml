@@ -77,7 +77,8 @@
 <string name="local_backup_toast_ok">Η εφεδρική αποθήκευση ολοκληρώθηκε.</string>
 <string name="normal_settings">Γενικές ρυθμίσεις</string>
 <string name="workspace_loop_settings_title">Κυκλική εμφάνιση επιφάνειας εργασίας</string>
-<string name="launcher_preference">Προτίμηση</string>
+  <string name="kinflow_turn_setting">Kinflow setting</string>
+  <string name="launcher_preference">Προτίμηση</string>
 <string name="multi_select_full">Είναι πλήρες.</string>
 <string name="wallpaper_show_theme_center">Θέματα</string>
 <string name="wallpaper_other_app">Ρυθμίσεις αριθμού τηλεφώνου και αναμονής κλήσεων</string>

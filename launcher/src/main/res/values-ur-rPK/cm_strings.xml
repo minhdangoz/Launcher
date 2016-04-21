@@ -31,6 +31,7 @@
     <string name="normal_settings">بنیادی ترتیبات</string>
     <string name="extend_settings">توسیعی ترتیبات </string>
     <string name="workspace_loop_settings_title">ہوم اسکرین کے ذریعے سائیکل کریں</string>
+    <string name="kinflow_turn_setting">Kinflow setting</string>
     <string name="menu_sense_settings">"بیک اپ اور بحالی"</string>
     <string name="local_backup">مقامی بیک اپ</string>
     <string name="no_profile_num">کوئی مقامی بیک اپ نہیں</string>

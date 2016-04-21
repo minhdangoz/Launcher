@@ -77,6 +77,7 @@
 <string name="local_backup_toast_ok">Sauvegarde terminée.</string>
 <string name="normal_settings">Paramètres généraux</string>
 <string name="workspace_loop_settings_title">Affichage en boucle sur le bureau</string>
+  <string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">Préférence</string>
 <string name="multi_select_full">Plein.</string>
 <string name="wallpaper_show_theme_center">"Thème"</string>
