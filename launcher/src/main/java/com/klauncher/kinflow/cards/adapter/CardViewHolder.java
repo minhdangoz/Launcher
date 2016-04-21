@@ -222,7 +222,7 @@ class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
     void setData (List<Article> group,CardInfo cardInfo){
         //今日头条新闻的4条非abstract新闻
         TTNewsAdapter adapter = (TTNewsAdapter) mRecyclerView.getAdapter();
-        adapter.updateAdapter(group, cardInfo);
+        adapter.updateAdapter(group.subList(1,group.size()), cardInfo);
         //今日头条的第一条新闻,abstract新闻
         //第一条新闻
         mFirstArticle = group.get(0);
