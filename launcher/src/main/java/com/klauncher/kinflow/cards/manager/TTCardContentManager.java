@@ -3,7 +3,6 @@ package com.klauncher.kinflow.cards.manager;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
 import com.klauncher.launcher.R;
 import com.klauncher.kinflow.cards.CardIdMap;
@@ -77,13 +76,12 @@ public class TTCardContentManager extends BaseCardContentManager {
             @Override
             public void onArticleListReceived(boolean b, List<Article> list) {
 
-                if (!b) {
-                    Toast.makeText(mContext, (mContext.getResources().getString(R.string.kinflow_string_obtain_toutiao_fail)), Toast.LENGTH_SHORT).show();
-                    log("获取头条新闻失败");
-                    return;
-                }
+//                if (!b) {
+//                    Toast.makeText(mContext, (mContext.getResources().getString(R.string.kinflow_string_obtain_toutiao_fail)), Toast.LENGTH_SHORT).show();
+//                    log("获取头条新闻失败");
+//                    return;
+//                }
 
-                    log("获取头条新闻成功");
                 mArticleListArrays = CardUtils.groupByAbstract2(list);
 
                 Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO);

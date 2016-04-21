@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.handmark.pulltorefresh.library.PullToRefreshScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.handmark.pulltorefresh.library.PullToRefreshScrollView
+    android:id="@+id/pull_refresh_scrollview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ptr="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pull_refresh_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/kinfow_dimen_main_padding"
     android:scrollbars="none"
     ptr:ptrAnimationStyle="flip"
-    ptr:ptrMode="both">
-    <!--tools:context="com.klauncher.kinflow.MainActivity"-->
+    ptr:ptrMode="both"
+    tools:context="com.klauncher.kinflow.MainActivity">
+
 
     <RelativeLayout
         style="@style/kinflow_commont_match_parent_all"
@@ -21,27 +23,50 @@
         <!--天气-->
         <include
             android:id="@+id/weather_header"
-            layout="@layout/weather_header" />
+            layout="@layout/weather_header"/>
+
         <RelativeLayout
             android:id="@+id/search_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/weather_header"
-            android:background="@color/kinflow_color_main_transparent_background">
+            android:background="@color/kinflow_color_main_transparent_background"
+            >
 
-            <TextView
-                android:id="@+id/search_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:drawableLeft="@drawable/baidu"
-                android:drawableRight="@drawable/search"
-                android:drawablePadding="8dp"
-                android:onClick="doClick"
+            <RelativeLayout
+                style="@style/kinflow_commont_match_parent_width"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@drawable/border_search"
-                android:hint="@string/kinflow_string_search_hint" />
+                android:background="@drawable/border_search">
+
+                <ImageView
+                    android:id="@+id/search_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/baidu"/>
+
+
+                <ImageView
+                    android:id="@+id/search_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/search"/>
+
+                <TextView
+                    android:id="@+id/search_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@id/search_icon"
+                    android:layout_toRightOf="@id/search_mode"
+                    android:gravity="center_vertical"
+                    android:hint="@string/kinflow_string_search_hint"/>
+            </RelativeLayout>
 
         </RelativeLayout>
 
@@ -52,45 +77,49 @@
             android:layout_height="@dimen/kinfow_dimen_search_layout_height"
             android:layout_below="@id/search_layout"
             android:background="@color/kinflow_color_main_transparent_background"
-            android:paddingLeft="12dp"
-            android:paddingRight="8dp"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:gravity="center">
-
-            <android.support.v7.internal.widget.CompatTextView
-                android:id="@+id/hot_word_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="144dp"
-                android:onClick="doClick"
-                android:gravity="center_vertical"
-                android:layout_alignParentLeft="true"
-                android:textColor="@color/kinflow_color_typeface_main"
-                android:textSize="14sp"
-                />
+            android:paddingLeft="12dp"
+            android:paddingRight="8dp">
 
             <ImageView
                 android:id="@+id/refresh_hotWord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:layout_alignParentRight="true"
+                android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
-                android:onClick="doClick"
-                android:src="@drawable/refresh" />
-
-            <android.support.v7.internal.widget.CompatTextView
-                android:id="@+id/hot_word_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="144dp"
-                android:onClick="doClick"
                 android:gravity="center_vertical"
-                android:layout_toRightOf="@id/hot_word_1"
+                android:src="@drawable/refresh"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/refresh_hotWord"
-                android:textColor="@color/kinflow_color_typeface_main"
-                android:textSize="14sp"
-                />
+                android:stretchColumns="0,1">
+
+                <android.support.v7.internal.widget.CompatTextView
+                    android:id="@+id/hot_word_1"
+                    style="@style/kinflow_commont_wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:textColor="@color/kinflow_color_typeface_main"
+                    android:textSize="14sp"
+                    />
+
+                <android.support.v7.internal.widget.CompatTextView
+                    android:id="@+id/hot_word_2"
+                    style="@style/kinflow_commont_wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:textColor="@color/kinflow_color_typeface_main"
+                    android:textSize="14sp"
+                    />
+            </RelativeLayout>
 
         </RelativeLayout>
 
@@ -99,13 +128,13 @@
             android:id="@+id/navigation_recyclerView"
             style="@style/kinflow_commont_match_parent_width"
             android:layout_below="@id/random_news_line"
-            android:background="@color/kinflow_color_main_transparent_background"
             android:layout_marginTop="12dp"
+            android:background="@color/kinflow_color_main_transparent_background"
+            android:paddingBottom="8dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:textColor="@color/kinflow_color_typeface_main" />
+            android:textColor="@color/kinflow_color_typeface_main"/>
 
         <!-- Card部分 -->
         <android.support.v7.widget.RecyclerView

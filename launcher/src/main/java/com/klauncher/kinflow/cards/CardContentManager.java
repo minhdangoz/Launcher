@@ -1,5 +1,28 @@
 package com.klauncher.kinflow.cards;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
+import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.klauncher.launcher.R;
 import com.klauncher.kinflow.browser.KinflowBrower;
 import com.klauncher.kinflow.cards.adapter.TTNewsAdapter;
@@ -22,30 +45,6 @@ import com.squareup.picasso.Target;
 import com.ss.android.sdk.minusscreen.SsNewsApi;
 import com.ss.android.sdk.minusscreen.control.feed.ArticleListQueryCallBack;
 import com.ss.android.sdk.minusscreen.model.Article;
-
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
-import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -215,9 +214,9 @@ public class CardContentManager {
         tv_moreNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ComponentName componentName = new ComponentName(Const.TOUTIAO_packageName, Const.TOUTIAO_mainActivity);
-                boolean b = CommonUtils.getInstance().isInstalledAPK(mContext, componentName);
+                boolean b = CommonUtils.getInstance().isInstalledAPK(mContext,OpenMode.COMPONENT_NAME_JINRI_TOUTIAO);
                 if (b) {
+                    ComponentName componentName = new ComponentName(Const.TOUTIAO_packageName, Const.TOUTIAO_mainActivity);
                     Intent intent = new Intent();
                     intent.setComponent(componentName);
                     mContext.startActivity(intent);

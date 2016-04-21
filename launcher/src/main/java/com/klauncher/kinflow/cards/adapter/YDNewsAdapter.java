@@ -37,7 +37,7 @@ public class YDNewsAdapter extends RecyclerView.Adapter<YDNewsAdapter.NewsAdapte
         this.mCardInfo = cardInfo;
         //初次构建我们传入null,后面已经做了非空判断.不会出问题.我们传入null的目的是因为后面还会使用updateYDnewsRecycler()
         //来重新填充数据,为了防止重复填充绘制view.减小内存压力.第一次传入null即可.
-         setArticleList(null);
+        setArticleList(null);
     }
 
     public void setArticleList(List<YiDianModel> articleList) {

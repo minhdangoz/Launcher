@@ -1,9 +1,6 @@
 package com.klauncher.kinflow.search;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +10,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,7 +33,7 @@ import java.util.List;
 /**
  * Created by xixionghui on 2016/3/15.
  */
-public class SearchActivity extends Activity {
+public class SearchActivity extends Activity implements OnClickListener{
 
 
     TextView searchOrCancle;
@@ -112,7 +110,6 @@ public class SearchActivity extends Activity {
                 int hintLength = editSearch.getHint().length();
                 int editLength = editSearch.getText().length();
                 if (hintLength > 0 || editLength>0) {
-                    editSearch.setHint("");
                     searchOrCancle.setTag("search");
                     searchOrCancle.setText("搜索");
                 } else {
@@ -146,9 +143,11 @@ public class SearchActivity extends Activity {
         editSearch = (EditText) findViewById(R.id.edit_search);
         searchHeader = (RelativeLayout) findViewById(R.id.search_header);
         hotwordRecycler = (RecyclerView) findViewById(R.id.hotword_recycler);
+        searchOrCancle.setOnClickListener(this);
     }
 
-    public void doClick(View view) {
+    @Override
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.search_or_cancle:
                 if (searchOrCancle.getTag().equals("search")) {

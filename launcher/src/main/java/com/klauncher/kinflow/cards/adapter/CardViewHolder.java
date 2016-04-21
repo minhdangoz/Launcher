@@ -1,8 +1,6 @@
 package com.klauncher.kinflow.cards.adapter;
 
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -236,12 +234,13 @@ class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.more_news:
-                ComponentName componentName = new ComponentName(Const.TOUTIAO_packageName, Const.TOUTIAO_mainActivity);
-                boolean b = CommonUtils.getInstance().isInstalledAPK(mContext, componentName);
+                boolean b = CommonUtils.getInstance().isInstalledAPK(mContext,OpenMode.COMPONENT_NAME_JINRI_TOUTIAO);
                 if (b) {
-                    Intent intent = new Intent();
-                    intent.setComponent(componentName);
-                    mContext.startActivity(intent);
+//                    ComponentName componentName = new ComponentName(Const.TOUTIAO_packageName, Const.TOUTIAO_mainActivity);
+//                    Intent intent = new Intent();
+//                    intent.setComponent(componentName);
+//                    mContext.startActivity(intent);
+                    CommonUtils.getInstance().openApp(mContext,OpenMode.COMPONENT_NAME_JINRI_TOUTIAO);
                 } else {
                     Toast.makeText(mContext, "请先下载今日头条APP", Toast.LENGTH_SHORT).show();
                 }
@@ -364,10 +363,19 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
                         addYiDianHeadWith3Image();
                         break;
                 }
+        }else {
+            log("一点咨询"+mCardInfo.getCardSecondTypeId()+"类型无数据,隐藏layout");
+            ViewGroup.LayoutParams params = cardView.getLayoutParams();
+            params.height = 0;
+            cardView.setLayoutParams(params);
+            ViewParent parent = cardView.getParent();
+            if (parent != null) {
+                parent.requestLayout();
+            }
         }
     }
 
-    void addYiDianHeadWith1Image(){
+    void addYiDianHeadWith1Image() {
         //布局
         final TextView tv_title = (TextView) mYiDianHeadWith1ImageLayout.findViewById(R.id.yidian_news_title);
         final TextView tv_publishTime = (TextView) mYiDianHeadWith1ImageLayout.findViewById(R.id.yidian_news_publish_time);

@@ -28,6 +28,7 @@ import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheLocation;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonUtils;
+import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.navigation.adapter.NavigationAdapter;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.SearchActivity;
@@ -42,14 +43,16 @@ import com.klauncher.launcher.R;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener, MainControl.ResponseListener {
+public class MainActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener, MainControl.ResponseListener,View.OnClickListener {
 
 
     //    ArrayList<HotWord> hotWordArrayList;
+    RelativeLayout mWeatherLayout;
     TextView tv_temperature;
     TextView tv_city;
     TextView tv_weather;
     ImageView iv_weatherType;
+    ImageView iv_searchIcon;
     TextView tv_searchHint;
     CompatTextView tv_hotWord1;
     CompatTextView tv_hotWord2;
@@ -106,17 +109,25 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
     }
 
     private void initView() {
+        mWeatherLayout = (RelativeLayout) findViewById(R.id.weather_header);
         tv_temperature = (TextView) findViewById(R.id.temperature);
         tv_city = (TextView) findViewById(R.id.city);
         tv_weather = (TextView) findViewById(R.id.weather);
         iv_weatherType = (ImageView) findViewById(R.id.weather_type);
         tv_searchHint = (TextView) findViewById(R.id.search_hint);
+        iv_searchIcon = (ImageView) findViewById(R.id.search_icon);
         tv_hotWord1 = (CompatTextView) findViewById(R.id.hot_word_1);
         tv_hotWord2 = (CompatTextView) findViewById(R.id.hot_word_2);
         iv_refresh = (ImageView) findViewById(R.id.refresh_hotWord);
         randomNewsLine = (RelativeLayout) findViewById(R.id.random_news_line);
         navigationRecyclerView = (RecyclerView) findViewById(R.id.navigation_recyclerView);
         mCardsView = (RecyclerView) findViewById(R.id.scroll_view_cards);
+        tv_searchHint.setOnClickListener(this);
+        iv_searchIcon.setOnClickListener(this);
+        iv_refresh.setOnClickListener(this);
+        tv_hotWord1.setOnClickListener(this);
+        tv_hotWord2.setOnClickListener(this);
+        mWeatherLayout.setOnClickListener(this);
     }
 
     //初始化数据---default data
@@ -137,8 +148,8 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
         mCardsView.setAdapter(new CardsAdapter(this, null));//最初传入空,等待收到数据后更新
     }
 
-
-    public void doClick(View view) {
+    @Override
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.hot_word_1://热词1监听
                 CommonUtils.getInstance().openHotWord(this, hotWord1.getUrl());
@@ -155,6 +166,14 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 intent.putExtra(SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
                 startActivity(intent);
+                break;
+            case R.id.search_icon:
+                CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
+                break;
+            case R.id.weather_header:
+                log("启动墨迹天气");
+                if (CommonUtils.getInstance().isInstalledAPK(this,OpenMode.COMPONENT_NAME_MOJI_TIANQI))
+                    CommonUtils.getInstance().openApp(this,OpenMode.COMPONENT_NAME_MOJI_TIANQI);
                 break;
         }
     }

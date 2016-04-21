@@ -76,14 +76,6 @@ public class MainControl {
                 case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW:
                     log("获取到adview");
                     break;
-                case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME://获取到城市名称
-                    try {
-                        String cityName = URLEncoder.encode((String) msg.obj, "UTF-8");
-                        parseWeather(cityName);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    break;
                 default:
                     log("what the fuck ??  msg.what="+msg.what);
                     break;
@@ -108,6 +100,23 @@ public class MainControl {
                 }
             }
         }
+        }
+    };
+
+    private Handler cityHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME://获取到城市名称
+                    log("获取到城市名称");
+                    try {
+                        String cityName = URLEncoder.encode((String) msg.obj, "UTF-8");
+                        parseWeather(cityName);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
         }
     };
 
@@ -145,6 +154,7 @@ public class MainControl {
 //        this.mCardInfoList = cardInfoList;
         this.mCardInfoList  = CardsListManager.getInstance().getInfos();
         permitCount = mCardInfoList.size()+2;
+        log("请求的总数="+permitCount+" ,其中card请求个数="+mCardInfoList.size());
         mRequestSemaphore = new Semaphore(permitCount);
         for (int what : msgWhats) {
             try {
@@ -169,13 +179,14 @@ public class MainControl {
                         }
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
-                        log("开始获取所有的Card信息,Card个数="+mCardInfoList.size());
                         for (CardInfo cardInfo : mCardInfoList) {
                             BaseCardContentManager cardContentManager = cardInfo.getmCardContentManager();
                             mRequestSemaphore.acquire();
                             cardContentManager.requestCardContent(mHandler,cardInfo);
                         }
                         break;
+                    default:
+                        log("未知请求,what="+what);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -191,7 +202,7 @@ public class MainControl {
         String param = "?location=" + CacheLocation.getInstance(mContext).getLatLng() + "&output=json&key=" + Const.BAIDU_APIKEY;
         String url = Const.OBTAIN_CITY_NAME + param;
         try {
-            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME).run(url);
+            new AsynchronousGet(cityHandler, MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME).run(url);
         } catch (Exception e) {
             e.printStackTrace();
         }

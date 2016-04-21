@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -157,23 +158,48 @@ public class CommonUtils {
         return componentNameList;
     }
 
-    public boolean isInstalledAPK(Context context,String packageName,String mainActivity){
-        ComponentName componentName = new ComponentName(packageName,mainActivity);
+    public boolean isInstalledAPK(Context context, String packageName, String mainActivity) {
+        ComponentName componentName = new ComponentName(packageName, mainActivity);
         if (allInstallAPK(context).contains(componentName)) return true;
         return false;
     }
 
-    public boolean isInstalledAPK(Context context,ComponentName componentName){
+    public boolean isInstalledAPK(Context context, ComponentName componentName) {
         if (allInstallAPK(context).contains(componentName)) return true;
         return false;
+    }
+
+    public boolean isInstalledAPK(Context context, String component) {
+        String[] cns = component.split("/");
+        try {
+            ApplicationInfo info = context.getPackageManager().getApplicationInfo(cns[0], PackageManager.GET_META_DATA);
+            if (null != info)
+                return true;
+            else return false;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void openApp(Context context,String component){
+        String[] cns = component.split("/");
+        ComponentName componentName = new ComponentName(cns[0],cns[1]);
+        Intent intent = new Intent();
+        intent.setComponent(componentName);
+        try {
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * @param content PackageName 和 MainActivity组合，例如：com.android.chrome/com.google.android.apps.chrome.Main
-     * @param url 打开指定内容的url
+     * @param url     打开指定内容的url
      * @return
      */
-    public boolean openDetalWithSpecialMode(Context context, String content,String url) {
+    public boolean openDetalWithSpecialMode(Context context, String content, String url) {
         boolean isSuccess = false;
         String[] contents = null;
 
@@ -184,9 +210,9 @@ public class CommonUtils {
             Log.d("CommonUtils", "没有按照指定格式返回数据：....PackageName...../.....MainActivity......");
             return false;
         }
-            if (contents.length!=2) return false;
-            Log.d("CommonUtils", "开始构建ComponentName");
-        ComponentName componentName = new ComponentName(contents[0],contents[1]);
+        if (contents.length != 2) return false;
+        Log.d("CommonUtils", "开始构建ComponentName");
+        ComponentName componentName = new ComponentName(contents[0], contents[1]);
         Intent intent = new Intent();
         intent.setComponent(componentName);
         intent.setAction("android.intent.action.VIEW");
@@ -200,56 +226,55 @@ public class CommonUtils {
             e.printStackTrace();
             isSuccess = false;
         } finally {
-            return  isSuccess;
+            return isSuccess;
         }
     }
 
     /**
-     *
      * @param context
      * @param contents app的包名、类名
-     * @param url 打开指定内容的url
+     * @param url      打开指定内容的url
      */
-    public void openDetail(Context context,List<String> contents,String url) {
+    public void openDetail(Context context, List<String> contents, String url) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0 ; i < contents.size() ; i ++) {
+        for (int i = 0; i < contents.size(); i++) {
             stringBuilder.append(contents.get(i)).append("  ,  ");
         }
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         Log.i("CommonUtils", "要打开的方式: " + stringBuilder.toString());
 
-        if (null == contents || contents.size() ==0) {
+        if (null == contents || contents.size() == 0) {
             Toast.makeText(context, "没有指定打开方式,使用默认打开方式", Toast.LENGTH_SHORT).show();
-            context.startActivity(new Intent(context, KinflowBrower.class).putExtra(KinflowBrower.KEY_EXTRA_URL,url));
+            context.startActivity(new Intent(context, KinflowBrower.class).putExtra(KinflowBrower.KEY_EXTRA_URL, url));
             return;
         }
         boolean isOpenSuccess = false;
-        for (int i = 0 ; i <contents.size() ; i++) {
-            if (openDetalWithSpecialMode(context, contents.get(i),url)){//如果打开成功
+        for (int i = 0; i < contents.size(); i++) {
+            if (openDetalWithSpecialMode(context, contents.get(i), url)) {//如果打开成功
                 isOpenSuccess = true;
                 return;
             }
         }
         if (!isOpenSuccess) {//如果所有指定的方式都打开失败，则启动内嵌浏览器打开
             Toast.makeText(context, "没有指定打开方式,使用默认打开方式", Toast.LENGTH_SHORT).show();
-            context.startActivity(new Intent(context, KinflowBrower.class).putExtra(KinflowBrower.KEY_EXTRA_URL,url));
+            context.startActivity(new Intent(context, KinflowBrower.class).putExtra(KinflowBrower.KEY_EXTRA_URL, url));
         }
     }
 
-    public void openHotWord(Context context,String url){
+    public void openHotWord(Context context, String url) {
         try {
             //uc
-            openBrowerUrl(context,url,Const.UC_packageName,Const.UC_mainActivity);
+            openBrowerUrl(context, url, Const.UC_packageName, Const.UC_mainActivity);
         } catch (Exception e) {
             try {
-                openBrowerUrl(context,url,Const.QQ_packageName,Const.QQ_mainActivity);
+                openBrowerUrl(context, url, Const.QQ_packageName, Const.QQ_mainActivity);
             } catch (Exception e1) {
-                openDefaultBrowserUrl(context,url);
+                openDefaultBrowserUrl(context, url);
             }
         }
     }
 
-    void openBrowerUrl(Context context,String url,String packageName,String className) {
+    void openBrowerUrl(Context context, String url, String packageName, String className) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         Uri data = Uri.parse(url);
