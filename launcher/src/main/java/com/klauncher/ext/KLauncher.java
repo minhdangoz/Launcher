@@ -10,7 +10,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,6 +33,7 @@ import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheLocation;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonUtils;
+import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.navigation.adapter.NavigationAdapter;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
@@ -70,11 +70,13 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     //    private WebView mWebView;
     //kinflow
+    RelativeLayout mWeatherLayout;
     private LinearLayout mLayoutContent;
     TextView tv_temperature;
     TextView tv_city;
     TextView tv_weather;
     ImageView iv_weatherType;
+    ImageView iv_searchIcon;
     TextView tv_searchHint;
     CompatTextView tv_hotWord1;
     CompatTextView tv_hotWord2;
@@ -277,11 +279,13 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     private void initKinflow() {
         View kinflowView = getLayoutInflater().inflate(R.layout.activity_main, null);
         //initview
+        mWeatherLayout = (RelativeLayout) kinflowView.findViewById(R.id.weather_header);
         tv_temperature = (TextView) kinflowView.findViewById(R.id.temperature);
         tv_city = (TextView) kinflowView.findViewById(R.id.city);
         tv_weather = (TextView) kinflowView.findViewById(R.id.weather);
         iv_weatherType = (ImageView) kinflowView.findViewById(R.id.weather_type);
         tv_searchHint = (TextView) kinflowView.findViewById(R.id.search_hint);
+        iv_searchIcon = (ImageView) kinflowView.findViewById(R.id.search_icon);
         tv_hotWord1 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_1);
         tv_hotWord2 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_2);
         iv_refresh = (ImageView) kinflowView.findViewById(R.id.refresh_hotWord);
@@ -290,22 +294,15 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mCardsView = (RecyclerView) kinflowView.findViewById(R.id.scroll_view_cards);
         mPullRefreshScrollView = (PullToRefreshScrollView) kinflowView.findViewById(R.id.pull_refresh_scrollview);
         mLayoutContent.addView(kinflowView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-       /* //initview
-        tv_temperature = (TextView) findViewById(R.id.temperature);
-        tv_city = (TextView) findViewById(R.id.city);
-        tv_weather = (TextView) findViewById(R.id.weather);
-        iv_weatherType = (ImageView) findViewById(R.id.weather_type);
-        tv_searchHint = (TextView) findViewById(R.id.search_hint);
-        tv_hotWord1 = (CompatTextView) findViewById(R.id.hot_word_1);
-        tv_hotWord2 = (CompatTextView) findViewById(R.id.hot_word_2);
-        iv_refresh = (ImageView) findViewById(R.id.refresh_hotWord);
-        randomNewsLine = (RelativeLayout) findViewById(R.id.random_news_line);
-        navigationRecyclerView = (RecyclerView) findViewById(R.id.navigation_recyclerView);
-        mCardsView = (RecyclerView) findViewById(R.id.scroll_view_cards);
-        mPullRefreshScrollView = (PullToRefreshScrollView)findViewById(R.id.pull_refresh_scrollview);
-*/
-        CardsListManager.getInstance().init(this);
+        //listener
+        tv_searchHint.setOnClickListener(this);
+        iv_searchIcon.setOnClickListener(this);
+        iv_refresh.setOnClickListener(this);
+        tv_hotWord1.setOnClickListener(this);
+        tv_hotWord2.setOnClickListener(this);
+        mWeatherLayout.setOnClickListener(this);
         //初始化数据---default data
+        CardsListManager.getInstance().init(this);
         tv_hotWord1.setText(hotWord1.getWord());
         tv_hotWord2.setText(hotWord2.getWord());
         navigationRecyclerView.setLayoutManager(new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false));
@@ -344,7 +341,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mScrollView = mPullRefreshScrollView.getRefreshableView();
         mScrollView.setFillViewport(true);
         mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);//关闭加载更多
-        //水平滑动 父控件拦截  垂直滑动
     }
 
     @Override
@@ -352,7 +348,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.onCreate(savedInstanceState, persistentState);
     }
 
-    public void doClick(View view) {
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
         switch (view.getId()) {
             case R.id.hot_word_1://热词1监听
                 CommonUtils.getInstance().openHotWord(this, hotWord1.getUrl());
@@ -369,6 +367,14 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
                 intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
                 startActivity(intent);
+                break;
+            case R.id.search_icon:
+                CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
+                break;
+            case R.id.weather_header:
+                log("启动墨迹天气");
+                if (CommonUtils.getInstance().isInstalledAPK(this, OpenMode.COMPONENT_NAME_MOJI_TIANQI))
+                    CommonUtils.getInstance().openApp(this,OpenMode.COMPONENT_NAME_MOJI_TIANQI);
                 break;
         }
     }

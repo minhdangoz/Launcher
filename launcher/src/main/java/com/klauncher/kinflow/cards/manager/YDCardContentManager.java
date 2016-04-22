@@ -28,11 +28,22 @@ public class YDCardContentManager extends BaseCardContentManager {
 
     private Handler mHandler;//本Card的handler
     private Handler mainControlHandler;//MainControl的handler
+    //初始化
+    static {
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME+CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN,0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME+CardIdMap.CARD_TYPE_NEWS_YD_REDIAN,0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME+CardIdMap.CARD_TYPE_NEWS_YD_YULE,0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME+CardIdMap.CARD_TYPE_NEWS_YD_QICHE,0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME+CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG,0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME+CardIdMap.CARD_TYPE_NEWS_YD_LVYOU,0);
+    }
     private Handler.Callback mCallback = new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             if (msg.arg1 == AsynchronousGet.SUCCESS) {
+                //计算下次的偏移量offset
                 int offset = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,0)+5;
+                //存储偏移量offset
                 CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,offset);
                 handleObtainedData(msg);
             } else {
@@ -72,7 +83,8 @@ public class YDCardContentManager extends BaseCardContentManager {
 //    }
 
     public String getRequestUrl() {
-        int mOffSet = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,CardIdMap.CARD_TYPE_NEWS_TT_REDIAN);
+        //获取偏移量,如果没有获取到偏移量则使用默认偏移量0
+        int mOffSet = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,0);
         StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT);
         stringBuilder.append("?channel_id=").append(String.valueOf(CardIdMap.getYiDianChannelId(mOurDefineChannelId)));//channelId
         stringBuilder.append("&offset=").append(String.valueOf(mOffSet));//偏移量
