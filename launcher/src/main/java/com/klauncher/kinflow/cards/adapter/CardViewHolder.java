@@ -266,9 +266,10 @@ class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
                 break;
             case R.id.first_news_layout_toutiao:
                 if (null == mFirstArticle) return;
-                Bundle extreas = new Bundle();
-                extreas.putString(OpenMode.OPEN_URL_KEY,mFirstArticle.mSrcUrl);
-                mCardInfo.open(mContext,extreas);
+                Bundle extras = new Bundle();
+                extras.putString(OpenMode.OPEN_URL_KEY,mFirstArticle.mSrcUrl);
+                extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + mFirstArticle.mGroupId);
+                mCardInfo.open(mContext, extras);
                 break;
         }
     }
