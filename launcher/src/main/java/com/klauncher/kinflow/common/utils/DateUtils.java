@@ -106,7 +106,7 @@ public class DateUtils {
         } else {
             int month = disPlayCalendar.get(Calendar.MONTH) + 1;
             stringBuilder = month<10?stringBuilder.append("0").append(String.valueOf(month)):stringBuilder.append(month);
-            stringBuilder.append(":");
+            stringBuilder.append("-");
             int day = disPlayCalendar.get(Calendar.DAY_OF_MONTH);
             stringBuilder = day<10?stringBuilder.append("0").append(String.valueOf(day)):stringBuilder.append(String.valueOf(day));
         }

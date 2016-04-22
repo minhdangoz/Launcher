@@ -82,11 +82,25 @@ public class YDCardContentManager extends BaseCardContentManager {
 //        this.isFirst = true;
 //    }
 
+    static final String YIDIAN_APPID = "17Mgz4F2WfWvrWQ9z8J6iAfi";
+    static final String YIDIAN_APPKEY = "lxRgj53VtpL6wL0t1NkX1IxxRvlZtf0j";
+
     public String getRequestUrl() {
+        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT);
+        /*
+        int timestamp = (int)((System.currentTimeMillis())/1000);
+//        int timestamp = (int)((new Date().getTime())/1000);
+        String nonce = CommonUtils.getInstance().getRandomString(5);//生成5个随机字符串
+        //String appkey,String nonce,String timestamp
+        String secretkey = CommonUtils.getInstance().getSecretkey(YIDIAN_APPKEY, nonce, String.valueOf(timestamp));
+        stringBuilder.append("?appid=").append(YIDIAN_APPID);
+        stringBuilder.append("&secretkey=").append(secretkey);
+        stringBuilder.append("&timestamp=").append(timestamp);
+        stringBuilder.append("&nonce=").append(nonce);
+        */
         //获取偏移量,如果没有获取到偏移量则使用默认偏移量0
         int mOffSet = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,0);
-        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT);
-        stringBuilder.append("?channel_id=").append(String.valueOf(CardIdMap.getYiDianChannelId(mOurDefineChannelId)));//channelId
+        stringBuilder.append("&channel_id=").append(String.valueOf(CardIdMap.getYiDianChannelId(mOurDefineChannelId)));//channelId
         stringBuilder.append("&offset=").append(String.valueOf(mOffSet));//偏移量
         stringBuilder.append("&count=").append(String.valueOf(this.mCount));
         return stringBuilder.toString();

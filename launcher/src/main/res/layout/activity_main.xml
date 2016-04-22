@@ -11,8 +11,7 @@
     android:padding="@dimen/kinfow_dimen_main_padding"
     android:scrollbars="none"
     ptr:ptrAnimationStyle="flip"
-    ptr:ptrMode="both"
-    tools:context="com.klauncher.kinflow.MainActivity">
+    ptr:ptrMode="both">
 
 
     <RelativeLayout

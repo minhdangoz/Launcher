@@ -490,8 +490,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         //更新CardsAdapter
         if (null != cardInfoList && cardInfoList.size() != 0) {
             log("==========更新CardsAdapter===========");
-            CardsAdapter cardsAdapter = (CardsAdapter) mCardsView.getAdapter();
-            cardsAdapter.updateCards(cardInfoList);
+//            CardsAdapter cardsAdapter = (CardsAdapter) mCardsView.getAdapter();
+//            cardsAdapter.updateCards(cardInfoList);
+            mCardsView.removeAllViews();
+            CardsAdapter cardsAdapter = new CardsAdapter(this,cardInfoList);
+            mCardsView.setAdapter(cardsAdapter);
         }
     }
 
