@@ -266,6 +266,7 @@ public final class AsynchronousGet {
     }
 
     private void parseYiDian(String responseBody) {
+        Log.d("Kinflow", "parseYiDian: responseBody= "+responseBody);
 //        handler.sendMessage(msg);
         List<YiDianModel> yiDianModelList = new ArrayList<>();
         try {

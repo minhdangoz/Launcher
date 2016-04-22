@@ -503,6 +503,13 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         }
     }
 
+    @Override
+    public void onAddAdview(CardInfo cardInfo) {
+        //向CardsAdapter中添加adView
+        CardsAdapter adapter= (CardsAdapter) mCardsView.getAdapter();
+        if (null!=adapter) adapter.addCard(cardInfo);
+    }
+
     final protected static void log(String msg) {
         KinflowLog.i(msg);
     }

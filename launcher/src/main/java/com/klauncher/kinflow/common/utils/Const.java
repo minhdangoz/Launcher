@@ -96,8 +96,8 @@ public class Const {
     public static final int YI_DIAN_CHANNEL_JianKang = 4;
     public static final int YI_DIAN_CHANNEL_LvYou = 5;
     public static final int YI_DIAN_CHANNEL_ID = YI_DIAN_CHANNEL_JingXuan;
-    public static final String  URL_YI_DIAN_ZI_XUN_HOUT ="http://o.go2yd.com/oapi/sample/channel?";//测试
-//    public static final String  URL_YI_DIAN_ZI_XUN_HOUT ="http://o.go2yd.com/open-api/delong/channel";
+    public static final String  URL_YI_DIAN_ZI_XUN_HOUT_DEBUG ="http://o.go2yd.com/oapi/sample/channel?";//测试
+    public static final String  URL_YI_DIAN_ZI_XUN_HOUT_RELEASE ="http://o.go2yd.com/open-api/delong/channel";
     public static final String YI_DIAN_CHANNEL_MORE_JingXuan = "http://www.yidianzixun.com/home";
     public static final String YI_DIAN_CHANNEL_MORE_ReDian = "http://www.yidianzixun.com/home?page=channel&id=hot";
     public static final String YI_DIAN_CHANNEL_MORE_YuLe = "http://www.yidianzixun.com/home?page=channel&keyword=%E5%A8%B1%E4%B9%90";

@@ -69,6 +69,12 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
         }
     }
 
+    public void addCard(CardInfo cardInfo){
+        if(null==this.mCardsList) this.mCardsList = new ArrayList<>();
+        this.mCardsList.add(cardInfo);
+        this.notifyDataSetChanged();
+    }
+
     public void updateCards(List<CardInfo> cardsList) {
 //        this.mCardsList.clear();
 //        this.mCardsList.addAll(cardsList);
