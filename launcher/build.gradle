@@ -120,8 +120,8 @@ android {
         }
         debug {
             minifyEnabled false
-            buildConfigField "String", "PING_DOMAIN", "\"http://test.ping.klauncher.com\""
-            buildConfigField "String", "PUSH_DOMAIN", "\"http://test.api.klauncher.com/v1\""
+            buildConfigField "String", "PING_DOMAIN", "\"http://ping.klauncher.com\""
+            buildConfigField "String", "PUSH_DOMAIN", "\"http://api.klauncher.com/v1\""
         }
     }
 }
