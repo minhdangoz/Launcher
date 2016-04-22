@@ -11,6 +11,7 @@
     android:padding="@dimen/kinfow_dimen_main_padding"
     android:scrollbars="none"
     ptr:ptrAnimationStyle="flip"
+    android:fitsSystemWindows="true"
     ptr:ptrMode="both">
 
 
