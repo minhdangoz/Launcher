@@ -464,12 +464,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>-->
-
+        <!--set  android:theme Transparent 无标题-->
         <activity
             android:name="com.klauncher.kinflow.search.SearchActivity"
             android:configChanges="keyboard|orientation|screenSize"
             android:theme="@style/Theme.Transparent"/>
-
+        <!--set  android:theme Transparent 无标题-->
         <activity
             android:name="com.klauncher.kinflow.browser.KinflowBrower"
             android:configChanges="keyboard|orientation|screenSize"
