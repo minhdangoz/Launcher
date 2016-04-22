@@ -87,6 +87,7 @@ public class YDCardContentManager extends BaseCardContentManager {
 
     public String getRequestUrl() {
         StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_DEBUG);
+//        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_RELEASE);
         /*
         int timestamp = (int)((System.currentTimeMillis())/1000);
 //        int timestamp = (int)((new Date().getTime())/1000);

@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.baidu.apistore.sdk.ApiCallBack;
 import com.baidu.apistore.sdk.ApiStoreSDK;
 import com.baidu.apistore.sdk.network.Parameters;
+import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.utilities.FileUtils;
 import com.klauncher.launcher.R;
 import com.klauncher.kinflow.cards.CardsListManager;
@@ -98,16 +99,46 @@ public class MainControl {
                             mListener.onNavigationUpdate(mNavigationList);
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
-                            mListener.onCardInfoUpdate(mCardInfoList);
+//                            mCardInfoList
+                            List<CardInfo> filiterCardInfoList = new ArrayList<>();
+                            for (CardInfo cardInfo : mCardInfoList) {
+                                switch (cardInfo.getCardSecondTypeId()) {
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
+                                        YDCardContentManager ydCardContentManager = (YDCardContentManager) cardInfo.getmCardContentManager();
+                                        if (null!=ydCardContentManager.getmYiDianModelList()&&ydCardContentManager.getmYiDianModelList().size()!=0)
+                                            filiterCardInfoList.add(cardInfo);
+                                        break;
+                                    case CardIdMap.CARD_TYPE_NEWS_TT_REDIAN://头条
+                                        TTCardContentManager ttCardContentManager = (TTCardContentManager) cardInfo.getmCardContentManager();
+                                        if (null!=ttCardContentManager.getArticleListArrays())
+                                            filiterCardInfoList.add(cardInfo);
+                                        break;
+                                    case CardIdMap.ADVERTISEMENT_YOKMOB:
+                                        YMCardContentManager ymCardContentManager = (YMCardContentManager) cardInfo.getmCardContentManager();
+                                        if (null!=ymCardContentManager.getImageUrl()&&null!=ymCardContentManager.getClickUrl())
+                                            filiterCardInfoList.add(cardInfo);
+                                        break;
+//                                    case CardIdMap.ADVERTISEMENT_ADVIEW:
+//                                        break;
+//                                    case CardIdMap.ADVERTISEMENT_BAIDU:
+//                                        break;
+                                }
+                            }
+                            mListener.onCardInfoUpdate(filiterCardInfoList);
+                            //非adViewCard更新完毕,再启用adViewCard请求
+                            //单独请求adView
+                            ADVCardContentManager advCardContentManager = (ADVCardContentManager) adViewCardInfo.getmCardContentManager();
+                            advCardContentManager.requestCardContent(singleRequestHandler, adViewCardInfo);
                             break;
 
                     }
                 }
             }
-
-            //单独请求adView
-            ADVCardContentManager advCardContentManager = (ADVCardContentManager) adViewCardInfo.getmCardContentManager();
-            advCardContentManager.requestCardContent(singleRequestHandler, adViewCardInfo);
         }
     };
 
@@ -131,7 +162,7 @@ public class MainControl {
                         return;
                     } else {
                         log("MainControl获取adview成功");
-                        ADVCardContentManager manager = (ADVCardContentManager) adViewCardInfo.getmCardContentManager();
+//                        ADVCardContentManager manager = (ADVCardContentManager) adViewCardInfo.getmCardContentManager();
                         mListener.onAddAdview(adViewCardInfo);
                     }
                     break;
