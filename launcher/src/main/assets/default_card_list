@@ -1,5 +1,5 @@
 {
-    "lastModified": 1461263587000,
+    "lastModified": 1461293228000,
     "updateInterval": "31230000",
     "cards": [
         {
@@ -11,22 +11,7 @@
             "tyn": "新闻类,一点资讯热点",
             "ext": "",
             "ops": [
-                "12",
-                "com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity",
-                "0"
-            ],
-            "th": ""
-        },
-        {
-            "id": "6",
-            "tyd": "3,301",
-            "carn": "今日头条热点",
-            "fot": "",
-            "ord": "19",
-            "tyn": "新闻类,今日头条热点",
-            "ext": "",
-            "ops": [
-                "2",
+                "9",
                 "com.tencent.mtt/com.tencent.mtt.SplashActivity",
                 "0"
             ],
@@ -37,11 +22,26 @@
             "tyd": "3,353",
             "carn": "一点资讯娱乐",
             "fot": "",
-            "ord": "21",
+            "ord": "19",
             "tyn": "新闻类,一点资讯娱乐",
             "ext": "",
             "ops": [
-                "12",
+                "23",
+                "com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity",
+                "0"
+            ],
+            "th": ""
+        },
+        {
+            "id": "6",
+            "tyd": "3,301",
+            "carn": "今日头条热点",
+            "fot": "",
+            "ord": "21",
+            "tyn": "新闻类,今日头条热点",
+            "ext": "",
+            "ops": [
+                "2",
                 "com.tencent.mtt/com.tencent.mtt.SplashActivity",
                 "0"
             ],
