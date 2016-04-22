@@ -332,6 +332,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             @Override
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 //当下拉刷新的时候
+                startService(new Intent(KLauncher.this, LocationService.class));
                 mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
                         MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
                         MessageFactory.MESSAGE_WHAT_OBTAION_CARD);
@@ -351,6 +352,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     public void onClick(View view) {
         super.onClick(view);
+        startService(new Intent(KLauncher.this, LocationService.class));
         switch (view.getId()) {
             case R.id.hot_word_1://热词1监听
                 CommonUtils.getInstance().openHotWord(this, hotWord1.getUrl());
