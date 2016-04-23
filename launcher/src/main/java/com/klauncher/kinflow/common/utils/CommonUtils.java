@@ -16,6 +16,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import com.klauncher.kinflow.browser.KinflowBrower;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -297,71 +299,58 @@ public class CommonUtils {
         return sb.toString();
     }
 
-    public static String stringMD5(String input) {
-        try {
-            // 拿到一个MD5转换器（如果想要SHA1参数换成”SHA1”）
-            MessageDigest messageDigest =MessageDigest.getInstance("MD5");
-            // 输入的字符串转换成字节数组
-            byte[] inputByteArray = input.getBytes();
-            // inputByteArray是输入字符串转换得到的字节数组
-            messageDigest.update(inputByteArray);
-            // 转换并返回结果，也是字节数组，包含16个元素
-            byte[] resultByteArray = messageDigest.digest();
-            // 字符数组转换成字符串返回
-//            return byteArrayToHex(resultByteArray);
-            return  new String(resultByteArray);
-        } catch (NoSuchAlgorithmException e) {
-            return null;
-        }
-
-    }
-
-    public static String byteArrayToHex(byte[] byteArray) {
-        // 首先初始化一个字符数组，用来存放每个16进制字符
-        char[] hexDigits = {'0','1','2','3','4','5','6','7','8','9', 'A','B','C','D','E','F' };
-        // new一个字符数组，这个就是用来组成结果字符串的（解释一下：一个byte是八位二进制，也就是2位十六进制字符（2的8次方等于16的2次方））
-        char[] resultCharArray =new char[byteArray.length * 2];
-        // 遍历字节数组，通过位运算（位运算效率高），转换成字符放到字符数组中去
-        int index = 0;
-        for (byte b : byteArray) {
-            resultCharArray[index++] = hexDigits[b>>> 4 & 0xf];
-            resultCharArray[index++] = hexDigits[b& 0xf];
-        }
-        // 字符数组组合成字符串返回
-        return new String(resultCharArray);
-
-    }
-
     //secretkey ＝ sha1(md5(app_key) + nonce + timestamp)
-    public String getSecretkey(String appkey,String nonce,String timestamp){
-        String md5AppKey = stringMD5(appkey);
+    public static String getSecretkey(String appkey,String nonce,String timestamp){
+        String md5AppKey = getMD5(appkey);
         return SHA1(md5AppKey+nonce+timestamp);
     }
 
-    public String SHA1(String decript) {
+    public static String SHA1(String decript) {
         try {
             MessageDigest digest = java.security.MessageDigest
                     .getInstance("SHA-1");
             digest.update(decript.getBytes());
             byte messageDigest[] = digest.digest();
-            /*
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            // 字节数组转换为 十六进制 数
-            for (int i = 0; i < messageDigest.length; i++) {
-                String shaHex = Integer.toHexString(messageDigest[i] & 0xFF);
-                if (shaHex.length() < 2) {
-                    hexString.append(0);
-                }
-                hexString.append(shaHex);
+            StringBuilder sb = new StringBuilder();
+            for (byte b : messageDigest) {
+                sb.append(b);
             }
-            return hexString.toString();
-            */
-            return new String(messageDigest);
-
+            return sb.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return "";
+    }
+
+    //-----
+    public static String getMD5(String input) {
+        if (TextUtils.isEmpty(input)) {
+            return null;
+        }
+        try {
+            return getDigest(input.getBytes("UTF-8"), "MD5");
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
+    }
+
+    private static String getDigest(byte[] bytes, String algorithm) {
+        MessageDigest messageDigest = null;
+
+        try {
+            messageDigest = MessageDigest.getInstance(algorithm);
+            messageDigest.reset();
+            messageDigest.update(bytes);
+        } catch (Exception e) {
+            return null;
+        }
+
+        byte[] byteArray = messageDigest.digest();
+        StringBuilder md5StrBuff = new StringBuilder(byteArray.length * 2);
+        for (byte b : byteArray) {
+            md5StrBuff.append(Integer.toHexString((0xFF & b) >> 4));
+            md5StrBuff.append(Integer.toHexString(0x0F & b));
+        }
+        return md5StrBuff.toString();
     }
 }

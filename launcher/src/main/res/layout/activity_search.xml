@@ -39,6 +39,7 @@
             android:drawablePadding="6dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:textColor="@color/color_black"
             android:hint="@string/kinflow_string_search_hint_shishi"
 
             android:textSize="16sp" />

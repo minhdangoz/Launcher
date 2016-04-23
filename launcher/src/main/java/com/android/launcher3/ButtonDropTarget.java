@@ -171,21 +171,23 @@ public class ButtonDropTarget extends TextView implements DropTarget, DragContro
 
         final int left;
         final int right;
-
+        //right to  left  12
         if (isRtl()) {
             right = to.right - getPaddingRight();
             left = right - width;
-        } else {
+        } else {//ledt to right
             left = to.left + getPaddingLeft();
             right = left + width;
         }
 
         final int top = to.top + (getMeasuredHeight() - height) / 2;
         final int bottom = top +  height;
-
         to.set(left, top, right, bottom);
 
         // Center the destination rect about the trash icon
+        //match_parent下计算显示的不对
+        //final int xOffset = (int) -(viewWidth - width) / 2;
+        //final int yOffset = (int) -(viewHeight - height) / 2;
         final int xOffset = (int) -(viewWidth - width) / 2;
         final int yOffset = (int) -(viewHeight - height) / 2;
         to.offset(xOffset, yOffset);

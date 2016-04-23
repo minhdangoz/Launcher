@@ -110,6 +110,7 @@ public class SearchActivity extends Activity implements OnClickListener{
                 int hintLength = editSearch.getHint().length();
                 int editLength = editSearch.getText().length();
                 if (hintLength > 0 || editLength>0) {
+                    editSearch.setHint("");
                     searchOrCancle.setTag("search");
                     searchOrCancle.setText("搜索");
                 } else {

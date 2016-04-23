@@ -86,13 +86,14 @@ public class YDCardContentManager extends BaseCardContentManager {
     static final String YIDIAN_APPKEY = "lxRgj53VtpL6wL0t1NkX1IxxRvlZtf0j";
 
     public String getRequestUrl() {
-        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT);
+        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_DEBUG);
+//        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_RELEASE);
         /*
         int timestamp = (int)((System.currentTimeMillis())/1000);
 //        int timestamp = (int)((new Date().getTime())/1000);
         String nonce = CommonUtils.getInstance().getRandomString(5);//生成5个随机字符串
         //String appkey,String nonce,String timestamp
-        String secretkey = CommonUtils.getInstance().getSecretkey(YIDIAN_APPKEY, nonce, String.valueOf(timestamp));
+        String secretkey = CommonUtils.getSecretkey(YIDIAN_APPKEY, nonce, String.valueOf(timestamp));
         stringBuilder.append("?appid=").append(YIDIAN_APPID);
         stringBuilder.append("&secretkey=").append(secretkey);
         stringBuilder.append("&timestamp=").append(timestamp);

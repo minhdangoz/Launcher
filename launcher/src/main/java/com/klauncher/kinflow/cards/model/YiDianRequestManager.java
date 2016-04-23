@@ -1,6 +1,5 @@
 package com.klauncher.kinflow.cards.model;
 
-import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.common.utils.Const;
 
 /**
@@ -51,7 +50,7 @@ public class YiDianRequestManager {
     public String nextGroupRequestUrl() {
         //http://o.go2yd.com/oapi/sample/channel?channel_id=1&offset=0&count=5
         if (!isFirstRequest)this.offset = this.offset+5;
-        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT);
+        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_DEBUG);
         stringBuilder.append("?channel_id=").append(String.valueOf(this.channelId));//id
         stringBuilder.append("&offset=").append(String.valueOf(this.offset));//偏移量
         stringBuilder.append("&count=").append(String.valueOf(this.count));

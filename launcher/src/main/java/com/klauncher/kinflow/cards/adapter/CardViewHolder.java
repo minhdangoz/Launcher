@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -91,6 +92,7 @@ class AdnativeCardViewHolder extends CardViewHolder implements View.OnClickListe
         ADVCardContentManager manager = (ADVCardContentManager) this.mCardInfo.getmCardContentManager();
         List<NativeAdInfo> nativeAdInfoList = manager.getNativeAdInfoList();
         if (null == nativeAdInfoList || nativeAdInfoList.size() == 0) {//获取数据失败
+            Log.i("Kinflow", "setCardInfo: AdView的CardInfo对应的Manager存储的数据为空");
             ViewGroup.LayoutParams params = cardView.getLayoutParams();
             params.height = 0;
             cardView.setLayoutParams(params);

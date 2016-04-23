@@ -48,7 +48,7 @@ public class YiDianContentManager {
     }
 
     private String getRequestUrl () {
-        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT);
+        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_DEBUG);
         stringBuilder.append("?channel_id=").append(String.valueOf(this.mChannelId));//channelId
         stringBuilder.append("&offset=").append(String.valueOf(this.mOffSet));//偏移量
         stringBuilder.append("&count=").append(String.valueOf(this.mCount));

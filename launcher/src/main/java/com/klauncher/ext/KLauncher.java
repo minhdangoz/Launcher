@@ -1,6 +1,8 @@
 package com.klauncher.ext;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,6 +36,8 @@ import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheLocation;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonUtils;
+import com.klauncher.kinflow.common.utils.DeviceState;
+import com.klauncher.kinflow.common.utils.DialogUtils;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.navigation.adapter.NavigationAdapter;
 import com.klauncher.kinflow.navigation.model.Navigation;
@@ -68,6 +72,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     private boolean firstRun = true;*/
     private boolean isShown = false;
+    AlertDialog mAlertDialog;
+    static final int SETTING_WIFI = 59;
 
     //    private WebView mWebView;
     //kinflow
@@ -77,6 +83,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     TextView tv_city;
     TextView tv_weather;
     ImageView iv_weatherType;
+    ImageView iv_searchMode;
     ImageView iv_searchIcon;
     TextView tv_searchHint;
     CompatTextView tv_hotWord1;
@@ -113,32 +120,32 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         initKinflow();
 
         CustomContentCallbacks callbacks = new CustomContentCallbacks() {
-			@Override
-			public void onShow(boolean fromResume) {
+            @Override
+            public void onShow(boolean fromResume) {
                 LauncherLog.i(TAG, "callbacks: " + fromResume);
                 isShown = true;
-			}
+            }
 
-			@Override
-			public void onHide() {
+            @Override
+            public void onHide() {
                 isShown = false;
-			}
+            }
 
-			@Override
-			public void onScrollProgressChanged(float progress) {
-				// TODO Auto-generated method stub
-				
-			}
+            @Override
+            public void onScrollProgressChanged(float progress) {
+                // TODO Auto-generated method stub
 
-			@Override
-			public boolean isScrollingAllowed() {
-				// TODO Auto-generated method stub
-				return true;
-			}
+            }
+
+            @Override
+            public boolean isScrollingAllowed() {
+                // TODO Auto-generated method stub
+                return true;
+            }
         };
-        
-		addToCustomContentPage(customView, callbacks, "custom-view");
-	}
+
+        addToCustomContentPage(customView, callbacks, "custom-view");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -286,6 +293,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         tv_weather = (TextView) kinflowView.findViewById(R.id.weather);
         iv_weatherType = (ImageView) kinflowView.findViewById(R.id.weather_type);
         tv_searchHint = (TextView) kinflowView.findViewById(R.id.search_hint);
+        iv_searchMode = (ImageView) kinflowView.findViewById(R.id.search_mode);
         iv_searchIcon = (ImageView) kinflowView.findViewById(R.id.search_icon);
         tv_hotWord1 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_1);
         tv_hotWord2 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_2);
@@ -297,6 +305,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mLayoutContent.addView(kinflowView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         //listener
         tv_searchHint.setOnClickListener(this);
+        iv_searchMode.setOnClickListener(this);
         iv_searchIcon.setOnClickListener(this);
         iv_refresh.setOnClickListener(this);
         tv_hotWord1.setOnClickListener(this);
@@ -319,7 +328,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mCardsView.setAdapter(new CardsAdapter(this, null));//最初传入空,等待收到数据后更新
 
         //异步获取所有
-        startService(new Intent(KLauncher.this, LocationService.class));
+//        startService(new Intent(KLauncher.this, LocationService.class));
+        requestLocation();
         mMainControl = new MainControl(KLauncher.this, this);
         mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
                 MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
@@ -333,7 +343,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             @Override
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 //当下拉刷新的时候
-                startService(new Intent(KLauncher.this, LocationService.class));
+//                startService(new Intent(KLauncher.this, LocationService.class));
+                requestLocation();
                 mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
                         MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
                         MessageFactory.MESSAGE_WHAT_OBTAION_CARD);
@@ -354,10 +365,33 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.onCreate(savedInstanceState, persistentState);
     }
 
+    void requestLocation() {
+        if (!DeviceState.gspIsOPen(this)) {
+            mAlertDialog = DialogUtils.getCommontAlertDialog(this,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mAlertDialog.dismiss();
+                        }
+                    }, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mAlertDialog.dismiss();
+                            final Intent intentWiFi = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            intentWiFi.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivityForResult(intentWiFi, SETTING_WIFI);
+                        }
+                    });
+            mAlertDialog.show();
+        } else {
+            startService(new Intent(KLauncher.this, LocationService.class));
+        }
+    }
+
     @Override
     public void onClick(View view) {
+//        startService(new Intent(KLauncher.this, LocationService.class));
         super.onClick(view);
-        startService(new Intent(KLauncher.this, LocationService.class));
         switch (view.getId()) {
             case R.id.hot_word_1://热词1监听
                 CommonUtils.getInstance().openHotWord(this, hotWord1.getUrl());
@@ -375,13 +409,15 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
                 startActivity(intent);
                 break;
+            case R.id.search_mode:
             case R.id.search_icon:
                 CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
                 break;
             case R.id.weather_header:
+                requestLocation();
                 log("启动墨迹天气");
                 if (CommonUtils.getInstance().isInstalledAPK(this, OpenMode.COMPONENT_NAME_MOJI_TIANQI))
-                    CommonUtils.getInstance().openApp(this,OpenMode.COMPONENT_NAME_MOJI_TIANQI);
+                    CommonUtils.getInstance().openApp(this, OpenMode.COMPONENT_NAME_MOJI_TIANQI);
                 break;
         }
     }
@@ -498,9 +534,16 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 //            CardsAdapter cardsAdapter = (CardsAdapter) mCardsView.getAdapter();
 //            cardsAdapter.updateCards(cardInfoList);
             mCardsView.removeAllViews();
-            CardsAdapter cardsAdapter = new CardsAdapter(this,cardInfoList);
+            CardsAdapter cardsAdapter = new CardsAdapter(this, cardInfoList);
             mCardsView.setAdapter(cardsAdapter);
         }
+    }
+
+    @Override
+    public void onAddAdview(CardInfo cardInfo) {
+        //向CardsAdapter中添加adView
+        CardsAdapter adapter = (CardsAdapter) mCardsView.getAdapter();
+        if (null != adapter) adapter.addCard(cardInfo);
     }
 
     final protected static void log(String msg) {

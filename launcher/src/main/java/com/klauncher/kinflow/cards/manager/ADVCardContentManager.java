@@ -24,13 +24,25 @@ public class ADVCardContentManager extends BaseCardContentManager {
     private CardInfo mCardInfo;
     private Handler mMainControlHandler;//MainControl的handler;
     private List<NativeAdInfo> mNativeAdInfoList;
-
+//    private Handler mHandler;
+//    private Handler.Callback advHandlerCallback = new Handler.Callback() {
+//        @Override
+//        public boolean handleMessage(Message msg) {
+//            mNativeAdInfoList = (List<NativeAdInfo>) msg.obj;
+//
+//            Message msgAdv = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
+//            msgAdv.obj = mNativeAdInfoList;
+//            mMainControlHandler.sendMessage(msgAdv);
+//            return true;
+//        }
+//    };
     /**
      * @param context
      */
     ADVCardContentManager(Context context) {
         super(context);
         this.mContext = context;
+//        this.mHandler = new Handler(advHandlerCallback);
         mAdNativeManager = new AdNativeManager((Activity) mContext, "SDK20161518030339tw90ofxelsoctuo");
     }
 
@@ -48,6 +60,10 @@ public class ADVCardContentManager extends BaseCardContentManager {
         return mNativeAdInfoList;
     }
 
+    public void setNativeAdInfoList(List<NativeAdInfo> nativeAdInfoList) {
+        mNativeAdInfoList = nativeAdInfoList;
+    }
+
     @Override
     public void requestCardContent(Handler mainControlHandler, CardInfo cardInfo) {
         log("开始请求adView数据");
@@ -63,9 +79,14 @@ public class ADVCardContentManager extends BaseCardContentManager {
 
             @Override
             public void onReceivedAd(List list) {
-                ADVCardContentManager.this.mNativeAdInfoList = list;
+                setNativeAdInfoList(list);
                 Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
+                msg.obj = ADVCardContentManager.this.mNativeAdInfoList;
                 ADVCardContentManager.this.mMainControlHandler.sendMessage(msg);
+
+//                Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
+//                msg.obj = list;
+//                mHandler.sendMessage(msg);
             }
 
             @Override
