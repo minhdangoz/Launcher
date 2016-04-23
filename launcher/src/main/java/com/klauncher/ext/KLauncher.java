@@ -83,6 +83,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     TextView tv_city;
     TextView tv_weather;
     ImageView iv_weatherType;
+    ImageView iv_searchMode;
     ImageView iv_searchIcon;
     TextView tv_searchHint;
     CompatTextView tv_hotWord1;
@@ -292,6 +293,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         tv_weather = (TextView) kinflowView.findViewById(R.id.weather);
         iv_weatherType = (ImageView) kinflowView.findViewById(R.id.weather_type);
         tv_searchHint = (TextView) kinflowView.findViewById(R.id.search_hint);
+        iv_searchMode = (ImageView) kinflowView.findViewById(R.id.search_mode);
         iv_searchIcon = (ImageView) kinflowView.findViewById(R.id.search_icon);
         tv_hotWord1 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_1);
         tv_hotWord2 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_2);
@@ -303,6 +305,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mLayoutContent.addView(kinflowView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         //listener
         tv_searchHint.setOnClickListener(this);
+        iv_searchMode.setOnClickListener(this);
         iv_searchIcon.setOnClickListener(this);
         iv_refresh.setOnClickListener(this);
         tv_hotWord1.setOnClickListener(this);
@@ -406,10 +409,12 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
                 startActivity(intent);
                 break;
+            case R.id.search_mode:
             case R.id.search_icon:
                 CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
                 break;
             case R.id.weather_header:
+                requestLocation();
                 log("启动墨迹天气");
                 if (CommonUtils.getInstance().isInstalledAPK(this, OpenMode.COMPONENT_NAME_MOJI_TIANQI))
                     CommonUtils.getInstance().openApp(this, OpenMode.COMPONENT_NAME_MOJI_TIANQI);
