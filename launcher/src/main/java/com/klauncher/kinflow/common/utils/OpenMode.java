@@ -32,7 +32,7 @@ public class OpenMode {
     public static final String COMPONENT_NAME_BAIDU_BROWSER_1 = "com.baidu.browser.apps_sj/com.baidu.browser.framework.BdBrowserActivity";
     public static final String COMPONENT_NAME_BAIDU_BROWSER_2 = "com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity";
     public static final String COMPONENT_NAME_JINRI_TOUTIAO = "com.ss.android.article.news/com.ss.android.article.news.activity.SplashActivity";
-    public static final String COMPONENT_NAME_MOJI_TIANQI = "com.moji.mjweather/CSplashScreen";
+    public static final String COMPONENT_NAME_MOJI_TIANQI = "com.moji.mjweather/com.moji.mjweather.CSplashScreen";
     public static final String COMPONENT_NAME_SOUGOU_SOUSUO = "com.sogou.activity.src/com.sogou.activity.src.SplashActivity";
     public static final String COMPONENT_NAME_TAOBAO = "com.taobao.com/com.taobao.tao.welcome.Welcome";
     public static final String COMPONENT_NAME_TENGXUN_SHIPIN = "com.tencent.qqlive/com.tencent.qqlive.ona.activity.WelcomeActivity";
