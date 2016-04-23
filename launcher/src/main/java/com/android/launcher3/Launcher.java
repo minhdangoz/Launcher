@@ -834,7 +834,7 @@ public class Launcher extends Activity
     }
 
     private void installWidgetByClassName(String classname, int x, int y, int screen,int spanX,int spanY) {
-        Log.d(TAG,"Position==> CellXY: "+x+","+y+" Screen: "+screen+" SpanXY: "+spanX+","+spanY);
+        Log.d(TAG, "Position==> CellXY: " + x + "," + y + " Screen: " + screen + " SpanXY: " + spanX + "," + spanY);
         List<AppWidgetProviderInfo> widgets = AppWidgetManager
                 .getInstance(this).getInstalledProviders();
         for (AppWidgetProviderInfo widget : widgets) {
@@ -4991,12 +4991,14 @@ public class Launcher extends Activity
     }*/
     
     private void bringChildOfDragLayerToFront(String from, View... views) {
-    	LauncherLog.i(TAG, "bringChildOfDragLayerToFront call from : " + from);
-    	for(int i=0; i<views.length; i++) {
-    		View view = views[i];
-    		mDragLayer.bringChildToFront(view);
-    		view.bringToFront();
-    	}
+        LauncherLog.i(TAG, "bringChildOfDragLayerToFront call from : " + from);
+        if (mDragLayer != null) {
+            for (int i = 0; i < views.length; i++) {
+                View view = views[i];
+                mDragLayer.bringChildToFront(view);
+                view.bringToFront();
+            }
+        }
     }
     /** Lenovo-SW zhaoxin5 20150805 XTHREEROW-585 END */
     
