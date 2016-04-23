@@ -2,8 +2,6 @@ package com.android.launcher3.settings;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.database.CursorJoiner;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -17,6 +15,7 @@ import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.ModeSwitchHelper;
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.klauncher.launcher.R;
+import com.umeng.analytics.MobclickAgent;
 
 public class LauncherSettingActivity extends SettingBaseActivity implements OnPreferenceClickListener {
 	// 定义相关变量
@@ -47,6 +46,18 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 	public void onStart() {
 		super.onStart();
 		loadSettings();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 
 	@Override
@@ -134,6 +145,12 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 		Log.d("workspaceKinflow","setKinflowSet="+SettingsValue.isKinflowSetOn(this));
 		// need call Launcher to start show or hide kinflow
 		mLauncher.invalidateHasCustomContentToLeft();
+		//if off kinflow  && 未上报过  数据上报
+		if(!SettingsValue.isKinflowSetOn(this) && !SettingsValue.isKinflowReport(this)){
+			//信息流关闭时间上报统计
+			MobclickAgent.onEvent(this, "kinflow_set_off" );
+			SettingsValue.setKinflowReport(this,true);
+		}
 			/*new AsyncTask<Void, Void, Void>() {
 				@Override
 				protected Void doInBackground(Void... params) {
@@ -150,6 +167,7 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 			}.execute();*/
 		return;
 	}
+
 	@SuppressWarnings("deprecation")
 	private void loadSettings() {
 		Mode mode = LauncherAppState.getInstance().getCurrentLayoutMode();
