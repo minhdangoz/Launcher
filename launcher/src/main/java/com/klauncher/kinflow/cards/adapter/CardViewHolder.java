@@ -539,7 +539,10 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
 
                             @Override
                             public void onSuccess(List<YiDianModel> yiDianModelList) {
-                                YDCardViewHolder.this.addData((YDNewsAdapter) mRecyclerView.getAdapter(), yiDianModelList);
+                                ((YDCardContentManager) mCardInfo.getmCardContentManager()).setYiDianModelList(yiDianModelList);
+//                                int position = YDCardViewHolder.this.getAdapterPosition();
+                                YDCardViewHolder.this.setmCardInfo(mCardInfo);
+//                                YDCardViewHolder.this.addData((YDNewsAdapter) mRecyclerView.getAdapter(), yiDianModelList);
                             }
                         }).run();
                     } catch (Exception e) {

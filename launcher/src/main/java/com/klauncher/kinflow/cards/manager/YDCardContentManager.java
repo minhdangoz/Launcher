@@ -133,7 +133,11 @@ public class YDCardContentManager extends BaseCardContentManager {
         return mYiDianModelList;
     }
 
-//    String timestampUrl = "http://api.klauncher.com/v1/card/gettime";
+    public void setYiDianModelList(List<YiDianModel> yiDianModelList) {
+        mYiDianModelList = yiDianModelList;
+    }
+
+    //    String timestampUrl = "http://api.klauncher.com/v1/card/gettime";
     /**
      * 查看如何根据要请求的channel：secondType获取下一组一点资讯数据
      */
