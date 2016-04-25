@@ -16,6 +16,7 @@ public class MessageFactory {
     public static final int MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO = 7;//获取头条
     public static final int MESSAGE_WHAT_OBTAION_NEWS_YOKMOB = 8;//获取YOKMOB
     public static final int MESSAGE_WHAT_OBTAION_NEWS_ADVIEW = 9;//获取ADVIEW
+    public static final int MESSAGE_WHAT_TIMESTAMP = 10;//获取时间戳
 
     public static Message createMessage(int what) {
         Message msg = Message.obtain();
@@ -47,6 +48,8 @@ public class MessageFactory {
             case MESSAGE_WHAT_OBTAION_NEWS_ADVIEW:
                 msg.what = MESSAGE_WHAT_OBTAION_NEWS_ADVIEW;
                 break;
+            case MESSAGE_WHAT_TIMESTAMP:
+                msg.what = MESSAGE_WHAT_TIMESTAMP;
         }
         return msg;
     }

@@ -41,18 +41,28 @@ public class YDCardContentManager extends BaseCardContentManager {
     private Handler.Callback mCallback = new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            if (msg.arg1 == AsynchronousGet.SUCCESS) {
-                //计算下次的偏移量offset
-                int offset = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,0)+5;
-                //存储偏移量offset
-                CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,offset);
-                handleObtainedData(msg);
-            } else {
-                onFailToast(msg);
+            switch (msg.what) {
+                case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
+                    timestamp = (String) msg.obj;
+                    try {
+                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN).run(getRequestUrl());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
+                    if (msg.arg1 == AsynchronousGet.SUCCESS) {
+                        //计算下次的偏移量offset
+                        int offset = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,0)+5;
+                        //存储偏移量offset
+                        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,offset);
+                        handleObtainedData(msg);
+                    } else {
+                        onFailToast(msg);
+                    }
+                    mainControlHandler.handleMessage(msg);
+                    break;
             }
-            //释放信号量
-//            semaphoreController.onAsynchronizeEnd();
-            mainControlHandler.handleMessage(msg);
             return true;
         }
     };
@@ -86,15 +96,16 @@ public class YDCardContentManager extends BaseCardContentManager {
     static final String YIDIAN_APPID = "17Mgz4F2WfWvrWQ9z8J6iAfi";
     static final String YIDIAN_APPKEY = "lxRgj53VtpL6wL0t1NkX1IxxRvlZtf0j";
 
+    String timestamp;
     public String getRequestUrl() {
 //        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_DEBUG);
         StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_RELEASE);
 //        /*
-        int timestamp = (int)((System.currentTimeMillis())/1000);
+        if (null==timestamp) timestamp = String.valueOf((int)((System.currentTimeMillis())/1000));
 //        int timestamp = (int)((new Date().getTime())/1000);
         String nonce = CommonUtils.getInstance().getRandomString(5);//生成5个随机字符串
         //String appkey,String nonce,String timestamp
-        String secretkey = CommonUtils.getSecretkey(YIDIAN_APPKEY, nonce, String.valueOf(timestamp));
+        String secretkey = CommonUtils.getSecretkey(YIDIAN_APPKEY, nonce, timestamp);
         stringBuilder.append("?appid=").append(YIDIAN_APPID);
         stringBuilder.append("&secretkey=").append(secretkey);
         stringBuilder.append("&timestamp=").append(timestamp);
@@ -125,6 +136,7 @@ public class YDCardContentManager extends BaseCardContentManager {
         return mYiDianModelList;
     }
 
+//    String timestampUrl = "http://api.klauncher.com/v1/card/gettime";
     /**
      * 查看如何根据要请求的channel：secondType获取下一组一点资讯数据
      */
@@ -134,7 +146,8 @@ public class YDCardContentManager extends BaseCardContentManager {
         this.mainControlHandler = mainControlHandler;
         this.mOurDefineChannelId = cardInfo.getCardSecondTypeId();
         try {
-            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN).run(getRequestUrl());
+//            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN).run(getRequestUrl());
+            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_TIMESTAMP).run(Const.URL_TIMESTAMP);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -101,6 +101,9 @@ public final class AsynchronousGet {
                     case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
                         parseYiDian(response.body().string());
                         break;
+                    case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
+                        parseTimestamp(response.body().string());
+                        break;
                 }
                 response.body().close();
             }
@@ -305,6 +308,22 @@ public final class AsynchronousGet {
         } catch (JSONException e) {
             Log.d("AsynchronousGet", "一点资讯解析出错:"+e.getMessage());
             msg.arg1 = PARSE_ERROR;
+        } finally {
+            handler.sendMessage(msg);
+        }
+    }
+
+    private void parseTimestamp(String responseBody) {
+        Log.i("MyInfo","parseTimestamp,获取到的时间戳:"+responseBody);
+        try {
+            JSONArray jsonArray = new JSONArray(responseBody);
+            JSONObject jsonObject = jsonArray.getJSONObject(0);
+            int time = (int)(jsonObject.getLong("time")/1000);
+            msg.arg1 = SUCCESS;
+            msg.obj = String.valueOf(time);
+        } catch (JSONException e) {
+            msg.arg1 = PARSE_ERROR;
+            e.printStackTrace();
         } finally {
             handler.sendMessage(msg);
         }
