@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.common.factory.MessageFactory;
@@ -75,6 +76,7 @@ public class ADVCardContentManager extends BaseCardContentManager {
                 ADVCardContentManager.this.mNativeAdInfoList = new ArrayList<NativeAdInfo>();
                 Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
                 ADVCardContentManager.this.mMainControlHandler.sendMessage(msg);
+                Log.i("MyInfo","ADVCardContentManager.获取失败");
             }
 
             @Override
@@ -83,10 +85,7 @@ public class ADVCardContentManager extends BaseCardContentManager {
                 Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
                 msg.obj = ADVCardContentManager.this.mNativeAdInfoList;
                 ADVCardContentManager.this.mMainControlHandler.sendMessage(msg);
-
-//                Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
-//                msg.obj = list;
-//                mHandler.sendMessage(msg);
+                Log.i("MyInfo","ADVCardContentManager.获取成功");
             }
 
             @Override

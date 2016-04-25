@@ -159,10 +159,12 @@ public class MainControl {
                     List<NativeAdInfo> nativeAdInfoList = (List<NativeAdInfo>) msg.obj;
                     if (null == nativeAdInfoList || nativeAdInfoList.size() == 0) {
                         log("MainControl获取adview失败");
+                        Log.i("MyInfo", "MainControl 获取AdView失败");
                         return;
                     } else {
                         log("MainControl获取adview成功");
 //                        ADVCardContentManager manager = (ADVCardContentManager) adViewCardInfo.getmCardContentManager();
+                        Log.i("MyInfo", "MainControl 获取AdView成功");
                         mListener.onAddAdview(adViewCardInfo);
                     }
                     break;

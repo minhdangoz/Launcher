@@ -11,6 +11,7 @@ import com.klauncher.kinflow.cards.utils.CardUtils;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.task.AsynchronousGet;
 import com.klauncher.kinflow.common.utils.CommonShareData;
+import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.common.utils.Const;
 
 import java.util.ArrayList;
@@ -86,9 +87,9 @@ public class YDCardContentManager extends BaseCardContentManager {
     static final String YIDIAN_APPKEY = "lxRgj53VtpL6wL0t1NkX1IxxRvlZtf0j";
 
     public String getRequestUrl() {
-        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_DEBUG);
-//        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_RELEASE);
-        /*
+//        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_DEBUG);
+        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_RELEASE);
+//        /*
         int timestamp = (int)((System.currentTimeMillis())/1000);
 //        int timestamp = (int)((new Date().getTime())/1000);
         String nonce = CommonUtils.getInstance().getRandomString(5);//生成5个随机字符串
@@ -98,10 +99,10 @@ public class YDCardContentManager extends BaseCardContentManager {
         stringBuilder.append("&secretkey=").append(secretkey);
         stringBuilder.append("&timestamp=").append(timestamp);
         stringBuilder.append("&nonce=").append(nonce);
-        */
+//        */
         //获取偏移量,如果没有获取到偏移量则使用默认偏移量0
         int mOffSet = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,0);
-        stringBuilder.append("&channel_id=").append(String.valueOf(CardIdMap.getYiDianChannelId(mOurDefineChannelId)));//channelId
+        stringBuilder.append("&channel_id=").append(CardIdMap.getYiDianChannelId(mOurDefineChannelId));//channelId
         stringBuilder.append("&offset=").append(String.valueOf(mOffSet));//偏移量
         stringBuilder.append("&count=").append(String.valueOf(this.mCount));
         return stringBuilder.toString();

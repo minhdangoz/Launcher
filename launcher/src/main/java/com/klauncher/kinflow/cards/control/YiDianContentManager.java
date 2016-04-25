@@ -13,7 +13,7 @@ import com.klauncher.kinflow.common.utils.Const;
 public class YiDianContentManager {
 
     private CardInfo mCardInfo;//最好有默认
-    private int mChannelId = CardIdMap.YIDIAN_CHANNEL_JIANKANG;
+    private String mChannelId = CardIdMap.YIDIAN_CHANNEL_JIANKANG;
     private final int mCount = 5;//每次请求个数,通常为5不变
     private int mOffSet = 0;
     private boolean isFirst = true;
@@ -49,7 +49,7 @@ public class YiDianContentManager {
 
     private String getRequestUrl () {
         StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_DEBUG);
-        stringBuilder.append("?channel_id=").append(String.valueOf(this.mChannelId));//channelId
+        stringBuilder.append("?channel_id=").append(this.mChannelId);//channelId
         stringBuilder.append("&offset=").append(String.valueOf(this.mOffSet));//偏移量
         stringBuilder.append("&count=").append(String.valueOf(this.mCount));
         return stringBuilder.toString();

@@ -3,6 +3,7 @@
 
     <color name="color_black">#000000</color>
     <color name="color_white">#FFFFFF</color>
+    <color name="kinflow_color_transparent">#00000000</color>
 
     <color name="kinflow_color_background_main">@android:color/darker_gray</color>
     <color name="kinflow_color_typeface_main">@color/color_white</color>

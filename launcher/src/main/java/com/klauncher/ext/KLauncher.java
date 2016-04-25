@@ -1,5 +1,6 @@
 package com.klauncher.ext;
 
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
@@ -402,6 +403,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             case R.id.refresh_hotWord://刷新监听
 //                asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
                 //此处传入mCardInfoList无用
+                ObjectAnimator animator = ObjectAnimator.ofFloat(iv_refresh,"rotation",0f,360f);
+                animator.setDuration(500);
+                animator.start();
                 mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
                 break;
             case R.id.search_hint://搜索框监听

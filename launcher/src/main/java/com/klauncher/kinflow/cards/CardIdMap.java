@@ -33,7 +33,7 @@ public class CardIdMap {
         public static final int CARD_TYPE_NEWS_YD_KEJI = 356;
         public static final int CARD_TYPE_NEWS_YD_JUNSHI = 357;
         public static final int CARD_TYPE_NEWS_YD_MINSHENG = 358;
-        public static final int CARD_TYPE_NEWS_YD_MEIMV = 359;
+        public static final int CARD_TYPE_NEWS_YD_MEINV = 359;
         public static final int CARD_TYPE_NEWS_YD_DUANZI = 360;
         public static final int CARD_TYPE_NEWS_YD_JIANKANG = 361;
         public static final int CARD_TYPE_NEWS_YD_SHISHANG = 362;
@@ -46,37 +46,126 @@ public class CardIdMap {
 
     /**
      * 一点资讯定义的ChannelID.也就是key
+     * 热点、社会、娱乐、军事、体育、NBA、财经、科技、民生、美女、段子、健康、时尚、汽车、搞笑、视频、游戏、旅游、科学、互联网、趣图、美食、星座、育儿、情感、房产
      */
-        public static final int YIDIAN_CHANNEL_JINGXUAN = 0;
-        public static final int YIDIAN_CHANNEL_REMEN = 1;
-        public static final int YIDIAN_CHANNEL_YULE = 2;
-        public static final int YIDIAN_CHANNEL_QICHE = 3;
-        public static final int YIDIAN_CHANNEL_JIANKANG = 4;
-        public static final int YIDIAN_CHANNEL_LVYOU = 5;
+        public static final String YIDIAN_CHANNEL_REDIAN = "热点";
+        public static final String YIDIAN_CHANNEL_SHEHUI = "社会";
+        public static final String YIDIAN_CHANNEL_YULE = "娱乐";
+        public static final String YIDIAN_CHANNEL_JUNSHI = "军事";
+        public static final String YIDIAN_CHANNEL_TIYU = "体育";
+        public static final String YIDIAN_CHANNEL_NBA = "NBA";
+        public static final String YIDIAN_CHANNEL_CAIJING = "财经";
+        public static final String YIDIAN_CHANNEL_KEJI = "科技";
+        public static final String YIDIAN_CHANNEL_MINSHENG = "民生";
+        public static final String YIDIAN_CHANNEL_MEINV = "美女";
+        public static final String YIDIAN_CHANNEL_DUANZI = "段子";
+        public static final String YIDIAN_CHANNEL_JIANKANG = "健康";
+        public static final String YIDIAN_CHANNEL_SHISHANG = "时尚";
+        public static final String YIDIAN_CHANNEL_QICHE = "汽车";
+        public static final String YIDIAN_CHANNEL_GAOXIAO = "搞笑";
+        public static final String YIDIAN_CHANNEL_SHIPIN = "视频";
+        public static final String YIDIAN_CHANNEL_YOUXI = "游戏";
+        public static final String YIDIAN_CHANNEL_LVYOU = "旅游";
+        public static final String YIDIAN_CHANNEL_KEXUE = "科学";
+        public static final String YIDIAN_CHANNEL_HULIANWANG = "互联网";
+        public static final String YIDIAN_CHANNEL_QUTU = "趣图";
+        public static final String YIDIAN_CHANNEL_MEISHI = "美食";
+        public static final String YIDIAN_CHANNEL_XINGZUO = "星座";
+        public static final String YIDIAN_CHANNEL_YUER = "育儿";
+        public static final String YIDIAN_CHANNEL_QINGGAN = "情感";
+        public static final String YIDIAN_CHANNEL_FANGCHAN = "房产";
 
     /**
      * 通过我们自己定义的key,获取指定的一点咨询的channelID
+     * 热点、社会、娱乐、军事、体育、NBA、财经、科技、民生、美女、段子、健康、时尚、汽车、搞笑、视频、游戏、旅游、科学、互联网、趣图、美食、星座、育儿、情感、房产
      * @param cardSecondTypeId
      * @return
      */
-    public static int getYiDianChannelId(int cardSecondTypeId) {
-        int channelId = YIDIAN_CHANNEL_JINGXUAN;
+    public static String getYiDianChannelId(int cardSecondTypeId) {
+        String channelId = YIDIAN_CHANNEL_REDIAN;
         switch (cardSecondTypeId) {
+
+            case CARD_TYPE_NEWS_YD_REDIAN:
+                channelId = YIDIAN_CHANNEL_REDIAN;
+                break;
+            case CARD_TYPE_NEWS_YD_SHEHUI:
+                channelId = YIDIAN_CHANNEL_SHEHUI;
+                break;
             case CARD_TYPE_NEWS_YD_YULE:
                 channelId = YIDIAN_CHANNEL_YULE;
                 break;
-            case CARD_TYPE_NEWS_YD_QICHE:
-                channelId = YIDIAN_CHANNEL_QICHE;
+            case CARD_TYPE_NEWS_YD_JUNSHI:
+                channelId = YIDIAN_CHANNEL_JUNSHI;
+                break;
+            case CARD_TYPE_NEWS_YD_TIYU:
+                channelId = YIDIAN_CHANNEL_TIYU;
+                break;
+//            case CARD_TYPE_NEWS_YD_NBA:
+//                channelId = YIDIAN_CHANNEL_NBA;
+//                break;
+            case CARD_TYPE_NEWS_YD_CAIJING:
+                channelId = YIDIAN_CHANNEL_CAIJING;
+                break;
+            //科技、民生、美女、段子、健康、时尚、汽车、搞笑、视频、游戏、旅游、科学、互联网、趣图、美食、星座、育儿、情感、房产
+            case CARD_TYPE_NEWS_YD_KEJI:
+                channelId = YIDIAN_CHANNEL_KEJI;
+                break;
+            case CARD_TYPE_NEWS_YD_MINSHENG:
+                channelId = YIDIAN_CHANNEL_MINSHENG;
+                break;
+            case CARD_TYPE_NEWS_YD_MEINV:
+                channelId = YIDIAN_CHANNEL_MEINV;
+                break;
+            case CARD_TYPE_NEWS_YD_DUANZI:
+                channelId = YIDIAN_CHANNEL_DUANZI;
                 break;
             case CARD_TYPE_NEWS_YD_JIANKANG:
                 channelId = YIDIAN_CHANNEL_JIANKANG;
                 break;
+            case CARD_TYPE_NEWS_YD_SHISHANG:
+                channelId = YIDIAN_CHANNEL_SHISHANG;
+                break;
+            case CARD_TYPE_NEWS_YD_QICHE:
+                channelId = YIDIAN_CHANNEL_QICHE;
+                break;
+            case CARD_TYPE_NEWS_YD_GAOXIAO:
+                channelId = YIDIAN_CHANNEL_GAOXIAO;
+                break;
+            //视频、游戏、旅游、科学、互联网、趣图、美食、星座、育儿、情感、房产
+            case CARD_TYPE_NEWS_YD_SHIPIN:
+                channelId = YIDIAN_CHANNEL_SHIPIN;
+                break;
+//            case CARD_TYPE_NEWS_YD_YOUXI:
+//                channelId = YIDIAN_CHANNEL_YOUXI;
+//                break;
             case CARD_TYPE_NEWS_YD_LVYOU:
                 channelId = YIDIAN_CHANNEL_LVYOU;
                 break;
-            case CARD_TYPE_NEWS_YD_REDIAN:
-                channelId = YIDIAN_CHANNEL_REMEN;
-                break;
+//            case CARD_TYPE_NEWS_YD_KEXUE:
+//                channelId = YIDIAN_CHANNEL_KEXUE;
+//                break;
+//            case CARD_TYPE_NEWS_YD_HULIANWANG:
+//                channelId = YIDIAN_CHANNEL_HULIANWANG;
+//                break;
+//            case CARD_TYPE_NEWS_YD_QUTU:
+//                channelId = YIDIAN_CHANNEL_QUTU;
+//                break;
+//            case CARD_TYPE_NEWS_YD_MEISHI:
+//                channelId = YIDIAN_CHANNEL_MEISHI;
+//                break;
+//            case CARD_TYPE_NEWS_YD_XINGZUO:
+//                channelId = YIDIAN_CHANNEL_XINGZUO;
+//                break;
+//            case CARD_TYPE_NEWS_YD_YUER:
+//                channelId = YIDIAN_CHANNEL_YUER;
+//                break;
+//            case CARD_TYPE_NEWS_YD_QINGGAN:
+//                channelId = YIDIAN_CHANNEL_QINGGAN;
+//                break;
+//            case CARD_TYPE_NEWS_YD_FANGCHAN:
+//                channelId = YIDIAN_CHANNEL_FANGCHAN;
+//                break;
+
         }
         return channelId;
     }
