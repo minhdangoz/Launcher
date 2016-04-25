@@ -21,7 +21,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.klauncher.launcher"
     android:versionName="1.9.0"
-    android:versionCode="1604241818">
+    android:versionCode="1604252230">
 
     <original-package android:name="com.android.launcher" />
 
