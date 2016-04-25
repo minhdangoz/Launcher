@@ -71,6 +71,7 @@
 <string name="local_backup_toast_ok">Copie de rezervă finalizată.</string>
 <string name="normal_settings">Setări generale</string>
 <string name="workspace_loop_settings_title">Afişare ciclu desktop</string>
+  <string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">Preferinţă</string>
 <string name="multi_select_full">A fost umplut.</string>
 <string name="wallpaper_show_theme_center">Temă</string>

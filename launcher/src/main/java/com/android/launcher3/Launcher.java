@@ -702,15 +702,23 @@ public class Launcher extends Activity
      * To be overriden by subclasses to hint to Launcher that we have custom content
      */
     protected boolean hasCustomContentToLeft() {
-        return false;
+        //boolean kinflowSet  = SettingsValue.isKinflowSetOn(this);
+        /*if(!isAnimating() && !mModel.isLoadingWorkspace() &&
+                LauncherAppState.getInstance().isCurrentVibeuiMode()) {
+            autoReorder(true);
+        }*/
+        return true;
     }
+    /*protected boolean hasCustomContentToLeft() {
+        return false;
+    }*/
 
     /**
      * To be overridden by subclasses to populate the custom content container and call
      * {@link #addToCustomContentPage}. This will only be invoked if
      * {@link #hasCustomContentToLeft()} is {@code true}.
      */
-    protected void populateCustomContentContainer() {
+    public void populateCustomContentContainer() {
     }
 
     private void initializeScrubber() {
@@ -741,7 +749,8 @@ public class Launcher extends Activity
      * Invoked by subclasses to signal a change to the {@link #addCustomContentToLeft} value to
      * ensure the custom content page is added or removed if necessary.
      */
-    protected void invalidateHasCustomContentToLeft() {
+    //protected
+    public void invalidateHasCustomContentToLeft() {
         if (mWorkspace == null || mWorkspace.getScreenOrder().isEmpty()) {
             // Not bound yet, wait for bindScreens to be called.
             return;
@@ -825,7 +834,7 @@ public class Launcher extends Activity
     }
 
     private void installWidgetByClassName(String classname, int x, int y, int screen,int spanX,int spanY) {
-        Log.d(TAG,"Position==> CellXY: "+x+","+y+" Screen: "+screen+" SpanXY: "+spanX+","+spanY);
+        Log.d(TAG, "Position==> CellXY: " + x + "," + y + " Screen: " + screen + " SpanXY: " + spanX + "," + spanY);
         List<AppWidgetProviderInfo> widgets = AppWidgetManager
                 .getInstance(this).getInstalledProviders();
         for (AppWidgetProviderInfo widget : widgets) {
@@ -4982,12 +4991,14 @@ public class Launcher extends Activity
     }*/
     
     private void bringChildOfDragLayerToFront(String from, View... views) {
-    	LauncherLog.i(TAG, "bringChildOfDragLayerToFront call from : " + from);
-    	for(int i=0; i<views.length; i++) {
-    		View view = views[i];
-    		mDragLayer.bringChildToFront(view);
-    		view.bringToFront();
-    	}
+        LauncherLog.i(TAG, "bringChildOfDragLayerToFront call from : " + from);
+        if (mDragLayer != null) {
+            for (int i = 0; i < views.length; i++) {
+                View view = views[i];
+                mDragLayer.bringChildToFront(view);
+                view.bringToFront();
+            }
+        }
     }
     /** Lenovo-SW zhaoxin5 20150805 XTHREEROW-585 END */
     

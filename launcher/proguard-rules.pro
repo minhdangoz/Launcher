@@ -15,6 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-useuniqueclassmembernames
 -dontwarn com.squareup.picasso.OkHttpDownloader
 
 #DELONG SDK

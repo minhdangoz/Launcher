@@ -82,4 +82,7 @@
         <!-- Lenovo-SW zhangyj19 20150629 add for search app support START -->
     <color name="apps_list_alpha_text_color">#ffffff</color>
     <!-- Lenovo-SW zhangyj19 20150629 add for search app support END -->
+    <!--kinflow add-->
+    <color name="default_window_bg">#f9f9f9</color>
+    <color name="default_window_bg_night">#1a1b1d</color>
 </resources>

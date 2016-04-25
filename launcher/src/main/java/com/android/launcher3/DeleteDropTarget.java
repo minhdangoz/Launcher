@@ -448,6 +448,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
         final Rect from = new Rect();
         dragLayer.getViewRectRelativeToSelf(d.dragView, from);
 
+
         // Calculate how far along the velocity vector we should put the intermediate point on
         // the bezier curve
         float velocity = Math.abs(vel.length());
@@ -482,7 +483,6 @@ public class DeleteDropTarget extends ButtonDropTarget {
                         (t * t) * x3;
                 float y = (1f - t) * (1f - t) * (y1 - y1o) + 2 * (1f - t) * t * (y2 - x1o) +
                         (t * t) * y3;
-
                 dragView.setTranslationX(x);
                 dragView.setTranslationY(y);
                 dragView.setScaleX(initialScale * (1f - tp));
@@ -621,4 +621,5 @@ public class DeleteDropTarget extends ButtonDropTarget {
         dragLayer.animateView(d.dragView, updateCb, duration, tInterpolator, onAnimationEndRunnable,
                 DragLayer.ANIMATION_END_DISAPPEAR, null);
     }
+
 }

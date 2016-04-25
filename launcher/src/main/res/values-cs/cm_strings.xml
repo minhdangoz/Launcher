@@ -75,7 +75,7 @@
 <string name="local_backup_toast_ok">Záloha dokončena.</string>
 <string name="normal_settings">Základní nastavení</string>
 <string name="workspace_loop_settings_title">Zobrazení cyklu plochy</string>
-
+<string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">Předvolby</string>
 <string name="multi_select_full">Již je naplněno.</string>
 <string name="wallpaper_show_theme_center">Motiv</string>

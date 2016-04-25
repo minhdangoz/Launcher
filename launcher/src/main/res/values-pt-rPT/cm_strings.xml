@@ -75,6 +75,7 @@
 <string name="local_backup_toast_ok">Backup concluído.</string>
 <string name="normal_settings">Definições gerais</string>
 <string name="workspace_loop_settings_title">Apresentação cíclica do ambiente de trabalho</string>
+  <string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">Preferência</string>
 <string name="multi_select_full">Foi preenchido.</string>
 <string name="wallpaper_show_theme_center">Tema</string>

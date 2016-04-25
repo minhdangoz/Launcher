@@ -8,17 +8,22 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.preference.SwitchPreference;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.ModeSwitchHelper;
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.klauncher.launcher.R;
+import com.umeng.analytics.MobclickAgent;
 
 public class LauncherSettingActivity extends SettingBaseActivity implements OnPreferenceClickListener {
 	// 定义相关变量
 	private static final String PREFERENCE_DESKTOP_STYLE = "desktop_style_key";
+	//桌面循环显示开关
 	private static final String PREFERENCE_INFINITE_SCROLLING = "pref_workspace_loop";
+	//kinflow 显示开关
+	private static final String PREFERENCE_KINFLOW_SETTING = "pref_kinflow_setingon";
 	private static final String PREFERENCE_HOMESCREEN = "home_screen_key";
 	private static final String PREFERENCE_DRAWER = "drawer_settings_key";
 	private static final String PREFERENCE_BACKUP_RESTORE = "backup_restore_key";
@@ -41,6 +46,18 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 	public void onStart() {
 		super.onStart();
 		loadSettings();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 
 	@Override
@@ -101,6 +118,9 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 		return true;
 	}
 
+	/**
+	 * 桌面循环显示开关设置
+	 */
 	private void setWorkspaceLoop() {
 		boolean current = SettingsValue.isWorkspaceLoop(this);
 		SettingsValue.setWorkspaceLoop(this, !current);
@@ -114,6 +134,40 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 		/*Lenovo-sw zhangyj19 add 2015/09/09 add search app definition end */
         return;
 	}
+
+	/**
+	 * 是否显示kinflow信息流设置
+	 */
+	private void setKinflowSet() {
+		boolean current = SettingsValue.isKinflowSetOn(this);
+		Log.d("workspaceKinflow","setKinflowSet="+current);
+		SettingsValue.setKinflowSetOn(this, !current);
+		Log.d("workspaceKinflow","setKinflowSet="+SettingsValue.isKinflowSetOn(this));
+		// need call Launcher to start show or hide kinflow
+		mLauncher.invalidateHasCustomContentToLeft();
+		//if off kinflow  && 未上报过  数据上报
+		if(!SettingsValue.isKinflowSetOn(this) && !SettingsValue.isKinflowReport(this)){
+			//信息流关闭时间上报统计
+			MobclickAgent.onEvent(this, "kinflow_set_off" );
+			SettingsValue.setKinflowReport(this,true);
+		}
+			/*new AsyncTask<Void, Void, Void>() {
+				@Override
+				protected Void doInBackground(Void... params) {
+					// TODO Auto-generated method stub
+					//show left coustom
+					//mLauncher.invalidateHasCustomContentToLeft();
+					return null;
+				}
+				@Override
+				protected void onPreExecute()
+				{
+					mLauncher.invalidateHasCustomContentToLeft();
+				}
+			}.execute();*/
+		return;
+	}
+
 	@SuppressWarnings("deprecation")
 	private void loadSettings() {
 		Mode mode = LauncherAppState.getInstance().getCurrentLayoutMode();
@@ -135,9 +189,12 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 				}
 			});
 		}
+		//桌面循环显示开关
 		SwitchPreference workspaceLoop = (SwitchPreference) findPreference(PREFERENCE_INFINITE_SCROLLING);
+		//获取并设置初始值
 		boolean current = SettingsValue.isWorkspaceLoop(this);
 		workspaceLoop.setChecked(current);
+		//workspaceLoop 点击改变监听
         workspaceLoop.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -146,6 +203,21 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 
             }
         });
+		//kinflow开关设置
+		SwitchPreference workspaceKinflow = (SwitchPreference) findPreference(PREFERENCE_KINFLOW_SETTING);
+		//设置默认值
+		boolean bKinflowSet = SettingsValue.isKinflowSetOn(this);
+		Log.d("workspaceKinflow","bKinflowSet="+bKinflowSet);
+		workspaceKinflow.setChecked(bKinflowSet);
+		Log.d("workspaceKinflow","workspaceKinflow="+workspaceKinflow.isChecked());
+		workspaceKinflow.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				setKinflowSet(); //设置lancher是否显示kinflow 信息流
+				return true;
+
+			}
+		});
 		Preference homeScreen = (Preference) findPreference(PREFERENCE_HOMESCREEN);
 		if (homeScreen != null) {
 			homeScreen.setOnPreferenceClickListener(this);

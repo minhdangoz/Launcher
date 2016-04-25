@@ -49,6 +49,7 @@ public class WidgetPreviewLoader {
 
     private static abstract class SoftReferenceThreadLocal<T> {
         private ThreadLocal<SoftReference<T>> mThreadLocal;
+
         public SoftReferenceThreadLocal() {
             mThreadLocal = new ThreadLocal<SoftReference<T>>();
         }
@@ -185,7 +186,7 @@ public class WidgetPreviewLoader {
     }
 
     public void setPreviewSize(int previewWidth, int previewHeight,
-            PagedViewCellLayout widgetSpacingLayout) {
+                               PagedViewCellLayout widgetSpacingLayout) {
         mPreviewBitmapWidth = previewWidth;
         mPreviewBitmapHeight = previewHeight;
         mSize = previewWidth + "x" + previewHeight;
@@ -196,13 +197,13 @@ public class WidgetPreviewLoader {
         final String name = getObjectName(o);
         final String packageName = getObjectPackage(o);
         // check if the package is valid
-        synchronized(sInvalidPackages) {
+        synchronized (sInvalidPackages) {
             boolean packageValid = !sInvalidPackages.contains(packageName);
             if (!packageValid) {
                 return null;
             }
         }
-        synchronized(mLoadedPreviews) {
+        synchronized (mLoadedPreviews) {
             // check if it exists in our existing cache
             if (mLoadedPreviews.containsKey(name)) {
                 WeakReference<Bitmap> bitmapReference = mLoadedPreviews.get(name);
@@ -214,7 +215,7 @@ public class WidgetPreviewLoader {
         }
 
         Bitmap unusedBitmap = null;
-        synchronized(mUnusedBitmaps) {
+        synchronized (mUnusedBitmaps) {
             // not in cache; we need to load it from the db
             while (unusedBitmap == null && mUnusedBitmaps.size() > 0) {
                 Bitmap candidate = mUnusedBitmaps.remove(0).get();
@@ -239,7 +240,7 @@ public class WidgetPreviewLoader {
         Bitmap preview = readFromDb(name, unusedBitmap);
 
         if (preview != null) {
-            synchronized(mLoadedPreviews) {
+            synchronized (mLoadedPreviews) {
                 mLoadedPreviews.put(name, new WeakReference<Bitmap>(preview));
             }
             return preview;
@@ -251,14 +252,15 @@ public class WidgetPreviewLoader {
                 throw new RuntimeException("generatePreview is not recycling the bitmap " + o);
             }
 
-            synchronized(mLoadedPreviews) {
+            synchronized (mLoadedPreviews) {
                 mLoadedPreviews.put(name, new WeakReference<Bitmap>(preview));
             }
 
             // write to db on a thread pool... this can be done lazily and improves the performance
             // of the first time widget previews are loaded
             new AsyncTask<Void, Void, Void>() {
-                public Void doInBackground(Void ... args) {
+                public Void doInBackground(Void... args) {
+                    //error
                     writeToDb(o, generatedPreview);
                     return null;
                 }
@@ -357,6 +359,25 @@ public class WidgetPreviewLoader {
     private void writeToDb(Object o, Bitmap preview) {
         String name = getObjectName(o);
         SQLiteDatabase db = mDb.getWritableDatabase();
+        //bug 华为 android.database.sqlite.SQLiteException: no such table: shortcut_and_widget_previews(Sqlite code 1),(OS error - 2:No such file or directory)
+
+        //判断 db 和表shortcut_and_widget_previews 是否存在
+        boolean isTableExist = false;
+        try {
+            Cursor c = db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name=" + CacheDb.TABLE_NAME, null);
+            if (c.getInt(0) == 0) {
+                isTableExist = false;
+            }
+            c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (!isTableExist) {//数据库 表不存时返回
+                return;
+            }
+        }
+
+
         ContentValues values = new ContentValues();
 
         values.put(CacheDb.COLUMN_NAME, name);
@@ -392,17 +413,17 @@ public class WidgetPreviewLoader {
     }
 
     public static void removePackageFromDb(final CacheDb cacheDb, final String packageName) {
-        synchronized(sInvalidPackages) {
+        synchronized (sInvalidPackages) {
             sInvalidPackages.add(packageName);
         }
         new AsyncTask<Void, Void, Void>() {
-            public Void doInBackground(Void ... args) {
+            public Void doInBackground(Void... args) {
                 SQLiteDatabase db = cacheDb.getWritableDatabase();
                 try {
                     db.delete(CacheDb.TABLE_NAME,
                             CacheDb.COLUMN_NAME + " LIKE ? OR " +
-                            CacheDb.COLUMN_NAME + " LIKE ?", // SELECT query
-                            new String[] {
+                                    CacheDb.COLUMN_NAME + " LIKE ?", // SELECT query
+                            new String[]{
                                     WIDGET_PREFIX + packageName + "/%",
                                     SHORTCUT_PREFIX + packageName + "/%"
                             } // args to SELECT query
@@ -411,12 +432,12 @@ public class WidgetPreviewLoader {
                 } catch (SQLiteCantOpenDatabaseException e) {
                     dumpOpenFiles();
                     throw e;
-                /** Lenovo-SW zhaoxin5 20151103 add for Gouye phone exception START */    
+                    /** Lenovo-SW zhaoxin5 20151103 add for Gouye phone exception START */
                 } catch (SQLiteReadOnlyDatabaseException e) {
-                	throw e;
+                    throw e;
                 }
                 /** Lenovo-SW zhaoxin5 20151103 add for Gouye phone exception END */
-                synchronized(sInvalidPackages) {
+                synchronized (sInvalidPackages) {
                     sInvalidPackages.remove(packageName);
                 }
                 return null;
@@ -426,12 +447,12 @@ public class WidgetPreviewLoader {
 
     private static void removeItemFromDb(final CacheDb cacheDb, final String objectName) {
         new AsyncTask<Void, Void, Void>() {
-            public Void doInBackground(Void ... args) {
+            public Void doInBackground(Void... args) {
                 SQLiteDatabase db = cacheDb.getWritableDatabase();
                 try {
                     db.delete(CacheDb.TABLE_NAME,
                             CacheDb.COLUMN_NAME + " = ? ", // SELECT query
-                            new String[] { objectName }); // args to SELECT query
+                            new String[]{objectName}); // args to SELECT query
                 } catch (SQLiteDiskIOException e) {
                 } catch (SQLiteCantOpenDatabaseException e) {
                     dumpOpenFiles();
@@ -451,9 +472,9 @@ public class WidgetPreviewLoader {
         Cursor result;
         try {
             result = db.query(CacheDb.TABLE_NAME,
-                    new String[] { CacheDb.COLUMN_PREVIEW_BITMAP }, // cols to return
+                    new String[]{CacheDb.COLUMN_PREVIEW_BITMAP}, // cols to return
                     mCachedSelectQuery, // select query
-                    new String[] { name, mSize }, // args to select query
+                    new String[]{name, mSize}, // args to select query
                     null,
                     null,
                     null,
@@ -487,7 +508,7 @@ public class WidgetPreviewLoader {
     private Bitmap generatePreview(Object info, Bitmap preview) {
         if (preview != null &&
                 (preview.getWidth() != mPreviewBitmapWidth ||
-                preview.getHeight() != mPreviewBitmapHeight)) {
+                        preview.getHeight() != mPreviewBitmapHeight)) {
             throw new RuntimeException("Improperly sized bitmap passed as argument");
         }
         if (info instanceof AppWidgetProviderInfo) {
@@ -517,7 +538,7 @@ public class WidgetPreviewLoader {
     }
 
     public Bitmap generateWidgetPreview(AppWidgetProviderInfo info, int cellHSpan, int cellVSpan,
-            int maxPreviewWidth, int maxPreviewHeight, Bitmap preview, int[] preScaledWidthOut) {
+                                        int maxPreviewWidth, int maxPreviewHeight, Bitmap preview, int[] preScaledWidthOut) {
         // Load the preview image if possible
         if (maxPreviewWidth < 0) maxPreviewWidth = Integer.MAX_VALUE;
         if (maxPreviewHeight < 0) maxPreviewHeight = Integer.MAX_VALUE;
@@ -719,6 +740,7 @@ public class WidgetPreviewLoader {
 
     private static final int MAX_OPEN_FILES = 1024;
     private static final int SAMPLE_RATE = 23;
+
     /**
      * Dumps all files that are open in this process without allocating a file descriptor.
      */

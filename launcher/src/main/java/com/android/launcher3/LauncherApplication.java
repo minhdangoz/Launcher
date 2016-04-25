@@ -30,6 +30,7 @@ public class LauncherApplication extends KLauncherApplication {
     public static int mIndexLog = 0;
     public static String[] mLogArray = null;
     public static int mLoglength = 500;
+
     @Override
     public void onCreate() {
         super.onCreate();

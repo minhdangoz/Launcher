@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="kinfow_dimen_main_padding">4dp</dimen>
+    <dimen name="kinfow_dimen_weather_temperature">52sp</dimen>
+    <dimen name="kinfow_dimen_weather_city_weather">16sp</dimen>
+    <dimen name="kinfow_dimen_weather_temperature_symbol">16dp</dimen>
+    <dimen name="kinfow_dimen_weather_temperature_symbol_paddingTop">6dp</dimen>
+    <dimen name="kinfow_dimen_weather_temperature_space_city">6dp</dimen>
+    <dimen name="kinfow_dimen_weather_city_weather_typeface_size">16sp</dimen>
+    <dimen name="kinfow_dimen_search_layout_height">42dp</dimen>
+    <dimen name="kinfow_dimen_hotWord_margin_top_bottom">8dp</dimen>
+    <dimen name="kinfow_dimen_navigation_margin_top">8dp</dimen>
+    <dimen name="kinflow_dimen_card_yidian_padding_leftOrRight">16dp</dimen>
+    <dimen name="kinflow_dimen_card_image_height">72dp</dimen>
+
+    <dimen name="kinflow_dimen_card_corner_radius">0dp</dimen>
+</resources>

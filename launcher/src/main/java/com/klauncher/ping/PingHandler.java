@@ -3,12 +3,11 @@
 package com.klauncher.ping;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Looper;
 
 import com.klauncher.ext.LauncherLog;
+import com.klauncher.kinflow.utilities.AppContextUtils;
 import com.klauncher.launcher.BuildConfig;
 
 import org.apache.http.HttpResponse;
@@ -123,15 +122,7 @@ class PingHandler {
     private JSONObject putGeneralData(JSONObject postData) {
         String token = "klauncher";
         String clientChannel ="103";
-        String productiId = "";
-        try {
-            ApplicationInfo applicationInfo = mContext.getPackageManager().getApplicationInfo(
-                    mContext.getPackageName(), PackageManager.GET_META_DATA);
-            productiId = applicationInfo.metaData.getString("KappChannel");
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        Map<String, String> map = com.android.system.ReporterApi.getCarryOnParams(token, clientChannel, productiId);
+        Map<String, String> map = com.android.system.ReporterApi.getCarryOnParams(AppContextUtils.getAppContext(),token, clientChannel, BuildConfig.CHANNEL_ID);
         for (String key : map.keySet()) {
             try {
                 postData.put(key, map.get(key));

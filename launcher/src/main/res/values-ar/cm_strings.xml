@@ -71,6 +71,7 @@
 <string name="local_backup_toast_ok">اكتمل النسخ الاحتياطي.</string>
 <string name="normal_settings">الإعدادات العامة</string>
 <string name="workspace_loop_settings_title">عرض دورة سطح المكتب</string>
+  <string name="kinflow_turn_setting">Kinflow setting</string>
 
 <string name="launcher_preference">التفضيل</string>
 <string name="multi_select_full">كان ممتلئًا.</string>

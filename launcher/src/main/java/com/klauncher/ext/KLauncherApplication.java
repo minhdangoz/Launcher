@@ -3,12 +3,20 @@ package com.klauncher.ext;
 import android.app.Application;
 
 import com.android.system.ReporterApi;
+import com.baidu.apistore.sdk.ApiStoreSDK;
+import com.klauncher.kinflow.common.utils.CacheHotWord;
+import com.klauncher.kinflow.common.utils.CacheNavigation;
+import com.klauncher.kinflow.common.utils.CommonShareData;
+import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.ping.PingManager;
+import com.ss.android.sdk.minusscreen.SsNewsApi;
 
 /**
  * Created by yanni on 16/3/27.
  */
 public class KLauncherApplication extends Application {
+    //kinflow
+    String clientId = "delong";
 
     @Override
     public void onCreate() {
@@ -18,5 +26,15 @@ public class KLauncherApplication extends Application {
         ReporterApi.startService(this, ReporterApi.POST_AS_REGULAR);
         KLauncherAppDisguise.getInstance().init(this);
         PingManager.getInstance().init(this);
+
+        //init kinflow
+        //今日头条
+        SsNewsApi.init(getApplicationContext(), clientId, true);
+        //百度天气
+        ApiStoreSDK.init(this, Const.BAIDU_APIKEY);
+        //三个个缓存文件
+        CommonShareData.init(getApplicationContext());
+        CacheNavigation.getInstancce().createCacheFile(getApplicationContext());
+        CacheHotWord.getInstance().createCacheHotWord(getApplicationContext());
     }
 }

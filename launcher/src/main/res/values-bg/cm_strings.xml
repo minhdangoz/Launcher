@@ -30,7 +30,7 @@
 <string name="local_backup_toast_ok">Архивирането е изпълнено.</string>
 <string name="normal_settings">Общи настройки</string>
 <string name="workspace_loop_settings_title">Безкрайно превъртане</string>
-
+<string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">Предпочитание</string>
 <string name="multi_select_full">Пълно е.</string>
 <string name="wallpaper_show_theme_center">Тема</string>

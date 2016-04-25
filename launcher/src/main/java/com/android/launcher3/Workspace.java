@@ -1332,10 +1332,11 @@ public class Workspace extends SmoothPagedView
         boolean swipeInIgnoreDirection = isLayoutRtl() ? deltaX < 0 : deltaX > 0;
         boolean onCustomContentScreen =
                 getScreenIdForPageIndex(getCurrentPage()) == CUSTOM_CONTENT_SCREEN_ID;
-        if (swipeInIgnoreDirection && onCustomContentScreen && passRightSwipesToCustomContent) {
+        //yanni: allow scroll to left when on customConetntScreen
+        /*if (swipeInIgnoreDirection && onCustomContentScreen && passRightSwipesToCustomContent) {
             // Pass swipes to the right to the custom content page.
             return;
-        }
+        }*/
 
         if (onCustomContentScreen && (mCustomContentCallbacks != null)
                 && !mCustomContentCallbacks.isScrollingAllowed()) {

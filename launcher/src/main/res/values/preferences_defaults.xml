@@ -29,6 +29,8 @@
     <bool name="preferences_ui_disable_all_apps_default">true</bool>
     <string name="preferences_interface_backup_path_default">"/storage/sdcard0/.IdeaDesktop/.backup/.localbackup"</string>
     <bool name="preferences_interface_workspace_loop_default">true</bool>
+    <bool name="preferences_interface_workspace_kinflow_default">true</bool>
+    <bool name="preferences_kinflow_report_default">false</bool>
     <!-- Lenovo-sw zhangyj19 add 2015/09/09 add search app definition begin-->
     <bool name="preferences_search_app_default">false</bool>
      <!-- Lenovo-sw zhangyj19 add 2015/09/09 add search app definitionend-->

@@ -72,6 +72,7 @@
 <string name="local_backup_toast_ok">備份完成</string>
 <string name="normal_settings">一般設定</string>
 <string name="workspace_loop_settings_title">桌面循環顯示</string>
+  <string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">設定桌布</string>
 <string name="multi_select_full">已滿。</string>
 <string name="wallpaper_show_theme_center">"主題"</string>

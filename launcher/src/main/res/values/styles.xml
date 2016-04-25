@@ -70,10 +70,10 @@
         <item name="android:layout_height">match_parent</item>
     </style>
     <style name="DropTargetButton">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>grgradle
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
         <item name="android:drawablePadding">7.5dp</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">25dp</item>
@@ -187,5 +187,25 @@
     </style>
     
     <!-- Add for backup dialog -->
-	<style name="AlertDialogCustom" parent="@android:style/Theme.DeviceDefault.Light" />    
+	<style name="AlertDialogCustom" parent="@android:style/Theme.DeviceDefault.Light" />
+    <!--kinflow add-->
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@android:style/Theme.Holo.Wallpaper.NoTitleBar">
+        <!-- Customize your theme here. -->
+    </style>
+   <!--kinflow add-->
+    <style name="Theme.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Transparent" parent="Theme.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+
 </resources>

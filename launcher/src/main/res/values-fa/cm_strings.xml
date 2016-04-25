@@ -49,7 +49,8 @@
 <string name="restore_toast_fail">بازیابی انجام نشد، لطفاً دوباره تلاش کنید.</string>
 <string name="select_item_count">آیتم های انتخاب شده %s</string>
 <string name="workspace_loop_settings_title">پیمایش نامحدود دسک تاپ</string>
-<string name="launcher_preference">تنظیم برگزیده</string>
+  <string name="kinflow_turn_setting">Kinflow setting</string>
+  <string name="launcher_preference">تنظیم برگزیده</string>
 <string name="multi_select_full">پر شده است.</string>
 <string name="wallpaper_show_theme_center">زمينه</string>
 <string name="wallpaper_other_app">تنظيمات شماره تلفن و انتظار مکالمه</string>

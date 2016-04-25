@@ -75,6 +75,7 @@
 <string name="local_backup_toast_ok">Yedekleme tamamlandı.</string>
 <string name="normal_settings">Genel Ayarlar</string>
 <string name="workspace_loop_settings_title">Masaüstü ekran değiştirme</string>
+  <string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">Tercih</string>
 <string name="multi_select_full">Doldu.</string>
 <string name="wallpaper_show_theme_center">tema</string>

@@ -78,6 +78,7 @@
 <string name="local_backup_toast_ok">สำรองข้อมูลเสร็จสมบูรณ์</string>
 <string name="normal_settings">การตั้งค่าทั่วไป</string>
 <string name="workspace_loop_settings_title">การแสดงผลการวนเดสก์ท็อป</string>
+  <string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">การกำหนดลักษณะ</string>
 <string name="multi_select_full">เต็มแล้ว</string>
 <string name="wallpaper_show_theme_center">"ธีม"</string>

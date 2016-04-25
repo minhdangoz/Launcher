@@ -77,6 +77,7 @@
 <string name="local_backup_toast_ok">Резервное копирование выполнено.</string>
 <string name="normal_settings">Общие параметры</string>
 <string name="workspace_loop_settings_title">Круговое листание раб. столов</string>
+  <string name="kinflow_turn_setting">Kinflow setting</string>
 <string name="launcher_preference">Параметры</string>
 <string name="multi_select_full">Заполнен.</string>
 <string name="wallpaper_show_theme_center">"Центр тем"</string>
