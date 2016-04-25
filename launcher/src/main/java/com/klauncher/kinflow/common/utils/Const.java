@@ -89,6 +89,8 @@ public class Const {
     public static String OBTAION_WEATHER_BY_CITY_NAME = "http://apis.baidu.com/apistore/weatherservice/cityname";
 
     //一点资讯
+    public static final String YIDIAN_APPID = "17Mgz4F2WfWvrWQ9z8J6iAfi";
+    public static final String YIDIAN_APPKEY = "lxRgj53VtpL6wL0t1NkX1IxxRvlZtf0j";
     public static final int YI_DIAN_CHANNEL_JingXuan = 0;
     public static final int YI_DIAN_CHANNEL_ReMen = 1;
     public static final int YI_DIAN_CHANNEL_YuLe = 2;

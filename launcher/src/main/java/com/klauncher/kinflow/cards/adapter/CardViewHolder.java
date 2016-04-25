@@ -541,7 +541,7 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
                             public void onSuccess(List<YiDianModel> yiDianModelList) {
                                 YDCardViewHolder.this.addData((YDNewsAdapter) mRecyclerView.getAdapter(), yiDianModelList);
                             }
-                        }).run(ydCardContentManager.getRequestUrl());
+                        }).run();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

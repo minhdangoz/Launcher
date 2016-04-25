@@ -3,11 +3,14 @@ package com.klauncher.kinflow.common.task;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
+import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.manager.CardContentManagerFactory;
 import com.klauncher.kinflow.cards.model.yidian.YiDianModel;
+import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CommonShareData;
+import com.klauncher.kinflow.common.utils.CommonUtils;
+import com.klauncher.kinflow.common.utils.Const;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +37,6 @@ public class YiDianTask {
     private Context mContext;
     private int mOurDefineChannelId;
     private Handler mHandler;
-    private Message mMessage;
     Handler.Callback handleCallback = new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -52,14 +54,45 @@ public class YiDianTask {
                     mCallBack.onError(YiDianQuestCallBack.ERROR_CONNECT);
                     break;
                 case YiDianQuestCallBack.SUCCESS:
-                    int offset = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, 0)+5;
-                    CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,offset);
-                    mCallBack.onSuccess((List<YiDianModel>) msg.obj);
+                    switch (msg.what) {
+                        case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
+                            String timestamp = (String) msg.obj;
+                            String requestUrl = getRequestUrl(timestamp);
+                            getYdTask(requestUrl);
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
+                            int offset = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, 0)+5;
+                            CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,offset);
+                            mCallBack.onSuccess((List<YiDianModel>) msg.obj);
+                            break;
+                    }
                     break;
             }
             return true;
         }
     };
+
+    public String getRequestUrl(String timestamp) {
+//        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_DEBUG);
+        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_RELEASE);
+//        /*
+        if (null==timestamp) timestamp = String.valueOf((int)((System.currentTimeMillis())/1000));
+//        int timestamp = (int)((new Date().getTime())/1000);
+        String nonce = CommonUtils.getInstance().getRandomString(5);//生成5个随机字符串
+        //String appkey,String nonce,String timestamp
+        String secretkey = CommonUtils.getSecretkey(Const.YIDIAN_APPKEY, nonce, timestamp);
+        stringBuilder.append("?appid=").append(Const.YIDIAN_APPID);
+        stringBuilder.append("&secretkey=").append(secretkey);
+        stringBuilder.append("&timestamp=").append(timestamp);
+        stringBuilder.append("&nonce=").append(nonce);
+//        */
+        //获取偏移量,如果没有获取到偏移量则使用默认偏移量0
+        int mOffSet = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,0);
+        stringBuilder.append("&channel_id=").append(CardIdMap.getYiDianChannelId(mOurDefineChannelId));//channelId
+        stringBuilder.append("&offset=").append(String.valueOf(mOffSet));//偏移量
+        stringBuilder.append("&count=").append(String.valueOf(5));//count 为5 不变
+        return stringBuilder.toString();
+    }
 
     /**
      *
@@ -71,42 +104,77 @@ public class YiDianTask {
         this.mContext = context;
         this.mOurDefineChannelId = ourDefineChannelId;
         this.mCallBack = callBack;
-        mMessage = Message.obtain();
         mHandler = new Handler(handleCallback);
     }
 
-    public void run(String url) throws Exception {
+    public void run(){
         Request request = new Request.Builder()
-                .url(url)
+                .url(Const.URL_TIMESTAMP)
                 .build();
+        final Message msgTimestamp = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_TIMESTAMP);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 //网络连接错误
-                mMessage.arg1 = YiDianQuestCallBack.ERROR_CONNECT;
-                mHandler.sendMessage(mMessage);
+                msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_CONNECT;
+                mHandler.sendMessage(msgTimestamp);
             }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (!response.isSuccessful()) {//响应失败
-                    mMessage.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
+                    msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
                 }else {//响应成功
-                    parseYiDian(response.body().string());
+                    JSONArray jsonArray = null;
+                    try {
+                        jsonArray = new JSONArray(response.body().string());
+                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+                        int time = (int)(jsonObject.getLong("time")/1000);
+                        msgTimestamp.arg1 = YiDianQuestCallBack.SUCCESS;
+                        msgTimestamp.obj = String.valueOf(time);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_PARSE;
+                    }
                 }
-                mHandler.sendMessage(mMessage);
+                mHandler.sendMessage(msgTimestamp);
                 response.body().close();
             }
         });
     }
 
-    private void parseYiDian(String responseBody) {
+    public void getYdTask(String url){
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        final Message msgYiDian = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN);
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //网络连接错误
+                msgYiDian.arg1 = YiDianQuestCallBack.ERROR_CONNECT;
+                mHandler.sendMessage(msgYiDian);
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful()) {//响应失败
+                    msgYiDian.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
+                }else {//响应成功
+                    parseYiDian(msgYiDian,response.body().string());
+                }
+                mHandler.sendMessage(msgYiDian);
+                response.body().close();
+            }
+        });
+    }
+
+    private void parseYiDian(Message msgYiDian,String responseBody) {
 //        handler.sendMessage(msg);
         List<YiDianModel> yiDianModelList = new ArrayList<>();
         try {
             JSONObject allYiDianObject = new JSONObject(responseBody);
             int code = allYiDianObject.getInt("code");
             if (code != 0) {//获取失败
-                mMessage.arg1 = YiDianQuestCallBack.ERROR_DATA_NULL;
+                msgYiDian.arg1 = YiDianQuestCallBack.ERROR_DATA_NULL;
             } else {//获取成功
                 JSONArray jsonArrayYiDianModel = allYiDianObject.getJSONArray("result");
                 int length = jsonArrayYiDianModel.length();
@@ -134,10 +202,10 @@ public class YiDianTask {
                     yiDianModelList.add(yiDianModel);
                 }
             }
-            mMessage.arg1 = YiDianQuestCallBack.SUCCESS;
-            mMessage.obj = yiDianModelList;
+            msgYiDian.arg1 = YiDianQuestCallBack.SUCCESS;
+            msgYiDian.obj = yiDianModelList;
         } catch (JSONException e) {
-            mMessage.arg1 = YiDianQuestCallBack.ERROR_PARSE;
+            msgYiDian.arg1 = YiDianQuestCallBack.ERROR_PARSE;
         }
     }
 
