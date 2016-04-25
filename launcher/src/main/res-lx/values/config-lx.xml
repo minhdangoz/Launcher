@@ -34,5 +34,5 @@
     <string name="config_icon_com.moji.mjweather">sina.mobile.tianqitong</string>
 
     <string name="folder_system_tool">系统工具</string>
-    <bool name="kinflow_switch">false</bool>
+    <bool name="kinflow_switch">true</bool>
 </resources>
