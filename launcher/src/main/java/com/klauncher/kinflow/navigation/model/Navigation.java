@@ -9,6 +9,7 @@ import android.os.Parcelable;
 
 import com.klauncher.kinflow.common.utils.OpenMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,6 +67,12 @@ public class Navigation implements Parcelable, Comparable {
     }
 
     public Navigation() {
+//        "23", "com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity", "0"
+        List<String> ops = new ArrayList<>();
+        ops.add("23");
+        ops.add("com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity");
+        ops.add("0");
+        this.navOpenOptions = ops;
     }
 
     public Navigation(String navId, String navName, String navIcon, String navUrl, int navOrder, List<String> navOpenOptions) {

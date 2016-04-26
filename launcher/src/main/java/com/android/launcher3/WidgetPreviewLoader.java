@@ -362,10 +362,12 @@ public class WidgetPreviewLoader {
         //bug 华为 android.database.sqlite.SQLiteException: no such table: shortcut_and_widget_previews(Sqlite code 1),(OS error - 2:No such file or directory)
 
         //判断 db 和表shortcut_and_widget_previews 是否存在
-        boolean isTableExist = false;
+        boolean isTableExist = true;
         try {
-            Cursor c = db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name=" + CacheDb.TABLE_NAME, null);
-            if (c.getInt(0) == 0) {
+            //no such column: shortcut_and_widget_previews (code 1) SELECT count(*) FROM sqlite_master WHERE type='table' AND name=shortcut_and_widget_previews
+           //Cursor c = db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name=" + CacheDb.TABLE_NAME, null);
+            Cursor c=db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='shortcut_and_widget_previews'", null);
+            if (c.getCount()<1 || c.getInt(0) == 0) {//游标没有查到  或查到为 0
                 isTableExist = false;
             }
             c.close();

@@ -92,6 +92,7 @@ public class SearchActivity extends Activity implements OnClickListener{
         setContentView(R.layout.activity_search);
         initView();
         hintHotWord = getIntent().getParcelableExtra(HITN_HOT_WORD_KEY);
+        if (null!=hintHotWord&&null!=hintHotWord.getWord())
         editSearch.setHint(hintHotWord.getWord());
         editSearch.setFocusable(true);
         editSearch.addTextChangedListener(new TextWatcher() {
