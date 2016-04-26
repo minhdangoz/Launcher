@@ -1,6 +1,6 @@
 <resources>
     <integer name="config_workspaceDefaultScreen">1</integer>
-    <integer name="config_workspaceInstalledAppStartScreen">2</integer>
+    <integer name="config_workspaceInstalledAppStartScreen">1</integer>
     <item name="config_folder_background_ratio" format="float" type="dimen">0.75</item>
     <item name="config_folder_iconsize_ratio" format="float" type="dimen">1</item>
     <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0.66</item>
