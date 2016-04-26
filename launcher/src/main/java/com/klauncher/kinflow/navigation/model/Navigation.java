@@ -81,6 +81,13 @@ public class Navigation implements Parcelable, Comparable {
         this.navIcon = navIcon;
         this.navUrl = navUrl;
         this.navOrder = navOrder;
+        if (null==navOpenOptions||navOpenOptions.size()==0) {
+            List<String> ops = new ArrayList<>();
+            ops.add("23");
+            ops.add("com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity");
+            ops.add("0");
+            this.navOpenOptions = ops;
+        }
         this.navOpenOptions = navOpenOptions;
     }
 

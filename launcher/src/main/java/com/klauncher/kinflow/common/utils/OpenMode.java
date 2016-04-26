@@ -169,7 +169,15 @@ public class OpenMode {
         for (int i = 0; i < size; i++) {
             switch (i) {
                 case 0:
+                    if (CommonUtils.isInteger(cardOpenOptionList.get(i)))
                     setFirstIntent(Integer.valueOf(cardOpenOptionList.get(i)));
+                    else {
+                        //
+                        firstIntent.setAction(Intent.ACTION_VIEW);
+                        firstIntent.setClass(context, KinflowBrower.class);
+                        firstIntent.putExtra(KinflowBrower.KEY_EXTRA_URL, openUrl);
+                        firstIntent.setData(Uri.parse(openUrl));
+                    }
                     break;
                 case 1:
                     setSecondIntent(cardOpenOptionList.get(i), openUrl);
