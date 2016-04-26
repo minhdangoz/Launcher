@@ -148,6 +148,7 @@ public class MainControl {
             switch (msg.what) {
                 case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME://获取到城市名称
                     log("获取到城市名称");
+                    if (null!=msg.obj)
                     try {
                         String cityName = URLEncoder.encode((String) msg.obj, "UTF-8");
                         parseWeather(cityName);
