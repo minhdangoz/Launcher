@@ -67,12 +67,36 @@ public class SettingsValue {
         SettingsProvider.putBoolean(c, SettingsProvider.SETTINGS_UI_KINFLOW_SETON, loop);
     }
     //第一次关闭信息流 上报标志 默认为false 上报之后为true
-    public static boolean isKinflowReport(Context c) {
+    public static boolean isKinflowOffReport(Context c) {
+        return SettingsProvider.getBoolean(c, SettingsProvider.KINFLOW_REPORT_SETOFF,
+                R.bool.preferences_kinflow_report_default);
+    }
+    public static void setKinflowOffReport(Context c, boolean loop) {
+        SettingsProvider.putBoolean(c, SettingsProvider.KINFLOW_REPORT_SETOFF, loop);
+    }
+    //第一次打开信息流 上报标志 默认为false 上报之后为true
+    public static boolean isKinflowOnReport(Context c) {
         return SettingsProvider.getBoolean(c, SettingsProvider.KINFLOW_REPORT_SETON,
                 R.bool.preferences_kinflow_report_default);
     }
-    public static void setKinflowReport(Context c, boolean loop) {
+    public static void setKinflowOnReport(Context c, boolean loop) {
         SettingsProvider.putBoolean(c, SettingsProvider.KINFLOW_REPORT_SETON, loop);
+    }
+    //是否创建 wifi设置快捷方式
+    public static boolean isAddWifiShortCut(Context c) {
+        return SettingsProvider.getBoolean(c, SettingsProvider.SHORTCUT_WIFI_SETTING,
+                R.bool.preferences_shortcut_wifi_default);
+    }
+    public static void setAddWifiShortCut(Context c, boolean loop) {
+        SettingsProvider.putBoolean(c, SettingsProvider.SHORTCUT_WIFI_SETTING, loop);
+    }
+    //是否创建 klancher快捷方式
+    public static boolean isAddKlancherShortCut(Context c) {
+        return SettingsProvider.getBoolean(c, SettingsProvider.SHORTCUT_ADD_KLANCHER,
+                R.bool.preferences_shortcut_klancher_default);
+    }
+    public static void setAddKlancherShortCut(Context c, boolean loop) {
+        SettingsProvider.putBoolean(c, SettingsProvider.SHORTCUT_ADD_KLANCHER, loop);
     }
     
     /** Lenovo-SW zhaoxin5 20150813 add for KOLEOSROW-580 START */

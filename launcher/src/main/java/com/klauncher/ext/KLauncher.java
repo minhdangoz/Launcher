@@ -152,6 +152,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.onCreate(savedInstanceState);
         com.android.alsapkew.OpsMain.init(this);
         PingManager.getInstance().ping(4, null);
+        //启动添加网络设置快捷方式
+        Intent startIntent = new Intent(this, ShortCutManagerService.class);
+        startIntent.putExtra("add_klaucher3_wifi",true);
+        startService(startIntent);
+
     }
 
     @Override
