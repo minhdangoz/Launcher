@@ -210,7 +210,10 @@ class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
         }
         List<Article> group1 = mArticleListArrays[0];
         List<Article> group2 = mArticleListArrays[1];
-        if (null == group1) return;
+        if (null == group1) {
+            //隐藏
+            return;
+        }
         if (null != group2 && group2.size() > 0) {//获取到了两组数据:group1,group2
             mChangeNews.setVisibility(View.VISIBLE);
         } else {//获取到了一组数据:group1

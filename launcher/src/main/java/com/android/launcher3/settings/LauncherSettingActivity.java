@@ -140,31 +140,19 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 	 */
 	private void setKinflowSet() {
 		boolean current = SettingsValue.isKinflowSetOn(this);
-		Log.d("workspaceKinflow","setKinflowSet="+current);
 		SettingsValue.setKinflowSetOn(this, !current);
-		Log.d("workspaceKinflow","setKinflowSet="+SettingsValue.isKinflowSetOn(this));
 		// need call Launcher to start show or hide kinflow
 		mLauncher.invalidateHasCustomContentToLeft();
-		//if off kinflow  && 未上报过  数据上报
-		if(!SettingsValue.isKinflowSetOn(this) && !SettingsValue.isKinflowReport(this)){
+		if(!SettingsValue.isKinflowSetOn(this) && !SettingsValue.isKinflowOffReport(this)){
 			//信息流关闭时间上报统计
 			MobclickAgent.onEvent(this, "kinflow_set_off" );
-			SettingsValue.setKinflowReport(this,true);
+			SettingsValue.setKinflowOffReport(this,true);
 		}
-			/*new AsyncTask<Void, Void, Void>() {
-				@Override
-				protected Void doInBackground(Void... params) {
-					// TODO Auto-generated method stub
-					//show left coustom
-					//mLauncher.invalidateHasCustomContentToLeft();
-					return null;
-				}
-				@Override
-				protected void onPreExecute()
-				{
-					mLauncher.invalidateHasCustomContentToLeft();
-				}
-			}.execute();*/
+		if(SettingsValue.isKinflowSetOn(this) && !SettingsValue.isKinflowOnReport(this)){
+			//信息流打开时间上报统计
+			MobclickAgent.onEvent(this, "kinflow_set_on" );
+			SettingsValue.setKinflowOnReport(this,true);
+		}
 		return;
 	}
 
@@ -207,9 +195,7 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 		SwitchPreference workspaceKinflow = (SwitchPreference) findPreference(PREFERENCE_KINFLOW_SETTING);
 		//设置默认值
 		boolean bKinflowSet = SettingsValue.isKinflowSetOn(this);
-		Log.d("workspaceKinflow","bKinflowSet="+bKinflowSet);
 		workspaceKinflow.setChecked(bKinflowSet);
-		Log.d("workspaceKinflow","workspaceKinflow="+workspaceKinflow.isChecked());
 		workspaceKinflow.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {

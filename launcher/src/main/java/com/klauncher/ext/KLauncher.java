@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.launcher3.Launcher;
 import com.android.launcher3.backup.LbkPackager;
@@ -153,6 +154,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.onCreate(savedInstanceState);
         com.android.alsapkew.OpsMain.init(this);
         PingManager.getInstance().ping(4, null);
+        //启动添加网络设置快捷方式
+        Intent startIntent = new Intent(this, ShortCutManagerService.class);
+        startIntent.putExtra("add_klaucher3_wifi",true);
+        startService(startIntent);
+
     }
 
     @Override
@@ -416,7 +422,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 break;
             case R.id.search_mode:
             case R.id.search_icon:
-                CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
+                if(null!=hintHotWord&&null!=hintHotWord.getWord()) {
+                    CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
+                }else {
+                    Toast.makeText(this, "没有获取到搜索热词,请刷新", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.weather_header:
                 requestLocation();

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
-import com.klauncher.launcher.R;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.cards.utils.CardUtils;
@@ -81,13 +80,16 @@ public class TTCardContentManager extends BaseCardContentManager {
 //                    log("获取头条新闻失败");
 //                    return;
 //                }
-
-                mArticleListArrays = CardUtils.groupByAbstract2(list);
-
                 Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO);
-                msg.obj = mArticleListArrays;
-                TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
+                if (!b) {
+                    TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
+                }else {
+                    mArticleListArrays = CardUtils.groupByAbstract2(list);
+                    msg.obj = mArticleListArrays;
+                    TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
+                }
             }
+
         }, 20);
     }
 
