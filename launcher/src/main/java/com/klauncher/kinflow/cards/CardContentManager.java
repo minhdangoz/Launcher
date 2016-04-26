@@ -188,7 +188,7 @@ public class CardContentManager {
                     addYiDianLayout(cardRoot,cardInfo,sortedYiDianModelLst,params,yiDianContentManager);
 //                    addYiDianLayout(cardRoot,cardInfo,yiDianModelList,params,yiDianContentManager);
                 }
-            }).run(yiDianContentManager.getNextRequestUrl());
+            }).run();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -479,7 +479,7 @@ public class CardContentManager {
                                     true);
 //                            */
                         }
-                    }).run(yiDianContentManager.getNextRequestUrl());
+                    }).run();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

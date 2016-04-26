@@ -26,6 +26,7 @@ import com.android.launcher3.backup.LbkUtil;
 import com.android.launcher3.settings.SettingsValue;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.adapter.CardItemDecoration;
 import com.klauncher.kinflow.cards.adapter.CardsAdapter;
@@ -545,9 +546,12 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     public void onAddAdview(CardInfo cardInfo) {
+//        log("开始添加adview");
+        Log.i("MyInfo","开始添加adview");
         //向CardsAdapter中添加adView
         CardsAdapter adapter = (CardsAdapter) mCardsView.getAdapter();
-        if (null != adapter) adapter.addCard(cardInfo);
+        int type = adapter.getItemViewType(adapter.getItemCount()-1);
+        if (null != adapter&&type!= CardIdMap.ADVERTISEMENT_ADVIEW) adapter.addCard(cardInfo);
     }
 
     final protected static void log(String msg) {

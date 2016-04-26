@@ -234,11 +234,12 @@ public class MainControl {
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                         mRequestSemaphore.acquire();
-                        Calendar latestModifiedCalendar = DateUtils.getInstance().millis2Calendar(CommonShareData.getString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(Calendar.getInstance().getTimeInMillis())));
-                        String navagationUpdateInterval = CommonShareData.getString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, String.valueOf(Calendar.getInstance().getTimeInMillis()));
-                        int second = (int) (Long.valueOf(navagationUpdateInterval) / 1000);
-                        latestModifiedCalendar.add(Calendar.SECOND, second);
-                        if (latestModifiedCalendar.before(Calendar.getInstance())) {
+//                        Calendar latestModifiedCalendar = DateUtils.getInstance().millis2Calendar(CommonShareData.getString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(Calendar.getInstance().getTimeInMillis())));
+//                        String navagationUpdateInterval = CommonShareData.getString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, String.valueOf(Calendar.getInstance().getTimeInMillis()));
+//                        int second = (int) (Long.valueOf(navagationUpdateInterval) / 1000);
+//                        latestModifiedCalendar.add(Calendar.SECOND, second);
+                        if (isUpdateNow()) {
+                            log("超过4小时请求更新Navigation");
                             new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.NAVIGATION_GET);
                         } else {
                             Message msg = Message.obtain();
@@ -248,6 +249,10 @@ public class MainControl {
                         }
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
+                        if (isUpdateNow()) {
+                            log("超过4小时清空offset");
+                            CardContentManagerFactory.clearAllOffset();
+                        }
                         for (CardInfo cardInfo : mCardInfoList) {
                             BaseCardContentManager cardContentManager = cardInfo.getmCardContentManager();
                             mRequestSemaphore.acquire();
@@ -261,6 +266,16 @@ public class MainControl {
                 e.printStackTrace();
             }
         }
+
+    }
+
+    public boolean isUpdateNow(){
+        Calendar latestModifiedCalendar = DateUtils.getInstance().millis2Calendar(CommonShareData.getString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, "0"));//默认最后更新时间为0
+        String navagationUpdateInterval = CommonShareData.getString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, String .valueOf(Const.DURATION_FOUR_HOUR));//默认更新频度为4个小时
+        int second = (int) (Long.valueOf(navagationUpdateInterval) / 1000);
+        latestModifiedCalendar.add(Calendar.SECOND, second);
+        if (latestModifiedCalendar.before(Calendar.getInstance())) return true;
+        return false;
 
     }
 

@@ -38,3 +38,11 @@
     <methods>;
 }
 -keep class com.baidu.** {public protected *;}
+
+###########adview混淆
+-keep class com.kyview.** {
+    *;
+}
+-keep class com.kuaiyou.** {
+    *;
+}

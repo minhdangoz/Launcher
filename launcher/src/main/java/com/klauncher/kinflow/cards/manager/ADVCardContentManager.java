@@ -37,6 +37,7 @@ public class ADVCardContentManager extends BaseCardContentManager {
 //            return true;
 //        }
 //    };
+
     /**
      * @param context
      */
@@ -76,16 +77,23 @@ public class ADVCardContentManager extends BaseCardContentManager {
                 ADVCardContentManager.this.mNativeAdInfoList = new ArrayList<NativeAdInfo>();
                 Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
                 ADVCardContentManager.this.mMainControlHandler.sendMessage(msg);
-                Log.i("MyInfo","ADVCardContentManager.获取失败");
+                Log.i("MyInfo", "ADVCardContentManager.获取失败");
             }
 
             @Override
             public void onReceivedAd(List list) {
+                for (int i = 0; i < list.size(); i++) {
+                    NativeAdInfo info = (NativeAdInfo) list.get(i);
+                    Log.i("MyInfo", "NativeAdInfo.title="+info.getTitle()
+                            +"\n   info.getIconUrl="+info.getIconUrl()
+                            +"\n   info.getImageUrl()="+info.getImageUrl()
+                            +"\n   info.getDescription="+info.getDescription());
+                }
                 setNativeAdInfoList(list);
                 Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
                 msg.obj = ADVCardContentManager.this.mNativeAdInfoList;
                 ADVCardContentManager.this.mMainControlHandler.sendMessage(msg);
-                Log.i("MyInfo","ADVCardContentManager.获取成功");
+                Log.i("MyInfo", "ADVCardContentManager.获取成功");
             }
 
             @Override

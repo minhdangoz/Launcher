@@ -92,7 +92,7 @@ class AdnativeCardViewHolder extends CardViewHolder implements View.OnClickListe
         ADVCardContentManager manager = (ADVCardContentManager) this.mCardInfo.getmCardContentManager();
         List<NativeAdInfo> nativeAdInfoList = manager.getNativeAdInfoList();
         if (null == nativeAdInfoList || nativeAdInfoList.size() == 0) {//获取数据失败
-            Log.i("Kinflow", "setCardInfo: AdView的CardInfo对应的Manager存储的数据为空");
+            Log.i("MyInfo", "setCardInfo: AdView的CardInfo对应的Manager存储的数据为空");
             ViewGroup.LayoutParams params = cardView.getLayoutParams();
             params.height = 0;
             cardView.setLayoutParams(params);
@@ -104,6 +104,7 @@ class AdnativeCardViewHolder extends CardViewHolder implements View.OnClickListe
         }
         //获取数据成功
          this.mFirstNativeAdInfo = nativeAdInfoList.get(0);
+        Log.i("MyInfo","mFirstNativeAdInfo.getTitle() = "+mFirstNativeAdInfo.getTitle());
         this.mNativeTitle.setText(mFirstNativeAdInfo.getTitle());
         Picasso.with(mContext).load(mFirstNativeAdInfo.getIconUrl()).into(this.mNativeImage);
 
@@ -539,9 +540,12 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
 
                             @Override
                             public void onSuccess(List<YiDianModel> yiDianModelList) {
-                                YDCardViewHolder.this.addData((YDNewsAdapter) mRecyclerView.getAdapter(), yiDianModelList);
+                                ((YDCardContentManager) mCardInfo.getmCardContentManager()).setYiDianModelList(yiDianModelList);
+//                                int position = YDCardViewHolder.this.getAdapterPosition();
+                                YDCardViewHolder.this.setmCardInfo(mCardInfo);
+//                                YDCardViewHolder.this.addData((YDNewsAdapter) mRecyclerView.getAdapter(), yiDianModelList);
                             }
-                        }).run(ydCardContentManager.getRequestUrl());
+                        }).run();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
