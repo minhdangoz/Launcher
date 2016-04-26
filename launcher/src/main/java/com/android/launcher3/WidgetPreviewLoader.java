@@ -367,7 +367,8 @@ public class WidgetPreviewLoader {
             //no such column: shortcut_and_widget_previews (code 1) SELECT count(*) FROM sqlite_master WHERE type='table' AND name=shortcut_and_widget_previews
            //Cursor c = db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name=" + CacheDb.TABLE_NAME, null);
             Cursor c=db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='shortcut_and_widget_previews'", null);
-            if (c.getCount()<1 || c.getInt(0) == 0) {//游标没有查到  或查到为 0
+
+            if (c == null || c.getCount()<=0 ||(c.getCount()>0&& c.getInt(0) == 0)) {//游标没有查到  或查到为 0
                 isTableExist = false;
             }
             c.close();
