@@ -26,6 +26,7 @@ import com.klauncher.kinflow.search.model.HotWord;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.weather.model.Weather;
 import com.kyview.natives.NativeAdInfo;
+import com.ss.android.sdk.minusscreen.model.Article;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -115,7 +116,8 @@ public class MainControl {
                                         break;
                                     case CardIdMap.CARD_TYPE_NEWS_TT_REDIAN://头条
                                         TTCardContentManager ttCardContentManager = (TTCardContentManager) cardInfo.getmCardContentManager();
-                                        if (null!=ttCardContentManager.getArticleListArrays())
+                                        List<Article>[] mArticleListArrays = ttCardContentManager.getArticleListArrays();
+                                        if (null!=mArticleListArrays&&null!=mArticleListArrays[0]&&0!=mArticleListArrays[0].size())
                                             filiterCardInfoList.add(cardInfo);
                                         break;
                                     case CardIdMap.ADVERTISEMENT_YOKMOB:
