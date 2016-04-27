@@ -27,7 +27,7 @@
     <string name="config_icon_com.miguan.market">com.lenovo.leos.appstore</string>
     <string name="config_icon_cn.kuwo.player">com.lenovo.music,com.android.music</string>
     <string name="config_icon_com.duomi.android">com.lenovo.music,com.android.music</string>
-    <string name="config_icon_com.tencent.qqlive">com.lenovo.videoplayer,com.lenovo.video,com.ontim.videoplayer,com.mediatek.videoplayer</string>
+    <string name="config_icon_com.tencent.qqlive">com.lenovo.videoplayer,com.lenovo.video,com.ontim.videoplayer,com.mediatek.videoplayer,com.android.music/com.android.music.video.MovieListActivity</string>
     <string name="config_icon_com.UCMobile">com.lenovo.browser,com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.lenovo.safecenter,com.lenovo.security</string>
     <string name="config_icon_cn.etouch.ecalendar.cpa">com.lenovo.calendar,com.android.calendar</string>
