@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.launcher.R;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.navigation.model.Navigation;
@@ -48,6 +49,11 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
     @Override
     public void onBindViewHolder(NavigationAdapterViewHolder holder, int position) {
         Navigation navigation = navigationList.get(position);
+        if (null==navigation||null==navigation.getNavName()||null==navigation.getNavIcon()) {
+            this.navigationList.remove(position);
+            navigation = CacheNavigation.getInstancce().createDefaultNavigation(position);
+            this.navigationList.add(position,navigation);
+        }
         //navigation-name
         holder.tv_navigation.setText(navigation.getNavName());
 
