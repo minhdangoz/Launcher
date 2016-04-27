@@ -10,8 +10,6 @@ import com.baidu.apistore.sdk.ApiCallBack;
 import com.baidu.apistore.sdk.ApiStoreSDK;
 import com.baidu.apistore.sdk.network.Parameters;
 import com.klauncher.kinflow.cards.CardIdMap;
-import com.klauncher.kinflow.utilities.FileUtils;
-import com.klauncher.launcher.R;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.common.factory.MessageFactory;
@@ -23,8 +21,10 @@ import com.klauncher.kinflow.common.utils.DateUtils;
 import com.klauncher.kinflow.common.utils.MathUtils;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
+import com.klauncher.kinflow.utilities.FileUtils;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.weather.model.Weather;
+import com.klauncher.launcher.R;
 import com.kyview.natives.NativeAdInfo;
 import com.ss.android.sdk.minusscreen.model.Article;
 
@@ -33,7 +33,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,9 +64,10 @@ public class MainControl {
                     log("获取到百度热词");
                     break;
                 case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION://获取Navigation
-                    if (null != msg.obj)
+                    if (null != msg.obj) {
                         mNavigationList = (List<Navigation>) msg.obj;
-                    Collections.sort(mNavigationList);
+                        Collections.sort(mNavigationList);
+                    }
                     log("获取到导航");
                     break;
                 case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN://获取一点咨询
@@ -150,12 +150,13 @@ public class MainControl {
             switch (msg.what) {
                 case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME://获取到城市名称
                     log("获取到城市名称");
-                    if (null!=msg.obj)
-                    try {
-                        String cityName = URLEncoder.encode((String) msg.obj, "UTF-8");
-                        parseWeather(cityName);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
+                    if (null!=msg.obj){
+                        try {
+                            String cityName = URLEncoder.encode((String) msg.obj, "UTF-8");
+                            parseWeather(cityName);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                     break;
                 case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW:
