@@ -19,6 +19,7 @@ package com.android.launcher3;
 import android.os.Build;
 
 import com.klauncher.ext.KLauncherApplication;
+import com.klauncher.kinflow.utilities.CrashHandler;
 import com.klauncher.launcher.R;
 import com.klauncher.theme.ThemeController;
 
@@ -43,6 +44,9 @@ public class LauncherApplication extends KLauncherApplication {
         SHOW_CTAPP_FEATURE = getResources().getBoolean(R.bool.config_launcher_page);
         LauncherAppState.setApplicationContext(this);
         LauncherAppState.getInstance();
+        //crash save sd
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(getApplicationContext());
 
         /* Lenovo-SW zhaoxin5 20150116 add Theme support */
         initTheme();

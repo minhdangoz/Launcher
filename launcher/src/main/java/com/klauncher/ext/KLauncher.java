@@ -158,7 +158,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         Intent startIntent = new Intent(this, ShortCutManagerService.class);
         startIntent.putExtra("add_klaucher3_wifi",true);
         startService(startIntent);
-
     }
 
     @Override
