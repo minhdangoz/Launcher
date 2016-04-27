@@ -35,6 +35,8 @@ public abstract class LauncherActivityInfoCompat {
     public abstract Drawable getBadgedIcon(int density);
     /* Lenovo-SW zhaoxin5 20150410 add new interface to get ActivityInfo to avoid all
      * activities in one application to get same icon in iconcache START*/
+    //error 待查
+    // Unable to resume activity {com.webeye.launcher/com.webeye.launcher.ext.WeLauncher}: java.lang.NullPointerException: Attempt to invoke virtual method 'android.content.pm.ActivityInfo com.android.launcher3.b.d.f()' on a null object reference
     public abstract ActivityInfo getActivityInfo();
     /* Lenovo-SW zhaoxin5 20150410 add new interface to get ActivityInfo to avoid all
      * activities in one application to get same icon in iconcache END*/

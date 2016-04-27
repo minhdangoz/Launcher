@@ -360,27 +360,24 @@ public class WidgetPreviewLoader {
         String name = getObjectName(o);
         SQLiteDatabase db = mDb.getWritableDatabase();
         //bug 华为 android.database.sqlite.SQLiteException: no such table: shortcut_and_widget_previews(Sqlite code 1),(OS error - 2:No such file or directory)
-
         //判断 db 和表shortcut_and_widget_previews 是否存在
-        boolean isTableExist = true;
+        boolean isTableExist = false;
         try {
-            //no such column: shortcut_and_widget_previews (code 1) SELECT count(*) FROM sqlite_master WHERE type='table' AND name=shortcut_and_widget_previews
-           //Cursor c = db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name=" + CacheDb.TABLE_NAME, null);
-            Cursor c=db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='shortcut_and_widget_previews'", null);
-
-            if (c == null || c.getCount()<=0 ||(c.getCount()>0&& c.getInt(0) == 0)) {//游标没有查到  或查到为 0
+            Cursor cur=db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='shortcut_and_widget_previews'", null);
+            // 解决 bug android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 1
+            if(cur != null && cur.moveToFirst()&& cur.getInt(0)>0){
+                isTableExist = true;
+            }else{
                 isTableExist = false;
             }
-            c.close();
+            cur.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (!isTableExist) {//数据库 表不存时返回
-                return;
+            if (!isTableExist) {//数据库 表不存时创建表
+                mDb.onCreate(db);
             }
         }
-
-
         ContentValues values = new ContentValues();
 
         values.put(CacheDb.COLUMN_NAME, name);

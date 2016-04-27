@@ -1009,7 +1009,7 @@ public class CellLayout extends ViewGroup {
     public void setShortcutAndWidgetAlpha(float alpha) {
         mShortcutsAndWidgets.setAlpha(alpha);
     }
-
+    //com.android.launcher3.CellLayout.getShortcutsAndWidgets()' on a null object reference
     public ShortcutAndWidgetContainer getShortcutsAndWidgets() {
         return mShortcutsAndWidgets;
     }
