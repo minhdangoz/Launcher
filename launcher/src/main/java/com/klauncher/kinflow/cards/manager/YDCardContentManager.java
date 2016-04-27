@@ -45,16 +45,15 @@ public class YDCardContentManager extends BaseCardContentManager {
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
-                    if (msg.arg1 == AsynchronousGet.SUCCESS) {
+                    if (msg.arg1 == AsynchronousGet.SUCCESS && null != msg.obj) {
                         timestamp = (String) msg.obj;
-                        try {
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN).run(getRequestUrl());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        onFailToast(msg);
-                        mainControlHandler.handleMessage(msg);
+                    }else {
+                        timestamp = String.valueOf((int) ((System.currentTimeMillis()) / 1000));
+                    }
+                    try {
+                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN).run(getRequestUrl());
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     break;
                 case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
