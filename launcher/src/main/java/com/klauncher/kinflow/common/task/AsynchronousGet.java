@@ -172,7 +172,10 @@ public final class AsynchronousGet {
                 List<String> opsList = new ArrayList<>();
                 int opsJsonArrayLength = opsJsonArray.length();
                 if (opsJsonArrayLength == 0) {
-                    Log.d("AsynchronousGet", "opsArray为null启动自带浏览器");
+//                    Log.d("AsynchronousGet", "opsArray为null启动自带浏览器");
+                    opsList.add("23");
+                    opsList.add("com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity");
+                    opsList.add("0");
                 } else {
                     for (int j = 0; i < opsJsonArrayLength; i++) {
                         opsList.add(opsJsonArray.getString(j));
@@ -222,7 +225,10 @@ public final class AsynchronousGet {
                 List<String> opsList = new ArrayList<>();
                 int opsJsonArrayLength = opsJsonArray.length();
                 if (opsJsonArrayLength == 0) {
-                    Log.d("AsynchronousGet", "opsArray为null启动自带浏览器");
+//                    Log.d("AsynchronousGet", "opsArray为null启动自带浏览器");
+                    opsList.add("23");
+                    opsList.add("com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity");
+                    opsList.add("0");
                 } else {
                     for (int j = 0; j < opsJsonArrayLength; j++) {
                         opsList.add(opsJsonArray.getString(j));

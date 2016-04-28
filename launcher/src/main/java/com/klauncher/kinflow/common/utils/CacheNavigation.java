@@ -103,12 +103,14 @@ public class CacheNavigation {
      *
      * @param navigation
      */
-    public void putNavigation(Navigation navigation) throws NullPointerException {
-        if (null == navigation) throw new NullPointerException("navigation is null");
-        String key = String.valueOf(navigation.getNavOrder());
-        String navigationToString = navigationToString(navigation);
-        editor.putString(key, navigationToString);
-        editor.apply();
+    public void putNavigation(Navigation navigation){
+        synchronized (this) {
+            if (null == navigation) return;
+            String key = String.valueOf(navigation.getNavOrder());
+            String navigationToString = navigationToString(navigation);
+            editor.putString(key, navigationToString);
+            editor.commit();
+        }
     }
 
     /**
@@ -117,11 +119,22 @@ public class CacheNavigation {
      * @param order
      * @return
      */
-    public Navigation getNavigation(String order) throws NullPointerException {
-        if (order == null) throw new NullPointerException("order is null");
-        String navigationToString = sharedPreferences.getString(order, "");//默认Navigation---->8个默认要补全
-        Navigation navigation = stringToNavigation(navigationToString);
-        return navigation;
+    public Navigation getNavigation(String order){
+        int orderInt = 0;
+        synchronized (this) {
+            if (order == null) {
+                try {
+                    orderInt = Integer.parseInt(order);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                return createDefaultNavigation(orderInt);
+
+            } else {
+                String navigationToString = sharedPreferences.getString(order, String.valueOf(orderInt));//默认Navigation---->8个默认要补全
+                return stringToNavigation(navigationToString);
+            }
+        }
     }
 
     /**
@@ -161,6 +174,7 @@ public class CacheNavigation {
      * @param navigationList
      */
     public void putNavigationList(List<Navigation> navigationList) {
+        if (null==navigationList||navigationList.size()==0) return;
         clear();//增加之前先清空已缓存Navigation
         for (Navigation navigation : navigationList) {
             putNavigation(navigation);

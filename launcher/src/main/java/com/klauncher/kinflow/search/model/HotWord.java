@@ -12,6 +12,7 @@ import com.klauncher.kinflow.common.utils.Const;
 public class HotWord implements Parcelable {
     private static final String defaultHotword1 = "人生若只如初见";
     private static final String defaultHotword2 = "又岂在朝朝暮暮";
+    private static final String defaultHotword3 = "搜你所想";
 
     String word;
     String url;
@@ -21,8 +22,9 @@ public class HotWord implements Parcelable {
             Const.URL_SEARCH_WITH_BAIDU + defaultHotword1);
     private static HotWord defaultHotWord2 = new HotWord(String.valueOf(-2), defaultHotword2,
             Const.URL_SEARCH_WITH_BAIDU + defaultHotword2);
+    private static HotWord hintHotWord = new HotWord(String.valueOf(-3), defaultHotword3, Const.URL_SEARCH_WITH_BAIDU + defaultHotword3);
 
-    public static HotWord getDefaultHotWord1(){
+    public static HotWord getDefaultHotWord1() {
         return defaultHotWord1;
     }
 
@@ -30,7 +32,11 @@ public class HotWord implements Parcelable {
         return defaultHotWord2;
     }
 
-    public HotWord(String id,String word, String url) {
+    public static HotWord getHintHotWord() {
+        return hintHotWord;
+    }
+
+    public HotWord(String id, String word, String url) {
         this.word = word;
         this.url = url;
         this.id = id;

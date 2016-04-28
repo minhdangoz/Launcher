@@ -100,7 +100,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     private HotWord hotWord1 = HotWord.getDefaultHotWord1();
     private HotWord hotWord2 = HotWord.getDefaultHotWord2();
-    private HotWord hintHotWord;
+    private HotWord hintHotWord = HotWord.getHintHotWord();
     private MainControl mMainControl;
 
     @Override

@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.klauncher.kinflow.common.task.AsynchronousGet;
 import com.klauncher.kinflow.search.model.HotWord;
 
 import java.util.ArrayList;
@@ -13,8 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import okhttp3.Cache;
 
 /**
  * Created by xixionghui on 2016/3/19.
@@ -51,15 +48,28 @@ public class CacheHotWord {
         return gson.fromJson(hotWordString, HotWord.class);
     }
 
-    public void putHotWord(HotWord hotWord) throws NullPointerException {
-        if (hotWord == null) throw new NullPointerException("hotWord is null");
-        editor.putString(hotWord.getId(), hotWord2String(hotWord));
-        editor.apply();
+    public void putHotWord(HotWord hotWord){
+        synchronized (this) {
+            if (hotWord == null) return;
+            editor.putString(hotWord.getId(), hotWord2String(hotWord));
+            editor.commit();
+        }
     }
 
     public HotWord getHotWord(String id) throws NullPointerException {
-        if (id == null) throw new NullPointerException("id is null");
-        return string2HotWord(id);
+        synchronized (this) {
+            if (null == id) {
+                return getDefaultHotWord();
+            } else {
+                String hotWord2String = sharedPreferences.getString(id, "0");//默认值给0
+                return string2HotWord(hotWord2String);
+            }
+        }
+    }
+
+
+    private HotWord getDefaultHotWord(){
+        return new  HotWord(String.valueOf(-4),"热词",Const.URL_SEARCH_WITH_BAIDU +"热词");
     }
 
     /**

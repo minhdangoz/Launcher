@@ -23,7 +23,7 @@ public class CommonShareData {
     public static void putString(String key,String value){
         if (TextUtils.isEmpty(key)||TextUtils.isEmpty(value)) return;
         editor.putString(key, value);
-        editor.apply();
+        editor.commit();
     }
 
     public static String getString(String key,String defaultStr) {
@@ -34,7 +34,7 @@ public class CommonShareData {
     public static void putInt(String key,int value){
         if (TextUtils.isEmpty(key)) return;
         editor.putInt(key,value);
-        editor.apply();
+        editor.commit();
     }
 
     public static int getInt(String key,int defaultValue) {
