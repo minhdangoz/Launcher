@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.klauncher.launcher.R;
@@ -34,10 +35,12 @@ public class SearchWidgetProvider extends AppWidgetProvider {
             // Get the layout for the App Widget and attach an on-click listener
             // to the button
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.search_widget);
+            Log.d("RemoteViews","onReceive search_widget 1111");
             views.setOnClickPendingIntent(R.id.search_widget_bar, pendingIntent);
-
+            Log.d("RemoteViews","onReceive search_widget 222");
             // Tell the AppWidgetManager to perform an update on the current app widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
+            Log.d("RemoteViews","onReceive search_widget 333");
         }
     }
 }

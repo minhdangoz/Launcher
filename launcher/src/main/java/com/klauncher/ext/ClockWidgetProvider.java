@@ -7,9 +7,10 @@ import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.umeng.common.message.Log;
 import com.klauncher.launcher.R;
 
 import java.util.Calendar;
@@ -22,7 +23,7 @@ import java.util.Locale;
 public class ClockWidgetProvider extends AppWidgetProvider {
     private static final String TAG = "ClockWidgetProvider";
 
-    private final int[] CLOCK_IMAGES = new int[] {
+    private final int[] CLOCK_IMAGES = new int[]{
             R.drawable.clock_0, R.drawable.clock_1, R.drawable.clock_2, R.drawable.clock_3,
             R.drawable.clock_4, R.drawable.clock_5, R.drawable.clock_6, R.drawable.clock_7,
             R.drawable.clock_8, R.drawable.clock_9
@@ -48,16 +49,24 @@ public class ClockWidgetProvider extends AppWidgetProvider {
                 || Intent.ACTION_SCREEN_ON.equals(action)
                 || Intent.ACTION_USER_PRESENT.equals(action)
                 || ClockWidgetService.ACTION_CLOCK_UPDATE.equals(action)) {
+//            ClockWidgetAsyncTask clockWidgetAsyncTask = new ClockWidgetAsyncTask();
+//            clockWidgetAsyncTask.execute(context);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             if (appWidgetManager != null) {
                 int[] appWidgetIds = appWidgetManager.getAppWidgetIds(getComponentName(context));
                 for (int appWidgetId : appWidgetIds) {
                     appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId,
                             R.id.clock_widget_bar);
+                    Log.d("RemoteViews", "onReceive clock_widget 1111");
                     RemoteViews widget = new RemoteViews(context.getPackageName(),
                             R.layout.clock_widget);
+                    Log.d("RemoteViews", "onReceive clock_widget 222");
                     updateViews(context, widget);
+                    Log.d("RemoteViews", "onReceive clock_widget 333");
+
                     appWidgetManager.partiallyUpdateAppWidget(appWidgetId, widget);
+
+                    Log.d("RemoteViews", "onReceive clock_widget 444");
                 }
             }
         }
@@ -161,4 +170,39 @@ public class ClockWidgetProvider extends AppWidgetProvider {
         else
             return false;
     }
+
+    class ClockWidgetAsyncTask extends AsyncTask<Context, Void, Boolean> {
+        Context context;
+        Boolean finalStatus = false;
+
+        @Override
+        protected Boolean doInBackground(Context... params) {
+            if (params.length > 0) {
+                context = params[0];
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                if (appWidgetManager != null) {
+                    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(getComponentName(context));
+                    for (int appWidgetId : appWidgetIds) {
+                        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId,
+                                R.id.clock_widget_bar);
+                        Log.d("RemoteViews", "onReceive clock_widget 1111");
+                        RemoteViews widget = new RemoteViews(context.getPackageName(),
+                                R.layout.clock_widget);
+                        Log.d("RemoteViews", "onReceive clock_widget 222");
+                        updateViews(context, widget);
+                        Log.d("RemoteViews", "onReceive clock_widget 333");
+
+                        appWidgetManager.partiallyUpdateAppWidget(appWidgetId, widget);
+
+                        Log.d("RemoteViews", "onReceive clock_widget 444");
+                    }
+                }
+                finalStatus = true;
+            }
+
+            return finalStatus;
+        }
+
+    }
+
 }
