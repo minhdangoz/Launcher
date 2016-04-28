@@ -71,16 +71,19 @@ public class SearchActivity extends Activity implements OnClickListener{
                         case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD://获取百度热词
                             ArrayList<HotWord> hotWordArrayList = (ArrayList<HotWord>) msg.obj;
 //                            hintHotWord = hotWordArrayList.get(0);
-                            recyclerViewHotWordList =  hotWordArrayList.subList(0, 12);
-                            editSearch.setHint(hintHotWord.getWord());
-                            hotwordRecycler.setAdapter(new HotWordsRecyclerViewAdapter(SearchActivity.this, recyclerViewHotWordList));
+                            if (null==hotWordArrayList||hotWordArrayList.size()==0) {
+                                Toast.makeText(SearchActivity.this, "获取热词失败", Toast.LENGTH_SHORT).show();
+                            }else {
+                                int endIndex = 12;
+                                if (hotWordArrayList.size()<12) endIndex = hotWordArrayList.size();
+                                recyclerViewHotWordList = hotWordArrayList.subList(0, endIndex);
+                                editSearch.setHint(hintHotWord.getWord());
+                                hotwordRecycler.setAdapter(new HotWordsRecyclerViewAdapter(SearchActivity.this, recyclerViewHotWordList));
+                            }
                             break;
 
                     }
                     break;
-            }
-
-            switch (msg.arg1) {
             }
             return true;
         }
