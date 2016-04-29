@@ -60,7 +60,7 @@ public class SettingsValue {
     //设置Kindflow开关
     public static boolean isKinflowSetOn(Context c) {
         return SettingsProvider.getBoolean(c, SettingsProvider.SETTINGS_UI_KINFLOW_SETON,
-                R.bool.preferences_interface_workspace_kinflow_default);
+                R.bool.kinflow_switch_default);
     }
 
     public static void setKinflowSetOn(Context c, boolean loop) {
