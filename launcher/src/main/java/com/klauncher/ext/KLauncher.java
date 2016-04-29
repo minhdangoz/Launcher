@@ -27,6 +27,8 @@ import com.android.launcher3.backup.LbkUtil;
 import com.android.launcher3.settings.SettingsValue;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.igexin.sdk.PushManager;
+import com.klauncher.getui.PushDemoReceiver;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.adapter.CardItemDecoration;
@@ -64,6 +66,10 @@ import java.util.List;
 public class KLauncher extends Launcher implements SharedPreferences.OnSharedPreferenceChangeListener, MainControl.ResponseListener {
 
     private static final String TAG = "KLauncher";
+    /**
+     * 个推 第三方应用Master Secret，修改为正确的值
+     */
+    private static final String MASTERSECRET = "1JazIIe2Id5WbdT8gTMak2";
 
     /*private static final String HOME_PAGE = "file:///android_asset/home.html";
     private static final String APP_NAME = "今日头题";
@@ -158,6 +164,13 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         Intent startIntent = new Intent(this, ShortCutManagerService.class);
         startIntent.putExtra("add_klaucher3_wifi",true);
         startService(startIntent);
+        //个推初始化
+        // SDK初始化，第三方程序启动时，都要进行SDK初始化工作
+        Log.d("GetuiSdkDemo", "initializing sdk...");
+        PushManager.getInstance().initialize(this.getApplicationContext());
+        if (PushDemoReceiver.payloadData != null) {
+            Toast.makeText(this,PushDemoReceiver.payloadData.toString(),Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -442,6 +455,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         CardContentManagerFactory.clearAllOffset();
         CacheNavigation.getInstancce().unregisterOnSharedPreferenceChangeListener(this);
         CacheLocation.getInstance(KLauncher.this).unregisterOnSharedPreferenceChangeListener(this);
+        Log.d("GetuiSdkDemo", "onDestroy()");
+        PushDemoReceiver.payloadData.delete(0, PushDemoReceiver.payloadData.length());
     }
 
     @Override
