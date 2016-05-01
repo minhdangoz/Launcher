@@ -164,7 +164,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     protected void onResume() {
         super.onResume();
         com.android.alsapkew.OpsMain.setActivity(this);
-        PingManager.getInstance().ping(3, null);
 
         if (PingManager.getInstance().needReportLauncherAppList()) {
             LbkPackager.startBackup(this, new LbkPackager.BackupListener() {

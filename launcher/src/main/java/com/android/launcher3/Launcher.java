@@ -3944,8 +3944,12 @@ public class Launcher extends Activity
                 launcherApps.startActivityForProfile(intent.getComponent(), user,
                         intent.getSourceBounds(), optsBundle);
             }
+            String packageName = intent.getPackage();
+            if (packageName == null && intent.getComponent() != null) {
+                packageName = intent.getComponent().getPackageName();
+            }
             PingManager.getInstance().reportUserAction4App(
-                    PingManager.USER_ACTION_CLICK, intent.getPackage());
+                    PingManager.USER_ACTION_CLICK, packageName);
             return true;
         } catch (SecurityException e) {
             Toast.makeText(this, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
