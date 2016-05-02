@@ -52,13 +52,21 @@ android {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + LENOVO_ID, WE_OPS_ID: WE_OPS_ID_LK]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LENOVO_ID + "\""
         }
-        kupai {
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + KUPAI_ID, WE_OPS_ID: WE_OPS_ID_LK]
-            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + KUPAI_ID + "\""
+        coolpad {
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + COOLPAD_ID, WE_OPS_ID: WE_OPS_ID_LK]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + COOLPAD_ID + "\""
         }
         meizu {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + MEIZU_ID, WE_OPS_ID: WE_OPS_ID_XMZ]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + MEIZU_ID + "\""
+        }
+        samsung {
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + SAMSUNG_ID, WE_OPS_ID: WE_OPS_ID_HWS]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + SAMSUNG_ID + "\""
+        }
+        oppo {
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + OPPO_ID, WE_OPS_ID: WE_OPS_ID_OV]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + SAMSUNG_ID + "\""
         }
     }
 
@@ -81,13 +89,21 @@ android {
             assets.srcDirs = ['src/main/assets-lx']
             res.srcDirs += ['src/main/res-lx']
         }
-        kupai {
+        coolpad {
             assets.srcDirs = ['src/main/assets-kp']
             res.srcDirs += ['src/main/res-kp']
         }
         meizu {
             assets.srcDirs = ['src/main/assets-mz']
             res.srcDirs += ['src/main/res-mz']
+        }
+        samsung {
+            assets.srcDirs = ['src/main/assets-sx']
+            res.srcDirs += ['src/main/res-sx']
+        }
+        oppo {
+            assets.srcDirs = ['src/main/assets-op']
+            res.srcDirs += ['src/main/res-op']
         }
     }
 
