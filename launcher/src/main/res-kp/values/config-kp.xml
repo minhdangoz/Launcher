@@ -8,6 +8,7 @@
     <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0</item>
     <array name="config_theme_load_keywords">
         <item>Coolpad Y,xuancai</item>
+        <item>Coolpad 8722,xuancai</item>
     </array>
 
     <array name="app_disguise_list">
