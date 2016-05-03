@@ -1,9 +1,9 @@
 <resources>
     <integer name="config_workspaceDefaultScreen">1</integer>
     <integer name="config_workspaceInstalledAppStartScreen">1</integer>
-    <item name="config_folder_background_ratio" format="float" type="dimen">0.75</item>
-    <item name="config_folder_iconsize_ratio" format="float" type="dimen">1</item>
-    <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0.66</item>
+    <item name="config_folder_background_ratio" format="float" type="dimen">0</item>
+    <item name="config_folder_iconsize_ratio" format="float" type="dimen">0</item>
+    <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0</item>
     <array name="config_theme_load_keywords">
     </array>
 
@@ -25,9 +25,9 @@
     <string name="config_icon_com.duomi.android">com.oppo.music</string>
     <string name="config_icon_com.tencent.qqlive">com.oppo.video</string>
     <string name="config_icon_com.UCMobile">com.android.browser</string>
-    <string name="config_icon_com.tencent.qqpimsecure">com.color.safecenter</string>
+    <string name="config_icon_com.tencent.qqpimsecure">com.color.safecenter,com.coloros.safecenter</string>
     <string name="config_icon_cn.etouch.ecalendar.cpa">com.android.calendar</string>
-    <string name="config_icon_com.moji.mjweather">com.oppo.weather</string>
+    <string name="config_icon_com.moji.mjweather">com.oppo.weather,com.coloros.weather</string>
 
     <string name="folder_system_tool">系统工具</string>
     <bool name="kinflow_switch_default">true</bool>
