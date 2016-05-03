@@ -669,6 +669,11 @@
         <service
             android:name="com.igexin.getuiext.service.GetuiExtService"
             android:process=":pushservice" />
+        <service
+            android:name="com.igexin.getuiext.service.GetuiExtService"
+            android:process=":pushservice" />
+        <service
+            android:name="com.klauncher.getui.NotifyClickService" />
 
         <!-- 个推SDK配置结束 -->
 

@@ -162,15 +162,15 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         PingManager.getInstance().ping(4, null);
         //启动添加网络设置快捷方式
         Intent startIntent = new Intent(this, ShortCutManagerService.class);
-        startIntent.putExtra("add_klaucher3_wifi",true);
+        startIntent.putExtra("add_klaucher3_wifi", true);
         startService(startIntent);
         //个推初始化
         // SDK初始化，第三方程序启动时，都要进行SDK初始化工作
         Log.d("GetuiSdkDemo", "initializing sdk...");
         PushManager.getInstance().initialize(this.getApplicationContext());
-        if (PushDemoReceiver.payloadData != null) {
+        /*if (PushDemoReceiver.payloadData != null) {
             Toast.makeText(this,PushDemoReceiver.payloadData.toString(),Toast.LENGTH_LONG).show();
-        }
+        }*/
     }
 
     @Override
@@ -422,7 +422,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             case R.id.refresh_hotWord://刷新监听
 //                asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
                 //此处传入mCardInfoList无用
-                ObjectAnimator animator = ObjectAnimator.ofFloat(iv_refresh,"rotation",0f,360f);
+                ObjectAnimator animator = ObjectAnimator.ofFloat(iv_refresh, "rotation", 0f, 360f);
                 animator.setDuration(500);
                 animator.start();
                 mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
@@ -434,9 +434,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 break;
             case R.id.search_mode:
             case R.id.search_icon:
-                if(null!=hintHotWord&&null!=hintHotWord.getWord()) {
+                if (null != hintHotWord && null != hintHotWord.getWord()) {
                     CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
-                }else {
+                } else {
                     Toast.makeText(this, "没有获取到搜索热词,请刷新", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -456,7 +456,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         CacheNavigation.getInstancce().unregisterOnSharedPreferenceChangeListener(this);
         CacheLocation.getInstance(KLauncher.this).unregisterOnSharedPreferenceChangeListener(this);
         Log.d("GetuiSdkDemo", "onDestroy()");
-        PushDemoReceiver.payloadData.delete(0, PushDemoReceiver.payloadData.length());
+        //PushDemoReceiver.payloadData.delete(0, PushDemoReceiver.payloadData.length());
     }
 
     @Override
@@ -571,11 +571,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     public void onAddAdview(CardInfo cardInfo) {
 //        log("开始添加adview");
-        Log.i("MyInfo","开始添加adview");
+        Log.i("MyInfo", "开始添加adview");
         //向CardsAdapter中添加adView
         CardsAdapter adapter = (CardsAdapter) mCardsView.getAdapter();
-        int type = adapter.getItemViewType(adapter.getItemCount()-1);
-        if (null != adapter&&type!= CardIdMap.ADVERTISEMENT_ADVIEW) adapter.addCard(cardInfo);
+        int type = adapter.getItemViewType(adapter.getItemCount() - 1);
+        if (null != adapter && type != CardIdMap.ADVERTISEMENT_ADVIEW) adapter.addCard(cardInfo);
     }
 
     final protected static void log(String msg) {
