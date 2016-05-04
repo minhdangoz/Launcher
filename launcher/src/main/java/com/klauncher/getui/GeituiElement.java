@@ -7,13 +7,15 @@ import java.io.Serializable;
  * Created by wangqinghao on 2016/5/3.
  */
 public class GeituiElement implements Serializable {
-    //{"type":"1","title":"title","icon":"icon","pkgname":"pkgname","startActname":"startActname","url":"url"}
+    //{"type":"1","title":"title","icon":"icon","pkgname":"pkgname","startActname":"startActname","url":"url","showStatistUrl":"showStatistUrl","clickStatistUrl":"clickStatistUrl"}
     private int type;
     private String title;
     private String icon;
     private String pkgname;
     private String startActname;
     private String url;
+    private String showStatistUrl;
+    private String clickStatistUrl;
 
     public int getType() {
         return type;
@@ -63,4 +65,19 @@ public class GeituiElement implements Serializable {
         this.url = url;
     }
 
+    public String getShowStatistUrl() {
+        return showStatistUrl;
+    }
+
+    public void setShowStatistUrl(String showStatistUrl) {
+        this.showStatistUrl = showStatistUrl;
+    }
+
+    public String getClickStatistUrl() {
+        return clickStatistUrl;
+    }
+
+    public void setClickStatistUrl(String clickStatistUrl) {
+        this.clickStatistUrl = clickStatistUrl;
+    }
 }

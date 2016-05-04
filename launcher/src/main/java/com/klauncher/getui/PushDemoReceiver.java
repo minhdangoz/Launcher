@@ -14,16 +14,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.igexin.sdk.PushConsts;
-import com.igexin.sdk.PushManager;
 import com.klauncher.launcher.R;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,7 +59,7 @@ public class PushDemoReceiver extends BroadcastReceiver {
                     Log.d("GetuiSdkDemo", "receiver payload : " + data);
 
                     //payloadData.append(data);
-                    Toast.makeText(context, data, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, data, Toast.LENGTH_LONG).show();
                     handleMsgData(context, data);
 
 
@@ -74,7 +70,7 @@ public class PushDemoReceiver extends BroadcastReceiver {
                 // 获取ClientID(CID)
                 // 第三方应用需要将CID上传到第三方服务器，并且将当前用户帐号和CID进行关联，以便日后通过用户帐号查找CID进行消息推送
                 String cid = bundle.getString("clientid");
-                Toast.makeText(context, cid, Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, cid, Toast.LENGTH_LONG).show();
                 break;
 
             case PushConsts.THIRDPART_FEEDBACK:
@@ -104,74 +100,105 @@ public class PushDemoReceiver extends BroadcastReceiver {
      * @param data
      */
     private void handleMsgData(Context context, String data) {
-        //data type,content  1,title,pkgname,pkgActname,downloadUrl ; 2,title,url
-        //Json格式{"type":"1","title":"title","pkgname":"pkgname","startActname":"startActname","url":"url"}
-        //{"type":"2","title":"title","url":"url"}
-        //显示出来统计   点击事件统计
-        //String spStr[] = data.split(",");
+        //Json格式{"type":"1","title":"title","icon":"icon","pkgname":"pkgname","startActname":"startActname","url":"url"}
         Gson gson = new GsonBuilder().create();
+        //json格式不对可能异常退出 考虑是否加try catch
         GeituiElement element = gson.fromJson(data, GeituiElement.class);
+        setBaiduStatistUrl(element);
+        getRemoteViews(context, element.getTitle(), element.getIcon(), element);
+    }
 
+    public boolean isAppInstalled(Context context, String packageName) {
+        final PackageManager packageManager = context.getPackageManager();
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+        List<String> pName = new ArrayList<String>();
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                pName.add(pn);
+            }
+        }
+        return pName.contains(packageName);
+    }
+
+    /**
+     * 构建通知
+     *
+     * @param title   标题
+     * @param iconurl 图片url
+     * @return
+     */
+    private void getRemoteViews(final Context context, String title, String iconurl, final GeituiElement element) {
+        final RemoteViews rv = new RemoteViews(context.getPackageName(),
+                R.layout.view_my_notify);
+        rv.setTextViewText(R.id.text_content, title);
+        if (TextUtils.isEmpty(iconurl)) {
+            rv.setImageViewResource(R.id.iv_notify_icon,
+                    R.mipmap.ic_launcher);
+            showNotifiation(context, rv, element);
+
+        } else {
+            new AsyncTask<String, Void, Bitmap>() {
+                @Override
+                protected Bitmap doInBackground(String... params) {
+                    try {
+                        URL url = new URL(params[0]);
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setConnectTimeout(6000);//设置超时
+                        conn.setDoInput(true);
+                        conn.setUseCaches(false);//不缓存
+                        conn.connect();
+                        int code = conn.getResponseCode();
+                        Bitmap bitmap = null;
+                        if (code == 200) {
+                            InputStream is = conn.getInputStream();//获得图片的数据流
+                            bitmap = BitmapFactory.decodeStream(is);
+                        }
+                        return bitmap;
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                        return null;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(Bitmap result) {
+                    super.onPostExecute(result);
+                    if (result != null) {
+                        rv.setImageViewBitmap(R.id.iv_notify_icon, result);
+                    } else {
+                        rv.setImageViewResource(R.id.iv_notify_icon,
+                                R.mipmap.ic_launcher);
+                    }
+                    showNotifiation(context, rv, element);
+
+                }
+            }.execute(iconurl);
+
+        }
+
+
+    }
+
+    private void showNotifiation(Context context, RemoteViews rv, GeituiElement element) {
         int intType = element.getType();
-
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         switch (intType) {
             case 1://打开APP
-                String title = element.getTitle();
-                final String icon = element.getIcon();
                 String pkgName = element.getPkgname();
                 String startActName = element.getStartActname();
                 String downUrl = element.getUrl();
-
+                //Notification
                 Notification myNotify = new Notification();
                 myNotify.icon = R.mipmap.ic_launcher;
-                myNotify.tickerText = title;
+                myNotify.tickerText = element.getTitle();
                 myNotify.when = System.currentTimeMillis();
                 myNotify.flags = Notification.FLAG_AUTO_CANCEL;
-                final RemoteViews rv = new RemoteViews(context.getPackageName(),
-                        R.layout.view_my_notify);
-                rv.setTextViewText(R.id.text_content, title);
-                rv.setImageViewResource(R.id.iv_notify_icon,
-                        R.mipmap.ic_launcher);
                 myNotify.contentView = rv;
-
-                new AsyncTask<String, Void, Bitmap>() {
-                    @Override
-                    protected Bitmap doInBackground(String... params) {
-                        try {
-                            URL url = new URL(params[0]);
-                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                            conn.setConnectTimeout(6000);//设置超时
-                            conn.setDoInput(true);
-                            conn.setUseCaches(false);//不缓存
-                            conn.connect();
-                            int code = conn.getResponseCode();
-                            Bitmap bitmap = null;
-                            if(code==200) {
-                                InputStream is = conn.getInputStream();//获得图片的数据流
-                                bitmap = BitmapFactory.decodeStream(is);
-                            }
-                            return bitmap;
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                            return null;
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            return null;
-                        }
-                    }
-
-                    @Override
-                    protected void onPostExecute(Bitmap result) {
-                        super.onPostExecute(result);
-                        if (result != null) {
-                            rv.setImageViewBitmap(R.id.iv_notify_icon, result);
-                        }
-                    }
-                }.execute(icon);
-
-
                 PendingIntent contentIntent = null;
                 if (isAppInstalled(context, pkgName)) {//已安装 打开
                     //clickintent //点击 Intent
@@ -189,61 +216,20 @@ public class PushDemoReceiver extends BroadcastReceiver {
                     contentIntent = PendingIntent.getService(context, 1,
                             clickIntent, PendingIntent.FLAG_ONE_SHOT);
                 }
-
                 myNotify.contentIntent = contentIntent;
                 manager.notify(NOTIFICATION_FLAG, myNotify);
-
 
                 break;
             case 2://打开广告
                 if (!TextUtils.isEmpty(element.getUrl())) {
-                    String adTitle = element.getTitle();
-                    final String adicon = element.getIcon();
                     String adUrl = element.getUrl();
                     Notification adNotify = new Notification();
                     adNotify.icon = R.mipmap.ic_launcher;
-                    adNotify.tickerText = adTitle;
+                    adNotify.tickerText = element.getTitle();
                     adNotify.when = System.currentTimeMillis();
                     adNotify.flags = Notification.FLAG_AUTO_CANCEL;
-                    final RemoteViews adRv = new RemoteViews(context.getPackageName(),
-                            R.layout.view_my_notify);
-                    adRv.setTextViewText(R.id.text_content, adTitle);
-                    adRv.setImageViewResource(R.id.iv_notify_icon,
-                            R.mipmap.ic_launcher);
-                    new AsyncTask<String, Void, Bitmap>() {
-                        @Override
-                        protected Bitmap doInBackground(String... params) {
-                            try {
-                                URL url = new URL(params[0]);
-                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                                conn.setConnectTimeout(6000);//设置超时
-                                conn.setDoInput(true);
-                                conn.setUseCaches(false);//不缓存
-                                conn.connect();
-                                int code = conn.getResponseCode();
-                                Bitmap bitmap = null;
-                                if(code==200) {
-                                    InputStream is = conn.getInputStream();//获得图片的数据流
-                                    bitmap = BitmapFactory.decodeStream(is);
-                                }
-                                return bitmap;
-                            } catch (MalformedURLException e) {
-                                e.printStackTrace();
-                                return null;
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                return null;
-                            }
-                        }
+                    adNotify.contentView = rv;
 
-                        @Override
-                        protected void onPostExecute(Bitmap result) {
-                            super.onPostExecute(result);
-                            if (result != null) {
-                                adRv.setImageViewBitmap(R.id.iv_notify_icon, result);
-                            }
-                        }
-                    }.execute(adicon);
                     Intent clickIntent = new Intent(context, NotifyClickService.class); //点击通知之后要发送的广播
                     clickIntent.putExtra("type", "openAd");
                     clickIntent.putExtra("url", adUrl);
@@ -252,12 +238,11 @@ public class PushDemoReceiver extends BroadcastReceiver {
                             clickIntent, PendingIntent.FLAG_ONE_SHOT);
 
                     adNotify.contentIntent = adIntent;
-                    adNotify.contentView = adRv;
                     manager.notify(NOTIFICATION_FLAG, adNotify);
                     //显示统计
-                    Log.d("BaiduStatist","reportShowStatist()  1111111");
+                    Log.d("BaiduStatist", "reportShowStatist()  1111111");
                     BaiduStatist.reportShowStatist();
-                    Log.d("BaiduStatist","reportShowStatist() 2222222");
+                    Log.d("BaiduStatist", "reportShowStatist() 2222222");
                 }
                 break;
             default://不处理
@@ -267,17 +252,17 @@ public class PushDemoReceiver extends BroadcastReceiver {
 
     }
 
-    public boolean isAppInstalled(Context context, String packageName) {
-        final PackageManager packageManager = context.getPackageManager();
-        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
-        List<String> pName = new ArrayList<String>();
-        if (pinfo != null) {
-            for (int i = 0; i < pinfo.size(); i++) {
-                String pn = pinfo.get(i).packageName;
-                pName.add(pn);
-            }
+    /**
+     * 设置百度统计地址
+     * @param element
+     */
+    private void setBaiduStatistUrl(GeituiElement element){
+        if(!TextUtils.isEmpty(element.getShowStatistUrl())){
+            BaiduStatist.setShowStatist(element.getShowStatistUrl());
         }
-        return pName.contains(packageName);
+        if(!TextUtils.isEmpty(element.getClickStatistUrl())){
+            BaiduStatist.setOnclickStatist(element.getClickStatistUrl());
+        }
     }
 }
 

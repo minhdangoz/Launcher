@@ -16,25 +16,33 @@ import okhttp3.Response;
  * Created by wangqinghao on 2016/5/4.
  */
 public class BaiduStatist {
-    public static final String STATIST_CLICK_URL = "http://debug.mobads.baidu.com/mopt/click?uuid=33420fee-bcac-4a2a-8c2c-4d05c991d871";
-    public static final String STATIST_SHOW_URL = "http://debug.mobads.baidu.com/mopt/show?uuid=33420fee-bcac-4a2a-8c2c-4d05c991d871";
+    public static String STATIST_SHOW_URL = "http://debug.mobads.baidu.com/mopt/show?uuid=33420fee-bcac-4a2a-8c2c-4d05c991d871";
+    public static String STATIST_CLICK_URL = "http://debug.mobads.baidu.com/mopt/click?uuid=33420fee-bcac-4a2a-8c2c-4d05c991d871";
+
+    public static void setShowStatist(String showstatisturl) {
+        STATIST_SHOW_URL = showstatisturl;
+    }
+
+    public static void setOnclickStatist(String onclickstatisturl) {
+        STATIST_CLICK_URL = onclickstatisturl;
+    }
 
     public static void reportClickStatist() {
-        Log.d("BaiduStatist","reportClickStatist 1111111");
+        Log.d("BaiduStatist", "reportClickStatist 1111111");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(STATIST_CLICK_URL).build();
-        Log.d("BaiduStatist","reportClickStatist 222222");
+        Log.d("BaiduStatist", "reportClickStatist 222222");
         try {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("BaiduStatist","reportClickStatist onFailure");
+                    Log.e("BaiduStatist", "reportClickStatist onFailure");
 
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("BaiduStatist","reportClickStatist success");
+                    Log.e("BaiduStatist", "reportClickStatist success");
 
                 }
             });
@@ -44,21 +52,21 @@ public class BaiduStatist {
     }
 
     public static void reportShowStatist() {
-        Log.d("BaiduStatist","reportShowStatist 1111111");
+        Log.e("BaiduStatist", "reportShowStatist 1111111");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(STATIST_SHOW_URL).build();
-        Log.d("BaiduStatist","reportShowStatist 22222");
+        Log.d("BaiduStatist", "reportShowStatist 22222");
 
         try {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.d("BaiduStatist","reportShowStatist onFailure");
+                    Log.e("BaiduStatist", "reportShowStatist onFailure");
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    Log.d("BaiduStatist","reportShowStatist success");
+                    Log.e("BaiduStatist", "reportShowStatist success");
 
                 }
             });
