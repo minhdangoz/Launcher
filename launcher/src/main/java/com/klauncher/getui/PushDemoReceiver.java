@@ -114,7 +114,7 @@ public class PushDemoReceiver extends BroadcastReceiver {
 
         int intType = element.getType();
 
-        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         switch (intType) {
             case 1://打开APP
@@ -132,7 +132,7 @@ public class PushDemoReceiver extends BroadcastReceiver {
                 final RemoteViews rv = new RemoteViews(context.getPackageName(),
                         R.layout.view_my_notify);
                 rv.setTextViewText(R.id.text_content, title);
-                rv.setImageViewResource(R.id.image,
+                rv.setImageViewResource(R.id.iv_notify_icon,
                         R.mipmap.ic_launcher);
                 myNotify.contentView = rv;
 
@@ -166,7 +166,7 @@ public class PushDemoReceiver extends BroadcastReceiver {
                     protected void onPostExecute(Bitmap result) {
                         super.onPostExecute(result);
                         if (result != null) {
-                            rv.setImageViewBitmap(R.id.image, result);
+                            rv.setImageViewBitmap(R.id.iv_notify_icon, result);
                         }
                     }
                 }.execute(icon);
@@ -174,9 +174,6 @@ public class PushDemoReceiver extends BroadcastReceiver {
 
                 PendingIntent contentIntent = null;
                 if (isAppInstalled(context, pkgName)) {//已安装 打开
-                        /*Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.setClassName(pkgName,startActName);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
                     //clickintent //点击 Intent
                     Intent clickIntent = new Intent(context, NotifyClickService.class); //点击 Intent
                     clickIntent.putExtra("type", "startApp");
@@ -189,9 +186,6 @@ public class PushDemoReceiver extends BroadcastReceiver {
                     Intent clickIntent = new Intent(context, NotifyClickService.class);
                     clickIntent.putExtra("type", "downApk");
                     clickIntent.putExtra("downUrl", downUrl);
-
-                        /*Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(downUrl));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
                     contentIntent = PendingIntent.getService(context, 1,
                             clickIntent, PendingIntent.FLAG_ONE_SHOT);
                 }
@@ -214,6 +208,8 @@ public class PushDemoReceiver extends BroadcastReceiver {
                     final RemoteViews adRv = new RemoteViews(context.getPackageName(),
                             R.layout.view_my_notify);
                     adRv.setTextViewText(R.id.text_content, adTitle);
+                    adRv.setImageViewResource(R.id.iv_notify_icon,
+                            R.mipmap.ic_launcher);
                     new AsyncTask<String, Void, Bitmap>() {
                         @Override
                         protected Bitmap doInBackground(String... params) {
@@ -244,24 +240,24 @@ public class PushDemoReceiver extends BroadcastReceiver {
                         protected void onPostExecute(Bitmap result) {
                             super.onPostExecute(result);
                             if (result != null) {
-                                adRv.setImageViewBitmap(R.id.image, result);
+                                adRv.setImageViewBitmap(R.id.iv_notify_icon, result);
                             }
                         }
                     }.execute(adicon);
-                    //
                     Intent clickIntent = new Intent(context, NotifyClickService.class); //点击通知之后要发送的广播
                     clickIntent.putExtra("type", "openAd");
                     clickIntent.putExtra("url", adUrl);
-                    int id = (int) (System.currentTimeMillis() / 1000);
                     //
-                /*Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
                     PendingIntent adIntent = PendingIntent.getService(context, 1,
                             clickIntent, PendingIntent.FLAG_ONE_SHOT);
+
                     adNotify.contentIntent = adIntent;
-                    //rv.setOnClickPendingIntent(R.id.text_content,contentIntent);
                     adNotify.contentView = adRv;
                     manager.notify(NOTIFICATION_FLAG, adNotify);
+                    //显示统计
+                    Log.d("BaiduStatist","reportShowStatist()  1111111");
+                    BaiduStatist.reportShowStatist();
+                    Log.d("BaiduStatist","reportShowStatist() 2222222");
                 }
                 break;
             default://不处理

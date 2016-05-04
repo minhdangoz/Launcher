@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 /**
  * Created by wangqinghao on 2016/5/3.
@@ -41,6 +42,9 @@ public class NotifyClickService extends Service{
                 Intent intent3 = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent3);
+                Log.d("BaiduStatist","reportClickStatist()  1111111");
+                BaiduStatist.reportClickStatist();
+                Log.d("BaiduStatist","reportClickStatist()  1111111");
 
             }
 
