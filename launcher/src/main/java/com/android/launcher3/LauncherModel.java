@@ -4920,7 +4920,8 @@ public class LauncherModel extends BroadcastReceiver
             "com.shyz.desktop",
             "com.xiaomi.market",
             "com.xiaomi.gamecenter",
-            "com.sohu.inputmethod.sogou"
+            "com.sohu.inputmethod.sogou",
+            "com.miui.securitycenter"
     };
     
     private boolean isFilterPackage(String pkg) {
