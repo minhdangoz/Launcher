@@ -133,10 +133,8 @@ public class PushDemoReceiver extends BroadcastReceiver {
                 R.layout.view_my_notify);
         rv.setTextViewText(R.id.text_content, title);
         if (TextUtils.isEmpty(iconurl)) {
-            rv.setImageViewResource(R.id.iv_notify_icon,
-                    R.mipmap.ic_launcher);
+            rv.setImageViewResource(R.id.iv_notify_icon, R.drawable.ic_push);
             showNotifiation(context, rv, element);
-
         } else {
             new AsyncTask<String, Void, Bitmap>() {
                 @Override
@@ -170,8 +168,7 @@ public class PushDemoReceiver extends BroadcastReceiver {
                     if (result != null) {
                         rv.setImageViewBitmap(R.id.iv_notify_icon, result);
                     } else {
-                        rv.setImageViewResource(R.id.iv_notify_icon,
-                                R.mipmap.ic_launcher);
+                        rv.setImageViewResource(R.id.iv_notify_icon, R.drawable.ic_push);
                     }
                     showNotifiation(context, rv, element);
 

@@ -28,7 +28,6 @@ import com.android.launcher3.settings.SettingsValue;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.igexin.sdk.PushManager;
-import com.klauncher.getui.PushDemoReceiver;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.adapter.CardItemDecoration;
