@@ -35,7 +35,6 @@ import com.klauncher.kinflow.cards.manager.CardContentManagerFactory;
 import com.klauncher.kinflow.cards.manager.MainControl;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.common.factory.MessageFactory;
-import com.klauncher.kinflow.common.utils.CacheLocation;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.common.utils.DeviceState;
@@ -453,11 +452,12 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.onDestroy();
         CardContentManagerFactory.clearAllOffset();
         CacheNavigation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
-        CacheLocation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
+//        CacheLocation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        /*
         Log.d("MainActivity", "收到缓存数据变更通知 key=" +
                 key);
         if (key.equals(CacheLocation.KEY_LAT_LNG)) {//位置信息变更----->驱动天气数据变更
@@ -465,6 +465,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         } else {//Navigation变更
 
         }
+        */
+
+        //Navigation变更
     }
 
     /**
