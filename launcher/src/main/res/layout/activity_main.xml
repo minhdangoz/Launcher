@@ -23,13 +23,29 @@
         <!--天气-->
         <include
             android:id="@+id/weather_header"
+            android:visibility="gone"
             layout="@layout/weather_header"/>
+
+        <android.support.v7.internal.widget.CompatTextView
+            android:id="@+id/hot_word_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="顶部热词"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingRight="16dp"
+            android:paddingLeft="8dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/kinflow_color_typeface_main"
+            android:textSize="16sp"
+            />
 
         <RelativeLayout
             android:id="@+id/search_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/weather_header"
+            android:layout_below="@id/hot_word_top"
             android:background="@color/kinflow_color_main_transparent_background"
             >
 

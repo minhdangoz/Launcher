@@ -13,6 +13,7 @@ public class HotWord implements Parcelable {
     private static final String defaultHotword1 = "人生若只如初见";
     private static final String defaultHotword2 = "又岂在朝朝暮暮";
     private static final String defaultHotword3 = "搜你所想";
+    private static final String defaultHotword4 = "时事热点";
 
     String word;
     String url;
@@ -23,6 +24,7 @@ public class HotWord implements Parcelable {
     private static HotWord defaultHotWord2 = new HotWord(String.valueOf(-2), defaultHotword2,
             Const.URL_SEARCH_WITH_BAIDU + defaultHotword2);
     private static HotWord hintHotWord = new HotWord(String.valueOf(-3), defaultHotword3, Const.URL_SEARCH_WITH_BAIDU + defaultHotword3);
+    private static HotWord topHotWord = new HotWord(String.valueOf(-4), defaultHotword4, Const.URL_SEARCH_WITH_BAIDU + defaultHotword4);
 
     public static HotWord getDefaultHotWord1() {
         return defaultHotWord1;
@@ -34,6 +36,10 @@ public class HotWord implements Parcelable {
 
     public static HotWord getHintHotWord() {
         return hintHotWord;
+    }
+
+    public static HotWord getTopHotWord() {
+        return topHotWord;
     }
 
     public HotWord(String id, String word, String url) {

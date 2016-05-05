@@ -5,7 +5,6 @@ import android.app.Application;
 import com.android.system.ReporterApi;
 import com.baidu.apistore.sdk.ApiStoreSDK;
 import com.klauncher.kinflow.common.utils.CacheHotWord;
-import com.klauncher.kinflow.common.utils.CacheLocation;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
@@ -37,6 +36,7 @@ public class KLauncherApplication extends Application {
         CommonShareData.init(getApplicationContext());
         CacheNavigation.getInstance().createCacheFile(getApplicationContext());
         CacheHotWord.getInstance().createCacheHotWord(getApplicationContext());
-        CacheLocation.getInstance().createCacheLocation(getApplicationContext());
+        //此版本已没有天气模块,但是保留天气模块相关代码
+//        CacheLocation.getInstance().createCacheLocation(getApplicationContext());
     }
 }
