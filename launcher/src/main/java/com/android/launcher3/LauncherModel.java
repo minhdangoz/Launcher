@@ -4917,7 +4917,11 @@ public class LauncherModel extends BroadcastReceiver
             "cn.lt.game",
             "net.dx.cloudgame",
             "com.dx.agent2",
-            "com.shyz.desktop"
+            "com.shyz.desktop",
+            "com.xiaomi.market",
+            "com.xiaomi.gamecenter",
+            "com.sohu.inputmethod.sogou",
+            "com.miui.securitycenter"
     };
     
     private boolean isFilterPackage(String pkg) {

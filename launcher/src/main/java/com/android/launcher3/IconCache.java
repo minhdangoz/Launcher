@@ -383,9 +383,11 @@ public class IconCache {
                         if (themeBmp == null) {
                             String pkgName = info.getActivityInfo().packageName;
 
+                            //TODO: move them into xml array list
                             if (pkgName.contains("mms") || pkgName.contains("contacts") ||
                                     pkgName.contains("settings") || pkgName.contains("ideafriend") ||
-                                    pkgName.contains("scgmtk") || pkgName.contains("gallery3d")) {
+                                    pkgName.contains("scgmtk") || pkgName.contains("gallery3d") ||
+                                    pkgName.contains("coolmessage")) {
                                 themeBmp = drawableToBitmap(mContext.getPackageManager().getActivityIcon(info.getComponentName()));
                             } else {
                                 themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(info.getActivityInfo().packageName));

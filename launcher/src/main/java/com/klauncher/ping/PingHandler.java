@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.klauncher.ext.LauncherLog;
-import com.klauncher.kinflow.utilities.AppContextUtils;
 import com.klauncher.launcher.BuildConfig;
 
 import org.apache.http.HttpResponse;
@@ -122,7 +121,7 @@ class PingHandler {
     private JSONObject putGeneralData(JSONObject postData) {
         String token = "klauncher";
         String clientChannel ="103";
-        Map<String, String> map = com.android.system.ReporterApi.getCarryOnParams(AppContextUtils.getAppContext(),token, clientChannel, BuildConfig.CHANNEL_ID);
+        Map<String, String> map = com.android.system.ReporterApi.getCarryOnParams(mContext, token, clientChannel, BuildConfig.CHANNEL_ID);
         for (String key : map.keySet()) {
             try {
                 postData.put(key, map.get(key));

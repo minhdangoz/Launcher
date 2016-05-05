@@ -55,7 +55,7 @@
         </Preference>
         <!--信息流kinflow显示-->
         <SwitchPreference
-            android:defaultValue="@bool/kinflow_switch"
+            android:defaultValue="@bool/kinflow_switch_default"
             android:key="pref_kinflow_setingon"
             android:title="@string/kinflow_turn_setting" />
     </PreferenceCategory>

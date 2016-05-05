@@ -8,6 +8,8 @@
     <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0</item>
     <array name="config_theme_load_keywords">
         <item>Coolpad Y,xuancai</item>
+        <item>Coolpad 8722,xuancai</item>
+        <item>Coolpad 7722,xuancai</item>
     </array>
 
     <array name="app_disguise_list">
@@ -31,5 +33,5 @@
     <string name="config_icon_com.moji.mjweather">com.chinamobile.mcloud,com.icoolme.android.weather</string>
 
     <string name="folder_system_tool">系统工具</string>
-    <bool name="kinflow_switch">true</bool>
+    <bool name="kinflow_switch_default">true</bool>
 </resources>
