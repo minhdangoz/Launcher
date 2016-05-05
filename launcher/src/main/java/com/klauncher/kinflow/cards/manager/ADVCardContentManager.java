@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.common.factory.MessageFactory;
@@ -77,23 +76,27 @@ public class ADVCardContentManager extends BaseCardContentManager {
                 ADVCardContentManager.this.mNativeAdInfoList = new ArrayList<NativeAdInfo>();
                 Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
                 ADVCardContentManager.this.mMainControlHandler.sendMessage(msg);
-                Log.i("MyInfo", "ADVCardContentManager.获取失败");
+//                Log.i("MyInfo", "ADVCardContentManager.获取失败");
             }
 
             @Override
             public void onReceivedAd(List list) {
-                for (int i = 0; i < list.size(); i++) {
-                    NativeAdInfo info = (NativeAdInfo) list.get(i);
-                    Log.i("MyInfo", "NativeAdInfo.title="+info.getTitle()
-                            +"\n   info.getIconUrl="+info.getIconUrl()
-                            +"\n   info.getImageUrl()="+info.getImageUrl()
-                            +"\n   info.getDescription="+info.getDescription());
+//                for (int i = 0; i < list.size(); i++) {
+//                    NativeAdInfo info = (NativeAdInfo) list.get(i);
+//                    Log.i("MyInfo", "NativeAdInfo.title="+info.getTitle()
+//                            +"\n   info.getIconUrl="+info.getIconUrl()
+//                            +"\n   info.getImageUrl()="+info.getImageUrl()
+//                            +"\n   info.getDescription="+info.getDescription());
+//                }
+                    Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
+                if (null==list||list.size()==0) {//获取adview成功,但是依旧可能出现为空的情况
+                    ADVCardContentManager.this.mMainControlHandler.sendMessage(msg);
+                }else {//获取adview成功&&肯定有数据
+                    setNativeAdInfoList(list);
+                    msg.obj = ADVCardContentManager.this.mNativeAdInfoList;
+                    ADVCardContentManager.this.mMainControlHandler.sendMessage(msg);
                 }
-                setNativeAdInfoList(list);
-                Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
-                msg.obj = ADVCardContentManager.this.mNativeAdInfoList;
-                ADVCardContentManager.this.mMainControlHandler.sendMessage(msg);
-                Log.i("MyInfo", "ADVCardContentManager.获取成功");
+//                Log.i("MyInfo", "ADVCardContentManager.获取成功");
             }
 
             @Override
