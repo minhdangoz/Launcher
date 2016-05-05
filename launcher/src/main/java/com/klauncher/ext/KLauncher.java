@@ -2,10 +2,16 @@ package com.klauncher.ext;
 
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.internal.widget.CompatTextView;
@@ -154,6 +160,31 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         addToCustomContentPage(customView, callbacks, "custom-view");
     }
 
+    //
+    private ConnectivityManager mConnectivityManager;
+    private NetworkInfo netInfo;
+    private BroadcastReceiver myNetReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                initGeitui();
+
+            }
+        }
+    };
+
+    private void initGeitui() {
+        mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        netInfo = mConnectivityManager.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isAvailable()) {
+            // SDK初始化，第三方程序启动时，都要进行SDK初始化工作
+            Log.d("GetuiSdkDemo", "initializing sdk...");
+            PushManager.getInstance().initialize(this.getApplicationContext());
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,13 +195,17 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         startIntent.putExtra("add_klaucher3_wifi", true);
         startService(startIntent);
         //个推初始化
-        // SDK初始化，第三方程序启动时，都要进行SDK初始化工作
-        Log.d("GetuiSdkDemo", "initializing sdk...");
-        PushManager.getInstance().initialize(this.getApplicationContext());
+        IntentFilter mFilter = new IntentFilter();
+        mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        mFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(myNetReceiver, mFilter);
+        initGeitui();
         /*if (PushDemoReceiver.payloadData != null) {
             Toast.makeText(this,PushDemoReceiver.payloadData.toString(),Toast.LENGTH_LONG).show();
         }*/
     }
+
 
     @Override
     protected void onResume() {
@@ -427,7 +462,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 break;
             case R.id.search_hint://搜索框监听
                 Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
-                if(null==hintHotWord||null==hintHotWord.getWord()) hintHotWord = HotWord.getHintHotWord();
+                if (null == hintHotWord || null == hintHotWord.getWord())
+                    hintHotWord = HotWord.getHintHotWord();
                 intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
                 startActivity(intent);
                 break;
@@ -580,4 +616,5 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     final protected static void log(String msg) {
         KinflowLog.i(msg);
     }
+
 }
