@@ -14,6 +14,7 @@ import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.task.AsynchronousGet;
+import com.klauncher.kinflow.common.task.SearchAsynchronousGet;
 import com.klauncher.kinflow.common.utils.CacheLocation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
@@ -21,6 +22,7 @@ import com.klauncher.kinflow.common.utils.DateUtils;
 import com.klauncher.kinflow.common.utils.MathUtils;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
+import com.klauncher.kinflow.search.model.SearchEnum;
 import com.klauncher.kinflow.utilities.FileUtils;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.weather.model.Weather;
@@ -234,7 +236,8 @@ public class MainControl {
                 switch (what) {
                     case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
                         mRequestSemaphore.acquire();
-                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(Const.URL_HOT_WORD);
+//                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(Const.URL_HOT_WORD);
+                        new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.BAIDU);
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                         mRequestSemaphore.acquire();
