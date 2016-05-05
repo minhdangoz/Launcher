@@ -1,6 +1,7 @@
 package com.klauncher.kinflow.search;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -94,9 +95,21 @@ public class SearchActivity extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         initView();
-        hintHotWord = getIntent().getParcelableExtra(HITN_HOT_WORD_KEY);
+
+//        hintHotWord = getIntent().getParcelableExtra(HITN_HOT_WORD_KEY);
+//        if (null!=hintHotWord&&null!=hintHotWord.getWord())
+//        editSearch.setHint(hintHotWord.getWord());
+
+        Intent getIntent = getIntent();
+        if (null==getIntent) {
+            hintHotWord = HotWord.getHintHotWord();
+        }else {
+            hintHotWord = getIntent().getParcelableExtra(HITN_HOT_WORD_KEY);
+        }
+
         if (null!=hintHotWord&&null!=hintHotWord.getWord())
-        editSearch.setHint(hintHotWord.getWord());
+            editSearch.setHint(hintHotWord.getWord());
+
         editSearch.setFocusable(true);
         editSearch.addTextChangedListener(new TextWatcher() {
             @Override

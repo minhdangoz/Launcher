@@ -415,6 +415,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 break;
             case R.id.search_hint://搜索框监听
                 Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
+                if(null==hintHotWord||null==hintHotWord.getWord()) hintHotWord = HotWord.getHintHotWord();
                 intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
                 startActivity(intent);
                 break;
