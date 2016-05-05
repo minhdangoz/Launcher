@@ -42,12 +42,10 @@ import com.klauncher.kinflow.cards.manager.CardContentManagerFactory;
 import com.klauncher.kinflow.cards.manager.MainControl;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.common.factory.MessageFactory;
-import com.klauncher.kinflow.common.utils.CacheLocation;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.common.utils.DeviceState;
 import com.klauncher.kinflow.common.utils.DialogUtils;
-import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.navigation.adapter.NavigationAdapter;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
@@ -101,6 +99,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     TextView tv_searchHint;
     CompatTextView tv_hotWord1;
     CompatTextView tv_hotWord2;
+    CompatTextView tv_hotWordTop;
     ImageView iv_refresh;
     RelativeLayout randomNewsLine;
     RecyclerView navigationRecyclerView;
@@ -112,6 +111,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     private HotWord hotWord1 = HotWord.getDefaultHotWord1();
     private HotWord hotWord2 = HotWord.getDefaultHotWord2();
     private HotWord hintHotWord = HotWord.getHintHotWord();
+    private HotWord topHotWord = HotWord.getTopHotWord();
     private MainControl mMainControl;
 
     @Override
@@ -348,6 +348,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         tv_searchHint = (TextView) kinflowView.findViewById(R.id.search_hint);
         iv_searchMode = (ImageView) kinflowView.findViewById(R.id.search_mode);
         iv_searchIcon = (ImageView) kinflowView.findViewById(R.id.search_icon);
+        tv_hotWordTop = (CompatTextView) kinflowView.findViewById(R.id.hot_word_top);
         tv_hotWord1 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_1);
         tv_hotWord2 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_2);
         iv_refresh = (ImageView) kinflowView.findViewById(R.id.refresh_hotWord);
@@ -361,6 +362,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         iv_searchMode.setOnClickListener(this);
         iv_searchIcon.setOnClickListener(this);
         iv_refresh.setOnClickListener(this);
+        tv_hotWordTop.setOnClickListener(this);
         tv_hotWord1.setOnClickListener(this);
         tv_hotWord2.setOnClickListener(this);
         mWeatherLayout.setOnClickListener(this);
@@ -369,7 +371,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         tv_hotWord1.setText(hotWord1.getWord());
         tv_hotWord2.setText(hotWord2.getWord());
         navigationRecyclerView.setLayoutManager(new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false));
-        List<Navigation> navigationList = CacheNavigation.getInstancce().getAll();
+        List<Navigation> navigationList = CacheNavigation.getInstance().getAll();
         Collections.sort(navigationList);
         navigationRecyclerView.setAdapter(new NavigationAdapter(KLauncher.this, navigationList));
         navigationRecyclerView.addItemDecoration(new HotWordItemDecoration(16, 32, false));
@@ -381,23 +383,21 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mCardsView.setAdapter(new CardsAdapter(this, null));//最初传入空,等待收到数据后更新
 
         //异步获取所有
-//        startService(new Intent(KLauncher.this, LocationService.class));
-        requestLocation();
+//        requestLocation();//此版本已没有天气模块,但是保留天气模块相关代码
         mMainControl = new MainControl(KLauncher.this, this);
         mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
                 MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
                 MessageFactory.MESSAGE_WHAT_OBTAION_CARD);
         //注册监听
-        CacheNavigation.getInstancce().registerOnSharedPreferenceChangeListener(this);
-        CacheLocation.getInstance(KLauncher.this).registerOnSharedPreferenceChangeListener(this);
+        CacheNavigation.getInstance().registerOnSharedPreferenceChangeListener(this);
+//        CacheLocation.getInstance().registerOnSharedPreferenceChangeListener(this);//此版本已没有天气模块,但是保留天气模块相关代码
         //初始化下拉刷新
         mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
 
             @Override
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 //当下拉刷新的时候
-//                startService(new Intent(KLauncher.this, LocationService.class));
-                requestLocation();
+//                requestLocation();
                 mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
                         MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
                         MessageFactory.MESSAGE_WHAT_OBTAION_CARD);
@@ -417,6 +417,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
     }
+
+
+    /**
+     * 请求定位:此版本已没有天气模块,但是保留天气模块相关代码
+     */
 
     void requestLocation() {
         if (!DeviceState.gspIsOPen(this)) {
@@ -452,6 +457,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             case R.id.hot_word_2://热词2监听
                 CommonUtils.getInstance().openHotWord(this, hotWord2.getUrl());
                 break;
+            case R.id.hot_word_top:
+                CommonUtils.getInstance().openHotWord(this, topHotWord.getUrl());
+                break;
             case R.id.refresh_hotWord://刷新监听
 //                asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
                 //此处传入mCardInfoList无用
@@ -475,12 +483,15 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     Toast.makeText(this, "没有获取到搜索热词,请刷新", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            //
+            /*
             case R.id.weather_header:
                 requestLocation();
                 log("启动墨迹天气");
                 if (CommonUtils.getInstance().isInstalledAPK(this, OpenMode.COMPONENT_NAME_MOJI_TIANQI))
                     CommonUtils.getInstance().openApp(this, OpenMode.COMPONENT_NAME_MOJI_TIANQI);
                 break;
+            */
         }
     }
 
@@ -488,14 +499,13 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     public void onDestroy() {
         super.onDestroy();
         CardContentManagerFactory.clearAllOffset();
-        CacheNavigation.getInstancce().unregisterOnSharedPreferenceChangeListener(this);
-        CacheLocation.getInstance(KLauncher.this).unregisterOnSharedPreferenceChangeListener(this);
-        Log.d("GetuiSdkDemo", "onDestroy()");
-        //PushDemoReceiver.payloadData.delete(0, PushDemoReceiver.payloadData.length());
+        CacheNavigation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
+//        CacheLocation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        /*
         Log.d("MainActivity", "收到缓存数据变更通知 key=" +
                 key);
         if (key.equals(CacheLocation.KEY_LAT_LNG)) {//位置信息变更----->驱动天气数据变更
@@ -503,8 +513,15 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         } else {//Navigation变更
 
         }
+        */
+
+        //Navigation变更
     }
 
+    /**
+     * 当更新天气,此版本已没有天气模块,但是保留天气模块相关代码
+     * @param weatherObject
+     */
     @Override
     public void onWeatherUpdate(Weather weatherObject) {
         tv_temperature.setText(weatherObject.getTemp());
@@ -576,6 +593,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             tv_hotWord1.setText(hotWord1.getWord());
             hotWord2 = hotWordList.get(2);
             tv_hotWord2.setText(hotWord2.getWord());
+            topHotWord = hotWordList.get(3);
+            tv_hotWordTop.setText(topHotWord.getWord());
         }
     }
 

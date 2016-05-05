@@ -2,16 +2,11 @@ package com.klauncher.kinflow.common.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.klauncher.kinflow.navigation.model.Navigation;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,22 +51,24 @@ public class CacheNavigation {
 
     //获取Navigation的顺序：getAll--->getDefaultList---->createDefaultList-----(将此三个封装成一个方法)
 
-    private static CacheNavigation instancce;
+    private static CacheNavigation instance = new CacheNavigation();
     private Context context;
 
     private CacheNavigation() {
     }
 
-    public static CacheNavigation getInstancce() {
-        if (null == instancce) instancce = new CacheNavigation();
-        return instancce;
+    public static CacheNavigation getInstance() {
+//        if (null == instance) instance = new CacheNavigation();
+        return instance;
     }
 
     public void createCacheFile(Context context) {
-        this.context = context;
-        sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        gson = new GsonBuilder().create();
+        synchronized (this) {
+            this.context = context;
+            sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+            gson = new GsonBuilder().create();
+        }
     }
 
     /**
@@ -81,9 +78,10 @@ public class CacheNavigation {
      * @return
      * @throws NullPointerException
      */
-    String navigationToString(Navigation navigation) throws NullPointerException {
-        if (null == navigation) throw new NullPointerException("Navigation is null");
-        return gson.toJson(navigation);
+    String navigationToString(Navigation navigation){
+        synchronized (this) {
+            return gson.toJson(navigation);
+        }
     }
 
     /**
@@ -93,9 +91,15 @@ public class CacheNavigation {
      * @return
      * @throws NullPointerException
      */
-    Navigation stringToNavigation(String navigationJson) throws NullPointerException {
-        if (null == navigationJson) throw new NullPointerException("navigationJson is null");
-        return gson.fromJson(navigationJson, Navigation.class);
+    Navigation stringToNavigation(String navigationJson) {
+        synchronized (this) {
+            if (navigationJson != null && navigationJson instanceof String) {
+                return gson.fromJson(navigationJson, Navigation.class);
+            } else {
+                int index = (int) (0 + Math.random() * (8));
+                return createDefaultNavigation(index);
+            }
+        }
     }
 
     /**
@@ -103,7 +107,7 @@ public class CacheNavigation {
      *
      * @param navigation
      */
-    public void putNavigation(Navigation navigation){
+    public void putNavigation(Navigation navigation) {
         synchronized (this) {
             if (null == navigation) return;
             String key = String.valueOf(navigation.getNavOrder());
@@ -119,9 +123,9 @@ public class CacheNavigation {
      * @param order
      * @return
      */
-    public Navigation getNavigation(String order){
-        int orderInt = 0;
+    public Navigation getNavigation(String order) {
         synchronized (this) {
+            int orderInt = 0;
             if (order == null) {
                 try {
                     orderInt = Integer.parseInt(order);
@@ -142,10 +146,12 @@ public class CacheNavigation {
      *
      * @param newNavigation
      */
-    public void setNavigation(Navigation newNavigation) throws NullPointerException {
-        if (null == newNavigation) throw new NullPointerException("navigation is null");
-        removeNavigation(String.valueOf(newNavigation.getNavOrder()));
-        putNavigation(newNavigation);
+    public void setNavigation(Navigation newNavigation) {
+        synchronized (this) {
+            if (null == newNavigation) return;
+            removeNavigation(String.valueOf(newNavigation.getNavOrder()));
+            putNavigation(newNavigation);
+        }
     }
 
     /**
@@ -153,9 +159,11 @@ public class CacheNavigation {
      *
      * @param navigation
      */
-    public void removeNavigation(Navigation navigation) throws NullPointerException {
-        if (null == navigation) throw new NullPointerException("navigation is null");
-        editor.remove(String.valueOf(navigation.getNavOrder()));
+    public void removeNavigation(Navigation navigation) {
+        synchronized (this) {
+            if (null == navigation) return;
+            editor.remove(String.valueOf(navigation.getNavOrder()));
+        }
     }
 
     /**
@@ -163,9 +171,11 @@ public class CacheNavigation {
      *
      * @param navigation
      */
-    public void removeNavigation(String order) throws NullPointerException {
-        if (order == null) throw new NullPointerException("order is null");
-        editor.remove(order);
+    public void removeNavigation(String order) {
+        synchronized (this) {
+            if (order == null) return;
+            editor.remove(order);
+        }
     }
 
     /**
@@ -174,10 +184,12 @@ public class CacheNavigation {
      * @param navigationList
      */
     public void putNavigationList(List<Navigation> navigationList) {
-        if (null==navigationList||navigationList.size()==0) return;
-        clear();//增加之前先清空已缓存Navigation
-        for (Navigation navigation : navigationList) {
-            putNavigation(navigation);
+        synchronized (this) {
+            if (null == navigationList || navigationList.size() == 0) return;
+            clear();//增加之前先清空已缓存Navigation
+            for (Navigation navigation : navigationList) {
+                putNavigation(navigation);
+            }
         }
     }
 
@@ -187,8 +199,10 @@ public class CacheNavigation {
      * @param orders
      */
     public void removeNavigationList(List<String> orders) {
-        for (String order : orders) {
-            removeNavigation(order);
+        synchronized (this) {
+            for (String order : orders) {
+                removeNavigation(order);
+            }
         }
     }
 
@@ -196,7 +210,9 @@ public class CacheNavigation {
      * 清空所有数据
      */
     public void clear() {
-        editor.clear();
+        synchronized (this) {
+            editor.clear();
+        }
     }
 
     /**
@@ -206,17 +222,21 @@ public class CacheNavigation {
      * @return
      */
     public List<Navigation> getAll() {
-        List<Navigation> navigationList = new ArrayList<>();
-        HashMap<String, String> allNavigationToString = (HashMap<String, String>) sharedPreferences.getAll();
-        Set<Map.Entry<String, String>> entrySet = allNavigationToString.entrySet();
-        if (entrySet.size() != 0) {//缓存了Navigation
-            for (Map.Entry entry : entrySet) {
-                navigationList.add(stringToNavigation((String) entry.getValue()));
+        synchronized (this) {
+            List<Navigation> navigationList = new ArrayList<>();
+            HashMap<String, String> allNavigationToString = (HashMap<String, String>) sharedPreferences.getAll();
+            Set<Map.Entry<String, String>> entrySet = allNavigationToString.entrySet();
+            if (entrySet.size() != 0) {//缓存了Navigation
+                for (Map.Entry entry : entrySet) {
+//                    navigationList.add(stringToNavigation((String) entry.getValue()));
+                    String navigationJson = (String) entry.getValue();
+                    navigationList.add(stringToNavigation(navigationJson));
+                }
+            } else {//没有缓存Navigation
+                navigationList.addAll(createAllDefaultNavigation());
             }
-        } else {//没有缓存Navigation
-            navigationList.addAll(createAllDefaultNavigation());
+            return navigationList;
         }
-        return navigationList;
     }
 
     /**
@@ -226,92 +246,94 @@ public class CacheNavigation {
      * @return
      */
     public Navigation createDefaultNavigation(int order) {
-        Navigation navigation = new Navigation();
-        List<String> navOpenOptions = new ArrayList<>();
-        switch (order) {
-            case DEFAULT_ORDER_0:
-                navigation.setNavOrder(DEFAULT_ORDER_0);
-                navigation.setNavId(String.valueOf(DEFAULT_ORDER_0));
-                navigation.setNavName("新浪");
-                navigation.setNavUrl("http://sina.cn/");
-                navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
-                navigation.setNavOpenOptions(navOpenOptions);
-                navigation.setNavIcon("default/sina");
-                //有待剩余字段完成..
-                break;
-            case DEFAULT_ORDER_1:
-                navigation.setNavOrder(DEFAULT_ORDER_1);
-                navigation.setNavId(String.valueOf(DEFAULT_ORDER_1));
-                navigation.setNavName("淘宝");
-                navigation.setNavUrl("http://www.taobao.com");
-                navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
-                navigation.setNavOpenOptions(navOpenOptions);
-                navigation.setNavIcon("default/taobao");
-                //有待剩余字段完成..
-                break;
-            case DEFAULT_ORDER_2:
-                navigation.setNavOrder(DEFAULT_ORDER_2);
-                navigation.setNavId(String.valueOf(DEFAULT_ORDER_2));
-                navigation.setNavName("京东");
-                navigation.setNavUrl("http://m.jd.com");
-                navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
-                navigation.setNavOpenOptions(navOpenOptions);
-                navigation.setNavIcon("default/jd");
-                //有待剩余字段完成..
-                break;
-            case DEFAULT_ORDER_3:
-                navigation.setNavOrder(DEFAULT_ORDER_3);
-                navigation.setNavId(String.valueOf(DEFAULT_ORDER_3));
-                navigation.setNavName("同城");
-                navigation.setNavUrl("http://m.58.com");
-                navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
-                navigation.setNavOpenOptions(navOpenOptions);
-                navigation.setNavIcon("default/tongcheng");
-                //有待剩余字段完成..
-                break;
-            case DEFAULT_ORDER_4:
-                navigation.setNavOrder(DEFAULT_ORDER_4);
-                navigation.setNavId(String.valueOf(DEFAULT_ORDER_4));
-                navigation.setNavName("美团");
-                navigation.setNavUrl("http://i.meituan.com/");
-                navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
-                navigation.setNavOpenOptions(navOpenOptions);
-                navigation.setNavIcon("default/meituan");
-                //有待剩余字段完成..
-                break;
-            case DEFAULT_ORDER_5:
-                navigation.setNavOrder(DEFAULT_ORDER_5);
-                navigation.setNavId(String.valueOf(DEFAULT_ORDER_5));
-                navigation.setNavName("携程");
-                navigation.setNavUrl("http://m.ctrip.com");
-                navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
-                navigation.setNavOpenOptions(navOpenOptions);
-                navigation.setNavIcon("default/ctrip");
-                //有待剩余字段完成..
-                break;
-            case DEFAULT_ORDER_6:
-                navigation.setNavOrder(DEFAULT_ORDER_6);
-                navigation.setNavId(String.valueOf(DEFAULT_ORDER_6));
-                navigation.setNavName("优酷");
-                navigation.setNavUrl("http://www.youku.com/");
-                navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
-                navigation.setNavOpenOptions(navOpenOptions);
-                navigation.setNavIcon("default/youku");
-                //有待剩余字段完成..
-                break;
-            case DEFAULT_ORDER_7:
-                navigation.setNavOrder(DEFAULT_ORDER_7);
-                navigation.setNavId(String.valueOf(DEFAULT_ORDER_7));
-                navigation.setNavName("更多");
-                navigation.setNavUrl("http://m.hao123.com/");
-                navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
-                navigation.setNavOpenOptions(navOpenOptions);
-                navigation.setNavIcon("default/");
-                //有待剩余字段完成..
-                break;
+        synchronized (this) {
+            Navigation navigation = new Navigation();
+            List<String> navOpenOptions = new ArrayList<>();
+            switch (order) {
+                case DEFAULT_ORDER_0:
+                    navigation.setNavOrder(DEFAULT_ORDER_0);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_0));
+                    navigation.setNavName("新浪");
+                    navigation.setNavUrl("http://sina.cn/");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default/sina");
+                    //有待剩余字段完成..
+                    break;
+                case DEFAULT_ORDER_1:
+                    navigation.setNavOrder(DEFAULT_ORDER_1);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_1));
+                    navigation.setNavName("淘宝");
+                    navigation.setNavUrl("http://www.taobao.com");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default/taobao");
+                    //有待剩余字段完成..
+                    break;
+                case DEFAULT_ORDER_2:
+                    navigation.setNavOrder(DEFAULT_ORDER_2);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_2));
+                    navigation.setNavName("京东");
+                    navigation.setNavUrl("http://m.jd.com");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default/jd");
+                    //有待剩余字段完成..
+                    break;
+                case DEFAULT_ORDER_3:
+                    navigation.setNavOrder(DEFAULT_ORDER_3);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_3));
+                    navigation.setNavName("同城");
+                    navigation.setNavUrl("http://m.58.com");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default/tongcheng");
+                    //有待剩余字段完成..
+                    break;
+                case DEFAULT_ORDER_4:
+                    navigation.setNavOrder(DEFAULT_ORDER_4);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_4));
+                    navigation.setNavName("美团");
+                    navigation.setNavUrl("http://i.meituan.com/");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default/meituan");
+                    //有待剩余字段完成..
+                    break;
+                case DEFAULT_ORDER_5:
+                    navigation.setNavOrder(DEFAULT_ORDER_5);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_5));
+                    navigation.setNavName("携程");
+                    navigation.setNavUrl("http://m.ctrip.com");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default/ctrip");
+                    //有待剩余字段完成..
+                    break;
+                case DEFAULT_ORDER_6:
+                    navigation.setNavOrder(DEFAULT_ORDER_6);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_6));
+                    navigation.setNavName("优酷");
+                    navigation.setNavUrl("http://www.youku.com/");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default/youku");
+                    //有待剩余字段完成..
+                    break;
+                case DEFAULT_ORDER_7:
+                    navigation.setNavOrder(DEFAULT_ORDER_7);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_7));
+                    navigation.setNavName("更多");
+                    navigation.setNavUrl("http://m.hao123.com/");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default/");
+                    //有待剩余字段完成..
+                    break;
+            }
+            putNavigation(navigation);//保存持久化
+            return navigation;
         }
-        putNavigation(navigation);//保存持久化
-        return navigation;
     }
 
 
@@ -321,11 +343,13 @@ public class CacheNavigation {
      * @return
      */
     public List<Navigation> createAllDefaultNavigation() {
-        List<Navigation> navigationList = new ArrayList<>();
-        for (int i = 0; i < DEFAULT_NAVIGATION_COUNT; i++) {
-            navigationList.add(createDefaultNavigation(i));
+        synchronized (this) {
+            List<Navigation> navigationList = new ArrayList<>();
+            for (int i = 0; i < DEFAULT_NAVIGATION_COUNT; i++) {
+                navigationList.add(createDefaultNavigation(i));
+            }
+            return navigationList;
         }
-        return navigationList;
     }
 
 
@@ -335,7 +359,9 @@ public class CacheNavigation {
      * @param listener
      */
     public void registerOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
-        sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
+        synchronized (this) {
+            sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
+        }
     }
 
     /**
@@ -344,7 +370,9 @@ public class CacheNavigation {
      * @param listener
      */
     public void unregisterOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener listener) {
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
+        synchronized (this) {
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
+        }
     }
 
 

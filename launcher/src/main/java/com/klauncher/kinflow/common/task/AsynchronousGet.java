@@ -196,7 +196,7 @@ public final class AsynchronousGet {
 
     void parseNavigation(String responseBody) {
         Log.i("AsynchronousGet", ("Navigation响应体:  " + responseBody));
-        List<Navigation> navigationList = null;
+        List<Navigation> navigationList = new ArrayList<>();;
         try {
 //            JSONArray jsonArray = new JSONArray(responseBody);
 //            JSONObject jsonObjectAll = new JSONArray(responseBody).getJSONObject(0);
@@ -212,7 +212,6 @@ public final class AsynchronousGet {
                 return;
             }
 
-            navigationList = new ArrayList<>();
             for (int i = 0; i < navigationsLength; i++) {
                 Navigation navigation = new Navigation();
                 JSONObject navigationJsonObject = navigationJsonArray.getJSONObject(i);
@@ -247,7 +246,7 @@ public final class AsynchronousGet {
         } finally {
             handler.sendMessage(msg);
             if (msg.arg1 == SUCCESS)
-                CacheNavigation.getInstancce().putNavigationList(navigationList);
+                CacheNavigation.getInstance().putNavigationList(navigationList);
         }
     }
 

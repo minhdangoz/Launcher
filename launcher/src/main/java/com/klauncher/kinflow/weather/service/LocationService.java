@@ -74,7 +74,7 @@ public class LocationService extends Service implements LocationListener {
     public void onLocationChanged(Location location) {
 //        Log.d("LocationService", ("lat=" + String.valueOf(location.getLatitude()) + " , lng=" + String.valueOf(location.getLongitude())));
         String latLng =  String.valueOf(location.getLatitude()) + "," + String.valueOf(location.getLongitude());
-        CacheLocation.getInstance(this).putLatLng(latLng);
+        CacheLocation.getInstance().putLatLng(latLng);
     }
 
     @Override

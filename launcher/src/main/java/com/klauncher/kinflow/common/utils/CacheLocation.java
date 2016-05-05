@@ -18,16 +18,19 @@ public class CacheLocation {
     public static String KEY_WEATHER = "latest_weather";
     public static String KEY_LAT_LNG = "latest_lat_lng";
 
-    private static CacheLocation instance;
+    private static CacheLocation instance = new CacheLocation();
 
-    private CacheLocation(Context context) {
+    public void createCacheLocation(Context context) {
         sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         gson = new GsonBuilder().create();
     }
 
-    public static CacheLocation getInstance(Context context) {
-        if (null == instance) instance = new CacheLocation(context);
+    private CacheLocation() {
+    }
+
+    public static CacheLocation getInstance() {
+//        if (null == instance) instance = new CacheLocation(context);
         return instance;
     }
 

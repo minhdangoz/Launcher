@@ -34,7 +34,9 @@ public class KLauncherApplication extends Application {
         ApiStoreSDK.init(this, Const.BAIDU_APIKEY);
         //三个个缓存文件
         CommonShareData.init(getApplicationContext());
-        CacheNavigation.getInstancce().createCacheFile(getApplicationContext());
+        CacheNavigation.getInstance().createCacheFile(getApplicationContext());
         CacheHotWord.getInstance().createCacheHotWord(getApplicationContext());
+        //此版本已没有天气模块,但是保留天气模块相关代码
+//        CacheLocation.getInstance().createCacheLocation(getApplicationContext());
     }
 }

@@ -363,11 +363,11 @@ public class WidgetPreviewLoader {
         //判断 db 和表shortcut_and_widget_previews 是否存在
         boolean isTableExist = false;
         try {
-            Cursor cur=db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='shortcut_and_widget_previews'", null);
+            Cursor cur = db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='shortcut_and_widget_previews'", null);
             // 解决 bug android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 1
-            if(cur != null && cur.moveToFirst()&& cur.getInt(0)>0){
+            if (cur != null && cur.moveToFirst() && cur.getInt(0) > 0) {
                 isTableExist = true;
-            }else{
+            } else {
                 isTableExist = false;
             }
             cur.close();
@@ -375,7 +375,8 @@ public class WidgetPreviewLoader {
             e.printStackTrace();
         } finally {
             if (!isTableExist) {//数据库 表不存时创建表
-                mDb.onCreate(db);
+                //mDb.onCreate(db);
+                return;
             }
         }
         ContentValues values = new ContentValues();
@@ -448,6 +449,7 @@ public class WidgetPreviewLoader {
     private static void removeItemFromDb(final CacheDb cacheDb, final String objectName) {
         new AsyncTask<Void, Void, Void>() {
             public Void doInBackground(Void... args) {
+                // maybe error
                 SQLiteDatabase db = cacheDb.getWritableDatabase();
                 try {
                     db.delete(CacheDb.TABLE_NAME,

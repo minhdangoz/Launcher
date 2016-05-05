@@ -35,7 +35,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -60,6 +59,7 @@ public class MainControl {
         @Override
         public void handleMessage(Message msg) {
             mRequestSemaphore.release();
+            if (msg.arg1==AsynchronousGet.SUCCESS)
             switch (msg.what) {
                 case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD://获取百度热词
                     handleHotWords((List<HotWord>) msg.obj);
@@ -150,6 +150,8 @@ public class MainControl {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                //此版本已没有天气模块,但是保留天气模块相关代码
+                /*
                 case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME://获取到城市名称
                     log("获取到城市名称");
                     if (null!=msg.obj){
@@ -161,6 +163,7 @@ public class MainControl {
                         }
                     }
                     break;
+                */
                 case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW:
                     List<NativeAdInfo> nativeAdInfoList = (List<NativeAdInfo>) msg.obj;
                     if (null == nativeAdInfoList || nativeAdInfoList.size() == 0) {
@@ -179,7 +182,7 @@ public class MainControl {
     };
 
     /**
-     * 将获取到的热词随机出3条.并加入到mRandomHotWordList集合.以便在Completed的时候传入
+     * 将获取到的热词随机出4条.并加入到mRandomHotWordList集合.以便在Completed的时候传入
      *
      * @param mHotWordList
      */
@@ -189,7 +192,7 @@ public class MainControl {
             List<Integer> randomNumbers = MathUtils.randomNumber(mHotWordList.size());
             for (int i = 0; i < randomNumbers.size(); i++) {
                 int position = randomNumbers.get(i);
-                if (i == 0 || i == 1 || i == 2) {
+                if (i == 0 || i == 1 || i == 2 || i == 3) {
                     mRandomHotWordList.add(mHotWordList.get(position));
                 }
             }
@@ -288,9 +291,10 @@ public class MainControl {
 
     /**
      * 通过定位获取城市名称，将城市名称逆解析后，再请求天气。（自动完成）
+     * 此版本已没有天气模块,但是保留天气模块相关代码
      */
     public void obtainCityName() {
-        String param = "?location=" + CacheLocation.getInstance(mContext).getLatLng() + "&output=json&key=" + Const.BAIDU_APIKEY;
+        String param = "?location=" + CacheLocation.getInstance().getLatLng() + "&output=json&key=" + Const.BAIDU_APIKEY;
         String url = Const.OBTAIN_CITY_NAME + param;
         try {
             new AsynchronousGet(singleRequestHandler, MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME).run(url);

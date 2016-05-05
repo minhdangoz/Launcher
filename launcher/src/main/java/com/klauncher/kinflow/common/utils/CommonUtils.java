@@ -39,13 +39,13 @@ import java.util.Random;
  */
 public class CommonUtils {
 
-    public static CommonUtils instance;
+    public static CommonUtils instance  = new CommonUtils();
 
     private CommonUtils() {
     }
 
     public static CommonUtils getInstance() {
-        if (null == instance) instance = new CommonUtils();
+//        if (null == instance) instance = new CommonUtils();
         return instance;
     }
 
@@ -117,9 +117,11 @@ public class CommonUtils {
      * @param url
      */
     public void openDefaultBrowserUrl(Context context, String url) {
-        Intent defaultBrower = new Intent(context, KinflowBrower.class);
-        defaultBrower.putExtra(KinflowBrower.KEY_EXTRA_URL, url);
-        context.startActivity(defaultBrower);
+        synchronized (this) {
+            Intent defaultBrower = new Intent(context, KinflowBrower.class);
+            defaultBrower.putExtra(KinflowBrower.KEY_EXTRA_URL, url);
+            context.startActivity(defaultBrower);
+        }
     }
 
 
@@ -159,52 +161,62 @@ public class CommonUtils {
 
 
     public List<ComponentName> allInstallAPK(Context context) {
-        List<ComponentName> componentNameList = new ArrayList<>();
-        PackageManager packageManager = context.getPackageManager();
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        List<ResolveInfo> infos = packageManager.queryIntentActivities(intent,
-                PackageManager.GET_INTENT_FILTERS);
-        for (ResolveInfo resolveInfo : infos) {
-            componentNameList.add(new ComponentName(
-                    resolveInfo.activityInfo.packageName, resolveInfo.activityInfo.name));
+        synchronized (this) {
+            List<ComponentName> componentNameList = new ArrayList<>();
+            PackageManager packageManager = context.getPackageManager();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            List<ResolveInfo> infos = packageManager.queryIntentActivities(intent,
+                    PackageManager.GET_INTENT_FILTERS);
+            for (ResolveInfo resolveInfo : infos) {
+                componentNameList.add(new ComponentName(
+                        resolveInfo.activityInfo.packageName, resolveInfo.activityInfo.name));
+            }
+            return componentNameList;
         }
-        return componentNameList;
     }
 
     public boolean isInstalledAPK(Context context, String packageName, String mainActivity) {
-        ComponentName componentName = new ComponentName(packageName, mainActivity);
-        if (allInstallAPK(context).contains(componentName)) return true;
-        return false;
-    }
-
-    public boolean isInstalledAPK(Context context, ComponentName componentName) {
-        if (allInstallAPK(context).contains(componentName)) return true;
-        return false;
-    }
-
-    public boolean isInstalledAPK(Context context, String component) {
-        String[] cns = component.split("/");
-        try {
-            ApplicationInfo info = context.getPackageManager().getApplicationInfo(cns[0], PackageManager.GET_META_DATA);
-            if (null != info)
-                return true;
-            else return false;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+        synchronized (this) {
+            ComponentName componentName = new ComponentName(packageName, mainActivity);
+            if (allInstallAPK(context).contains(componentName)) return true;
             return false;
         }
     }
 
+    public boolean isInstalledAPK(Context context, ComponentName componentName) {
+        synchronized (this) {
+            if (allInstallAPK(context).contains(componentName)) return true;
+            return false;
+        }
+    }
+
+    public boolean isInstalledAPK(Context context, String component) {
+        synchronized (this) {
+            String[] cns = component.split("/");
+            try {
+                ApplicationInfo info = context.getPackageManager().getApplicationInfo(cns[0], PackageManager.GET_META_DATA);
+                if (null != info)
+                    return true;
+                else return false;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
+
     public void openApp(Context context,String component){
-        String[] cns = component.split("/");
-        ComponentName componentName = new ComponentName(cns[0],cns[1]);
-        Intent intent = new Intent();
-        intent.setComponent(componentName);
-        try {
-            context.startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
+        synchronized (this) {
+            String[] cns = component.split("/");
+            ComponentName componentName = new ComponentName(cns[0], cns[1]);
+            Intent intent = new Intent();
+            intent.setComponent(componentName);
+            try {
+                context.startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -214,33 +226,35 @@ public class CommonUtils {
      * @return
      */
     public boolean openDetalWithSpecialMode(Context context, String content, String url) {
-        boolean isSuccess = false;
-        String[] contents = null;
+        synchronized (this) {
+            boolean isSuccess = false;
+            String[] contents = null;
 
-        try {
-            contents = content.split("/");
-            Log.d("CommonUtils", "try split context");
-        } catch (Exception e) {//没有按照指定格式返回数据：....PackageName...../.....MainActivity......
-            Log.d("CommonUtils", "没有按照指定格式返回数据：....PackageName...../.....MainActivity......");
-            return false;
-        }
-        if (contents.length != 2) return false;
-        Log.d("CommonUtils", "开始构建ComponentName");
-        ComponentName componentName = new ComponentName(contents[0], contents[1]);
-        Intent intent = new Intent();
-        intent.setComponent(componentName);
-        intent.setAction("android.intent.action.VIEW");
-        Uri content_url = Uri.parse(url);
-        intent.setData(content_url);
+            try {
+                contents = content.split("/");
+                Log.d("CommonUtils", "try split context");
+            } catch (Exception e) {//没有按照指定格式返回数据：....PackageName...../.....MainActivity......
+                Log.d("CommonUtils", "没有按照指定格式返回数据：....PackageName...../.....MainActivity......");
+                return false;
+            }
+            if (contents.length != 2) return false;
+            Log.d("CommonUtils", "开始构建ComponentName");
+            ComponentName componentName = new ComponentName(contents[0], contents[1]);
+            Intent intent = new Intent();
+            intent.setComponent(componentName);
+            intent.setAction("android.intent.action.VIEW");
+            Uri content_url = Uri.parse(url);
+            intent.setData(content_url);
 
-        try {
-            context.startActivity(intent);
-            isSuccess = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            isSuccess = false;
-        } finally {
-            return isSuccess;
+            try {
+                context.startActivity(intent);
+                isSuccess = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                isSuccess = false;
+            } finally {
+                return isSuccess;
+            }
         }
     }
 
@@ -250,62 +264,70 @@ public class CommonUtils {
      * @param url      打开指定内容的url
      */
     public void openDetail(Context context, List<String> contents, String url) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < contents.size(); i++) {
-            stringBuilder.append(contents.get(i)).append("  ,  ");
-        }
-        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        Log.i("CommonUtils", "要打开的方式: " + stringBuilder.toString());
+        synchronized (this) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < contents.size(); i++) {
+                stringBuilder.append(contents.get(i)).append("  ,  ");
+            }
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            Log.i("CommonUtils", "要打开的方式: " + stringBuilder.toString());
 
-        if (null == contents || contents.size() == 0) {
-            Toast.makeText(context, "没有指定打开方式,使用默认打开方式", Toast.LENGTH_SHORT).show();
-            context.startActivity(new Intent(context, KinflowBrower.class).putExtra(KinflowBrower.KEY_EXTRA_URL, url));
-            return;
-        }
-        boolean isOpenSuccess = false;
-        for (int i = 0; i < contents.size(); i++) {
-            if (openDetalWithSpecialMode(context, contents.get(i), url)) {//如果打开成功
-                isOpenSuccess = true;
+            if (null == contents || contents.size() == 0) {
+                Toast.makeText(context, "没有指定打开方式,使用默认打开方式", Toast.LENGTH_SHORT).show();
+                context.startActivity(new Intent(context, KinflowBrower.class).putExtra(KinflowBrower.KEY_EXTRA_URL, url));
                 return;
             }
-        }
-        if (!isOpenSuccess) {//如果所有指定的方式都打开失败，则启动内嵌浏览器打开
-            Toast.makeText(context, "没有指定打开方式,使用默认打开方式", Toast.LENGTH_SHORT).show();
-            context.startActivity(new Intent(context, KinflowBrower.class).putExtra(KinflowBrower.KEY_EXTRA_URL, url));
+            boolean isOpenSuccess = false;
+            for (int i = 0; i < contents.size(); i++) {
+                if (openDetalWithSpecialMode(context, contents.get(i), url)) {//如果打开成功
+                    isOpenSuccess = true;
+                    return;
+                }
+            }
+            if (!isOpenSuccess) {//如果所有指定的方式都打开失败，则启动内嵌浏览器打开
+                Toast.makeText(context, "没有指定打开方式,使用默认打开方式", Toast.LENGTH_SHORT).show();
+                context.startActivity(new Intent(context, KinflowBrower.class).putExtra(KinflowBrower.KEY_EXTRA_URL, url));
+            }
         }
     }
 
     public void openHotWord(Context context, String url) {
-        try {
-            //uc
-            openBrowerUrl(context, url, Const.UC_packageName, Const.UC_mainActivity);
-        } catch (Exception e) {
+        synchronized (this) {
             try {
-                openBrowerUrl(context, url, Const.QQ_packageName, Const.QQ_mainActivity);
-            } catch (Exception e1) {
-                openDefaultBrowserUrl(context, url);
+                //uc
+                openBrowerUrl(context, url, Const.UC_packageName, Const.UC_mainActivity);
+            } catch (Exception e) {
+                try {
+                    openBrowerUrl(context, url, Const.QQ_packageName, Const.QQ_mainActivity);
+                } catch (Exception e1) {
+                    openDefaultBrowserUrl(context, url);
+                }
             }
         }
     }
 
     void openBrowerUrl(Context context, String url, String packageName, String className) {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        Uri data = Uri.parse(url);
-        intent.setData(data);
-        intent.setClassName(packageName, className);
-        context.startActivity(intent);
+        synchronized (this) {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            Uri data = Uri.parse(url);
+            intent.setData(data);
+            intent.setClassName(packageName, className);
+            context.startActivity(intent);
+        }
     }
 
     public String getRandomString(int length) { //length表示生成字符串的长度
-        String base = "abcdefghijklmnopqrstuvwxyz0123456789";
-        Random random = new Random();
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < length; i++) {
-            int number = random.nextInt(base.length());
-            sb.append(base.charAt(number));
+        synchronized (this) {
+            String base = "abcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < length; i++) {
+                int number = random.nextInt(base.length());
+                sb.append(base.charAt(number));
+            }
+            return sb.toString();
         }
-        return sb.toString();
     }
 
     //secretkey ＝ sha1(md5(app_key) + nonce + timestamp)
