@@ -13,10 +13,12 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.widget.Toast;
 
-import com.klauncher.kinflow.common.task.AsynchronousGet;
 import com.klauncher.kinflow.common.utils.CacheLocation;
 import com.klauncher.kinflow.common.utils.Const;
+
+import java.util.List;
 
 /**
  * Created by xixionghui on 2016/3/21.
@@ -53,11 +55,18 @@ public class LocationService extends Service implements LocationListener {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+            Toast.makeText(this, "请打开定位权限,否则无法更新天气", Toast.LENGTH_LONG).show();
             return START_REDELIVER_INTENT;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Const.DURATION_FOUR_HOUR, Const.DISTANCE_LOCATION_UPDATE, this);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Const.DURATION_FOUR_HOUR, Const.DISTANCE_LOCATION_UPDATE, this);
-        locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, Const.DURATION_FOUR_HOUR, Const.DISTANCE_LOCATION_UPDATE, this);
+        List<String> allProviders  = locationManager.getAllProviders();
+        for (String provider:allProviders) {
+            if (provider.equals(LocationManager.GPS_PROVIDER))
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Const.DURATION_FOUR_HOUR, Const.DISTANCE_LOCATION_UPDATE, this);
+            if (provider.equals(LocationManager.NETWORK_PROVIDER))
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Const.DURATION_FOUR_HOUR, Const.DISTANCE_LOCATION_UPDATE, this);
+            if (provider.equals(LocationManager.PASSIVE_PROVIDER))
+                locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, Const.DURATION_FOUR_HOUR, Const.DISTANCE_LOCATION_UPDATE, this);
+        }
         return START_REDELIVER_INTENT;//retry redeliver intent
     }
 
