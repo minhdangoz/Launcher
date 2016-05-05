@@ -45,7 +45,12 @@ public class CacheHotWord {
     }
 
     public HotWord string2HotWord(String hotWordString) {
-        return gson.fromJson(hotWordString, HotWord.class);
+//        return gson.fromJson(hotWordString, HotWord.class);
+        if (null!=hotWordString && hotWordString instanceof String) {
+            return gson.fromJson(hotWordString, HotWord.class);
+        }else {
+           return HotWord.getHintHotWord();
+        }
     }
 
     public void putHotWord(HotWord hotWord) {

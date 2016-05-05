@@ -88,9 +88,13 @@ public class CacheNavigation {
      * @return
      * @throws NullPointerException
      */
-    Navigation stringToNavigation(String navigationJson) throws NullPointerException {
-        if (null == navigationJson) throw new NullPointerException("navigationJson is null");
-        return gson.fromJson(navigationJson, Navigation.class);
+    Navigation stringToNavigation(String navigationJson) {
+        if (navigationJson != null && navigationJson instanceof String) {
+            return gson.fromJson(navigationJson, Navigation.class);
+        } else {
+            int index = (int) (0 + Math.random() * (8));
+            return createDefaultNavigation(index);
+        }
     }
 
     /**
@@ -219,7 +223,9 @@ public class CacheNavigation {
             Set<Map.Entry<String, String>> entrySet = allNavigationToString.entrySet();
             if (entrySet.size() != 0) {//缓存了Navigation
                 for (Map.Entry entry : entrySet) {
-                    navigationList.add(stringToNavigation((String) entry.getValue()));
+//                    navigationList.add(stringToNavigation((String) entry.getValue()));
+                    String navigationJson = (String) entry.getValue();
+                    navigationList.add(stringToNavigation(navigationJson));
                 }
             } else {//没有缓存Navigation
                 navigationList.addAll(createAllDefaultNavigation());

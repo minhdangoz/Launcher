@@ -60,6 +60,7 @@ public class MainControl {
         @Override
         public void handleMessage(Message msg) {
             mRequestSemaphore.release();
+            if (msg.arg1==AsynchronousGet.SUCCESS)
             switch (msg.what) {
                 case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD://获取百度热词
                     handleHotWords((List<HotWord>) msg.obj);
