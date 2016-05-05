@@ -63,10 +63,12 @@ public class CacheNavigation {
     }
 
     public void createCacheFile(Context context) {
-        this.context = context;
-        sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        gson = new GsonBuilder().create();
+        synchronized (this) {
+            this.context = context;
+            sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+            gson = new GsonBuilder().create();
+        }
     }
 
     /**
@@ -76,9 +78,10 @@ public class CacheNavigation {
      * @return
      * @throws NullPointerException
      */
-    String navigationToString(Navigation navigation) throws NullPointerException {
-        if (null == navigation) throw new NullPointerException("Navigation is null");
-        return gson.toJson(navigation);
+    String navigationToString(Navigation navigation){
+        synchronized (this) {
+            return gson.toJson(navigation);
+        }
     }
 
     /**
@@ -89,11 +92,13 @@ public class CacheNavigation {
      * @throws NullPointerException
      */
     Navigation stringToNavigation(String navigationJson) {
-        if (navigationJson != null && navigationJson instanceof String) {
-            return gson.fromJson(navigationJson, Navigation.class);
-        } else {
-            int index = (int) (0 + Math.random() * (8));
-            return createDefaultNavigation(index);
+        synchronized (this) {
+            if (navigationJson != null && navigationJson instanceof String) {
+                return gson.fromJson(navigationJson, Navigation.class);
+            } else {
+                int index = (int) (0 + Math.random() * (8));
+                return createDefaultNavigation(index);
+            }
         }
     }
 

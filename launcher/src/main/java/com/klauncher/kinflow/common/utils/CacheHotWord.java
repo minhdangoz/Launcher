@@ -32,24 +32,29 @@ public class CacheHotWord {
     }
 
     public void createCacheHotWord(Context context) {
-        sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        gson = new GsonBuilder().create();
+        synchronized (this) {
+            sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+            gson = new GsonBuilder().create();
+        }
     }
 
     private CacheHotWord() {
     }
 
     public String hotWord2String(HotWord hotWord) {
-        return gson.toJson(hotWord);
+        synchronized (this) {
+            return gson.toJson(hotWord);
+        }
     }
 
     public HotWord string2HotWord(String hotWordString) {
-//        return gson.fromJson(hotWordString, HotWord.class);
-        if (null!=hotWordString && hotWordString instanceof String) {
-            return gson.fromJson(hotWordString, HotWord.class);
-        }else {
-           return HotWord.getHintHotWord();
+        synchronized (this) {
+            if (null != hotWordString && hotWordString instanceof String) {
+                return gson.fromJson(hotWordString, HotWord.class);
+            } else {
+                return HotWord.getHintHotWord();
+            }
         }
     }
 
