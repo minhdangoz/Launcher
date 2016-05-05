@@ -322,7 +322,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         tv_hotWord1.setText(hotWord1.getWord());
         tv_hotWord2.setText(hotWord2.getWord());
         navigationRecyclerView.setLayoutManager(new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false));
-        List<Navigation> navigationList = CacheNavigation.getInstancce().getAll();
+        List<Navigation> navigationList = CacheNavigation.getInstance().getAll();
         Collections.sort(navigationList);
         navigationRecyclerView.setAdapter(new NavigationAdapter(KLauncher.this, navigationList));
         navigationRecyclerView.addItemDecoration(new HotWordItemDecoration(16, 32, false));
@@ -341,8 +341,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
                 MessageFactory.MESSAGE_WHAT_OBTAION_CARD);
         //注册监听
-        CacheNavigation.getInstancce().registerOnSharedPreferenceChangeListener(this);
-        CacheLocation.getInstance(KLauncher.this).registerOnSharedPreferenceChangeListener(this);
+        CacheNavigation.getInstance().registerOnSharedPreferenceChangeListener(this);
+        CacheLocation.getInstance().registerOnSharedPreferenceChangeListener(this);
         //初始化下拉刷新
         mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
 
@@ -440,8 +440,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     public void onDestroy() {
         super.onDestroy();
         CardContentManagerFactory.clearAllOffset();
-        CacheNavigation.getInstancce().unregisterOnSharedPreferenceChangeListener(this);
-        CacheLocation.getInstance(KLauncher.this).unregisterOnSharedPreferenceChangeListener(this);
+        CacheNavigation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
+        CacheLocation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override

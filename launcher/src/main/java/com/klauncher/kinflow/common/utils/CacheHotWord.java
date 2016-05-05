@@ -23,11 +23,11 @@ public class CacheHotWord {
 
     private Gson gson;
 
-    private static CacheHotWord instance;
+    private static CacheHotWord instance = new CacheHotWord();
     static String fileName = "cacheHotWord";
 
     public static CacheHotWord getInstance() {
-        if (null == instance) instance = new CacheHotWord();
+//        if (null == instance) instance = new CacheHotWord();
         return instance;
     }
 

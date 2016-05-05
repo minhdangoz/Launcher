@@ -2,16 +2,11 @@ package com.klauncher.kinflow.common.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.klauncher.kinflow.navigation.model.Navigation;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,15 +51,15 @@ public class CacheNavigation {
 
     //获取Navigation的顺序：getAll--->getDefaultList---->createDefaultList-----(将此三个封装成一个方法)
 
-    private static CacheNavigation instancce;
+    private static CacheNavigation instance = new CacheNavigation();
     private Context context;
 
     private CacheNavigation() {
     }
 
-    public static CacheNavigation getInstancce() {
-        if (null == instancce) instancce = new CacheNavigation();
-        return instancce;
+    public static CacheNavigation getInstance() {
+//        if (null == instance) instance = new CacheNavigation();
+        return instance;
     }
 
     public void createCacheFile(Context context) {

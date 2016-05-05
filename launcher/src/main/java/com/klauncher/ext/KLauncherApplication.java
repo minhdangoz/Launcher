@@ -5,6 +5,7 @@ import android.app.Application;
 import com.android.system.ReporterApi;
 import com.baidu.apistore.sdk.ApiStoreSDK;
 import com.klauncher.kinflow.common.utils.CacheHotWord;
+import com.klauncher.kinflow.common.utils.CacheLocation;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
@@ -34,7 +35,8 @@ public class KLauncherApplication extends Application {
         ApiStoreSDK.init(this, Const.BAIDU_APIKEY);
         //三个个缓存文件
         CommonShareData.init(getApplicationContext());
-        CacheNavigation.getInstancce().createCacheFile(getApplicationContext());
+        CacheNavigation.getInstance().createCacheFile(getApplicationContext());
         CacheHotWord.getInstance().createCacheHotWord(getApplicationContext());
+        CacheLocation.getInstance().createCacheLocation(getApplicationContext());
     }
 }

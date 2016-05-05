@@ -39,13 +39,13 @@ import java.util.Random;
  */
 public class CommonUtils {
 
-    public static CommonUtils instance;
+    public static CommonUtils instance  = new CommonUtils();
 
     private CommonUtils() {
     }
 
     public static CommonUtils getInstance() {
-        if (null == instance) instance = new CommonUtils();
+//        if (null == instance) instance = new CommonUtils();
         return instance;
     }
 

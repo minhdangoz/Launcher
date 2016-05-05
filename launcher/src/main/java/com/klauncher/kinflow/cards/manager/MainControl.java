@@ -290,7 +290,7 @@ public class MainControl {
      * 通过定位获取城市名称，将城市名称逆解析后，再请求天气。（自动完成）
      */
     public void obtainCityName() {
-        String param = "?location=" + CacheLocation.getInstance(mContext).getLatLng() + "&output=json&key=" + Const.BAIDU_APIKEY;
+        String param = "?location=" + CacheLocation.getInstance().getLatLng() + "&output=json&key=" + Const.BAIDU_APIKEY;
         String url = Const.OBTAIN_CITY_NAME + param;
         try {
             new AsynchronousGet(singleRequestHandler, MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME).run(url);

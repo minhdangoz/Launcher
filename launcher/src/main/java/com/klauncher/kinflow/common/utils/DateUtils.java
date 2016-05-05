@@ -14,13 +14,13 @@ public class DateUtils {
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
 
-    private static DateUtils instance;
+    private static DateUtils instance = new DateUtils();;
 
     public DateUtils() {
     }
 
     public static DateUtils getInstance() {
-        if (null == instance) instance = new DateUtils();
+//        if (null == instance) instance = new DateUtils();
         return instance;
     }
 

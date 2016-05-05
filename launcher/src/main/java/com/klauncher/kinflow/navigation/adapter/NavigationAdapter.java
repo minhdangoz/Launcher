@@ -51,7 +51,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
         Navigation navigation = navigationList.get(position);
         if (null==navigation||null==navigation.getNavName()||null==navigation.getNavIcon()) {
             this.navigationList.remove(position);
-            navigation = CacheNavigation.getInstancce().createDefaultNavigation(position);
+            navigation = CacheNavigation.getInstance().createDefaultNavigation(position);
             this.navigationList.add(position,navigation);
         }
         //navigation-name
