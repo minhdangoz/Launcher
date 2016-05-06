@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -53,7 +54,12 @@ public final class AsynchronousGet {
     public static final int OBTAIN_RESULT_NULL = 2;//获取到服务器端的响应数据，但是数据为空
     public static final int RESPONSE_FAIL = 3;//服务器端有响应，但是出现错误：如404,500-----服务器响应失败，请稍后重试
 
-    private final OkHttpClient client = new OkHttpClient();
+//    private final OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client = new OkHttpClient.Builder()
+        .connectTimeout(5, TimeUnit.SECONDS)
+        .writeTimeout(10, TimeUnit.SECONDS)
+        .readTimeout(15, TimeUnit.SECONDS)
+        .build();
     private final Gson gson = new GsonBuilder().create();
     private Handler handler;
 

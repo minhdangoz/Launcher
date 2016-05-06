@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -31,8 +32,12 @@ import okhttp3.Response;
  */
 public class YiDianTask {
 
-    private final OkHttpClient client = new OkHttpClient();
-
+    //    private final OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client = new OkHttpClient.Builder()
+            .connectTimeout(5, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .build();
     private YiDianQuestCallBack mCallBack;
     private Context mContext;
     private int mOurDefineChannelId;
@@ -61,8 +66,8 @@ public class YiDianTask {
                             getYdTask(requestUrl);
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
-                            int offset = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, 0)+5;
-                            CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,offset);
+                            int offset = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, 0) + 5;
+                            CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, offset);
                             mCallBack.onSuccess((List<YiDianModel>) msg.obj);
                             break;
                     }
@@ -76,7 +81,8 @@ public class YiDianTask {
 //        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_DEBUG);
         StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_RELEASE);
 //        /*
-        if (null==timestamp) timestamp = String.valueOf((int)((System.currentTimeMillis())/1000));
+        if (null == timestamp)
+            timestamp = String.valueOf((int) ((System.currentTimeMillis()) / 1000));
 //        int timestamp = (int)((new Date().getTime())/1000);
         String nonce = CommonUtils.getInstance().getRandomString(5);//生成5个随机字符串
         //String appkey,String nonce,String timestamp
@@ -87,7 +93,7 @@ public class YiDianTask {
         stringBuilder.append("&nonce=").append(nonce);
 //        */
         //获取偏移量,如果没有获取到偏移量则使用默认偏移量0
-        int mOffSet = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME+mOurDefineChannelId,0);
+        int mOffSet = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, 0);
         stringBuilder.append("&channel_id=").append(CardIdMap.getYiDianChannelId(mOurDefineChannelId));//channelId
         stringBuilder.append("&offset=").append(String.valueOf(mOffSet));//偏移量
         stringBuilder.append("&count=").append(String.valueOf(5));//count 为5 不变
@@ -95,19 +101,18 @@ public class YiDianTask {
     }
 
     /**
-     *
      * @param context
      * @param ourDefineChannelId 不同的channelID,用于控制offset
      * @param callBack
      */
-    public YiDianTask(Context context,int ourDefineChannelId,YiDianQuestCallBack callBack) {
+    public YiDianTask(Context context, int ourDefineChannelId, YiDianQuestCallBack callBack) {
         this.mContext = context;
         this.mOurDefineChannelId = ourDefineChannelId;
         this.mCallBack = callBack;
         mHandler = new Handler(handleCallback);
     }
 
-    public void run(){
+    public void run() {
         Request request = new Request.Builder()
                 .url(Const.URL_TIMESTAMP)
                 .build();
@@ -119,16 +124,17 @@ public class YiDianTask {
                 msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_CONNECT;
                 mHandler.sendMessage(msgTimestamp);
             }
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (!response.isSuccessful()) {//响应失败
                     msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
-                }else {//响应成功
+                } else {//响应成功
                     JSONArray jsonArray = null;
                     try {
                         jsonArray = new JSONArray(response.body().string());
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
-                        int time = (int)(jsonObject.getLong("time")/1000);
+                        int time = (int) (jsonObject.getLong("time") / 1000);
                         msgTimestamp.arg1 = YiDianQuestCallBack.SUCCESS;
                         msgTimestamp.obj = String.valueOf(time);
                     } catch (JSONException e) {
@@ -142,7 +148,7 @@ public class YiDianTask {
         });
     }
 
-    public void getYdTask(String url){
+    public void getYdTask(String url) {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -154,12 +160,13 @@ public class YiDianTask {
                 msgYiDian.arg1 = YiDianQuestCallBack.ERROR_CONNECT;
                 mHandler.sendMessage(msgYiDian);
             }
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (!response.isSuccessful()) {//响应失败
                     msgYiDian.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
-                }else {//响应成功
-                    parseYiDian(msgYiDian,response.body().string());
+                } else {//响应成功
+                    parseYiDian(msgYiDian, response.body().string());
                 }
                 mHandler.sendMessage(msgYiDian);
                 response.body().close();
@@ -167,7 +174,7 @@ public class YiDianTask {
         });
     }
 
-    private void parseYiDian(Message msgYiDian,String responseBody) {
+    private void parseYiDian(Message msgYiDian, String responseBody) {
 //        handler.sendMessage(msg);
         List<YiDianModel> yiDianModelList = new ArrayList<>();
         try {
@@ -184,7 +191,7 @@ public class YiDianTask {
                     String docid = jsonYidianMoedel.getString("docid");
                     String url = jsonYidianMoedel.getString("url");
                     String date = jsonYidianMoedel.getString("date");
-                    String source= jsonYidianMoedel.getString("source");
+                    String source = jsonYidianMoedel.getString("source");
                     //图片
                     String[] images = null;
                     if (jsonYidianMoedel.has("images")) {//包含图片
@@ -195,10 +202,10 @@ public class YiDianTask {
                             String image = jsonArrayImages.getString(j);
                             images[j] = image;
                         }
-                    }else {//不包含图片
+                    } else {//不包含图片
                         images = new String[0];
                     }
-                    YiDianModel yiDianModel = new YiDianModel(title,docid,date,url,source,images);
+                    YiDianModel yiDianModel = new YiDianModel(title, docid, date, url, source, images);
                     yiDianModelList.add(yiDianModel);
                 }
             }
@@ -210,13 +217,14 @@ public class YiDianTask {
     }
 
     public interface YiDianQuestCallBack {
-        public static final  int ERROR_CONNECT = -1;
-        public static final  int ERROR_RESPONSE = -2;
-        public static final  int ERROR_DATA_NULL = -3;
-        public static final  int ERROR_PARSE = -4;
-        public static final  int SUCCESS = 0;
+        public static final int ERROR_CONNECT = -1;
+        public static final int ERROR_RESPONSE = -2;
+        public static final int ERROR_DATA_NULL = -3;
+        public static final int ERROR_PARSE = -4;
+        public static final int SUCCESS = 0;
 
         public void onError(int errorCode);//失败
+
         public void onSuccess(List<YiDianModel> yiDianModelList);//成功
     }
 }
