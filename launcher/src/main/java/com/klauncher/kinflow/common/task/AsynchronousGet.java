@@ -29,7 +29,6 @@ import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
-import com.klauncher.kinflow.weather.model.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -95,9 +94,10 @@ public final class AsynchronousGet {
                     case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                         parseNavigation(response.body().string());
                         break;
-                    case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME:
-                        parseLocaiton(response.body().string());
-                        break;
+                    //此版本已没有天气模块,但是保留天气模块相关代码
+//                    case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME:
+//                        parseLocaiton(response.body().string());
+//                        break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
                         parseYiDian(response.body().string());
                         break;
@@ -196,7 +196,8 @@ public final class AsynchronousGet {
 
     void parseNavigation(String responseBody) {
         Log.i("AsynchronousGet", ("Navigation响应体:  " + responseBody));
-        List<Navigation> navigationList = new ArrayList<>();;
+        List<Navigation> navigationList = new ArrayList<>();
+        ;
         try {
 //            JSONArray jsonArray = new JSONArray(responseBody);
 //            JSONObject jsonObjectAll = new JSONArray(responseBody).getJSONObject(0);
@@ -239,7 +240,7 @@ public final class AsynchronousGet {
             msg.arg1 = SUCCESS;
             msg.obj = navigationList;
             CommonShareData.putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(Calendar.getInstance().getTimeInMillis()));
-            CommonShareData.putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL,jsonObjectAll.getString(Const.NAVIGATION_SERVER_UPDATE_INTERVAL));
+            CommonShareData.putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, jsonObjectAll.getString(Const.NAVIGATION_SERVER_UPDATE_INTERVAL));
         } catch (JSONException e) {
             msg.arg1 = PARSE_ERROR;
             Log.d("AsynchronousGet", ("Navigation解析出错：" + e.getMessage()));
@@ -251,7 +252,7 @@ public final class AsynchronousGet {
     }
 
     void parseLocaiton(String responseBody) {
-        final Weather[] weatherObject = {null};
+//        final Weather[] weatherObject = {null};
         //获取城市中文名称
         try {
             final JSONObject jsonObject = new JSONObject(responseBody);
@@ -259,9 +260,17 @@ public final class AsynchronousGet {
                 JSONObject resultAll = (JSONObject) jsonObject.get("result");
                 JSONObject jsonAddressComponent = resultAll.getJSONObject("addressComponent");
                 String jsonCityName = ((String) jsonAddressComponent.get("city"));
-                String cityName = jsonCityName.substring(0, jsonCityName.length() - 1);
-                msg.arg1 = SUCCESS;
-                msg.obj = cityName;
+                if (jsonCityName.length() > 1) {//城市名称大于1
+                    String cityName = jsonCityName.substring(0, jsonCityName.length() - 1);
+                    msg.arg1 = SUCCESS;
+                    msg.obj = cityName;
+                } else if (jsonCityName.length() == 1) {//城市名称就一个字
+                    String cityName = jsonCityName;
+                    msg.arg1 = SUCCESS;
+                    msg.obj = cityName;
+                } else {//获取到城市名字为空
+                    msg.arg1 = PARSE_ERROR;
+                }
             } else {
                 msg.arg1 = RESPONSE_FAIL;
             }
@@ -291,7 +300,7 @@ public final class AsynchronousGet {
                     String docid = jsonYidianMoedel.getString("docid");
                     String url = jsonYidianMoedel.getString("url");
                     String date = jsonYidianMoedel.getString("date");
-                    String source= jsonYidianMoedel.getString("source");
+                    String source = jsonYidianMoedel.getString("source");
                     //图片
                     String[] images = null;
                     if (jsonYidianMoedel.has("images")) {//包含图片
@@ -304,14 +313,14 @@ public final class AsynchronousGet {
                         }
                     }
 
-                    YiDianModel yiDianModel = new YiDianModel(title,docid,date,url,source,images);
+                    YiDianModel yiDianModel = new YiDianModel(title, docid, date, url, source, images);
                     yiDianModelList.add(yiDianModel);
                 }
             }
             msg.arg1 = SUCCESS;
             msg.obj = yiDianModelList;
         } catch (JSONException e) {
-            Log.d("AsynchronousGet", "一点资讯解析出错:"+e.getMessage());
+            Log.d("AsynchronousGet", "一点资讯解析出错:" + e.getMessage());
             msg.arg1 = PARSE_ERROR;
         } finally {
             handler.sendMessage(msg);
@@ -319,11 +328,11 @@ public final class AsynchronousGet {
     }
 
     private void parseTimestamp(String responseBody) {
-        Log.i("MyInfo","parseTimestamp,获取到的时间戳:"+responseBody);
+        Log.i("MyInfo", "parseTimestamp,获取到的时间戳:" + responseBody);
         try {
             JSONArray jsonArray = new JSONArray(responseBody);
             JSONObject jsonObject = jsonArray.getJSONObject(0);
-            int time = (int)(jsonObject.getLong("time")/1000);
+            int time = (int) (jsonObject.getLong("time") / 1000);
             msg.arg1 = SUCCESS;
             msg.obj = String.valueOf(time);
         } catch (JSONException e) {
