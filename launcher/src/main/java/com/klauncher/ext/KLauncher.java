@@ -11,7 +11,6 @@ import android.support.v7.internal.widget.CompatTextView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -572,10 +571,14 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     public void onAddAdview(CardInfo cardInfo) {
-//        log("开始添加adview");
-        Log.i("MyInfo","开始添加adview");
+        log("==========开始添加adview==========");
         //向CardsAdapter中添加adView
         CardsAdapter adapter = (CardsAdapter) mCardsView.getAdapter();
+        int adapterItemCount = adapter.getItemCount();
+        if (adapterItemCount<=1) {
+        log("Card的个数<=1,所以不添加adview广告");
+            return;
+        }
         int type = adapter.getItemViewType(adapter.getItemCount()-1);
         if (null != adapter&&type!= CardIdMap.ADVERTISEMENT_ADVIEW) adapter.addCard(cardInfo);
     }
