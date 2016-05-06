@@ -30,7 +30,7 @@
             android:id="@+id/hot_word_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="顶部热词"
+            android:text="时事热点"
             android:singleLine="true"
             android:ellipsize="end"
             android:gravity="center_vertical"
