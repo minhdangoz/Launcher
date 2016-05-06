@@ -3,7 +3,6 @@ package com.klauncher.ext;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,8 +36,6 @@ import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonUtils;
-import com.klauncher.kinflow.common.utils.DeviceState;
-import com.klauncher.kinflow.common.utils.DialogUtils;
 import com.klauncher.kinflow.navigation.adapter.NavigationAdapter;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
@@ -46,7 +43,6 @@ import com.klauncher.kinflow.search.model.HotWordItemDecoration;
 import com.klauncher.kinflow.utilities.Dips;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.weather.model.Weather;
-import com.klauncher.kinflow.weather.service.LocationService;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
 
@@ -375,7 +371,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     /**
      * 请求定位:此版本已没有天气模块,但是保留天气模块相关代码
      */
-
+    /*
     void requestLocation() {
         if (!DeviceState.gspIsOPen(this)) {
             mAlertDialog = DialogUtils.getCommontAlertDialog(this,
@@ -398,7 +394,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             startService(new Intent(KLauncher.this, LocationService.class));
         }
     }
-
+    */
     @Override
     public void onClick(View view) {
 //        startService(new Intent(KLauncher.this, LocationService.class));
