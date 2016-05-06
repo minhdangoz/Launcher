@@ -122,7 +122,6 @@ public final class AsynchronousGet {
      * @param responseBody
      */
     void parseHotWord(String responseBody) {
-        Log.i("AsynchronousGet", ("百度热词响应体:  " + responseBody));
         List<HotWord> hotWordList = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(responseBody);
@@ -148,7 +147,6 @@ public final class AsynchronousGet {
     }
 
     void parseCard(String responseBody) {
-        Log.i("AsynchronousGet", ("Card响应体:  " + responseBody));
         try {
             JSONArray jsonArray = new JSONArray(responseBody);
             if (null == jsonArray || jsonArray.length() == 0) {
@@ -201,7 +199,6 @@ public final class AsynchronousGet {
     }
 
     void parseNavigation(String responseBody) {
-        Log.i("AsynchronousGet", ("Navigation响应体:  " + responseBody));
         List<Navigation> navigationList = new ArrayList<>();
         ;
         try {
@@ -334,7 +331,6 @@ public final class AsynchronousGet {
     }
 
     private void parseTimestamp(String responseBody) {
-        Log.i("MyInfo", "parseTimestamp,获取到的时间戳:" + responseBody);
         try {
             JSONArray jsonArray = new JSONArray(responseBody);
             JSONObject jsonObject = jsonArray.getJSONObject(0);

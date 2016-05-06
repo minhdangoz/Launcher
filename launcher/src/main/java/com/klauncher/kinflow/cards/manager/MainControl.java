@@ -3,7 +3,6 @@ package com.klauncher.kinflow.cards.manager;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.baidu.apistore.sdk.ApiCallBack;
@@ -168,12 +167,10 @@ public class MainControl {
                     List<NativeAdInfo> nativeAdInfoList = (List<NativeAdInfo>) msg.obj;
                     if (null == nativeAdInfoList || nativeAdInfoList.size() == 0) {
                         log("MainControl获取adview失败");
-                        Log.i("MyInfo", "MainControl 获取AdView失败");
                         return;
                     } else {
                         log("MainControl获取adview成功");
 //                        ADVCardContentManager manager = (ADVCardContentManager) adViewCardInfo.getmCardContentManager();
-                        Log.i("MyInfo", "MainControl 获取AdView成功");
                         mListener.onAddAdview(adViewCardInfo);
                     }
                     break;
@@ -352,7 +349,8 @@ public class MainControl {
 
                     @Override
                     public void onError(int status, String responseString, Exception e) {
-                        Log.i("sdkdemo", "errMsg: " + (e == null ? "" : e.getMessage()));
+//                        Log.i("sdkdemo", "errMsg: " + (e == null ? "" : e.getMessage()));
+                        log("获取天气信息时,出现错误");
                     }
 
                 });

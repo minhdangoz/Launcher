@@ -270,7 +270,6 @@ public class CommonUtils {
                 stringBuilder.append(contents.get(i)).append("  ,  ");
             }
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-            Log.i("CommonUtils", "要打开的方式: " + stringBuilder.toString());
 
             if (null == contents || contents.size() == 0) {
                 Toast.makeText(context, "没有指定打开方式,使用默认打开方式", Toast.LENGTH_SHORT).show();

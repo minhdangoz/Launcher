@@ -3,24 +3,18 @@ package com.klauncher.kinflow.cards.adapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.klauncher.launcher.R;
-import com.klauncher.kinflow.cards.manager.YDCardContentManager;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.cards.model.yidian.YiDianModel;
-import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.common.utils.DateUtils;
 import com.klauncher.kinflow.common.utils.OpenMode;
+import com.klauncher.launcher.R;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -92,7 +86,6 @@ public class YDNewsAdapter extends RecyclerView.Adapter<YDNewsAdapter.NewsAdapte
             tv_title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.i("kinflow","一点咨询的Adapter被点击");
                     YiDianModel yiDianModel = mYiDianModelList.get(getPosition());
 //                    CommonUtils.getInstance().openDetail(mContext,mCardInfo.getCardOpenOptionList(),yiDianModel.getUrl());
                     Bundle extras = new Bundle();

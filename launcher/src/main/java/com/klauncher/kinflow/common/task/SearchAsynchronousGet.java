@@ -17,7 +17,6 @@ package com.klauncher.kinflow.common.task;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -106,7 +105,6 @@ public final class SearchAsynchronousGet {
      * @param responseBody
      */
     void parseBaiduHotWord(String responseBody) {
-        Log.i("AsynchronousGet", ("百度热词响应体:  " + responseBody));
         List<HotWord> hotWordList = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(responseBody);
