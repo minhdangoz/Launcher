@@ -21,7 +21,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.klauncher.kinflow.cards.model.Card;
+import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.cards.model.yidian.YiDianModel;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
@@ -91,9 +91,6 @@ public final class AsynchronousGet {
                     throw new IOException("Unexpected code " + response);
                 }
                 switch (msg.what) {
-                    case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
-                        parseCard(response.body().string());
-                        break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
                         parseHotWord(response.body().string());
                         break;
@@ -146,58 +143,6 @@ public final class AsynchronousGet {
         }
     }
 
-    void parseCard(String responseBody) {
-        try {
-            JSONArray jsonArray = new JSONArray(responseBody);
-            if (null == jsonArray || jsonArray.length() == 0) {
-                msg.arg1 = OBTAIN_RESULT_NULL;
-                return;
-            }
-            JSONObject jsonObject = jsonArray.getJSONObject(0);
-            JSONArray cardJsonArray = jsonObject.getJSONArray("data");
-            int cardsLength = cardJsonArray.length();
-            if (null == cardJsonArray || cardsLength == 0) {
-                msg.arg1 = OBTAIN_RESULT_NULL;
-                return;
-            }
-
-            List<Card> cardList = new ArrayList<>();
-            for (int i = 0; i < cardsLength; i++) {
-                Card card = new Card();
-                JSONObject cardJsonObject = cardJsonArray.getJSONObject(i);
-                card.setCardId(cardJsonObject.getString(Card.CARD_ID));
-                card.setCardName(cardJsonObject.getString(Card.CARD_NAME));
-                card.setCardTypeId(cardJsonObject.getString(Card.CARD_TYPE_ID));
-                card.setCardTypeName(cardJsonObject.getString(Card.CARD_TYPE_NAME));
-                card.setCardOrder(cardJsonObject.getString(Card.CARD_ORDER));
-                card.setCardFooter(cardJsonObject.getString(Card.CARD_FOOTER));
-                card.setCardExtra(cardJsonObject.getString(Card.CARD_EXTRA));
-                JSONArray opsJsonArray = cardJsonObject.getJSONArray(Card.CARD_OPEN_OPTIONS);
-                List<String> opsList = new ArrayList<>();
-                int opsJsonArrayLength = opsJsonArray.length();
-                if (opsJsonArrayLength == 0) {
-//                    Log.d("AsynchronousGet", "opsArray为null启动自带浏览器");
-                    opsList.add("23");
-                    opsList.add("com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity");
-                    opsList.add("0");
-                } else {
-                    for (int j = 0; i < opsJsonArrayLength; i++) {
-                        opsList.add(opsJsonArray.getString(j));
-                    }
-                }
-                card.setCardOpenOptionList(opsList);
-                cardList.add(card);
-            }
-            msg.arg1 = SUCCESS;
-            msg.obj = cardList;
-        } catch (JSONException e) {
-            msg.arg1 = PARSE_ERROR;
-            Log.d("AsynchronousGet", ("Card解析出错：" + e.getMessage()));
-        } finally {
-            handler.sendMessage(msg);
-        }
-    }
-
     void parseNavigation(String responseBody) {
         List<Navigation> navigationList = new ArrayList<>();
         ;
@@ -224,10 +169,10 @@ public final class AsynchronousGet {
                 navigation.setNavIcon(navigationJsonObject.getString(Navigation.NAV_ICON));
                 navigation.setNavUrl(navigationJsonObject.getString(Navigation.NAV_URL));
                 navigation.setNavOrder(navigationJsonObject.getInt(Navigation.NAV_ORDER));
-                JSONArray opsJsonArray = navigationJsonObject.getJSONArray(Card.CARD_OPEN_OPTIONS);
+                JSONArray opsJsonArray = navigationJsonObject.getJSONArray(CardInfo.CARD_OPEN_OPTIONS);
                 List<String> opsList = new ArrayList<>();
                 int opsJsonArrayLength = opsJsonArray.length();
-                if (opsJsonArrayLength == 0) {
+                if (opsJsonArrayLength <= 0) {
 //                    Log.d("AsynchronousGet", "opsArray为null启动自带浏览器");
                     opsList.add("23");
                     opsList.add("com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity");

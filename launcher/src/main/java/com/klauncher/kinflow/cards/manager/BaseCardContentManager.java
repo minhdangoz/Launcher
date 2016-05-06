@@ -6,7 +6,6 @@ import android.os.Message;
 import android.widget.Toast;
 
 import com.klauncher.launcher.R;
-import com.klauncher.kinflow.cards.model.Card;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.task.AsynchronousGet;

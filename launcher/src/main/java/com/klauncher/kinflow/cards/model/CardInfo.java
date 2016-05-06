@@ -87,10 +87,16 @@ public class CardInfo implements Parcelable {
         cardFooter = json.optString(CARD_FOOTER);
         cardExtra = json.optString(CARD_EXTRA);
         JSONArray array = json.optJSONArray(CARD_OPEN_OPTIONS);
-        for (int i = 0; i < array.length(); i++) {
-            String ops = array.optString(i);
-            if (ops != null && ops.length() > 0) {
-                cardOpenOptionList.add(ops);
+        if (array.length()<=0) {
+            cardOpenOptionList.add("23");
+            cardOpenOptionList.add("com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity");
+            cardOpenOptionList.add("0");
+        }else {
+            for (int i = 0; i < array.length(); i++) {
+                String ops = array.optString(i);
+                if (ops != null && ops.length() > 0) {
+                    cardOpenOptionList.add(ops);
+                }
             }
         }
         this.mContext = context;
