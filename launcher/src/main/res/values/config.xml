@@ -122,7 +122,7 @@
 
     <bool name="config_launcher_page">false</bool>
     <bool name="config_launcher_shortcut">false</bool>
-    <bool name="config_launcher_show_unread_number">true</bool>
+    <bool name="config_launcher_show_unread_number">false</bool>
 
     <!-- Lenovo-sw:yuanyl2, Add edit mode function. Begin. -->
     <integer name="config_workspaceScreenMaxCount">10</integer>

@@ -267,14 +267,12 @@ public final class Utilities {
             final Resources resources = context.getResources();
             float textsize = resources.getDimension(R.dimen.infomation_count_textsize);
             int newTextureWidth = (int) (textureWidth + textsize);
-            Bitmap newB = Bitmap.createBitmap(newTextureWidth, (int) (textureWidth + textsize/2), Bitmap.Config.ARGB_8888);
+            Bitmap newB = Bitmap.createBitmap(newTextureWidth, (int) (textureWidth + textsize / 2), Bitmap.Config.ARGB_8888);
             canvas.setBitmap(newB);
-            canvas.drawBitmap(bitmap, textsize/2, textsize/2, null);
+            canvas.drawBitmap(bitmap, textsize / 2, textsize / 2, null);
             canvas.setBitmap(null);
             bitmap.recycle();
             bitmap = null;
-            /** Lenovo-SW zhaoxin5 20150817 KOLEOSROW-976 END */
-            
             return newB;
         }
     }

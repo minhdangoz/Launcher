@@ -329,16 +329,6 @@ public class IconCache {
         return mDefaultIcons.get(user) == icon;
     }
 
-    private Bitmap drawableToBitmap(Drawable drawable) {
-        int width = drawable.getIntrinsicWidth();
-        int height = drawable.getIntrinsicHeight();
-        Bitmap bitmap = Bitmap.createBitmap(width, height, drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, width, height);
-        drawable.draw(canvas);
-        return bitmap;
-    }
-
     private CacheEntry cacheLocked(ComponentName componentName, LauncherActivityInfoCompat info,
             HashMap<Object, CharSequence> labelCache, UserHandleCompat user,
             boolean usePackageIcon, int unreadNum) {
@@ -369,9 +359,11 @@ public class IconCache {
                         // 没有找到theme，读取frontActivityIcon
                         if (themeBmp == null) {
                             if (disguiseIconInfo.readFromApplication) {
-                                themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(activityInfo.packageName));
+                                themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
+                                        mContext.getPackageManager().getApplicationIcon(activityInfo.packageName), mContext);
                             } else {
-                                themeBmp = drawableToBitmap(mContext.getPackageManager().getActivityIcon(disguiseIconInfo.componentName));
+                                themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
+                                        mContext.getPackageManager().getActivityIcon(disguiseIconInfo.componentName), mContext);
                             }
                         }
                     } else {
@@ -388,9 +380,11 @@ public class IconCache {
                                     pkgName.contains("settings") || pkgName.contains("ideafriend") ||
                                     pkgName.contains("scgmtk") || pkgName.contains("gallery3d") ||
                                     pkgName.contains("coolmessage")) {
-                                themeBmp = drawableToBitmap(mContext.getPackageManager().getActivityIcon(info.getComponentName()));
+                                themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
+                                        mContext.getPackageManager().getActivityIcon(info.getComponentName()), mContext);
                             } else {
-                                themeBmp = drawableToBitmap(mContext.getPackageManager().getApplicationIcon(info.getActivityInfo().packageName));
+                                themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
+                                        mContext.getPackageManager().getApplicationIcon(info.getActivityInfo().packageName), mContext);
                             }
                         }
                     }
