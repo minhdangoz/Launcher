@@ -46,3 +46,8 @@
 -keep class com.kuaiyou.** {
     *;
 }
+
+# 个推混淆
+-dontwarn com.igexin.**
+-keep class com.igexin.**{*;}
+-keep class com.klauncher.getui.**{*;}

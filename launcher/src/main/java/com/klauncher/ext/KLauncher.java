@@ -2,9 +2,15 @@ package com.klauncher.ext;
 
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.internal.widget.CompatTextView;
@@ -25,6 +31,7 @@ import com.android.launcher3.backup.LbkUtil;
 import com.android.launcher3.settings.SettingsValue;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.igexin.sdk.PushManager;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.adapter.CardItemDecoration;
@@ -57,6 +64,10 @@ import java.util.List;
 public class KLauncher extends Launcher implements SharedPreferences.OnSharedPreferenceChangeListener, MainControl.ResponseListener {
 
     private static final String TAG = "KLauncher";
+    /**
+     * 个推 第三方应用Master Secret，修改为正确的值
+     */
+    private static final String MASTERSECRET = "1JazIIe2Id5WbdT8gTMak2";
 
     /*private static final String HOME_PAGE = "file:///android_asset/home.html";
     private static final String APP_NAME = "今日头题";
@@ -144,6 +155,31 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         addToCustomContentPage(customView, callbacks, "custom-view");
     }
 
+    //
+    private ConnectivityManager mConnectivityManager;
+    private NetworkInfo netInfo;
+    private BroadcastReceiver myNetReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                initGeitui();
+
+            }
+        }
+    };
+
+    private void initGeitui() {
+        mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        netInfo = mConnectivityManager.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isAvailable()) {
+            // SDK初始化，第三方程序启动时，都要进行SDK初始化工作
+            log("initializing GetuiSdk...");
+            PushManager.getInstance().initialize(this.getApplicationContext());
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,9 +187,20 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         PingManager.getInstance().ping(4, null);
         //启动添加网络设置快捷方式
         Intent startIntent = new Intent(this, ShortCutManagerService.class);
-        startIntent.putExtra("add_klaucher3_wifi",true);
+        startIntent.putExtra("add_klaucher3_wifi", true);
         startService(startIntent);
+        //个推初始化
+        IntentFilter mFilter = new IntentFilter();
+        mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        mFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(myNetReceiver, mFilter);
+        initGeitui();
+        /*if (PushDemoReceiver.payloadData != null) {
+            Toast.makeText(this,PushDemoReceiver.payloadData.toString(),Toast.LENGTH_LONG).show();
+        }*/
     }
+
 
     @Override
     protected void onResume() {
@@ -411,22 +458,23 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             case R.id.refresh_hotWord://刷新监听
 //                asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
                 //此处传入mCardInfoList无用
-                ObjectAnimator animator = ObjectAnimator.ofFloat(iv_refresh,"rotation",0f,360f);
+                ObjectAnimator animator = ObjectAnimator.ofFloat(iv_refresh, "rotation", 0f, 360f);
                 animator.setDuration(500);
                 animator.start();
                 mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
                 break;
             case R.id.search_hint://搜索框监听
                 Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
-                if(null==hintHotWord||null==hintHotWord.getWord()) hintHotWord = HotWord.getHintHotWord();
+                if (null == hintHotWord || null == hintHotWord.getWord())
+                    hintHotWord = HotWord.getHintHotWord();
                 intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
                 startActivity(intent);
                 break;
             case R.id.search_mode:
             case R.id.search_icon:
-                if(null!=hintHotWord&&null!=hintHotWord.getWord()) {
+                if (null != hintHotWord && null != hintHotWord.getWord()) {
                     CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
-                }else {
+                } else {
                     Toast.makeText(this, "没有获取到搜索热词,请刷新", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -575,8 +623,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         //向CardsAdapter中添加adView
         CardsAdapter adapter = (CardsAdapter) mCardsView.getAdapter();
         int adapterItemCount = adapter.getItemCount();
-        if (adapterItemCount<=1) {
-        log("Card的个数<=1,所以不添加adview广告");
+        if (adapterItemCount <= 1) {
+            log("Card的个数<=1,所以不添加adview广告");
             return;
         }
         int type = adapter.getItemViewType(adapter.getItemCount()-1);
@@ -586,4 +634,5 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     final protected static void log(String msg) {
         KinflowLog.i(msg);
     }
+
 }
