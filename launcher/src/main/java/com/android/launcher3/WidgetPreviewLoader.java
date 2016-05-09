@@ -361,7 +361,7 @@ public class WidgetPreviewLoader {
         SQLiteDatabase db = mDb.getWritableDatabase();
         //bug 华为 android.database.sqlite.SQLiteException: no such table: shortcut_and_widget_previews(Sqlite code 1),(OS error - 2:No such file or directory)
         //判断 db 和表shortcut_and_widget_previews 是否存在
-        boolean isTableExist = false;
+        /*boolean isTableExist = false;
         try {
             Cursor cur = db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='shortcut_and_widget_previews'", null);
             // 解决 bug android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 1
@@ -378,7 +378,7 @@ public class WidgetPreviewLoader {
                 //mDb.onCreate(db);
                 return;
             }
-        }
+        }*/
         ContentValues values = new ContentValues();
 
         values.put(CacheDb.COLUMN_NAME, name);
