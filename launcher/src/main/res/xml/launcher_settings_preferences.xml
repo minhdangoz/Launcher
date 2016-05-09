@@ -17,11 +17,15 @@
 
 
 <!-- App-wide preferences -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:layout="@layout/sec_pref_widget_top">
+    </Preference>
 
     <PreferenceCategory
         android:key="normal_settings_key"
-        android:title="@string/normal_settings" >
+        android:title="@string/normal_settings"
+        android:widgetLayout="@layout/sec_pref_widget_more">
         <!--<ListPreference
             android:dialogTitle="@string/desktop_style"
             android:entries="@array/launcher_desktop_style_entries"
@@ -30,34 +34,45 @@
             android:summary="@string/switch_2_single_layer_shortcut"
             android:title="@string/desktop_style" />-->
         <SwitchPreference
-          android:defaultValue="true"
-          android:key="pref_workspace_loop"
-          android:enabled="true"
-          android:title="@string/workspace_loop_settings_title" />
+            android:defaultValue="true"
+            android:enabled="true"
+            android:key="pref_workspace_loop"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/lancher_setting_switchpreference_textsize"
+            android:title="@string/workspace_loop_settings_title"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:key="extend_settings_key"
-        android:title="@string/extend_settings" >
+        android:title="@string/extend_settings">
         <Preference
             android:key="home_screen_key"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/lancher_setting_preference_textsize"
             android:title="@string/home_screen_settings"
-            android:widgetLayout="@layout/sec_pref_widget_more" >
+            android:widgetLayout="@layout/sec_pref_widget_more">
         </Preference>
         <Preference
             android:key="drawer_settings_key"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/lancher_setting_preference_textsize"
             android:title="@string/drawer_settings"
-            android:widgetLayout="@layout/sec_pref_widget_more" >
+            android:widgetLayout="@layout/sec_pref_widget_more">
         </Preference>
         <Preference
             android:key="backup_restore_key"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/lancher_setting_preference_textsize"
             android:title="@string/menu_sense_settings"
-            android:widgetLayout="@layout/sec_pref_widget_more" >
+            android:widgetLayout="@layout/sec_pref_widget_more">
         </Preference>
         <!--信息流kinflow显示-->
         <SwitchPreference
             android:defaultValue="@bool/kinflow_switch_default"
             android:key="pref_kinflow_setingon"
-            android:title="@string/kinflow_turn_setting" />
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/lancher_setting_switchpreference_textsize"
+            android:textStyle="normal"
+            android:title="@string/kinflow_turn_setting"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
