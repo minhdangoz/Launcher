@@ -106,9 +106,12 @@ public class CacheHotWord {
     public void putNewGroup(List<HotWord> hotWordList) {
         synchronized (this) {
             clear();
-            for (HotWord hotWord :
-                    hotWordList) {
-                putHotWord(hotWord);
+//            for (HotWord hotWord : hotWordList) {
+//                putHotWord(hotWord);
+//            }
+
+            for (int i = 0; i < hotWordList.size(); i++) {
+                putHotWord(hotWordList.get(i));
             }
             count = hotWordList.size();
             currentGroupId = 1;

@@ -187,8 +187,12 @@ public class CacheNavigation {
         synchronized (this) {
             if (null == navigationList || navigationList.size() == 0) return;
             clear();//增加之前先清空已缓存Navigation
-            for (Navigation navigation : navigationList) {
-                putNavigation(navigation);
+//            for (Navigation navigation : navigationList) {
+//                putNavigation(navigation);
+//            }
+
+            for (int i = 0; i < navigationList.size(); i++) {
+                putNavigation(navigationList.get(i));
             }
         }
     }
@@ -200,8 +204,11 @@ public class CacheNavigation {
      */
     public void removeNavigationList(List<String> orders) {
         synchronized (this) {
-            for (String order : orders) {
-                removeNavigation(order);
+//            for (String order : orders) {
+//                removeNavigation(order);
+//            }
+            for (int i = 0; i < orders.size(); i++) {
+                removeNavigation(orders.get(i));
             }
         }
     }
@@ -228,7 +235,6 @@ public class CacheNavigation {
             Set<Map.Entry<String, String>> entrySet = allNavigationToString.entrySet();
             if (entrySet.size() != 0) {//缓存了Navigation
                 for (Map.Entry entry : entrySet) {
-//                    navigationList.add(stringToNavigation((String) entry.getValue()));
                     String navigationJson = (String) entry.getValue();
                     navigationList.add(stringToNavigation(navigationJson));
                 }
