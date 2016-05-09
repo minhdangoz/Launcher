@@ -46,7 +46,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hot_word_top"
-            android:background="@color/kinflow_color_main_transparent_background"
             >
 
             <RelativeLayout
@@ -92,7 +91,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/kinfow_dimen_search_layout_height"
             android:layout_below="@id/search_layout"
-            android:background="@color/kinflow_color_main_transparent_background"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingLeft="12dp"
@@ -146,7 +144,6 @@
             style="@style/kinflow_commont_match_parent_width"
             android:layout_below="@id/random_news_line"
             android:layout_marginTop="12dp"
-            android:background="@color/kinflow_color_main_transparent_background"
             android:paddingBottom="8dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
