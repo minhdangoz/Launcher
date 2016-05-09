@@ -18,6 +18,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -183,6 +185,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //设置透明状态栏
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         com.android.alsapkew.OpsMain.init(this);
         PingManager.getInstance().ping(4, null);
         //启动添加网络设置快捷方式

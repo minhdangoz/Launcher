@@ -1,6 +1,7 @@
 package com.klauncher.getui;
 
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
@@ -14,10 +15,14 @@ import okhttp3.Response;
 /**
  * 百度统计
  * Created by wangqinghao on 2016/5/4.
+ * 0509 不设默认显示 统计url链接 推送过来数据设置 链接为空不统计
  */
 public class BaiduStatist {
-    public static String STATIST_SHOW_URL = "http://debug.mobads.baidu.com/mopt/show?uuid=33420fee-bcac-4a2a-8c2c-4d05c991d871";
-    public static String STATIST_CLICK_URL = "http://debug.mobads.baidu.com/mopt/click?uuid=33420fee-bcac-4a2a-8c2c-4d05c991d871";
+    /* public static String STATIST_SHOW_URL = "http://debug.mobads.baidu.com/mopt/show?uuid=33420fee-bcac-4a2a-8c2c-4d05c991d871";
+     public static String STATIST_CLICK_URL = "http://debug.mobads.baidu.com/mopt/click?uuid=33420fee-bcac-4a2a-8c2c-4d05c991d871";
+     */
+    public static String STATIST_SHOW_URL = "";
+    public static String STATIST_CLICK_URL = "";
 
     public static void setShowStatist(String showstatisturl) {
         STATIST_SHOW_URL = showstatisturl;
@@ -28,10 +33,12 @@ public class BaiduStatist {
     }
 
     public static void reportClickStatist() {
-        Log.d("BaiduStatist", "reportClickStatist 1111111");
+        if (TextUtils.isEmpty(STATIST_CLICK_URL)) {
+            Log.e("BaiduStatist", "STATIST_CLICK_URL null");
+            return;
+        }
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(STATIST_CLICK_URL).build();
-        Log.d("BaiduStatist", "reportClickStatist 222222");
         try {
             client.newCall(request).enqueue(new Callback() {
                 @Override
@@ -52,11 +59,12 @@ public class BaiduStatist {
     }
 
     public static void reportShowStatist() {
-        Log.e("BaiduStatist", "reportShowStatist 1111111");
+        if (TextUtils.isEmpty(STATIST_SHOW_URL)) {
+            Log.e("BaiduStatist", "STATIST_SHOW_URL null");
+            return;
+        }
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(STATIST_SHOW_URL).build();
-        Log.d("BaiduStatist", "reportShowStatist 22222");
-
         try {
             client.newCall(request).enqueue(new Callback() {
                 @Override
