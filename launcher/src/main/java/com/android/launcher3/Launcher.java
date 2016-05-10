@@ -702,16 +702,17 @@ public class Launcher extends Activity
      * To be overriden by subclasses to hint to Launcher that we have custom content
      */
     protected boolean hasCustomContentToLeft() {
-        //boolean kinflowSet  = SettingsValue.isKinflowSetOn(this);
-        /*if(!isAnimating() && !mModel.isLoadingWorkspace() &&
-                LauncherAppState.getInstance().isCurrentVibeuiMode()) {
-            autoReorder(true);
-        }*/
-        return true;
+        return false;
     }
     /*protected boolean hasCustomContentToLeft() {
-        return false;
+        //boolean kinflowSet  = SettingsValue.isKinflowSetOn(this);
+        *//*if(!isAnimating() && !mModel.isLoadingWorkspace() &&
+                LauncherAppState.getInstance().isCurrentVibeuiMode()) {
+            autoReorder(true);
+        }*//*
+        return true;
     }*/
+
 
     /**
      * To be overridden by subclasses to populate the custom content container and call

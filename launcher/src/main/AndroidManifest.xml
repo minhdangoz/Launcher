@@ -136,7 +136,7 @@
     <!-- 自定义权限 -->
     <uses-permission android:name="getui.permission.GetuiService.com.klauncher.launcher" />
     <permission
-        android:name="getui.permission.GetuiService.com.getui.demo"
+        android:name="getui.permission.GetuiService.com.klauncher.launcher"
         android:protectionLevel="normal" >
     </permission>
     <!-- 个推SDK权限配置结束 -->
