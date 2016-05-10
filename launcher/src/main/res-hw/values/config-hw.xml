@@ -26,7 +26,6 @@
         <item>com.tencent.qqlive</item>
         <item>com.UCMobile</item>
         <item>com.tencent.qqpimsecure</item>
-        <item>cn.etouch.ecalendar.cpa</item>
         <item>cn.etouch.ecalendar</item>
         <item>com.moji.mjweather</item>
     </array>
@@ -38,7 +37,6 @@
     <string name="config_icon_com.tencent.qqlive">com.huawei.hwvplayer,com.huawei.hwvplayer.youku</string>
     <string name="config_icon_com.UCMobile">com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.huawei.systemmanager</string>
-    <string name="config_icon_cn.etouch.ecalendar.cpa">com.android.calendar</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">com.huawei.android.totemweather</string>
 
