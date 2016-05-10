@@ -57,6 +57,7 @@ public class MainControl {
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            log("收到信号,wmg.what="+msg.what);
             mRequestSemaphore.release();
             if (msg.arg1==AsynchronousGet.SUCCESS)
             switch (msg.what) {

@@ -17,12 +17,14 @@ package com.klauncher.kinflow.common.task;
 
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.search.model.HotWord;
 import com.klauncher.kinflow.search.model.SearchEnum;
+import com.klauncher.kinflow.utilities.KinflowLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -76,17 +78,30 @@ public final class SearchAsynchronousGet {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response){
                 if (!response.isSuccessful()) {
                     msg.arg1 = RESPONSE_FAIL;
                     handler.sendMessage(msg);
-                    throw new IOException("Unexpected code " + response);
+                    response.body().close();
+                    return;
                 }
+                String responseBodyStr = null;
+                try {
+                    responseBodyStr = response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                    msg.arg1 = RESPONSE_FAIL;
+                    handler.sendMessage(msg);
+                    log("热词响应失败,发生IOException");
+                    response.body().close();
+                }
+                if (!TextUtils.isEmpty(responseBodyStr))
                 switch (msg.what) {
                     case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
                         switch (searchEnum) {
                             case BAIDU:
-                                parseBaiduHotWord(response.body().string());
+                                parseBaiduHotWord(responseBodyStr);
                                 break;
                             case SHENMA:
                                 break;
@@ -105,6 +120,7 @@ public final class SearchAsynchronousGet {
      * @param responseBody
      */
     void parseBaiduHotWord(String responseBody) {
+        log("开始解析百度热词:SearchAsynchronousGet");
         List<HotWord> hotWordList = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(responseBody);
@@ -129,5 +145,7 @@ public final class SearchAsynchronousGet {
         }
     }
 
-
+    final protected static void log(String msg) {
+        KinflowLog.i(msg);
+    }
 }

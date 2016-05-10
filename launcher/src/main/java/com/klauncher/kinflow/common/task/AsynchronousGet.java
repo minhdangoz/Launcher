@@ -17,6 +17,7 @@ package com.klauncher.kinflow.common.task;
 
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -29,6 +30,7 @@ import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
+import com.klauncher.kinflow.utilities.KinflowLog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,28 +86,40 @@ public final class AsynchronousGet {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response) {
                 if (!response.isSuccessful()) {
                     msg.arg1 = RESPONSE_FAIL;
                     handler.sendMessage(msg);
-                    throw new IOException("Unexpected code " + response);
+                    response.body().close();
+                    return;
                 }
+                String responseBodyStr = null;
+                try {
+                    responseBodyStr = response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    msg.arg1 = RESPONSE_FAIL;
+                    handler.sendMessage(msg);
+                    log("服务器响应失败,发生IOException,msg.what="+msg.what);
+                    response.body().close();
+                }
+                if (!TextUtils.isEmpty(responseBodyStr))
                 switch (msg.what) {
                     case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
-                        parseHotWord(response.body().string());
+                        parseHotWord(responseBodyStr);
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
-                        parseNavigation(response.body().string());
+                        parseNavigation(responseBodyStr);
                         break;
                     //此版本已没有天气模块,但是保留天气模块相关代码
 //                    case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME:
-//                        parseLocaiton(response.body().string());
+//                        parseLocaiton(responseBodyStr);
 //                        break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
-                        parseYiDian(response.body().string());
+                        parseYiDian(responseBodyStr);
                         break;
                     case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
-                        parseTimestamp(response.body().string());
+                        parseTimestamp(responseBodyStr);
                         break;
                 }
                 response.body().close();
@@ -288,5 +302,9 @@ public final class AsynchronousGet {
         } finally {
             handler.sendMessage(msg);
         }
+    }
+
+    final protected static void log(String msg) {
+        KinflowLog.i(msg);
     }
 }

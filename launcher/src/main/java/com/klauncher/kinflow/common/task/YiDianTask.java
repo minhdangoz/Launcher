@@ -3,6 +3,7 @@ package com.klauncher.kinflow.common.task;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.manager.CardContentManagerFactory;
@@ -11,6 +12,7 @@ import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.common.utils.Const;
+import com.klauncher.kinflow.utilities.KinflowLog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -129,23 +131,41 @@ public class YiDianTask {
             public void onResponse(Call call, Response response) throws IOException {
                 if (!response.isSuccessful()) {//响应失败
                     msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
-                } else {//响应成功
-                    JSONArray jsonArray = null;
-                    try {
-                        jsonArray = new JSONArray(response.body().string());
-                        JSONObject jsonObject = jsonArray.getJSONObject(0);
-                        int time = (int) (jsonObject.getLong("time") / 1000);
-                        msgTimestamp.arg1 = YiDianQuestCallBack.SUCCESS;
-                        msgTimestamp.obj = String.valueOf(time);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_PARSE;
-                    }
+                    response.body().close();
+                    return;
                 }
-                mHandler.sendMessage(msgTimestamp);
+
+                String responseBodyStr = null;
+                try {
+                    responseBodyStr = response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
+                    mHandler.sendMessage(msgTimestamp);
+                    log("时间戳响应失败,发生IOException");
+                    response.body().close();
+                }
+                if (!TextUtils.isEmpty(responseBodyStr))
+                    parseTimeStamp(msgTimestamp, responseBodyStr);
                 response.body().close();
             }
         });
+    }
+
+    private void parseTimeStamp(Message msgTimestamp, String responseBody) {
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = new JSONArray(responseBody);
+            JSONObject jsonObject = jsonArray.getJSONObject(0);
+            int time = (int) (jsonObject.getLong("time") / 1000);
+            msgTimestamp.arg1 = YiDianQuestCallBack.SUCCESS;
+            msgTimestamp.obj = String.valueOf(time);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_PARSE;
+        } finally {
+            mHandler.sendMessage(msgTimestamp);
+        }
     }
 
     public void getYdTask(String url) {
@@ -165,10 +185,21 @@ public class YiDianTask {
             public void onResponse(Call call, Response response) throws IOException {
                 if (!response.isSuccessful()) {//响应失败
                     msgYiDian.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
-                } else {//响应成功
-                    parseYiDian(msgYiDian, response.body().string());
+                    response.body().close();
+                    return;
                 }
-                mHandler.sendMessage(msgYiDian);
+
+                String responseBodyStr = null;
+                try {
+                    responseBodyStr = response.body().string();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    msgYiDian.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
+                    mHandler.sendMessage(msgYiDian);
+                    log("单独获取一点咨询响应失败,发生IOException");
+                }
+                if (!TextUtils.isEmpty(responseBodyStr))
+                    parseYiDian(msgYiDian, responseBodyStr);
                 response.body().close();
             }
         });
@@ -213,6 +244,8 @@ public class YiDianTask {
             msgYiDian.obj = yiDianModelList;
         } catch (JSONException e) {
             msgYiDian.arg1 = YiDianQuestCallBack.ERROR_PARSE;
+        } finally {
+            mHandler.sendMessage(msgYiDian);
         }
     }
 
@@ -227,4 +260,9 @@ public class YiDianTask {
 
         public void onSuccess(List<YiDianModel> yiDianModelList);//成功
     }
+
+    final protected static void log(String msg) {
+        KinflowLog.i(msg);
+    }
+
 }
