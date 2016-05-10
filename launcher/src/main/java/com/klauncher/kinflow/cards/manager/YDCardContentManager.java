@@ -165,8 +165,13 @@ public class YDCardContentManager extends BaseCardContentManager {
 
 
     protected void handleObtainedData(Message msg) {
-        mYiDianModelList.clear();
-        mYiDianModelList = CardUtils.sortYiDianModelList((List<YiDianModel>) msg.obj);
+        if(null!=msg.obj) {
+            List<YiDianModel> newYiDianModelList = (List<YiDianModel>) msg.obj;
+            if (newYiDianModelList.size()!=0) {
+                mYiDianModelList.clear();
+                mYiDianModelList = CardUtils.sortYiDianModelList(newYiDianModelList);
+            }
+        }
     }
 
 }

@@ -4,15 +4,18 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.manager.CardContentManagerFactory;
 import com.klauncher.kinflow.cards.model.yidian.YiDianModel;
+import com.klauncher.kinflow.cards.utils.CardUtils;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.utilities.KinflowLog;
+import com.klauncher.launcher.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,28 +52,32 @@ public class YiDianTask {
         public boolean handleMessage(Message msg) {
             switch (msg.arg1) {
                 case YiDianQuestCallBack.ERROR_CONNECT:
-                    mCallBack.onError(YiDianQuestCallBack.ERROR_CONNECT);
-                    break;
                 case YiDianQuestCallBack.ERROR_RESPONSE:
-                    mCallBack.onError(YiDianQuestCallBack.ERROR_CONNECT);
-                    break;
                 case YiDianQuestCallBack.ERROR_DATA_NULL:
-                    mCallBack.onError(YiDianQuestCallBack.ERROR_CONNECT);
-                    break;
                 case YiDianQuestCallBack.ERROR_PARSE:
-                    mCallBack.onError(YiDianQuestCallBack.ERROR_CONNECT);
+                    onFailToast(msg);
                     break;
                 case YiDianQuestCallBack.SUCCESS:
                     switch (msg.what) {
                         case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
-                            String timestamp = (String) msg.obj;
+                            if (msg.arg1 == AsynchronousGet.SUCCESS && null != msg.obj) {
+                                timestamp = (String) msg.obj;
+                            }else {
+                                timestamp = String.valueOf((int) ((System.currentTimeMillis()) / 1000));
+                            }
                             String requestUrl = getRequestUrl(timestamp);
                             getYdTask(requestUrl);
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
-                            int offset = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, 0) + 5;
-                            CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, offset);
-                            mCallBack.onSuccess((List<YiDianModel>) msg.obj);
+                            if (msg.arg1 == AsynchronousGet.SUCCESS) {
+                                //计算下次的偏移量offset
+                                int offset = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, 0) + 5;
+                                //存储偏移量offset
+                                CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, offset);
+                                handleObtainedData(msg);
+                            } else {
+                                onFailToast(msg);
+                            }
                             break;
                     }
                     break;
@@ -79,6 +86,18 @@ public class YiDianTask {
         }
     };
 
+    protected void handleObtainedData(Message msg) {
+        if(null!=msg.obj) {
+            List<YiDianModel> newYiDianModelList = (List<YiDianModel>) msg.obj;
+            if (newYiDianModelList.size()!=0) {
+//                mYiDianModelList.clear();
+//                mYiDianModelList = CardUtils.sortYiDianModelList(newYiDianModelList);
+                mCallBack.onSuccess(CardUtils.sortYiDianModelList(newYiDianModelList));
+            }
+        }
+    }
+
+    String timestamp;
     public String getRequestUrl(String timestamp) {
 //        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_DEBUG);
         StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_RELEASE);
@@ -263,6 +282,22 @@ public class YiDianTask {
 
     final protected static void log(String msg) {
         KinflowLog.i(msg);
+    }
+    void onFailToast(Message msg) {
+        switch (msg.arg1) {
+            case YiDianQuestCallBack.ERROR_CONNECT:
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.kinflow_string_connection_error), Toast.LENGTH_SHORT).show();
+                break;
+            case YiDianQuestCallBack.ERROR_RESPONSE:
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.kinflow_string_response_fail), Toast.LENGTH_SHORT).show();
+                break;
+            case YiDianQuestCallBack.ERROR_DATA_NULL:
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.kinflow_string_obtain_result_null), Toast.LENGTH_SHORT).show();
+                break;
+            case YiDianQuestCallBack.ERROR_PARSE:
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.kinflow_string_parse_error), Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
 }
