@@ -4,12 +4,16 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.klauncher.kinflow.cards.CardContentManager;
+import com.klauncher.kinflow.cards.manager.CardContentManagerFactory;
 import com.klauncher.kinflow.cards.model.yidian.YiDianModel;
+import com.klauncher.kinflow.common.utils.CommonShareData;
+import com.klauncher.kinflow.common.utils.Const;
+import com.klauncher.kinflow.common.utils.DateUtils;
 import com.ss.android.sdk.minusscreen.model.Article;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -175,4 +179,29 @@ public class CardUtils {
         }
         return sortListYiDianModel;
     }
+
+    /**
+     * 判断是否超过了4个小时
+     * @return
+     */
+    private static boolean isOver4hour() {
+        Calendar latestModifiedCalendar = DateUtils.getInstance().millis2Calendar(CommonShareData.getString(Const.KEY_CARD_CLEAR_OFFSET, "0"));//默认最后更新时间为0
+        latestModifiedCalendar.add(Calendar.SECOND,14400);//14400S=4hour
+        if (latestModifiedCalendar.before(Calendar.getInstance())) return true;
+        return false;
+    }
+
+    public static void clearOffset () {
+        if (isOver4hour()) {
+//            log("超过4小时清空offset");
+            Log.i("Kinflow","超过4小时清空offset");
+            CardContentManagerFactory.clearAllOffset();
+            try {
+                CommonShareData.putString(Const.KEY_CARD_CLEAR_OFFSET,String.valueOf(Calendar.getInstance().getTimeInMillis()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
+
