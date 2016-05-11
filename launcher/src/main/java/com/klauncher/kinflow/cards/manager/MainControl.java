@@ -237,8 +237,8 @@ public class MainControl {
                 switch (what) {
                     case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
                         mRequestSemaphore.acquire();
-//                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(Const.URL_HOT_WORD);
                         new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.BAIDU);
+//                        new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.SHENMA);
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                         mRequestSemaphore.acquire();

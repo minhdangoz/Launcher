@@ -17,15 +17,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.klauncher.launcher.R;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.task.AsynchronousGet;
+import com.klauncher.kinflow.common.task.SearchAsynchronousGet;
 import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.search.adapter.HotWordsRecyclerViewAdapter;
 import com.klauncher.kinflow.search.model.HotWord;
 import com.klauncher.kinflow.search.model.HotWordItemDecoration;
+import com.klauncher.kinflow.search.model.SearchEnum;
 import com.klauncher.kinflow.weather.listener.RecyclerItemClickListener;
+import com.klauncher.launcher.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +128,7 @@ public class SearchActivity extends Activity implements OnClickListener{
             public void afterTextChanged(Editable s) {
                 int hintLength = editSearch.getHint().length();
                 int editLength = editSearch.getText().length();
-                if (hintLength > 0 || editLength>0) {
+                if (hintLength > 0 || editLength > 0) {
                     editSearch.setHint("");
                     searchOrCancle.setTag("search");
                     searchOrCancle.setText("搜索");
@@ -153,7 +155,9 @@ public class SearchActivity extends Activity implements OnClickListener{
             }
         }));
         handler = new Handler(callback);
-        asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
+//        asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
+        new SearchAsynchronousGet(handler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.BAIDU);
+//        new SearchAsynchronousGet(handler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.SHENMA);
     }
 
     private void initView() {
@@ -183,33 +187,4 @@ public class SearchActivity extends Activity implements OnClickListener{
                 break;
         }
     }
-
-
-    /**
-     * 可请求一个或者多个
-     *
-     * @param msgWhats
-     */
-    public void asynchronousRequest(int... msgWhats) {
-        for (int what : msgWhats) {
-            try {
-                switch (what) {
-                    case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
-                        new AsynchronousGet(handler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(Const.URL_HOT_WORD);
-                        break;
-                    case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
-                        new AsynchronousGet(handler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.NAVIGATION_GET);
-                        break;
-                    case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
-                        new AsynchronousGet(handler, MessageFactory.MESSAGE_WHAT_OBTAION_CARD).run(Const.CARD_GET);
-                        break;
-
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
 }

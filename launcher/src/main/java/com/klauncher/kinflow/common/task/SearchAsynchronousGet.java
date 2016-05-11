@@ -26,6 +26,7 @@ import com.klauncher.kinflow.search.model.HotWord;
 import com.klauncher.kinflow.search.model.SearchEnum;
 import com.klauncher.kinflow.utilities.KinflowLog;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -64,10 +65,11 @@ public final class SearchAsynchronousGet {
         msg = MessageFactory.createMessage(messageWhat);
     }
 
-    public void run(final SearchEnum searchEnum) throws Exception {
+    public void run(final SearchEnum searchEnum){
         Request request = new Request.Builder()
                 .url(searchEnum.getUrl_obtainHotword())
                 .build();
+        log("热词请求的url = "+searchEnum.getUrl_obtainHotword());
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -104,6 +106,7 @@ public final class SearchAsynchronousGet {
                                     parseBaiduHotWord(responseBodyStr);
                                     break;
                                 case SHENMA:
+                                    parseSheMaHotWord(responseBodyStr);
                                     break;
                             }
                             break;
@@ -135,6 +138,29 @@ public final class SearchAsynchronousGet {
                 for (int i = 1; i <= jsonHotLength; i++) {
                     JSONObject jsonHotWord = jsonHot.getJSONObject(String.valueOf(i));
                     hotWordList.add(new HotWord(String.valueOf(i), jsonHotWord.getString("word"), jsonHotWord.getString("url")));
+                }
+                msg.arg1 = SUCCESS;
+                msg.obj = hotWordList;
+            }
+        } catch (JSONException e) {
+            msg.arg1 = PARSE_ERROR;
+        } finally {
+            handler.sendMessage(msg);
+        }
+    }
+
+    void parseSheMaHotWord(String responseBody) {
+        log("开始解析神马热词:SearchAsynchronousGet");
+        List<HotWord> hotWordList = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(responseBody);
+            if (null==jsonArray||jsonArray.length()==0) {
+                msg.arg1 = OBTAIN_RESULT_NULL;
+            }else {
+                int jsonArrayHotWordLength = jsonArray.length();
+                for (int i = 0; i < jsonArrayHotWordLength; i ++) {
+                    JSONObject jsonShenMaHotWord = jsonArray.getJSONObject(i);
+                    hotWordList.add(new HotWord(String.valueOf(i),jsonShenMaHotWord.getString("title"),jsonShenMaHotWord.getString("url")));
                 }
                 msg.arg1 = SUCCESS;
                 msg.obj = hotWordList;
