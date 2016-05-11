@@ -56,12 +56,12 @@ public final class AsynchronousGet {
     public static final int OBTAIN_RESULT_NULL = 2;//获取到服务器端的响应数据，但是数据为空
     public static final int RESPONSE_FAIL = 3;//服务器端有响应，但是出现错误：如404,500-----服务器响应失败，请稍后重试
 
-//    private final OkHttpClient client = new OkHttpClient();
+    //    private final OkHttpClient client = new OkHttpClient();
     private final OkHttpClient client = new OkHttpClient.Builder()
-        .connectTimeout(5, TimeUnit.SECONDS)
-        .writeTimeout(10, TimeUnit.SECONDS)
-        .readTimeout(15, TimeUnit.SECONDS)
-        .build();
+            .connectTimeout(5, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .build();
     private final Gson gson = new GsonBuilder().create();
     private Handler handler;
 
@@ -100,29 +100,30 @@ public final class AsynchronousGet {
                     e.printStackTrace();
                     msg.arg1 = RESPONSE_FAIL;
                     handler.sendMessage(msg);
-                    log("服务器响应失败,发生IOException,msg.what="+msg.what);
+                    log("服务器响应失败,发生IOException,msg.what=" + msg.what);
                     response.body().close();
                 }
-                if (!TextUtils.isEmpty(responseBodyStr))
-                switch (msg.what) {
-                    case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
-                        parseHotWord(responseBodyStr);
-                        break;
-                    case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
-                        parseNavigation(responseBodyStr);
-                        break;
-                    //此版本已没有天气模块,但是保留天气模块相关代码
+                if (!TextUtils.isEmpty(responseBodyStr)) {
+                    switch (msg.what) {
+                        case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
+                            parseHotWord(responseBodyStr);
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
+                            parseNavigation(responseBodyStr);
+                            break;
+                        //此版本已没有天气模块,但是保留天气模块相关代码
 //                    case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME:
 //                        parseLocaiton(responseBodyStr);
 //                        break;
-                    case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
-                        parseYiDian(responseBodyStr);
-                        break;
-                    case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
-                        parseTimestamp(responseBodyStr);
-                        break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
+                            parseYiDian(responseBodyStr);
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
+                            parseTimestamp(responseBodyStr);
+                            break;
+                    }
+                    response.body().close();
                 }
-                response.body().close();
             }
         });
     }

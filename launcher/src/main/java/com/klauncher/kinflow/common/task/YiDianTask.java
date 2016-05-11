@@ -62,7 +62,7 @@ public class YiDianTask {
                         case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
                             if (msg.arg1 == AsynchronousGet.SUCCESS && null != msg.obj) {
                                 timestamp = (String) msg.obj;
-                            }else {
+                            } else {
                                 timestamp = String.valueOf((int) ((System.currentTimeMillis()) / 1000));
                             }
                             String requestUrl = getRequestUrl(timestamp);
@@ -87,9 +87,9 @@ public class YiDianTask {
     };
 
     protected void handleObtainedData(Message msg) {
-        if(null!=msg.obj) {
+        if (null != msg.obj) {
             List<YiDianModel> newYiDianModelList = (List<YiDianModel>) msg.obj;
-            if (newYiDianModelList.size()!=0) {
+            if (newYiDianModelList.size() != 0) {
 //                mYiDianModelList.clear();
 //                mYiDianModelList = CardUtils.sortYiDianModelList(newYiDianModelList);
                 mCallBack.onSuccess(CardUtils.sortYiDianModelList(newYiDianModelList));
@@ -98,6 +98,7 @@ public class YiDianTask {
     }
 
     String timestamp;
+
     public String getRequestUrl(String timestamp) {
 //        StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_DEBUG);
         StringBuilder stringBuilder = new StringBuilder(Const.URL_YI_DIAN_ZI_XUN_HOUT_RELEASE);
@@ -164,9 +165,10 @@ public class YiDianTask {
                     log("时间戳响应失败,发生IOException");
                     response.body().close();
                 }
-                if (!TextUtils.isEmpty(responseBodyStr))
+                if (!TextUtils.isEmpty(responseBodyStr)) {
                     parseTimeStamp(msgTimestamp, responseBodyStr);
-                response.body().close();
+                    response.body().close();
+                }
             }
         });
     }
@@ -217,9 +219,10 @@ public class YiDianTask {
                     mHandler.sendMessage(msgYiDian);
                     log("单独获取一点咨询响应失败,发生IOException");
                 }
-                if (!TextUtils.isEmpty(responseBodyStr))
+                if (!TextUtils.isEmpty(responseBodyStr)) {
                     parseYiDian(msgYiDian, responseBodyStr);
-                response.body().close();
+                    response.body().close();
+                }
             }
         });
     }
@@ -283,6 +286,7 @@ public class YiDianTask {
     final protected static void log(String msg) {
         KinflowLog.i(msg);
     }
+
     void onFailToast(Message msg) {
         switch (msg.arg1) {
             case YiDianQuestCallBack.ERROR_CONNECT:

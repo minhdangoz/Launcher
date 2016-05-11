@@ -96,19 +96,20 @@ public final class SearchAsynchronousGet {
                     log("热词响应失败,发生IOException");
                     response.body().close();
                 }
-                if (!TextUtils.isEmpty(responseBodyStr))
-                switch (msg.what) {
-                    case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
-                        switch (searchEnum) {
-                            case BAIDU:
-                                parseBaiduHotWord(responseBodyStr);
-                                break;
-                            case SHENMA:
-                                break;
-                        }
-                        break;
+                if (!TextUtils.isEmpty(responseBodyStr)) {
+                    switch (msg.what) {
+                        case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
+                            switch (searchEnum) {
+                                case BAIDU:
+                                    parseBaiduHotWord(responseBodyStr);
+                                    break;
+                                case SHENMA:
+                                    break;
+                            }
+                            break;
+                    }
+                    response.body().close();
                 }
-                response.body().close();
             }
         });
     }
