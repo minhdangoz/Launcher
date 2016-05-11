@@ -135,6 +135,7 @@ public class YiDianTask {
     }
 
     public void run() {
+        CardUtils.clearOffset();
         Request request = new Request.Builder()
                 .url(Const.URL_TIMESTAMP)
                 .build();

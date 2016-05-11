@@ -11,6 +11,7 @@ import com.baidu.apistore.sdk.network.Parameters;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.model.CardInfo;
+import com.klauncher.kinflow.cards.utils.CardUtils;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.task.AsynchronousGet;
 import com.klauncher.kinflow.common.task.SearchAsynchronousGet;
@@ -242,25 +243,19 @@ public class MainControl {
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                         mRequestSemaphore.acquire();
-//                        Calendar latestModifiedCalendar = DateUtils.getInstance().millis2Calendar(CommonShareData.getString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(Calendar.getInstance().getTimeInMillis())));
-//                        String navagationUpdateInterval = CommonShareData.getString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, String.valueOf(Calendar.getInstance().getTimeInMillis()));
-//                        int second = (int) (Long.valueOf(navagationUpdateInterval) / 1000);
-//                        latestModifiedCalendar.add(Calendar.SECOND, second);
-                        if (isUpdateNow()) {
-                            log("超过4小时请求更新Navigation");
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.NAVIGATION_GET);
-                        } else {
-                            Message msg = Message.obtain();
-                            msg.arg1 = AsynchronousGet.SUCCESS;
-                            msg.what = MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION;
-                            mHandler.sendMessage(msg);
-                        }
+//                        if (isUpdateNow()) {
+//                            log("超过4小时请求更新Navigation");
+//                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.NAVIGATION_GET);
+//                        } else {
+//                            Message msg = Message.obtain();
+//                            msg.arg1 = AsynchronousGet.SUCCESS;
+//                            msg.what = MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION;
+//                            mHandler.sendMessage(msg);
+//                        }
+                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.NAVIGATION_GET);
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
-                        if (isUpdateNow()) {
-                            log("超过4小时清空offset");
-                            CardContentManagerFactory.clearAllOffset();
-                        }
+                        CardUtils.clearOffset();
                         for (CardInfo cardInfo : mCardInfoList) {
                             BaseCardContentManager cardContentManager = cardInfo.getmCardContentManager();
                             mRequestSemaphore.acquire();

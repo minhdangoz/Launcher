@@ -121,4 +121,9 @@ public class Const {
     public static final String YI_DIAN_CHANNEL_MORE_JianKang = "http://www.yidianzixun.com/home?page=channel&keyword=%E5%81%A5%E5%BA%B7";
     public static final String YI_DIAN_CHANNEL_MORE_LvYou = "http://www.yidianzixun.com/home?page=channel&keyword=%E6%97%85%E6%B8%B8";
     public static final String URL_TIMESTAMP = "http://api.klauncher.com/v1/card/gettime";
+
+    /**
+     * SharedPreference---key
+     */
+    public static final String KEY_CARD_CLEAR_OFFSET = "card_clear_offset";
 }
