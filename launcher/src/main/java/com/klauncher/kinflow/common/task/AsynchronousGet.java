@@ -39,6 +39,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -309,10 +310,6 @@ public final class AsynchronousGet {
     }
 
     private void parseConfig(String responseBodyStr) {
-        log("parseConfig : " + responseBodyStr);
-        msg.arg1 = SUCCESS;
-        handler.sendMessage(msg);
-        /*
         try {
             JSONObject jsonObjectRoot = new JSONObject(responseBodyStr);
             JSONArray jsonArrayConfigList = jsonObjectRoot.getJSONArray("cw");
@@ -322,14 +319,23 @@ public final class AsynchronousGet {
                 int jsonArrayLength = jsonArrayConfigList.length();
                 for (int i = 0; i < jsonArrayLength; i++) {
                     JSONObject configJson = jsonArrayConfigList.getJSONObject(i);
-                    Config config = new Config(configJson.getString("app_active"),configJson.getString("kinfo"));
+                    Iterator<String> keysIterator = configJson.keys();
+                    String key;
+                    String value;
+                    while (keysIterator.hasNext()) {
+                        key = keysIterator.next();
+                        value = (String) configJson.get(key);
+                        CommonShareData.putString(key, value);
+                    }
                 }
             }
+            msg.arg1 = SUCCESS;
         } catch (JSONException e) {
-            e.printStackTrace();
+            log("解析Config的Json数据时,出错:" + e.getMessage());
+            msg.arg1 = PARSE_ERROR;
         } finally {
+            handler.sendMessage(msg);
         }
-        */
     }
 
     final protected static void log(String msg) {
