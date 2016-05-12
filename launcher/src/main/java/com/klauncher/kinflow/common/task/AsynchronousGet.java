@@ -328,8 +328,8 @@ public final class AsynchronousGet {
                         CommonShareData.putString(key, value);
                     }
                 }
+                msg.arg1 = SUCCESS;
             }
-            msg.arg1 = SUCCESS;
         } catch (JSONException e) {
             log("解析Config的Json数据时,出错:" + e.getMessage());
             msg.arg1 = PARSE_ERROR;
