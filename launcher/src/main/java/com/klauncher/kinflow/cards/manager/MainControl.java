@@ -82,9 +82,9 @@ public class MainControl {
                 case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YOKMOB:
                     log("获取到yokmob");
                     break;
-//                case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW:
-//                    log("获取到adview");
-//                    break;
+                case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
+                    log("获取到config");
+                    break;
                 default:
                     log("what the fuck ??  msg.what=" + msg.what);
                     break;
@@ -109,9 +109,22 @@ public class MainControl {
                                 switch (cardInfo.getCardSecondTypeId()) {
                                     case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
                                     case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
                                     case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_CAIJING:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_TIYU:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_KEJI:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_MEINV:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_DUANZI:
                                     case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG:
                                     case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_DIANYING:
+                                    case CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN:
                                     case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
                                         YDCardContentManager ydCardContentManager = (YDCardContentManager) cardInfo.getmCardContentManager();
                                         if (null!=ydCardContentManager.getmYiDianModelList()&&ydCardContentManager.getmYiDianModelList().size()!=0)
@@ -230,7 +243,7 @@ public class MainControl {
         this.mRequestTypes = msgWhats;
 //        this.mCardInfoList = cardInfoList;
         this.mCardInfoList = CardsListManager.getInstance().getInfos();
-        permitCount = mCardInfoList.size() + 2;
+        permitCount = mCardInfoList.size() + 3;
         log("请求的总数=" + permitCount + " ,其中card请求个数=" + mCardInfoList.size());
         mRequestSemaphore = new Semaphore(permitCount);
         for (int what : msgWhats) {
@@ -243,16 +256,11 @@ public class MainControl {
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                         mRequestSemaphore.acquire();
-//                        if (isUpdateNow()) {
-//                            log("超过4小时请求更新Navigation");
-//                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.NAVIGATION_GET);
-//                        } else {
-//                            Message msg = Message.obtain();
-//                            msg.arg1 = AsynchronousGet.SUCCESS;
-//                            msg.what = MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION;
-//                            mHandler.sendMessage(msg);
-//                        }
                         new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.NAVIGATION_GET);
+                        break;
+                    case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
+                        mRequestSemaphore.acquire();
+                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG).run(Const.CONFIG_SETTINGS);
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
                         CardUtils.clearOffset();

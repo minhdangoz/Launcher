@@ -93,7 +93,13 @@ public class YiDianTask {
 //                mYiDianModelList.clear();
 //                mYiDianModelList = CardUtils.sortYiDianModelList(newYiDianModelList);
                 mCallBack.onSuccess(CardUtils.sortYiDianModelList(newYiDianModelList));
+            } else {
+                msg.arg1 = YiDianQuestCallBack.ERROR_DATA_NULL;
+                onFailToast(msg);
             }
+        } else {
+            msg.arg1 = YiDianQuestCallBack.ERROR_DATA_NULL;
+            onFailToast(msg);
         }
     }
 

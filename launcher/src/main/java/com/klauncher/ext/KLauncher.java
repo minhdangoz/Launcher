@@ -18,8 +18,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -386,7 +384,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mMainControl = new MainControl(KLauncher.this, this);
         mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
                 MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-                MessageFactory.MESSAGE_WHAT_OBTAION_CARD);
+                MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
+                MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG);
         //注册监听
         CacheNavigation.getInstance().registerOnSharedPreferenceChangeListener(this);
 //        CacheLocation.getInstance().registerOnSharedPreferenceChangeListener(this);//此版本已没有天气模块,但是保留天气模块相关代码
@@ -399,7 +398,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 //                requestLocation();
                 mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
                         MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-                        MessageFactory.MESSAGE_WHAT_OBTAION_CARD);
+                        MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
+                        MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG);
             }
         });
 

@@ -121,6 +121,9 @@ public final class AsynchronousGet {
                         case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
                             parseTimestamp(responseBodyStr);
                             break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
+                            parseConfig(responseBodyStr);
+                            break;
                     }
                     response.body().close();
                 }
@@ -279,9 +282,9 @@ public final class AsynchronousGet {
                     YiDianModel yiDianModel = new YiDianModel(title, docid, date, url, source, images);
                     yiDianModelList.add(yiDianModel);
                 }
+                msg.arg1 = SUCCESS;
+                msg.obj = yiDianModelList;
             }
-            msg.arg1 = SUCCESS;
-            msg.obj = yiDianModelList;
         } catch (JSONException e) {
             Log.d("AsynchronousGet", "一点资讯解析出错:" + e.getMessage());
             msg.arg1 = PARSE_ERROR;
@@ -303,6 +306,30 @@ public final class AsynchronousGet {
         } finally {
             handler.sendMessage(msg);
         }
+    }
+
+    private void parseConfig(String responseBodyStr) {
+        log("parseConfig : " + responseBodyStr);
+        msg.arg1 = SUCCESS;
+        handler.sendMessage(msg);
+        /*
+        try {
+            JSONObject jsonObjectRoot = new JSONObject(responseBodyStr);
+            JSONArray jsonArrayConfigList = jsonObjectRoot.getJSONArray("cw");
+            if (null == jsonArrayConfigList || jsonArrayConfigList.length() == 0) {
+                msg.arg1 = RESPONSE_FAIL;
+            } else {
+                int jsonArrayLength = jsonArrayConfigList.length();
+                for (int i = 0; i < jsonArrayLength; i++) {
+                    JSONObject configJson = jsonArrayConfigList.getJSONObject(i);
+                    Config config = new Config(configJson.getString("app_active"),configJson.getString("kinfo"));
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } finally {
+        }
+        */
     }
 
     final protected static void log(String msg) {
