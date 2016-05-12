@@ -2,9 +2,16 @@ package com.klauncher.kinflow.utilities;
 
 /**
  * Created by wangqinghao on 2016/4/27.
+ * add 日志上报  待测
  */
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -26,11 +33,21 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 /**
  * UncaughtException处理类,当程序发生Uncaught异常的时候,有该类来接管程序,并记录发送错误报告.
  *
  * @author user
- *
  */
 public class CrashHandler implements UncaughtExceptionHandler {
 
@@ -46,14 +63,21 @@ public class CrashHandler implements UncaughtExceptionHandler {
     private Map<String, String> infos = new HashMap<String, String>();
 
     //用于格式化日期,作为日志文件名的一部分
-    private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    //private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
-    /** 保证只有一个CrashHandler实例 */
+    /**
+     * 保证只有一个CrashHandler实例
+     */
     private CrashHandler() {
     }
 
-    /** 获取CrashHandler实例 ,单例模式 */
-    public static CrashHandler getInstance() {
+    /**
+     * 获取CrashHandler实例 ,单例模式
+     */
+    public synchronized static CrashHandler getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new CrashHandler();
+        }
         return INSTANCE;
     }
 
@@ -110,6 +134,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             }
         }.start();
         //收集设备参数信息
+        infos.clear();
         collectDeviceInfo(mContext);
         //保存日志文件
         saveCrashInfo2File(ex);
@@ -118,6 +143,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
     /**
      * 收集设备参数信息
+     *
      * @param ctx
      */
     public void collectDeviceInfo(Context ctx) {
@@ -127,13 +153,17 @@ public class CrashHandler implements UncaughtExceptionHandler {
             if (pi != null) {
                 String versionName = pi.versionName == null ? "null" : pi.versionName;
                 String versionCode = pi.versionCode + "";
-                infos.put("versionName", versionName);
-                infos.put("versionCode", versionCode);
+                infos.put("lname", versionName);
+                infos.put("lver", versionCode);
+                infos.put("androidver", android.os.Build.VERSION.RELEASE);
+                infos.put("mcompany", android.os.Build.MANUFACTURER);
+                infos.put("minfo", android.os.Build.MODEL);
+                infos.put("logtime", System.currentTimeMillis() + "");
             }
         } catch (NameNotFoundException e) {
             Log.e(TAG, "an error occured when collect package info", e);
         }
-        Field[] fields = Build.class.getDeclaredFields();
+        /*Field[] fields = Build.class.getDeclaredFields();
         for (Field field : fields) {
             try {
                 field.setAccessible(true);
@@ -142,23 +172,24 @@ public class CrashHandler implements UncaughtExceptionHandler {
             } catch (Exception e) {
                 Log.e(TAG, "an error occured when collect crash info", e);
             }
-        }
+        }*/
     }
 
     /**
      * 保存错误信息到文件中
      *
      * @param ex
-     * @return  返回文件名称,便于将文件传送到服务器
+     * @return 返回文件名称, 便于将文件传送到服务器
      */
     private String saveCrashInfo2File(Throwable ex) {
 
-        StringBuffer sb = new StringBuffer();
+        /*StringBuffer sb = new StringBuffer();
+
         for (Map.Entry<String, String> entry : infos.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            sb.append(key + "=" + value + "\n");
-        }
+            sb.append(key + "=" + value );
+        }*/
 
         Writer writer = new StringWriter();
         PrintWriter printWriter = new PrintWriter(writer);
@@ -170,11 +201,13 @@ public class CrashHandler implements UncaughtExceptionHandler {
         }
         printWriter.close();
         String result = writer.toString();
-        sb.append(result);
+        infos.put("context", result);
+        String strJson = new Gson().toJson(infos).toString();
+
         try {
             long timestamp = System.currentTimeMillis();
-            String time = formatter.format(new Date());
-            String fileName = "crash-" + time + "-" + timestamp + ".log";
+            //String time = formatter.format(new Date());
+            String fileName = "crash.log";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 String path = "/sdcard/crash/";
                 File dir = new File(path);
@@ -182,7 +215,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
                     dir.mkdirs();
                 }
                 FileOutputStream fos = new FileOutputStream(path + fileName);
-                fos.write(sb.toString().getBytes());
+                fos.write(strJson.getBytes());
                 fos.close();
             }
             return fileName;
@@ -191,4 +224,122 @@ public class CrashHandler implements UncaughtExceptionHandler {
         }
         return null;
     }
+
+    private boolean isFirstUpdateErrorLog = true;
+    private boolean isUploadSuccess = false;
+
+
+    public void updateErrorLog() {
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            return;
+        }
+        String crashFileName = "/sdcard/crash/crash.log";
+        File file = new File(crashFileName);
+        if (!file.exists()) {
+            return;
+        }
+        try {
+            String content = "";
+            InputStream instream = new FileInputStream(file);
+            if (instream != null) {
+                InputStreamReader inputreader = new InputStreamReader(instream);
+                BufferedReader buffreader = new BufferedReader(inputreader);
+                String line;
+                //分行读取
+                while ((line = buffreader.readLine()) != null) {
+                    content += line;
+                }
+                instream.close();
+                postJson(content);
+                /*//开启一个线程，做联网操作
+                final String finalContent = content;
+                new Thread() {
+                    @Override
+                    public void run() {
+                        postJson(finalContent);
+                    }
+                }.start();*/
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+        }
+
+
+    }
+
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+    private void postJson(String json) {
+        //第一次 上传或上次上传失败
+        if (isFirstUpdateErrorLog) {
+            isFirstUpdateErrorLog = false;
+        } else if (!isUploadSuccess) {
+
+        } else {
+            return;
+        }
+        //申明给服务端传递一个json串
+        //创建一个OkHttpClient对象
+        OkHttpClient okHttpClient = new OkHttpClient();
+        //创建一个RequestBody(参数1：数据类型 参数2传递的json串)
+        //String json = new Gson().toJson(infos).toString();
+
+        //RequestBody requestBody = RequestBody.create(JSON, json);
+        RequestBody formBody = new FormBody.Builder()
+                .add("data", json)
+                .build();
+
+        //创建一个请求对象
+        Request request = new Request.Builder()
+                .url("http://klog.klauncher.com/log/record")
+                .post(formBody)
+                .build();
+        Log.e(TAG, request.toString());
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                isUploadSuccess = false;
+                Log.e(TAG, "onFailure");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //判断请求是否成功  code为200是成功500是错误，401是参数有问题
+                Log.e(TAG,"code"+response.code());
+                if (response.code() == 200) {
+                    isUploadSuccess = true;
+                    //打印服务端返回结果
+                    Log.e(TAG, response.body().string());
+                    File file1 = new File("/sdcard/crash/crash.log");
+                    if (file1.exists()) {
+                        file1.delete();
+                    }
+                }else{
+                    isUploadSuccess = false;
+                }
+            }
+        });
+
+
+        /*//启动 子线程方式 发送请求获取响应
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            //判断请求是否成功  code为200是成功500是错误，401是参数有问题
+            if (response.isSuccessful()) {
+                //打印服务端返回结果
+                Log.e(TAG, response.body().string());
+                File file1 = new File("/sdcard/crash/crash.log");
+                if (file1.exists()) {
+                    file1.delete();
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
+    }
+
 }

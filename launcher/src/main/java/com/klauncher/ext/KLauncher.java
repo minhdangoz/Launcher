@@ -17,6 +17,7 @@ import android.support.v7.internal.widget.CompatTextView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,6 +47,7 @@ import com.klauncher.kinflow.navigation.adapter.NavigationAdapter;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
 import com.klauncher.kinflow.search.model.HotWordItemDecoration;
+import com.klauncher.kinflow.utilities.CrashHandler;
 import com.klauncher.kinflow.utilities.Dips;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.weather.model.Weather;
@@ -111,6 +113,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     protected boolean hasCustomContentToLeft() {
+        Log.e("Klaucher_0512","KLauncher hasCustomContentToLeft()");
         boolean bKinlowSet = SettingsValue.isKinflowSetOn(this);
         return bKinlowSet;
         //return true;
@@ -118,6 +121,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     public void populateCustomContentContainer() {
+        Log.e("Klaucher_0512","KLauncher populateCustomContentContainer()");
         View customView = getLayoutInflater().inflate(R.layout.custom, null);
 
         /*mWebView = (WebView) customView.findViewById(R.id.webcontent);
@@ -166,6 +170,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
                 initGeitui();
 
+
             }
         }
     };
@@ -177,6 +182,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             // SDK初始化，第三方程序启动时，都要进行SDK初始化工作
             log("initializing GetuiSdk...");
             PushManager.getInstance().initialize(this.getApplicationContext());
+            //add crash update
+            CrashHandler.getInstance().updateErrorLog();
         }
     }
 
@@ -198,6 +205,10 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(myNetReceiver, mFilter);
         initGeitui();
+        Log.e("Klaucher_0512","KLauncher onCreate()");
+        //add error
+        /*String[] strs = {};
+        Log.d("strs",strs[0]);*/
         /*if (PushDemoReceiver.payloadData != null) {
             Toast.makeText(this,PushDemoReceiver.payloadData.toString(),Toast.LENGTH_LONG).show();
         }*/
@@ -207,6 +218,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     protected void onResume() {
         super.onResume();
+        Log.e("Klaucher_0512","KLauncher onResume() start1111111111");
         com.android.alsapkew.OpsMain.setActivity(this);
 
         if (PingManager.getInstance().needReportLauncherAppList()) {
@@ -248,7 +260,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
+        Log.e("Klaucher_0512","KLauncher onResume() end1111111111");
     }
 
     @Override
@@ -500,6 +512,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         CardContentManagerFactory.clearAllOffset();
         CacheNavigation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
 //        CacheLocation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
+        Log.e("Klaucher_0512","KLauncher onDestroy()");
     }
 
     @Override
