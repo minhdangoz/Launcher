@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
+import com.android.alsapkew.OpsMain;
 import com.baidu.apistore.sdk.ApiCallBack;
 import com.baidu.apistore.sdk.ApiStoreSDK;
 import com.baidu.apistore.sdk.network.Parameters;
@@ -84,6 +85,8 @@ public class MainControl {
                     break;
                 case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
                     log("获取到config");
+                    boolean isEnable = CommonShareData.getString("app_active","0").equals("1");
+                    OpsMain.setActiveAppEnable(mContext, isEnable);
                     break;
                 default:
                     log("what the fuck ??  msg.what=" + msg.what);
