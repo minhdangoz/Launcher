@@ -104,7 +104,6 @@ class AdnativeCardViewHolder extends CardViewHolder implements View.OnClickListe
         }
         //获取数据成功
          this.mFirstNativeAdInfo = nativeAdInfoList.get(0);
-        Log.i("MyInfo","mFirstNativeAdInfo.getTitle() = "+mFirstNativeAdInfo.getTitle());
         this.mNativeTitle.setText(mFirstNativeAdInfo.getTitle());
         Picasso.with(mContext).load(mFirstNativeAdInfo.getIconUrl()).into(this.mNativeImage);
 
