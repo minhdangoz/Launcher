@@ -761,8 +761,13 @@ public class Launcher extends Activity
             // Create the custom content page and call the subclass to populate it.
             mWorkspace.createCustomContentContainer();
             populateCustomContentContainer();
+            /*if(mWorkspace.mCurrentPage == 1){//信息流 全屏
+                setFullScreen(true);
+                Log.e("mWorkspace",mWorkspace.mCurrentPage+";setFullScreen true");
+            }*/
         } else if (mWorkspace.hasCustomContent() && !hasCustomContentToLeft()) {
             mWorkspace.removeCustomContentPage();
+            //setFullScreen(false);
         }
     }
 
@@ -1503,6 +1508,11 @@ public class Launcher extends Activity
             mWorkspace.updateSlideLoopValue();
         }
         /* Lenovo-sw luyy1 add end for loop support 2015-08-31*/
+       /* if(hasCustomContentToLeft()&& mWorkspace.mCurrentPage == 1){
+            setFullScreen(true);
+        }else{
+            setFullScreen(false);
+        }*/
     }
 
     @Override
@@ -4163,8 +4173,8 @@ public class Launcher extends Activity
     }
 
     public boolean onLongClick(View v) {
-        if (!isDraggingEnabled()) return false;
-        if (isWorkspaceLocked()) return false;
+        if (!isDraggingEnabled()) return false;//klaucher 正在加载  不能操作 返回
+        if (isWorkspaceLocked()) return false; //klaucher  锁定 不能操作
         if (mState != State.WORKSPACE) return false;
         if (v instanceof Workspace) {
             if (!mWorkspace.isInOverviewMode()) {
@@ -5594,6 +5604,10 @@ public class Launcher extends Activity
         if (hasCustomContentToLeft()) {
             mWorkspace.createCustomContentContainer();
             populateCustomContentContainer();
+            /*if(mWorkspace.mCurrentPage == 1){
+                setFullScreen(true);
+            }*/
+
         }
     }
 

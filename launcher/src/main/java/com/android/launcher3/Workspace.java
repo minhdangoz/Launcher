@@ -1962,6 +1962,15 @@ public class Workspace extends SmoothPagedView
         // Force the wallpaper offset steps to be set again, because another app might have changed
         // them
         mLastSetWallpaperOffsetSteps = 0f;
+        Log.e("setFullScreen","setFullScreen "+mLauncher.hasCustomContentToLeft()+";"+mCurrentPage);
+        //信息流设置
+        if(mLauncher.hasCustomContentToLeft()&& mCurrentPage == 0){
+            mLauncher.setFullScreen(true);
+            Log.e("setFullScreen","setFullScreen true");
+        }else{
+            mLauncher.setFullScreen(false);
+            Log.e("setFullScreen","setFullScreen false");
+        }
     }
 
     @Override
