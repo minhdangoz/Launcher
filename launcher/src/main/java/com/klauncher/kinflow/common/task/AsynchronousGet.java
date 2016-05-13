@@ -150,7 +150,7 @@ public final class AsynchronousGet {
             } else {
                 for (int i = 1; i <= jsonHotLength; i++) {
                     JSONObject jsonHotWord = jsonHot.getJSONObject(String.valueOf(i));
-                    hotWordList.add(new HotWord(String.valueOf(i), jsonHotWord.getString("word"), jsonHotWord.getString("url")));
+                    hotWordList.add(new HotWord(String.valueOf(i), jsonHotWord.getString("word"), jsonHotWord.getString("url"),HotWord.TYPE_BAIDU));
                 }
                 msg.arg1 = SUCCESS;
                 msg.obj = hotWordList;

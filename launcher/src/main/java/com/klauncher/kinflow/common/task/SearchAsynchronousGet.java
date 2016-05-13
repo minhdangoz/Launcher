@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.klauncher.kinflow.common.factory.MessageFactory;
+import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.search.model.HotWord;
 import com.klauncher.kinflow.search.model.SearchEnum;
 import com.klauncher.kinflow.utilities.KinflowLog;
@@ -137,7 +138,7 @@ public final class SearchAsynchronousGet {
             } else {
                 for (int i = 1; i <= jsonHotLength; i++) {
                     JSONObject jsonHotWord = jsonHot.getJSONObject(String.valueOf(i));
-                    hotWordList.add(new HotWord(String.valueOf(i), jsonHotWord.getString("word"), jsonHotWord.getString("url")));
+                    hotWordList.add(new HotWord(String.valueOf(i), jsonHotWord.getString("word"), jsonHotWord.getString("url"),HotWord.TYPE_BAIDU));
                 }
                 msg.arg1 = SUCCESS;
                 msg.obj = hotWordList;
@@ -160,7 +161,7 @@ public final class SearchAsynchronousGet {
                 int jsonArrayHotWordLength = jsonArray.length();
                 for (int i = 0; i < jsonArrayHotWordLength; i ++) {
                     JSONObject jsonShenMaHotWord = jsonArray.getJSONObject(i);
-                    hotWordList.add(new HotWord(String.valueOf(i),jsonShenMaHotWord.getString("title"),jsonShenMaHotWord.getString("url")));
+                    hotWordList.add(new HotWord(String.valueOf(i),jsonShenMaHotWord.getString("title"), Const.SHEN_MA_SITE+jsonShenMaHotWord.getString("url"),HotWord.TYPE_SHENMA));
                 }
                 msg.arg1 = SUCCESS;
                 msg.obj = hotWordList;

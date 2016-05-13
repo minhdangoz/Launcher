@@ -29,6 +29,7 @@ public class Const {
     public static final String SHEN_MA_SEARCH_KEY = "wm946679";
     public static final String SHEN_MA_HOTWORD_KEY = "wm848022";
     public static final String SHEN_MA_KEYW0RD = "";
+    public static final String SHEN_MA_SITE = "http://m.yz2.sm.cn/";
     public static final String SHEN_MA_HOMEPAGE = "http://m.yz2.sm.cn/?from="+SHEN_MA_SEARCH_KEY;
     public static final String SHEN_MA_SEARCH_BOX = "http://m.yz2.sm.cn/s?from="+SHEN_MA_SEARCH_KEY+"&q=";//最后需要拼接关键字
     public static final String SHEN_MA_COMBOBOX_HINT = "http://sugs.m.sm.cn/api?wd="+SHEN_MA_KEYW0RD+"&vd"+SHEN_MA_SEARCH_KEY;//需要给keywork赋值,或者单独拼接此url

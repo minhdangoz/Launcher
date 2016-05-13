@@ -155,9 +155,11 @@ public class SearchActivity extends Activity implements OnClickListener{
             }
         }));
         handler = new Handler(callback);
-//        asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
-        new SearchAsynchronousGet(handler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.BAIDU);
-//        new SearchAsynchronousGet(handler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.SHENMA);
+        if (hintHotWord.getType()==HotWord.TYPE_BAIDU) {
+            new SearchAsynchronousGet(handler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.BAIDU);
+        }else {
+            new SearchAsynchronousGet(handler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.SHENMA);
+        }
     }
 
     private void initView() {

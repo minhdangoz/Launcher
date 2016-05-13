@@ -79,7 +79,7 @@ public class CacheHotWord {
 
 
     private HotWord getDefaultHotWord() {
-        return new HotWord(String.valueOf(-4), "热词", Const.URL_SEARCH_WITH_BAIDU + "热词");
+        return new HotWord(String.valueOf(-4), "热词", Const.URL_SEARCH_WITH_BAIDU + "热词",HotWord.TYPE_BAIDU);
     }
 
     /**

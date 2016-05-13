@@ -63,9 +63,9 @@ public class MainControl {
             mRequestSemaphore.release();
             if (msg.arg1==AsynchronousGet.SUCCESS)
             switch (msg.what) {
-                case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD://获取百度热词
+                case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD://获取百度热词||神马热词
                     handleHotWords((List<HotWord>) msg.obj);
-                    log("获取到百度热词");
+                    log("获取到热词");
                     break;
                 case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION://获取Navigation
                     if (null != msg.obj) {
@@ -255,8 +255,9 @@ public class MainControl {
                 switch (what) {
                     case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
                         mRequestSemaphore.acquire();
-                        new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.BAIDU);
+//                        new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.BAIDU);
 //                        new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.SHENMA);
+                        new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.random());
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                         mRequestSemaphore.acquire();
