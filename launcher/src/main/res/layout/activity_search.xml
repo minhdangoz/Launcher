@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/white"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/search_header"
@@ -26,7 +26,7 @@
             android:tag="search"
             android:text="搜索"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <EditText
             android:id="@+id/edit_search"
@@ -39,10 +39,11 @@
             android:drawablePadding="6dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:textColor="@color/color_black"
             android:hint="@string/kinflow_string_search_hint_shishi"
+            android:singleLine="true"
+            android:textColor="@color/color_black"
 
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <TextView
@@ -52,14 +53,14 @@
         android:layout_marginTop="12dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="大家都在搜" />
+        android:text="大家都在搜"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:background="#FF9090" />
+        android:background="#FF9090"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/hotword_recycler"
@@ -67,5 +68,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp" />
+        android:paddingRight="16dp"/>
 </LinearLayout>
