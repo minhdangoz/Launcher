@@ -1,13 +1,19 @@
 package com.klauncher.ext;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.android.system.ReporterApi;
 import com.baidu.apistore.sdk.ApiStoreSDK;
+import com.igexin.sdk.PushManager;
 import com.klauncher.kinflow.common.utils.CacheHotWord;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
+import com.klauncher.kinflow.utilities.CrashHandler;
 import com.klauncher.ping.PingManager;
 import com.ss.android.sdk.minusscreen.SsNewsApi;
 
@@ -17,6 +23,7 @@ import com.ss.android.sdk.minusscreen.SsNewsApi;
 public class KLauncherApplication extends Application {
     //kinflow
     String clientId = "delong";
+    public static KLauncherApplication mKLauncherApplication;
 
     @Override
     public void onCreate() {
@@ -38,5 +45,24 @@ public class KLauncherApplication extends Application {
         CacheHotWord.getInstance().createCacheHotWord(getApplicationContext());
         //此版本已没有天气模块,但是保留天气模块相关代码
 //        CacheLocation.getInstance().createCacheLocation(getApplicationContext());
+        mKLauncherApplication = this;
+        //crash save sd
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(getApplicationContext());
+        initGeitui();
+
+    }
+    private ConnectivityManager mConnectivityManager;
+    private NetworkInfo netInfo;
+    public void initGeitui() {
+        mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        netInfo = mConnectivityManager.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isAvailable()) {
+            // SDK初始化，第三方程序启动时，都要进行SDK初始化工作
+            Log.e("KLauncherApplication","initializing GetuiSdk...");
+            PushManager.getInstance().initialize(this.getApplicationContext());
+            //add crash update
+            CrashHandler.getInstance().uploadErrorLog();
+        }
     }
 }

@@ -44,9 +44,6 @@ public class LauncherApplication extends KLauncherApplication {
         SHOW_CTAPP_FEATURE = getResources().getBoolean(R.bool.config_launcher_page);
         LauncherAppState.setApplicationContext(this);
         LauncherAppState.getInstance();
-        //crash save sd
-        CrashHandler crashHandler = CrashHandler.getInstance();
-        crashHandler.init(getApplicationContext());
 
         /* Lenovo-SW zhaoxin5 20150116 add Theme support */
         initTheme();

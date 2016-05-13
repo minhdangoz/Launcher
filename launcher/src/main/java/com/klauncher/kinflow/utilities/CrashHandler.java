@@ -74,7 +74,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
     /**
      * 获取CrashHandler实例 ,单例模式
      */
-    public synchronized static CrashHandler getInstance() {
+    public static CrashHandler getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new CrashHandler();
         }
@@ -205,7 +205,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
         String strJson = new Gson().toJson(infos).toString();
 
         try {
-            long timestamp = System.currentTimeMillis();
+            //long timestamp = System.currentTimeMillis();
             //String time = formatter.format(new Date());
             String fileName = "crash.log";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -225,11 +225,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
         return null;
     }
 
-    private boolean isFirstUpdateErrorLog = true;
-    private boolean isUploadSuccess = false;
 
-
-    public void updateErrorLog() {
+    public void uploadErrorLog() {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return;
         }
@@ -238,47 +235,46 @@ public class CrashHandler implements UncaughtExceptionHandler {
         if (!file.exists()) {
             return;
         }
+        InputStream instream = null;
+        InputStreamReader inputreader = null;
+        BufferedReader buffreader = null;
         try {
             String content = "";
-            InputStream instream = new FileInputStream(file);
-            if (instream != null) {
-                InputStreamReader inputreader = new InputStreamReader(instream);
-                BufferedReader buffreader = new BufferedReader(inputreader);
-                String line;
-                //分行读取
-                while ((line = buffreader.readLine()) != null) {
-                    content += line;
-                }
-                instream.close();
-                postJson(content);
-                /*//开启一个线程，做联网操作
-                final String finalContent = content;
-                new Thread() {
-                    @Override
-                    public void run() {
-                        postJson(finalContent);
-                    }
-                }.start();*/
+            instream = new FileInputStream(file);
+            inputreader = new InputStreamReader(instream);
+            buffreader = new BufferedReader(inputreader);
+            String line;
+            //分行读取
+            while ((line = buffreader.readLine()) != null) {
+                content += line;
             }
+            postJson(content);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+            try {
+                instream.close();
+                inputreader.close();
+                buffreader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
 
     }
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    //是否正在提交标志位
+    private boolean isWorking = false;
 
     private void postJson(String json) {
-        //第一次 上传或上次上传失败
-        if (isFirstUpdateErrorLog) {
-            isFirstUpdateErrorLog = false;
-        } else if (!isUploadSuccess) {
-
-        } else {
+        //正在上传
+        if (isWorking) {
             return;
         }
+        //改变标志位
+        isWorking = true;
         //申明给服务端传递一个json串
         //创建一个OkHttpClient对象
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -300,24 +296,22 @@ public class CrashHandler implements UncaughtExceptionHandler {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                isUploadSuccess = false;
+                isWorking = false;
                 Log.e(TAG, "onFailure");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 //判断请求是否成功  code为200是成功500是错误，401是参数有问题
-                Log.e(TAG,"code"+response.code());
+                Log.e(TAG, "code" + response.code());
+                isWorking = false;
                 if (response.code() == 200) {
-                    isUploadSuccess = true;
                     //打印服务端返回结果
                     Log.e(TAG, response.body().string());
                     File file1 = new File("/sdcard/crash/crash.log");
                     if (file1.exists()) {
                         file1.delete();
                     }
-                }else{
-                    isUploadSuccess = false;
                 }
             }
         });

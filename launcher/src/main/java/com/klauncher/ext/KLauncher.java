@@ -160,7 +160,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     }
 
     //
-    private ConnectivityManager mConnectivityManager;
+   /* private ConnectivityManager mConnectivityManager;
     private NetworkInfo netInfo;
     private BroadcastReceiver myNetReceiver = new BroadcastReceiver() {
 
@@ -173,9 +173,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
             }
         }
-    };
+    };*/
 
-    private void initGeitui() {
+   /* private void initGeitui() {
         mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         netInfo = mConnectivityManager.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isAvailable()) {
@@ -185,7 +185,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             //add crash update
             CrashHandler.getInstance().updateErrorLog();
         }
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,13 +198,13 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         Intent startIntent = new Intent(this, ShortCutManagerService.class);
         startIntent.putExtra("add_klaucher3_wifi", true);
         startService(startIntent);
-        //个推初始化
+        /*//个推初始化
         IntentFilter mFilter = new IntentFilter();
         mFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         mFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(myNetReceiver, mFilter);
-        initGeitui();
+        initGeitui();*/
         Log.e("Klaucher_0512","KLauncher onCreate()");
         //add error
         /*String[] strs = {};

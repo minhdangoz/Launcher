@@ -676,6 +676,15 @@
             android:name="com.klauncher.getui.NotifyClickService" />
 
         <!-- 个推SDK配置结束 -->
+        <receiver
+            android:name="com.klauncher.getui.NetStatusReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
     </application>
 </manifest>
