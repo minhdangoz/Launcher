@@ -150,6 +150,7 @@ public class MainControl {
 //                                        break;
                                 }
                             }
+                            if (null!=filiterCardInfoList&&filiterCardInfoList.size()!=0)
                             mListener.onCardInfoUpdate(filiterCardInfoList);
                             //非adViewCard更新完毕,再启用adViewCard请求
                             //单独请求adView

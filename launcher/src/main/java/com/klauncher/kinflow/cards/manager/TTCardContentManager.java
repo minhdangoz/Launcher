@@ -1,6 +1,8 @@
 package com.klauncher.kinflow.cards.manager;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Message;
 
@@ -22,6 +24,7 @@ public class TTCardContentManager extends BaseCardContentManager {
     private Handler mMainControlHandler;//MainControl的handler
     private CardInfo mCardInfo;
     private int mChannelId;
+    private ConnectivityManager mCM;
     private List<Article>[] mArticleListArrays = new List[2];//会生成固定长度的两个集合List<Article>数组
 
     public List<Article>[] getArticleListArrays() {
@@ -46,6 +49,7 @@ public class TTCardContentManager extends BaseCardContentManager {
 
     TTCardContentManager(Context context) {
         super(context);
+        mCM = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
     @Override
@@ -84,13 +88,29 @@ public class TTCardContentManager extends BaseCardContentManager {
                 if (!b) {
                     TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
                 }else {
-                    mArticleListArrays = CardUtils.groupByAbstract2(list);
-                    msg.obj = mArticleListArrays;
-                    TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
+//                    mArticleListArrays = CardUtils.groupByAbstract2(list);
+//                    msg.obj = mArticleListArrays;
+//                    TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
+                    if (isConnected2Net()) {
+                        mArticleListArrays = CardUtils.groupByAbstract2(list);
+                        msg.obj = mArticleListArrays;
+                        TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
+                    } else {
+                        TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
+                    }
                 }
             }
 
         }, 20);
     }
 
+    public boolean isConnected2Net() {
+        NetworkInfo networkInfoWifi = mCM.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo networkInfoMobile = mCM.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (networkInfoMobile.isConnected() || networkInfoWifi.isConnected()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -2,15 +2,9 @@ package com.klauncher.ext;
 
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.internal.widget.CompatTextView;
@@ -32,7 +26,6 @@ import com.android.launcher3.backup.LbkUtil;
 import com.android.launcher3.settings.SettingsValue;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
-import com.igexin.sdk.PushManager;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.adapter.CardItemDecoration;
@@ -47,7 +40,6 @@ import com.klauncher.kinflow.navigation.adapter.NavigationAdapter;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
 import com.klauncher.kinflow.search.model.HotWordItemDecoration;
-import com.klauncher.kinflow.utilities.CrashHandler;
 import com.klauncher.kinflow.utilities.Dips;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.weather.model.Weather;
@@ -636,16 +628,22 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     public void onAddAdview(CardInfo cardInfo) {
-        log("==========开始添加adview==========");
-        //向CardsAdapter中添加adView
         CardsAdapter adapter = (CardsAdapter) mCardsView.getAdapter();
+        if (null==adapter) return;
         int adapterItemCount = adapter.getItemCount();
         if (adapterItemCount <= 1) {
             log("Card的个数<=1,所以不添加adview广告");
             return;
         }
         int type = adapter.getItemViewType(adapter.getItemCount()-1);
-        if (null != adapter&&type!= CardIdMap.ADVERTISEMENT_ADVIEW) adapter.addCard(cardInfo);
+        if (type!= CardIdMap.ADVERTISEMENT_ADVIEW) {//没有adview----添加
+            adapter.addCard(cardInfo);
+            log("==========添加adview完成==========");
+        } else if (type == CardIdMap.ADVERTISEMENT_ADVIEW) {//有adview-----删除换新
+            adapter.notifyItemRemoved(adapter.getItemCount() - 1);
+            adapter.addCard(cardInfo);
+            log("==========更新adview完成==========");
+        }
     }
 
     final protected static void log(String msg) {
