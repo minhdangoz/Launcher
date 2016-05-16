@@ -83,12 +83,13 @@ public final class AsynchronousGet {
             public void onFailure(Call call, IOException e) {
                 msg.arg1 = CONNECTION_ERROR;
                 handler.sendMessage(msg);
-
+                log("服务器连接失败,msg.what=" + msg.what);
             }
 
             @Override
             public void onResponse(Call call, Response response) {
                 if (!response.isSuccessful()) {
+                    log("服务器响应失败,msg.what=" + msg.what);
                     msg.arg1 = RESPONSE_FAIL;
                     handler.sendMessage(msg);
                     response.body().close();
@@ -124,6 +125,9 @@ public final class AsynchronousGet {
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
                             parseConfig(responseBodyStr);
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT:
+                            parseHotwordWeight(responseBodyStr);
                             break;
                     }
                     response.body().close();
@@ -332,6 +336,40 @@ public final class AsynchronousGet {
             }
         } catch (JSONException e) {
             log("解析Config的Json数据时,出错:" + e.getMessage());
+            msg.arg1 = PARSE_ERROR;
+        } finally {
+            handler.sendMessage(msg);
+        }
+    }
+
+    private void parseHotwordWeight(String responseBodyStr) {
+        log("开始解析热词权重比:parseHotwordWeight");
+        try {
+            JSONObject jsonObjectRoot = new JSONObject(responseBodyStr);
+            JSONArray jsonArrayConfigList = jsonObjectRoot.getJSONArray("cw");
+            if (null == jsonArrayConfigList || jsonArrayConfigList.length() == 0) {
+                msg.arg1 = RESPONSE_FAIL;
+            } else {
+                int jsonArrayLength = jsonArrayConfigList.length();
+                for (int i = 0; i < jsonArrayLength; i++) {
+                    JSONObject configJson = jsonArrayConfigList.getJSONObject(i);
+                    Iterator<String> keysIterator = configJson.keys();
+                    String key;
+                    String value;
+                    while (keysIterator.hasNext()) {
+                        key = keysIterator.next();
+                        value = (String) configJson.get(key);
+                        CommonShareData.putString(key, value);
+                    }
+                }
+                msg.arg1 = SUCCESS;
+                log("解析热词权重比完毕"
+                +"  bd_prct = "+ CommonShareData.getString("bd_prct","50")
+                +"  sm_prct = "+ CommonShareData.getString("sm_prct","50")
+                );
+            }
+        } catch (JSONException e) {
+            log("解析热词权重比的Json数据时,出错:" + e.getMessage());
             msg.arg1 = PARSE_ERROR;
         } finally {
             handler.sendMessage(msg);

@@ -60,6 +60,7 @@ public class Const {
     public static final String NAVIGATION_LOCAL_UPDATE_INTERVAL = "local_updateInterval";
     public static final String NAVIGATION_SERVER_UPDATE_INTERVAL = "updateInterval";
     public static final String CONFIG_SETTINGS = REALEASE_HOST+"/v1/config?cid="+REALEASE_CID;
+    public static final String CONFIG_HOTWORD_WEIGHT = REALEASE_HOST+"/v1/config/funclist?cid="+REALEASE_CID;
 
     //Android默认浏览器（Android新版本默认是chrome）
     public static final String DEFAULT_BROWSER_packageName = "com.android.browser";

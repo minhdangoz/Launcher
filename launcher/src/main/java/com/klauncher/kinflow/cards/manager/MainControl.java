@@ -247,7 +247,7 @@ public class MainControl {
         this.mRequestTypes = msgWhats;
 //        this.mCardInfoList = cardInfoList;
         this.mCardInfoList = CardsListManager.getInstance().getInfos();
-        permitCount = mCardInfoList.size() + 3;
+        permitCount = mCardInfoList.size() + 4;
         log("请求的总数=" + permitCount + " ,其中card请求个数=" + mCardInfoList.size());
         mRequestSemaphore = new Semaphore(permitCount);
         for (int what : msgWhats) {
@@ -255,9 +255,7 @@ public class MainControl {
                 switch (what) {
                     case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
                         mRequestSemaphore.acquire();
-//                        new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.BAIDU);
-//                        new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.SHENMA);
-                        new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.random());
+                        new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.rateSearchEnum());
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                         mRequestSemaphore.acquire();
@@ -266,6 +264,11 @@ public class MainControl {
                     case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
                         mRequestSemaphore.acquire();
                         new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG).run(Const.CONFIG_SETTINGS);
+                        break;
+                    case MessageFactory.MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT:
+                        mRequestSemaphore.acquire();
+                        log("热词权重比url = "+Const.CONFIG_HOTWORD_WEIGHT);
+                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT).run(Const.CONFIG_HOTWORD_WEIGHT);
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
                         CardUtils.clearOffset();

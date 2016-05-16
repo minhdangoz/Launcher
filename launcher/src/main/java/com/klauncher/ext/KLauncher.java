@@ -390,7 +390,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
                 MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
                 MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-                MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG);
+                MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG,
+                MessageFactory.MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT
+        );
         //注册监听
         CacheNavigation.getInstance().registerOnSharedPreferenceChangeListener(this);
 //        CacheLocation.getInstance().registerOnSharedPreferenceChangeListener(this);//此版本已没有天气模块,但是保留天气模块相关代码
@@ -404,7 +406,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
                         MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
                         MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-                        MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG);
+                        MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG,
+                        MessageFactory.MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT
+                );
             }
         });
 
