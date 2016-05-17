@@ -1962,15 +1962,15 @@ public class Workspace extends SmoothPagedView
         // Force the wallpaper offset steps to be set again, because another app might have changed
         // them
         mLastSetWallpaperOffsetSteps = 0f;
-        Log.e("setFullScreen","setFullScreen "+mLauncher.hasCustomContentToLeft()+";"+mCurrentPage);
-        //信息流设置
+        //Log.e("setFullScreen","setFullScreen "+mLauncher.hasCustomContentToLeft()+";"+mCurrentPage);
+        /*//信息流设置
         if(mLauncher.hasCustomContentToLeft()&& mCurrentPage == 0){
             mLauncher.setFullScreen(true);
             Log.e("setFullScreen","setFullScreen true");
         }else{
             mLauncher.setFullScreen(false);
             Log.e("setFullScreen","setFullScreen false");
-        }
+        }*/
     }
 
     @Override
@@ -2676,6 +2676,7 @@ public class Workspace extends SmoothPagedView
         if (hasCustomContent()) {
             snapPage = Math.max(1, snapPage);
         }
+
         
         /** Lenovo-SW zhaoxin5 20150916 fix bug, get out from edit mode, the workspace edge shows innormal START */
         if (canSnapPage) {
@@ -3008,11 +3009,23 @@ public class Workspace extends SmoothPagedView
             enableLayoutTransitions();
         }
     }
+    void setFullScreenContentIfNecessary(){
+        //信息流设置
+        Log.e("setFullScreen","setFullScreen "+mLauncher.hasCustomContentToLeft()+";"+mCurrentPage);
+        if(mLauncher.hasCustomContentToLeft()&& mCurrentPage == 0){
+            mLauncher.setFullScreen(true);
+            Log.e("setFullScreen","setFullScreen true");
+        }else{
+            mLauncher.setFullScreen(false);
+            Log.e("setFullScreen","setFullScreen false");
+        }
+    }
 
     private void onTransitionEnd() {
         mIsSwitchingState = false;
         updateChildrenLayersEnabled(false);
         showCustomContentIfNecessary();
+        setFullScreenContentIfNecessary();
     }
 
     @Override

@@ -588,6 +588,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
         updateCurrentPageScroll();
         notifyPageSwitchListener();
         invalidate();
+
     }
 
     /**
