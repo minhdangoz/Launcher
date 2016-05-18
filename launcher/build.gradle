@@ -5,7 +5,6 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.klauncher.launcher"
         minSdkVersion 16
         targetSdkVersion 21
         multiDexEnabled true
@@ -43,34 +42,42 @@ android {
         xiaomi {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + XIAOMI_ID, WE_OPS_ID: WE_OPS_ID_XMZ]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + XIAOMI_ID + "\""
+            applicationId = "com.klauncher.xmlauncher"
         }
         huawei {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + HUAWEI_ID, WE_OPS_ID: WE_OPS_ID_HWS]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + HUAWEI_ID + "\""
+            applicationId = "com.klauncher.hwlauncher"
         }
         lenovo {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + LENOVO_ID, WE_OPS_ID: WE_OPS_ID_LK]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LENOVO_ID + "\""
+            applicationId = "com.klauncher.lxlauncher"
         }
         coolpad {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + COOLPAD_ID, WE_OPS_ID: WE_OPS_ID_LK]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + COOLPAD_ID + "\""
+            applicationId = "com.klauncher.cplauncher"
         }
         meizu {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + MEIZU_ID, WE_OPS_ID: WE_OPS_ID_XMZ]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + MEIZU_ID + "\""
+            applicationId = "com.klauncher.mzlauncher"
         }
         samsung {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + SAMSUNG_ID, WE_OPS_ID: WE_OPS_ID_HWS]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + SAMSUNG_ID + "\""
+            applicationId = "com.klauncher.sxlauncher"
         }
         oppo {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + OPPO_ID, WE_OPS_ID: WE_OPS_ID_OV]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + OPPO_ID + "\""
+            applicationId = "com.klauncher.oplauncher"
         }
         leshi {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + LESHI_ID, WE_OPS_ID: WE_OPS_ID_OTH]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LESHI_ID + "\""
+            applicationId = "com.klauncher.lslauncher"
         }
     }
 
