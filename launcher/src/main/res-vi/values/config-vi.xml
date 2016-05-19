@@ -1,0 +1,45 @@
+<resources>
+    <integer name="config_workspaceDefaultScreen">1</integer>
+    <integer name="config_workspaceInstalledAppStartScreen">1</integer>
+    <item name="config_folder_background_ratio" format="float" type="dimen">0.75</item>
+    <item name="config_folder_iconsize_ratio" format="float" type="dimen">1</item>
+    <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0.66</item>
+    <array name="config_theme_load_keywords">
+        <item>HUAWEI RIO-AL00,yongheng</item>
+        <item>HUAWEI RIO-UL00,yongheng</item>
+        <item>HUAWEI RIO-TL00,yongheng</item>
+        <item>HUAWEI NXT-AL10,yongheng</item>
+        <item>HUAWEI MT7-TL10,yongheng</item>
+        <item>HUAWEI MT7-TL00,yongheng</item>
+        <item>HUAWEI M2-803L,yongheng</item>
+        <item>SCL-AL00,duocai</item>
+        <item>SCL-CL00,duocai</item>
+        <item>SCL-TL00,duocai</item>
+        <item>PLK-TL00,bazzar</item>
+    </array>
+
+    <array name="app_disguise_list">
+        <item>com.miguan.market</item>
+        <item>com.alex.nuclear</item>
+        <item>cn.kuwo.player</item>
+        <item>com.duomi.android</item>
+        <item>com.tencent.qqlive</item>
+        <item>com.UCMobile</item>
+        <item>com.tencent.qqpimsecure</item>
+        <item>cn.etouch.ecalendar</item>
+        <item>com.moji.mjweather</item>
+    </array>
+
+    <string name="config_icon_com.miguan.market">com.bbk.appstore</string>
+    <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
+    <string name="config_icon_cn.kuwo.player">com.android.bbkmusic,com.android.music,com.android.mediacenter</string>
+    <string name="config_icon_com.duomi.android">com.android.mediacenter</string>
+    <string name="config_icon_com.tencent.qqlive">com.android.VideoPlayer</string>
+    <string name="config_icon_com.UCMobile">com.vivo.browser,com.android.browser</string>
+    <string name="config_icon_com.tencent.qqpimsecure">com.iqoo.secure</string>
+    <string name="config_icon_cn.etouch.ecalendar">com.bbk.calendar,com.android.calendar</string>
+    <string name="config_icon_com.moji.mjweather">com.vivo.weather</string>
+
+    <string name="folder_system_tool">系统工具</string>
+    <bool name="kinflow_switch_default">true</bool>
+</resources>

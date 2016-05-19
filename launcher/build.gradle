@@ -79,6 +79,11 @@ android {
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LESHI_ID + "\""
             applicationId = "com.klauncher.lslauncher"
         }
+        vivo {
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + VIVO_ID, WE_OPS_ID: WE_OPS_ID_OTH]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + VIVO_ID + "\""
+            applicationId = "com.klauncher.vilauncher"
+        }
     }
 
     sourceSets {
@@ -119,6 +124,10 @@ android {
         leshi {
             assets.srcDirs = ['src/main/assets-ls']
             res.srcDirs += ['src/main/res-ls']
+        }
+        vivo {
+            assets.srcDirs = ['src/main/assets-vi']
+            res.srcDirs += ['src/main/res-vi']
         }
     }
 
