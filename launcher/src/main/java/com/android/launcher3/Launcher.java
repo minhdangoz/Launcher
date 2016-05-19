@@ -838,7 +838,7 @@ public class Launcher extends Activity
                     (int)rmList.get(i).screenId,rmList.get(i).spanX,rmList.get(i).spanY);
         }
     }
-
+    //error  void android.view.View.bringToFront()' on a null object reference
     private void installWidgetByClassName(String classname, int x, int y, int screen,int spanX,int spanY) {
         Log.d(TAG, "Position==> CellXY: " + x + "," + y + " Screen: " + screen + " SpanXY: " + spanX + "," + spanY);
         List<AppWidgetProviderInfo> widgets = AppWidgetManager

@@ -16,17 +16,17 @@
         android:layout_height="match_parent"
         />-->
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/layoutcontent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+    </LinearLayout>-->
 
-        <!--<include
-            layout="@layout/activity_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />-->
-    </LinearLayout>
+    <include
+        layout="@layout/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>

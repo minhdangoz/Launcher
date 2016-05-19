@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.handmark.pulltorefresh.library.PullToRefreshScrollView
-    android:id="@+id/pull_refresh_scrollview"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ptr="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pull_refresh_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:padding="@dimen/kinfow_dimen_main_padding"
+    android:paddingBottom="20dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="20dp"
     android:scrollbars="none"
     ptr:ptrAnimationStyle="flip"
-    android:fitsSystemWindows="true"
     ptr:ptrMode="both">
 
 
@@ -23,20 +26,20 @@
         <!--天气-->
         <include
             android:id="@+id/weather_header"
-            android:visibility="gone"
-            layout="@layout/weather_header"/>
+            layout="@layout/weather_header"
+            android:visibility="gone"/>
 
         <android.support.v7.internal.widget.CompatTextView
             android:id="@+id/hot_word_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="时事热点"
-            android:singleLine="true"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:paddingRight="16dp"
-            android:paddingLeft="8dp"
             android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="16dp"
+            android:singleLine="true"
+            android:text="时事热点"
             android:textColor="@color/kinflow_color_typeface_main"
             android:textSize="16sp"
             />
@@ -101,9 +104,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:gravity="center_vertical"
                 android:src="@drawable/refresh"/>
 
             <RelativeLayout
@@ -154,7 +157,7 @@
             android:id="@+id/scroll_view_cards"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="42dp"
-            android:layout_below="@id/navigation_recyclerView"/>
+            android:layout_below="@id/navigation_recyclerView"
+            android:paddingBottom="42dp"/>
     </RelativeLayout>
 </com.handmark.pulltorefresh.library.PullToRefreshScrollView>

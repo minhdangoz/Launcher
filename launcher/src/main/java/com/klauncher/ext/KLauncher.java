@@ -78,7 +78,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     //    private WebView mWebView;
     //kinflow
     RelativeLayout mWeatherLayout;
-    private LinearLayout mLayoutContent;
+    //private LinearLayout mLayoutContent;
     TextView tv_temperature;
     TextView tv_city;
     TextView tv_weather;
@@ -114,14 +114,14 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     public void populateCustomContentContainer() {
         Log.e("Klaucher_0512","KLauncher populateCustomContentContainer()");
-        View customView = getLayoutInflater().inflate(R.layout.custom, null);
-
+        //View customView = getLayoutInflater().inflate(R.layout.custom, null);
+        View customView = getLayoutInflater().inflate(R.layout.activity_main, null);
         /*mWebView = (WebView) customView.findViewById(R.id.webcontent);
         if (null != mWebView) {
             setupWebView();
 		}*/
-        mLayoutContent = (LinearLayout) customView.findViewById(R.id.layoutcontent);
-        initKinflow();
+        //mLayoutContent = (LinearLayout) customView.findViewById(R.id.layoutcontent);
+        initKinflow(customView);
 
         CustomContentCallbacks callbacks = new CustomContentCallbacks() {
             @Override
@@ -339,8 +339,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     private int SCROLL_X = 0;
     private final int ANIM_DURATION = 300;
 
-    private void initKinflow() {
-        View kinflowView = getLayoutInflater().inflate(R.layout.activity_main, null);
+    private void initKinflow( View customview) {
+       // View kinflowView = getLayoutInflater().inflate(R.layout.activity_main, null);
+        View kinflowView = customview;
         //initview
         mWeatherLayout = (RelativeLayout) kinflowView.findViewById(R.id.weather_header);
         tv_temperature = (TextView) kinflowView.findViewById(R.id.temperature);
@@ -358,7 +359,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         navigationRecyclerView = (RecyclerView) kinflowView.findViewById(R.id.navigation_recyclerView);
         mCardsView = (RecyclerView) kinflowView.findViewById(R.id.scroll_view_cards);
         mPullRefreshScrollView = (PullToRefreshScrollView) kinflowView.findViewById(R.id.pull_refresh_scrollview);
-        mLayoutContent.addView(kinflowView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        //mLayoutContent.addView(kinflowView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         //listener
         tv_searchHint.setOnClickListener(this);
         iv_searchMode.setOnClickListener(this);

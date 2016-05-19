@@ -1419,6 +1419,8 @@ public class Workspace extends SmoothPagedView
                 mCustomContentCallbacks.onShow(false);
                 mCustomContentShowTime = System.currentTimeMillis();
                 mLauncher.updateVoiceButtonProxyVisible(false);
+                //刷新
+                mLauncher.setFullScreen(true);
             }
         } else if (hasCustomContent() && getNextPage() != 0 && mCustomContentShowing) {
             mCustomContentShowing = false;
@@ -1426,6 +1428,7 @@ public class Workspace extends SmoothPagedView
                 mCustomContentCallbacks.onHide();
                 mLauncher.resetQSBScroll();
                 mLauncher.updateVoiceButtonProxyVisible(false);
+                mLauncher.setFullScreen(false);
             }
         }
     }
@@ -3009,7 +3012,7 @@ public class Workspace extends SmoothPagedView
             enableLayoutTransitions();
         }
     }
-    void setFullScreenContentIfNecessary(){
+    /*void setFullScreenContentIfNecessary(){
         //信息流设置
         Log.e("setFullScreen","setFullScreen "+mLauncher.hasCustomContentToLeft()+";"+mCurrentPage);
         if(mLauncher.hasCustomContentToLeft()&& mCurrentPage == 0){
@@ -3019,13 +3022,13 @@ public class Workspace extends SmoothPagedView
             mLauncher.setFullScreen(false);
             Log.e("setFullScreen","setFullScreen false");
         }
-    }
+    }*/
 
     private void onTransitionEnd() {
         mIsSwitchingState = false;
         updateChildrenLayersEnabled(false);
         showCustomContentIfNecessary();
-        setFullScreenContentIfNecessary();
+        //setFullScreenContentIfNecessary();
     }
 
     @Override
