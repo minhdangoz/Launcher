@@ -234,7 +234,12 @@ public class ModeSwitchHelper {
 	    }
 	    return null;
 	}
-	
+
+	/**
+	 * error attempt to write a readonly database
+	 * @param mode
+	 * @param db
+     */
 	private static void clearDesktopDataForSpecificMode(Mode mode, SQLiteDatabase db) {
 		String args = String.valueOf(mode.ordinal());
 		// 先删除favorites表中的数据
