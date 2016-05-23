@@ -47,14 +47,14 @@ public class KLauncherApplication extends Application {
 //        CacheLocation.getInstance().createCacheLocation(getApplicationContext());
         mKLauncherApplication = this;
         //crash save sd
-        CrashHandler crashHandler = CrashHandler.getInstance();
+       /* CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(getApplicationContext());
-        initGeitui();
+        initGeitui();*/
 
     }
     private ConnectivityManager mConnectivityManager;
     private NetworkInfo netInfo;
-    public void initGeitui() {
+    /*public void initGeitui() {
         mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         netInfo = mConnectivityManager.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isAvailable()) {
@@ -64,5 +64,5 @@ public class KLauncherApplication extends Application {
             //add crash update
             CrashHandler.getInstance().uploadErrorLog();
         }
-    }
+    }*/
 }

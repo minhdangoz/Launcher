@@ -27,6 +27,7 @@
         <item>com.UCMobile</item>
         <item>com.tencent.qqpimsecure</item>
         <item>cn.etouch.ecalendar</item>
+        <item>cn.etouch.ecalendar.cpa</item>
         <item>com.moji.mjweather</item>
     </array>
 
@@ -38,6 +39,7 @@
     <string name="config_icon_com.UCMobile">com.vivo.browser,com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.iqoo.secure</string>
     <string name="config_icon_cn.etouch.ecalendar">com.bbk.calendar,com.android.calendar</string>
+    <string name="config_icon_cn.etouch.ecalendar.cpa">com.bbk.calendar,com.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">com.vivo.weather</string>
 
     <string name="folder_system_tool">系统工具</string>
