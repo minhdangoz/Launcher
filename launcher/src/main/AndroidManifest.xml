@@ -62,31 +62,30 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
-    <!--<uses-permission android:name="android.permission.VIBRATE" />-->
     <uses-permission android:name="android.permission.BIND_APPWIDGET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <!--<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
  	<!--往sdcard中写入数据的权限 -->
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
-    <!--<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <!--<uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />-->
+    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
     <uses-permission android:name="com.klauncher.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="com.klauncher.launcher.permission.WRITE_SETTINGS" />
     <uses-permission android:name="com.klauncher.launcher.permission.RECEIVE_LAUNCH_BROADCASTS" />
-    <!--<uses-permission android:name="com.klauncher.launcher.permission.RECEIVE_FIRST_LOAD_BROADCAST" />-->
+    <uses-permission android:name="com.klauncher.launcher.permission.RECEIVE_FIRST_LOAD_BROADCAST" />
     <uses-permission android:name="cyanogenmod.permission.PROTECTED_APP" />
     <!-- Lenovo-SW zhaoxin5 20150529 add for 2 layer support  -->
 	<uses-permission android:name="com.lenovo.launcher.permission.READ_SETTINGS" />
 	<uses-permission android:name="com.lenovo.launcher.permission.WRITE_SETTINGS" />
     <!-- Lenovo-SW zhaoxin5 20150529 add for 2 layer support  -->
-
+    <!-- vivo  -->
+    <uses-permission android:name="com.bbk.launcher2.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.bbk.launcher2.permission.WRITE_SETTINGS" />
+    <!-- vivo  -->
     <!-- LqOps需要的权限 BEGIN -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!--<uses-permission android:name="android.permission.INTERNET" />-->
-    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -97,7 +96,6 @@
     <!--非系统级app获取不到该权限-->
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
@@ -123,7 +121,6 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <uses-permission android:name="android.permission.BATTERY_STATS" />
-    <!--<uses-permission android:name="android.permission.GET_ACCOUNTS" />-->
     <uses-permission android:name="android.permission.GET_TOP_ACTIVITY_INFO" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.READ_SMS"/>
@@ -141,6 +138,8 @@
     </permission>
     <!-- 个推SDK权限配置结束 -->
     <!-- LqOps需要的权限 END -->
+    <!--监听用户解锁-->
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <!--android:name="com.android.launcher3.LauncherApplication"-->
     <!--tools:replace="android:icon, android:title,android:background"-->
     <application
@@ -676,6 +675,7 @@
             android:name="com.klauncher.getui.NotifyClickService" />
 
         <!-- 个推SDK配置结束 -->
+        <!--网络状态监听广播-->
         <receiver
             android:name="com.klauncher.getui.NetStatusReceiver"
             android:exported="false" >
@@ -683,6 +683,16 @@
                 <action android:name="android.net.wifi.STATE_CHANGE" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <!--屏幕变化监听广播-->
+        <receiver
+            android:name="com.klauncher.getui.ScreenStatusReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.SCREEN_ON" />
             </intent-filter>
         </receiver>
 

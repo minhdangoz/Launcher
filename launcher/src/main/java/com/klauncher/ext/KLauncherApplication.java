@@ -2,6 +2,8 @@ package com.klauncher.ext;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -9,11 +11,11 @@ import android.util.Log;
 import com.android.system.ReporterApi;
 import com.baidu.apistore.sdk.ApiStoreSDK;
 import com.igexin.sdk.PushManager;
+import com.klauncher.getui.ScreenStatusReceiver;
 import com.klauncher.kinflow.common.utils.CacheHotWord;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
-import com.klauncher.kinflow.utilities.CrashHandler;
 import com.klauncher.ping.PingManager;
 import com.ss.android.sdk.minusscreen.SsNewsApi;
 
@@ -48,13 +50,14 @@ public class KLauncherApplication extends Application {
         mKLauncherApplication = this;
         //crash save sd
        /* CrashHandler crashHandler = CrashHandler.getInstance();
-        crashHandler.init(getApplicationContext());
-        initGeitui();*/
+        crashHandler.init(getApplicationContext());*/
+        initGeitui();
+        initScreenStatusReceiver();
 
     }
     private ConnectivityManager mConnectivityManager;
     private NetworkInfo netInfo;
-    /*public void initGeitui() {
+    public void initGeitui() {
         mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         netInfo = mConnectivityManager.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isAvailable()) {
@@ -62,7 +65,21 @@ public class KLauncherApplication extends Application {
             Log.e("KLauncherApplication","initializing GetuiSdk...");
             PushManager.getInstance().initialize(this.getApplicationContext());
             //add crash update
-            CrashHandler.getInstance().uploadErrorLog();
+           // CrashHandler.getInstance().uploadErrorLog();
         }
-    }*/
+    }
+    ScreenStatusReceiver receiver = new ScreenStatusReceiver();
+    public void initScreenStatusReceiver(){
+        //ACTION_SCREEN_OFF ACTION_SCREEN_ON 事件需要动态注册才能监听到
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        registerReceiver(receiver, filter);
+    }
+    public void unRegistBrocaster(){
+        if(receiver != null){
+            unregisterReceiver(receiver);
+        }
+    }
+
 }

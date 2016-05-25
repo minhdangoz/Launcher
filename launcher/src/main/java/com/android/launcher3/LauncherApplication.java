@@ -19,7 +19,6 @@ package com.android.launcher3;
 import android.os.Build;
 
 import com.klauncher.ext.KLauncherApplication;
-import com.klauncher.kinflow.utilities.CrashHandler;
 import com.klauncher.launcher.R;
 import com.klauncher.theme.ThemeController;
 
@@ -55,6 +54,7 @@ public class LauncherApplication extends KLauncherApplication {
     public void onTerminate() {
         super.onTerminate();
         LauncherAppState.getInstance().onTerminate();
+        unRegistBrocaster();
     }
 
     /* Lenovo-SW zhaoxin5 20150116 add Theme support */

@@ -12,7 +12,7 @@ import com.klauncher.ext.KLauncherApplication;
 public class NetStatusReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
-        //KLauncherApplication.mKLauncherApplication.initGeitui();
+        KLauncherApplication.mKLauncherApplication.initGeitui();
     }
 
 }

@@ -226,7 +226,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
     }
 
 
-    public void uploadErrorLog() {
+    /*public void uploadErrorLog() {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return;
         }
@@ -262,7 +262,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
         }
 
 
-    }
+    }*/
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     //是否正在提交标志位

@@ -151,34 +151,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         addToCustomContentPage(customView, callbacks, "custom-view");
     }
 
-    //
-   /* private ConnectivityManager mConnectivityManager;
-    private NetworkInfo netInfo;
-    private BroadcastReceiver myNetReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-                initGeitui();
-
-
-            }
-        }
-    };*/
-
-   /* private void initGeitui() {
-        mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        netInfo = mConnectivityManager.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isAvailable()) {
-            // SDK初始化，第三方程序启动时，都要进行SDK初始化工作
-            log("initializing GetuiSdk...");
-            PushManager.getInstance().initialize(this.getApplicationContext());
-            //add crash update
-            CrashHandler.getInstance().updateErrorLog();
-        }
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
