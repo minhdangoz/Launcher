@@ -291,6 +291,12 @@
             </intent-filter>
         </receiver>
  		-->
+
+        <receiver android:name="com.klauncher.ext.DefaultLauncherReceiver">
+            <intent-filter>
+                <action android:name="com.klauncher.launcher.action.DEFAULT_LAUNCHER" />
+            </intent-filter>
+        </receiver>
  
         <!-- Intent received used to install shortcuts from other applications -->
         <receiver

@@ -20,6 +20,7 @@ gradlew
 gradlew.bat
 local.properties
 *.iml
+*.diff
 
 
 /build
