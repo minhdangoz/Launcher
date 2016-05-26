@@ -129,4 +129,8 @@ public class Const {
      * SharedPreference---key
      */
     public static final String KEY_CARD_CLEAR_OFFSET = "card_clear_offset";
+    public static final String KEY_LAST_SKIP_TIME = "last_skip_time";//在信息里流界面一天以内,随机跳转到2345界面
+
+    //other
+    public static final String URL_2345_HOMEPAGE = "http://m.2345.com/?sc_delong";
 }

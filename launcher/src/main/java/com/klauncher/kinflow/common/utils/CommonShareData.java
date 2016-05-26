@@ -42,6 +42,17 @@ public class CommonShareData {
         return sharedPreferences.getInt(key,defaultValue);
     }
 
+    public static void putLong (String key,long value) {
+        if (TextUtils.isEmpty(key)) return;
+        editor.putLong(key,value);
+        editor.commit();
+    }
+
+    public static long getLong (String key,long defaultValue) {
+        if (TextUtils.isEmpty(key)) return defaultValue;
+        return sharedPreferences.getLong(key,defaultValue);
+    }
+
     public static void clearInt(String key){
         editor.putInt(key,0);
     }

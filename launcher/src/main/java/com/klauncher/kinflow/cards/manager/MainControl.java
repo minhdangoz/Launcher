@@ -59,7 +59,7 @@ public class MainControl {
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            log("收到信号,wmg.what="+msg.what);
+            log("收到信号,wmg.what=" + msg.what);
             mRequestSemaphore.release();
             if (msg.arg1==AsynchronousGet.SUCCESS)
             switch (msg.what) {
@@ -87,6 +87,9 @@ public class MainControl {
                     log("获取到config");
                     boolean isEnable = CommonShareData.getString("app_active","0").equals("1");
                     OpsMain.setActiveAppEnable(mContext, isEnable);
+                    break;
+                case MessageFactory.MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT:
+                    log("获取到funclist:热词权重比");
                     break;
                 default:
                     log("what the fuck ??  msg.what=" + msg.what);
