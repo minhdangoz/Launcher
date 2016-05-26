@@ -407,7 +407,7 @@
         <meta-data android:name="KappChannel" android:value="${CHANNEL_ID}"/>
 
         <!-- Umeng SDK -->
-        <meta-data android:name="UMENG_APPKEY" android:value="568337bfe0f55a167b000012"/>
+        <meta-data android:name="UMENG_APPKEY" android:value="574727a067e58e34760010bd"/>
         <meta-data android:name="UMENG_CHANNEL" android:value="${CHANNEL_ID}"/>
 
         <!-- LqOps申明的组件 BEGIN -->
