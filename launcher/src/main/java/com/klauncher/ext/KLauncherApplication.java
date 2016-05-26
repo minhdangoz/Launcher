@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.android.launcher3.settings.SettingsValue;
 import com.android.system.ReporterApi;
 import com.baidu.apistore.sdk.ApiStoreSDK;
 import com.igexin.sdk.PushManager;
@@ -18,6 +20,8 @@ import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.ping.PingManager;
 import com.ss.android.sdk.minusscreen.SsNewsApi;
+
+import java.util.ArrayList;
 
 /**
  * Created by yanni on 16/3/27.
@@ -53,6 +57,8 @@ public class KLauncherApplication extends Application {
         crashHandler.init(getApplicationContext());*/
         initGeitui();
         initScreenStatusReceiver();
+        //高低机型判断
+        initKinflowStatus();
 
     }
     private ConnectivityManager mConnectivityManager;
@@ -80,6 +86,31 @@ public class KLauncherApplication extends Application {
         if(receiver != null){
             unregisterReceiver(receiver);
         }
+    }
+    //低配手机列表
+    String[] lowModeList = {
+
+    };
+    public void initKinflowStatus(){
+        //已经打开信息流
+        if(SettingsValue.isKinflowSetOn(getApplicationContext())){
+            boolean isContain = false;
+            String currentmode = android.os.Build.MODEL;
+            if(!TextUtils.isEmpty(currentmode)) {
+                //判断是否包含
+                for (String mode : lowModeList) {
+                    if (mode.equalsIgnoreCase(currentmode)) {
+                        isContain = true;
+                        break;
+                    }
+                }
+            }
+            if(isContain){
+                SettingsValue.setKinflowSetOn(getApplicationContext(),false);
+            }
+
+        }
+
     }
 
 }

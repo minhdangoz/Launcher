@@ -173,6 +173,7 @@ public class Workspace extends SmoothPagedView
     static Rect mPortraitCellLayoutMetrics = null;
 
     CustomContentCallbacks mCustomContentCallbacks;
+    //信息流是否显示
     boolean mCustomContentShowing;
     private float mLastCustomContentScrollProgress = -1f;
     private String mCustomContentDescription = "";
@@ -1412,7 +1413,7 @@ public class Workspace extends SmoothPagedView
     protected void notifyPageSwitchListener() {
         super.notifyPageSwitchListener();
         Launcher.setScreen(getNextPage());
-
+       Log.e("wqhnotifyPage","getNextPage()"+getNextPage());
         if (hasCustomContent() && getNextPage() == 0 && !mCustomContentShowing) {
             mCustomContentShowing = true;
             if (mCustomContentCallbacks != null) {
@@ -1420,7 +1421,11 @@ public class Workspace extends SmoothPagedView
                 mCustomContentShowTime = System.currentTimeMillis();
                 mLauncher.updateVoiceButtonProxyVisible(false);
                 //刷新
-                mLauncher.setFullScreen(true);
+                if(!mLauncher.isWorkspaceLoading()) {
+                    mLauncher.setFullScreen(true);
+                    mLauncher.scrollToKinflow();
+                    Log.e("wqhnotifyPage","setFullScreen true"+getNextPage());
+                }
             }
         } else if (hasCustomContent() && getNextPage() != 0 && mCustomContentShowing) {
             mCustomContentShowing = false;
@@ -1429,6 +1434,7 @@ public class Workspace extends SmoothPagedView
                 mLauncher.resetQSBScroll();
                 mLauncher.updateVoiceButtonProxyVisible(false);
                 mLauncher.setFullScreen(false);
+                Log.e("wqhnotifyPage","setFullScreen false"+getNextPage());
             }
         }
     }

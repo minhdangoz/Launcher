@@ -7572,6 +7572,13 @@ public class Launcher extends Activity
         mIsFullScreen = fullScreen;
     }
 
+    /**
+     * 滑动显示 信息流回调方法
+     */
+    public void scrollToKinflow() {
+
+    }
+
     private void reLayoutChildren(boolean fullScreen) {
         if (mDragLayer == null) {
             return;
