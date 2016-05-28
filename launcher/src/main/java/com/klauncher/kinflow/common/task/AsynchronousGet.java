@@ -15,6 +15,7 @@
  */
 package com.klauncher.kinflow.common.task;
 
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -33,14 +34,16 @@ import com.klauncher.kinflow.search.model.HotWord;
 import com.klauncher.kinflow.utilities.KinflowLog;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -73,67 +76,87 @@ public final class AsynchronousGet {
         msg = MessageFactory.createMessage(messageWhat);
     }
 
-    public void run(String url) throws Exception {
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
+    public void run(final String url) {
+        try {
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                msg.arg1 = CONNECTION_ERROR;
-                handler.sendMessage(msg);
-                log("服务器连接失败,msg.what=" + msg.what);
-            }
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    msg.arg1 = CONNECTION_ERROR;
+                    handler.sendMessage(msg);
+                    log("服务器连接失败,msg.what=" + msg.what);
+                }
 
-            @Override
-            public void onResponse(Call call, Response response) {
-                if (!response.isSuccessful()) {
-                    log("服务器响应失败,msg.what=" + msg.what);
-                    msg.arg1 = RESPONSE_FAIL;
-                    handler.sendMessage(msg);
-                    response.body().close();
-                    return;
-                }
-                String responseBodyStr = null;
-                try {
-                    responseBodyStr = response.body().string();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    msg.arg1 = RESPONSE_FAIL;
-                    handler.sendMessage(msg);
-                    log("服务器响应失败,发生IOException,msg.what=" + msg.what);
-                    response.body().close();
-                }
-                if (!TextUtils.isEmpty(responseBodyStr)) {
-                    switch (msg.what) {
-                        case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
-                            parseHotWord(responseBodyStr);
-                            break;
-                        case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
-                            parseNavigation(responseBodyStr);
-                            break;
-                        //此版本已没有天气模块,但是保留天气模块相关代码
+                @Override
+                public void onResponse(Call call, Response response) {
+                    //1,如果响应失败
+                    if (!response.isSuccessful()) {
+                        log("服务器响应失败,msg.what=" + msg.what);
+                        msg.arg1 = RESPONSE_FAIL;
+                        handler.sendMessage(msg);
+                        response.body().close();
+                        return;
+                    }
+                    //2,响应体有错误
+                    String responseBodyStr = null;
+                    try {
+                        responseBodyStr = response.body().string();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        msg.arg1 = RESPONSE_FAIL;
+                        handler.sendMessage(msg);
+                        log("服务器响应失败,发生IOException,msg.what=" + msg.what);
+                        response.body().close();
+                    }
+                    //3,准备解析
+                    if (!TextUtils.isEmpty(responseBodyStr)) {
+                        switch (msg.what) {
+                            case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
+                                parseHotWord(responseBodyStr);
+                                break;
+                            case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
+                                parseNavigation(responseBodyStr);
+                                break;
+                            //此版本已没有天气模块,但是保留天气模块相关代码
 //                    case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME:
 //                        parseLocaiton(responseBodyStr);
 //                        break;
-                        case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
-                            parseYiDian(responseBodyStr);
-                            break;
-                        case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
-                            parseTimestamp(responseBodyStr);
-                            break;
-                        case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
-                            parseConfig(responseBodyStr);
-                            break;
-                        case MessageFactory.MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT:
-                            parseHotwordWeight(responseBodyStr);
-                            break;
+                            case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
+                                log("一点资讯请求的url = " + url);
+                                parseYiDian(responseBodyStr);
+                                break;
+                            case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
+                                parseTimestamp(responseBodyStr);
+                                break;
+                            case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH:
+                                parseConfigSwitch(responseBodyStr);
+                                break;
+                            case MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST:
+                                parseConfigList(responseBodyStr);
+                                break;
+                            case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
+                                parseConfig(responseBodyStr);
+                                break;
+                            default:
+                                log("未知请求,URL="+url);
+                                msg.arg1 = CONNECTION_ERROR;
+                                handler.sendMessage(msg);
+                                break;
+                        }
+                        response.body().close();
+                    } else {
+                        log("Message.what=" + msg.what + "的响应体为空,url=" + url);
+                        msg.arg1 = RESPONSE_FAIL;//RESPONSE_NULL
+                        handler.sendMessage(msg);
                     }
-                    response.body().close();
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
+            log("AsynchronousGet网络请求出错:" + e.getMessage());
+        }
     }
 
     /**
@@ -154,12 +177,12 @@ public final class AsynchronousGet {
             } else {
                 for (int i = 1; i <= jsonHotLength; i++) {
                     JSONObject jsonHotWord = jsonHot.getJSONObject(String.valueOf(i));
-                    hotWordList.add(new HotWord(String.valueOf(i), jsonHotWord.getString("word"), jsonHotWord.getString("url"),HotWord.TYPE_BAIDU));
+                    hotWordList.add(new HotWord(String.valueOf(i), jsonHotWord.getString("word"), jsonHotWord.getString("url"), HotWord.TYPE_BAIDU));
                 }
                 msg.arg1 = SUCCESS;
                 msg.obj = hotWordList;
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             msg.arg1 = PARSE_ERROR;
         } finally {
             handler.sendMessage(msg);
@@ -212,7 +235,7 @@ public final class AsynchronousGet {
             msg.obj = navigationList;
             CommonShareData.putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(Calendar.getInstance().getTimeInMillis()));
             CommonShareData.putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, jsonObjectAll.getString(Const.NAVIGATION_SERVER_UPDATE_INTERVAL));
-        } catch (JSONException e) {
+        } catch (Exception e) {
             msg.arg1 = PARSE_ERROR;
             Log.d("AsynchronousGet", ("Navigation解析出错：" + e.getMessage()));
         } finally {
@@ -246,7 +269,7 @@ public final class AsynchronousGet {
                 msg.arg1 = RESPONSE_FAIL;
             }
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             msg.arg1 = PARSE_ERROR;
         } finally {
             handler.sendMessage(msg);
@@ -254,7 +277,7 @@ public final class AsynchronousGet {
     }
 
     private void parseYiDian(String responseBody) {
-//        Log.d("Kinflow", "parseYiDian: responseBody= "+responseBody);
+        log("解析一点咨询内容: responseBody= " + responseBody);
 //        handler.sendMessage(msg);
         List<YiDianModel> yiDianModelList = new ArrayList<>();
         try {
@@ -290,7 +313,7 @@ public final class AsynchronousGet {
                 msg.arg1 = SUCCESS;
                 msg.obj = yiDianModelList;
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             Log.d("AsynchronousGet", "一点资讯解析出错:" + e.getMessage());
             msg.arg1 = PARSE_ERROR;
         } finally {
@@ -305,74 +328,156 @@ public final class AsynchronousGet {
             int time = (int) (jsonObject.getLong("time") / 1000);
             msg.arg1 = SUCCESS;
             msg.obj = String.valueOf(time);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             msg.arg1 = PARSE_ERROR;
-            e.printStackTrace();
+            Log.d("AsynchronousGet", "时间戳解析出错:" + e.getMessage());
         } finally {
             handler.sendMessage(msg);
         }
     }
 
-    private void parseConfig(String responseBodyStr) {
+    private void parseConfigSwitch(String responseBodyStr) {
         try {
             JSONObject jsonObjectRoot = new JSONObject(responseBodyStr);
             JSONArray jsonArrayConfigList = jsonObjectRoot.getJSONArray("cw");
             if (null == jsonArrayConfigList || jsonArrayConfigList.length() == 0) {
                 msg.arg1 = RESPONSE_FAIL;
             } else {
+                //----------------
                 int jsonArrayLength = jsonArrayConfigList.length();
                 for (int i = 0; i < jsonArrayLength; i++) {
                     JSONObject configJson = jsonArrayConfigList.getJSONObject(i);
                     Iterator<String> keysIterator = configJson.keys();
-                    String key;
-                    String value;
                     while (keysIterator.hasNext()) {
-                        key = keysIterator.next();
-                        value = (String) configJson.get(key);
-                        CommonShareData.putString(key, value);
+                        String key = keysIterator.next();
+                        if ("app_active".equals(key)) {
+                            String value = configJson.getString(key);
+                            CommonShareData.putString(key, value);
+                        } else if ("kinfo".equals(key)) {
+                            String value = configJson.getString(key);
+                            CommonShareData.putString(key, value);
+                        }
                     }
                 }
+
                 msg.arg1 = SUCCESS;
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             log("解析Config的Json数据时,出错:" + e.getMessage());
             msg.arg1 = PARSE_ERROR;
         } finally {
             handler.sendMessage(msg);
+            log("解析config配置完毕"
+                            + "  app_active = " + CommonShareData.getString("app_active", "默认")
+                            + "  kinfo = " + CommonShareData.getString("kinfo", "默认")
+            );
         }
     }
 
-    private void parseHotwordWeight(String responseBodyStr) {
-        log("开始解析热词权重比:parseHotwordWeight");
+    private void parseConfigList(String responseBodyStr) {
+        log("开始解析配置功能列表:parseConfigList");
         try {
             JSONObject jsonObjectRoot = new JSONObject(responseBodyStr);
-            JSONArray jsonArrayConfigList = jsonObjectRoot.getJSONArray("cw");
-            if (null == jsonArrayConfigList || jsonArrayConfigList.length() == 0) {
+            JSONArray jsonArrayFunList = jsonObjectRoot.getJSONArray("cw");
+            if (null == jsonArrayFunList || jsonArrayFunList.length() == 0) {
                 msg.arg1 = RESPONSE_FAIL;
             } else {
-                int jsonArrayLength = jsonArrayConfigList.length();
+                int jsonArrayLength = jsonArrayFunList.length();
                 for (int i = 0; i < jsonArrayLength; i++) {
-                    JSONObject configJson = jsonArrayConfigList.getJSONObject(i);
-                    Iterator<String> keysIterator = configJson.keys();
-                    String key;
-                    String value;
+                    JSONObject funJson = jsonArrayFunList.getJSONObject(i);
+                    Iterator<String> keysIterator = funJson.keys();
                     while (keysIterator.hasNext()) {
-                        key = keysIterator.next();
-                        value = (String) configJson.get(key);
-                        CommonShareData.putString(key, value);
+                        String key = keysIterator.next();
+                        if ("bd_prct".equals(key)) {
+                            String value = funJson.getString(key);
+                            CommonShareData.putString(key, value);
+                        } else if ("sm_prct".equals(key)) {
+                            String value = funJson.getString(key);
+                            CommonShareData.putString(key, value);
+                        } else if ("dis_act".equals(key)) {//
+                            String value = funJson.getString(key);
+                            String[] devList = value.split(",");
+                            Set<String> set = new HashSet<>(Arrays.asList(devList));
+                            CommonShareData.putSet("dis_act", set);
+                        }
                     }
                 }
                 msg.arg1 = SUCCESS;
-                log("解析热词权重比完毕"
-                +"  bd_prct = "+ CommonShareData.getString("bd_prct","50")
-                +"  sm_prct = "+ CommonShareData.getString("sm_prct","50")
-                );
             }
-        } catch (JSONException e) {
-            log("解析热词权重比的Json数据时,出错:" + e.getMessage());
+        } catch (Exception e) {
+            log("解析配置功能列表的Json数据时,出错:" + e.getMessage());
             msg.arg1 = PARSE_ERROR;
         } finally {
             handler.sendMessage(msg);
+            //---
+            Set<String> devicesSet = new HashSet<>();
+            devicesSet = CommonShareData.getSet("dis_act", devicesSet);
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String device : devicesSet) {
+                stringBuilder.append(device).append(",");
+            }
+            log("解析配置功能列表完毕"
+                            + "  bd_prct = " + CommonShareData.getString("bd_prct", "默认")
+                            + "  sm_prct = " + CommonShareData.getString("sm_prct", "默认")
+                            + "  dis_act = " + stringBuilder.toString()
+            );
+            if (devicesSet.contains("coolpad8702D")) {
+                log("包含设备:coolpad8702D");
+            } else {
+                log("不包含设备:coolpad8702D");
+            }
+        }
+    }
+
+    private void parseConfig(String responseBodyStr) {
+        log("开始解析所有配置项");
+        try {
+            JSONObject jsonObjectRoot = new JSONObject(responseBodyStr);
+            JSONArray jsonArrayFunList = jsonObjectRoot.getJSONArray("cw");
+            if (null == jsonArrayFunList || jsonArrayFunList.length() == 0) {
+                msg.arg1 = RESPONSE_FAIL;
+            } else {
+                boolean appActive = false;
+                boolean devEnable = true;
+                int jsonArrayLength = jsonArrayFunList.length();
+                for (int i = 0; i < jsonArrayLength; i++) {
+                    JSONObject funJson = jsonArrayFunList.getJSONObject(i);
+                    Iterator<String> keysIterator = funJson.keys();
+                    while (keysIterator.hasNext()) {
+                        String key = keysIterator.next();
+                        if ("app_active".equals(key)) {//如果存在app_active这个key
+                            String value = funJson.optString(key);
+                            if ("1".equals(value)) {
+                                appActive = true;
+                            }
+                        } else if ("dis_act".equals(key)) {//
+                            String[] devArray = funJson.optString(key).split(",");
+                            for (String dev : devArray) {
+                                if (Build.MODEL.contains(dev)) devEnable = false;
+                                break;
+                            }
+                        } else if ("bd_prct".equals(key)) {
+                            String value = funJson.getString(key);
+                            CommonShareData.putString(key, value);
+                        } else if ("sm_prct".equals(key)) {
+                            String value = funJson.getString(key);
+                            CommonShareData.putString(key, value);
+                        }
+                    }
+                }
+                CommonShareData.putBoolean("active",appActive&&devEnable);
+                msg.arg1 = SUCCESS;
+            }
+        } catch (Exception e) {
+            log("解析配置Json数据时,出错:" + e.getMessage());
+            msg.arg1 = PARSE_ERROR;
+        } finally {
+            handler.sendMessage(msg);
+            log("获取到所有配置项:\n"
+                    +"  active="+CommonShareData.getBoolean("active",true)
+                    +"  bd_prct="+CommonShareData.getString("bd_prct", "默认")
+                    +"  sm_prct="+CommonShareData.getString("sm_prct","默认")
+            );
         }
     }
 

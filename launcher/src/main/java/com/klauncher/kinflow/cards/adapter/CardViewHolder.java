@@ -319,27 +319,86 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
     public void setmCardInfo(CardInfo cardInfo) {
         //初始化数据
         this.mCardInfo = cardInfo;
-//        tvMoreNews.setText(this.mCardInfo.getCardFooter());
+//        tvMoreNews.setText(""+this.mCardInfo.getCardFooter());
         switch (cardInfo.getCardSecondTypeId()) {
+//            case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
+//                tvMoreNews.setText("更多精选新闻");
+//                break;
+//            case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
+//                tvMoreNews.setText("更多热点新闻");
+//                break;
+//            case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
+//                tvMoreNews.setText("更多娱乐新闻");
+//                break;
+//            case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
+//                tvMoreNews.setText("更多汽车新闻");
+//                break;
+//            case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
+//                tvMoreNews.setText("更多健康新闻");
+//                break;
+//            case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
+//                tvMoreNews.setText("更多旅游新闻");
+//                break;
             case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
                 tvMoreNews.setText("更多精选新闻");
                 break;
             case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
                 tvMoreNews.setText("更多热点新闻");
                 break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
+                tvMoreNews.setText("更多社会新闻");
+                break;
             case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
                 tvMoreNews.setText("更多娱乐新闻");
                 break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
-                tvMoreNews.setText("更多汽车新闻");
+            case CardIdMap.CARD_TYPE_NEWS_YD_CAIJING:
+                tvMoreNews.setText("更多财经新闻");
+                break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_TIYU:
+                tvMoreNews.setText("更多体育新闻");
+                break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_KEJI:
+                tvMoreNews.setText("更多科技新闻");
+                break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI:
+                tvMoreNews.setText("更多军事新闻");
+                break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG:
+                tvMoreNews.setText("更多民生新闻");
+                break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_MEINV:
+                tvMoreNews.setText("更多美女新闻");
+                break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_DUANZI:
+                tvMoreNews.setText("更多段子新闻");
                 break;
             case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
                 tvMoreNews.setText("更多健康新闻");
                 break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG:
+                tvMoreNews.setText("更多时尚新闻");
+                break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
+                tvMoreNews.setText("更多汽车新闻");
+                break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO:
+                tvMoreNews.setText("更多搞笑");
+                break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN:
+                tvMoreNews.setText("更多视频新闻");
+                break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_DIANYING:
+                tvMoreNews.setText("更多电影新闻");
+                break;
+            case CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN:
+                tvMoreNews.setText("更多健身新闻");
+                break;
             case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
                 tvMoreNews.setText("更多旅游新闻");
                 break;
-
+            default:
+                tvMoreNews.setText("更多新闻");
+                break;
         }
         YDCardContentManager manager = (YDCardContentManager) cardInfo.getmCardContentManager();
         List<YiDianModel> yiDianModelList = manager.getmYiDianModelList();

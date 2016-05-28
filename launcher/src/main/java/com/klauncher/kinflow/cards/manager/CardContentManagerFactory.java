@@ -18,9 +18,22 @@ public class CardContentManagerFactory {
         switch (cardSecondTypeId) {
             case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
             case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
+            case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
             case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
+            case CardIdMap.CARD_TYPE_NEWS_YD_CAIJING:
+            case CardIdMap.CARD_TYPE_NEWS_YD_TIYU:
+            case CardIdMap.CARD_TYPE_NEWS_YD_KEJI:
+            case CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI:
+            case CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG:
+            case CardIdMap.CARD_TYPE_NEWS_YD_MEINV:
+            case CardIdMap.CARD_TYPE_NEWS_YD_DUANZI:
             case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
+            case CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG:
             case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
+            case CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO:
+            case CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN:
+            case CardIdMap.CARD_TYPE_NEWS_YD_DIANYING:
+            case CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN:
             case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
                 cardContentManager = new YDCardContentManager(context);
                 break;

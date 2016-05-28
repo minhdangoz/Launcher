@@ -18,7 +18,6 @@ import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.launcher.R;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -141,43 +140,48 @@ public class YiDianTask {
     }
 
     public void run() {
-        CardUtils.clearOffset();
-        Request request = new Request.Builder()
-                .url(Const.URL_TIMESTAMP)
-                .build();
-        final Message msgTimestamp = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_TIMESTAMP);
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                //网络连接错误
-                msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_CONNECT;
-                mHandler.sendMessage(msgTimestamp);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (!response.isSuccessful()) {//响应失败
-                    msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
-                    response.body().close();
-                    return;
-                }
-
-                String responseBodyStr = null;
-                try {
-                    responseBodyStr = response.body().string();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
+        try {
+            CardUtils.clearOffset();
+            Request request = new Request.Builder()
+                    .url(Const.URL_TIMESTAMP)
+                    .build();
+            final Message msgTimestamp = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_TIMESTAMP);
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    //网络连接错误
+                    msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_CONNECT;
                     mHandler.sendMessage(msgTimestamp);
-                    log("时间戳响应失败,发生IOException");
-                    response.body().close();
                 }
-                if (!TextUtils.isEmpty(responseBodyStr)) {
-                    parseTimeStamp(msgTimestamp, responseBodyStr);
-                    response.body().close();
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (!response.isSuccessful()) {//响应失败
+                        msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
+                        response.body().close();
+                        return;
+                    }
+
+                    String responseBodyStr = null;
+                    try {
+                        responseBodyStr = response.body().string();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
+                        mHandler.sendMessage(msgTimestamp);
+                        log("时间戳响应失败,发生IOException");
+                        response.body().close();
+                    }
+                    if (!TextUtils.isEmpty(responseBodyStr)) {
+                        parseTimeStamp(msgTimestamp, responseBodyStr);
+                        response.body().close();
+                    }
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
+            log("YiDianTask网络请求出错:" + e.getMessage());
+        }
+
     }
 
     private void parseTimeStamp(Message msgTimestamp, String responseBody) {
@@ -188,7 +192,7 @@ public class YiDianTask {
             int time = (int) (jsonObject.getLong("time") / 1000);
             msgTimestamp.arg1 = YiDianQuestCallBack.SUCCESS;
             msgTimestamp.obj = String.valueOf(time);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             msgTimestamp.arg1 = YiDianQuestCallBack.ERROR_PARSE;
         } finally {
@@ -271,7 +275,7 @@ public class YiDianTask {
             }
             msgYiDian.arg1 = YiDianQuestCallBack.SUCCESS;
             msgYiDian.obj = yiDianModelList;
-        } catch (JSONException e) {
+        } catch (Exception e) {
             msgYiDian.arg1 = YiDianQuestCallBack.ERROR_PARSE;
         } finally {
             mHandler.sendMessage(msgYiDian);

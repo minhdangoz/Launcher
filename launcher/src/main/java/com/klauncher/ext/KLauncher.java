@@ -312,86 +312,94 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     private final int ANIM_DURATION = 300;
 
     private void initKinflow( View customview) {
-       // View kinflowView = getLayoutInflater().inflate(R.layout.activity_main, null);
-        View kinflowView = customview;
-        //initview
-        mWeatherLayout = (RelativeLayout) kinflowView.findViewById(R.id.weather_header);
-        tv_temperature = (TextView) kinflowView.findViewById(R.id.temperature);
-        tv_city = (TextView) kinflowView.findViewById(R.id.city);
-        tv_weather = (TextView) kinflowView.findViewById(R.id.weather);
-        iv_weatherType = (ImageView) kinflowView.findViewById(R.id.weather_type);
-        tv_searchHint = (TextView) kinflowView.findViewById(R.id.search_hint);
-        iv_searchMode = (ImageView) kinflowView.findViewById(R.id.search_mode);
-        iv_searchIcon = (ImageView) kinflowView.findViewById(R.id.search_icon);
-        tv_hotWordTop = (CompatTextView) kinflowView.findViewById(R.id.hot_word_top);
-        tv_hotWord1 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_1);
-        tv_hotWord2 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_2);
-        iv_refresh = (ImageView) kinflowView.findViewById(R.id.refresh_hotWord);
-        randomNewsLine = (RelativeLayout) kinflowView.findViewById(R.id.random_news_line);
-        navigationRecyclerView = (RecyclerView) kinflowView.findViewById(R.id.navigation_recyclerView);
-        mCardsView = (RecyclerView) kinflowView.findViewById(R.id.scroll_view_cards);
-        mPullRefreshScrollView = (PullToRefreshScrollView) kinflowView.findViewById(R.id.pull_refresh_scrollview);
-        //mLayoutContent.addView(kinflowView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        //listener
-        tv_searchHint.setOnClickListener(this);
-        iv_searchMode.setOnClickListener(this);
-        iv_searchIcon.setOnClickListener(this);
-        iv_refresh.setOnClickListener(this);
-        tv_hotWordTop.setOnClickListener(this);
-        tv_hotWord1.setOnClickListener(this);
-        tv_hotWord2.setOnClickListener(this);
-        mWeatherLayout.setOnClickListener(this);
-        //初始化数据---default data
-        CardsListManager.getInstance().init(this);
-        tv_hotWord1.setText(hotWord1.getWord());
-        tv_hotWord2.setText(hotWord2.getWord());
-        navigationRecyclerView.setLayoutManager(new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false));
-        List<Navigation> navigationList = CacheNavigation.getInstance().getAll();
-        Collections.sort(navigationList);
-        navigationRecyclerView.setAdapter(new NavigationAdapter(KLauncher.this, navigationList));
-        navigationRecyclerView.addItemDecoration(new HotWordItemDecoration(16, 32, false));
+        try {
+            // View kinflowView = getLayoutInflater().inflate(R.layout.activity_main, null);
+            View kinflowView = customview;
+            //initview
+            mWeatherLayout = (RelativeLayout) kinflowView.findViewById(R.id.weather_header);
+            tv_temperature = (TextView) kinflowView.findViewById(R.id.temperature);
+            tv_city = (TextView) kinflowView.findViewById(R.id.city);
+            tv_weather = (TextView) kinflowView.findViewById(R.id.weather);
+            iv_weatherType = (ImageView) kinflowView.findViewById(R.id.weather_type);
+            tv_searchHint = (TextView) kinflowView.findViewById(R.id.search_hint);
+            iv_searchMode = (ImageView) kinflowView.findViewById(R.id.search_mode);
+            iv_searchIcon = (ImageView) kinflowView.findViewById(R.id.search_icon);
+            tv_hotWordTop = (CompatTextView) kinflowView.findViewById(R.id.hot_word_top);
+            tv_hotWord1 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_1);
+            tv_hotWord2 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_2);
+            iv_refresh = (ImageView) kinflowView.findViewById(R.id.refresh_hotWord);
+            randomNewsLine = (RelativeLayout) kinflowView.findViewById(R.id.random_news_line);
+            navigationRecyclerView = (RecyclerView) kinflowView.findViewById(R.id.navigation_recyclerView);
+            mCardsView = (RecyclerView) kinflowView.findViewById(R.id.scroll_view_cards);
+            mPullRefreshScrollView = (PullToRefreshScrollView) kinflowView.findViewById(R.id.pull_refresh_scrollview);
+            //mLayoutContent.addView(kinflowView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            //listener
+            tv_searchHint.setOnClickListener(this);
+            iv_searchMode.setOnClickListener(this);
+            iv_searchIcon.setOnClickListener(this);
+            iv_refresh.setOnClickListener(this);
+            tv_hotWordTop.setOnClickListener(this);
+            tv_hotWord1.setOnClickListener(this);
+            tv_hotWord2.setOnClickListener(this);
+            mWeatherLayout.setOnClickListener(this);
+            //初始化数据---default data
+            CardsListManager.getInstance().init(this);
+            tv_hotWord1.setText(hotWord1.getWord());
+            tv_hotWord2.setText(hotWord2.getWord());
+            navigationRecyclerView.setLayoutManager(new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false));
+            List<Navigation> navigationList = CacheNavigation.getInstance().getAll();
+            Collections.sort(navigationList);
+            navigationRecyclerView.setAdapter(new NavigationAdapter(KLauncher.this, navigationList));
+            navigationRecyclerView.addItemDecoration(new HotWordItemDecoration(16, 32, false));
 
 //        CardsListManager.getInstance().loadCardList();
-        mCardsView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mCardsView.addItemDecoration(new CardItemDecoration(Dips.dipsToIntPixels(12, this)));
-        //mCardInfoList = CardsListManager.getInstance().getInfos();
-        mCardsView.setAdapter(new CardsAdapter(this, null));//最初传入空,等待收到数据后更新
+            mCardsView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            mCardsView.addItemDecoration(new CardItemDecoration(Dips.dipsToIntPixels(12, this)));
+            //mCardInfoList = CardsListManager.getInstance().getInfos();
+            mCardsView.setAdapter(new CardsAdapter(this, null));//最初传入空,等待收到数据后更新
 
-        //异步获取所有
+            //异步获取所有
 //        requestLocation();//此版本已没有天气模块,但是保留天气模块相关代码
-        mMainControl = new MainControl(KLauncher.this, this);
-        mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
-                MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-                MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-                MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG,
-                MessageFactory.MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT
-        );
-        //注册监听
-        CacheNavigation.getInstance().registerOnSharedPreferenceChangeListener(this);
+            mMainControl = new MainControl(KLauncher.this, this);
+            mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
+                    MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
+                    MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
+                    MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
+//                    MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH,
+//                    MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST
+            );
+            //注册监听
+            CacheNavigation.getInstance().registerOnSharedPreferenceChangeListener(this);
 //        CacheLocation.getInstance().registerOnSharedPreferenceChangeListener(this);//此版本已没有天气模块,但是保留天气模块相关代码
-        //初始化下拉刷新
-        mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+            //初始化下拉刷新
+            mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
 
-            @Override
-            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                //当下拉刷新的时候
-//                requestLocation();
-                mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
-                        MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-                        MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-                        MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG,
-                        MessageFactory.MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT
-                );
-            }
-        });
+                @Override
+                public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                    //当下拉刷新的时候
+    //                requestLocation();
+                    //loadCardList
+                    CardsListManager.getInstance().loadCardList();
+                    mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
+                            MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
+                            MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
+                            MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
+//                            MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH,
+//                            MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST
+                    );
+                }
+            });
 
-        mScrollView = mPullRefreshScrollView.getRefreshableView();
-        mScrollView.setFillViewport(true);
-        mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);//关闭加载更多
-        //
+            mScrollView = mPullRefreshScrollView.getRefreshableView();
+            mScrollView.setFillViewport(true);
+            mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);//关闭加载更多
+            //
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//A
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);//B
 //        toggleHideyBar();
+        } catch (Exception e) {
+            log("初始化信息流的时候出错initKinflow: "+e.getMessage());
+        }
     }
 
     @Override

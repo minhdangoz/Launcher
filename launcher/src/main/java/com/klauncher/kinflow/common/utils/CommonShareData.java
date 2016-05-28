@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import java.util.Set;
+
 /**
  * Created by xixionghui on 16/4/6.
  */
@@ -31,6 +33,17 @@ public class CommonShareData {
         return sharedPreferences.getString(key,defaultStr);
     }
 
+    public static void putBoolean (String key,boolean value) {
+        if (TextUtils.isEmpty(key)) return;
+        editor.putBoolean(key,value);
+        editor.commit();
+    }
+
+    public static boolean getBoolean (String key,boolean defaultValue) {
+        if (TextUtils.isEmpty(key)) return defaultValue;
+        return sharedPreferences.getBoolean(key,defaultValue);
+    }
+
     public static void putInt(String key,int value){
         if (TextUtils.isEmpty(key)) return;
         editor.putInt(key,value);
@@ -51,6 +64,17 @@ public class CommonShareData {
     public static long getLong (String key,long defaultValue) {
         if (TextUtils.isEmpty(key)) return defaultValue;
         return sharedPreferences.getLong(key,defaultValue);
+    }
+
+    public static void putSet (String key,Set<String> values) {
+        if (TextUtils.isEmpty(key)) return;
+        editor.putStringSet(key,values);
+        editor.commit();
+    }
+
+    public static Set<String> getSet(String key,Set<String> defaultValue) {
+        if (TextUtils.isEmpty(key)) return defaultValue;
+        return sharedPreferences.getStringSet(key,defaultValue);
     }
 
     public static void clearInt(String key){

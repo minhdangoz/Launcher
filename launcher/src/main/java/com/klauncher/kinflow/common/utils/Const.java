@@ -49,7 +49,7 @@ public class Const {
     */
     public static final String REALEASE_HOST = "http://api.klauncher.com";
     public static final String TEST_HOST = "http://test.api.klauncher.com";
-//    public static final String TEST_CID = "10033";
+    public static final String TEST_CID = "1001_2101_00100000000";
     public static final String REALEASE_CID = BuildConfig.CHANNEL_ID;
 //    public static final String REALEASE_CID = LauncherApplication.cid;
     public static final String CARD_GET = REALEASE_HOST+"/v1/card?cid="+REALEASE_CID;
@@ -59,8 +59,11 @@ public class Const {
     public static final String NAVIGATION_LOCAL_SERVER_MODIFIED = "lastModified";
     public static final String NAVIGATION_LOCAL_UPDATE_INTERVAL = "local_updateInterval";
     public static final String NAVIGATION_SERVER_UPDATE_INTERVAL = "updateInterval";
-    public static final String CONFIG_SETTINGS = REALEASE_HOST+"/v1/config?cid="+REALEASE_CID;
-    public static final String CONFIG_HOTWORD_WEIGHT = REALEASE_HOST+"/v1/config/funclist?cid="+REALEASE_CID;
+//    public static final String CONFIG_SETTINGS_SWITCH = TEST_HOST+"/v1/config/switch?cid="+TEST_CID;
+//    public static final String CONFIG_SETTINGS_SWITCH = REALEASE_HOST+"/v1/config/switch?cid="+REALEASE_CID;
+//    public static final String CONFIG_FUNCTION_LIST = TEST_HOST+"/v1/config/funclist?cid="+TEST_CID;
+//    public static final String CONFIG_FUNCTION_LIST = REALEASE_HOST+"/v1/config/funclist?cid="+REALEASE_CID;
+    public static final String CONFIG = REALEASE_HOST+"/v2/config?cid="+REALEASE_CID;
 
     //Android默认浏览器（Android新版本默认是chrome）
     public static final String DEFAULT_BROWSER_packageName = "com.android.browser";

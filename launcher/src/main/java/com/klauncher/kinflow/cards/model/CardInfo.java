@@ -114,8 +114,11 @@ public class CardInfo implements Parcelable {
         if (extras != null) {
             openUrl = extras.getString(OpenMode.OPEN_URL_KEY);
             openUri = extras.getString(OpenMode.FIRST_OPEN_MODE_TYPE_URI);
+        } else {
+            return;
         }
         //获取OpenMode
+        if (null==openUrl) return;
         OpenMode openMode = new OpenMode(context,this.cardOpenOptionList, openUrl);
         Intent firstIntent = openMode.getFirstIntent();
         try {

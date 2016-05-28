@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.launcher.R;
 import com.klauncher.kinflow.browser.KinflowBrower;
 import com.klauncher.kinflow.cards.model.CardInfo;
@@ -106,12 +107,25 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
             case CardInfo.CARD_TYPE_NEWS_TT_REDIAN:
                 view = LayoutInflater.from(mContext).inflate(R.layout.card_info_news_toutiao, parent, false);
                 return new TTCardViewHolder(mContext,view);
-            case CardInfo.CARD_TYPE_NEWS_YD_REDIAN:
-            case CardInfo.CARD_TYPE_NEWS_YD_JINGXUAN:
-            case CardInfo.CARD_TYPE_NEWS_YD_JIANKANG:
-            case CardInfo.CARD_TYPE_NEWS_YD_LVYOU:
-            case CardInfo.CARD_TYPE_NEWS_YD_QICHE:
-            case CardInfo.CARD_TYPE_NEWS_YD_YULE:
+            case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
+            case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
+            case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
+            case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
+            case CardIdMap.CARD_TYPE_NEWS_YD_CAIJING:
+            case CardIdMap.CARD_TYPE_NEWS_YD_TIYU:
+            case CardIdMap.CARD_TYPE_NEWS_YD_KEJI:
+            case CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI:
+            case CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG:
+            case CardIdMap.CARD_TYPE_NEWS_YD_MEINV:
+            case CardIdMap.CARD_TYPE_NEWS_YD_DUANZI:
+            case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
+            case CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG:
+            case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
+            case CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO:
+            case CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN:
+            case CardIdMap.CARD_TYPE_NEWS_YD_DIANYING:
+            case CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN:
+            case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
                 view = LayoutInflater.from(mContext).inflate(R.layout.card_info_news_yidian, parent, false);
                 return new YDCardViewHolder(view,mContext);
             default:

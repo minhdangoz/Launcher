@@ -83,14 +83,23 @@ public class MainControl {
                 case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YOKMOB:
                     log("获取到yokmob");
                     break;
+//                case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH:
+//                    log("获取到config");
+//                    //配置打开与否&&当前运行的设备是否允许
+//                    boolean isEnable = CommonShareData.getString("app_active","0").equals("1");
+//                    Set<String> devicesSet = new HashSet<>();
+//                    boolean isContains = false;
+//                    for (String deviceName: devicesSet) {
+//                        if (Build.MODEL.contains(deviceName)) isContains = true;
+//                    }
+//                    OpsMain.setActiveAppEnable(mContext, isEnable&&isContains);
+//                    break;
+//                case MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST:
+//                    log("获取到funclist");
+//                    break;
                 case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
-                    log("获取到config");
-                    boolean isEnable = CommonShareData.getString("app_active","0").equals("1");
-                    OpsMain.setActiveAppEnable(mContext, isEnable);
-                    break;
-                case MessageFactory.MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT:
-                    log("获取到funclist:热词权重比");
-                    break;
+                    log("获取到所有的配置项");
+                    OpsMain.setActiveAppEnable(mContext, CommonShareData.getBoolean("active", false));
                 default:
                     log("what the fuck ??  msg.what=" + msg.what);
                     break;
@@ -250,8 +259,13 @@ public class MainControl {
         this.mRequestTypes = msgWhats;
 //        this.mCardInfoList = cardInfoList;
         this.mCardInfoList = CardsListManager.getInstance().getInfos();
-        permitCount = mCardInfoList.size() + 4;
-        log("请求的总数=" + permitCount + " ,其中card请求个数=" + mCardInfoList.size());
+        permitCount = mCardInfoList.size() + 3;
+        StringBuilder sb = new StringBuilder();
+        for (CardInfo cardInfo:
+             mCardInfoList) {
+            sb.append(cardInfo.getCardSecondTypeId()).append(",");
+        }
+        log("请求的总数=" + permitCount + " ,其中card分别是=" + sb.toString());
         mRequestSemaphore = new Semaphore(permitCount);
         for (int what : msgWhats) {
             try {
@@ -264,14 +278,19 @@ public class MainControl {
                         mRequestSemaphore.acquire();
                         new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.NAVIGATION_GET);
                         break;
+//                    case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH:
+//                        mRequestSemaphore.acquire();
+//                        log("配置开关项url = " + Const.CONFIG_SETTINGS_SWITCH);
+//                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH).run(Const.CONFIG_SETTINGS_SWITCH);
+//                        break;
+//                    case MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST:
+//                        mRequestSemaphore.acquire();
+//                        log("功能列表url = "+Const.CONFIG_FUNCTION_LIST);
+//                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST).run(Const.CONFIG_FUNCTION_LIST);
+//                        break;
                     case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
                         mRequestSemaphore.acquire();
-                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG).run(Const.CONFIG_SETTINGS);
-                        break;
-                    case MessageFactory.MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT:
-                        mRequestSemaphore.acquire();
-                        log("热词权重比url = "+Const.CONFIG_HOTWORD_WEIGHT);
-                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT).run(Const.CONFIG_HOTWORD_WEIGHT);
+                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG).run(Const.CONFIG);
                         break;
                     case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
                         CardUtils.clearOffset();

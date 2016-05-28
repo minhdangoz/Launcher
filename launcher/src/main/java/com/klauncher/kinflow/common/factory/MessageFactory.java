@@ -17,8 +17,9 @@ public class MessageFactory {
     public static final int MESSAGE_WHAT_OBTAION_NEWS_YOKMOB = 8;//获取YOKMOB
     public static final int MESSAGE_WHAT_OBTAION_NEWS_ADVIEW = 9;//获取ADVIEW
     public static final int MESSAGE_WHAT_TIMESTAMP = 10;//获取时间戳
-    public static final int MESSAGE_WHAT_OBTAIN_CONFIG = 11;//获取配置信息
-    public static final int MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT = 12;//获取热词的权重比
+    public static final int MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH = 11;//获取配置信息
+    public static final int MESSAGE_WHAT_OBTAIN_FUNCTION_LIST = 12;//获取FUNCTION_LIST
+    public static final int MESSAGE_WHAT_OBTAIN_CONFIG = 13;//获取所有config
 
     public static Message createMessage(int what) {
         Message msg = Message.obtain();
@@ -53,11 +54,14 @@ public class MessageFactory {
             case MESSAGE_WHAT_TIMESTAMP:
                 msg.what = MESSAGE_WHAT_TIMESTAMP;
                 break;
+            case MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH:
+                msg.what = MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH;
+                break;
+            case MESSAGE_WHAT_OBTAIN_FUNCTION_LIST:
+                msg.what = MESSAGE_WHAT_OBTAIN_FUNCTION_LIST;
+                break;
             case MESSAGE_WHAT_OBTAIN_CONFIG:
                 msg.what = MESSAGE_WHAT_OBTAIN_CONFIG;
-                break;
-            case MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT:
-                msg.what = MESSAGE_WHAT_OBTAIN_HOTWORD_WEIGHT;
                 break;
         }
         return msg;
