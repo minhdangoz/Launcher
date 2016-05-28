@@ -125,7 +125,6 @@ public final class AsynchronousGet {
 //                        parseLocaiton(responseBodyStr);
 //                        break;
                             case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
-                                log("一点资讯请求的url = " + url);
                                 parseYiDian(responseBodyStr);
                                 break;
                             case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
@@ -141,7 +140,7 @@ public final class AsynchronousGet {
                                 parseConfig(responseBodyStr);
                                 break;
                             default:
-                                log("未知请求,URL="+url);
+                                log("未知请求,URL=" + url);
                                 msg.arg1 = CONNECTION_ERROR;
                                 handler.sendMessage(msg);
                                 break;
@@ -456,11 +455,14 @@ public final class AsynchronousGet {
                                 if (Build.MODEL.contains(dev)) devEnable = false;
                                 break;
                             }
+                        } else if ("kinfo".equals(key)) {
+                            String value = funJson.optString(key);
+                            CommonShareData.putString(key,value);
                         } else if ("bd_prct".equals(key)) {
-                            String value = funJson.getString(key);
+                            String value = funJson.optString(key);
                             CommonShareData.putString(key, value);
                         } else if ("sm_prct".equals(key)) {
-                            String value = funJson.getString(key);
+                            String value = funJson.optString(key);
                             CommonShareData.putString(key, value);
                         }
                     }
@@ -473,11 +475,13 @@ public final class AsynchronousGet {
             msg.arg1 = PARSE_ERROR;
         } finally {
             handler.sendMessage(msg);
-            log("获取到所有配置项:\n"
-                    +"  active="+CommonShareData.getBoolean("active",true)
-                    +"  bd_prct="+CommonShareData.getString("bd_prct", "默认")
-                    +"  sm_prct="+CommonShareData.getString("sm_prct","默认")
-            );
+//            log("获取到所有配置项:\n"
+//                     + "  kinfo = " + CommonShareData.getString("kinfo", "默认")
+//                    +"  active="+CommonShareData.getBoolean("active", false)
+//                    +"  bd_prct="+CommonShareData.getString("bd_prct", "默认")
+//                    +"  sm_prct="+CommonShareData.getString("sm_prct","默认")
+//                    + "  当前设备名称= " + Build.MODEL
+//            );
         }
     }
 
