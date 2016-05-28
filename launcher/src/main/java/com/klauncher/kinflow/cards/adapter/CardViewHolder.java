@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.klauncher.kinflow.cards.CardIdMap;
-import com.klauncher.kinflow.cards.manager.ADVCardContentManager;
 import com.klauncher.kinflow.cards.manager.YDCardContentManager;
 import com.klauncher.kinflow.cards.manager.YMCardContentManager;
 import com.klauncher.kinflow.cards.model.CardInfo;
@@ -27,7 +25,6 @@ import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.launcher.R;
-import com.kyview.natives.NativeAdInfo;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -62,6 +59,8 @@ class WifiCardViewHolder extends CardViewHolder {
 /**
  * adView的ViewHolder
  */
+/*
+
 class AdnativeCardViewHolder extends CardViewHolder implements View.OnClickListener{
 
     private Context mContext;
@@ -111,6 +110,8 @@ class AdnativeCardViewHolder extends CardViewHolder implements View.OnClickListe
         mFirstNativeAdInfo.onClick(getNativeGroup());
     }
 }
+*/
+
 
 /**
  * yokmob的CardView

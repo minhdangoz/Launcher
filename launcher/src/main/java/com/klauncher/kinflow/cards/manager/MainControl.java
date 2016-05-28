@@ -28,7 +28,7 @@ import com.klauncher.kinflow.utilities.FileUtils;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.weather.model.Weather;
 import com.klauncher.launcher.R;
-import com.kyview.natives.NativeAdInfo;
+//import com.kyview.natives.NativeAdInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -166,8 +166,8 @@ public class MainControl {
                             mListener.onCardInfoUpdate(filiterCardInfoList);
                             //非adViewCard更新完毕,再启用adViewCard请求
                             //单独请求adView
-                            ADVCardContentManager advCardContentManager = (ADVCardContentManager) adViewCardInfo.getmCardContentManager();
-                            advCardContentManager.requestCardContent(singleRequestHandler, adViewCardInfo);
+//                            ADVCardContentManager advCardContentManager = (ADVCardContentManager) adViewCardInfo.getmCardContentManager();
+//                            advCardContentManager.requestCardContent(singleRequestHandler, adViewCardInfo);
                             break;
 
                     }
@@ -195,15 +195,14 @@ public class MainControl {
                     break;
                 */
                 case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW:
-                    List<NativeAdInfo> nativeAdInfoList = (List<NativeAdInfo>) msg.obj;
-                    if (null == nativeAdInfoList || nativeAdInfoList.size() == 0) {
-                        log("MainControl获取adview失败");
-                        return;
-                    } else {
-                        log("MainControl获取adview成功");
-//                        ADVCardContentManager manager = (ADVCardContentManager) adViewCardInfo.getmCardContentManager();
-                        mListener.onAddAdview(adViewCardInfo);
-                    }
+//                    List<NativeAdInfo> nativeAdInfoList = (List<NativeAdInfo>) msg.obj;
+//                    if (null == nativeAdInfoList || nativeAdInfoList.size() == 0) {
+//                        log("MainControl获取adview失败");
+//                        return;
+//                    } else {
+//                        log("MainControl获取adview成功");
+//                        mListener.onAddAdview(adViewCardInfo);
+//                    }
                     break;
             }
         }

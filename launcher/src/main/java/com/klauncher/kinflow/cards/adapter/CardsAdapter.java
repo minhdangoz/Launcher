@@ -11,18 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
-import com.klauncher.kinflow.cards.CardIdMap;
-import com.klauncher.launcher.R;
 import com.klauncher.kinflow.browser.KinflowBrower;
+import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.model.CardInfo;
-import com.klauncher.kinflow.utilities.Dips;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.utilities.NetworkUtils;
-import com.kyview.interfaces.AdNativeInterface;
-import com.kyview.natives.AdNativeManager;
-import com.kyview.natives.NativeAdInfo;
+import com.klauncher.launcher.R;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -101,9 +96,9 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
             case CardInfo.CARD_TYPE_AD_KAPPMOB:
                 view = LayoutInflater.from(mContext).inflate(R.layout.card_info_ads_banner, parent, false);
                 return new AdbannerCardViewHolder(mContext,view);
-            case CardInfo.CARD_TYPE_AD_ADVIEW:
-                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_ads_native, parent, false);
-                return new AdnativeCardViewHolder(mContext,view);
+//            case CardInfo.CARD_TYPE_AD_ADVIEW:
+//                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_ads_native, parent, false);
+//                return new AdnativeCardViewHolder(mContext,view);
 //            case CardInfo.CARD_TYPE_NEWS_TT_REDIAN:
 //                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_news_toutiao, parent, false);
 //                return new TTCardViewHolder(mContext,view);
@@ -150,13 +145,15 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
             yokmobHolder.getBannerImage().setOnClickListener(yokmobHolder);
             yokmobHolder.setCardInfo(card);
 
-        } else if (holder instanceof AdnativeCardViewHolder) {//adView的ViewHolder
-            AdnativeCardViewHolder adviewHolder = (AdnativeCardViewHolder) holder;
-            adviewHolder.getCardView().setOnClickListener(adviewHolder);
-            adviewHolder.getNativeGroup().setOnClickListener(adviewHolder);
-            adviewHolder.setCardInfo(card);
-
-        } else if (holder instanceof YDCardViewHolder) {
+        }
+//        else if (holder instanceof AdnativeCardViewHolder) {//adView的ViewHolder
+//            AdnativeCardViewHolder adviewHolder = (AdnativeCardViewHolder) holder;
+//            adviewHolder.getCardView().setOnClickListener(adviewHolder);
+//            adviewHolder.getNativeGroup().setOnClickListener(adviewHolder);
+//            adviewHolder.setCardInfo(card);
+//
+//        }
+        else if (holder instanceof YDCardViewHolder) {
             YDCardViewHolder ydCardViewHolder = (YDCardViewHolder) holder;
             //添加监听
             ydCardViewHolder.getmYiDianHeadWith1ImageLayout().setOnClickListener(ydCardViewHolder);
@@ -217,54 +214,4 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
         KinflowLog.i(msg);
     }
 
-    private void loadAdviewCard(CardInfo cardInfo, final AdnativeCardViewHolder holder) {
-        AdNativeManager adNativeManager = new AdNativeManager(mContext, "SDK20161518030339tw90ofxelsoctuo");
-        //设置原生回调接口
-        adNativeManager.setAdNativeInterface(new AdNativeInterface() {
-            /**
-             * 当广告请求成功时调用该函数. */
-            @Override
-            public void onReceivedAd(List arg0) {
-                final NativeAdInfo nativeAdInfo = (NativeAdInfo) arg0.get(0);
-                Picasso.with(mContext).load(nativeAdInfo.getIconUrl()).into(holder.mNativeImage);
-                holder.mNativeTitle.setText(nativeAdInfo.getTitle());
-                holder.mNativeGroup.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        nativeAdInfo.onClick(holder.mNativeGroup);
-                    }
-                });
-                ViewGroup.LayoutParams params = holder.cardView.getLayoutParams();
-                params.height = Dips.dipsToIntPixels(64f, mContext);
-                holder.cardView.setLayoutParams(params);
-                ViewParent parent = holder.cardView.getParent();
-                if (parent != null) {
-                    parent.requestLayout();
-                }
-            }
-
-            /**
-             * 当广告请求失败时调用该函数.
-             */
-            @Override
-            public void onFailedReceivedAd(String arg0) {
-                log("adview获取数据失败");
-                ViewGroup.LayoutParams params = holder.cardView.getLayoutParams();
-                params.height = 0;
-                holder.cardView.setLayoutParams(params);
-                ViewParent parent = holder.cardView.getParent();
-                if (parent != null) {
-                    parent.requestLayout();
-                }
-            }
-
-            /**
-             * 为下载广告时调用 返回现下载内容状态.
-             */
-            @Override
-            public void onAdStatusChanged(int arg0) {
-            }
-        });
-        adNativeManager.requestAd();
-    }
 }

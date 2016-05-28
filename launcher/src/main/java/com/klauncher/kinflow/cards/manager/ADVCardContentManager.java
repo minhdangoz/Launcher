@@ -1,18 +1,15 @@
 package com.klauncher.kinflow.cards.manager;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.common.factory.MessageFactory;
-import com.kyview.interfaces.AdNativeInterface;
-import com.kyview.natives.AdNativeManager;
-import com.kyview.natives.NativeAdInfo;
+//import com.kyview.natives.AdNativeManager;
 
-import java.util.ArrayList;
-import java.util.List;
+//import com.kyview.natives.AdNativeManager;
+//import com.kyview.natives.NativeAdInfo;
 
 /**
  * Created by xixionghui on 16/4/18.
@@ -20,22 +17,9 @@ import java.util.List;
 public class ADVCardContentManager extends BaseCardContentManager {
 
     private Context mContext;
-    private AdNativeManager mAdNativeManager;
+//    private AdNativeManager mAdNativeManager;
     private CardInfo mCardInfo;
     private Handler mMainControlHandler;//MainControl的handler;
-    private List<NativeAdInfo> mNativeAdInfoList;
-//    private Handler mHandler;
-//    private Handler.Callback advHandlerCallback = new Handler.Callback() {
-//        @Override
-//        public boolean handleMessage(Message msg) {
-//            mNativeAdInfoList = (List<NativeAdInfo>) msg.obj;
-//
-//            Message msgAdv = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
-//            msgAdv.obj = mNativeAdInfoList;
-//            mMainControlHandler.sendMessage(msgAdv);
-//            return true;
-//        }
-//    };
 
     /**
      * @param context
@@ -43,8 +27,7 @@ public class ADVCardContentManager extends BaseCardContentManager {
     ADVCardContentManager(Context context) {
         super(context);
         this.mContext = context;
-//        this.mHandler = new Handler(advHandlerCallback);
-        mAdNativeManager = new AdNativeManager((Activity) mContext, "SDK20161518030339tw90ofxelsoctuo");
+//        mAdNativeManager = new AdNativeManager((Activity) mContext, "SDK20161518030339tw90ofxelsoctuo");
     }
 
     @Override
@@ -56,7 +39,7 @@ public class ADVCardContentManager extends BaseCardContentManager {
     public void changeNews() {
 
     }
-
+    /*
     public List<NativeAdInfo> getNativeAdInfoList() {
         return mNativeAdInfoList;
     }
@@ -64,12 +47,13 @@ public class ADVCardContentManager extends BaseCardContentManager {
     public void setNativeAdInfoList(List<NativeAdInfo> nativeAdInfoList) {
         mNativeAdInfoList = nativeAdInfoList;
     }
-
+    */
     @Override
     public void requestCardContent(Handler mainControlHandler, CardInfo cardInfo) {
         log("开始请求adView数据");
         this.mMainControlHandler = mainControlHandler;
         this.mCardInfo = cardInfo;
+        /*
         this.mAdNativeManager.setAdNativeInterface(new AdNativeInterface() {
             @Override
             public void onFailedReceivedAd(String s) {
@@ -81,13 +65,6 @@ public class ADVCardContentManager extends BaseCardContentManager {
 
             @Override
             public void onReceivedAd(List list) {
-//                for (int i = 0; i < list.size(); i++) {
-//                    NativeAdInfo info = (NativeAdInfo) list.get(i);
-//                    Log.i("MyInfo", "NativeAdInfo.title="+info.getTitle()
-//                            +"\n   info.getIconUrl="+info.getIconUrl()
-//                            +"\n   info.getImageUrl()="+info.getImageUrl()
-//                            +"\n   info.getDescription="+info.getDescription());
-//                }
                     Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
                 if (null==list||list.size()==0) {//获取adview成功,但是依旧可能出现为空的情况
                     ADVCardContentManager.this.mMainControlHandler.sendMessage(msg);
@@ -105,5 +82,9 @@ public class ADVCardContentManager extends BaseCardContentManager {
             }
         });
         mAdNativeManager.requestAd();
+        */
+
+        Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW);
+        ADVCardContentManager.this.mMainControlHandler.sendMessage(msg);
     }
 }
