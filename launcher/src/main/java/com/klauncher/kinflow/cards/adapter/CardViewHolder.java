@@ -15,25 +15,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.klauncher.launcher.R;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.manager.ADVCardContentManager;
-import com.klauncher.kinflow.cards.manager.TTCardContentManager;
 import com.klauncher.kinflow.cards.manager.YDCardContentManager;
 import com.klauncher.kinflow.cards.manager.YMCardContentManager;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.cards.model.yidian.YiDianModel;
 import com.klauncher.kinflow.common.task.YiDianTask;
-import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.utilities.KinflowLog;
+import com.klauncher.launcher.R;
 import com.kyview.natives.NativeAdInfo;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-import com.ss.android.sdk.minusscreen.model.Article;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,7 +145,7 @@ class AdbannerCardViewHolder extends CardViewHolder implements View.OnClickListe
         this.mCardInfo.open(mContext, extras);
     }
 }
-
+/*
 class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
 
     Context mContext;
@@ -164,6 +160,7 @@ class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
     TextView mChangeNews;
     List<Article>[] mArticleListArrays;
     boolean isGroup2;
+
 
     public TTCardViewHolder(Context context, View itemView) {
         super(itemView);
@@ -278,7 +275,8 @@ class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
                 break;
         }
     }
-}
+
+    */
 
 class YDCardViewHolder extends CardViewHolder implements OnClickListener {
     Context mContext;

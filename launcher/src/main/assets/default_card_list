@@ -31,21 +31,6 @@
                 "0"
             ],
             "th": ""
-        },
-        {
-            "id": "6",
-            "tyd": "3,301",
-            "carn": "今日头条热点",
-            "fot": "",
-            "ord": "21",
-            "tyn": "新闻类,今日头条热点",
-            "ext": "",
-            "ops": [
-                "2",
-                "com.tencent.mtt/com.tencent.mtt.SplashActivity",
-                "0"
-            ],
-            "th": ""
         }
     ]
 }

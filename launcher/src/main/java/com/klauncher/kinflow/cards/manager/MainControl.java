@@ -29,7 +29,6 @@ import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.weather.model.Weather;
 import com.klauncher.launcher.R;
 import com.kyview.natives.NativeAdInfo;
-import com.ss.android.sdk.minusscreen.model.Article;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -100,6 +99,7 @@ public class MainControl {
                 case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
                     log("获取到所有的配置项");
                     OpsMain.setActiveAppEnable(mContext, CommonShareData.getBoolean("active", false));
+                    break;
                 default:
                     log("what the fuck ??  msg.what=" + msg.what);
                     break;
@@ -146,10 +146,10 @@ public class MainControl {
                                             filiterCardInfoList.add(cardInfo);
                                         break;
                                     case CardIdMap.CARD_TYPE_NEWS_TT_REDIAN://头条
-                                        TTCardContentManager ttCardContentManager = (TTCardContentManager) cardInfo.getmCardContentManager();
-                                        List<Article>[] mArticleListArrays = ttCardContentManager.getArticleListArrays();
-                                        if (null!=mArticleListArrays&&null!=mArticleListArrays[0]&&0!=mArticleListArrays[0].size())
-                                            filiterCardInfoList.add(cardInfo);
+//                                        TTCardContentManager ttCardContentManager = (TTCardContentManager) cardInfo.getmCardContentManager();
+//                                        List<Article>[] mArticleListArrays = ttCardContentManager.getArticleListArrays();
+//                                        if (null!=mArticleListArrays&&null!=mArticleListArrays[0]&&0!=mArticleListArrays[0].size())
+//                                            filiterCardInfoList.add(cardInfo);
                                         break;
                                     case CardIdMap.ADVERTISEMENT_YOKMOB:
                                         YMCardContentManager ymCardContentManager = (YMCardContentManager) cardInfo.getmCardContentManager();

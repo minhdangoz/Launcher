@@ -19,9 +19,6 @@ import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.ping.PingManager;
-import com.ss.android.sdk.minusscreen.SsNewsApi;
-
-import java.util.ArrayList;
 
 /**
  * Created by yanni on 16/3/27.
@@ -42,7 +39,7 @@ public class KLauncherApplication extends Application {
 
         //init kinflow
         //今日头条
-        SsNewsApi.init(getApplicationContext(), clientId, true);
+//        SsNewsApi.init(getApplicationContext(), clientId, true);
         //百度天气
         ApiStoreSDK.init(this, Const.BAIDU_APIKEY);
         //三个个缓存文件

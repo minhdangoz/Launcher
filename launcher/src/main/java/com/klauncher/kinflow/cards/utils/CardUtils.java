@@ -1,20 +1,14 @@
 package com.klauncher.kinflow.cards.utils;
 
-import android.text.TextUtils;
 import android.util.Log;
 
-import com.klauncher.kinflow.cards.CardContentManager;
 import com.klauncher.kinflow.cards.manager.CardContentManagerFactory;
 import com.klauncher.kinflow.cards.model.yidian.YiDianModel;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.common.utils.DateUtils;
-import com.ss.android.sdk.minusscreen.model.Article;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,18 +16,20 @@ import java.util.List;
  * Created by xixionghui on 2016/3/28.
  */
 public class CardUtils {
-
+    /*
     public static boolean isContainsAbstract(Article article) {
         if (null == article) return false;
         if (!TextUtils.isEmpty(article.mAbstract.trim())) return true;
         return false;
     }
+    */
 
-    /**
+    /*
+    *//**
      * 获取带有abstract的Article集合
      * @param articleList
      * @return
-     */
+     *//*
     public static List<Article> getAbstractArticleList(List<Article> articleList) {
         List<Article> articleContainsAbstractList = new ArrayList<>();
         for (Article article : articleList) {
@@ -41,46 +37,9 @@ public class CardUtils {
         }
         return articleContainsAbstractList;
     }
-
-    /*
-    *//**
-     * 给获取到的Article分组
-     *
-     * @param articleListSrc
-     * @return
-     *//*
-    public static HashMap<String, LinkedHashSet<Article>> groupByAbstract(List<Article> articleListSrc) {
-        HashMap<String, LinkedHashSet<Article>> group = new HashMap<>();
-        LinkedHashSet<Article> group1 = new LinkedHashSet<>();
-        LinkedHashSet<Article> group2 = new LinkedHashSet<>();
-
-
-        List<Article> abstractArticleList = getAbstractArticleList(articleListSrc);
-        if (articleListSrc.size() >= 10 && null != abstractArticleList && abstractArticleList.size() >= 2) {//首轮获取到数据，足够两组
-            group1.add(abstractArticleList.get(0));
-            group2.add(abstractArticleList.get(1));
-            //移除已经添加到分组的Article
-            articleListSrc.remove(abstractArticleList.get(0));
-            articleListSrc.remove(abstractArticleList.get(1));
-            group1.addAll(articleListSrc.subList(0, 4));
-            group2.addAll(articleListSrc.subList(4, 8));//报错了，因为size=6，而你要截取5-9所有出错
-            group.put(CardContentManager.key_group1, group1);
-            group.put(CardContentManager.key_group2, group2);
-        } else {
-            group1.add(abstractArticleList.get(0));
-            articleListSrc.remove(abstractArticleList.get(0));
-            if (articleListSrc.size() < 5) {//一组也分不够
-                group1.addAll(articleListSrc);
-            } else {//能分够一组
-                group1.addAll(articleListSrc.subList(0, 4));
-            }
-            group.put(CardContentManager.key_group1, group1);
-        }
-        return group;
-    }
     */
 
-
+    /*
     public static List<Article>[] groupByAbstract2(List<Article> articleListSrc) {
         List<Article>[] articleListArrays = new List[2];
         List<Article> group1 = new ArrayList<>();
@@ -122,7 +81,10 @@ public class CardUtils {
         }
         return articleListArrays;
     }
+    */
 
+
+    /*
     public static HashMap<String, LinkedHashSet<Article>> groupByAbstract(List<Article> articleListSrc) {
         HashMap<String, LinkedHashSet<Article>> group = new HashMap<>();
         LinkedHashSet<Article> group1 = new LinkedHashSet<>();
@@ -160,6 +122,7 @@ public class CardUtils {
         return group;
     }
 
+*/
 
     /**
      * 对获取到的一点咨询进行排序.尽量保证第一个是有图的

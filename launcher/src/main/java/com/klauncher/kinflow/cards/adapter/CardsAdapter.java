@@ -104,9 +104,9 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
             case CardInfo.CARD_TYPE_AD_ADVIEW:
                 view = LayoutInflater.from(mContext).inflate(R.layout.card_info_ads_native, parent, false);
                 return new AdnativeCardViewHolder(mContext,view);
-            case CardInfo.CARD_TYPE_NEWS_TT_REDIAN:
-                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_news_toutiao, parent, false);
-                return new TTCardViewHolder(mContext,view);
+//            case CardInfo.CARD_TYPE_NEWS_TT_REDIAN:
+//                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_news_toutiao, parent, false);
+//                return new TTCardViewHolder(mContext,view);
             case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
             case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
             case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
@@ -166,13 +166,14 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
             //初始化cardInfo数据
             ydCardViewHolder.setmCardInfo(card);
 
-        } else if (holder instanceof TTCardViewHolder) {
-            TTCardViewHolder ttCardViewHolder = (TTCardViewHolder) holder;
-            ttCardViewHolder.getTouTiaoFirstNewsLayout().setOnClickListener(ttCardViewHolder);
-            ttCardViewHolder.getChangeNews().setOnClickListener(ttCardViewHolder);
-            ttCardViewHolder.getMoreNews().setOnClickListener(ttCardViewHolder);
-            ttCardViewHolder.setmCardInfo(card);
         }
+//        else if (holder instanceof TTCardViewHolder) {
+//            TTCardViewHolder ttCardViewHolder = (TTCardViewHolder) holder;
+//            ttCardViewHolder.getTouTiaoFirstNewsLayout().setOnClickListener(ttCardViewHolder);
+//            ttCardViewHolder.getChangeNews().setOnClickListener(ttCardViewHolder);
+//            ttCardViewHolder.getMoreNews().setOnClickListener(ttCardViewHolder);
+//            ttCardViewHolder.setmCardInfo(card);
+//        }
     }
 
     @Override

@@ -8,13 +8,7 @@ import android.os.Message;
 
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.model.CardInfo;
-import com.klauncher.kinflow.cards.utils.CardUtils;
 import com.klauncher.kinflow.common.factory.MessageFactory;
-import com.ss.android.sdk.minusscreen.SsNewsApi;
-import com.ss.android.sdk.minusscreen.control.feed.ArticleListQueryCallBack;
-import com.ss.android.sdk.minusscreen.model.Article;
-
-import java.util.List;
 
 /**
  * Created by xixionghui on 16/4/12.
@@ -25,11 +19,11 @@ public class TTCardContentManager extends BaseCardContentManager {
     private CardInfo mCardInfo;
     private int mChannelId;
     private ConnectivityManager mCM;
-    private List<Article>[] mArticleListArrays = new List[2];//会生成固定长度的两个集合List<Article>数组
-
-    public List<Article>[] getArticleListArrays() {
-        return mArticleListArrays;
-    }
+//    private List<Article>[] mArticleListArrays = new List[2];//会生成固定长度的两个集合List<Article>数组
+//
+//    public List<Article>[] getArticleListArrays() {
+//        return mArticleListArrays;
+//    }
 
     //    private Handler mHandler = new Handler() {
 //        @Override
@@ -68,6 +62,7 @@ public class TTCardContentManager extends BaseCardContentManager {
      */
     @Override
     public void requestCardContent(final Handler handler,CardInfo cardInfo) {
+        /*
         this.mCardInfo = cardInfo;
         log("开始获取今日头条信息,频道号="+cardInfo.getCardSecondTypeId());
         //目前今日头条不支持按channel获取新闻.此处可以忽略,为下一个版本准备
@@ -79,18 +74,10 @@ public class TTCardContentManager extends BaseCardContentManager {
             @Override
             public void onArticleListReceived(boolean b, List<Article> list) {
 
-//                if (!b) {
-//                    Toast.makeText(mContext, (mContext.getResources().getString(R.string.kinflow_string_obtain_toutiao_fail)), Toast.LENGTH_SHORT).show();
-//                    log("获取头条新闻失败");
-//                    return;
-//                }
                 Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO);
                 if (!b) {
                     TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
                 }else {
-//                    mArticleListArrays = CardUtils.groupByAbstract2(list);
-//                    msg.obj = mArticleListArrays;
-//                    TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
                     if (isConnected2Net()) {
                         mArticleListArrays = CardUtils.groupByAbstract2(list);
                         msg.obj = mArticleListArrays;
@@ -102,6 +89,15 @@ public class TTCardContentManager extends BaseCardContentManager {
             }
 
         }, 20);
+        */
+
+        this.mCardInfo = cardInfo;
+        log("开始获取今日头条信息,频道号="+cardInfo.getCardSecondTypeId());
+        //目前今日头条不支持按channel获取新闻.此处可以忽略,为下一个版本准备
+        this.mChannelId = CardIdMap.getTouTiaoChannelId(cardInfo.getCardSecondTypeId());
+        this.mMainControlHandler = handler;
+        Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO);
+        TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
     }
 
     public boolean isConnected2Net() {

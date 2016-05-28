@@ -499,6 +499,7 @@
             />
 
         <!--今日头条注册信息-->
+        <!--
         <activity
             android:name="com.ss.android.sdk.article.base.activity.BrowserActivity"
             android:configChanges="keyboard|orientation|screenSize"
@@ -555,6 +556,7 @@
         <activity
             android:name="com.ss.android.sdk.minusscreen.ui.main.WidgetActivity"
             android:screenOrientation="portrait" />
+        -->
 
         <!--kinflow end-->
         <!--开机启动快捷方式管理 开始-->
