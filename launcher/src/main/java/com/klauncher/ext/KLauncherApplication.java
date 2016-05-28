@@ -19,6 +19,7 @@ import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.ping.PingManager;
+import com.klauncher.utilities.LogUtil;
 
 /**
  * Created by yanni on 16/3/27.
@@ -31,6 +32,9 @@ public class KLauncherApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //log mode 测试
+        LogUtil.mLogModel = LogUtil.LogModel.RELEASE;
+        LogUtil.e("LogUtil","KLauncherApplication onCreate ");
         // Init DELONG report
         ReporterApi.onApplicationCreated(this);
         ReporterApi.startService(this, ReporterApi.POST_AS_REGULAR);
@@ -55,7 +59,11 @@ public class KLauncherApplication extends Application {
         initGeitui();
         initScreenStatusReceiver();
         //高低机型判断
-        initKinflowStatus();
+        //initKinflowStatus();
+        //CommonShareData.getBoolean("active", false);
+        //obtain false  关闭信息流配置项  不包含 true 打开配置项
+        SettingsValue.setKinflowSetOn(getApplicationContext(),CommonShareData.getBoolean("active", false));
+
 
     }
     private ConnectivityManager mConnectivityManager;
@@ -84,11 +92,11 @@ public class KLauncherApplication extends Application {
             unregisterReceiver(receiver);
         }
     }
-    //低配手机列表
+    /*//低配手机列表
     String[] lowModeList = {
 
-    };
-    public void initKinflowStatus(){
+    };*/
+    /*public void initKinflowStatus(){
         //已经打开信息流
         if(SettingsValue.isKinflowSetOn(getApplicationContext())){
             boolean isContain = false;
@@ -108,6 +116,6 @@ public class KLauncherApplication extends Application {
 
         }
 
-    }
+    }*/
 
 }

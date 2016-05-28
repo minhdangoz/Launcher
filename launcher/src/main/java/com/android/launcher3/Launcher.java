@@ -179,8 +179,8 @@ public class Launcher extends Activity
 
     static final boolean ENABLE_DEBUG_INTENTS = false; // allow DebugIntents to run
 
-    private static final int REQUEST_CREATE_SHORTCUT = 1;
-    private static final int REQUEST_CREATE_APPWIDGET = 5;
+    private static final int REQUEST_CREATE_SHORTCUT = 1;//shortcut
+    private static final int REQUEST_CREATE_APPWIDGET = 5;//appwidget
     private static final int REQUEST_PICK_SHORTCUT = 7;
     private static final int REQUEST_PICK_APPWIDGET = 9;
     private static final int REQUEST_PICK_WALLPAPER = 10;
@@ -267,9 +267,7 @@ public class Launcher extends Activity
      */
     private enum State {
         NONE, WORKSPACE, APPS_CUSTOMIZE, APPS_CUSTOMIZE_SPRING_LOADED
-    }
-
-    ;
+    };
     private State mState = State.WORKSPACE;
     private AnimatorSet mStateAnimation;
 
@@ -761,16 +759,14 @@ public class Launcher extends Activity
             // Create the custom content page and call the subclass to populate it.
             mWorkspace.createCustomContentContainer();
             populateCustomContentContainer();
-            /*if(mWorkspace.mCurrentPage == 1){//信息流 全屏
-                setFullScreen(true);
-                Log.e("mWorkspace",mWorkspace.mCurrentPage+";setFullScreen true");
-            }*/
         } else if (mWorkspace.hasCustomContent() && !hasCustomContentToLeft()) {
             mWorkspace.removeCustomContentPage();
-            //setFullScreen(false);
         }
     }
 
+    /**
+     * 跟新获取搜索 声音图标
+     */
     private void updateGlobalIcons() {
         boolean searchVisible = false;
         boolean voiceVisible = false;
@@ -903,6 +899,9 @@ public class Launcher extends Activity
     }
     /*Lenovo-sw luyy1 add 20150729 for Yandex search end*/
 
+    /**
+     * 语言环境判断
+     */
     private void checkForLocaleChange() {
         if (sLocaleConfiguration == null) {
             new AsyncTask<Void, Void, LocaleConfiguration>() {

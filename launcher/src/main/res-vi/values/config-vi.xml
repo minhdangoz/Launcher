@@ -20,6 +20,7 @@
 
     <array name="app_disguise_list">
         <item>com.miguan.market</item>
+        <item>com.tencent.android.qqdownloader</item>
         <item>com.alex.nuclear</item>
         <item>cn.kuwo.player</item>
         <item>com.duomi.android</item>
@@ -31,7 +32,8 @@
         <item>com.moji.mjweather</item>
     </array>
 
-    <string name="config_icon_com.miguan.market">com.bbk.appstore</string>
+    <string name="config_icon_com.miguan.market">com.vivo.game</string>
+    <string name="config_icon_com.tencent.android.qqdownloader">com.bbk.appstore</string>
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.android.bbkmusic,com.android.music,com.android.mediacenter</string>
     <string name="config_icon_com.duomi.android">com.android.mediacenter</string>

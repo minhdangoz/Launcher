@@ -14,6 +14,7 @@
 
     <array name="app_disguise_list">
         <item>com.miguan.market</item>
+        <item>com.tencent.android.qqdownloader</item>
         <item>com.alex.nuclear</item>
         <item>cn.kuwo.player</item>
         <item>com.duomi.android</item>
@@ -31,6 +32,8 @@
     <string name="config_icon_com.tencent.qqpimsecure">com.yulong.android.security,com.qiku.android.cloudsync</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar,com.yulong.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">com.chinamobile.mcloud,com.icoolme.android.weather</string>
+    <string name="config_icon_com.tencent.android.qqdownloader">com.yulong.android.coolmart</string>
+    <string name="config_icon_com.miguan.market">com.yulong.android.gamecenter</string>
 
     <string name="folder_system_tool">系统工具</string>
     <bool name="kinflow_switch_default">true</bool>
