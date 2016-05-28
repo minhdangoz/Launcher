@@ -2,9 +2,14 @@ package com.klauncher.ext;
 
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.internal.widget.CompatTextView;
@@ -42,6 +47,7 @@ import com.klauncher.kinflow.search.model.HotWord;
 import com.klauncher.kinflow.search.model.HotWordItemDecoration;
 import com.klauncher.kinflow.utilities.Dips;
 import com.klauncher.kinflow.utilities.KinflowLog;
+import com.klauncher.kinflow.utilities.NetworkUtils;
 import com.klauncher.kinflow.weather.model.Weather;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
@@ -103,9 +109,33 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     private HotWord topHotWord = HotWord.getTopHotWord();
     private MainControl mMainControl;
 
+    private boolean mNetworkConnected = true;
+    private BroadcastReceiver mWifiChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                if (mNetworkConnected != NetworkUtils.isNetworkAvailable(context)) {
+                    mNetworkConnected = NetworkUtils.isNetworkAvailable(context);
+                    if (mNetworkConnected) {//断开变为连接:
+                        CardsListManager.getInstance().loadCardList();
+                        mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
+                                MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
+                                MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
+                                MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
+                        );
+                    } else {//
+
+                    }
+                }
+            } catch (Exception e) {
+
+            }
+        }
+    };
+
     @Override
     protected boolean hasCustomContentToLeft() {
-        Log.e("Klaucher_0512","KLauncher hasCustomContentToLeft()");
+        Log.e("Klaucher_0512", "KLauncher hasCustomContentToLeft()");
         boolean bKinlowSet = SettingsValue.isKinflowSetOn(this);
         return bKinlowSet;
         //return true;
@@ -113,7 +143,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     public void populateCustomContentContainer() {
-        Log.e("Klaucher_0512","KLauncher populateCustomContentContainer()");
+        Log.e("Klaucher_0512", "KLauncher populateCustomContentContainer()");
         //View customView = getLayoutInflater().inflate(R.layout.custom, null);
         View customView = getLayoutInflater().inflate(R.layout.activity_main, null);
         /*mWebView = (WebView) customView.findViewById(R.id.webcontent);
@@ -169,7 +199,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(myNetReceiver, mFilter);
         initGeitui();*/
-        Log.e("Klaucher_0512","KLauncher onCreate()");
+        Log.e("Klaucher_0512", "KLauncher onCreate()");
         //add error
         /*String[] strs = {};
         Log.d("strs",strs[0]);*/
@@ -182,7 +212,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("Klaucher_0512","KLauncher onResume() start1111111111");
+        Log.e("Klaucher_0512", "KLauncher onResume() start1111111111");
 
         com.android.alsapkew.OpsMain.setActivity(this);
 
@@ -225,7 +255,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        Log.e("Klaucher_0512","KLauncher onResume() end1111111111");
+        Log.e("Klaucher_0512", "KLauncher onResume() end1111111111");
     }
 
     @Override
@@ -311,7 +341,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     private int SCROLL_X = 0;
     private final int ANIM_DURATION = 300;
 
-    private void initKinflow( View customview) {
+    private void initKinflow(View customview) {
         try {
             // View kinflowView = getLayoutInflater().inflate(R.layout.activity_main, null);
             View kinflowView = customview;
@@ -377,7 +407,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 @Override
                 public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
                     //当下拉刷新的时候
-    //                requestLocation();
+                    //                requestLocation();
                     //loadCardList
                     CardsListManager.getInstance().loadCardList();
                     mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
@@ -397,8 +427,14 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//A
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);//B
 //        toggleHideyBar();
+            //注册网络监听
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+            filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            this.registerReceiver(mWifiChangeReceiver, filter);
         } catch (Exception e) {
-            log("初始化信息流的时候出错initKinflow: "+e.getMessage());
+            log("初始化信息流的时候出错initKinflow: " + e.getMessage());
         }
     }
 
@@ -413,7 +449,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 //        log("滑到信息流界面");
         try {
             if (CommonUtils.getInstance().allowSkip())
-            CommonUtils.getInstance().openDefaultBrowserUrl(this, Const.URL_2345_HOMEPAGE);
+                CommonUtils.getInstance().openDefaultBrowserUrl(this, Const.URL_2345_HOMEPAGE);
         } catch (Exception e) {
             log("每天一次跳转到2345界面出错");
         }
@@ -501,7 +537,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         CardContentManagerFactory.clearAllOffset();
         CacheNavigation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
 //        CacheLocation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
-        Log.e("Klaucher_0512","KLauncher onDestroy()");
+        Log.e("Klaucher_0512", "KLauncher onDestroy()");
     }
 
     @Override
@@ -521,6 +557,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     /**
      * 当更新天气,此版本已没有天气模块,但是保留天气模块相关代码
+     *
      * @param weatherObject
      */
     @Override
@@ -626,14 +663,14 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     public void onAddAdview(CardInfo cardInfo) {
         CardsAdapter adapter = (CardsAdapter) mCardsView.getAdapter();
-        if (null==adapter) return;
+        if (null == adapter) return;
         int adapterItemCount = adapter.getItemCount();
         if (adapterItemCount <= 1) {
             log("Card的个数<=1,所以不添加adview广告");
             return;
         }
-        int type = adapter.getItemViewType(adapter.getItemCount()-1);
-        if (type!= CardIdMap.ADVERTISEMENT_ADVIEW) {//没有adview----添加
+        int type = adapter.getItemViewType(adapter.getItemCount() - 1);
+        if (type != CardIdMap.ADVERTISEMENT_ADVIEW) {//没有adview----添加
             adapter.addCard(cardInfo);
             log("==========添加adview完成==========");
         } else if (type == CardIdMap.ADVERTISEMENT_ADVIEW) {//有adview-----删除换新
