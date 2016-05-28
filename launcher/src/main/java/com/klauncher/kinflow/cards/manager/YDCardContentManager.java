@@ -27,17 +27,83 @@ public class YDCardContentManager extends BaseCardContentManager {
     private final int mCount = 5;//每次请求个数,通常为5不变
     private List<YiDianModel> mYiDianModelList = new ArrayList<>();
 
-    private Handler mHandler;//本Card的handler
     private Handler mainControlHandler;//MainControl的handler
+    //本Card的handler
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MessageFactory.MESSAGE_WHAT_TIMESTAMP:
+                    if (msg.arg1 == AsynchronousGet.SUCCESS && null != msg.obj) {
+                        timestamp = (String) msg.obj;
+                    }else {
+                        timestamp = String.valueOf((int) ((System.currentTimeMillis()) / 1000));
+                    }
+                    try {
+                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN).run(getRequestUrl());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN:
+                    if (msg.arg1 == AsynchronousGet.SUCCESS) {
+                        //计算下次的偏移量offset
+                        int offset = CommonShareData.getInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, 0) + 5;
+                        //存储偏移量offset
+                        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, offset);
+                        handleObtainedData(msg);
+                    } else {
+                        onFailToast(msg);
+                    }
+                    mainControlHandler.handleMessage(msg);
+                    break;
+            }
+        }
+    };
 
+    /**
+     * case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
+     case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
+     case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
+     case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
+     case CardIdMap.CARD_TYPE_NEWS_YD_CAIJING:
+     case CardIdMap.CARD_TYPE_NEWS_YD_TIYU:
+     case CardIdMap.CARD_TYPE_NEWS_YD_KEJI:
+     case CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI:
+     case CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG:
+     case CardIdMap.CARD_TYPE_NEWS_YD_MEINV:
+     case CardIdMap.CARD_TYPE_NEWS_YD_DUANZI:
+     case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
+     case CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG:
+     case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
+     case CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO:
+     case CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN:
+     case CardIdMap.CARD_TYPE_NEWS_YD_DIANYING:
+     case CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN:
+     case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
+     */
     //初始化
     static {
         CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN, 0);
         CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_REDIAN, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI, 0);
         CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_YULE, 0);
-        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_QICHE, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_CAIJING, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_TIYU, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_KEJI, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_MEINV, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_DUANZI, 0);
         CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_QICHE, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_DIANYING, 0);
+        CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN, 0);
         CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + CardIdMap.CARD_TYPE_NEWS_YD_LVYOU, 0);
+
     }
 
     private Handler.Callback mCallback = new Handler.Callback() {
@@ -75,7 +141,7 @@ public class YDCardContentManager extends BaseCardContentManager {
 
     YDCardContentManager(Context context) {
         super(context);
-        this.mHandler = new Handler(mCallback);
+//        this.mHandler = new Handler(mCallback);
     }
 
     public int getmOurDefineChannelId() {
