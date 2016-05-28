@@ -572,17 +572,59 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
                     case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
                         extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_ReDian);
                         break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_SheHui);
+                        break;
                     case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
                         extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_YuLe);
                         break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_QiChe);
+                    case CardIdMap.CARD_TYPE_NEWS_YD_CAIJING:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_CarJing);
+                        break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_TIYU:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_TiYu);
+                        break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_KEJI:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_KeJi);
+                        break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JunShi);
+                        break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_MinSheng);
+                        break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_MEINV:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_MeiNv);
+                        break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_DUANZI:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_DuanZi);
                         break;
                     case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
                         extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JianKang);
                         break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_ShiShang);
+                        break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_QiChe);
+                        break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_GaoXiao);
+                        break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_ShiPin);
+                        break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_DIANYING:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_DianYing);
+                        break;
+                    case CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JianShen);
+                        break;
                     case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
                         extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_LvYou);
+                        break;
+                    default:
+                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JingXuan);
                         break;
 
                 }

@@ -120,12 +120,25 @@ public class Const {
     public static final int YI_DIAN_CHANNEL_ID = YI_DIAN_CHANNEL_JingXuan;
     public static final String  URL_YI_DIAN_ZI_XUN_HOUT_DEBUG ="http://o.go2yd.com/oapi/sample/channel?";//测试
     public static final String  URL_YI_DIAN_ZI_XUN_HOUT_RELEASE ="http://o.go2yd.com/open-api/delong/channel";
-    public static final String YI_DIAN_CHANNEL_MORE_JingXuan = "http://www.yidianzixun.com/home";
-    public static final String YI_DIAN_CHANNEL_MORE_ReDian = "http://www.yidianzixun.com/home?page=channel&id=hot";
-    public static final String YI_DIAN_CHANNEL_MORE_YuLe = "http://www.yidianzixun.com/home?page=channel&keyword=%E5%A8%B1%E4%B9%90";
-    public static final String YI_DIAN_CHANNEL_MORE_QiChe = "http://www.yidianzixun.com/home?page=channel&keyword=%E6%B1%BD%E8%BD%A6";
-    public static final String YI_DIAN_CHANNEL_MORE_JianKang = "http://www.yidianzixun.com/home?page=channel&keyword=%E5%81%A5%E5%BA%B7";
-    public static final String YI_DIAN_CHANNEL_MORE_LvYou = "http://www.yidianzixun.com/home?page=channel&keyword=%E6%97%85%E6%B8%B8";
+    public static final String YI_DIAN_CHANNEL_MORE_JingXuan = "http://www.yidianzixun.com/home";//一点资讯精选
+    public static final String YI_DIAN_CHANNEL_MORE_ReDian = "http://www.yidianzixun.com/home?page=channel&id=hot";//一点资讯热点
+    public static final String YI_DIAN_CHANNEL_MORE_SheHui = "http://www.yidianzixun.com/home?page=channel&keyword=%E7%A4%BE%E4%BC%9A";//一点资讯社会
+    public static final String YI_DIAN_CHANNEL_MORE_YuLe = "http://www.yidianzixun.com/home?page=channel&keyword=%E5%A8%B1%E4%B9%90";//一点资讯娱乐
+    public static final String YI_DIAN_CHANNEL_MORE_CarJing = "http://www.yidianzixun.com/home?page=channel&keyword=%E8%B4%A2%E7%BB%8F";//一点资讯财经
+    public static final String YI_DIAN_CHANNEL_MORE_TiYu = "http://www.yidianzixun.com/home?page=channel&keyword=%E4%BD%93%E8%82%B2";//一点资讯体育
+    public static final String YI_DIAN_CHANNEL_MORE_KeJi = "http://www.yidianzixun.com/home?page=channel&keyword=%E7%A7%91%E6%8A%80";//一点资讯科技
+    public static final String YI_DIAN_CHANNEL_MORE_JunShi = "http://www.yidianzixun.com/home?page=channel&keyword=%E5%86%9B%E4%BA%8B";//一点资讯军事
+    public static final String YI_DIAN_CHANNEL_MORE_MinSheng = "http://www.yidianzixun.com/home?page=channel&keyword=%E6%B0%91%E7%94%9F";//一点资讯民生
+    public static final String YI_DIAN_CHANNEL_MORE_MeiNv = "http://www.yidianzixun.com/home?page=channel&keyword=%E7%BE%8E%E5%A5%B3";//一点资讯美女
+    public static final String YI_DIAN_CHANNEL_MORE_DuanZi = "http://www.yidianzixun.com/home?page=channel&keyword=%E6%AE%B5%E5%AD%90";//一点资讯段子
+    public static final String YI_DIAN_CHANNEL_MORE_JianKang = "http://www.yidianzixun.com/home?page=channel&keyword=%E5%81%A5%E5%BA%B7";//一点资讯健康
+    public static final String YI_DIAN_CHANNEL_MORE_ShiShang = "http://www.yidianzixun.com/home?page=channel&keyword=%E6%97%B6%E5%B0%9A";//一点资讯时尚
+    public static final String YI_DIAN_CHANNEL_MORE_QiChe = "http://www.yidianzixun.com/home?page=channel&keyword=%E6%B1%BD%E8%BD%A6";//一点资讯汽车
+    public static final String YI_DIAN_CHANNEL_MORE_GaoXiao = "http://www.yidianzixun.com/home?page=channel&keyword=%E6%90%9E%E7%AC%91";//一点资讯搞笑
+    public static final String YI_DIAN_CHANNEL_MORE_ShiPin = "http://www.yidianzixun.com/home?page=channel&keyword=%E8%A7%86%E9%A2%91";//一点资讯视频
+    public static final String YI_DIAN_CHANNEL_MORE_DianYing = "http://www.yidianzixun.com/home?page=channel&keyword=%E7%94%B5%E5%BD%B1";//一点资讯电影
+    public static final String YI_DIAN_CHANNEL_MORE_JianShen = "http://www.yidianzixun.com/home?page=channel&keyword=%E5%81%A5%E8%BA%AB";//一点资讯健身
+    public static final String YI_DIAN_CHANNEL_MORE_LvYou = "http://www.yidianzixun.com/home?page=channel&keyword=%E6%97%85%E6%B8%B8";//一点资讯旅游
     public static final String URL_TIMESTAMP = "http://api.klauncher.com/v1/card/gettime";
 
     /**

@@ -117,7 +117,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 if (mNetworkConnected != NetworkUtils.isNetworkAvailable(context)) {
                     mNetworkConnected = NetworkUtils.isNetworkAvailable(context);
                     if (mNetworkConnected) {//断开变为连接:
-                        CardsListManager.getInstance().loadCardList();
                         mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
                                 MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
                                 MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
@@ -382,7 +381,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             navigationRecyclerView.setAdapter(new NavigationAdapter(KLauncher.this, navigationList));
             navigationRecyclerView.addItemDecoration(new HotWordItemDecoration(16, 32, false));
 
-//        CardsListManager.getInstance().loadCardList();
             mCardsView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             mCardsView.addItemDecoration(new CardItemDecoration(Dips.dipsToIntPixels(12, this)));
             //mCardInfoList = CardsListManager.getInstance().getInfos();
@@ -409,7 +407,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     //当下拉刷新的时候
                     //                requestLocation();
                     //loadCardList
-                    CardsListManager.getInstance().loadCardList();
                     mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
                             MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
                             MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
