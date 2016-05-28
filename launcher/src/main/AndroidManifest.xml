@@ -492,11 +492,14 @@
             android:theme="@style/Theme.Transparent"/>
 
         <service android:name="com.klauncher.kinflow.weather.service.LocationService"/>
+
+        <!--adview注册信息-->
+        <!--
         <service android:name="com.kyview.DownloadService" />
-        <!--<activity android:name="com.kyview.AdviewWebView" />-->
         <activity android:name="com.kyview.AdviewWebView"
                   android:theme="@style/Theme.Transparent"
             />
+        -->
 
         <!--今日头条注册信息-->
         <!--
