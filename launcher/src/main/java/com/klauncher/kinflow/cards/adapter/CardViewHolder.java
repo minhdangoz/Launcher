@@ -320,24 +320,6 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
         this.mCardInfo = cardInfo;
 //        tvMoreNews.setText(""+this.mCardInfo.getCardFooter());
         switch (cardInfo.getCardSecondTypeId()) {
-//            case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
-//                tvMoreNews.setText("更多精选新闻");
-//                break;
-//            case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
-//                tvMoreNews.setText("更多热点新闻");
-//                break;
-//            case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
-//                tvMoreNews.setText("更多娱乐新闻");
-//                break;
-//            case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
-//                tvMoreNews.setText("更多汽车新闻");
-//                break;
-//            case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
-//                tvMoreNews.setText("更多健康新闻");
-//                break;
-//            case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
-//                tvMoreNews.setText("更多旅游新闻");
-//                break;
             case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
                 tvMoreNews.setText("更多精选新闻");
                 break;

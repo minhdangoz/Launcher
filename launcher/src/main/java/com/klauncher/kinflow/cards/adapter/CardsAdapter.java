@@ -88,82 +88,89 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-        switch (viewType) {
-            case CardInfo.CARD_TYPE_SETTING_WIFI:
-                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_settings_wifi, parent, false);
-                return new WifiCardViewHolder(view);
-            case CardInfo.CARD_TYPE_AD_KAPPMOB:
-                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_ads_banner, parent, false);
-                return new AdbannerCardViewHolder(mContext,view);
-//            case CardInfo.CARD_TYPE_AD_ADVIEW:
-//                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_ads_native, parent, false);
-//                return new AdnativeCardViewHolder(mContext,view);
-//            case CardInfo.CARD_TYPE_NEWS_TT_REDIAN:
-//                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_news_toutiao, parent, false);
-//                return new TTCardViewHolder(mContext,view);
-            case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
-            case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
-            case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
-            case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
-            case CardIdMap.CARD_TYPE_NEWS_YD_CAIJING:
-            case CardIdMap.CARD_TYPE_NEWS_YD_TIYU:
-            case CardIdMap.CARD_TYPE_NEWS_YD_KEJI:
-            case CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI:
-            case CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG:
-            case CardIdMap.CARD_TYPE_NEWS_YD_MEINV:
-            case CardIdMap.CARD_TYPE_NEWS_YD_DUANZI:
-            case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
-            case CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG:
-            case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
-            case CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO:
-            case CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN:
-            case CardIdMap.CARD_TYPE_NEWS_YD_DIANYING:
-            case CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN:
-            case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
-                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_news_yidian, parent, false);
-                return new YDCardViewHolder(view,mContext);
-            default:
-                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_unknown, parent, false);
-                break;
+        try {
+            View view;
+            switch (viewType) {
+                case CardInfo.CARD_TYPE_SETTING_WIFI:
+                    view = LayoutInflater.from(mContext).inflate(R.layout.card_info_settings_wifi, parent, false);
+                    return new WifiCardViewHolder(view);
+                case CardInfo.CARD_TYPE_AD_KAPPMOB:
+                    view = LayoutInflater.from(mContext).inflate(R.layout.card_info_ads_banner, parent, false);
+                    return new AdbannerCardViewHolder(mContext,view);
+    //            case CardInfo.CARD_TYPE_AD_ADVIEW:
+    //                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_ads_native, parent, false);
+    //                return new AdnativeCardViewHolder(mContext,view);
+    //            case CardInfo.CARD_TYPE_NEWS_TT_REDIAN:
+    //                view = LayoutInflater.from(mContext).inflate(R.layout.card_info_news_toutiao, parent, false);
+    //                return new TTCardViewHolder(mContext,view);
+                case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
+                case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
+                case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
+                case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
+                case CardIdMap.CARD_TYPE_NEWS_YD_CAIJING:
+                case CardIdMap.CARD_TYPE_NEWS_YD_TIYU:
+                case CardIdMap.CARD_TYPE_NEWS_YD_KEJI:
+                case CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI:
+                case CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG:
+                case CardIdMap.CARD_TYPE_NEWS_YD_MEINV:
+                case CardIdMap.CARD_TYPE_NEWS_YD_DUANZI:
+                case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
+                case CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG:
+                case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
+                case CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO:
+                case CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN:
+                case CardIdMap.CARD_TYPE_NEWS_YD_DIANYING:
+                case CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN:
+                case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
+                    view = LayoutInflater.from(mContext).inflate(R.layout.card_info_news_yidian, parent, false);
+                    return new YDCardViewHolder(view,mContext);
+                default:
+                    view = LayoutInflater.from(mContext).inflate(R.layout.card_info_unknown, parent, false);
+                    break;
+            }
+            return new CardViewHolder(view);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log("CardsAdapter:onBindViewHolder时出错");
+            return new CardViewHolder(LayoutInflater.from(mContext).inflate(R.layout.card_info_unknown, parent, false));
         }
-        return new CardViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, final int position) {
-        CardInfo card = mCardsList.get(position);
-        if (holder instanceof WifiCardViewHolder) {
-            ((WifiCardViewHolder) holder).wifiLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mCardsList.get(position).open(mContext, null);
-                }
-            });
-        } else if (holder instanceof AdbannerCardViewHolder) {//yokmob的CardView
-            AdbannerCardViewHolder yokmobHolder = (AdbannerCardViewHolder) holder;
-            yokmobHolder.getBannerImage().setOnClickListener(yokmobHolder);
-            yokmobHolder.setCardInfo(card);
+        try {
+            CardInfo card = mCardsList.get(position);
+            if (holder instanceof WifiCardViewHolder) {
+                ((WifiCardViewHolder) holder).wifiLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mCardsList.get(position).open(mContext, null);
+                    }
+                });
+            } else if (holder instanceof AdbannerCardViewHolder) {//yokmob的CardView
+                AdbannerCardViewHolder yokmobHolder = (AdbannerCardViewHolder) holder;
+                yokmobHolder.getBannerImage().setOnClickListener(yokmobHolder);
+                yokmobHolder.setCardInfo(card);
 
-        }
-//        else if (holder instanceof AdnativeCardViewHolder) {//adView的ViewHolder
-//            AdnativeCardViewHolder adviewHolder = (AdnativeCardViewHolder) holder;
-//            adviewHolder.getCardView().setOnClickListener(adviewHolder);
-//            adviewHolder.getNativeGroup().setOnClickListener(adviewHolder);
-//            adviewHolder.setCardInfo(card);
-//
-//        }
-        else if (holder instanceof YDCardViewHolder) {
-            YDCardViewHolder ydCardViewHolder = (YDCardViewHolder) holder;
-            //添加监听
-            ydCardViewHolder.getmYiDianHeadWith1ImageLayout().setOnClickListener(ydCardViewHolder);
-            ydCardViewHolder.getmYiDianHeadWith3ImageLayout().setOnClickListener(ydCardViewHolder);
-            ydCardViewHolder.getTvChangeNews().setOnClickListener(ydCardViewHolder);
-            ydCardViewHolder.getTvMoreNews().setOnClickListener(ydCardViewHolder);
-            //初始化cardInfo数据
-            ydCardViewHolder.setmCardInfo(card);
+            }
+    //        else if (holder instanceof AdnativeCardViewHolder) {//adView的ViewHolder
+    //            AdnativeCardViewHolder adviewHolder = (AdnativeCardViewHolder) holder;
+    //            adviewHolder.getCardView().setOnClickListener(adviewHolder);
+    //            adviewHolder.getNativeGroup().setOnClickListener(adviewHolder);
+    //            adviewHolder.setCardInfo(card);
+    //
+    //        }
+            else if (holder instanceof YDCardViewHolder) {
+                YDCardViewHolder ydCardViewHolder = (YDCardViewHolder) holder;
+                //添加监听
+                ydCardViewHolder.getmYiDianHeadWith1ImageLayout().setOnClickListener(ydCardViewHolder);
+                ydCardViewHolder.getmYiDianHeadWith3ImageLayout().setOnClickListener(ydCardViewHolder);
+                ydCardViewHolder.getTvChangeNews().setOnClickListener(ydCardViewHolder);
+                ydCardViewHolder.getTvMoreNews().setOnClickListener(ydCardViewHolder);
+                //初始化cardInfo数据
+                ydCardViewHolder.setmCardInfo(card);
 
-        }
+            }
 //        else if (holder instanceof TTCardViewHolder) {
 //            TTCardViewHolder ttCardViewHolder = (TTCardViewHolder) holder;
 //            ttCardViewHolder.getTouTiaoFirstNewsLayout().setOnClickListener(ttCardViewHolder);
@@ -171,6 +178,10 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
 //            ttCardViewHolder.getMoreNews().setOnClickListener(ttCardViewHolder);
 //            ttCardViewHolder.setmCardInfo(card);
 //        }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log("CardsAdapter:onBindViewHolder时出错");
+        }
     }
 
     @Override
