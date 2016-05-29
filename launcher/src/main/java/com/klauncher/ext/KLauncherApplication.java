@@ -10,13 +10,11 @@ import android.util.Log;
 
 import com.android.launcher3.settings.SettingsValue;
 import com.android.system.ReporterApi;
-import com.baidu.apistore.sdk.ApiStoreSDK;
 import com.igexin.sdk.PushManager;
 import com.klauncher.getui.ScreenStatusReceiver;
 import com.klauncher.kinflow.common.utils.CacheHotWord;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
-import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.launcher.BuildConfig;
 import com.klauncher.ping.PingManager;
 import com.klauncher.utilities.LogUtil;
@@ -51,8 +49,6 @@ public class KLauncherApplication extends Application {
         MobileStatistics.init(this, BuildConfig.CHANNEL_ID, "103");//productID 用BuildConfig.CHANNEL_ID,channel=103
         MobileStatistics.flushBuffer(50, 10 * 60, TimeUnit.MINUTES);//全部设置为默认值
 
-        //百度天气
-        ApiStoreSDK.init(this, Const.BAIDU_APIKEY);
         //三个个缓存文件
         CommonShareData.init(getApplicationContext());
         CacheNavigation.getInstance().createCacheFile(getApplicationContext());

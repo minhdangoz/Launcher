@@ -3,12 +3,8 @@ package com.klauncher.kinflow.cards.manager;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
 import com.android.alsapkew.OpsMain;
-import com.baidu.apistore.sdk.ApiCallBack;
-import com.baidu.apistore.sdk.ApiStoreSDK;
-import com.baidu.apistore.sdk.network.Parameters;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.model.CardInfo;
@@ -16,7 +12,6 @@ import com.klauncher.kinflow.cards.utils.CardUtils;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.task.AsynchronousGet;
 import com.klauncher.kinflow.common.task.SearchAsynchronousGet;
-import com.klauncher.kinflow.common.utils.CacheLocation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.common.utils.DateUtils;
@@ -27,8 +22,6 @@ import com.klauncher.kinflow.search.model.SearchEnum;
 import com.klauncher.kinflow.utilities.FileUtils;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.weather.model.Weather;
-import com.klauncher.launcher.R;
-//import com.kyview.natives.NativeAdInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,6 +33,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Semaphore;
+
+//import com.kyview.natives.NativeAdInfo;
 
 /**
  * Created by xixionghui on 16/4/12.
@@ -180,20 +175,6 @@ public class MainControl {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                //此版本已没有天气模块,但是保留天气模块相关代码
-                /*
-                case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME://获取到城市名称
-                    log("获取到城市名称");
-                    if (null!=msg.obj){
-                        try {
-                            String cityName = URLEncoder.encode((String) msg.obj, "UTF-8");
-                            parseWeather(cityName);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    break;
-                */
                 case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_ADVIEW:
 //                    List<NativeAdInfo> nativeAdInfoList = (List<NativeAdInfo>) msg.obj;
 //                    if (null == nativeAdInfoList || nativeAdInfoList.size() == 0) {
@@ -321,75 +302,6 @@ public class MainControl {
 
     }
 
-    /**
-     * 通过定位获取城市名称，将城市名称逆解析后，再请求天气。（自动完成）
-     * 此版本已没有天气模块,但是保留天气模块相关代码
-     */
-    public void obtainCityName() {
-        String param = "?location=" + CacheLocation.getInstance().getLatLng() + "&output=json&key=" + Const.BAIDU_APIKEY;
-        String url = Const.OBTAIN_CITY_NAME + param;
-        try {
-            new AsynchronousGet(singleRequestHandler, MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME).run(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void parseWeather(String cityName) {
-        Parameters para = new Parameters();
-        para.put("cityname", cityName);
-        ApiStoreSDK.execute(Const.OBTAION_WEATHER_BY_CITY_NAME,
-                ApiStoreSDK.GET,
-                para,
-                new ApiCallBack() {
-
-                    @Override
-                    public void onSuccess(int status, String responseString) {
-                        try {
-                            JSONObject jsonAll = new JSONObject(responseString);
-                            int resultCode = jsonAll.getInt("errNum");
-                            if (resultCode != 0) {
-                                Toast.makeText(mContext, mContext.getResources().getString(R.string.kinflow_string_obtain_weather_success), Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            JSONObject jsonWeather = (JSONObject) jsonAll.get("retData");
-
-                            String city = jsonWeather.getString("city");
-                            String pinyin = jsonWeather.getString("pinyin");
-                            String citycode = jsonWeather.getString("citycode");
-                            String date = jsonWeather.getString("date");
-                            String time = jsonWeather.getString("time");
-                            String postCode = jsonWeather.getString("postCode");
-                            Double longitude = jsonWeather.getDouble("longitude");
-                            Double latitude = jsonWeather.getDouble("latitude");
-                            String altitude = jsonWeather.getString("altitude");
-                            String weather = jsonWeather.getString("weather");
-                            String temp = jsonWeather.getString("temp");
-                            String l_tmp = jsonWeather.getString("l_tmp");
-                            String h_tmp = jsonWeather.getString("h_tmp");
-                            String WD = jsonWeather.getString("WD");
-                            String WS = jsonWeather.getString("WS");
-                            String sunrise = jsonWeather.getString("sunrise");
-                            String sunset = jsonWeather.getString("sunset");
-                            Weather weatherObject = new Weather(city, pinyin, citycode, date, time, postCode, longitude, latitude, altitude, weather, temp, l_tmp, h_tmp, WD, WS, sunrise, sunset);
-                            mListener.onWeatherUpdate(weatherObject);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-
-                    @Override
-                    public void onError(int status, String responseString, Exception e) {
-//                        Log.i("sdkdemo", "errMsg: " + (e == null ? "" : e.getMessage()));
-                        log("获取天气信息时,出现错误");
-                    }
-
-                });
-    }
 
     final protected static void log(String msg) {
         KinflowLog.i(msg);
