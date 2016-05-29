@@ -1,6 +1,7 @@
 package com.klauncher.kinflow.cards.manager;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.common.utils.CommonShareData;
@@ -53,29 +54,32 @@ public class CardContentManagerFactory {
     }
 
     //统一管理清空offset
-    public static final String KEY_CARD_OFFSET_ADVIEW = "offset_adview";
-    public static final String KEY_CARD_OFFSET_BAIDU = "offset_baidu";
-    public static final String KEY_CARD_OFFSET_YOKMOB = "offset_yokmob";
-    public static final String KEY_CARD_OFFSET_TOUTIAO_REDIAN = "offset_toutiao_redian";
-    public static final String KEY_CARD_OFFSET_YIDIAN_JINGXUAN = "offset_yidian_jingxuan";
-    public static final String KEY_CARD_OFFSET_YIDIAN_REDIAN = "offset_yidian_redian";
-    public static final String KEY_CARD_OFFSET_YIDIAN_YULE = "offset_yidian_yule";
-    public static final String KEY_CARD_OFFSET_YIDIAN_JIANKANG = "offset_yidian_jikang";
-    public static final String KEY_CARD_OFFSET_YIDIAN_QICHE = "offset_yidian_qiche";
-    public static final String KEY_CARD_OFFSET_YIDIAN_LVYOU = "offset_yidian_lvyou";
+//    public static final String KEY_CARD_OFFSET_ADVIEW = "offset_adview";
+//    public static final String KEY_CARD_OFFSET_BAIDU = "offset_baidu";
+//    public static final String KEY_CARD_OFFSET_YOKMOB = "offset_yokmob";
+//    public static final String KEY_CARD_OFFSET_TOUTIAO_REDIAN = "offset_toutiao_redian";
+//    public static final String KEY_CARD_OFFSET_YIDIAN_JINGXUAN = "offset_yidian_jingxuan";
+//    public static final String KEY_CARD_OFFSET_YIDIAN_REDIAN = "offset_yidian_redian";
+//    public static final String KEY_CARD_OFFSET_YIDIAN_YULE = "offset_yidian_yule";
+//    public static final String KEY_CARD_OFFSET_YIDIAN_JIANKANG = "offset_yidian_jikang";
+//    public static final String KEY_CARD_OFFSET_YIDIAN_QICHE = "offset_yidian_qiche";
+//    public static final String KEY_CARD_OFFSET_YIDIAN_LVYOU = "offset_yidian_lvyou";
 
     public static final String OFFSET_NAME = "offset_";
     public static void clearAllOffset(){
-        CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.ADVERTISEMENT_ADVIEW));
-        CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.ADVERTISEMENT_BAIDU));
-        CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.ADVERTISEMENT_YOKMOB));
-        CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.CARD_TYPE_NEWS_TT_REDIAN));
-        CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN));
-        CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.CARD_TYPE_NEWS_YD_REDIAN));
-        CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.CARD_TYPE_NEWS_YD_YULE));
-        CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG));
-        CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.CARD_TYPE_NEWS_YD_QICHE));
-        CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.CARD_TYPE_NEWS_YD_LVYOU));
+        try{
+            CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.ADVERTISEMENT_ADVIEW));
+            CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.ADVERTISEMENT_BAIDU));
+            CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.ADVERTISEMENT_YOKMOB));
+
+            CommonShareData.clearInt(OFFSET_NAME+String.valueOf(CardIdMap.CARD_TYPE_NEWS_TT_REDIAN));
+
+            for (int i = 350 ;i<=368;i++) {
+                CommonShareData.clearInt(OFFSET_NAME+i);
+            }
+        }catch (Exception e) {
+            Log.i("Kinflow", "clearAllOffset: 清空offset出错");
+        }
     }
 
 }

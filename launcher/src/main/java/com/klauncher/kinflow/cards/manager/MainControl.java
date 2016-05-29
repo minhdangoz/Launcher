@@ -294,9 +294,11 @@ public class MainControl {
                     case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
                         CardUtils.clearOffset();
                         for (CardInfo cardInfo : mCardInfoList) {
-                            BaseCardContentManager cardContentManager = cardInfo.getmCardContentManager();
-                            mRequestSemaphore.acquire();
-                            cardContentManager.requestCardContent(mHandler, cardInfo);
+                            if (CardIdMap.isKnow(cardInfo.getCardSecondTypeId())) {//认识的:释放信号,发出请求
+                                BaseCardContentManager cardContentManager = cardInfo.getmCardContentManager();
+                                mRequestSemaphore.acquire();
+                                cardContentManager.requestCardContent(mHandler, cardInfo);
+                            }
                         }
                         break;
                     default:

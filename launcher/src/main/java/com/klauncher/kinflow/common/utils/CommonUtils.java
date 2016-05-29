@@ -22,6 +22,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.klauncher.kinflow.browser.KinflowBrower;
+import com.klauncher.launcher.BuildConfig;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -291,17 +292,24 @@ public class CommonUtils {
         }
     }
 
-    public void openHotWord(Context context, String url) {
+    public String openHotWord(Context context, String url) {
         synchronized (this) {
+        String pullUpPackageName ="com.klauncher.launcher";//定义拉起APP的包名
             try {
                 //uc
                 openBrowerUrl(context, url, Const.UC_packageName, Const.UC_mainActivity);
+                pullUpPackageName = Const.UC_packageName;
             } catch (Exception e) {
                 try {
                     openBrowerUrl(context, url, Const.QQ_packageName, Const.QQ_mainActivity);
+                    pullUpPackageName = Const.QQ_packageName;
                 } catch (Exception e1) {
                     openDefaultBrowserUrl(context, url);
+//                    pullUpPackageName = "com.klauncher.launcher";//使用这个,在正式app上无法获取src32,正式app的包名
+                    pullUpPackageName = BuildConfig.APPLICATION_ID;
                 }
+            } finally {
+                return pullUpPackageName;
             }
         }
     }

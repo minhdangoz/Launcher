@@ -3,6 +3,7 @@ package com.klauncher.kinflow.cards.adapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.klauncher.kinflow.cards.model.yidian.YiDianModel;
 import com.klauncher.kinflow.common.utils.DateUtils;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.launcher.R;
+import com.klauncher.ping.PingManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,8 +92,11 @@ public class YDNewsAdapter extends RecyclerView.Adapter<YDNewsAdapter.NewsAdapte
 //                    CommonUtils.getInstance().openDetail(mContext,mCardInfo.getCardOpenOptionList(),yiDianModel.getUrl());
                     Bundle extras = new Bundle();
                     extras.putString(OpenMode.OPEN_URL_KEY, yiDianModel.getUrl());
-                    if (null!=mCardInfo)
-                    mCardInfo.open(mContext, extras);
+                    if (null!=mCardInfo) {
+                        String finalOpenModel = mCardInfo.open(mContext, extras);
+                        if (!TextUtils.isEmpty(finalOpenModel))
+                        PingManager.getInstance().reportUserAction4cardNewsOpen("yiDianZiXun", String.valueOf(mCardInfo.getCardSecondTypeId()));
+                    }
                 }
             });
         }

@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -15,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.manager.YDCardContentManager;
 import com.klauncher.kinflow.cards.manager.YMCardContentManager;
 import com.klauncher.kinflow.cards.model.CardInfo;
@@ -25,8 +26,11 @@ import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.launcher.R;
+import com.klauncher.ping.PingManager;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +87,8 @@ class AdnativeCardViewHolder extends CardViewHolder implements View.OnClickListe
     }
 
     public void setCardInfo(CardInfo cardInfo) {
-        this.mCardInfo = cardInfo;
+        try{
+            this.mCardInfo = cardInfo;
         ADVCardContentManager manager = (ADVCardContentManager) this.mCardInfo.getmCardContentManager();
         List<NativeAdInfo> nativeAdInfoList = manager.getNativeAdInfoList();
         if (null == nativeAdInfoList || nativeAdInfoList.size() == 0) {//获取数据失败
@@ -101,13 +106,17 @@ class AdnativeCardViewHolder extends CardViewHolder implements View.OnClickListe
          this.mFirstNativeAdInfo = nativeAdInfoList.get(0);
         this.mNativeTitle.setText(mFirstNativeAdInfo.getTitle());
         Picasso.with(mContext).load(mFirstNativeAdInfo.getIconUrl()).into(this.mNativeImage);
-
+        }catch(Exception e) {
+              Log.i("Kinflow", "给adview添加数据的时候出错:AdnativeCardViewHolder.setCardInfo");
+        }
 
     }
 
     @Override
     public void onClick(View v) {
         mFirstNativeAdInfo.onClick(getNativeGroup());
+        //String openType,String pullUpAppPackageName,String fromName
+        PingManager.getInstance().reportUserAction4Banner("adview_sdk", BuildConfig.APPLICATION_ID,"adview");
     }
 }
 */
@@ -132,9 +141,14 @@ class AdbannerCardViewHolder extends CardViewHolder implements View.OnClickListe
     }
 
     public void setCardInfo(CardInfo cardInfo) {
-        this.mCardInfo = cardInfo;
-        YMCardContentManager mManager = (YMCardContentManager) mCardInfo.getmCardContentManager();
-        Picasso.with(mContext).load(mManager.getImageUrl()).into(bannerImage);
+        try{
+            this.mCardInfo = cardInfo;
+            YMCardContentManager mManager = (YMCardContentManager) mCardInfo.getmCardContentManager();
+            Picasso.with(mContext).load(mManager.getImageUrl()).into(bannerImage);
+        }catch (Exception e) {
+            Log.i("Kinflow", "给yokmob添加数据的时候出错:AdbannerCardViewHolder.setCardInfo");
+        }
+
     }
 
     @Override
@@ -237,6 +251,7 @@ class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.more_news:
+                String openPackageName = "";
                 boolean b = CommonUtils.getInstance().isInstalledAPK(mContext,OpenMode.COMPONENT_NAME_JINRI_TOUTIAO);
                 if (b) {
 //                    ComponentName componentName = new ComponentName(Const.TOUTIAO_packageName, Const.TOUTIAO_mainActivity);
@@ -244,9 +259,12 @@ class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
 //                    intent.setComponent(componentName);
 //                    mContext.startActivity(intent);
                     CommonUtils.getInstance().openApp(mContext,OpenMode.COMPONENT_NAME_JINRI_TOUTIAO);
+                    openPackageName = Const.TOUTIAO_packageName;
                 } else {
-                    Toast.makeText(mContext, "请先下载今日头条APP", Toast.LENGTH_SHORT).show();
+                    openPackageName = CommonUtils.getInstance().openHotWord(mContext, "http://m.toutiao.com/");
                 }
+                //String openType,String pullUpAppPackageName,String fromName
+                PingManager.getInstance().reportUserAction4CardMore(openPackageName,"jinRiTouTiao");
                 break;
             case R.id.change_news:
                 if (null == mArticleListArrays) {//第一次从assets中读取到的CardInfo对应Manager没有数据
@@ -266,6 +284,7 @@ class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
                         }
                     }
                 }
+                PingManager.getInstance().reportUserAction4Changes("jinRiTouTiao",String.valueOf(mCardInfo.getCardSecondTypeId()));
                 break;
             case R.id.first_news_layout_toutiao:
                 if (null == mFirstArticle) return;
@@ -273,6 +292,7 @@ class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
                 extras.putString(OpenMode.OPEN_URL_KEY,mFirstArticle.mSrcUrl);
                 extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + mFirstArticle.mGroupId);
                 mCardInfo.open(mContext, extras);
+                PingManager.getInstance().reportUserAction4cardNewsOpen("jinRiTouTiao","301");
                 break;
         }
     }
@@ -316,76 +336,22 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
      * @param cardInfo
      */
     public void setmCardInfo(CardInfo cardInfo) {
-        //初始化数据
-        this.mCardInfo = cardInfo;
-//        tvMoreNews.setText(""+this.mCardInfo.getCardFooter());
-        switch (cardInfo.getCardSecondTypeId()) {
-            case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
-                tvMoreNews.setText("更多精选新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
-                tvMoreNews.setText("更多热点新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
-                tvMoreNews.setText("更多社会新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
-                tvMoreNews.setText("更多娱乐新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_CAIJING:
-                tvMoreNews.setText("更多财经新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_TIYU:
-                tvMoreNews.setText("更多体育新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_KEJI:
-                tvMoreNews.setText("更多科技新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI:
-                tvMoreNews.setText("更多军事新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG:
-                tvMoreNews.setText("更多民生新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_MEINV:
-                tvMoreNews.setText("更多美女新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_DUANZI:
-                tvMoreNews.setText("更多段子新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
-                tvMoreNews.setText("更多健康新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG:
-                tvMoreNews.setText("更多时尚新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
-                tvMoreNews.setText("更多汽车新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO:
-                tvMoreNews.setText("更多搞笑");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN:
-                tvMoreNews.setText("更多视频新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_DIANYING:
-                tvMoreNews.setText("更多电影新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN:
-                tvMoreNews.setText("更多健身新闻");
-                break;
-            case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
-                tvMoreNews.setText("更多旅游新闻");
-                break;
-            default:
-                tvMoreNews.setText("更多新闻");
-                break;
+        try {
+            //初始化数据
+            this.mCardInfo = cardInfo;
+            String footerName = mCardInfo.getCardFooter();
+            if (TextUtils.isEmpty(footerName)) {
+                footerName = "更多新闻";
+            }
+            tvMoreNews.setText(footerName);
+            YDCardContentManager manager = (YDCardContentManager) cardInfo.getmCardContentManager();
+            List<YiDianModel> yiDianModelList = manager.getmYiDianModelList();
+            YDNewsAdapter adapter = new YDNewsAdapter(mContext, cardInfo);
+            mRecyclerView.setAdapter(adapter);
+            addData(adapter, yiDianModelList);
+        }catch (Exception e) {
+            log("CardViewHolder.setmCardInfo时出错,也就是添加数据时出错");
         }
-        YDCardContentManager manager = (YDCardContentManager) cardInfo.getmCardContentManager();
-        List<YiDianModel> yiDianModelList = manager.getmYiDianModelList();
-        YDNewsAdapter adapter = new YDNewsAdapter(mContext, cardInfo);
-        mRecyclerView.setAdapter(adapter);
-        addData(adapter, yiDianModelList);
     }
 
     private void addData(YDNewsAdapter adapter, List<YiDianModel> yiDianModelList) {
@@ -540,77 +506,93 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
         switch (v.getId()) {
             case R.id.yidian_head_1image:
                 extras.putString(OpenMode.OPEN_URL_KEY, mFirstYiDianModel.getUrl());
-                mCardInfo.open(mContext, extras);
+                String finalOpenComponent_Head1Imapge = mCardInfo.open(mContext, extras);
+                if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
+                PingManager.getInstance().reportUserAction4cardNewsOpen("yiDianZiXun", String.valueOf(mCardInfo.getCardSecondTypeId()));
                 break;
             case R.id.yidian_head_3image:
                 extras.putString(OpenMode.OPEN_URL_KEY, mFirstYiDianModel.getUrl());
-                mCardInfo.open(mContext, extras);
+                String finalOpenComponent_Head3Imapge = mCardInfo.open(mContext, extras);
+                if (!TextUtils.isEmpty(finalOpenComponent_Head3Imapge))
+                PingManager.getInstance().reportUserAction4cardNewsOpen("yiDianZiXun", String.valueOf(mCardInfo.getCardSecondTypeId()));
                 break;
             case R.id.more_news:
-                switch (mCardInfo.getCardSecondTypeId()) {
-                    case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JingXuan);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_ReDian);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_SheHui);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_YuLe);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_CAIJING:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_CarJing);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_TIYU:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_TiYu);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_KEJI:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_KeJi);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JunShi);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_MinSheng);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_MEINV:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_MeiNv);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_DUANZI:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_DuanZi);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JianKang);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_ShiShang);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_QiChe);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_GaoXiao);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_ShiPin);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_DIANYING:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_DianYing);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JianShen);
-                        break;
-                    case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_LvYou);
-                        break;
-                    default:
-                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JingXuan);
-                        break;
-
+                String url = "";
+                String cardExtra = mCardInfo.getCardExtra();
+                try {
+                    JSONObject extraJson = new JSONObject(cardExtra);
+                    url = extraJson.optString("clc",Const.YI_DIAN_CHANNEL_MORE_JingXuan);
+                } catch (Exception e) {
+                    url = Const.YI_DIAN_CHANNEL_MORE_JingXuan;
+                    log("解析一点资讯Card的extra出错:"+e.getMessage());
                 }
-                mCardInfo.open(mContext, extras);
+                extras.putString(OpenMode.OPEN_URL_KEY, url);
+//                switch (mCardInfo.getCardSecondTypeId()) {
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JingXuan);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_ReDian);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_SheHui);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_YuLe);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_CAIJING:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_CarJing);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_TIYU:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_TiYu);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_KEJI:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_KeJi);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JunShi);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_MinSheng);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_MEINV:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_MeiNv);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_DUANZI:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_DuanZi);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JianKang);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_ShiShang);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_QiChe);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_GaoXiao);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_ShiPin);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_DIANYING:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_DianYing);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JianShen);
+//                        break;
+//                    case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_LvYou);
+//                        break;
+//                    default:
+//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JingXuan);
+//                        break;
+//
+//                }
+                String finalOpenComponent_moreNews =  mCardInfo.open(mContext, extras);
+                if (!TextUtils.isEmpty(finalOpenComponent_moreNews))
+                PingManager.getInstance().reportUserAction4CardMore(finalOpenComponent_moreNews, "yiDianZiXun");
                 break;
             case R.id.change_news:
                 if (null != mCardInfo) {
@@ -635,11 +617,12 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
                     }
                 } else {
                 }
+                PingManager.getInstance().reportUserAction4Changes("yiDianZiXun",String.valueOf(mCardInfo.getCardSecondTypeId()));
                 break;
         }
     }
 
     final protected static void log(String msg) {
-        KinflowLog.i(msg);
+        KinflowLog.e(msg);
     }
 }

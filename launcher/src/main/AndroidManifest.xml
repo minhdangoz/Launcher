@@ -19,6 +19,7 @@
 -->
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.klauncher.launcher"
     android:versionName="1.9.4"
     android:versionCode="1605231035">
@@ -150,7 +151,8 @@
         android:label="@string/cm_application_name"
         android:largeHeap="@bool/config_largeHeap"
         android:restoreAnyVersion="true"
-        android:supportsRtl="true" 
+        android:supportsRtl="true"
+        tools:replace="icon,label"
         android:requiredForAllUsers="true">
 
         <activity

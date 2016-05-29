@@ -94,7 +94,8 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
                 case CardInfo.CARD_TYPE_SETTING_WIFI:
                     view = LayoutInflater.from(mContext).inflate(R.layout.card_info_settings_wifi, parent, false);
                     return new WifiCardViewHolder(view);
-                case CardInfo.CARD_TYPE_AD_KAPPMOB:
+//                case CardInfo.CARD_TYPE_AD_KAPPMOB:
+                case CardIdMap.ADVERTISEMENT_YOKMOB:
                     view = LayoutInflater.from(mContext).inflate(R.layout.card_info_ads_banner, parent, false);
                     return new AdbannerCardViewHolder(mContext,view);
     //            case CardInfo.CARD_TYPE_AD_ADVIEW:

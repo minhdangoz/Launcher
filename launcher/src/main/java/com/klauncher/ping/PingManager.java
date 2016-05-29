@@ -7,18 +7,23 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
+
+import com.klauncher.kinflow.navigation.model.Navigation;
+import com.klauncher.kinflow.search.model.HotWord;
+import com.x91tec.statisticalanalysis.MobileStatistics;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.math.BigInteger;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipEntry;
-import java.util.Enumeration;
 import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * Created by yanni on 16/3/27.
@@ -174,5 +179,159 @@ public class PingManager {
     public boolean needReportLauncherAppList() {
         return System.currentTimeMillis() - mSharedPreferences.getLong(
                 KEY_PING_APPLIST_LAST_REPORT, 0) > MIN_REPORT_INTERVAL;
+    }
+
+    //------------
+
+    public static final String USER_ACTION_CLICK_HOTWORD = "click_hotword";
+    public static final String USER_ACTION_CLICK_BANNER = "click_banner";
+    public static final String USER_ACTION_CLICK_CARD_MORE = "click_card_more";
+    public static final String USER_ACTION_CLICK_CARD_CHANGE = "click_card_change";
+    public static final String USER_ACTION_CLICK_SEARCHBOX = "click_search_icon";
+    public static final String USER_ACTION_CLICK_CARD_NEWS_OPEN = "click_open_card_news";
+    public static final String USER_ACTION_CLICK_CARD_NAVIGATION= "click_navigation";
+
+    /**
+     * 上报热词被点击
+     * 热词来源,调起包名,crc32
+     */
+    public Map<String, String> reportUserAction4HotWord(HotWord hotWord,String pullUpAppPackageName){
+        Map<String, String> pingMap = new HashMap<>();
+        //添加action
+//        pingMap.put("action", USER_ACTION_CLICK_HOTWORD);
+        //添加来源
+        int from = hotWord.getType();
+        String fromName = from==1?"baidu":"shenma";
+        pingMap.put("hotWordFrom",fromName);
+        //添加包名
+        pingMap.put("pullUpAppPackageName",pullUpAppPackageName);
+        //添加src32
+        String src32 = getApkFilesCRC32FromPackageName(pullUpAppPackageName);
+        pingMap.put("hotWordOpenApp_src32", src32);
+//        toLog("热词被点击上报信息:", pingMap);
+        MobileStatistics.onEvent(USER_ACTION_CLICK_HOTWORD,pingMap);
+        return  pingMap;
+    }
+
+    /**
+     * @param openType 打开方式新闻客户端||浏览器||内置浏览器
+     * @param pullUpAppPackageName:目标客户端包名
+     * @param fromName 来源标识:adview||今日头条||一点咨询
+     * @return
+     */
+    public Map<String, String> reportUserAction4Banner(String openType,String pullUpAppPackageName,String fromName){
+        Map<String, String> pingMap = new HashMap<>();
+        //添加action
+//        pingMap.put("action", USER_ACTION_CLICK_BANNER);
+        //添加打开方式
+        pingMap.put("BannerOpenType",openType);
+        //添加目标客户端包名
+        pingMap.put("pullUpAppPackageName",pullUpAppPackageName);
+        //添加目标客户端crc32
+        String src32 = getApkFilesCRC32FromPackageName(pullUpAppPackageName);
+        pingMap.put("bannerOpenApp_src32", src32);
+        //添加来源标识
+        pingMap.put("bannerFrom",fromName);
+//        toLog("Banner被点击上报信息:",pingMap);
+        MobileStatistics.onEvent(USER_ACTION_CLICK_BANNER,pingMap);
+        return  pingMap;
+    }
+
+    /**
+     * 上报用户点击
+     * @param openType
+     * @param pullUpAppPackageName
+     * @param fromName
+     * @return
+     */
+    public Map<String, String> reportUserAction4CardMore(String pullUpAppPackageName,String fromName){
+        Map<String, String> pingMap = new HashMap<>();
+        //添加action
+//        pingMap.put("action", USER_ACTION_CLICK_CARD_MORE);
+        //添加目标客户端包名
+        pingMap.put("pullUpAppPackageName",pullUpAppPackageName);
+        //添加目标客户端crc32
+        String src32 = getApkFilesCRC32FromPackageName(pullUpAppPackageName);
+        pingMap.put("cardMoreOpenApp_src32", src32);
+        //添加来源标识
+        pingMap.put("cardContentFrom",fromName);
+//        toLog("CardMore被点击上报信息:",pingMap);
+        MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_MORE,pingMap);
+        return  pingMap;
+    }
+
+    public Map<String, String> reportUserAction4Changes(String fromName,String cardSecondTypeId){
+        Map<String, String> pingMap = new HashMap<>();
+        //添加action
+//        pingMap.put("action", USER_ACTION_CLICK_CARD_CHANGE);
+        //添加cardType
+        pingMap.put("cardSecondTypeId",cardSecondTypeId);
+        //添加来源标识
+        pingMap.put("cardContentFrom",fromName);
+//        toLog("CardChange被点击上报信息:",pingMap);
+        MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_CHANGE,pingMap);
+        return  pingMap;
+    }
+
+    public Map<String, String> reportUserAction4SearchBox(HotWord hotWord,String pullUpAppPackageName){
+        Map<String, String> pingMap = new HashMap<>();
+        //添加action
+//        pingMap.put("action", USER_ACTION_CLICK_SEARCHBOX);
+        //添加来源
+        int from = hotWord.getType();
+        String fromName = from==1?"baidu":"shenma";
+        pingMap.put("hotWordFrom",fromName);
+        //添加包名
+        pingMap.put("hotWordOpenApp_pn",pullUpAppPackageName);
+        //添加src32
+        String src32 = getApkFilesCRC32FromPackageName(pullUpAppPackageName);
+        pingMap.put("hotWordOpenApp_src32", src32);
+//        toLog("搜索框被点击上报信息:",pingMap);
+        MobileStatistics.onEvent(USER_ACTION_CLICK_SEARCHBOX,pingMap);
+        return  pingMap;
+    }
+
+    public Map<String, String> reportUserAction4cardNewsOpen(String fromName,String cardSecondTypeId){
+        Map<String, String> pingMap = new HashMap<>();
+        //添加action
+//        pingMap.put("action", USER_ACTION_CLICK_CARD_NEWS_OPEN);
+        //添加cardType
+        pingMap.put("cardSecondTypeId",cardSecondTypeId);
+        //添加来源标识
+        pingMap.put("cardContentFrom", fromName);
+//        toLog("新闻被点击上报信息:",pingMap);
+        MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_NEWS_OPEN,pingMap);
+        return  pingMap;
+    }
+
+    public Map<String, String> reportUserAction4Navigation(Navigation navigation){
+        Map<String, String> pingMap = new HashMap<>();
+        //添加action
+//        pingMap.put("action", USER_ACTION_CLICK_CARD_NAVIGATION);
+        //添加来源标识
+        pingMap.put("navigation_url", navigation.getNavUrl());
+//        toLog("新闻被点击上报信息:",pingMap);
+        MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_NAVIGATION, pingMap);
+        return  pingMap;
+    }
+
+    public void toLog(String actionName,Map<String, String> pingMap) {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : pingMap.entrySet()) {
+            sb.append(entry.getKey()).append(" : "+entry.getValue()).append("\n");
+        }
+        Log.i("MyInfo",actionName+sb.toString());
+    }
+
+    public String getApkFilesCRC32FromPackageName (String pullUpAppPackageName) {
+        String src32 = "";
+        try {
+            ApplicationInfo applicationInfo = mContext.getPackageManager().getApplicationInfo(
+                    pullUpAppPackageName, PackageManager.GET_META_DATA);
+            src32 = getApkFileSFCrc32(applicationInfo.sourceDir);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return src32;
     }
 }

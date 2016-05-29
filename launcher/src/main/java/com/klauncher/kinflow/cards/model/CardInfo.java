@@ -17,8 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by xixionghui on 2016/3/18.
@@ -107,7 +107,8 @@ public class CardInfo implements Parcelable {
         return mCardContentManager;
     }
 
-    public void open(Context context, Bundle extras) {
+    public String open(Context context, Bundle extras) {
+        String finalOpenComponent = "";
         //通过Bundle获取url&&uri
         String openUrl = null;
         String openUri = null;
@@ -115,10 +116,10 @@ public class CardInfo implements Parcelable {
             openUrl = extras.getString(OpenMode.OPEN_URL_KEY);
             openUri = extras.getString(OpenMode.FIRST_OPEN_MODE_TYPE_URI);
         } else {
-            return;
+            return finalOpenComponent;
         }
         //获取OpenMode
-        if (null==openUrl) return;
+        if (null==openUrl) return finalOpenComponent;
         OpenMode openMode = new OpenMode(context,this.cardOpenOptionList, openUrl);
         Intent firstIntent = openMode.getFirstIntent();
         try {
@@ -136,6 +137,8 @@ public class CardInfo implements Parcelable {
             }
             firstIntent.setData(uri);
             context.startActivity(openMode.getFirstIntent());
+            finalOpenComponent = openMode.getFirstIntent().getComponent().getPackageName();
+
         } catch (Exception e) {
             try {
                 Intent secondIntent = openMode.getSecondIntent();
@@ -143,10 +146,15 @@ public class CardInfo implements Parcelable {
                     throw new AndroidRuntimeException("Unknown action intent...");
                 }
                 context.startActivity(openMode.getSecondIntent());
+                finalOpenComponent = openMode.getSecondIntent().getComponent().getPackageName();
             } catch (Exception e1) {
                 Intent thirdIntent = openMode.getThirdIntent();
                 context.startActivity(thirdIntent);
+                finalOpenComponent = openMode.getThirdIntent().getComponent().getPackageName();
             }
+        }finally {
+            //以下代码用于做统计使用
+            return finalOpenComponent;
         }
     }
 

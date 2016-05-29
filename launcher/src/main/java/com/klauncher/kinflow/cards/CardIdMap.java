@@ -18,11 +18,11 @@ public class CardIdMap {
      */
         //广告类别
         public static final int ADVERTISEMENT_YOKMOB = 100;
-        public static final int ADVERTISEMENT_ADVIEW = 101;
-        public static final int ADVERTISEMENT_BAIDU = 102;
+        public static final int ADVERTISEMENT_ADVIEW = 101;//不认识
+        public static final int ADVERTISEMENT_BAIDU = 102;//不认识
         //新闻分类----今日头条
-        public static final int CARD_TYPE_NEWS_TT_REDIAN = 301;
-        public static final int CARD_TYPE_NEWS_TT_SHEHUI = 302;
+        public static final int CARD_TYPE_NEWS_TT_REDIAN = 301;//不认识
+        public static final int CARD_TYPE_NEWS_TT_SHEHUI = 302;//不认识
         //新闻分类----一点资讯
         public static final int CARD_TYPE_NEWS_YD_JINGXUAN = 350;
         public static final int CARD_TYPE_NEWS_YD_REDIAN = 351;
@@ -44,10 +44,17 @@ public class CardIdMap {
         public static final int CARD_TYPE_NEWS_YD_JIANSHEN = 367;
         public static final int CARD_TYPE_NEWS_YD_LVYOU = 368;
 
+    public static boolean isKnow(int cardSecondTypeId){
+        if (cardSecondTypeId==ADVERTISEMENT_YOKMOB||(cardSecondTypeId>=350&&cardSecondTypeId<=368))
+            return true;
+        return false;
+    }
+
     /**
      * 一点资讯定义的ChannelID.也就是key
      * 热点、社会、娱乐、军事、体育、NBA、财经、科技、民生、美女、段子、健康、时尚、汽车、搞笑、视频、游戏、旅游、科学、互联网、趣图、美食、星座、育儿、情感、房产
      */
+        public static final String YIDIAN_CHANNEL_JINGXUAN = "精选";
         public static final String YIDIAN_CHANNEL_REDIAN = "热点";
         public static final String YIDIAN_CHANNEL_SHEHUI = "社会";
         public static final String YIDIAN_CHANNEL_YULE = "娱乐";
@@ -66,6 +73,8 @@ public class CardIdMap {
         public static final String YIDIAN_CHANNEL_SHIPIN = "视频";
         public static final String YIDIAN_CHANNEL_YOUXI = "游戏";
         public static final String YIDIAN_CHANNEL_LVYOU = "旅游";
+        public static final String YIDIAN_CHANNEL_DIANYING = "电影";
+        public static final String YIDIAN_CHANNEL_JIANSHEN = "健身";
         public static final String YIDIAN_CHANNEL_KEXUE = "科学";
         public static final String YIDIAN_CHANNEL_HULIANWANG = "互联网";
         public static final String YIDIAN_CHANNEL_QUTU = "趣图";
@@ -84,60 +93,70 @@ public class CardIdMap {
     public static String getYiDianChannelId(int cardSecondTypeId) {
         String channelId = YIDIAN_CHANNEL_REDIAN;
         switch (cardSecondTypeId) {
-
-            case CARD_TYPE_NEWS_YD_REDIAN:
+            case CARD_TYPE_NEWS_YD_JINGXUAN://精选
+                channelId = YIDIAN_CHANNEL_JINGXUAN;
+                break;
+            case CARD_TYPE_NEWS_YD_REDIAN://热点
                 channelId = YIDIAN_CHANNEL_REDIAN;
                 break;
-            case CARD_TYPE_NEWS_YD_SHEHUI:
+            case CARD_TYPE_NEWS_YD_SHEHUI://社会
                 channelId = YIDIAN_CHANNEL_SHEHUI;
                 break;
-            case CARD_TYPE_NEWS_YD_YULE:
+            case CARD_TYPE_NEWS_YD_YULE://娱乐
                 channelId = YIDIAN_CHANNEL_YULE;
                 break;
-            case CARD_TYPE_NEWS_YD_JUNSHI:
-                channelId = YIDIAN_CHANNEL_JUNSHI;
+            case CARD_TYPE_NEWS_YD_CAIJING://财经
+                channelId = YIDIAN_CHANNEL_CAIJING;
                 break;
-            case CARD_TYPE_NEWS_YD_TIYU:
+            case CARD_TYPE_NEWS_YD_TIYU://体育
                 channelId = YIDIAN_CHANNEL_TIYU;
+                break;
+            case CARD_TYPE_NEWS_YD_KEJI://科技
+                channelId = YIDIAN_CHANNEL_KEJI;
+                break;
+            case CARD_TYPE_NEWS_YD_JUNSHI://军事
+                channelId = YIDIAN_CHANNEL_JUNSHI;
                 break;
 //            case CARD_TYPE_NEWS_YD_NBA:
 //                channelId = YIDIAN_CHANNEL_NBA;
 //                break;
-            case CARD_TYPE_NEWS_YD_CAIJING:
-                channelId = YIDIAN_CHANNEL_CAIJING;
-                break;
+
             //科技、民生、美女、段子、健康、时尚、汽车、搞笑、视频、游戏、旅游、科学、互联网、趣图、美食、星座、育儿、情感、房产
-            case CARD_TYPE_NEWS_YD_KEJI:
-                channelId = YIDIAN_CHANNEL_KEJI;
-                break;
-            case CARD_TYPE_NEWS_YD_MINSHENG:
+
+            case CARD_TYPE_NEWS_YD_MINSHENG://民生
                 channelId = YIDIAN_CHANNEL_MINSHENG;
                 break;
-            case CARD_TYPE_NEWS_YD_MEINV:
+            case CARD_TYPE_NEWS_YD_MEINV://美女
                 channelId = YIDIAN_CHANNEL_MEINV;
                 break;
-            case CARD_TYPE_NEWS_YD_DUANZI:
+            case CARD_TYPE_NEWS_YD_DUANZI://段子
                 channelId = YIDIAN_CHANNEL_DUANZI;
                 break;
-            case CARD_TYPE_NEWS_YD_JIANKANG:
+            case CARD_TYPE_NEWS_YD_JIANKANG://健康
                 channelId = YIDIAN_CHANNEL_JIANKANG;
                 break;
-            case CARD_TYPE_NEWS_YD_SHISHANG:
+            case CARD_TYPE_NEWS_YD_SHISHANG://时尚
                 channelId = YIDIAN_CHANNEL_SHISHANG;
                 break;
-            case CARD_TYPE_NEWS_YD_QICHE:
+            case CARD_TYPE_NEWS_YD_QICHE://汽车
                 channelId = YIDIAN_CHANNEL_QICHE;
                 break;
-            case CARD_TYPE_NEWS_YD_GAOXIAO:
+            case CARD_TYPE_NEWS_YD_GAOXIAO://搞笑
                 channelId = YIDIAN_CHANNEL_GAOXIAO;
                 break;
             //视频、游戏、旅游、科学、互联网、趣图、美食、星座、育儿、情感、房产
-            case CARD_TYPE_NEWS_YD_SHIPIN:
+            case CARD_TYPE_NEWS_YD_SHIPIN://视频
                 channelId = YIDIAN_CHANNEL_SHIPIN;
                 break;
 //            case CARD_TYPE_NEWS_YD_YOUXI:
 //                channelId = YIDIAN_CHANNEL_YOUXI;
 //                break;
+            case CARD_TYPE_NEWS_YD_DIANYING:
+                channelId = YIDIAN_CHANNEL_DIANYING;
+                break;
+            case CARD_TYPE_NEWS_YD_JIANSHEN:
+                channelId = YIDIAN_CHANNEL_JIANSHEN;
+                break;
             case CARD_TYPE_NEWS_YD_LVYOU:
                 channelId = YIDIAN_CHANNEL_LVYOU;
                 break;

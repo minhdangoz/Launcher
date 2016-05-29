@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.launcher3.settings.SettingsValue;
@@ -18,8 +17,12 @@ import com.klauncher.kinflow.common.utils.CacheHotWord;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
+import com.klauncher.launcher.BuildConfig;
 import com.klauncher.ping.PingManager;
 import com.klauncher.utilities.LogUtil;
+import com.x91tec.statisticalanalysis.MobileStatistics;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by yanni on 16/3/27.
@@ -44,6 +47,10 @@ public class KLauncherApplication extends Application {
         //init kinflow
         //今日头条
 //        SsNewsApi.init(getApplicationContext(), clientId, true);
+        //本公司sdk统计:MobileStatistics.init(Context context,String productId,String clientChannel);
+        MobileStatistics.init(this, BuildConfig.CHANNEL_ID, "103");//productID 用BuildConfig.CHANNEL_ID,channel=103
+        MobileStatistics.flushBuffer(50, 10 * 60, TimeUnit.MINUTES);//全部设置为默认值
+
         //百度天气
         ApiStoreSDK.init(this, Const.BAIDU_APIKEY);
         //三个个缓存文件

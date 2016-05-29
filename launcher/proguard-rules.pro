@@ -20,6 +20,7 @@
 
 #DELONG SDK
 -keep class com.android.system.**{*;}
+-keep class com.x91tec.statisticalanalysis.**{*;}
 # -- end --
 
 #Umeng SDK

@@ -7,7 +7,6 @@ import android.os.Message;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -59,21 +58,21 @@ public class YMCardContentManager extends BaseCardContentManager {
 
     @Override
     public void requestCardContent(Handler mainControlHandler, CardInfo cardInfo) {
-        this.mMainControlHandler = mainControlHandler;
-        this.mCardInfo = cardInfo;
-
-        JSONObject json = null;
         try {
+            this.mMainControlHandler = mainControlHandler;
+            this.mCardInfo = cardInfo;
+
+            JSONObject json = null;
             json = new JSONObject(cardInfo.getCardExtra());
-        } catch (JSONException e) {
-            return;
-        }
-        if (json != null && json.has("img") && json.has("clc")) {
-            imageUrl = json.optString("img");
-            clickUrl = json.optString("clc");
-            HashMap<String,String> resultHashMap = new HashMap<>();
-//            resultHashMap.put(KEY_IMAGE_URL,imageUrl);
-//            resultHashMap.put(KEY_CLICK_URL, clickUrl);
+            if (json != null && json.has("img") && json.has("clc")) {
+                imageUrl = json.optString("img");
+                clickUrl = json.optString("clc");
+                HashMap<String,String> resultHashMap = new HashMap<>();
+                Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YOKMOB);
+                mMainControlHandler.sendMessage(msg);
+            }
+        } catch (Exception e) {
+            log("请求YOKMOB时出错:"+e.getMessage());
             Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YOKMOB);
             mMainControlHandler.sendMessage(msg);
         }

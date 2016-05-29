@@ -17,6 +17,7 @@ import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.launcher.R;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.navigation.model.Navigation;
+import com.klauncher.ping.PingManager;
 
 import java.util.List;
 
@@ -126,8 +127,8 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
 
                     Bundle extras = new Bundle();
                     extras.putString(OpenMode.OPEN_URL_KEY, navigation.getNavUrl());
-                    navigation.open(context,extras);
-
+                    navigation.open(context, extras);
+                    PingManager.getInstance().reportUserAction4Navigation(navigation);
                 }
             });
         }

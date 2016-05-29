@@ -9,7 +9,7 @@
             "fot": "",
             "ord": "6",
             "tyn": "新闻类,一点资讯热点",
-            "ext": "",
+            "ext": "{\"clc\":\"http://www.yidianzixun.com/home?page=channel&id=hot\"}",
             "ops": [
                 "9",
                 "com.tencent.mtt/com.tencent.mtt.SplashActivity",
@@ -24,7 +24,7 @@
             "fot": "",
             "ord": "19",
             "tyn": "新闻类,一点资讯娱乐",
-            "ext": "",
+            "ext": "{\"clc\":\"http://www.yidianzixun.com/home?page=channel&keyword=%E5%A8%B1%E4%B9%90\"}",
             "ops": [
                 "23",
                 "com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity",
