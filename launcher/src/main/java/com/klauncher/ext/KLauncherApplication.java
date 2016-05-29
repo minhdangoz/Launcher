@@ -65,7 +65,8 @@ public class KLauncherApplication extends Application {
         //initKinflowStatus();
         //CommonShareData.getBoolean("active", false);
         //obtain false  关闭信息流配置项  不包含 true 打开配置项
-        SettingsValue.setKinflowSetOn(getApplicationContext(),CommonShareData.getBoolean("active", false));
+        SettingsValue.setKinflowSetOn(getApplicationContext(),CommonShareData.getBoolean(
+                CommonShareData.KEY_APP_ACTIVE, false));
 
 
     }

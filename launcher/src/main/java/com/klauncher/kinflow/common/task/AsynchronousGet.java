@@ -436,6 +436,10 @@ public final class AsynchronousGet {
             if (null == jsonArrayFunList || jsonArrayFunList.length() == 0) {
                 msg.arg1 = RESPONSE_FAIL;
             } else {
+                if (!CommonShareData.containsKey(CommonShareData.KEY_CONFIG_FIRST_UPDATE)) {
+                    CommonShareData.putLong(CommonShareData.KEY_CONFIG_FIRST_UPDATE,
+                            System.currentTimeMillis());
+                }
                 boolean appActive = false;
                 boolean devEnable = true;
                 int jsonArrayLength = jsonArrayFunList.length();
@@ -464,10 +468,23 @@ public final class AsynchronousGet {
                         } else if ("sm_prct".equals(key)) {
                             String value = funJson.optString(key);
                             CommonShareData.putString(key, value);
+                        } else if (CommonShareData.KEY_ACTIVE_2345.equals(key)) {
+                            String value = funJson.optString(key);
+                            CommonShareData.putBoolean(key, "1".equals(value));
+                        } else if (CommonShareData.KEY_ACTIVE_INTERVAL_2345.equals(key)) {
+                            String value = funJson.optString(key);
+                            try {
+                                CommonShareData.putInt(key, Integer.valueOf(value));
+                            } catch (Exception e) { }
+                        } else if (CommonShareData.KEY_OPERATOR_DELAY_2345.equals(key)) {
+                            String value = funJson.optString(key);
+                            try {
+                                CommonShareData.putInt(key, Integer.valueOf(value));
+                            } catch (Exception e) { }
                         }
                     }
                 }
-                CommonShareData.putBoolean("active",appActive&&devEnable);
+                CommonShareData.putBoolean(CommonShareData.KEY_APP_ACTIVE, appActive && devEnable);
                 msg.arg1 = SUCCESS;
             }
         } catch (Exception e) {

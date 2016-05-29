@@ -93,7 +93,7 @@ public class MainControl {
 //                    break;
                 case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
                     log("获取到所有的配置项");
-                    OpsMain.setActiveAppEnable(mContext, CommonShareData.getBoolean("active", false));
+                    OpsMain.setActiveAppEnable(mContext, CommonShareData.getBoolean(CommonShareData.KEY_APP_ACTIVE, false));
                     break;
                 default:
                     log("what the fuck ??  msg.what=" + msg.what);

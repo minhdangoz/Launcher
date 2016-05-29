@@ -405,16 +405,22 @@ public class CommonUtils {
      * 信息流界面是否允许跳转
      * @return
      */
-    public boolean allowSkip() {
-        if (isSkipedIn24h()) {
+    public boolean allowActive2345() {
+        if (!CommonShareData.getBoolean("active_2345", false)) {
+            return false;
+        }
+        if (!canOperateNow()) {
+            return false;
+        }
+        if (isSkipedInterval()) {
 //            Log.i("Kinflow","24h以内已经跳转过,所以不在跳转");
             return false;
-        }else {//超过24小时还没有自动跳转过
+        } else {//超过24小时还没有自动跳转过
             if (random()) {//随机为跳转
-                CommonShareData.putLong(Const.KEY_LAST_SKIP_TIME,Calendar.getInstance().getTimeInMillis());
+                CommonShareData.putLong(Const.KEY_LAST_SKIP_TIME, Calendar.getInstance().getTimeInMillis());
 //                Log.i("Kinflow", "24h以内没有跳转过,随机:跳转");
                 return  true;
-            }else {//随机为不跳转
+            } else {//随机为不跳转
 //                Log.i("Kinflow","24h以内没有跳转过,随机:不跳转");
                 return false;
             }
@@ -422,17 +428,36 @@ public class CommonUtils {
     }
 
     /**
-     * 24小时以内是否跳转过
+     * 首次激活一定时间内不可以运营，默认${CommonShareData.DEFAULT_OPERATOR_INTERVAL}小时
      * @return
      */
-    private boolean isSkipedIn24h() {
-        long lastSkipTime = CommonShareData.getLong(Const.KEY_LAST_SKIP_TIME,0);
+    private boolean canOperateNow() {
+        long configFirstUpdateMillis = CommonShareData.getLong(CommonShareData.KEY_CONFIG_FIRST_UPDATE,
+                System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(configFirstUpdateMillis);
+        calendar.add(Calendar.HOUR_OF_DAY, CommonShareData.getInt(
+                CommonShareData.KEY_OPERATOR_DELAY_2345, CommonShareData.DEFAULT_OPERATOR_INTERVAL));
+        if (Calendar.getInstance().after(calendar)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * ${CommonShareData.DEFAULT_ACTIVE_INTERVAL_2345}小时以内是否跳转过
+     * @return
+     */
+    private boolean isSkipedInterval() {
+        long lastSkipTime = CommonShareData.getLong(Const.KEY_LAST_SKIP_TIME, 0);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(lastSkipTime);
-        calendar.add(Calendar.HOUR_OF_DAY, 24);
-        if (calendar.after(Calendar.getInstance())) {//24h以内,已经跳转过
+        calendar.add(Calendar.HOUR_OF_DAY, CommonShareData.getInt(
+                CommonShareData.KEY_ACTIVE_INTERVAL_2345, CommonShareData.DEFAULT_ACTIVE_INTERVAL_2345));
+        if (calendar.after(Calendar.getInstance())) {//DEFAULT_ACTIVE_INTERVAL_2345 以内,已经跳转过
             return true;
-        } else {//24h以内没有跳转过
+        } else {//DEFAULT_ACTIVE_INTERVAL_2345 以内没有跳转过
             return false;
         }
     }

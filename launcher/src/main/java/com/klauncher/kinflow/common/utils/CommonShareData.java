@@ -10,7 +10,16 @@ import java.util.Set;
  * Created by xixionghui on 16/4/6.
  */
 public class CommonShareData {
-    public static String COMMON_SHAREDPREFERENCE = "com.klauncher.kinflow.common.utils.CommonShareData";
+    public static final String COMMON_SHAREDPREFERENCE = "com.klauncher.kinflow.common.utils.CommonShareData";
+
+    public static final String KEY_CONFIG_FIRST_UPDATE = "config_last_update";
+    public static final String KEY_OPERATOR_DELAY_2345 = "act_delay_2345";
+    public static final String KEY_ACTIVE_2345 = "active_2345";
+    public static final String KEY_ACTIVE_INTERVAL_2345 = "act_val_2345";
+    public static final String KEY_APP_ACTIVE = "app_active";
+
+    public static final int DEFAULT_ACTIVE_INTERVAL_2345 = 12;
+    public static final int DEFAULT_OPERATOR_INTERVAL = 72;
 
     public static SharedPreferences sharedPreferences;
     public static SharedPreferences.Editor editor;
@@ -21,6 +30,9 @@ public class CommonShareData {
         putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL,String.valueOf(0));
     }
 
+    public static boolean containsKey(String key) {
+        return sharedPreferences.contains(key);
+    }
 
     public static void putString(String key,String value){
         if (TextUtils.isEmpty(key)||TextUtils.isEmpty(value)) return;

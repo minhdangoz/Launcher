@@ -445,8 +445,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     public void scrollToKinflow() {
 //        log("滑到信息流界面");
         try {
-            if (CommonUtils.getInstance().allowSkip())
+            if (CommonUtils.getInstance().allowActive2345()) {
                 CommonUtils.getInstance().openDefaultBrowserUrl(this, Const.URL_2345_HOMEPAGE);
+            }
         } catch (Exception e) {
             log("每天一次跳转到2345界面出错");
         }
