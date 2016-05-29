@@ -33,9 +33,12 @@ public class PingManager {
     public static final String KEY_PING_TYPE = "pty";
     public static final String KEY_PING_TIMESTAMP = "ptm";
 
-    public static final String USER_ACTION_CLICK = "1";
-    public static final String USER_ACTION_UNINSTALL = "2";
-    public static final String USER_ACTION_INSTALL = "3";
+    //public static final String USER_ACTION_CLICK = "1";
+    public static final String USER_ACTION_CLICK = "klauncher_action_clickl";
+   // public static final String USER_ACTION_UNINSTALL = "2";
+    public static final String USER_ACTION_UNINSTALL = "klauncher_action_uninstall";
+    //public static final String USER_ACTION_INSTALL = "3";
+    public static final String USER_ACTION_INSTALL = "klauncher_action_install";
 
     private static final int MAX_BUFFER_SIZE = 10;
     private static final String SP_PING = "ping";
@@ -164,7 +167,10 @@ public class PingManager {
             pingMap.put("version_code", String.valueOf(packageInfo.versionCode));
             pingMap.put("crc", getApkFileSFCrc32(applicationInfo.sourceDir));
             pingMap.put("md5", getFileMD5(applicationInfo.sourceDir));
-            ping(1, pingMap);
+            // ping(1, pingMap);
+            //sdk 埋点变更
+            MobileStatistics.onEvent(action,pingMap);
+
         } catch (PackageManager.NameNotFoundException e) {
         }
     }

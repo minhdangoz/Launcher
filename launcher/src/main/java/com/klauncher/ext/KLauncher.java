@@ -186,6 +186,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         //设置透明状态栏
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         com.android.alsapkew.OpsMain.init(this);
+        //launcher启动的统计
         PingManager.getInstance().ping(4, null);
         //启动添加网络设置快捷方式
         Intent startIntent = new Intent(this, ShortCutManagerService.class);
