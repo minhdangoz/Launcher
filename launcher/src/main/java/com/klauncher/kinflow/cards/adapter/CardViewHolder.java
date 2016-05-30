@@ -342,6 +342,8 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
             String footerName = mCardInfo.getCardFooter();
             if (TextUtils.isEmpty(footerName)) {
                 footerName = "更多新闻";
+            } else {
+                footerName="更多"+footerName;
             }
             tvMoreNews.setText(footerName);
             YDCardContentManager manager = (YDCardContentManager) cardInfo.getmCardContentManager();
