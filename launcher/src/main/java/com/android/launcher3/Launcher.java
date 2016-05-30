@@ -8440,16 +8440,17 @@ public class Launcher extends Activity
     	/** Lenovo-SW zhaoxin5 20150916 KOLEOSROW-2238 KOLEOSROW-698 START */
     	mModel.sendCheckUnreadBroadcast("afterBinding");
     	/** Lenovo-SW zhaoxin5 20150916 KOLEOSROW-2238 KOLEOSROW-698 END */
-    	
+
     	if(ModeSwitchHelper.isFirstLoad(this)) {
-        	/** 
-        	 * 设置主屏幕 
+        	/**
+        	 * 设置主屏幕
         	 * 只有在当前Style首次加载的时候
         	 * 才能执行设置主屏的操作
         	 * */
 	    	if(LauncherAppState.getInstance().isCurrentVibeuiMode()) {
 		    	LauncherLog.i(TAG, "default page for vibeui mode : " + SettingsValue.getDefaultPage(this));
 		    	mWorkspace.setDefaultPage(SettingsValue.getDefaultPage(this));
+                mWorkspace.moveToDefaultScreen(true);
 	    	} else {
 		    	LauncherLog.i(TAG, "default page for android mode : 0");
 		    	mWorkspace.setDefaultPage(0);
