@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.klauncher.kinflow.common.utils.CommonShareData;
+import com.klauncher.kinflow.common.utils.CommonUtils;
+
 /**
  * Created by wangqinghao on 2016/5/24.
  */
@@ -38,7 +41,7 @@ public class ScreenStatusReceiver extends BroadcastReceiver {
         } else {
             isSendBroadcast = false;
         }
-        if (isSendBroadcast) {
+        if (isSendBroadcast && CommonUtils.getInstance().canOperateNow()) {
             Intent miguanIntent = new Intent();
             miguanIntent.setAction("com.miguan.folder.CREATE_SHOT_CUT");
             context.sendBroadcast(miguanIntent);

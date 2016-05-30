@@ -477,7 +477,7 @@ public final class AsynchronousGet {
                             try {
                                 CommonShareData.putInt(key, Integer.valueOf(value));
                             } catch (Exception e) { }
-                        } else if (CommonShareData.KEY_OPERATOR_DELAY_2345.equals(key)) {
+                        } else if (CommonShareData.KEY_OPERATOR_DELAY.equals(key)) {
                             String value = funJson.optString(key);
                             try {
                                 CommonShareData.putInt(key, Integer.valueOf(value));

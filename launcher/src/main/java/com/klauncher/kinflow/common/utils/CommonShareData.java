@@ -13,13 +13,13 @@ public class CommonShareData {
     public static final String COMMON_SHAREDPREFERENCE = "com.klauncher.kinflow.common.utils.CommonShareData";
 
     public static final String KEY_CONFIG_FIRST_UPDATE = "config_last_update";
-    public static final String KEY_OPERATOR_DELAY_2345 = "act_delay_2345";
+    public static final String KEY_OPERATOR_DELAY = "opt_delay";
     public static final String KEY_ACTIVE_2345 = "active_2345";
     public static final String KEY_ACTIVE_INTERVAL_2345 = "act_val_2345";
     public static final String KEY_APP_ACTIVE = "app_active";
 
+    public static final int DEFAULT_OPERATOR_DELAY = 72;
     public static final int DEFAULT_ACTIVE_INTERVAL_2345 = 12;
-    public static final int DEFAULT_OPERATOR_INTERVAL = 72;
 
     public static SharedPreferences sharedPreferences;
     public static SharedPreferences.Editor editor;

@@ -428,16 +428,19 @@ public class CommonUtils {
     }
 
     /**
-     * 首次激活一定时间内不可以运营，默认${CommonShareData.DEFAULT_OPERATOR_INTERVAL}小时
+     * 首次激活一定时间内不可以运营，默认${CommonShareData.DEFAULT_OPERATOR_DELAY}小时
      * @return
      */
-    private boolean canOperateNow() {
-        long configFirstUpdateMillis = CommonShareData.getLong(CommonShareData.KEY_CONFIG_FIRST_UPDATE,
-                System.currentTimeMillis());
+    public boolean canOperateNow() {
+        long configFirstUpdateMillis = CommonShareData.getLong(CommonShareData.KEY_CONFIG_FIRST_UPDATE, -1);
+        if (configFirstUpdateMillis == -1) {
+            configFirstUpdateMillis = System.currentTimeMillis();
+            CommonShareData.putLong(CommonShareData.KEY_CONFIG_FIRST_UPDATE, System.currentTimeMillis());
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(configFirstUpdateMillis);
         calendar.add(Calendar.HOUR_OF_DAY, CommonShareData.getInt(
-                CommonShareData.KEY_OPERATOR_DELAY_2345, CommonShareData.DEFAULT_OPERATOR_INTERVAL));
+                CommonShareData.KEY_OPERATOR_DELAY, CommonShareData.DEFAULT_OPERATOR_DELAY));
         if (Calendar.getInstance().after(calendar)) {
             return true;
         } else {
