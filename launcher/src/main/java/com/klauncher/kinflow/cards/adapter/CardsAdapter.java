@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.klauncher.kinflow.browser.KinflowBrower;
 import com.klauncher.kinflow.cards.CardIdMap;
@@ -145,7 +146,16 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
                 ((WifiCardViewHolder) holder).wifiLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mCardsList.get(position).open(mContext, null);
+//                        mCardsList.get(position).open(mContext, null);
+                        try {
+                            Intent in1=new Intent();
+                            in1.setClassName("com.android.phone", "com.android.phone.MobileNetworkSettings");
+                            mContext.startActivity(in1);
+                        } catch (Exception e) {
+                            Toast.makeText(mContext, "打开网络设置失败,请在设置中手动打开", Toast.LENGTH_SHORT).show();
+                            log("打开网络设置失败,请在设置中手动打开");
+                        }
+
                     }
                 });
             } else if (holder instanceof AdbannerCardViewHolder) {//yokmob的CardView
