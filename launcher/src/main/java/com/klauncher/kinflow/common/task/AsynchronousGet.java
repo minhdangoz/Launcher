@@ -176,7 +176,7 @@ public final class AsynchronousGet {
             } else {
                 for (int i = 1; i <= jsonHotLength; i++) {
                     JSONObject jsonHotWord = jsonHot.getJSONObject(String.valueOf(i));
-                    hotWordList.add(new HotWord(String.valueOf(i), jsonHotWord.getString("word"), jsonHotWord.getString("url"), HotWord.TYPE_BAIDU));
+                    hotWordList.add(new HotWord(String.valueOf(i), jsonHotWord.optString("word"), jsonHotWord.optString("url"), HotWord.TYPE_BAIDU));
                 }
                 msg.arg1 = SUCCESS;
                 msg.obj = hotWordList;
@@ -209,11 +209,11 @@ public final class AsynchronousGet {
             for (int i = 0; i < navigationsLength; i++) {
                 Navigation navigation = new Navigation();
                 JSONObject navigationJsonObject = navigationJsonArray.getJSONObject(i);
-                navigation.setNavId(navigationJsonObject.getString(Navigation.NAV_ID));
-                navigation.setNavName(navigationJsonObject.getString(Navigation.NAV_NAME));
-                navigation.setNavIcon(navigationJsonObject.getString(Navigation.NAV_ICON));
-                navigation.setNavUrl(navigationJsonObject.getString(Navigation.NAV_URL));
-                navigation.setNavOrder(navigationJsonObject.getInt(Navigation.NAV_ORDER));
+                navigation.setNavId(navigationJsonObject.optString(Navigation.NAV_ID));
+                navigation.setNavName(navigationJsonObject.optString(Navigation.NAV_NAME));
+                navigation.setNavIcon(navigationJsonObject.optString(Navigation.NAV_ICON));
+                navigation.setNavUrl(navigationJsonObject.optString(Navigation.NAV_URL));
+                navigation.setNavOrder(navigationJsonObject.optInt(Navigation.NAV_ORDER));
                 JSONArray opsJsonArray = navigationJsonObject.getJSONArray(CardInfo.CARD_OPEN_OPTIONS);
                 List<String> opsList = new ArrayList<>();
                 int opsJsonArrayLength = opsJsonArray.length();
@@ -224,7 +224,7 @@ public final class AsynchronousGet {
                     opsList.add("0");
                 } else {
                     for (int j = 0; j < opsJsonArrayLength; j++) {
-                        opsList.add(opsJsonArray.getString(j));
+                        opsList.add(opsJsonArray.optString(j));
                     }
                 }
                 navigation.setNavOpenOptions(opsList);
@@ -233,14 +233,15 @@ public final class AsynchronousGet {
             msg.arg1 = SUCCESS;
             msg.obj = navigationList;
             CommonShareData.putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(Calendar.getInstance().getTimeInMillis()));
-            CommonShareData.putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, jsonObjectAll.getString(Const.NAVIGATION_SERVER_UPDATE_INTERVAL));
+            CommonShareData.putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, jsonObjectAll.optString(Const.NAVIGATION_SERVER_UPDATE_INTERVAL));
+            CacheNavigation.getInstance().putNavigationList(navigationList);
         } catch (Exception e) {
             msg.arg1 = PARSE_ERROR;
             Log.d("AsynchronousGet", ("Navigation解析出错：" + e.getMessage()));
         } finally {
             handler.sendMessage(msg);
-            if (msg.arg1 == SUCCESS)
-                CacheNavigation.getInstance().putNavigationList(navigationList);
+//            if (msg.arg1 == SUCCESS)
+//                CacheNavigation.getInstance().putNavigationList(navigationList);
         }
     }
 
@@ -289,11 +290,11 @@ public final class AsynchronousGet {
                 int length = jsonArrayYiDianModel.length();
                 for (int i = 0; i < length; i++) {
                     JSONObject jsonYidianMoedel = jsonArrayYiDianModel.getJSONObject(i);
-                    String title = jsonYidianMoedel.getString("title");
-                    String docid = jsonYidianMoedel.getString("docid");
-                    String url = jsonYidianMoedel.getString("url");
-                    String date = jsonYidianMoedel.getString("date");
-                    String source = jsonYidianMoedel.getString("source");
+                    String title = jsonYidianMoedel.optString("title");
+                    String docid = jsonYidianMoedel.optString("docid");
+                    String url = jsonYidianMoedel.optString("url");
+                    String date = jsonYidianMoedel.optString("date");
+                    String source = jsonYidianMoedel.optString("source");
                     //图片
                     String[] images = null;
                     if (jsonYidianMoedel.has("images")) {//包含图片
@@ -301,7 +302,7 @@ public final class AsynchronousGet {
                         int imageLength = jsonArrayImages.length();
                         images = new String[imageLength];
                         for (int j = 0; j < imageLength; j++) {
-                            String image = jsonArrayImages.getString(j);
+                            String image = jsonArrayImages.optString(j);
                             images[j] = image;
                         }
                     }
@@ -350,10 +351,10 @@ public final class AsynchronousGet {
                     while (keysIterator.hasNext()) {
                         String key = keysIterator.next();
                         if ("app_active".equals(key)) {
-                            String value = configJson.getString(key);
+                            String value = configJson.optString(key);
                             CommonShareData.putString(key, value);
                         } else if ("kinfo".equals(key)) {
-                            String value = configJson.getString(key);
+                            String value = configJson.optString(key);
                             CommonShareData.putString(key, value);
                         }
                     }
@@ -388,13 +389,13 @@ public final class AsynchronousGet {
                     while (keysIterator.hasNext()) {
                         String key = keysIterator.next();
                         if ("bd_prct".equals(key)) {
-                            String value = funJson.getString(key);
+                            String value = funJson.optString(key);
                             CommonShareData.putString(key, value);
                         } else if ("sm_prct".equals(key)) {
-                            String value = funJson.getString(key);
+                            String value = funJson.optString(key);
                             CommonShareData.putString(key, value);
                         } else if ("dis_act".equals(key)) {//
-                            String value = funJson.getString(key);
+                            String value = funJson.optString(key);
                             String[] devList = value.split(",");
                             Set<String> set = new HashSet<>(Arrays.asList(devList));
                             CommonShareData.putSet("dis_act", set);

@@ -201,41 +201,45 @@ public class YiDianTask {
     }
 
     public void getYdTask(String url) {
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        final Message msgYiDian = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN);
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                //网络连接错误
-                msgYiDian.arg1 = YiDianQuestCallBack.ERROR_CONNECT;
-                mHandler.sendMessage(msgYiDian);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (!response.isSuccessful()) {//响应失败
-                    msgYiDian.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
-                    response.body().close();
-                    return;
-                }
-
-                String responseBodyStr = null;
-                try {
-                    responseBodyStr = response.body().string();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    msgYiDian.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
+        try {
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            final Message msgYiDian = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN);
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    //网络连接错误
+                    msgYiDian.arg1 = YiDianQuestCallBack.ERROR_CONNECT;
                     mHandler.sendMessage(msgYiDian);
-                    log("单独获取一点咨询响应失败,发生IOException");
                 }
-                if (!TextUtils.isEmpty(responseBodyStr)) {
-                    parseYiDian(msgYiDian, responseBodyStr);
-                    response.body().close();
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (!response.isSuccessful()) {//响应失败
+                        msgYiDian.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
+                        response.body().close();
+                        return;
+                    }
+
+                    String responseBodyStr = null;
+                    try {
+                        responseBodyStr = response.body().string();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        msgYiDian.arg1 = YiDianQuestCallBack.ERROR_RESPONSE;
+                        mHandler.sendMessage(msgYiDian);
+                        log("单独获取一点咨询响应失败,发生IOException");
+                    }
+                    if (!TextUtils.isEmpty(responseBodyStr)) {
+                        parseYiDian(msgYiDian, responseBodyStr);
+                        response.body().close();
+                    }
                 }
-            }
-        });
+            });
+        }catch (Exception e) {
+            log("YiDianTask.getYdTask执行时出错:"+e.getMessage());
+        }
     }
 
     private void parseYiDian(Message msgYiDian, String responseBody) {
@@ -251,11 +255,11 @@ public class YiDianTask {
                 int length = jsonArrayYiDianModel.length();
                 for (int i = 0; i < length; i++) {
                     JSONObject jsonYidianMoedel = jsonArrayYiDianModel.getJSONObject(i);
-                    String title = jsonYidianMoedel.getString("title");
-                    String docid = jsonYidianMoedel.getString("docid");
-                    String url = jsonYidianMoedel.getString("url");
-                    String date = jsonYidianMoedel.getString("date");
-                    String source = jsonYidianMoedel.getString("source");
+                    String title = jsonYidianMoedel.optString("title");
+                    String docid = jsonYidianMoedel.optString("docid");
+                    String url = jsonYidianMoedel.optString("url");
+                    String date = jsonYidianMoedel.optString("date");
+                    String source = jsonYidianMoedel.optString("source");
                     //图片
                     String[] images = null;
                     if (jsonYidianMoedel.has("images")) {//包含图片
@@ -263,7 +267,7 @@ public class YiDianTask {
                         int imageLength = jsonArrayImages.length();
                         images = new String[imageLength];
                         for (int j = 0; j < imageLength; j++) {
-                            String image = jsonArrayImages.getString(j);
+                            String image = jsonArrayImages.optString(j);
                             images[j] = image;
                         }
                     } else {//不包含图片

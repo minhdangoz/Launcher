@@ -141,7 +141,7 @@ public final class SearchAsynchronousGet {
             } else {
                 for (int i = 1; i <= jsonHotLength; i++) {
                     JSONObject jsonHotWord = jsonHot.getJSONObject(String.valueOf(i));
-                    hotWordList.add(new HotWord(String.valueOf(i), jsonHotWord.getString("word"), jsonHotWord.getString("url"), HotWord.TYPE_BAIDU));
+                    hotWordList.add(new HotWord(String.valueOf(i), jsonHotWord.optString("word"), jsonHotWord.optString("url"), HotWord.TYPE_BAIDU));
                 }
                 msg.arg1 = SUCCESS;
                 msg.obj = hotWordList;
@@ -164,7 +164,7 @@ public final class SearchAsynchronousGet {
                 int jsonArrayHotWordLength = jsonArray.length();
                 for (int i = 0; i < jsonArrayHotWordLength; i++) {
                     JSONObject jsonShenMaHotWord = jsonArray.getJSONObject(i);
-                    hotWordList.add(new HotWord(String.valueOf(i), jsonShenMaHotWord.getString("title"), Const.SHEN_MA_SITE + jsonShenMaHotWord.getString("url"), HotWord.TYPE_SHENMA));
+                    hotWordList.add(new HotWord(String.valueOf(i), jsonShenMaHotWord.optString("title"), Const.SHEN_MA_SITE + jsonShenMaHotWord.optString("url"), HotWord.TYPE_SHENMA));
                 }
                 msg.arg1 = SUCCESS;
                 msg.obj = hotWordList;
