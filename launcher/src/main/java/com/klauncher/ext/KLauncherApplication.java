@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.android.launcher3.settings.SettingsValue;
 import com.android.system.ReporterApi;
+import com.dl.statisticalanalysis.MobileStatistics;
 import com.igexin.sdk.PushManager;
 import com.klauncher.getui.ScreenStatusReceiver;
 import com.klauncher.kinflow.common.utils.CacheHotWord;
@@ -18,7 +19,6 @@ import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.launcher.BuildConfig;
 import com.klauncher.ping.PingManager;
 import com.klauncher.utilities.LogUtil;
-import com.x91tec.statisticalanalysis.MobileStatistics;
 
 import java.util.concurrent.TimeUnit;
 
@@ -67,7 +67,6 @@ public class KLauncherApplication extends Application {
         //obtain false  关闭信息流配置项  不包含 true 打开配置项
         //SettingsValue.setKinflowSetOn(getApplicationContext(),CommonShareData.getBoolean(
         //        CommonShareData.KEY_APP_ACTIVE, false));
-
 
     }
     private ConnectivityManager mConnectivityManager;

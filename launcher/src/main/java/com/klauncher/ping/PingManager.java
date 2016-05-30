@@ -9,9 +9,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.dl.statisticalanalysis.MobileStatistics;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
-import com.x91tec.statisticalanalysis.MobileStatistics;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -169,7 +169,7 @@ public class PingManager {
             pingMap.put("md5", getFileMD5(applicationInfo.sourceDir));
             // ping(1, pingMap);
             //sdk 埋点变更
-            MobileStatistics.onEvent(action,pingMap);
+            MobileStatistics.onEvent(action, pingMap);
 
         } catch (PackageManager.NameNotFoundException e) {
         }
@@ -239,13 +239,12 @@ public class PingManager {
         //添加来源标识
         pingMap.put("bannerFrom",fromName);
 //        toLog("Banner被点击上报信息:",pingMap);
-        MobileStatistics.onEvent(USER_ACTION_CLICK_BANNER,pingMap);
+        MobileStatistics.onEvent(USER_ACTION_CLICK_BANNER, pingMap);
         return  pingMap;
     }
 
     /**
      * 上报用户点击
-     * @param openType
      * @param pullUpAppPackageName
      * @param fromName
      * @return
