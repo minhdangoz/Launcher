@@ -197,6 +197,18 @@ public class PingManager {
     public static final String USER_ACTION_CLICK_CARD_NEWS_OPEN = "click_open_card_news";
     public static final String USER_ACTION_CLICK_CARD_NAVIGATION= "click_navigation";
 
+    public static final String KEY_HOTWORD_CONTENT_FROM= "hotWordFrom";
+    public static final String KEY_PULL_UP_APP_PACKAGENAME= "pullUpAppPackageName";
+    public static final String KEY_PULL_UP_APP_CRC32= "pullUpAppCRC32";
+    public static final String KEY_CARD_CONTENT_FROM= "cardContentFrom";
+    public static final String KEY_CARD_SECOND_TYPE_ID= "cardSecondTypeId";
+    public static final String KEY_NAVIGATION_URL= "navigationUrl";
+    public static final String KEY_BANNER_FROM= "bannerFrom";
+    public static final String VALUE_HOTWORD_CONTENT_FROM_BAIDU= "baidu";
+    public static final String VALUE_HOTWORD_CONTENT_FROM_SHENMA= "shenma";
+    public static final String VALUE_CARD_CONTENT_FROM_YIDIANZIXUN= "yiDianZiXun";
+    public static final String VALUE_CARD_CONTENT_FROM_JINRITOUTIAO= "jinRiTouTiao";
+
     /**
      * 上报热词被点击
      * 热词来源,调起包名,crc32
@@ -207,13 +219,13 @@ public class PingManager {
 //        pingMap.put("action", USER_ACTION_CLICK_HOTWORD);
         //添加来源
         int from = hotWord.getType();
-        String fromName = from==1?"baidu":"shenma";
-        pingMap.put("hotWordFrom",fromName);
+        String fromName = from==1?VALUE_HOTWORD_CONTENT_FROM_BAIDU:VALUE_HOTWORD_CONTENT_FROM_SHENMA;
+        pingMap.put(KEY_HOTWORD_CONTENT_FROM,fromName);
         //添加包名
-        pingMap.put("pullUpAppPackageName",pullUpAppPackageName);
+        pingMap.put(KEY_PULL_UP_APP_PACKAGENAME,pullUpAppPackageName);
         //添加src32
         String src32 = getApkFilesCRC32FromPackageName(pullUpAppPackageName);
-        pingMap.put("hotWordOpenApp_src32", src32);
+        pingMap.put(KEY_PULL_UP_APP_CRC32, src32);
 //        toLog("热词被点击上报信息:", pingMap);
         MobileStatistics.onEvent(USER_ACTION_CLICK_HOTWORD,pingMap);
         return  pingMap;
@@ -225,19 +237,19 @@ public class PingManager {
      * @param fromName 来源标识:adview||今日头条||一点咨询
      * @return
      */
-    public Map<String, String> reportUserAction4Banner(String openType,String pullUpAppPackageName,String fromName){
+    public Map<String, String> reportUserAction4Banner(String pullUpAppPackageName,String fromName){
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_BANNER);
         //添加打开方式
-        pingMap.put("BannerOpenType",openType);
+//        pingMap.put("BannerOpenType",openType);
         //添加目标客户端包名
-        pingMap.put("pullUpAppPackageName",pullUpAppPackageName);
+        pingMap.put(KEY_PULL_UP_APP_PACKAGENAME,pullUpAppPackageName);
         //添加目标客户端crc32
-        String src32 = getApkFilesCRC32FromPackageName(pullUpAppPackageName);
-        pingMap.put("bannerOpenApp_src32", src32);
+        String crc32 = getApkFilesCRC32FromPackageName(pullUpAppPackageName);
+        pingMap.put(KEY_PULL_UP_APP_CRC32, crc32);
         //添加来源标识
-        pingMap.put("bannerFrom",fromName);
+        pingMap.put(KEY_BANNER_FROM,fromName);
 //        toLog("Banner被点击上报信息:",pingMap);
         MobileStatistics.onEvent(USER_ACTION_CLICK_BANNER, pingMap);
         return  pingMap;
@@ -254,12 +266,12 @@ public class PingManager {
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_MORE);
         //添加目标客户端包名
-        pingMap.put("pullUpAppPackageName",pullUpAppPackageName);
+        pingMap.put(KEY_PULL_UP_APP_PACKAGENAME,pullUpAppPackageName);
         //添加目标客户端crc32
-        String src32 = getApkFilesCRC32FromPackageName(pullUpAppPackageName);
-        pingMap.put("cardMoreOpenApp_src32", src32);
+        String crc32 = getApkFilesCRC32FromPackageName(pullUpAppPackageName);
+        pingMap.put(KEY_PULL_UP_APP_CRC32, crc32);
         //添加来源标识
-        pingMap.put("cardContentFrom",fromName);
+        pingMap.put(KEY_CARD_CONTENT_FROM,fromName);
 //        toLog("CardMore被点击上报信息:",pingMap);
         MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_MORE,pingMap);
         return  pingMap;
@@ -270,11 +282,11 @@ public class PingManager {
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_CHANGE);
         //添加cardType
-        pingMap.put("cardSecondTypeId",cardSecondTypeId);
+        pingMap.put(KEY_CARD_SECOND_TYPE_ID,cardSecondTypeId);
         //添加来源标识
-        pingMap.put("cardContentFrom",fromName);
+        pingMap.put(KEY_CARD_CONTENT_FROM,fromName);
 //        toLog("CardChange被点击上报信息:",pingMap);
-        MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_CHANGE,pingMap);
+        MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_CHANGE, pingMap);
         return  pingMap;
     }
 
@@ -284,13 +296,13 @@ public class PingManager {
 //        pingMap.put("action", USER_ACTION_CLICK_SEARCHBOX);
         //添加来源
         int from = hotWord.getType();
-        String fromName = from==1?"baidu":"shenma";
-        pingMap.put("hotWordFrom",fromName);
+        String fromName = from==1?VALUE_HOTWORD_CONTENT_FROM_BAIDU:VALUE_HOTWORD_CONTENT_FROM_SHENMA;
+        pingMap.put(KEY_HOTWORD_CONTENT_FROM,fromName);
         //添加包名
-        pingMap.put("hotWordOpenApp_pn",pullUpAppPackageName);
+        pingMap.put(KEY_PULL_UP_APP_PACKAGENAME,pullUpAppPackageName);
         //添加src32
-        String src32 = getApkFilesCRC32FromPackageName(pullUpAppPackageName);
-        pingMap.put("hotWordOpenApp_src32", src32);
+        String crc32 = getApkFilesCRC32FromPackageName(pullUpAppPackageName);
+        pingMap.put(KEY_PULL_UP_APP_CRC32, crc32);
 //        toLog("搜索框被点击上报信息:",pingMap);
         MobileStatistics.onEvent(USER_ACTION_CLICK_SEARCHBOX,pingMap);
         return  pingMap;
@@ -301,9 +313,9 @@ public class PingManager {
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_NEWS_OPEN);
         //添加cardType
-        pingMap.put("cardSecondTypeId",cardSecondTypeId);
+        pingMap.put(KEY_CARD_SECOND_TYPE_ID,cardSecondTypeId);
         //添加来源标识
-        pingMap.put("cardContentFrom", fromName);
+        pingMap.put(KEY_CARD_CONTENT_FROM, fromName);
 //        toLog("新闻被点击上报信息:",pingMap);
         MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_NEWS_OPEN,pingMap);
         return  pingMap;
@@ -314,7 +326,7 @@ public class PingManager {
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_NAVIGATION);
         //添加来源标识
-        pingMap.put("navigation_url", navigation.getNavUrl());
+        pingMap.put(KEY_NAVIGATION_URL, navigation.getNavUrl());
 //        toLog("新闻被点击上报信息:",pingMap);
         MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_NAVIGATION, pingMap);
         return  pingMap;

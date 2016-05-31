@@ -510,13 +510,13 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
                 extras.putString(OpenMode.OPEN_URL_KEY, mFirstYiDianModel.getUrl());
                 String finalOpenComponent_Head1Imapge = mCardInfo.open(mContext, extras);
                 if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
-                PingManager.getInstance().reportUserAction4cardNewsOpen("yiDianZiXun", String.valueOf(mCardInfo.getCardSecondTypeId()));
+                PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN, String.valueOf(mCardInfo.getCardSecondTypeId()));
                 break;
             case R.id.yidian_head_3image:
                 extras.putString(OpenMode.OPEN_URL_KEY, mFirstYiDianModel.getUrl());
                 String finalOpenComponent_Head3Imapge = mCardInfo.open(mContext, extras);
                 if (!TextUtils.isEmpty(finalOpenComponent_Head3Imapge))
-                PingManager.getInstance().reportUserAction4cardNewsOpen("yiDianZiXun", String.valueOf(mCardInfo.getCardSecondTypeId()));
+                PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN, String.valueOf(mCardInfo.getCardSecondTypeId()));
                 break;
             case R.id.more_news:
                 String url = "";
@@ -594,7 +594,7 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
 //                }
                 String finalOpenComponent_moreNews =  mCardInfo.open(mContext, extras);
                 if (!TextUtils.isEmpty(finalOpenComponent_moreNews))
-                PingManager.getInstance().reportUserAction4CardMore(finalOpenComponent_moreNews, "yiDianZiXun");
+                PingManager.getInstance().reportUserAction4CardMore(finalOpenComponent_moreNews, PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN);
                 break;
             case R.id.change_news:
                 if (null != mCardInfo) {
@@ -619,7 +619,7 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
                     }
                 } else {
                 }
-                PingManager.getInstance().reportUserAction4Changes("yiDianZiXun",String.valueOf(mCardInfo.getCardSecondTypeId()));
+                PingManager.getInstance().reportUserAction4Changes(PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN,String.valueOf(mCardInfo.getCardSecondTypeId()));
                 break;
         }
     }

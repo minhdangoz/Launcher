@@ -95,7 +95,7 @@ public class YDNewsAdapter extends RecyclerView.Adapter<YDNewsAdapter.NewsAdapte
                     if (null!=mCardInfo) {
                         String finalOpenModel = mCardInfo.open(mContext, extras);
                         if (!TextUtils.isEmpty(finalOpenModel))
-                        PingManager.getInstance().reportUserAction4cardNewsOpen("yiDianZiXun", String.valueOf(mCardInfo.getCardSecondTypeId()));
+                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN, String.valueOf(mCardInfo.getCardSecondTypeId()));
                     }
                 }
             });
