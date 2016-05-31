@@ -129,8 +129,11 @@ import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsController;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
+import com.dl.statisticalanalysis.MobileStatistics;
 import com.klauncher.ext.ClockWidgetProvider;
+import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.ping.PingManager;
+import com.klauncher.utilities.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.klauncher.theme.ThemeController;
 import com.klauncher.launcher.R;
@@ -5010,7 +5013,9 @@ public class Launcher extends Activity
             for (int i = 0; i < views.length; i++) {
                 View view = views[i];
                 mDragLayer.bringChildToFront(view);
-                view.bringToFront();
+                if(view != null) { //NullPointer 判断
+                    view.bringToFront();
+                }
             }
         }
     }
@@ -6319,14 +6324,18 @@ public class Launcher extends Activity
     }
 
     public void lockScreenOrientation() {
-        if (isRotationEnabled()) {
+        //强制竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        /*if (isRotationEnabled()) {
             setRequestedOrientation(mapConfigurationOriActivityInfoOri(getResources()
                     .getConfiguration().orientation));
-        }
+        }*/
     }
 
     public void unlockScreenOrientation(boolean immediate) {
-        if (isRotationEnabled()) {
+        //强制竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        /*if (isRotationEnabled()) {
             if (immediate) {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
             } else {
@@ -6336,7 +6345,7 @@ public class Launcher extends Activity
                     }
                 }, mRestoreScreenOrientationDelay);
             }
-        }
+        }*/
     }
 
     /**
@@ -7572,9 +7581,26 @@ public class Launcher extends Activity
     }
 
     /**
-     * 滑动显示 信息流回调方法
+     * 划入信息流回调方法
+     * 第一次加载过程中不调用
      */
     public void scrollToKinflow() {
+        String pkgNameStr = CommonShareData.getString(CommonShareData.KEY_APP_PACKAGE_NAME,"");
+        if(!TextUtils.isEmpty(pkgNameStr)&& !pkgNameStr.equals("null")){
+            MobileStatistics.onPageStart(this,pkgNameStr);
+            LogUtil.e("getAndSavePackageName","scrollToKinflow pkgname= "+pkgNameStr);
+        }
+    }
+    /**
+     * 划出信息流回调方法
+     * 第一次加载过程中不调用
+     */
+    public void scrollOutKinflow() {
+        String pkgNameStr = CommonShareData.getString(CommonShareData.KEY_APP_PACKAGE_NAME,"");
+        if(!TextUtils.isEmpty(pkgNameStr)&& !pkgNameStr.equals("null")){
+            MobileStatistics.onPageEnd(this,pkgNameStr);
+            LogUtil.e("getAndSavePackageName","scrollOutKinflow pkgname= "+pkgNameStr);
+        }
 
     }
 

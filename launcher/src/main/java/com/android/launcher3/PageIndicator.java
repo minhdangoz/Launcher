@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import com.klauncher.launcher.R;
+import com.klauncher.utilities.LogUtil;
 
 import java.util.ArrayList;
 
@@ -151,6 +152,8 @@ public class PageIndicator extends LinearLayout {
                         (windowAtEnd && i < (mMarkers.size() - hWindowSize)) ||
                         (!windowAtStart && !windowAtEnd)) {
                         alpha = 1f - Math.abs((i - windowMid) / hfWindowSize);
+                LogUtil.e("BackgroundAlpha","DragLayer offsetWindowCenterTo"+alpha);
+
                     }
                 }
                 marker.animate().alpha(alpha).setDuration(500).start();

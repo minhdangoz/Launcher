@@ -17,6 +17,7 @@ public class CommonShareData {
     public static final String KEY_ACTIVE_2345 = "active_2345";
     public static final String KEY_ACTIVE_INTERVAL_2345 = "act_val_2345";
     public static final String KEY_APP_ACTIVE = "app_active";
+    public static final String KEY_APP_PACKAGE_NAME = "app_package_name";
 
     public static final int DEFAULT_OPERATOR_DELAY = 72;
     public static final int DEFAULT_ACTIVE_INTERVAL_2345 = 12;

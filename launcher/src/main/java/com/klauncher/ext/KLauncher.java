@@ -444,6 +444,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     public void scrollToKinflow() {
+        super.scrollToKinflow();
 //        log("滑到信息流界面");
         try {
             if (CommonUtils.getInstance().allowActive2345()) {
@@ -489,15 +490,15 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         switch (view.getId()) {
             case R.id.hot_word_1://热词1监听
                 pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hotWord1.getUrl());
-                PingManager.getInstance().reportUserAction4HotWord(hotWord1,pullUpAppPackageName);
+                PingManager.getInstance().reportUserAction4HotWord(hotWord1, pullUpAppPackageName);
                 break;
             case R.id.hot_word_2://热词2监听
                 pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hotWord2.getUrl());
-                PingManager.getInstance().reportUserAction4HotWord(hotWord2,pullUpAppPackageName);
+                PingManager.getInstance().reportUserAction4HotWord(hotWord2, pullUpAppPackageName);
                 break;
             case R.id.hot_word_top:
                 pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, topHotWord.getUrl());
-                PingManager.getInstance().reportUserAction4HotWord(topHotWord,pullUpAppPackageName);
+                PingManager.getInstance().reportUserAction4HotWord(topHotWord, pullUpAppPackageName);
                 break;
             case R.id.refresh_hotWord://刷新监听
 //                asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
@@ -517,11 +518,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             case R.id.search_mode:
             case R.id.search_icon:
                 if (null != hintHotWord && null != hintHotWord.getWord()) {
-                    pullUpAppPackageName =  CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
+                    pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
                 } else {
                     Toast.makeText(this, "没有获取到搜索热词,请刷新", Toast.LENGTH_SHORT).show();
                 }
-                PingManager.getInstance().reportUserAction4SearchBox(hintHotWord,pullUpAppPackageName);//HotWord hotWord,String pullUpAppPackageName
+                PingManager.getInstance().reportUserAction4SearchBox(hintHotWord, pullUpAppPackageName);//HotWord hotWord,String pullUpAppPackageName
                 break;
             //
             /*

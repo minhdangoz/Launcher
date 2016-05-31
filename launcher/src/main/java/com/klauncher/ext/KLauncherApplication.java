@@ -4,8 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.launcher3.settings.SettingsValue;
@@ -34,7 +37,7 @@ public class KLauncherApplication extends Application {
     public void onCreate() {
         super.onCreate();
         //log mode 测试
-        LogUtil.mLogModel = LogUtil.LogModel.RELEASE;
+        LogUtil.mLogModel = LogUtil.LogModel.DEBUG;
         LogUtil.e("LogUtil","KLauncherApplication onCreate ");
         // Init DELONG report
         ReporterApi.onApplicationCreated(this);
@@ -61,6 +64,8 @@ public class KLauncherApplication extends Application {
         crashHandler.init(getApplicationContext());*/
         initGeitui();
         initScreenStatusReceiver();
+        //读取包名 并存储到本地
+        getAndSavePackageName();
         //高低机型判断
         //initKinflowStatus();
         //CommonShareData.getBoolean("active", false);
@@ -94,6 +99,28 @@ public class KLauncherApplication extends Application {
         if(receiver != null){
             unregisterReceiver(receiver);
         }
+    }
+
+    public void getAndSavePackageName() {
+        //Thread.dumpStack(); 跟踪方法调用
+        PackageInfo info;
+        String packageNames = "";
+        try {
+            info = getApplicationContext().getPackageManager().getPackageInfo(this.getPackageName(), 0);
+            // 当前应用的版本名称
+            //String versionName = info.versionName;
+            // 当前版本的版本号
+            //int versionCode = info.versionCode;
+            // 当前版本的包名
+            packageNames = info.packageName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            packageNames = "null";
+        } finally {
+            CommonShareData.putString(CommonShareData.KEY_APP_PACKAGE_NAME, packageNames);
+        }
+        LogUtil.e("getAndSavePackageName","getAndSavePackageName pkgname= "+packageNames);
+
     }
     /*//低配手机列表
     String[] lowModeList = {

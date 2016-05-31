@@ -80,6 +80,7 @@ import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
 import com.klauncher.ext.LauncherLog;
 import com.klauncher.launcher.R;
+import com.klauncher.utilities.LogUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -546,6 +547,7 @@ public class Workspace extends SmoothPagedView
     @Override
     public void setChildAlpha(View child, float alpha) {
         ((CellLayout) child).setShortcutAndWidgetAlpha(alpha);
+        LogUtil.e("BackgroundAlpha","Workspace setChildAlpha"+alpha);
     }
 
     @Override
@@ -1420,11 +1422,11 @@ public class Workspace extends SmoothPagedView
                 mCustomContentCallbacks.onShow(false);
                 mCustomContentShowTime = System.currentTimeMillis();
                 mLauncher.updateVoiceButtonProxyVisible(false);
-                //刷新
+                //刷新 划入信息流界面
                 if(!mLauncher.isWorkspaceLoading()) {
                     mLauncher.setFullScreen(true);
                     mLauncher.scrollToKinflow();
-                    Log.e("wqhnotifyPage","setFullScreen true"+getNextPage());
+                    LogUtil.e("wqhnotifyPage","setFullScreen true"+getNextPage());
                 }
             }
         } else if (hasCustomContent() && getNextPage() != 0 && mCustomContentShowing) {
@@ -1433,8 +1435,12 @@ public class Workspace extends SmoothPagedView
                 mCustomContentCallbacks.onHide();
                 mLauncher.resetQSBScroll();
                 mLauncher.updateVoiceButtonProxyVisible(false);
-                mLauncher.setFullScreen(false);
-                Log.e("wqhnotifyPage","setFullScreen false"+getNextPage());
+                //在信息流 滑动到其他界面时
+                if(!mLauncher.isWorkspaceLoading()) {
+                    mLauncher.setFullScreen(false);
+                    mLauncher.scrollOutKinflow();
+                    Log.e("wqhnotifyPage", "setFullScreen false" + getNextPage());
+                }
             }
         }
     }
@@ -1774,6 +1780,7 @@ public class Workspace extends SmoothPagedView
                     float scrollProgress = getScrollProgress(screenCenter, child, i);
                     float alpha = 1 - Math.abs(scrollProgress);
                     child.getShortcutsAndWidgets().setAlpha(alpha);
+                    LogUtil.e("BackgroundAlpha","Workspace updatePageAlphaValues"+ alpha);
                     //child.setBackgroundAlphaMultiplier(1 - alpha);
                 }
             }
@@ -1800,23 +1807,46 @@ public class Workspace extends SmoothPagedView
     }
 
     private void updateStateForCustomContent(int screenCenter) {
+        LogUtil.e("updateStateForCustomContent","screenCenter = "+screenCenter);
         float translationX = 0;
         float progress = 0;
-        if (hasCustomContent()) {
-            int index = mScreenOrder.indexOf(CUSTOM_CONTENT_SCREEN_ID);
-
+        LogUtil.e("updateStateForCustomContent","hasCustomContent = "+hasCustomContent());
+        if (hasCustomContent()) {//
+            int index = mScreenOrder.indexOf(CUSTOM_CONTENT_SCREEN_ID);//自定义内容屏幕id
+            LogUtil.e("updateStateForCustomContent","index = "+index);
+            //getScrollX X方向已经滑动的距离
+            // getScrollForPage（index） index 屏幕左边界X值
+            //getLayoutTransitionOffsetForPage(index) index屏幕 边距值
             int scrollDelta = getScrollX() - getScrollForPage(index) -
                     getLayoutTransitionOffsetForPage(index);
-            float scrollRange = getScrollForPage(index + 1) - getScrollForPage(index);
-            translationX = scrollRange - scrollDelta;
-            progress = (scrollRange - scrollDelta) / scrollRange;
+            LogUtil.e("updateStateForCustomContent","getScrollX() = "+getScrollX());
+            LogUtil.e("updateStateForCustomContent","getScrollForPage("+index+")= "+getScrollForPage(index));
+            LogUtil.e("updateStateForCustomContent","getLayoutTransitionOffsetForPage("+index+")= "+getLayoutTransitionOffsetForPage(index));
+            LogUtil.e("updateStateForCustomContent","scrollDelta = "+scrollDelta);
 
-            if (isLayoutRtl()) {
+
+            float scrollRange = getScrollForPage(index + 1) - getScrollForPage(index);
+            LogUtil.e("updateStateForCustomContent"," getScrollForPage("+(index+1)+")= "+ getScrollForPage(index + 1));
+            LogUtil.e("updateStateForCustomContent"," getScrollForPage("+index+")= "+ getScrollForPage(index));
+            LogUtil.e("updateStateForCustomContent"," scrollRange  = "+ scrollRange);
+
+
+
+
+            translationX = scrollRange - scrollDelta;
+            LogUtil.e("updateStateForCustomContent"," translationX  = "+ translationX);
+
+            progress = (scrollRange - scrollDelta) / scrollRange;
+            LogUtil.e("updateStateForCustomContent"," progress  = "+ progress);
+
+            if (isLayoutRtl()) {//->
                 translationX = Math.min(0, translationX);
-            } else {
+            } else {//false <-
                 translationX = Math.max(0, translationX);
+                LogUtil.e("updateStateForCustomContent"," translationX  = "+ translationX);
             }
             progress = Math.max(0, progress);
+            LogUtil.e("updateStateForCustomContent"," progress  = "+ progress);
         }
 
         if (Float.compare(progress, mLastCustomContentScrollProgress) == 0) return;
@@ -1829,6 +1859,7 @@ public class Workspace extends SmoothPagedView
         mLastCustomContentScrollProgress = progress;
 
         mLauncher.getDragLayer().setBackgroundAlpha(progress * 0.8f);
+        LogUtil.e("updateStateForCustomContent"," progress* 0.8f  = "+ progress* 0.8f);
 
         if (mLauncher.getHotseat() != null) {
             mLauncher.getHotseat().setTranslationX(translationX);

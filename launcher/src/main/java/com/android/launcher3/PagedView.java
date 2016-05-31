@@ -54,6 +54,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
 import com.klauncher.launcher.R;
+import com.klauncher.utilities.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -472,10 +473,11 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
      * Note: this is a reimplementation of View.isLayoutRtl() since that is currently hidden api.
      */
     public boolean isLayoutRtl() {
-    	/** Lenovo-SW zhaoxin5 20150827 XTHREEROW-1198 START */
-    	return false;
-        // return (getLayoutDirection() == LAYOUT_DIRECTION_RTL);
-    	/** Lenovo-SW zhaoxin5 20150827 XTHREEROW-1198 END */
+        /** Lenovo-SW zhaoxin5 20150827 XTHREEROW-1198 START */
+        //return false;
+        LogUtil.e("isLayoutRtl","isLayoutRtl"+(getLayoutDirection() == LAYOUT_DIRECTION_RTL));
+        return (getLayoutDirection() == LAYOUT_DIRECTION_RTL);
+        /** Lenovo-SW zhaoxin5 20150827 XTHREEROW-1198 END */
     }
 
     /**
@@ -1026,6 +1028,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
 
                 int scrollOffset = (getViewportWidth() - childWidth) / 2;
                 mPageScrolls[i] = childLeft - scrollOffset - offsetX;
+                LogUtil.e("mPageScrolls"," mPageScrolli["+i+"]"+mPageScrolls[i]);
 
                 if (i != endIndex - delta) {
                     childLeft += childWidth + scrollOffset;

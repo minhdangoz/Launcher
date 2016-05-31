@@ -40,6 +40,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.klauncher.launcher.R;
+import com.klauncher.utilities.LogUtil;
 
 import java.util.ArrayList;
 
@@ -924,7 +925,7 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
     @Override
     protected void dispatchDraw(Canvas canvas) {
         // Draw the background gradient below children.
-        if (mBackground != null && mBackgroundAlpha > 0.0f) {
+        if (mBackground != null && mBackgroundAlpha > 0.0f && mBackgroundAlpha<1.0f) {
             int alpha = (int) (mBackgroundAlpha * 255);
             mBackground.setAlpha(alpha);
             mBackground.setBounds(0, 0, getMeasuredWidth(), getMeasuredHeight());
@@ -980,8 +981,10 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
     }
 
     public void setBackgroundAlpha(float alpha) {
+        Thread.dumpStack();
         if (alpha != mBackgroundAlpha) {
             mBackgroundAlpha = alpha;
+            LogUtil.e("updateStateForCustomContent","DragLayer setBackgroundAlpha"+ mBackgroundAlpha);
             invalidate();
         }
     }
