@@ -209,11 +209,14 @@ public class PingManager {
     public static final String VALUE_CARD_CONTENT_FROM_YIDIANZIXUN= "yiDianZiXun";
     public static final String VALUE_CARD_CONTENT_FROM_JINRITOUTIAO= "jinRiTouTiao";
 
+    static boolean kinflowIsUsed;
+
     /**
      * 上报热词被点击
      * 热词来源,调起包名,crc32
      */
     public Map<String, String> reportUserAction4HotWord(HotWord hotWord,String pullUpAppPackageName){
+        kinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_HOTWORD);
@@ -238,6 +241,7 @@ public class PingManager {
      * @return
      */
     public Map<String, String> reportUserAction4Banner(String pullUpAppPackageName,String fromName){
+        kinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_BANNER);
@@ -262,6 +266,7 @@ public class PingManager {
      * @return
      */
     public Map<String, String> reportUserAction4CardMore(String pullUpAppPackageName,String fromName){
+        kinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_MORE);
@@ -278,6 +283,7 @@ public class PingManager {
     }
 
     public Map<String, String> reportUserAction4Changes(String fromName,String cardSecondTypeId){
+        kinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_CHANGE);
@@ -291,6 +297,7 @@ public class PingManager {
     }
 
     public Map<String, String> reportUserAction4SearchBox(HotWord hotWord,String pullUpAppPackageName){
+        kinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_SEARCHBOX);
@@ -309,6 +316,7 @@ public class PingManager {
     }
 
     public Map<String, String> reportUserAction4cardNewsOpen(String fromName,String cardSecondTypeId){
+        kinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_NEWS_OPEN);
@@ -322,6 +330,7 @@ public class PingManager {
     }
 
     public Map<String, String> reportUserAction4Navigation(Navigation navigation){
+        kinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_NAVIGATION);
