@@ -1812,6 +1812,7 @@ public class Workspace extends SmoothPagedView
         float progress = 0;
         LogUtil.e("updateStateForCustomContent","hasCustomContent = "+hasCustomContent());
         if (hasCustomContent()) {//
+            //左右方向区分？
             int index = mScreenOrder.indexOf(CUSTOM_CONTENT_SCREEN_ID);//自定义内容屏幕id
             LogUtil.e("updateStateForCustomContent","index = "+index);
             //getScrollX X方向已经滑动的距离
@@ -1848,7 +1849,7 @@ public class Workspace extends SmoothPagedView
             progress = Math.max(0, progress);
             LogUtil.e("updateStateForCustomContent"," progress  = "+ progress);
         }
-
+        //-1 不执行
         if (Float.compare(progress, mLastCustomContentScrollProgress) == 0) return;
 
         CellLayout cc = mWorkspaceScreens.get(CUSTOM_CONTENT_SCREEN_ID);
