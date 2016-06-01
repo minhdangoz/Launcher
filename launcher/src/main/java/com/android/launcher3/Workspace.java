@@ -1811,43 +1811,47 @@ public class Workspace extends SmoothPagedView
         float translationX = 0;
         float progress = 0;
         LogUtil.e("updateStateForCustomContent","hasCustomContent = "+hasCustomContent());
-        if (hasCustomContent()) {//
-            //左右方向区分？
-            int index = mScreenOrder.indexOf(CUSTOM_CONTENT_SCREEN_ID);//自定义内容屏幕id
-            LogUtil.e("updateStateForCustomContent","index = "+index);
+        if (hasCustomContent()) {
             //getScrollX X方向已经滑动的距离
             // getScrollForPage（index） index 屏幕左边界X值
             //getLayoutTransitionOffsetForPage(index) index屏幕 边距值
-            int scrollDelta = getScrollX() - getScrollForPage(index) -
-                    getLayoutTransitionOffsetForPage(index);
-            LogUtil.e("updateStateForCustomContent","getScrollX() = "+getScrollX());
-            LogUtil.e("updateStateForCustomContent","getScrollForPage("+index+")= "+getScrollForPage(index));
-            LogUtil.e("updateStateForCustomContent","getLayoutTransitionOffsetForPage("+index+")= "+getLayoutTransitionOffsetForPage(index));
-            LogUtil.e("updateStateForCustomContent","scrollDelta = "+scrollDelta);
-
-
+            int index = mScreenOrder.indexOf(CUSTOM_CONTENT_SCREEN_ID);//自定义内容屏幕id
             float scrollRange = getScrollForPage(index + 1) - getScrollForPage(index);
-            LogUtil.e("updateStateForCustomContent"," getScrollForPage("+(index+1)+")= "+ getScrollForPage(index + 1));
-            LogUtil.e("updateStateForCustomContent"," getScrollForPage("+index+")= "+ getScrollForPage(index));
-            LogUtil.e("updateStateForCustomContent"," scrollRange  = "+ scrollRange);
+            int intScrollRange = (int) (getScrollForPage(index + 1) - getScrollForPage(index));
+            int scrollDelta = 0;
+            if (getScrollX() > 0 && getScrollX() < 2 * intScrollRange) {
+                //0->1   progress 1-0 ; 1->0 progress 0-1
+                scrollDelta = getScrollX() - getScrollForPage(index) -
+                        getLayoutTransitionOffsetForPage(index);
+                LogUtil.e("updateStateForCustomContent", "getScrollX() = " + getScrollX());
+                translationX = scrollRange - scrollDelta;
+                progress = (scrollRange - scrollDelta) / scrollRange;
+                LogUtil.e("updateStateForCustomContent", " progress  = " + progress);
 
+            } else if (getScrollX() >= -1 * intScrollRange && getScrollX() <= 0) {
+                //0 到 2   progress 1-0
+                scrollDelta = getScrollX() - getScrollForPage(index) -
+                        getLayoutTransitionOffsetForPage(index);
+                LogUtil.e("updateStateForCustomContent", "getScrollX() = " + getScrollX());
+                translationX = scrollRange - scrollDelta;
+                progress = (scrollRange - Math.abs(scrollDelta)) / scrollRange;
 
+            } else if (getScrollX() >= 2 * intScrollRange && getScrollX() <= 3 * intScrollRange) {
+                //2-0  progress 0-1
+                scrollDelta = getScrollX() - getScrollForPage(index) -
+                        getLayoutTransitionOffsetForPage(index);
+                translationX = scrollRange - scrollDelta;
+                progress = (scrollDelta - 2 * intScrollRange) / scrollRange;
 
-
-            translationX = scrollRange - scrollDelta;
-            LogUtil.e("updateStateForCustomContent"," translationX  = "+ translationX);
-
-            progress = (scrollRange - scrollDelta) / scrollRange;
-            LogUtil.e("updateStateForCustomContent"," progress  = "+ progress);
-
+            }
             if (isLayoutRtl()) {//->
                 translationX = Math.min(0, translationX);
             } else {//false <-
                 translationX = Math.max(0, translationX);
-                LogUtil.e("updateStateForCustomContent"," translationX  = "+ translationX);
+                LogUtil.e("updateStateForCustomContent", " translationX  = " + translationX);
             }
             progress = Math.max(0, progress);
-            LogUtil.e("updateStateForCustomContent"," progress  = "+ progress);
+            LogUtil.e("updateStateForCustomContent", " progress  = " + progress);
         }
         //-1 不执行
         if (Float.compare(progress, mLastCustomContentScrollProgress) == 0) return;

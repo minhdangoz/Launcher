@@ -358,8 +358,8 @@ public class DeleteDropTarget extends ButtonDropTarget {
             AppInfo appInfo = (AppInfo) item;
             mLauncher.startApplicationUninstallActivity(appInfo.componentName, appInfo.flags,
                     appInfo.user);
-            PingManager.getInstance().reportUserAction4App(
-                    PingManager.USER_ACTION_UNINSTALL, appInfo.componentName.getPackageName());
+//            PingManager.getInstance().reportUserAction4App(
+//                    PingManager.USER_ACTION_UNINSTALL, appInfo.componentName.getPackageName());
         } else if (isUninstallFromWorkspace(d)) {
             ShortcutInfo shortcut = (ShortcutInfo) item;
             if (shortcut.intent != null && shortcut.intent.getComponent() != null) {

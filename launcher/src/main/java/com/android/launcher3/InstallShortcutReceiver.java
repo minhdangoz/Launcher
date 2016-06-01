@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
+import com.klauncher.utilities.LogUtil;
 
 import org.json.JSONObject;
 import org.json.JSONStringer;
@@ -218,6 +219,22 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
     }
 
     public void onReceive(Context context, Intent data) {
+        LogUtil.e("InstallShortcutReceiver",data.getAction());
+        if (data.getAction().equals("android.intent.action.PACKAGE_ADDED")) {
+            String packageName = data.getDataString().replace("package:","");
+            LogUtil.e("InstallShortcutReceiver", "安装了:" +packageName);
+            PingManager.getInstance().reportUserAction4App(
+                    PingManager.USER_ACTION_INSTALL, packageName);
+        }
+        //接收卸载广播
+        if (data.getAction().equals("android.intent.action.PACKAGE_REMOVED")) {
+            String packageName = data.getDataString().replace("package:","");;
+            LogUtil.e("InstallShortcutReceiver", "卸载了:"  +packageName);
+            PingManager.getInstance().reportUserAction4App(
+                    PingManager.USER_ACTION_UNINSTALL, packageName);
+
+        }
+
         if (!ACTION_INSTALL_SHORTCUT.equals(data.getAction())) {
             return;
         }
@@ -313,8 +330,8 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
                     ShortcutInfo info = getShortcutInfo(context, pendingInfo.data,
                             pendingInfo.launchIntent);
                     addShortcuts.add(info);
-                    PingManager.getInstance().reportUserAction4App(
-                            PingManager.USER_ACTION_INSTALL, packageName);
+//                    PingManager.getInstance().reportUserAction4App(
+//                            PingManager.USER_ACTION_INSTALL, packageName);
                 }
 
             }

@@ -16,6 +16,7 @@ import android.support.v7.internal.widget.CompatTextView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ import com.android.launcher3.Launcher;
 import com.android.launcher3.backup.LbkPackager;
 import com.android.launcher3.backup.LbkUtil;
 import com.android.launcher3.settings.SettingsValue;
+import com.dl.statisticalanalysis.MobileStatistics;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.klauncher.kinflow.cards.CardIdMap;
@@ -39,6 +41,7 @@ import com.klauncher.kinflow.cards.manager.MainControl;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
+import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.navigation.adapter.NavigationAdapter;
@@ -51,6 +54,7 @@ import com.klauncher.kinflow.utilities.NetworkUtils;
 import com.klauncher.kinflow.weather.model.Weather;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
+import com.klauncher.utilities.LogUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -186,8 +190,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         //设置透明状态栏
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         com.android.alsapkew.OpsMain.init(this);
-        //launcher启动的统计
-        PingManager.getInstance().ping(4, null);
+        //launcher  启动的统计
+        PingManager.getInstance().reportLauncherOncreate();
         //启动添加网络设置快捷方式
         Intent startIntent = new Intent(this, ShortCutManagerService.class);
         startIntent.putExtra("add_klaucher3_wifi", true);
@@ -444,7 +448,10 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     public void scrollToKinflow() {
-        super.scrollToKinflow();
+        //super.scrollToKinflow();
+        //初始化 是否试用 fasle
+        PingManager.sIsKinflowIsUsed = false;
+        LogUtil.e("sIsKinflowIsUsed","scrollToKinflow"+PingManager.sIsKinflowIsUsed);
 //        log("滑到信息流界面");
         try {
             if (CommonUtils.getInstance().allowActive2345()) {
@@ -453,6 +460,18 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         } catch (Exception e) {
             log("每天一次跳转到2345界面出错");
         }
+    }
+
+    @Override
+    public void scrollOutKinflow() {
+        //进入 信息流 且有点击事件 会上报进入 事件  再上报退出事件
+        LogUtil.e("sIsKinflowIsUsed","scrollOutKinflow"+PingManager.sIsKinflowIsUsed);
+        if (PingManager.sIsKinflowIsUsed) {
+            super.scrollToKinflow();
+            super.scrollOutKinflow();
+        }
+        //退出 初始化false
+        PingManager.sIsKinflowIsUsed = false;
     }
 
     /**

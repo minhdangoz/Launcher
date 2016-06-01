@@ -306,6 +306,9 @@
             android:permission="com.klauncher.launcher.permission.INSTALL_SHORTCUT">
             <intent-filter>
                 <action android:name="com.klauncher.launcher.action.INSTALL_SHORTCUT" />
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
 

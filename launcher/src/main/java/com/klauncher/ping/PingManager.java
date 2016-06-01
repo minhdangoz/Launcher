@@ -34,11 +34,13 @@ public class PingManager {
     public static final String KEY_PING_TIMESTAMP = "ptm";
 
     //public static final String USER_ACTION_CLICK = "1";
-    public static final String USER_ACTION_CLICK = "klauncher_action_clickl";
+    public static final String USER_ACTION_CLICK = "klauncher_action_click";
    // public static final String USER_ACTION_UNINSTALL = "2";
     public static final String USER_ACTION_UNINSTALL = "klauncher_action_uninstall";
     //public static final String USER_ACTION_INSTALL = "3";
     public static final String USER_ACTION_INSTALL = "klauncher_action_install";
+    public static final String USER_ACTION_REPORTAPPLIST = "klauncher_action_reportLauncherAppList";
+    public static final String KLAUNCHER_ONCREATE_REPORT = "klauncher_action_launcherOnCreate";
 
     private static final int MAX_BUFFER_SIZE = 10;
     private static final String SP_PING = "ping";
@@ -70,7 +72,7 @@ public class PingManager {
         mSharedPreferences = context.getSharedPreferences(SP_PING, Context.MODE_PRIVATE);
     }
 
-    public void ping(int action, Map<String, String> value) {
+    /*public void ping(int action, Map<String, String> value) {
         if (value == null) {
             value = new HashMap<>();
         }
@@ -82,7 +84,7 @@ public class PingManager {
                 sendPingRequest();
             }
         }
-    }
+    }*/
 
     private boolean needSend() {
         return mPingDataList.size() > MAX_BUFFER_SIZE;
@@ -159,6 +161,7 @@ public class PingManager {
         pingMap.put("action", action);
         pingMap.put("source", "1");
         pingMap.put("pkg_name", packageName);
+        pingMap.put(KEY_PING_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
         try {
             PackageInfo packageInfo = mContext.getPackageManager().getPackageInfo(
                     packageName, PackageManager.GET_SIGNATURES);
@@ -169,17 +172,32 @@ public class PingManager {
             pingMap.put("md5", getFileMD5(applicationInfo.sourceDir));
             // ping(1, pingMap);
             //sdk 埋点变更
-            MobileStatistics.onEvent(action, pingMap);
+            //MobileStatistics.onEvent(action, pingMap);
 
         } catch (PackageManager.NameNotFoundException e) {
+        } finally {
+            try {
+                MobileStatistics.onEvent(action, pingMap);
+            } catch (Exception e) {
+
+            }
+
         }
     }
 
     public void reportLauncherAppList(String xml) {
         Map<String, String> pingMap = new HashMap<>();
         pingMap.put("launcher_info", xml);
-        ping(2, pingMap);
+        pingMap.put(KEY_PING_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
+        //ping(2, pingMap);
+        MobileStatistics.onEvent(USER_ACTION_REPORTAPPLIST, pingMap);
         mSharedPreferences.edit().putLong(KEY_PING_APPLIST_LAST_REPORT, System.currentTimeMillis()).commit();
+    }
+    public void reportLauncherOncreate() {
+        Map<String, String> pingMap = new HashMap<>();
+        pingMap.put(KEY_PING_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
+        //ping(2, pingMap);
+        MobileStatistics.onEvent(KLAUNCHER_ONCREATE_REPORT, pingMap);
     }
 
     public boolean needReportLauncherAppList() {
@@ -209,14 +227,14 @@ public class PingManager {
     public static final String VALUE_CARD_CONTENT_FROM_YIDIANZIXUN= "yiDianZiXun";
     public static final String VALUE_CARD_CONTENT_FROM_JINRITOUTIAO= "jinRiTouTiao";
 
-    static boolean kinflowIsUsed;
+    public static boolean sIsKinflowIsUsed = false;
 
     /**
      * 上报热词被点击
      * 热词来源,调起包名,crc32
      */
     public Map<String, String> reportUserAction4HotWord(HotWord hotWord,String pullUpAppPackageName){
-        kinflowIsUsed = true;
+        sIsKinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_HOTWORD);
@@ -241,7 +259,7 @@ public class PingManager {
      * @return
      */
     public Map<String, String> reportUserAction4Banner(String pullUpAppPackageName,String fromName){
-        kinflowIsUsed = true;
+        sIsKinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_BANNER);
@@ -266,7 +284,7 @@ public class PingManager {
      * @return
      */
     public Map<String, String> reportUserAction4CardMore(String pullUpAppPackageName,String fromName){
-        kinflowIsUsed = true;
+        sIsKinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_MORE);
@@ -283,7 +301,7 @@ public class PingManager {
     }
 
     public Map<String, String> reportUserAction4Changes(String fromName,String cardSecondTypeId){
-        kinflowIsUsed = true;
+        sIsKinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_CHANGE);
@@ -297,7 +315,7 @@ public class PingManager {
     }
 
     public Map<String, String> reportUserAction4SearchBox(HotWord hotWord,String pullUpAppPackageName){
-        kinflowIsUsed = true;
+        sIsKinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_SEARCHBOX);
@@ -316,7 +334,7 @@ public class PingManager {
     }
 
     public Map<String, String> reportUserAction4cardNewsOpen(String fromName,String cardSecondTypeId){
-        kinflowIsUsed = true;
+        sIsKinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_NEWS_OPEN);
@@ -330,7 +348,7 @@ public class PingManager {
     }
 
     public Map<String, String> reportUserAction4Navigation(Navigation navigation){
-        kinflowIsUsed = true;
+        sIsKinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加action
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_NAVIGATION);
