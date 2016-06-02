@@ -37,7 +37,7 @@ public class KLauncherApplication extends Application {
     public void onCreate() {
         super.onCreate();
         //log mode 测试
-        LogUtil.mLogModel = LogUtil.LogModel.DEBUG;
+        LogUtil.mLogModel = LogUtil.LogModel.RELEASE;
         LogUtil.e("LogUtil","KLauncherApplication onCreate ");
         // Init DELONG report
         ReporterApi.onApplicationCreated(this);
@@ -50,8 +50,8 @@ public class KLauncherApplication extends Application {
 //        SsNewsApi.init(getApplicationContext(), clientId, true);
         //本公司sdk统计:MobileStatistics.init(Context context,String productId,String clientChannel);
         MobileStatistics.init(this, BuildConfig.CHANNEL_ID, "103");//productID 用BuildConfig.CHANNEL_ID,channel=103
-        //MobileStatistics.flushBuffer(50, 10 * 60, TimeUnit.MINUTES);//全部设置为默认值
-        MobileStatistics.flushBuffer(-1, 10 * 60, TimeUnit.MINUTES);//全部设置为默认值
+        MobileStatistics.flushBuffer(50, 10 * 60, TimeUnit.MINUTES);//全部设置为默认值
+        //MobileStatistics.flushBuffer(-1, 10 * 60, TimeUnit.MINUTES);//全部设置为默认值
 
         //三个个缓存文件
         CommonShareData.init(getApplicationContext());

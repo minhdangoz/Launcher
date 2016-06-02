@@ -7588,7 +7588,7 @@ public class Launcher extends Activity
         String pkgNameStr = CommonShareData.getString(CommonShareData.KEY_APP_PACKAGE_NAME,"");
         if(!TextUtils.isEmpty(pkgNameStr)&& !pkgNameStr.equals("null")){
             MobileStatistics.onPageStart(this,pkgNameStr);
-            LogUtil.e("getAndSavePackageName","scrollToKinflow pkgname= "+pkgNameStr);
+            LogUtil.e("sIsKinflowIsUsed","scrollToKinflow pkgname= "+pkgNameStr);
         }
     }
     /**
@@ -7599,7 +7599,7 @@ public class Launcher extends Activity
         String pkgNameStr = CommonShareData.getString(CommonShareData.KEY_APP_PACKAGE_NAME,"");
         if(!TextUtils.isEmpty(pkgNameStr)&& !pkgNameStr.equals("null")){
             MobileStatistics.onPageEnd(this,pkgNameStr);
-            LogUtil.e("getAndSavePackageName","scrollOutKinflow pkgname= "+pkgNameStr);
+            LogUtil.e("sIsKinflowIsUsed","scrollOutKinflow pkgname= "+pkgNameStr);
         }
 
     }
