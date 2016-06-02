@@ -146,11 +146,14 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
                 ((WifiCardViewHolder) holder).wifiLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        mCardsList.get(position).open(mContext, null);
                         try {
-                            Intent in1=new Intent();
-                            in1.setClassName("com.android.phone", "com.android.phone.MobileNetworkSettings");
-                            mContext.startActivity(in1);
+                            Intent intentWifi=new Intent();
+                            if (android.os.Build.VERSION.SDK_INT > 10) {
+                                intentWifi.setAction(android.provider.Settings.ACTION_SETTINGS);
+                            } else {
+                                intentWifi.setAction(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
+                            }
+                            mContext.startActivity(intentWifi);
                         } catch (Exception e) {
                             Toast.makeText(mContext, "打开网络设置失败,请在设置中手动打开", Toast.LENGTH_SHORT).show();
                             log("打开网络设置失败,请在设置中手动打开");
