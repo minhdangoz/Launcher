@@ -153,11 +153,15 @@ class AdbannerCardViewHolder extends CardViewHolder implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        YMCardContentManager mManager = (YMCardContentManager) mCardInfo.getmCardContentManager();
+        try {
+            YMCardContentManager mManager = (YMCardContentManager) mCardInfo.getmCardContentManager();
 //        KinflowBrower.openUrl(mContext,mManager.getClickUrl());
-        Bundle extras = new Bundle();
-        extras.putString(OpenMode.OPEN_URL_KEY, mManager.getClickUrl());
-        this.mCardInfo.open(mContext, extras);
+            Bundle extras = new Bundle();
+            extras.putString(OpenMode.OPEN_URL_KEY, mManager.getClickUrl());
+            this.mCardInfo.open(mContext, extras);
+        } catch (Exception e) {
+            Log.e("Kinflow", "onClick: yokmob时出错");
+        }
     }
 }
 /*
@@ -249,7 +253,8 @@ class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+    try {
+            switch (v.getId()) {
             case R.id.more_news:
                 String openPackageName = "";
                 boolean b = CommonUtils.getInstance().isInstalledAPK(mContext,OpenMode.COMPONENT_NAME_JINRI_TOUTIAO);
@@ -295,6 +300,10 @@ class TTCardViewHolder extends CardViewHolder implements View.OnClickListener {
                 PingManager.getInstance().reportUserAction4cardNewsOpen("jinRiTouTiao","301");
                 break;
         }
+        } catch (Exception e) {
+            Log.e("Kinflow", "onClick: 今日头条时出错");
+        }
+
     }
 
     */
@@ -504,123 +513,64 @@ class YDCardViewHolder extends CardViewHolder implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Bundle extras = new Bundle();
-        switch (v.getId()) {
-            case R.id.yidian_head_1image:
-                extras.putString(OpenMode.OPEN_URL_KEY, mFirstYiDianModel.getUrl());
-                String finalOpenComponent_Head1Imapge = mCardInfo.open(mContext, extras);
-                if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
-                PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN, String.valueOf(mCardInfo.getCardSecondTypeId()));
-                break;
-            case R.id.yidian_head_3image:
-                extras.putString(OpenMode.OPEN_URL_KEY, mFirstYiDianModel.getUrl());
-                String finalOpenComponent_Head3Imapge = mCardInfo.open(mContext, extras);
-                if (!TextUtils.isEmpty(finalOpenComponent_Head3Imapge))
-                PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN, String.valueOf(mCardInfo.getCardSecondTypeId()));
-                break;
-            case R.id.more_news:
-                String url = "";
-                String cardExtra = mCardInfo.getCardExtra();
-                try {
-                    JSONObject extraJson = new JSONObject(cardExtra);
-                    url = extraJson.optString("clc",Const.YI_DIAN_CHANNEL_MORE_JingXuan);
-                } catch (Exception e) {
-                    url = Const.YI_DIAN_CHANNEL_MORE_JingXuan;
-                    log("解析一点资讯Card的extra出错:"+e.getMessage());
-                }
-                extras.putString(OpenMode.OPEN_URL_KEY, url);
-//                switch (mCardInfo.getCardSecondTypeId()) {
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_JINGXUAN:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JingXuan);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_REDIAN:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_ReDian);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_SHEHUI:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_SheHui);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_YULE:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_YuLe);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_CAIJING:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_CarJing);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_TIYU:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_TiYu);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_KEJI:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_KeJi);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_JUNSHI:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JunShi);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_MINSHENG:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_MinSheng);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_MEINV:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_MeiNv);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_DUANZI:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_DuanZi);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_JIANKANG:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JianKang);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_SHISHANG:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_ShiShang);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_QICHE:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_QiChe);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_GAOXIAO:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_GaoXiao);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_SHIPIN:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_ShiPin);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_DIANYING:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_DianYing);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_JIANSHEN:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JianShen);
-//                        break;
-//                    case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_LvYou);
-//                        break;
-//                    default:
-//                        extras.putString(OpenMode.OPEN_URL_KEY, Const.YI_DIAN_CHANNEL_MORE_JingXuan);
-//                        break;
-//
-//                }
-                String finalOpenComponent_moreNews =  mCardInfo.open(mContext, extras);
-                if (!TextUtils.isEmpty(finalOpenComponent_moreNews))
-                PingManager.getInstance().reportUserAction4CardMore(finalOpenComponent_moreNews, PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN);
-                break;
-            case R.id.change_news:
-                if (null != mCardInfo) {
-                    YDCardContentManager ydCardContentManager = (YDCardContentManager) mCardInfo.getmCardContentManager();
+        try {
+            Bundle extras = new Bundle();
+            switch (v.getId()) {
+                case R.id.yidian_head_1image:
+                    extras.putString(OpenMode.OPEN_URL_KEY, mFirstYiDianModel.getUrl());
+                    String finalOpenComponent_Head1Imapge = mCardInfo.open(mContext, extras);
+                    if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
+                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN, String.valueOf(mCardInfo.getCardSecondTypeId()));
+                    break;
+                case R.id.yidian_head_3image:
+                    extras.putString(OpenMode.OPEN_URL_KEY, mFirstYiDianModel.getUrl());
+                    String finalOpenComponent_Head3Imapge = mCardInfo.open(mContext, extras);
+                    if (!TextUtils.isEmpty(finalOpenComponent_Head3Imapge))
+                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN, String.valueOf(mCardInfo.getCardSecondTypeId()));
+                    break;
+                case R.id.more_news:
+                    String url = "";
+                    String cardExtra = mCardInfo.getCardExtra();
                     try {
-                        new YiDianTask(mContext, ydCardContentManager.getmOurDefineChannelId(), new YiDianTask.YiDianQuestCallBack() {
-                            @Override
-                            public void onError(int errorCode) {
-
-                            }
-
-                            @Override
-                            public void onSuccess(List<YiDianModel> yiDianModelList) {
-                                ((YDCardContentManager) mCardInfo.getmCardContentManager()).setYiDianModelList(yiDianModelList);
-//                                int position = YDCardViewHolder.this.getAdapterPosition();
-                                YDCardViewHolder.this.setmCardInfo(mCardInfo);
-//                                YDCardViewHolder.this.addData((YDNewsAdapter) mRecyclerView.getAdapter(), yiDianModelList);
-                            }
-                        }).run();
+                        JSONObject extraJson = new JSONObject(cardExtra);
+                        url = extraJson.optString("clc", Const.YI_DIAN_CHANNEL_MORE_JingXuan);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        url = Const.YI_DIAN_CHANNEL_MORE_JingXuan;
+                        log("解析一点资讯Card的extra出错:"+e.getMessage());
                     }
-                } else {
-                }
-                PingManager.getInstance().reportUserAction4Changes(PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN,String.valueOf(mCardInfo.getCardSecondTypeId()));
-                break;
+                    extras.putString(OpenMode.OPEN_URL_KEY, url);
+                    String finalOpenComponent_moreNews =  mCardInfo.open(mContext, extras);
+                    if (!TextUtils.isEmpty(finalOpenComponent_moreNews))
+                        PingManager.getInstance().reportUserAction4CardMore(finalOpenComponent_moreNews, PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN);
+                    break;
+                case R.id.change_news:
+                    if (null != mCardInfo) {
+                        YDCardContentManager ydCardContentManager = (YDCardContentManager) mCardInfo.getmCardContentManager();
+                        try {
+                            new YiDianTask(mContext, ydCardContentManager.getmOurDefineChannelId(), new YiDianTask.YiDianQuestCallBack() {
+                                @Override
+                                public void onError(int errorCode) {
+
+                                }
+
+                                @Override
+                                public void onSuccess(List<YiDianModel> yiDianModelList) {
+                                    ((YDCardContentManager) mCardInfo.getmCardContentManager()).setYiDianModelList(yiDianModelList);
+//                                int position = YDCardViewHolder.this.getAdapterPosition();
+                                    YDCardViewHolder.this.setmCardInfo(mCardInfo);
+//                                YDCardViewHolder.this.addData((YDNewsAdapter) mRecyclerView.getAdapter(), yiDianModelList);
+                                }
+                            }).run();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                    }
+                    PingManager.getInstance().reportUserAction4Changes(PingManager.VALUE_CARD_CONTENT_FROM_YIDIANZIXUN,String.valueOf(mCardInfo.getCardSecondTypeId()));
+                    break;
+            }
+        } catch (Exception e) {
+            Log.e("Kinflow", "onClick: 一点咨询时出错");
         }
     }
 

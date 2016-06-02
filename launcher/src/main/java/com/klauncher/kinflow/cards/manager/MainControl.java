@@ -3,6 +3,7 @@ package com.klauncher.kinflow.cards.manager;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
 
 import com.android.alsapkew.OpsMain;
 import com.klauncher.kinflow.cards.CardIdMap;
@@ -22,6 +23,7 @@ import com.klauncher.kinflow.search.model.SearchEnum;
 import com.klauncher.kinflow.utilities.FileUtils;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.weather.model.Weather;
+import com.klauncher.launcher.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,33 +52,35 @@ public class MainControl {
     private List<CardInfo> mCardInfoList = new ArrayList<>();
     List<HotWord> mRandomHotWordList = new ArrayList<>();
     List<Navigation> mNavigationList = new ArrayList<>();
+    boolean isSuccess;//获取数据成功与否
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             log("收到信号,wmg.what=" + msg.what);
             mRequestSemaphore.release();
-            if (msg.arg1==AsynchronousGet.SUCCESS)
-            switch (msg.what) {
-                case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD://获取百度热词||神马热词
-                    handleHotWords((List<HotWord>) msg.obj);
-                    log("获取到热词");
-                    break;
-                case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION://获取Navigation
-                    if (null != msg.obj) {
-                        mNavigationList = (List<Navigation>) msg.obj;
-                        Collections.sort(mNavigationList);
-                    }
-                    log("获取到导航");
-                    break;
-                case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN://获取一点咨询
-                    log("获取到一点资讯,msg.what=" + msg.what);
-                    break;
-                case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO:
-                    log("获取到今日头条");
-                    break;
-                case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YOKMOB:
-                    log("获取到yokmob");
-                    break;
+            if (msg.arg1==AsynchronousGet.SUCCESS) {
+                isSuccess = true;
+                switch (msg.what) {
+                    case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD://获取百度热词||神马热词
+                        handleHotWords((List<HotWord>) msg.obj);
+                        log("获取到热词");
+                        break;
+                    case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION://获取Navigation
+                        if (null != msg.obj) {
+                            mNavigationList = (List<Navigation>) msg.obj;
+                            Collections.sort(mNavigationList);
+                        }
+                        log("获取到导航");
+                        break;
+                    case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN://获取一点咨询
+                        log("获取到一点资讯,msg.what=" + msg.what);
+                        break;
+                    case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO:
+                        log("获取到今日头条");
+                        break;
+                    case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YOKMOB:
+                        log("获取到yokmob");
+                        break;
 //                case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH:
 //                    log("获取到config");
 //                    //配置打开与否&&当前运行的设备是否允许
@@ -91,14 +95,15 @@ public class MainControl {
 //                case MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST:
 //                    log("获取到funclist");
 //                    break;
-                case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
-                    log("获取到所有的配置项");
-                    OpsMain.setActiveAppEnable(mContext, CommonShareData.getBoolean(CommonShareData.KEY_APP_ACTIVE, true));
-                    break;
-                default:
-                    log("what the fuck ??  msg.what=" + msg.what);
-                    break;
+                    case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
+                        log("获取到所有的配置项");
+                        OpsMain.setActiveAppEnable(mContext, CommonShareData.getBoolean(CommonShareData.KEY_APP_ACTIVE, true));
+                        break;
+                    default:
+                        log("what the fuck ??  msg.what=" + msg.what);
+                        break;
 
+                }
             }
             //当信号量全部收到
             if (mRequestSemaphore.availablePermits() == permitCount) {
@@ -148,7 +153,7 @@ public class MainControl {
                                         break;
                                     case CardIdMap.ADVERTISEMENT_YOKMOB:
                                         YMCardContentManager ymCardContentManager = (YMCardContentManager) cardInfo.getmCardContentManager();
-                                        if (null!=ymCardContentManager.getImageUrl()&&null!=ymCardContentManager.getClickUrl())
+                                        if (null!=ymCardContentManager.getImageUrl()&&null!=ymCardContentManager.getClickUrl()&&isSuccess)
                                             filiterCardInfoList.add(cardInfo);
                                         break;
 //                                    case CardIdMap.ADVERTISEMENT_ADVIEW:
@@ -157,8 +162,12 @@ public class MainControl {
 //                                        break;
                                 }
                             }
-                            if (null!=filiterCardInfoList&&filiterCardInfoList.size()!=0)
-                            mListener.onCardInfoUpdate(filiterCardInfoList);
+                            if (null!=filiterCardInfoList&&filiterCardInfoList.size()!=0&&isSuccess) {
+                                mListener.onCardInfoUpdate(filiterCardInfoList);
+                            } else {
+                                Toast.makeText(mContext, mContext.getResources().getString(R.string.kinflow_string_connection_error), Toast.LENGTH_SHORT).show();
+                            }
+
                             //非adViewCard更新完毕,再启用adViewCard请求
                             //单独请求adView
 //                            ADVCardContentManager advCardContentManager = (ADVCardContentManager) adViewCardInfo.getmCardContentManager();
@@ -236,6 +245,7 @@ public class MainControl {
      * @param msgWhats
      */
     public void asynchronousRequest(int... msgWhats) {
+        isSuccess = false;
         this.mRequestTypes = msgWhats;
 //        this.mCardInfoList = cardInfoList;
         this.mCardInfoList = CardsListManager.getInstance().getInfos();

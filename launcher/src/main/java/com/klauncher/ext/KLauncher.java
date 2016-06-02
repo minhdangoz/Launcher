@@ -396,13 +396,17 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             //异步获取所有
 //        requestLocation();//此版本已没有天气模块,但是保留天气模块相关代码
             mMainControl = new MainControl(KLauncher.this, this);
-            mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
-                    MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-                    MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-                    MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
-//                    MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH,
-//                    MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST
-            );
+            if (NetworkUtils.isNetworkAvailable(KLauncher.this)) {
+                mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
+                        MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
+                        MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
+                        MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
+//                            MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH,
+//                            MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST
+                );
+            }else {
+                Toast.makeText(KLauncher.this, KLauncher.this.getResources().getString(R.string.kinflow_string_connection_error), Toast.LENGTH_SHORT).show();
+            }
             //注册监听
             CacheNavigation.getInstance().registerOnSharedPreferenceChangeListener(this);
 //        CacheLocation.getInstance().registerOnSharedPreferenceChangeListener(this);//此版本已没有天气模块,但是保留天气模块相关代码
@@ -414,13 +418,19 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     //当下拉刷新的时候
                     //                requestLocation();
                     //loadCardList
-                    mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
-                            MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-                            MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-                            MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
+                    if (NetworkUtils.isNetworkAvailable(KLauncher.this)) {
+                        mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
+                                MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
+                                MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
+                                MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
 //                            MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH,
 //                            MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST
-                    );
+                        );
+                    }else {
+                        Toast.makeText(KLauncher.this, KLauncher.this.getResources().getString(R.string.kinflow_string_connection_error), Toast.LENGTH_SHORT).show();
+                        onCompleted();
+                    }
+
                 }
             });
 

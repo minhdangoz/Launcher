@@ -20,6 +20,6 @@
     <string name="kinflow_string_card_footer_changes">换一换</string>
 
     <string name="kinflow_string_wifi_setting">网络未连接，点击前往设置wifi网络？</string>
-    <string name="wifi_setting">无限网络设置</string>
+    <string name="wifi_setting">无线网络设置</string>
 
 </resources>

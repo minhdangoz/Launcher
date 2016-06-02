@@ -69,11 +69,13 @@ public class YMCardContentManager extends BaseCardContentManager {
                 clickUrl = json.optString("clc");
                 HashMap<String,String> resultHashMap = new HashMap<>();
                 Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YOKMOB);
+                msg.arg1 = -1;
                 mMainControlHandler.sendMessage(msg);
             }
         } catch (Exception e) {
             log("请求YOKMOB时出错:"+e.getMessage());
             Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YOKMOB);
+                msg.arg1 = -1;
             mMainControlHandler.sendMessage(msg);
         }
 

@@ -53,7 +53,8 @@ public class YDCardContentManager extends BaseCardContentManager {
                         CommonShareData.putInt(CardContentManagerFactory.OFFSET_NAME + mOurDefineChannelId, offset);
                         handleObtainedData(msg);
                     } else {
-                        onFailToast(msg);
+//                        onFailToast(msg);
+                        log("获取数据失败,msg.arg1="+msg.arg1);
                     }
                     mainControlHandler.handleMessage(msg);
                     break;
