@@ -216,7 +216,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("Klaucher_0512", "KLauncher onResume() start1111111111");
+        LogUtil.e("Klaucherwqh", "KLauncher onResume() start1111111111");
 
         com.android.alsapkew.OpsMain.setActivity(this);
 
@@ -232,10 +232,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                         File xmlFile = new File(LbkUtil.getXLauncherLbkBackupTempPath() + File.separator + LbkUtil.DESC_FILE);
                         FileInputStream fis;
                         StringBuilder sb = new StringBuilder();
+                        //StringBuffer sb = new StringBuffer("");
                         try {
                             fis = new FileInputStream(xmlFile);
                             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-                            String line;
+                            String line = null;
                             while ((line = br.readLine()) != null) {
                                 sb.append(line);
                             }
@@ -245,6 +246,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                             e.printStackTrace();
                         }
                         PingManager.getInstance().reportLauncherAppList(sb.toString());
+                        LogUtil.e("Klaucherwqh", "reportLauncherAppList ");
                     }
                 }
             });
@@ -451,7 +453,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         //super.scrollToKinflow();
         //初始化 是否试用 fasle
         PingManager.sIsKinflowIsUsed = false;
-        LogUtil.e("sIsKinflowIsUsed","scrollToKinflow"+PingManager.sIsKinflowIsUsed);
+        LogUtil.e("sIsKinflowIsUsed", "scrollToKinflow" + PingManager.sIsKinflowIsUsed);
 //        log("滑到信息流界面");
         try {
             if (CommonUtils.getInstance().allowActive2345()) {
@@ -465,10 +467,18 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     public void scrollOutKinflow() {
         //进入 信息流 且有点击事件 会上报进入 事件  再上报退出事件
-        LogUtil.e("sIsKinflowIsUsed","scrollOutKinflow"+PingManager.sIsKinflowIsUsed);
+        LogUtil.e("sIsKinflowIsUsed", "scrollOutKinflow" + PingManager.sIsKinflowIsUsed);
         if (PingManager.sIsKinflowIsUsed) {
-            super.scrollToKinflow();
-            super.scrollOutKinflow();
+            String pkgNameStr = CommonShareData.getString(CommonShareData.KEY_APP_PACKAGE_NAME,"");
+            if(!TextUtils.isEmpty(pkgNameStr)&& !pkgNameStr.equals("null")){
+                MobileStatistics.onPageStart(this,pkgNameStr);
+                LogUtil.e("sIsKinflowIsUsed","onPageStart pkgname= "+pkgNameStr);
+                MobileStatistics.onPageEnd(this,pkgNameStr);
+                LogUtil.e("sIsKinflowIsUsed","onPageEnd pkgname= "+pkgNameStr);
+
+            }
+            //super.scrollToKinflow();
+            //super.scrollOutKinflow();
         }
         //退出 初始化false
         PingManager.sIsKinflowIsUsed = false;

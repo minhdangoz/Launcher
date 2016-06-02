@@ -230,8 +230,8 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
         if (data.getAction().equals("android.intent.action.PACKAGE_REMOVED")) {
             String packageName = data.getDataString().replace("package:","");;
             LogUtil.e("InstallShortcutReceiver", "卸载了:"  +packageName);
-            PingManager.getInstance().reportUserAction4App(
-                    PingManager.USER_ACTION_UNINSTALL, packageName);
+//            PingManager.getInstance().reportUserAction4App(
+//                    PingManager.USER_ACTION_UNINSTALL, packageName);
 
         }
 

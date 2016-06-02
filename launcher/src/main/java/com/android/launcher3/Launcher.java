@@ -7585,22 +7585,22 @@ public class Launcher extends Activity
      * 第一次加载过程中不调用
      */
     public void scrollToKinflow() {
-        String pkgNameStr = CommonShareData.getString(CommonShareData.KEY_APP_PACKAGE_NAME,"");
+        /*String pkgNameStr = CommonShareData.getString(CommonShareData.KEY_APP_PACKAGE_NAME,"");
         if(!TextUtils.isEmpty(pkgNameStr)&& !pkgNameStr.equals("null")){
             MobileStatistics.onPageStart(this,pkgNameStr);
             LogUtil.e("sIsKinflowIsUsed","scrollToKinflow pkgname= "+pkgNameStr);
-        }
+        }*/
     }
     /**
      * 划出信息流回调方法
      * 第一次加载过程中不调用
      */
     public void scrollOutKinflow() {
-        String pkgNameStr = CommonShareData.getString(CommonShareData.KEY_APP_PACKAGE_NAME,"");
+        /*String pkgNameStr = CommonShareData.getString(CommonShareData.KEY_APP_PACKAGE_NAME,"");
         if(!TextUtils.isEmpty(pkgNameStr)&& !pkgNameStr.equals("null")){
             MobileStatistics.onPageEnd(this,pkgNameStr);
             LogUtil.e("sIsKinflowIsUsed","scrollOutKinflow pkgname= "+pkgNameStr);
-        }
+        }*/
 
     }
 
