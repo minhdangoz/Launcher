@@ -170,7 +170,7 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 			mBaselineIconSize = (int) (mIntrinsicIconSize * mBaselineIconScale);
 			mMaxPerspectiveShift = (int) (mIntrinsicIconSize * (mBaselineIconScale * 1 - 0.1f));
 			mOffsetX = (previewSize - mMaxPerspectiveShift * 3) / 10;
-			mPreviewOffsetX = (mTotalWidth - previewSize) / 2;
+			mPreviewOffsetX = (mTotalWidth - previewSize) / 2 - 2;
 			TypedValue outValue = new TypedValue();
 			mResources.getValue(R.dimen.config_folder_preview_offsety_ratio, outValue, true);
 			mPreviewOffsetY = mIcon.getPaddingTop() + (int)(previewPadding * outValue.getFloat());
@@ -180,7 +180,9 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 	public void drawPreviewItem(Canvas canvas, PreviewItemDrawingParams params) {
 		canvas.save();
 		canvas.translate(params.transX + mPreviewOffsetX, params.transY + mPreviewOffsetY);
-		canvas.scale(params.scale, params.scale);
+		int width = params.drawable.getBounds().width();
+		int height = params.drawable.getBounds().height();
+		canvas.scale(params.scale * width / height, params.scale);
 		Drawable d = params.drawable;
 
 		if (d != null) {
