@@ -135,4 +135,6 @@
     <integer name="config_folderMaxRow">4</integer>
     <!-- Lenovo-sw:zhangyj19, modify folder default max num. -->
     <integer name="config_folderMaxNum">64</integer>
+
+    <string name="folder_system_tool">系统工具</string>
 </resources>

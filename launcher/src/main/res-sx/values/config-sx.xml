@@ -28,6 +28,5 @@
     <string name="config_icon_com.UCMobile">com.android.browser,com.sec.android.app.sbrowser</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
 
-    <string name="folder_system_tool">系统工具</string>
     <bool name="kinflow_switch_default">true</bool>
 </resources>
