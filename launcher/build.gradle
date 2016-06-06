@@ -87,6 +87,12 @@ android {
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LESHI_ID + "\""
         }
+        jinli {
+            applicationId = "com.klauncher.jllauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + JINLI_ID, WE_OPS_ID: WE_OPS_ID_OTH,
+                                    PACKAGE_NAME : applicationId]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + JINLI_ID + "\""
+        }
         vivo {
             applicationId = "com.klauncher.vilauncher"
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + VIVO_ID, WE_OPS_ID: WE_OPS_ID_OTH,
@@ -137,6 +143,10 @@ android {
         vivo {
             assets.srcDirs = ['src/main/assets-vi']
             res.srcDirs += ['src/main/res-vi']
+        }
+        jinli {
+            assets.srcDirs = ['src/main/assets-jl']
+            res.srcDirs += ['src/main/res-jl']
         }
     }
 
@@ -192,5 +202,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile (name:'statisticalanalysis-release',ext:'aar')
+    //compile (name:'getuiadrecelibrary-release',ext:'aar')
 }
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }

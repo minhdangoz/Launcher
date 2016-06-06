@@ -4922,7 +4922,8 @@ public class LauncherModel extends BroadcastReceiver
             "com.xiaomi.gamecenter",
             "com.sohu.inputmethod.sogou",
             "com.miui.securitycenter",
-            "com.lenovo.launcher"
+            "com.lenovo.launcher",
+            "com.gionee.amisystem"
     };
     
     private boolean isFilterPackage(String pkg) {

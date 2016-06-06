@@ -61,8 +61,10 @@ public class PushDemoReceiver extends BroadcastReceiver {
                     //payloadData.append(data);
                     //Toast.makeText(context, data, Toast.LENGTH_LONG).show();
                     handleMsgData(context, data);
-
-
+                    /*GeituiAdHandler geituiAdHandler = new GeituiAdHandler();
+                    if (!geituiAdHandler.handleMsgData(context, data)) {
+                        LogUtil.e("GeituiAdHandler", "handleMsgData false");
+                   } */
                 }
                 break;
 
