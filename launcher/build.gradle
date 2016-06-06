@@ -87,17 +87,23 @@ android {
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LESHI_ID + "\""
         }
+        vivo {
+            applicationId = "com.klauncher.vilauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + VIVO_ID, WE_OPS_ID: WE_OPS_ID_OTH,
+                                    PACKAGE_NAME : applicationId]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + VIVO_ID + "\""
+        }
         jinli {
             applicationId = "com.klauncher.jllauncher"
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + JINLI_ID, WE_OPS_ID: WE_OPS_ID_OTH,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + JINLI_ID + "\""
         }
-        vivo {
-            applicationId = "com.klauncher.vilauncher"
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + VIVO_ID, WE_OPS_ID: WE_OPS_ID_OTH,
+        zte {
+            applicationId = "com.klauncher.ztelauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + ZTE_ID, WE_OPS_ID: WE_OPS_ID_OTH,
                                     PACKAGE_NAME : applicationId]
-            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + VIVO_ID + "\""
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + ZTE_ID + "\""
         }
     }
 
@@ -147,6 +153,10 @@ android {
         jinli {
             assets.srcDirs = ['src/main/assets-jl']
             res.srcDirs += ['src/main/res-jl']
+        }
+        zte {
+            assets.srcDirs = ['src/main/assets-zte']
+            res.srcDirs += ['src/main/res-zte']
         }
     }
 

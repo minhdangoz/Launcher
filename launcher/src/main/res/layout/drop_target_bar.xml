@@ -21,6 +21,7 @@
         <!-- Delete target -->
         <com.android.launcher3.DeleteDropTarget
             style="@style/DropTargetButton"
+            android:layout_width="match_parent"
             android:id="@+id/delete_target_text"
             android:text="@string/delete_zone_label_workspace"
             android:drawableStart="@drawable/remove_target_selector" />
