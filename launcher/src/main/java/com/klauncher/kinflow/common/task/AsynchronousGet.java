@@ -104,12 +104,13 @@ public final class AsynchronousGet {
                     String responseBodyStr = null;
                     try {
                         responseBodyStr = response.body().string();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                         msg.arg1 = RESPONSE_FAIL;
                         handler.sendMessage(msg);
                         log("服务器响应失败,发生IOException,msg.what=" + msg.what);
                         response.body().close();
+                        return;
                     }
                     //3,准备解析
                     if (!TextUtils.isEmpty(responseBodyStr)) {
@@ -149,6 +150,7 @@ public final class AsynchronousGet {
                     } else {
                         log("Message.what=" + msg.what + "的响应体为空,url=" + url);
                         msg.arg1 = RESPONSE_FAIL;//RESPONSE_NULL
+                        if (!handler.hasMessages(msg.what))
                         handler.sendMessage(msg);
                     }
                 }

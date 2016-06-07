@@ -14,9 +14,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.klauncher.kinflow.common.utils.CacheNavigation;
-import com.klauncher.launcher.R;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.navigation.model.Navigation;
+import com.klauncher.kinflow.utilities.Dips;
+import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
 
 import java.util.List;
@@ -55,6 +56,9 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
             navigation = CacheNavigation.getInstance().createDefaultNavigation(position);
             this.navigationList.add(position,navigation);
         }
+        //navigation-pixels
+        int pixels = pixels(Dips.deviceDpi(context));
+
         //navigation-name
         holder.tv_navigation.setText(navigation.getNavName());
 
@@ -91,7 +95,13 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
 
             }
             Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
-            drawable.setBounds(0, 0, context.getResources().getInteger(R.integer.kinflow_integer_navigataion_icon_bound), context.getResources().getInteger(R.integer.kinflow_integer_navigataion_icon_bound));
+//            drawable.setBounds(0, 0, context.getResources().getInteger(R.integer.kinflow_integer_navigataion_icon_bound), context.getResources().getInteger(R.integer.kinflow_integer_navigataion_icon_bound));
+//            if (Dips.getDensity(context)>=2){
+//                drawable.setBounds(0, 0, 48,48);
+//            } else {
+//                drawable.setBounds(0, 0, 32,32);
+//            }
+            drawable.setBounds(0, 0, pixels,pixels);
             holder.tv_navigation.setCompoundDrawables(drawable, null, null, null);
             return;
         }
@@ -99,9 +109,20 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Na
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         if (null != decodedByte) {
             Drawable drawable = new BitmapDrawable(context.getResources(), decodedByte);
-            drawable.setBounds(0, 0, context.getResources().getInteger(R.integer.kinflow_integer_navigataion_icon_bound), context.getResources().getInteger(R.integer.kinflow_integer_navigataion_icon_bound));
+//            drawable.setBounds(0, 0, context.getResources().getInteger(R.integer.kinflow_integer_navigataion_icon_bound), context.getResources().getInteger(R.integer.kinflow_integer_navigataion_icon_bound));
+//            if (Dips.getDensity(context)>=2){
+//                drawable.setBounds(0, 0, 48,48);
+//            } else {
+//                drawable.setBounds(0, 0, 32,32);
+//            }
+            drawable.setBounds(0, 0, pixels,pixels);
             holder.tv_navigation.setCompoundDrawables(drawable, null, null, null);
         }
+    }
+
+    private int pixels (int dpi) {
+        int multiple = dpi/160;//一个像素所占长度扩大或者缩小的倍数
+        return multiple*24;//在160dpi的屏幕上navigation的icon大概需要24个像素
     }
 
     @Override

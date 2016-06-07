@@ -21,7 +21,7 @@ public class Dips {
         return (int) (dipsToFloatPixels(dips, context) + 0.5f);
     }
 
-    private static float getDensity(final Context context) {
+    public static float getDensity(final Context context) {
         return context.getResources().getDisplayMetrics().density;
     }
 
@@ -32,5 +32,10 @@ public class Dips {
 
     public static int asIntPixels(float dips, Context context) {
         return (int) (asFloatPixels(dips, context) + 0.5f);
+    }
+
+    public static int deviceDpi (Context context) {
+        final DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return displayMetrics.densityDpi;
     }
 }
