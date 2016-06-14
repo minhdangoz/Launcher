@@ -577,12 +577,16 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(mWifiChangeReceiver);
-        CardContentManagerFactory.clearAllOffset();
-        CacheNavigation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
-//        CacheLocation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
-        Log.e("Klaucher_0512", "KLauncher onDestroy()");
+            super.onDestroy();
+        try {
+            unregisterReceiver(mWifiChangeReceiver);
+            CardContentManagerFactory.clearAllOffset();
+            CacheNavigation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
+//          CacheLocation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
+            Log.e("Klaucher_0512", "KLauncher onDestroy()");
+        } catch (Exception e) {
+            log("KLauncher在onDestroy时发生错误"+e.getMessage());
+        }
     }
 
     @Override
