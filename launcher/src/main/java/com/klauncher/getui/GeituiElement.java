@@ -10,6 +10,7 @@ public class GeituiElement implements Serializable {
     //{"type":"1","title":"title","icon":"icon","pkgname":"pkgname","startActname":"startActname","url":"url","showStatistUrl":"showStatistUrl","clickStatistUrl":"clickStatistUrl"}
     private int type;
     private String title;
+    private String content;
     private String icon;
     private String pkgname;
     private String startActname;
@@ -31,6 +32,14 @@ public class GeituiElement implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getIcon() {

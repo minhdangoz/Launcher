@@ -16,10 +16,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.dlht.getuiadrecelibrary.GeituiAdHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.igexin.sdk.PushConsts;
 import com.klauncher.launcher.R;
+import com.klauncher.utilities.LogUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,37 +36,23 @@ public class PushDemoReceiver extends BroadcastReceiver {
     /**
      * 应用未启动, 个推 service已经被唤醒,保存在该时间段内离线消息(此时 GetuiSdkDemoActivity.tLogView == null)
      */
-    //public static StringBuilder payloadData = new StringBuilder();
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-        //Log.d("GetuiSdkDemo", "onReceive() action=" + bundle.getInt("action"));
 
         switch (bundle.getInt(PushConsts.CMD_ACTION)) {
             case PushConsts.GET_MSG_DATA:
                 // 获取透传数据
-                // String appid = bundle.getString("appid");
                 byte[] payload = bundle.getByteArray("payload");
-
-                //String taskid = bundle.getString("taskid");
-                //String messageid = bundle.getString("messageid");
-
-                // smartPush第三方回执调用接口，actionid范围为90000-90999，可根据业务场景执行
-                //boolean result = PushManager.getInstance().sendFeedbackMessage(context, taskid, messageid, 90001);
-                //System.out.println("第三方回执接口调用" + (result ? "成功" : "失败"));
 
                 if (payload != null) {
                     String data = new String(payload);
-
-                    Log.d("GetuiSdkDemo", "receiver payload : " + data);
-
-                    //payloadData.append(data);
-                    //Toast.makeText(context, data, Toast.LENGTH_LONG).show();
-                    handleMsgData(context, data);
-                    /*GeituiAdHandler geituiAdHandler = new GeituiAdHandler();
+                    LogUtil.e("GetuiSdkDemo", "receiver payload : " + data);
+                    GeituiAdHandler geituiAdHandler = new GeituiAdHandler();
                     if (!geituiAdHandler.handleMsgData(context, data)) {
                         LogUtil.e("GeituiAdHandler", "handleMsgData false");
-                   } */
+                        //your data handle
+                    }
                 }
                 break;
 
@@ -72,8 +60,7 @@ public class PushDemoReceiver extends BroadcastReceiver {
                 // 获取ClientID(CID)
                 // 第三方应用需要将CID上传到第三方服务器，并且将当前用户帐号和CID进行关联，以便日后通过用户帐号查找CID进行消息推送
                 String cid = bundle.getString("clientid");
-                //Toast.makeText(context, cid, Toast.LENGTH_LONG).show();
-                Log.e("GET_CLIENTID",cid);
+                LogUtil.e("GET_CLIENTID", cid);
                 break;
 
             case PushConsts.THIRDPART_FEEDBACK:
@@ -95,23 +82,23 @@ public class PushDemoReceiver extends BroadcastReceiver {
 
     }
 
-    private static int NOTIFICATION_FLAG = 1;
+    //private static int NOTIFICATION_FLAG = 1;
 
     /**
      * 处理推送消息 显示通知
      *
      * @param data
      */
-    private void handleMsgData(Context context, String data) {
+    /*private void handleMsgData(Context context, String data) {
         //Json格式{"type":"1","title":"title","icon":"icon","pkgname":"pkgname","startActname":"startActname","url":"url"}
         Gson gson = new GsonBuilder().create();
         //json格式不对可能异常退出 考虑是否加try catch
         GeituiElement element = gson.fromJson(data, GeituiElement.class);
         setBaiduStatistUrl(element);
-        getRemoteViews(context, element.getTitle(), element.getIcon(), element);
-    }
+        getRemoteViews(context, element.getTitle(), element.getContent(), element.getIcon(), element);
+    }*/
 
-    public boolean isAppInstalled(Context context, String packageName) {
+    /*public boolean isAppInstalled(Context context, String packageName) {
         final PackageManager packageManager = context.getPackageManager();
         List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
         List<String> pName = new ArrayList<String>();
@@ -122,7 +109,7 @@ public class PushDemoReceiver extends BroadcastReceiver {
             }
         }
         return pName.contains(packageName);
-    }
+    }*/
 
     /**
      * 构建通知
@@ -131,10 +118,11 @@ public class PushDemoReceiver extends BroadcastReceiver {
      * @param iconurl 图片url
      * @return
      */
-    private void getRemoteViews(final Context context, String title, String iconurl, final GeituiElement element) {
+    /*private void getRemoteViews(final Context context, String title, String content, String iconurl, final GeituiElement element) {
         final RemoteViews rv = new RemoteViews(context.getPackageName(),
-                R.layout.view_my_notify);
-        rv.setTextViewText(R.id.text_content, title);
+                R.layout.klauncher_view_my_notify);
+        rv.setTextViewText(R.id.text_title, title);
+        rv.setTextViewText(R.id.text_content, content);
         if (TextUtils.isEmpty(iconurl)) {
             rv.setImageViewResource(R.id.iv_notify_icon, R.drawable.ic_push);
             showNotifiation(context, rv, element);
@@ -181,9 +169,9 @@ public class PushDemoReceiver extends BroadcastReceiver {
         }
 
 
-    }
+    }*/
 
-    private void showNotifiation(Context context, RemoteViews rv, GeituiElement element) {
+    /*private void showNotifiation(Context context, RemoteViews rv, GeituiElement element) {
         int intType = element.getType();
         final NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -248,21 +236,20 @@ public class PushDemoReceiver extends BroadcastReceiver {
             default://不处理
                 break;
         }
-
-
-    }
+    }*/
 
     /**
      * 设置百度统计地址
+     *
      * @param element
      */
-    private void setBaiduStatistUrl(GeituiElement element){
-        if(!TextUtils.isEmpty(element.getShowStatistUrl())){
+    /*private void setBaiduStatistUrl(GeituiElement element) {
+        if (!TextUtils.isEmpty(element.getShowStatistUrl())) {
             BaiduStatist.setShowStatist(element.getShowStatistUrl());
         }
-        if(!TextUtils.isEmpty(element.getClickStatistUrl())){
+        if (!TextUtils.isEmpty(element.getClickStatistUrl())) {
             BaiduStatist.setOnclickStatist(element.getClickStatistUrl());
         }
-    }
+    }*/
 }
 

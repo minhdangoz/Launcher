@@ -299,7 +299,7 @@
                 <action android:name="com.klauncher.launcher.action.DEFAULT_LAUNCHER" />
             </intent-filter>
         </receiver>
- 
+
         <!-- Intent received used to install shortcuts from other applications -->
         <receiver
             android:name="com.android.launcher3.InstallShortcutReceiver"
@@ -711,6 +711,22 @@
                 <action android:name="android.intent.action.SCREEN_ON" />
             </intent-filter>
         </receiver>
+        <!--默认桌面弹框-->
+        <activity
+            android:name="com.klauncher.getui.FakeHomeApp"
+            android:enabled="false"
+            android:exported="false"
+            android:label="Home Control">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.klauncher.getui.HomeSelector"
+            android:label="HomeSelector"/>
 
     </application>
 </manifest>
