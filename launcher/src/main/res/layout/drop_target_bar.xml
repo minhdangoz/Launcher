@@ -14,28 +14,20 @@
      limitations under the License.
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
+
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/DropTargetButtonContainer"
         android:layout_weight="1">
         <!-- Delete target -->
         <com.android.launcher3.DeleteDropTarget
-            style="@style/DropTargetButton"
-            android:layout_width="match_parent"
             android:id="@+id/delete_target_text"
-            android:text="@string/delete_zone_label_workspace"
-            android:drawableStart="@drawable/remove_target_selector" />
+            style="@style/DropTargetButton1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:drawableStart="@drawable/remove_target_selector"
+            android:text="@string/delete_zone_label_workspace"/>
     </FrameLayout>
-    <!--<FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@style/DropTargetButtonContainer"
-        android:layout_weight="1">
-        <com.android.launcher3.InfoDropTarget
-            style="@style/DropTargetButton"
-            android:id="@+id/info_target_text"
-            android:text="@string/info_target_label"
-            android:drawableStart="@drawable/info_target_selector" />
-    </FrameLayout>-->
     <!-- Lenovo-SW zhaoxin5 20150617 add for qucik share START -->
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -43,10 +35,10 @@
         android:layout_weight="1">
         <!-- Info target -->
         <com.android.launcher3.QuickShareDropTarget
-            style="@style/DropTargetButton"
             android:id="@+id/quick_share_target_text"
-            android:text="@string/quick_share_target_label"
-            android:drawableStart="@drawable/quick_share_selector" />
+            style="@style/DropTargetButton"
+            android:drawableStart="@drawable/quick_share_selector"
+            android:text="@string/quick_share_target_label"/>
     </FrameLayout>
     <!-- Lenovo-SW zhaoxin5 20150617 add for qucik share END -->
 </merge>

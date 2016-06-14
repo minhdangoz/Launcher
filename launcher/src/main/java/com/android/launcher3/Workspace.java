@@ -967,6 +967,9 @@ public class Workspace extends SmoothPagedView
     ArrayList<Long> getScreenOrder() {
         return mScreenOrder;
     }
+    public int getScreenNumber(){
+        return mScreenOrder.size();
+    }
 
     public void stripEmptyScreens() {
         // Log to disk
@@ -1819,7 +1822,9 @@ public class Workspace extends SmoothPagedView
             float scrollRange = getScrollForPage(index + 1) - getScrollForPage(index);
             int intScrollRange = (int) (getScrollForPage(index + 1) - getScrollForPage(index));
             int scrollDelta = 0;
-            if (getScrollX() > 0 && getScrollX() < 2 * intScrollRange) {
+            int  screenNuber = getScreenNumber();
+
+            if (getScrollX() > 0 && getScrollX() < (screenNuber-1) * intScrollRange) {
                 //0->1   progress 1-0 ; 1->0 progress 0-1
                 scrollDelta = getScrollX() - getScrollForPage(index) -
                         getLayoutTransitionOffsetForPage(index);
@@ -1836,12 +1841,12 @@ public class Workspace extends SmoothPagedView
                 translationX = scrollRange - scrollDelta;
                 progress = (scrollRange - Math.abs(scrollDelta)) / scrollRange;
 
-            } else if (getScrollX() >= 2 * intScrollRange && getScrollX() <= 3 * intScrollRange) {
+            } else if (getScrollX() >= (screenNuber -1) * intScrollRange && getScrollX() <= screenNuber * intScrollRange) {
                 //2-0  progress 0-1
                 scrollDelta = getScrollX() - getScrollForPage(index) -
                         getLayoutTransitionOffsetForPage(index);
                 translationX = scrollRange - scrollDelta;
-                progress = (scrollDelta - 2 * intScrollRange) / scrollRange;
+                progress = (scrollDelta - (screenNuber-1) * intScrollRange) / scrollRange;
 
             }
             if (isLayoutRtl()) {//->

@@ -22,6 +22,7 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -159,9 +160,8 @@ public class ButtonDropTarget extends TextView implements DropTarget, DragContro
         return (getLayoutDirection() == View.LAYOUT_DIRECTION_RTL);
     }
 
-    Rect getIconRect(int viewWidth, int viewHeight, int drawableWidth, int drawableHeight) {
+    public Rect getIconRect(int viewWidth, int viewHeight, int drawableWidth, int drawableHeight) {
         DragLayer dragLayer = mLauncher.getDragLayer();
-
         // Find the rect to animate to (the view is center aligned)
         Rect to = new Rect();
         dragLayer.getViewRectRelativeToSelf(this, to);
@@ -181,13 +181,9 @@ public class ButtonDropTarget extends TextView implements DropTarget, DragContro
         }
 
         final int top = to.top + (getMeasuredHeight() - height) / 2;
-        final int bottom = top +  height;
+        final int bottom = top + height;
         to.set(left, top, right, bottom);
 
-        // Center the destination rect about the trash icon
-        //match_parent下计算显示的不对
-        //final int xOffset = (int) -(viewWidth - width) / 2;
-        //final int yOffset = (int) -(viewHeight - height) / 2;
         final int xOffset = (int) -(viewWidth - width) / 2;
         final int yOffset = (int) -(viewHeight - height) / 2;
         to.offset(xOffset, yOffset);

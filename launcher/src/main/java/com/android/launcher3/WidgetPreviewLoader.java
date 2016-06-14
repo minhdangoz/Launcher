@@ -449,7 +449,7 @@ public class WidgetPreviewLoader {
     private static void removeItemFromDb(final CacheDb cacheDb, final String objectName) {
         new AsyncTask<Void, Void, Void>() {
             public Void doInBackground(Void... args) {
-                // maybe error
+                // maybe error  atabase disk image is malformed(Sqlite code 11)
                 SQLiteDatabase db = cacheDb.getWritableDatabase();
                 try {
                     db.delete(CacheDb.TABLE_NAME,

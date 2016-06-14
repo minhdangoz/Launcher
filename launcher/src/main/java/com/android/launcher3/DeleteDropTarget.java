@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.TransitionDrawable;
@@ -32,9 +33,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.UserManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
@@ -65,8 +68,13 @@ public class DeleteDropTarget extends ButtonDropTarget {
         this(context, attrs, 0);
     }
 
+    int sreenWidth = 0;
+
     public DeleteDropTarget(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        sreenWidth = wm.getDefaultDisplay().getWidth();
+
     }
 
     @Override
@@ -79,12 +87,17 @@ public class DeleteDropTarget extends ButtonDropTarget {
         // Get the hover color
         Resources r = getResources();
         mHoverColor = r.getColor(R.color.delete_target_hover_tint);
-        mUninstallDrawable = (TransitionDrawable) 
+        mUninstallDrawable = (TransitionDrawable)
                 r.getDrawable(R.drawable.uninstall_target_selector);
         mRemoveDrawable = (TransitionDrawable) r.getDrawable(R.drawable.remove_target_selector);
 
         mRemoveDrawable.setCrossFadeEnabled(true);
         mUninstallDrawable.setCrossFadeEnabled(true);
+        Thread.dumpStack();
+//        //padding
+//        int leftPadding = (sreenWidth - mUninstallDrawable.getBounds().width()) / 2;
+//        int rightPadding = sreenWidth - leftPadding - getWidth();
+//        setPadding(leftPadding, getPaddingTop(), getPaddingRight(), getPaddingBottom());
 
         // The current drawable is set to either the remove drawable or the uninstall drawable 
         // and is initially set to the remove drawable, as set in the layout xml.
@@ -93,9 +106,9 @@ public class DeleteDropTarget extends ButtonDropTarget {
         // Remove the text in the Phone UI in landscape
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        	/* Lenovo-SW zhaoxin5 20150403 BLADETL-1717 START */
+            /* Lenovo-SW zhaoxin5 20150403 BLADETL-1717 START */
             //if (!LauncherAppState.getInstance().isScreenLarge()) {
-                setText("");
+            setText("");
             //}
             /* Lenovo-SW zhaoxin5 20150403 BLADETL-1717 END */
         }
@@ -104,6 +117,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
     private boolean isAllAppsApplication(DragSource source, Object info) {
         return source.supportsAppInfoDropTarget() && (info instanceof AppInfo);
     }
+
     private boolean isAllAppsWidget(DragSource source, Object info) {
         if (source instanceof AppsCustomizePagedView) {
             if (info instanceof PendingAddItemInfo) {
@@ -117,15 +131,19 @@ public class DeleteDropTarget extends ButtonDropTarget {
         }
         return false;
     }
+
     private boolean isDragSourceWorkspaceOrFolder(DragObject d) {
         return (d.dragSource instanceof Workspace) || (d.dragSource instanceof Folder);
     }
+
     private boolean isWorkspaceOrFolderApplication(DragObject d) {
         return isDragSourceWorkspaceOrFolder(d) && (d.dragInfo instanceof ShortcutInfo);
     }
+
     private boolean isWorkspaceOrFolderWidget(DragObject d) {
         return isDragSourceWorkspaceOrFolder(d) && (d.dragInfo instanceof LauncherAppWidgetInfo);
     }
+
     private boolean isWorkspaceFolder(DragObject d) {
         return (d.dragSource instanceof Workspace) && (d.dragInfo instanceof FolderInfo);
     }
@@ -136,6 +154,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
         }
         setTextColor(mHoverColor);
     }
+
     private void resetHoverColor() {
         if (mCurrentDrawable != null) {
             mCurrentDrawable.resetTransition();
@@ -152,7 +171,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
 
         /* Lenovo-SW 20150514 zhaoxin5 add for launher single/double layer support */
         /* Lenovo-SW 20150514 zhaoxin5 add for launher single/double layer support */
-    	
+
         if (info instanceof ItemInfo) {
             ItemInfo item = (ItemInfo) info;
             if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPWIDGET ||
@@ -181,16 +200,16 @@ public class DeleteDropTarget extends ButtonDropTarget {
             }
 
             if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION &&
-                item instanceof ShortcutInfo) {
+                    item instanceof ShortcutInfo) {
                 if (LauncherAppState.isDisableAllApps()) {
                     ShortcutInfo shortcutInfo = (ShortcutInfo) info;
-                    
+
                     /** Lenovo-SW zhaoxin5 20150804 KOLEOSROW-484, KOLEOSROW-380 START */
-                    if(!shortcutInfo.initFlags) {
-                    	shortcutInfo.initFlags("completeDrop.willAcceptDrop");
+                    if (!shortcutInfo.initFlags) {
+                        shortcutInfo.initFlags("completeDrop.willAcceptDrop");
                     }
                     /** Lenovo-SW zhaoxin5 20150804 KOLEOSROW-484, KOLEOSROW-380 END */
-                    
+
                     return (shortcutInfo.flags & AppInfo.DOWNLOADED_FLAG) != 0;
                 } else {
                     return true;
@@ -202,20 +221,20 @@ public class DeleteDropTarget extends ButtonDropTarget {
 
     @Override
     public void onDragStart(DragSource source, Object info, int dragAction) {
-    	/** Lenovo-SW zhaoxin5 20150702 LANCHROW-187 START */
-    	super.onDragStart(source, info, dragAction);
-    	/** Lenovo-SW zhaoxin5 20150702 LANCHROW-187 END */
+        /** Lenovo-SW zhaoxin5 20150702 LANCHROW-187 START */
+        super.onDragStart(source, info, dragAction);
+        /** Lenovo-SW zhaoxin5 20150702 LANCHROW-187 END */
         boolean isVisible = true;
         boolean useUninstallLabel = !LauncherAppState.isDisableAllApps() &&
                 isAllAppsApplication(source, info);
-        
+
         /** Lenovo-SW zhaoxin5 20150701 LANCHROW-184 START */
-        if(isWorkspaceApplication(info)) {
-        	// judge if this is an ShortcutInfo that can be uninstall 
-        	useUninstallLabel = true;
+        if (isWorkspaceApplication(info)) {
+            // judge if this is an ShortcutInfo that can be uninstall
+            useUninstallLabel = true;
         }
         /** Lenovo-SW zhaoxin5 20150701 LANCHROW-184 END */
-        
+
         boolean useDeleteLabel = !useUninstallLabel && source.supportsDeleteDropTarget();
 
         // If we are dragging an application from AppsCustomize, only show the control if we can
@@ -250,7 +269,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
         ((ViewGroup) getParent()).setVisibility(isVisible ? View.VISIBLE : View.GONE);
         if (isVisible && getText().length() > 0) {
             setText(useUninstallLabel ? R.string.delete_target_uninstall_label
-                : R.string.delete_target_label);
+                    : R.string.delete_target_label);
         }
     }
 
@@ -318,30 +337,30 @@ public class DeleteDropTarget extends ButtonDropTarget {
     }
 
     private boolean isWorkspaceApplication(Object o) {
-    	// this means it is a ShortcutInfo but with a "LauncherSettings.Favorites.ITEM_TYPE_APPLICATION" itemType
-    	// in VIBEUI mode
-    	// see code in LauncherModel.java loadWorkspace func:
-    	// 
-    	// } else if (itemType ==
+        // this means it is a ShortcutInfo but with a "LauncherSettings.Favorites.ITEM_TYPE_APPLICATION" itemType
+        // in VIBEUI mode
+        // see code in LauncherModel.java loadWorkspace func:
+        //
+        // } else if (itemType ==
         //   LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
-    	//   info = getShortcutInfo(manager, intent, user, context, c,
+        //   info = getShortcutInfo(manager, intent, user, context, c,
         //   iconIndex, titleIndex, mLabelCache, allowMissingTarget);
-    	//
-    	// so this can be uninstall
+        //
+        // so this can be uninstall
 
-    	Object object = (o instanceof DragObject) ? ((DragObject)o).dragInfo : o;
-    	if(object instanceof ShortcutInfo &&
-        		((ItemInfo)object).itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION &&
-        		LauncherAppState.getInstance().getCurrentLayoutMode() == Mode.VIBEUI) {
-        	return true;
+        Object object = (o instanceof DragObject) ? ((DragObject) o).dragInfo : o;
+        if (object instanceof ShortcutInfo &&
+                ((ItemInfo) object).itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION &&
+                LauncherAppState.getInstance().getCurrentLayoutMode() == Mode.VIBEUI) {
+            return true;
         }
-    	return false;
+        return false;
     }
+
     private boolean isUninstallFromWorkspace(DragObject d) {
-    	if(isWorkspaceApplication(d)) {
-        	return true;
-        } 
-    	else if (LauncherAppState.isDisableAllApps() && isWorkspaceOrFolderApplication(d)) {
+        if (isWorkspaceApplication(d)) {
+            return true;
+        } else if (LauncherAppState.isDisableAllApps() && isWorkspaceOrFolderApplication(d)) {
             ShortcutInfo shortcut = (ShortcutInfo) d.dragInfo;
             // Only allow manifest shortcuts to initiate an un-install.
             return !InstallShortcutReceiver.isValidShortcutLaunchIntent(shortcut.intent);
@@ -368,11 +387,11 @@ public class DeleteDropTarget extends ButtonDropTarget {
                 final UserHandleCompat user = shortcut.user;
 
                 /** Lenovo-SW zhaoxin5 20150804 KOLEOSROW-484, KOLEOSROW-380 START */
-                if(!shortcut.initFlags) {
-                	shortcut.initFlags("DeleteDropTarget.completeDrop");
+                if (!shortcut.initFlags) {
+                    shortcut.initFlags("DeleteDropTarget.completeDrop");
                 }
                 /** Lenovo-SW zhaoxin5 20150804 KOLEOSROW-484, KOLEOSROW-380 END */
-                
+
                 mWaitingForUninstall = mLauncher.startApplicationUninstallActivity(
                         componentName, shortcut.flags, user);
                 PingManager.getInstance().reportUserAction4App(
@@ -387,10 +406,10 @@ public class DeleteDropTarget extends ButtonDropTarget {
                                     getContext(), packageName, user);
                             if (dragSource instanceof Folder) {
                                 ((Folder) dragSource).
-                                    onUninstallActivityReturned(uninstallSuccessful);
+                                        onUninstallActivityReturned(uninstallSuccessful);
                             } else if (dragSource instanceof Workspace) {
                                 ((Workspace) dragSource).
-                                    onUninstallActivityReturned(uninstallSuccessful);
+                                        onUninstallActivityReturned(uninstallSuccessful);
                             }
                         }
                     };
@@ -415,7 +434,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
                 // Deleting an app widget ID is a void call but writes to disk before returning
                 // to the caller...
                 new AsyncTask<Void, Void, Void>() {
-                    public Void doInBackground(Void ... args) {
+                    public Void doInBackground(Void... args) {
                         appWidgetHost.deleteAppWidgetId(launcherAppWidgetInfo.appWidgetId);
                         return null;
                     }
@@ -439,7 +458,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
      * Creates an animation from the current drag view to the delete trash icon.
      */
     private AnimatorUpdateListener createFlingToTrashAnimatorListener(final DragLayer dragLayer,
-            DragObject d, PointF vel, ViewConfiguration config) {
+                                                                      DragObject d, PointF vel, ViewConfiguration config) {
 
         int width = mCurrentDrawable == null ? 0 : mCurrentDrawable.getIntrinsicWidth();
         int height = mCurrentDrawable == null ? 0 : mCurrentDrawable.getIntrinsicHeight();
@@ -508,7 +527,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
         private final TimeInterpolator mAlphaInterpolator = new DecelerateInterpolator(0.75f);
 
         public FlingAlongVectorAnimatorUpdateListener(DragLayer dragLayer, PointF vel, Rect from,
-                long startTime, float friction) {
+                                                      long startTime, float friction) {
             mDragLayer = dragLayer;
             mVelocity = vel;
             mFrom = from;
@@ -543,10 +562,13 @@ public class DeleteDropTarget extends ButtonDropTarget {
             mVelocity.y *= mFriction;
             mPrevTime = curTime;
         }
-    };
+    }
+
+    ;
+
     private AnimatorUpdateListener createFlingAlongVectorAnimatorListener(final DragLayer dragLayer,
-            DragObject d, PointF vel, final long startTime, final int duration,
-            ViewConfiguration config) {
+                                                                          DragObject d, PointF vel, final long startTime, final int duration,
+                                                                          ViewConfiguration config) {
         final Rect from = new Rect();
         dragLayer.getViewRectRelativeToSelf(d.dragView, from);
 
