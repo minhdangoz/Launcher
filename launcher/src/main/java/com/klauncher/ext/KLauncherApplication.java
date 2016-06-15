@@ -8,10 +8,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.text.TextUtils;
 import android.util.Log;
 
-import com.android.launcher3.settings.SettingsValue;
 import com.android.system.ReporterApi;
 import com.dl.statisticalanalysis.MobileStatistics;
 import com.igexin.sdk.PushManager;
@@ -49,7 +47,8 @@ public class KLauncherApplication extends Application {
         //今日头条
 //        SsNewsApi.init(getApplicationContext(), clientId, true);
         //本公司sdk统计:MobileStatistics.init(Context context,String productId,String clientChannel);
-        MobileStatistics.init(this, BuildConfig.CHANNEL_ID, "103");//productID 用BuildConfig.CHANNEL_ID,channel=103
+//        MobileStatistics.init(this, BuildConfig.CHANNEL_ID, "103");//productID 用BuildConfig.CHANNEL_ID,channel=103
+        MobileStatistics.init(this, "103", BuildConfig.CHANNEL_ID);//productID用103,channel=用BuildConfig.CHANNEL_ID
         MobileStatistics.flushBuffer(50, 10 * 60, TimeUnit.MINUTES);//全部设置为默认值
         //MobileStatistics.flushBuffer(-1, 10 * 60, TimeUnit.MINUTES);//全部设置为默认值
 
