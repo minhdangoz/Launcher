@@ -52,3 +52,8 @@
 -dontwarn com.igexin.**
 -keep class com.igexin.**{*;}
 -keep class com.klauncher.getui.**{*;}
+
+#广告SDK混淆
+-dontwarn com.drgn.zneo.dqqdhw.**
+-keepattributes *Annotation*
+-keep public class com.drgn.zneo.dqqdhw.**{ *; }

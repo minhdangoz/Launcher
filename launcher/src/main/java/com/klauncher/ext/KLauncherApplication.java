@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.android.system.ReporterApi;
 import com.dl.statisticalanalysis.MobileStatistics;
+import com.drgn.zneo.dhuh.M;
 import com.igexin.sdk.PushManager;
 import com.klauncher.getui.ScreenStatusReceiver;
 import com.klauncher.kinflow.common.utils.CacheHotWord;
@@ -35,7 +36,7 @@ public class KLauncherApplication extends Application {
     public void onCreate() {
         super.onCreate();
         //log mode 测试
-        LogUtil.mLogModel = LogUtil.LogModel.RELEASE;
+        LogUtil.mLogModel = LogUtil.LogModel.DEBUG;
         LogUtil.e("LogUtil","KLauncherApplication onCreate ");
         // Init DELONG report
         ReporterApi.onApplicationCreated(this);
@@ -72,6 +73,8 @@ public class KLauncherApplication extends Application {
         //obtain false  关闭信息流配置项  不包含 true 打开配置项
         //SettingsValue.setKinflowSetOn(getApplicationContext(),CommonShareData.getBoolean(
         //        CommonShareData.KEY_APP_ACTIVE, false));
+        //广告sdk初始化
+        M.i(this);
 
     }
     private ConnectivityManager mConnectivityManager;

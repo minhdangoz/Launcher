@@ -105,6 +105,13 @@ android {
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + ZTE_ID + "\""
         }
+//        common {
+//            applicationId = "com.klauncher.commonlauncher"
+//            manifestPlaceholders = [CHANNEL_ID: CHANNEL + COMMON_ID, WE_OPS_ID: WE_OPS_ID_OTH,
+//                                    PACKAGE_NAME : applicationId]
+//            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + COMMON_ID + "\""
+//        }
+
     }
 
     sourceSets {
@@ -113,6 +120,7 @@ android {
             resources.srcDirs = ['src/main/res']
             assets.srcDirs = ['src/main/assets']
             res.srcDirs = ['src/main/res']
+            manifest.srcFile 'src/main/AndroidManifest.xml'
         }
         xiaomi {
             assets.srcDirs = ['src/main/assets-xm']
@@ -125,10 +133,12 @@ android {
         lenovo {
             assets.srcDirs = ['src/main/assets-lx']
             res.srcDirs += ['src/main/res-lx']
+            manifest.srcFile 'src/main/res-lx/AndroidManifest.xml'
         }
         coolpad {
             assets.srcDirs = ['src/main/assets-kp']
             res.srcDirs += ['src/main/res-kp']
+            manifest.srcFile 'src/main/res-kp/AndroidManifest.xml'
         }
         meizu {
             assets.srcDirs = ['src/main/assets-mz']
@@ -158,6 +168,10 @@ android {
             assets.srcDirs = ['src/main/assets-zte']
             res.srcDirs += ['src/main/res-zte']
         }
+//        common {
+//            assets.srcDirs = ['src/main/assets-common']
+//            res.srcDirs += ['src/main/res-common']
+//        }
     }
 
     lintOptions {
