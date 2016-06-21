@@ -20,10 +20,12 @@ import android.os.Handler;
 
 public class Alarm implements Runnable{
     // if we reach this time and the alarm hasn't been cancelled, call the listener
+    //如果到了预订的时间，并且这个alarm也没有取消，就执行
     private long mAlarmTriggerTime;
 
     // if we've scheduled a call to run() (ie called mHandler.postDelayed), this variable is true.
     // We use this to avoid having multiple pending callbacks
+    // 如果有定时任务，那么就是true，防止重复的调用
     private boolean mWaitingForCallback;
 
     private Handler mHandler;
@@ -40,6 +42,8 @@ public class Alarm implements Runnable{
 
     // Sets the alarm to go off in a certain number of milliseconds. If the alarm is already set,
     // it's overwritten and only the new alarm setting is used
+    // 设定一段时间到执行alarm。如果已经设定了，那么覆盖并使用新的alarm。
+    // 重新设定mAlarmTriggerTime就是覆盖了
     public void setAlarm(long millisecondsInFuture) {
         long currentTime = System.currentTimeMillis();
         mAlarmPending = true;

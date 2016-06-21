@@ -229,6 +229,7 @@ public class LbkLoader implements LauncherProvider.WorkspaceLoader {
 	}
 	
 	private void dispatchStartParser(XmlPullParser parser, ArrayList<Long> screenIds) {
+		//Thread.dumpStack();
 		String name = parser.getName();
 		
 		mValues.clear();
@@ -371,7 +372,7 @@ public class LbkLoader implements LauncherProvider.WorkspaceLoader {
 	}
 	
 	private long parseConfig(XmlPullParser parser) {
-		// 这是解析文件夹
+		// 这是解析文件夹属性
 		String cellX = parser.getAttributeValue(null, LbkUtil.Config.ATTR_CELL_X);
 		String cellY = parser.getAttributeValue(null, LbkUtil.Config.ATTR_CELL_Y);
 		String title = parser.getAttributeValue(null, LbkUtil.Config.ATTR_TITLE);

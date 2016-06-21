@@ -31,6 +31,10 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.klauncher.launcher.R;
 
+/**
+ * dragview只是一个拖动时显示的对象，并不是真正拖动的对象
+ */
+
 public class DragView extends View {
     private static float sDragAlpha = 1f;
 
@@ -59,6 +63,8 @@ public class DragView extends View {
      * <p>
      * The registration point is the point inside our view that the touch events should
      * be centered upon.
+     * 注册点，当对着程序图标长按下之后，dragview出来的时候，触摸到的点就是注册点。
+     * 如果DragView和原始view一样大则注册点为0。
      *
      * @param launcher The Launcher instance
      * @param bitmap The view that we're dragging around.  We scale it up when we draw it.

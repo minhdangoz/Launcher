@@ -78,6 +78,7 @@ public class DragController {
 
     /** the area at the edge of the screen that makes the workspace go left
      *   or right while you're dragging.
+     *   滑动到桌面左右边上的某区域时桌面就会滚动
      */
     private int mScrollZone;
 
@@ -106,7 +107,7 @@ public class DragController {
 
     private int mLastTouch[] = new int[2];
     private long mLastTouchUpTime = -1;
-    private int mDistanceSinceScroll = 0;
+    private int mDistanceSinceScroll = 0;// 上次滚动停止后，手指移动的距离
 
     private int mTmpPoint[] = new int[2];
     private Rect mDragLayerRect = new Rect();
@@ -158,14 +159,15 @@ public class DragController {
     /**
      * Starts a drag.
      *
-     * @param v The view that is being dragged
-     * @param bmp The bitmap that represents the view being dragged
-     * @param source An object representing where the drag originated
-     * @param dragInfo The data associated with the object that is being dragged
+     * @param v The view that is being dragged  被拖动的view
+     * @param bmp The bitmap that represents the view being dragged 表示被拖动view和bitmap
+     * @param source An object representing where the drag originated 发起拖动的对象
+     * @param dragInfo The data associated with the object that is being dragged 与被拖动对象关联的数据
      * @param dragAction The drag action: either {@link #DRAG_ACTION_MOVE} or
-     *        {@link #DRAG_ACTION_COPY}
+     *        {@link #DRAG_ACTION_COPY} 拖动的动作：移动或者复制
      * @param dragRegion Coordinates within the bitmap b for the position of item being dragged.
      *          Makes dragging feel more precise, e.g. you can clip out a transparent border
+     *          拖动对象bitmap的区域
      */
     public void startDrag(View v, Bitmap bmp, DragSource source, Object dragInfo, int dragAction,
             Point extraPadding, float initialDragViewScale) {
@@ -448,6 +450,8 @@ public class DragController {
 
     /**
      * This only gets called as a result of drag view cleanup being deferred in endDrag();
+     * 只有在drag view被清除的动作在endDrag()方法中被推迟的时候才执行。 换句话说，拖动执行完毕，而动画没有执行完毕，这个时候drag
+     * view不会被清除，listener不会执行onDragEnd，而是等到动画执行完毕
      */
     void onDeferredEndDrag(DragView dragView) {
         dragView.remove();
@@ -557,7 +561,7 @@ public class DragController {
             mLauncher.getDragLayer().onExitScrollArea();
         }
     }
-
+    //处理滑动事件 之后每次ACTION_MOVE都会怎这里
     private void handleMoveEvent(final int x, final int y) {
         // Lenovo-sw:yuanyl2, Add edit mode function.
         //mDragObject.dragView.move(x, y);

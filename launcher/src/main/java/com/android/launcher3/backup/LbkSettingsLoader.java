@@ -154,36 +154,41 @@ public class LbkSettingsLoader {
 	
 	private void dispatchStartParser(XmlPullParser parser) {
 		String name = parser.getName();
-		
 		if(name.equalsIgnoreCase(LbkUtil.Settings.TAG)) {
 			if(LOGD) {
 				LauncherLog.i(TAG, LbkUtil.Settings.TAG);
 			}
+			//<Setting  不处理
 			parseSettings(parser);
 		} else if(name.equalsIgnoreCase(LbkUtil.Setting.TAG)) {
 			if(LOGD) {
 				LauncherLog.i(TAG, LbkUtil.Setting.TAG);
 			}
+			//<Setting 没有该元素
 			parseSetting(parser);
 		} else if(name.equalsIgnoreCase(LbkUtil.LabelList.TAG)) {
 			if(LOGD) {
 				LauncherLog.i(TAG, LbkUtil.LabelList.TAG);
 			}
+			//<labellist 没有该元素  不处理
 			parseLabelList(parser);
 		} else if(name.equalsIgnoreCase(LbkUtil.LabelTag.TAG)) {
 			if(LOGD) {
 				LauncherLog.i(TAG, LbkUtil.LabelTag.TAG);
 			}
+			//<label  没有该元素
 			parseLabel(parser);
 		} else if(name.equalsIgnoreCase(LbkUtil.Folder.TAG)) {
 			if(LOGD) {
 				LauncherLog.i(TAG, LbkUtil.Folder.TAG);
 			}
+			//<folder 文件夹
 			parseFolder(parser, true);
 		} else if(name.equalsIgnoreCase(LbkUtil.Config.TAG)) {
 			if(LOGD) {
 				LauncherLog.i(TAG, LbkUtil.Config.TAG);
 			}
+			//文件夹 config解析
 			parseConfig(parser);
 		}
 	}
@@ -289,9 +294,9 @@ public class LbkSettingsLoader {
 			sb.append(" }");
 			LauncherLog.i(TAG, sb.toString());
 		}
-		if(isStart) {
+		if(isStart) {//开始解析
 			mPendingFolderTitleInfo.clear();
-		} else {
+		} else {//解析结束
 			if(mPendingFolderTitleInfo.isDataRight() && mLauncherProvider != null) {
 				// 需要将当前文件夹名字的数据插入到数据库中
 				String[] titles = mPendingFolderTitleInfo.getTitles();
@@ -304,7 +309,7 @@ public class LbkSettingsLoader {
 	}
 	
 	private void parseConfig(XmlPullParser parser) {
-		// 这是解析文件夹
+		// 解析文件夹 config
 		String cellX = parser.getAttributeValue(null, LbkUtil.Config.ATTR_CELL_X);
 		String cellY = parser.getAttributeValue(null, LbkUtil.Config.ATTR_CELL_Y);
 		String title = parser.getAttributeValue(null, LbkUtil.Config.ATTR_TITLE);

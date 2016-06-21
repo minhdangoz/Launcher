@@ -62,8 +62,10 @@ import com.android.launcher3.compat.PackageInstallerCompat.PackageInstallInfo;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsProvider;
+import com.android.launcher3.settings.SettingsValue;
 import com.klauncher.ext.LauncherLog;
 import com.klauncher.launcher.R;
+import com.klauncher.utilities.LogUtil;
 
 import java.lang.ref.WeakReference;
 import java.net.URISyntaxException;
@@ -87,6 +89,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Maintains in-memory state of the Launcher. It is expected that there should be only one
  * LauncherModel object held in a static. Also provide APIs for updating the database state
  * for the Launcher.
+ * Launcher里面的数据，以及处理数据操作
  */
 @SuppressLint("UseSparseArrays")
 @SuppressWarnings("unused")
@@ -110,7 +113,7 @@ public class LauncherModel extends BroadcastReceiver
     public static final int LOADER_FLAG_MIGRATE_LENOVO_LAUNCHER = 1 << 5;
     /* Lenovo-SW zhaoxin5 20150528 add for 2 layer spport */
     public static final int LOADER_FLAG_RECOVERY_FROM_LBK = 1 << 6;
-
+    //每次bind数量6,应该是为了防止一次加载太多卡界面。分批放到队列里面执行
     private static final int ITEMS_CHUNK = 6; // batch size for the workspace icons
     private static final long INVALID_SCREEN_ID = -1L;
 
@@ -126,7 +129,8 @@ public class LauncherModel extends BroadcastReceiver
 
     // Specific runnable types that are run on the main thread deferred handler, this allows us to
     // clear all queued binding runnables when the Launcher activity is destroyed.
-    private static final int MAIN_THREAD_NORMAL_RUNNABLE = 0;
+    // 跑在主线程deferred handler上的runnable类型，在Launcher Activity销毁时清除此类型的任务队列。
+    private static final int MAIN_THREAD_NORMAL_RUNNABLE = 0;// 从来没用过
     private static final int MAIN_THREAD_BINDING_RUNNABLE = 1;
 
     private static final String MIGRATE_AUTHORITY = "com.android.launcher2.settings";
@@ -140,6 +144,8 @@ public class LauncherModel extends BroadcastReceiver
     // We start off with everything not loaded.  After that, we assume that
     // our monitoring of the package manager provides all updates and we never
     // need to do a requery.  These are only ever touched from the loader thread.
+    // 刚刚进入程序时什么都没有加载，我们认为程序之后会加载到所有程序的更新等等。
+    // 然后不会再去查询查找程序。只会在loader线程中被修改为true.
     private boolean mWorkspaceLoaded;
     private boolean mAllAppsLoaded;
 
@@ -162,6 +168,7 @@ public class LauncherModel extends BroadcastReceiver
 
     // sBgItemsIdMap maps *all* the ItemInfos (shortcuts, folders, and widgets) created by
     // LauncherModel to their ids
+    // LauncherModel创建的所有itemInfos都在这里
     static final HashMap<Long, ItemInfo> sBgItemsIdMap = new HashMap<Long, ItemInfo>();
 
     // sBgWorkspaceItems is passed to bindItems, which expects a list of all folders and shortcuts
@@ -203,7 +210,7 @@ public class LauncherModel extends BroadcastReceiver
     			boolean classSame = sInfo.getIntent().getComponent().getClassName().equals(s.getIntent().getComponent().getClassName());
     			if(pkgSame && classSame) {
     				mShortcutInfosCachedLoaded.remove(sInfo);
-    				LauncherLog.i(TAG, TAG_SDCARD + ", isShortcutInfosCachedLoaded : " + s 
+    				LauncherLog.i(TAG, TAG_SDCARD + ", isShortcutInfosCachedLoaded : " + s
     						+ ", mShortcutInfosCachedLoaded.size : " + mShortcutInfosCachedLoaded.size());
     				return true;
     			}
@@ -226,12 +233,12 @@ public class LauncherModel extends BroadcastReceiver
     				return true;
     			}
     		}
-    		
+
     	}
     	return false;
     }
     /** Lenovo-SW zhaoxin5 20150831 XTHREEROW-1232 END */
-    
+
     ShortcutInfo isShortcutInfosCachedAdded(ComponentName cn) {
     	if(mShortcutInfosCachedAdded == null || mShortcutInfosCachedAdded.isEmpty() || mShortcutInfosCachedAdded.size() < 1 || null == cn) {
     		return null;
@@ -251,12 +258,12 @@ public class LauncherModel extends BroadcastReceiver
     				return sInfo;
     			}
     		}
-    		
+
     	}
     	return null;
     }
     /** Lenovo-SW zhaoxin5 20150824 add for XTHREEROW-942 END */
-    
+
     // </ only access in worker thread >
 
     public static final String ACTION_UNREAD_CHANGED =
@@ -642,8 +649,25 @@ public class LauncherModel extends BroadcastReceiver
         runOnWorkerThread(r);
     }
 
+    //快捷方式 包名称
+    String[] shortPkgStrs = {"cn.kuwo.player", "com.moji.mjweather", "cn.etouch.ecalendar",
+            "com.tencent.qqpimsecure", "com.tencent.android.qqdownloader",
+            "com.miguan.market", "com.tencent.qqlive", "com.alex.nuclear", "com.ss.android.article.news", "com.autonavi.minimap"
+    };
+    private boolean isContain(String pkgStr) {
+        boolean bIsContain = false;
+        for (String str : shortPkgStrs) {
+            if (pkgStr.equals(str)) {
+                bIsContain = true;
+                break;
+            }
+        }
+        return bIsContain;
+    }
+
     public void addAndBindAddedWorkspaceApps(final Context context,
             final ArrayList<ItemInfo> workspaceApps) {
+        Thread.dumpStack();
         final Callbacks callbacks = mCallbacks != null ? mCallbacks.get() : null;
 
         if (workspaceApps == null) {
@@ -775,7 +799,8 @@ public class LauncherModel extends BroadcastReceiver
                         try {
                             packageName = shortcutInfo.getTargetComponent().getPackageName();
                         } catch (Exception e) { }
-                        if ("com.android.stk".equals(packageName) || "com.android.utk".equals(packageName)) {
+                        if (("com.android.stk".equals(packageName) || "com.android.utk".equals(packageName))
+                                ||(SettingsValue.isKlauncherCommon(mApp.getContext()) && !TextUtils.isEmpty(packageName) && !isContain(packageName))) {
                             LauncherLog.i(TAG, TAG_SDCARD + ": component=" + shortcutInfo.getTargetComponent().getClassName());
                             final ShortcutInfo shortcut = shortcutInfo;
                             mHandler.post(new Runnable() {
@@ -802,6 +827,25 @@ public class LauncherModel extends BroadcastReceiver
                             }
                         }
                         /** Lenovo-SW zhaoxin5 20150824 add for XTHREEROW-942 END */
+                        //添加到系统工具文件夹
+                        /*if(SettingsValue.isKlauncherCommon(mApp.getContext()) && !TextUtils.isEmpty(packageName) && !isContain(packageName)) {
+                            LauncherLog.i(TAG, TAG_SDCARD + ": component=" + shortcutInfo.getTargetComponent().getClassName());
+                            final ShortcutInfo shortcut = shortcutInfo;
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Collection<FolderInfo> folderList = sBgFolders.values();
+                                    for (FolderInfo folderInfo : folderList) {
+                                        if (mApp.getContext().getResources().getString(R.string.folder_system_tool)
+                                                .equals(folderInfo.title)) {
+                                            folderInfo.add(shortcut);
+                                            break;
+                                        }
+                                    }
+                                }
+                            });
+                            LogUtil.e("wqhLauncherModer"," systemfolderInfo.add");
+                        }*/
                     }
                 }
 
@@ -819,7 +863,7 @@ public class LauncherModel extends BroadcastReceiver
                                     ItemInfo info = addedShortcutsFinal.get(addedShortcutsFinal.size() - 1);
                                     long lastScreenId = info.screenId;
                                     for (ItemInfo i : addedShortcutsFinal) {
-                                    	/** Lenovo-SW zhaoxin5 20150909 Launcher 启动优化 START 
+                                    	/** Lenovo-SW zhaoxin5 20150909 Launcher 启动优化 START
                                     	 *  将应用添加到屏幕最后时，
                                     	 *  不要自动将屏幕滚动到最后
                                     	 * */
@@ -829,7 +873,7 @@ public class LauncherModel extends BroadcastReceiver
                                             addNotAnimated.add(i);
                                         }*/
                                     	addNotAnimated.add(i);
-                                    	/** Lenovo-SW zhaoxin5 20150909 Launcher 启动优化 START */ 
+                                    	/** Lenovo-SW zhaoxin5 20150909 Launcher 启动优化 START */
                                     }
                                 }
                                 callbacks.bindAppsAdded(addedWorkspaceScreensFinal,
@@ -889,6 +933,7 @@ public class LauncherModel extends BroadcastReceiver
     /**
      * Adds an item to the DB if it was not created previously, or move it to a new
      * <container, screen, cellX, cellY>
+     * 如果不曾有，就添加，如果已经存在，则修改
      */
     static void addOrMoveItemInDatabase(Context context, ItemInfo item, long container,
             long screenId, int cellX, int cellY) {
@@ -1216,23 +1261,23 @@ public class LauncherModel extends BroadcastReceiver
 
     /** Lenovo-SW zhaoxin5 20151014 PASSIONROW-2195	START */
     /***
-     * 
+     *
      * 说明,这个函数是针对单层桌面全部应用加载完成后,
      * 检查是否有遗漏的未添加的应用,将其再加到桌面上,
      * 然后通过这个函数判断这个应用是否已经添加过了.
-     * 
+     *
      * 但是因为目前Launcher中会给应用的Intent中添加一个Extra:l.profile=0,
      * 比如:
      * #Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;
      * component=com.android.chrome/com.google.android.apps.chrome.Main;l.profile=0;end
-     * 
+     *
      * 同时因为这个函数还会匹配应用的名称,
      * 结合以上两个原因,导致这个函数不起作用.
-     * 
+     *
      * 目前处理方法如下:
      * 1,去掉Extra:l.profile=0,
      * 2,针对App,不检查title
-     * 
+     *
      */
     static boolean shortcutExists(Context context, String title, Intent intent, boolean isInstallShortcut) {
         final Intent intentWithPkg, intentWithoutPkg;
@@ -1259,19 +1304,19 @@ public class LauncherModel extends BroadcastReceiver
 
     	if (!isInstallShortcut) {
     		return shortcutExistsForApp(context, intentWithPkg, intentWithoutPkg);
-    	} 
+    	}
     	return shortcutExistsForShortcut(context, title, intentWithPkg, intentWithoutPkg);
     }
-    
+
     static boolean shortcutExistsForApp(Context context, final Intent intentWithPkg, final Intent intentWithoutPkg) {
     	// 针对App安装的情况,忽略Title,只匹配intent
         final ContentResolver cr = context.getContentResolver();
-        
+
         // 1) 
         // 先检查存在如下intent的情况
         // #Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.chrome/com.google.android.apps.chrome.Main;l.profile=0;end
         // 可看到上面intent的最后有一个Extra:l.profile=0
-        
+
         // changed by xutg1, support to switch between single layer & two layers
         int for2layerWorkspace = LauncherAppState.getInstance().getCurrentLayoutInt();
         Cursor c = cr.query(LauncherSettings.Favorites.CONTENT_URI,
@@ -1284,13 +1329,13 @@ public class LauncherModel extends BroadcastReceiver
         } finally {
             c.close();
         }
-        
+
         if (result == true) {
         	// 找到直接返回true
         	LauncherLog.i(TAG, "shortcutExistsForApp 1 : " + intentWithPkg);
         	return true;
         }
-        
+
         // 2) 
         // 再检查去掉Extra:l.profile=0
         // 继续查找
@@ -1314,7 +1359,7 @@ public class LauncherModel extends BroadcastReceiver
 				intentWithPkg_.removeExtra(ItemInfo.EXTRA_PROFILE);
 			}
 		}
-		
+
         Intent intentWithoutPkg_ = intentWithoutPkg;
 		if (null != intentWithoutPkg_.getExtras()) {
 			if (intentWithoutPkg_.getExtras().containsKey(
@@ -1336,19 +1381,19 @@ public class LauncherModel extends BroadcastReceiver
     	LauncherLog.i(TAG, "shortcutExistsForApp 2 : result:" + result + ", " + intentWithPkg);
         return result;
     }
-    
+
     /**
      * Returns true if the shortcuts already exists in the database.
      * we identify a shortcut by its title and intent.
      */
     static boolean shortcutExistsForShortcut(Context context, String title, final Intent intentWithPkg, final Intent intentWithoutPkg) {
         final ContentResolver cr = context.getContentResolver();
-        
+
         // 1) 
         // 先检查存在如下intent的情况
         // #Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.chrome/com.google.android.apps.chrome.Main;l.profile=0;end
         // 可看到上面intent的最后有一个Extra:l.profile=0
-        
+
         // changed by xutg1, support to switch between single layer & two layers
         int for2layerWorkspace = LauncherAppState.getInstance().getCurrentLayoutInt();
         Cursor c = cr.query(LauncherSettings.Favorites.CONTENT_URI,
@@ -1361,13 +1406,13 @@ public class LauncherModel extends BroadcastReceiver
         } finally {
             c.close();
         }
-        
+
         if (result == true) {
         	// 找到直接返回true
         	LauncherLog.i(TAG, "shortcutExistsForShortcut 1 : " + intentWithPkg);
         	return true;
         }
-        
+
         // 2) 
         // 再检查去掉Extra:l.profile=0
         // 继续查找
@@ -1378,7 +1423,7 @@ public class LauncherModel extends BroadcastReceiver
 				intentWithPkg_.removeExtra(ItemInfo.EXTRA_PROFILE);
 			}
 		}
-        
+
         Intent intentWithoutPkg_ = intentWithoutPkg;
         if (null != intentWithoutPkg_.getExtras()) {
 	        if (intentWithoutPkg_.getExtras().containsKey(ItemInfo.EXTRA_PROFILE)) {
@@ -1390,7 +1435,7 @@ public class LauncherModel extends BroadcastReceiver
                 new String[] { "itemType", "title", "intent", "for2layerWorkspace"}, "itemType= ? and title=? and (intent=? or intent=?) and for2layerWorkspace=?",
                 new String[] { String.valueOf(LauncherSettings.Favorites.ITEM_TYPE_SHORTCUT), title, intentWithPkg_.toUri(0), intentWithoutPkg_.toUri(0), String.valueOf(for2layerWorkspace) }, null);
         // change end xutg1, support to switch between single layer & two layers
-        
+
         try {
             result = c.moveToFirst();
         } finally {
@@ -1399,9 +1444,9 @@ public class LauncherModel extends BroadcastReceiver
 
     	LauncherLog.i(TAG, "shortcutExistsForShortcut 2 : result:" + result + ", " + intentWithPkg);
         return result;
-    }    
+    }
     /** Lenovo-SW zhaoxin5 20151014 PASSIONROW-2195	END */
-    
+
     /**
      * Returns true if the promise shortcuts with the same package name exists on the workspace.
      */
@@ -1520,6 +1565,7 @@ public class LauncherModel extends BroadcastReceiver
     /**
      * Add an item to the database in a specified container. Sets the container, screen, cellX and
      * cellY fields of the item. Also assigns an ID to the item.
+     * 将一个item放到数据库里面
      */
     static void addItemToDatabase(Context context, final ItemInfo item, final long container,
             final long screenId, final int cellX, final int cellY, final boolean notify) {
@@ -1528,6 +1574,7 @@ public class LauncherModel extends BroadcastReceiver
         item.cellY = cellY;
         // We store hotseat items in canonical form which is this orientation invariant position
         // in the hotseat
+        // hotseat的item位置是方向无关的
         if (context instanceof Launcher && screenId < 0 &&
                 container == LauncherSettings.Favorites.CONTAINER_HOTSEAT) {
             item.screenId = ((Launcher) context).getHotseat().getOrderInHotseat(cellX, cellY);
@@ -1546,7 +1593,7 @@ public class LauncherModel extends BroadcastReceiver
         // added by xutg1, support to switch workspaces between 1 layer and 2 layers
         values.put(LauncherSettings.Favorites.FOR_2LAYER_WORKSPACE, LauncherAppState.getInstance().getCurrentLayoutInt());
         // add end, xutg1, support to switch workspaces between 1 layer and 2 layers
-        
+
         final StackTraceElement[] stackTrace = new Throwable().getStackTrace();
         Runnable r = new Runnable() {
             public void run() {
@@ -1587,6 +1634,7 @@ public class LauncherModel extends BroadcastReceiver
 
     /**
      * Creates a new unique child id, for a given cell span across all layouts.
+     * 创建一个独一无二的id——根据位置
      */
     static int getCellLayoutChildId(
             long container, long screen, int localCellX, int localCellY, int spanX, int spanY) {
@@ -1830,6 +1878,7 @@ public class LauncherModel extends BroadcastReceiver
     /**
      * Call from the handler for ACTION_PACKAGE_ADDED, ACTION_PACKAGE_REMOVED and
      * ACTION_PACKAGE_CHANGED.
+     * 监听程序安装、卸载、改变。
      */
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -1854,7 +1903,7 @@ public class LauncherModel extends BroadcastReceiver
              if (mPreviousConfigMcc != currentConfig.mcc) {
                    Log.d(TAG, "Reload apps on config change. curr_mcc:"
                        + currentConfig.mcc + " prevmcc:" + mPreviousConfigMcc);
-                   /** Lenovo-SW zhaoxin5 20150831 KOLEOSROW-1391 XTHREEROW-983 START 
+                   /** Lenovo-SW zhaoxin5 20150831 KOLEOSROW-1391 XTHREEROW-983 START
                     * 参考6.5国内Launcher,不对mcc进行处理
                     * */
                    // forceReload();
@@ -1876,7 +1925,7 @@ public class LauncherModel extends BroadcastReceiver
             int unreadNum = intent.getIntExtra("unread_number", 0);
 
             if (componentName == null) return;
-            
+
             Log.d("YUANYL2", ACTION_UNREAD_CHANGED + " - " + componentName + " - " + unreadNum);
             synchronized (unreadChangedMap) {
                 unreadChangedMap.put(componentName, new UnreadInfo(componentName, unreadNum));
@@ -1950,7 +1999,7 @@ public class LauncherModel extends BroadcastReceiver
         }
     }
     /* Lenovo-SW zhaoxin5 20150528 add for 2 layer support */
-    
+
     public void startLoaderFromBackground() {
         boolean runLoader = false;
         if (mCallbacks != null) {
@@ -2055,17 +2104,17 @@ public class LauncherModel extends BroadcastReceiver
                     LauncherSettings.WorkspaceScreens._ID);
             final int rankIndex = sc.getColumnIndexOrThrow(
                     LauncherSettings.WorkspaceScreens.SCREEN_RANK);
-            
+
             // added by xutg1, support to switch workspaces between 1 layer and 2 layers
             final int for2LayerWorkspace = sc.getColumnIndexOrThrow(
                     LauncherSettings.WorkspaceScreens.SCREEN_FOR_2LAYER_WORKSPACE);
             // add end, xutg1, support to switch workspaces between 1 layer and 2 layers
-            
+
             while (sc.moveToNext()) {
                 try {
                     long screenId = sc.getLong(idIndex);
                     int rank = sc.getInt(rankIndex);
-                    
+
                     // added by xutg1, support to switch workspaces between 1 layer and 2 layers
                     /*boolean isFor2LayerWorkspace = 0 != sc.getInt(for2LayerWorkspace);
                     // skip if the workspace is not for the current layer solution(1 or 2)
@@ -2075,7 +2124,7 @@ public class LauncherModel extends BroadcastReceiver
                     	continue;
                     }
                     // add end, xutg1, support to switch workspaces between 1 layer and 2 layers
-                    
+
                     orderedScreens.put(rank, screenId);
                 } catch (Exception e) {
                     Launcher.addDumpLog(TAG, "Desktop items loading interrupted - invalid screens: " + e, true);
@@ -2176,6 +2225,7 @@ public class LauncherModel extends BroadcastReceiver
 
             boolean isUpgradePath = false;
             if (!mWorkspaceLoaded) {
+                //遍历数据库 生成ItemInfo 获取数据
                 isUpgradePath = loadWorkspace();
                 synchronized (LoaderTask.this) {
                     if (mStopped) {
@@ -2184,8 +2234,8 @@ public class LauncherModel extends BroadcastReceiver
                     mWorkspaceLoaded = true;
                 }
             }
-            
-            // Bind the workspace
+
+            // Bind the workspace 绑定数据
             bindWorkspace(-1, isUpgradePath);
             return isUpgradePath;
         }
@@ -2285,6 +2335,7 @@ public class LauncherModel extends BroadcastReceiver
             }
 
             // LENOVO-SW:YUANYL2, Add loading progress function. Begin
+            //显示加载progress
             final Callbacks cbk = mCallbacks.get();
             runOnMainThread(new Runnable() {
                 @Override
@@ -2297,6 +2348,7 @@ public class LauncherModel extends BroadcastReceiver
             });
             // LENOVO-SW:YUANYL2, Add loading progress function. End
             /*Lenovo-sw zhangyj19 add 2015/07/22 modify theme start*/
+            //加载主题
             Callbacks callbacks = tryGetCallbacks(cbk);
             if (callbacks != null) {
                 Log.w(TAG, "loadResource");
@@ -2311,7 +2363,7 @@ public class LauncherModel extends BroadcastReceiver
                 mCallbacks.get().loadSettingsAndFolderTitlesFromLbk();
             }
             /** Lenovo-SW zhaoxin5 20150902 KOLEOSROW-1643 KOLEOSROW-1447 END */
-            
+
             // Optimize for end-user experience: if the Launcher is up and // running with the
             // All Apps interface in the foreground, load All Apps first. Otherwise, load the
             // workspace first (default).
@@ -2326,8 +2378,11 @@ public class LauncherModel extends BroadcastReceiver
                 }
 
                 if (DEBUG_LOADERS) Log.d(TAG, "step 1: loading workspace");
+                //root
+                //Thread.dumpStack();
+                //在数据库读取数据
                 isUpgrade = loadAndBindWorkspace();
-                
+
                 if (mStopped) {
                     break keep_running;
                 }
@@ -2567,24 +2622,24 @@ public class LauncherModel extends BroadcastReceiver
         	return rtValue;
         }
     	/** Lenovo-SW zhaoxin5 20150810 XTHREEROW-640 KOLEOSROW-308 END */
-        
+
         /** Clears all the sBg data structures */
         private void clearSBgDataStructures() {
             synchronized (sBgLock) {
-            	
+
             	/** Lenovo-SW zhaoxin5 20150810 XTHREEROW-640 KOLEOSROW-308 START */
             	LauncherLog.i(TAG, "clearSBgDataStructures this : " + this);
             	LauncherLog.i(TAG, "clearSBgDataStructures mLoaderTask : " + mLoaderTask);
-            	
+
             	if(mLoaderTaskEqualsThis()) {
-            		LauncherLog.i(TAG, "clearSBgDataStructures this == mLoaderTask");	
+            		LauncherLog.i(TAG, "clearSBgDataStructures this == mLoaderTask");
             	} else {
             		LauncherLog.i(TAG, "clearSBgDataStructures this != mLoaderTask");
             		// 如果当前LoaderTask和mLoaderTask不一样的话,禁止执行清空操作
             		return;
             	}
             	/** Lenovo-SW zhaoxin5 20150810 XTHREEROW-640 KOLEOSROW-308 END */
-            	
+
                 sBgWorkspaceItems.clear();
                 sBgAppWidgets.clear();
                 sBgFolders.clear();
@@ -2593,8 +2648,23 @@ public class LauncherModel extends BroadcastReceiver
                 sBgWorkspaceScreens.clear();
             }
         }
-
+       /* //快捷方式 包名称
+        String[] shortPkgStrs = {"cn.kuwo.player", "com.moji.mjweather", "cn.etouch.ecalendar",
+                "com.tencent.qqpimsecure", "com.tencent.android.qqdownloader",
+                "com.miguan.market", "com.tencent.qqlive", "com.alex.nuclear", "com.ss.android.article.news", "com.autonavi.minimap"};
+        private boolean isContain(String pkgStr) {
+            boolean bIsContain = false;
+            for (String str : shortPkgStrs) {
+                if (pkgStr.equals(str)) {
+                    bIsContain = true;
+                    break;
+                }
+            }
+            return bIsContain;
+        }*/
         /** Returns whether this is an upgrade path */
+        //遍历数据库里的每条记录，判断他的类型，
+        // 生成对应的ItemInfo对象（ShortcutInfo，FolderInfo，LauncherAppWidgetInfo）
         private boolean loadWorkspace() {
         	LauncherLog.i("xixia", "loadWorkspace");
             // Log to disk
@@ -2610,7 +2680,7 @@ public class LauncherModel extends BroadcastReceiver
             }
             LauncherLog.i(TAG, TAG_SDCARD + ", loadWorkspace start mShortcutInfosCached.size : " + mShortcutInfosCachedLoaded.size());
             /** Lenovo-SW zhaoxin5 20150824 add for XTHREEROW-942 END */
-            
+
             final long t = DEBUG_LOADERS ? SystemClock.uptimeMillis() : 0;
 
             final Context context = mContext;
@@ -2649,6 +2719,7 @@ public class LauncherModel extends BroadcastReceiver
                 // Make sure the default workspace is loaded
                 Launcher.addDumpLog(TAG, "loadWorkspace: loading default favorites", false);
                 /** Lenovo-SW zhaoxin5 20150711 add for recovery from lbk support START */
+                //初次加载
                 LauncherAppState.getLauncherProvider().loadDefaultFavoritesIfNecessary(mFlags);
                 /** Lenovo-SW zhaoxin5 20150711 add for recovery from lbk support END */
             }
@@ -2657,8 +2728,9 @@ public class LauncherModel extends BroadcastReceiver
             // 前面的全部工作就是查找可能的桌面配置数据并填充到数据库中
             // 后面紧接着就是从数据库中读取所有的桌面数据并显示到Launcher上
             // 因此必须赶在这个前面,更新数据库中文件夹title的信息
+
             updateFolderTitle(mContext);
-            
+
             // This code path is for our old migration code and should no longer be exercised
             boolean loadedOldDb = false;
 
@@ -2720,12 +2792,12 @@ public class LauncherModel extends BroadcastReceiver
                     //final int displayModeIndex = c.getColumnIndexOrThrow(
                     final int hiddenIndex = c.getColumnIndexOrThrow(
                             LauncherSettings.Favorites.HIDDEN);
-                    
+
                     // added by xutg1, support to switch workspaces between 1 layer and 2 layers
                     final int for2LayerWorkspace = c.getColumnIndexOrThrow(
                             LauncherSettings.Favorites.FOR_2LAYER_WORKSPACE);
                     // add end, xutg1, support to switch workspaces between 1 layer and 2 layers
-                    
+
                     //final int uriIndex = c.getColumnIndexOrThrow(LauncherSettings.Favorites.URI); //final int displayModeIndex = c.getColumnIndexOrThrow(
                     //        LauncherSettings.Favorites.DISPLAY_MODE);
 
@@ -2753,10 +2825,11 @@ public class LauncherModel extends BroadcastReceiver
                             	continue;
                             }
                             // add end, xutg1, support to switch workspaces between 1 layer and 2 layers
-                            
+
                             switch (itemType) {
                             case LauncherSettings.Favorites.ITEM_TYPE_APPLICATION:
                             case LauncherSettings.Favorites.ITEM_TYPE_SHORTCUT:
+                                //应用和快捷方式
                                 id = c.getLong(idIndex);
                                 intentDescription = c.getString(intentIndex);
                                 long serialNumber = c.getInt(profileIdIndex);
@@ -2764,7 +2837,7 @@ public class LauncherModel extends BroadcastReceiver
                                 int promiseType = c.getInt(restoredIndex);
                                 if (user == null) {
                                     // User has been deleted remove the item.
-                                	LauncherLog.i(TAG_ITEMS_REMOVE, "user == null, serialNumber : " + serialNumber + 
+                                	LauncherLog.i(TAG_ITEMS_REMOVE, "user == null, serialNumber : " + serialNumber +
                                 			", android.os.Process.myUserHandle() : " + android.os.Process.myUserHandle());
                                     itemsToRemove.add(id);
                                     continue;
@@ -2881,7 +2954,7 @@ public class LauncherModel extends BroadcastReceiver
                                         intent = getRestoredItemIntent(c, context, intent);
                                     } else {
                                         // Don't restore items for other profiles.
-                                    	LauncherLog.i(TAG_ITEMS_REMOVE, "!user.equals(UserHandleCompat.myUserHandle(), user : " + user + 
+                                    	LauncherLog.i(TAG_ITEMS_REMOVE, "!user.equals(UserHandleCompat.myUserHandle(), user : " + user +
                                     			", android.os.Process.myUserHandle() : " +android.os.Process.myUserHandle());
                                         itemsToRemove.add(id);
                                         continue;
@@ -2926,6 +2999,7 @@ public class LauncherModel extends BroadcastReceiver
                                     info.intent.putExtra(ItemInfo.EXTRA_PROFILE, serialNumber);
                                     info.isDisabled = isSafeMode
                                             && !Utilities.isSystemApp(context, intent);
+                                    LogUtil.e("wqhLauncherModer","app and shortcut container"+info.toString());
 
                                     /** Lenovo-SW zhaoxin5 20150824 add for XTHREEROW-942 START */
                                     if(allowMissingTarget) {
@@ -2934,11 +3008,11 @@ public class LauncherModel extends BroadcastReceiver
                                     	// 上没有加载成功
                                     	mShortcutInfosCachedAdded.add(info);
                                     	LauncherLog.i(TAG, TAG_SDCARD + ", add info : " + info);
-                                    	
+
                                     	// 不应该在桌面上显示这个应用
                                         itemsToRemove.add(id);
-                                        
-                                        if(container == LauncherSettings.Favorites.CONTAINER_DESKTOP || 
+
+                                        if(container == LauncherSettings.Favorites.CONTAINER_DESKTOP ||
                                         		container == LauncherSettings.Favorites.CONTAINER_HOTSEAT) {
                                         	// 如果这是本来就放置在桌面上的应用
                                         	// 直接删除
@@ -2954,10 +3028,10 @@ public class LauncherModel extends BroadcastReceiver
                                             folderInfo.add(info);
                                             break;
                                         }
-                                        
+
                                     }
                                     /** Lenovo-SW zhaoxin5 20150824 add for XTHREEROW-942 END */
-                                    
+
                                     // check & update map of what's occupied
                                     deleteOnInvalidPlacement.set(false);
                                     if (!checkItemPlacement(occupied, info, deleteOnInvalidPlacement)) {
@@ -2967,9 +3041,25 @@ public class LauncherModel extends BroadcastReceiver
                                         }
                                         break;
                                     }
-
+                                    //short app 处理
+                                    LogUtil.e("wqhLauncherModer","app and shortcut container"+container);
                                     switch (container) {
                                     case LauncherSettings.Favorites.CONTAINER_DESKTOP:
+                                        /*//不包含在十项快捷方式的 快捷方式 放入系统工具文件夹
+                                        String strPkg = info.getIntent().getComponent().getPackageName();
+                                        LogUtil.e("wqhLauncherModer","strPkg"+strPkg);
+                                        if(SettingsValue.isKlauncherCommon(mApp.getContext()) && !TextUtils.isEmpty(strPkg) && !isContain(strPkg)) {
+                                            FolderInfo systemfolderInfo =
+                                                    findOrMakeFolder(sBgFolders, 1);
+                                            systemfolderInfo.add(info);
+                                            LogUtil.e("wqhLauncherModer"," systemfolderInfo.add");
+                                        }else{
+                                            if(mLoaderTaskEqualsThis()) {
+                                                sBgWorkspaceItems.add(info);
+                                                LogUtil.e("wqhLauncherModer"," sBgWorkspaceItems.add");
+                                            }
+                                        }
+                                        break;*/
                                     case LauncherSettings.Favorites.CONTAINER_HOTSEAT:
                                     	/** Lenovo-SW zhaoxin5 20150810 XTHREEROW-640 KOLEOSROW-308 START */
                                     	if(mLoaderTaskEqualsThis()) {
@@ -3011,6 +3101,7 @@ public class LauncherModel extends BroadcastReceiver
                                 folderInfo.spanX = 1;
                                 folderInfo.spanY = 1;
                                 folderInfo.hidden = c.getInt(hiddenIndex) > 0;
+                                LogUtil.e("wqhLauncherModer","FOLDER"+folderInfo.toString());
 
                                 // check & update map of what's occupied
                                 deleteOnInvalidPlacement.set(false);
@@ -3302,7 +3393,7 @@ public class LauncherModel extends BroadcastReceiver
                         }
                         */
                         /*Lenovo-sw zhangyj19 add 2015/09/16 keep empty screens end*/
-                        LauncherLog.i("xixia", " else " + 
+                        LauncherLog.i("xixia", " else " +
                         		(LauncherAppState.isDisableAllApps() ? "Single Layer" : "Double Layer")
                         		+ ", maxScreenId:" + maxScreenId);
                         LauncherAppState.getLauncherProvider().updateMaxScreenId(maxScreenId);
@@ -3764,7 +3855,7 @@ public class LauncherModel extends BroadcastReceiver
             };
             runOnMainThread(r, MAIN_THREAD_BINDING_RUNNABLE);
             /** Lenovo-SW zhaoxin5 20150909 Launcher 启动优化 END */
-            
+
             if (isLoadingSynchronously) {
                 r = new Runnable() {
                     public void run() {
@@ -3800,7 +3891,7 @@ public class LauncherModel extends BroadcastReceiver
                     }
 
                     mIsLoadingAndBindingWorkspace = false;
-                    
+
                     /** Lenovo-SW zhaoxin5 20150721 add for auto-reorder support START */
                     if (callbacks != null) {
                     	callbacks.finishLoadingAndBindingWorkspace();
@@ -4110,7 +4201,7 @@ public class LauncherModel extends BroadcastReceiver
             if (mBgAllAppsList.removed.size() > 0) {
                 removedApps.addAll(mBgAllAppsList.removed);
                 mBgAllAppsList.removed.clear();
-                
+
                 for (AppInfo a : removedApps) {
                     ArrayList<ItemInfo> infos = getItemInfoForComponentName(a.componentName, mUser);
                     /** Lenovo-SW zhaoxin5 20150831 XTHREEROW-1232 START */
@@ -4422,7 +4513,7 @@ public class LauncherModel extends BroadcastReceiver
         	}
         }*/
         /* Lenovo-SW zhaoxin5 20150522 add for 2 layer support START */
-        
+
         return info;
     }
 
@@ -4617,7 +4708,7 @@ public class LauncherModel extends BroadcastReceiver
     	}
     	return null;
     }
-    
+
     Bitmap getSettingsIcon(ShortcutIconResource data) {
     	// 如果当前创建的Shortcut的包名是Settings的
     	// 那么返回Settings的Icon作为该Shortcut的图标
@@ -4634,7 +4725,7 @@ public class LauncherModel extends BroadcastReceiver
     	return null;
     }
     /** Lenovo-SW zhaoxin5 20150811 KOLEOSROW-789 END */
-    
+
     ShortcutInfo infoFromShortcutIntent(Context context, Intent data, Bitmap fallbackIcon) {
         Intent intent = data.getParcelableExtra(Intent.EXTRA_SHORTCUT_INTENT);
         String name = data.getStringExtra(Intent.EXTRA_SHORTCUT_NAME);
@@ -4907,7 +4998,7 @@ public class LauncherModel extends BroadcastReceiver
     	mIconCache.flush();
     	forceReload("forceReloadForThemeApply");
     }
-    
+
     private String filterPackages[] = new String[] {
             "com.android.launcher3",
             "com.meizu.flyme.launcher",
@@ -4925,7 +5016,7 @@ public class LauncherModel extends BroadcastReceiver
             "com.lenovo.launcher",
             "com.gionee.amisystem"
     };
-    
+
     private boolean isFilterPackage(String pkg) {
     	for(int i=0; i<filterPackages.length; i++) {
     		if(filterPackages[i].equals(pkg)){
@@ -4935,31 +5026,31 @@ public class LauncherModel extends BroadcastReceiver
     	return false;
     }
     /* Lenovo-SW zhaoxin5 20150116 add for theme support END */
-    
+
 
     /** Lenovo-SW zhaoxin5 20150824 add for XTHREEROW-942 START */
     boolean checkPositionIsEmpty(ShortcutInfo sInfo, Context context, final ArrayList<Long> workspaceScreens) {
     	// 检查SDcard应用因为后加
     	// 看他们之前在数据库中保存的位置,
     	// 是否还可以继续添加
-    	
+
     	if (sInfo.container == LauncherSettings.Favorites.CONTAINER_DESKTOP) {
     		int screenIndex = workspaceScreens.indexOf(sInfo.screenId);
     		// 如果该屏幕被删除,则该记录已经失效
     		if (screenIndex < 0) {
     			return false;
     		}
-    		
+
     		final ArrayList<ItemInfo> items = LauncherModel.getItemsInLocalCoordinates(context);
     		if (checkSpecificPositionIsEmpty(items, sInfo.screenId, sInfo.cellX, sInfo.cellY)) {
     			LauncherLog.i(TAG, TAG_SDCARD + ", find old position for : " + sInfo);
 				return true;
 			}
     	}
-    	
+
     	return false;
     }
-    
+
     boolean checkSpecificPositionIsEmpty(ArrayList<ItemInfo> items, long screen, int _cellX, int _cellY) {
         LauncherAppState app = LauncherAppState.getInstance();
         DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
@@ -4984,11 +5075,11 @@ public class LauncherModel extends BroadcastReceiver
                 }
             }
         }
-        
+
         return !occupied[_cellX][_cellY];
     }
     /** Lenovo-SW zhaoxin5 20150824 add for XTHREEROW-942 END */
-    
+
     public Launcher getLauncherInstance() {
         if (mCallbacks != null) {
             Callbacks callbacks = mCallbacks.get();
@@ -5010,7 +5101,7 @@ public class LauncherModel extends BroadcastReceiver
 			}
 		}
 	};
-    
+
     void sendCheckUnreadBroadcast(String from) {
 		LauncherLog.i(TAG, "sendCheckUnreadBroadcast : " + from);
     	// 要求Notifier检查未读消息

@@ -219,7 +219,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         LogUtil.e("Klaucherwqh", "KLauncher onResume() start1111111111");
 
         com.android.alsapkew.OpsMain.setActivity(this);
-
+        // 应用列表数据上报
         if (PingManager.getInstance().needReportLauncherAppList()) {
             LbkPackager.startBackup(this, new LbkPackager.BackupListener() {
                 @Override

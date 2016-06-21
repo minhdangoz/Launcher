@@ -566,14 +566,20 @@ public class Launcher extends Activity
                 R.bool.preferences_interface_homescreen_hide_icon_labels_default);
 
         // the LauncherApplication should call this, but in case of Instrumentation it might not be present yet
+        /*mSharedPrefs: 桌面在第一次启动的时候会有一个指导界面，告诉用户怎么使用，在以后的启动中，就不会再出现了。
+        控制这个逻辑就是通过SharedPreference，他以key-value的形式把信息存储到一个xml文件当中。
+         */
         mSharedPrefs = getSharedPreferences(LauncherAppState.getSharedPreferencesKey(),
                 Context.MODE_PRIVATE);
         mIsSafeModeEnabled = getPackageManager().isSafeMode();
+        //mDragController: 用来控制拖拽对象的东西，与DragLayer结合起使用
         mDragController = new DragController(this);
+        //mInflater: 在图标加载的时候，会一个一个去生成BubbleTextView，
+        //而这些都是通过mInflater.inflate(..)方法从xml生成出来的，使用次数还是挺多的，详情参加Launcher.creatShortcut方法。
         mInflater = getLayoutInflater();
 
         mStats = new Stats(this);
-
+        //mAppWidgetManager用来管理小工具，mAppWidgetHost用来生成小工具的View对象并更新。
         mAppWidgetManager = AppWidgetManagerCompat.getInstance(this);
 
         mAppWidgetHost = new LauncherAppWidgetHost(this, APPWIDGET_HOST_ID);
@@ -606,15 +612,16 @@ public class Launcher extends Activity
             android.os.Debug.stopMethodTracing();
         }
 
-        if (!mRestoring) {
+        if (!mRestoring) {//不需要恢复 第一次加载
             if (DISABLE_SYNCHRONOUS_BINDING_CURRENT_PAGE) {
                 LauncherLog.i("xixia", "onCreate befor loader task 1");
                 // If the user leaves launcher, then we should just load items asynchronously when
                 // they return.
                 /* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+                //Launcher 加载lbk数据入口
                 mModel.startLoader(true, PagedView.INVALID_RESTORE_PAGE, ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(this));
             	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
-            } else {
+            } else {//从 lbk文件恢复
                 LauncherLog.i("xixia", "onCreate befor loader task 2");
                 // We only load the page synchronously if the user rotates (or triggers a
                 // configuration change) while launcher is in the foreground
@@ -693,8 +700,12 @@ public class Launcher extends Activity
                 Math.min(largestSize.x, largestSize.y),
                 realSize.x, realSize.y,
                 dm.widthPixels, dm.heightPixels);
-
+        // TODO  mModel初始化
+        //LauncherModel的对象，他是通过LauncherAppState.setLauncher(..)方法获得的，
+        // 在其中执行了LauncherModel.initialize(..)方法，他给LaucherModel传递了一个CallBacks对象(在Launcher.java中定义)。
+        // 为什么要传这个对象呢，因为LauncherModel主要是负责数据层的东西，界面方面的操作都交给了Launcher来做，那当LauncherModel需要更新界面的时候怎么操作呢，就是通过调用这些个回调函数来完成的。
         mModel = app.setLauncher(this);
+        //桌面图标缓存 提高性能
         mIconCache = app.getIconCache();
         mIconCache.flushInvalidIcons(mGrid);
     }
@@ -5748,7 +5759,7 @@ public class Launcher extends Activity
                             }
                         }
                     }
-
+                    //item 显示在桌面上
                     workspace.addInScreenFromBind(shortcut, item.container, item.screenId, item.cellX,
                             item.cellY, 1, 1);
                     if (animateIcons) {
@@ -8454,6 +8465,7 @@ public class Launcher extends Activity
     @Override
     public void beforeBinding() {
     	LauncherLog.i(TAG, "beforeBinding");
+        //显示加载 dialog
         showBootProgressDialog();
     }
 

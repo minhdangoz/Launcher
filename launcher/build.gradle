@@ -216,7 +216,6 @@ dependencies {
     compile project(':theme')
     compile project(':notifier')
     compile 'com.android.support:recyclerview-v7:23.2.1'
-    compile files('libs/webeye_1.9_39313.jar')
     compile 'com.umeng.analytics:analytics:latest.integration'
     //kinflow
     //compile fileTree(include: ['*.jar'], exclude: 'android-support-v4.jar', dir: 'libs')
@@ -227,5 +226,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile (name:'statisticalanalysis-release',ext:'aar')
     compile (name:'getuiadrecelibrary-release',ext:'aar')
+    //opmain 精简
+    compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
 }
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }

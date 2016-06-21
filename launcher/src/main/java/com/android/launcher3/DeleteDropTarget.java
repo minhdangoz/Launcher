@@ -93,7 +93,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
 
         mRemoveDrawable.setCrossFadeEnabled(true);
         mUninstallDrawable.setCrossFadeEnabled(true);
-        Thread.dumpStack();
+        //Thread.dumpStack();
 //        //padding
 //        int leftPadding = (sreenWidth - mUninstallDrawable.getBounds().width()) / 2;
 //        int rightPadding = sreenWidth - leftPadding - getWidth();
@@ -374,6 +374,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
         mWaitingForUninstall = false;
         if (isAllAppsApplication(d.dragSource, item)) {
             // Uninstall the application if it is being dragged from AppsCustomize
+            // 卸载APP
             AppInfo appInfo = (AppInfo) item;
             mLauncher.startApplicationUninstallActivity(appInfo.componentName, appInfo.flags,
                     appInfo.user);
@@ -420,11 +421,13 @@ public class DeleteDropTarget extends ButtonDropTarget {
             LauncherModel.deleteItemFromDatabase(mLauncher, item);
         } else if (isWorkspaceFolder(d)) {
             // Remove the folder from the workspace and delete the contents from launcher model
+            //删除文件夹图标
             FolderInfo folderInfo = (FolderInfo) item;
             mLauncher.removeFolder(folderInfo);
             LauncherModel.deleteFolderContentsFromDatabase(mLauncher, folderInfo);
         } else if (isWorkspaceOrFolderWidget(d)) {
             // Remove the widget from the workspace
+            // 删除插件
             mLauncher.removeAppWidget((LauncherAppWidgetInfo) item);
             LauncherModel.deleteItemFromDatabase(mLauncher, item);
 

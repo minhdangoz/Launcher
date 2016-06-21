@@ -3213,7 +3213,7 @@ public class Workspace extends SmoothPagedView
         CellLayout layout = (CellLayout) child.getParent().getParent();
         layout.prepareChildForDrag(child);
 
-        beginDragShared(child, this);
+        beginDragShared(child, this);//回执手移动的bmp
     }
 
     public void beginDragShared(View child, DragSource source) {
@@ -3268,7 +3268,7 @@ public class Workspace extends SmoothPagedView
                     + "View: " + child + "  tag: " + child.getTag();
             throw new IllegalStateException(msg);
         }
-
+        //1.生成随手移动的Bitmap 2 生成动圈 3 将view加到draglayer中4 将mDragfing设为true
         DragView dv = mDragController.startDrag(b, dragLayerX, dragLayerY, source, child.getTag(),
                 DragController.DRAG_ACTION_MOVE, dragVisualizeOffset, dragRect, scale);
         dv.setIntrinsicIconScaleFactor(source.getIntrinsicIconScaleFactor());

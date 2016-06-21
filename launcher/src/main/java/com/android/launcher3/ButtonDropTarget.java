@@ -44,6 +44,7 @@ public class ButtonDropTarget extends TextView implements DropTarget, DragContro
     protected SearchDropTargetBar mSearchDropTargetBar;
 
     /** Whether this drop target is active for the current drag */
+    /** 是否对于拖拽来说可用 */
     protected boolean mActive;
 
     /** The paint applied to the drag view on hover */

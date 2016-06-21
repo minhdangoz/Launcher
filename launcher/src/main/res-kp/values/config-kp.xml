@@ -33,4 +33,5 @@
     <string name="config_icon_com.miguan.market">com.yulong.android.gamecenter</string>
 
     <bool name="kinflow_switch_default">true</bool>
+    <bool name="klauncher_common_flag">false</bool>
 </resources>

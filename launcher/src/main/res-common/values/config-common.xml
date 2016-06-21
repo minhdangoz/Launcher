@@ -32,17 +32,17 @@
         <item>com.moji.mjweather</item>
     </array>
 
-    <string name="config_icon_com.miguan.market">com.huawei.gamecenter</string>
-    <string name="config_icon_com.tencent.android.qqdownloader">com.huawei.appmarket</string>
-    <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
-    <string name="config_icon_cn.kuwo.player">com.android.mediacenter</string>
-    <string name="config_icon_com.duomi.android">com.android.mediacenter</string>
-    <string name="config_icon_com.tencent.qqlive">com.huawei.hwvplayer,com.huawei.hwvplayer.youku</string>
-    <string name="config_icon_com.tencent.mtt">com.android.browser</string>
-    <string name="config_icon_com.tencent.qqpimsecure">com.huawei.systemmanager</string>
-    <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
-    <string name="config_icon_com.moji.mjweather">com.huawei.android.totemweather</string>
+    <!--<string name="config_icon_com.miguan.market">zte.com.game</string>-->
+    <!--<string name="config_icon_com.tencent.android.qqdownloader">zte.com.market</string>-->
+    <!--<string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>-->
+    <!--<string name="config_icon_cn.kuwo.player">cn.zte.music,com.imusic.musicplayer,com.android.music</string>-->
+    <!--<string name="config_icon_com.duomi.android">com.android.mediacenter</string>-->
+    <!--<string name="config_icon_com.tencent.qqlive">com.zte.videoplayer</string>-->
+    <!--<string name="config_icon_com.UCMobile">com.ume.browser,com.android.browser</string>-->
+    <!--<string name="config_icon_com.tencent.qqpimsecure">com.zte.heartyservice</string>-->
+    <!--<string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>-->
+    <!--<string name="config_icon_com.moji.mjweather">com.moji.zteweather</string>-->
 
     <bool name="kinflow_switch_default">true</bool>
-    <bool name="klauncher_common_flag">false</bool>
+    <bool name="klauncher_common_flag">true</bool>
 </resources>

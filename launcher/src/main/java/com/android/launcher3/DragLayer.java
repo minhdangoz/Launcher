@@ -981,7 +981,7 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
     }
 
     public void setBackgroundAlpha(float alpha) {
-        Thread.dumpStack();
+        //Thread.dumpStack();
         if (alpha != mBackgroundAlpha) {
             mBackgroundAlpha = alpha;
             LogUtil.e("updateStateForCustomContent","DragLayer setBackgroundAlpha"+ mBackgroundAlpha);

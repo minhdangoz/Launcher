@@ -172,24 +172,33 @@ public class LbkUtil {
 		
 		return data;
 	}
-	
+
+	/**
+	 * 加载 Assets 中lbk文件
+	 * @return
+     */
 	public static File getLbkFileFromPreloadDirectory() {
 		LauncherLog.i(TAG, "getLbkFileFromPreloadDirectory start!!!");
 		Context context = LauncherAppState.getInstance().getContext();
 		//String model = Build.MODEL.replace(" ", "-");
 		//LauncherLog.i("wcrow", "model = " + model);
 		String name;
+		//行数
 		float rows = LauncherAppState.getInstance().getDynamicGrid().getNumRows();
+		//列数
 		float columns = LauncherAppState.getInstance().getDynamicGrid().getNumColumns();
 		if (rows < 5) {
+			// 4x4
 			name = "default4.lbk";
 		} else if (rows > 5) {
 			if (columns == 5) {
 				name = "default6x5.lbk";
 			} else {
+				//6x4
 				name = "default2.lbk";
 			}
 		} else {
+			//5x4
 			name = "default.lbk";
 		}
 		File cacheFile = new File(context.getCacheDir(), name);

@@ -445,9 +445,10 @@ public class LauncherProvider extends ContentProvider {
         if (sp.getBoolean(EMPTY_DATABASE_CREATED, false)) {
         	
             LauncherLog.i("xixia", "loadDefaultFavoritesIfNecessary 0");
+            //从xml中解析 创建数据库
             WorkspaceLoader loader = AutoInstallsLayout.get(getContext(),
                     mOpenHelper.mAppWidgetHost, mOpenHelper);
-
+            //从备份回复
             /** Lenovo-SW zhaoxin5 20150711 add for recovery from lbk support START */
             if (loader == null && ((flags & LauncherModel.LOADER_FLAG_RECOVERY_FROM_LBK) != 0)) {
             	// 新的加载流程,从LBK中恢复桌面数据
@@ -457,7 +458,7 @@ public class LauncherProvider extends ContentProvider {
             }
             /** Lenovo-SW zhaoxin5 20150711 add for recovery from lbk support END */
             
-            /** Lenovo-SW zhaoxin5 20150728 add for first load from preload LBK sopport START */
+            /** Lenovo-SW zhaoxin5 20150728 add for first load from preload LBK sopport START *///first enter
             if (loader == null && LbkUtil.isPreloadLbkFileExist() 
             		&& LauncherAppState.getInstance().getCurrentLayoutMode() == Mode.VIBEUI) {
             	// VIBEUI模式下才加载LBK文件
@@ -491,6 +492,7 @@ public class LauncherProvider extends ContentProvider {
 
             // Populate favorites table with initial favorites
             SharedPreferences.Editor editor = sp.edit().remove(EMPTY_DATABASE_CREATED);
+            //解析 将xml配置项 加载到数据库中
             mOpenHelper.loadFavorites(mOpenHelper.getWritableDatabase(), loader);
             editor.commit();
         }
@@ -1698,6 +1700,7 @@ public class LauncherProvider extends ContentProvider {
         private int loadFavorites(SQLiteDatabase db, WorkspaceLoader loader) {
             ArrayList<Long> screenIds = new ArrayList<Long>();
             // TODO: Use multiple loaders with fall-back and transaction.
+            //LbkLoader loadLayout  解析xml
             int count = loader.loadLayout(db, screenIds);
 
             // Add the screens specified by the items above
