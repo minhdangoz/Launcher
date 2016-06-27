@@ -5,7 +5,7 @@
     <item name="config_folder_iconsize_ratio" format="float" type="dimen">0</item>
     <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0</item>
     <array name="config_theme_load_keywords">
-        <item>HUAWEI RIO-AL00,yongheng</item>
+        <!--<item>HUAWEI RIO-AL00,yongheng</item>
         <item>HUAWEI RIO-UL00,yongheng</item>
         <item>HUAWEI RIO-TL00,yongheng</item>
         <item>HUAWEI NXT-AL10,yongheng</item>
@@ -15,7 +15,7 @@
         <item>SCL-AL00,duocai</item>
         <item>SCL-CL00,duocai</item>
         <item>SCL-TL00,duocai</item>
-        <item>PLK-TL00,bazzar</item>
+        <item>PLK-TL00,bazzar</item>-->
     </array>
 
     <array name="app_disguise_list">

@@ -2380,7 +2380,6 @@ public class LauncherModel extends BroadcastReceiver
                 if (DEBUG_LOADERS) Log.d(TAG, "step 1: loading workspace");
                 //root
                 //Thread.dumpStack();
-                //在数据库读取数据
                 isUpgrade = loadAndBindWorkspace();
 
                 if (mStopped) {
@@ -2499,6 +2498,7 @@ public class LauncherModel extends BroadcastReceiver
             synchronized (sBgLock) {
                 for (AppInfo app : mBgAllAppsList.data) {
                 	/** Lenovo-SW zhaoxin5 20150626 not show LenovoLauncher in the workspace START */
+                    //过滤 app
                 	if(isFilterPackage(app.componentName.getPackageName())) {
                 		continue;
                 	}
@@ -3569,6 +3569,7 @@ public class LauncherModel extends BroadcastReceiver
                 public void run() {
                     Callbacks callbacks = tryGetCallbacks(oldCallbacks);
                     if (callbacks != null) {
+                        //bind screen
                         callbacks.bindScreens(orderedScreens);
                     }
                 }
@@ -3695,7 +3696,7 @@ public class LauncherModel extends BroadcastReceiver
                 ArrayList<Runnable> deferredBindRunnables) {
 
             final boolean postOnMainThread = (deferredBindRunnables != null);
-
+            //
             removeHiddenAppsWorkspaceItems(workspaceItems, appWidgets, folders);
 
             // Bind the workspace items
@@ -3837,7 +3838,7 @@ public class LauncherModel extends BroadcastReceiver
                 }
             };
             runOnMainThread(r, MAIN_THREAD_BINDING_RUNNABLE);
-
+            //bind Workspace
             bindWorkspaceScreens(oldCallbacks, orderedScreenIds);
 
             // Load items on the current page

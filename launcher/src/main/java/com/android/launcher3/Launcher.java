@@ -594,10 +594,10 @@ public class Launcher extends Activity
             android.os.Debug.startMethodTracing(
                     Environment.getExternalStorageDirectory() + "/launcher");
         }
-
+        //语言环境判断
         checkForLocaleChange();
         setContentView(R.layout.launcher);
-
+        //初始化控件 正常配置
         setupViews();
         mGrid.layout(this);
 
@@ -5607,6 +5607,7 @@ public class Launcher extends Activity
 
     @Override
     public void bindScreens(ArrayList<Long> orderedScreenIds) {
+        //bind add screen
         bindAddScreens(orderedScreenIds);
 
         // If there are no screens, we need to have an empty screen
