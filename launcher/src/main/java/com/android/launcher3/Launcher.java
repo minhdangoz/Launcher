@@ -527,10 +527,14 @@ public class Launcher extends Activity
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            LogUtil.e("MockAppWidgetReceiver", Launcher.this.getPackageName() + "; " + ClockWidgetProvider.class.getName());
             AppWidgetProviderInfo widgetInfo = LauncherModel.findAppWidgetProviderInfoWithComponent(
                     Launcher.this, new ComponentName(Launcher.this.getPackageName(), ClockWidgetProvider.class.getName()));
-            PendingAddWidgetInfo paddingWidgetInfo = new PendingAddWidgetInfo(widgetInfo, null, null);
-            addWidgetAfterAnimation(paddingWidgetInfo);
+            if (widgetInfo != null) {
+                LogUtil.e("MockAppWidgetReceiver", widgetInfo.toString());
+                PendingAddWidgetInfo paddingWidgetInfo = new PendingAddWidgetInfo(widgetInfo, null, null);
+                addWidgetAfterAnimation(paddingWidgetInfo);
+            }
         }
     }
 
