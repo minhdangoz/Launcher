@@ -44,5 +44,4 @@
     <string name="config_icon_com.moji.mjweather">com.moji.zteweather</string>
 
     <bool name="kinflow_switch_default">true</bool>
-    <bool name="klauncher_common_flag">false</bool>
 </resources>
