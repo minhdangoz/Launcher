@@ -62,11 +62,6 @@ public class SettingsValue {
         return SettingsProvider.getBoolean(c, SettingsProvider.SETTINGS_UI_KINFLOW_SETON,
                 R.bool.kinflow_switch_default);
     }
-    //获取是否通用版开关
-    public static boolean isKlauncherCommon(Context c) {
-        return SettingsProvider.getBoolean(c, SettingsProvider.KLAUNCHER_COMMON_FLAG,
-                R.bool.klauncher_common_flag);
-    }
 
     public static void setKinflowSetOn(Context c, boolean loop) {
         SettingsProvider.putBoolean(c, SettingsProvider.SETTINGS_UI_KINFLOW_SETON, loop);

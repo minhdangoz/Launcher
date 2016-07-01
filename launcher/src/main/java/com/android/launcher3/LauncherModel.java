@@ -649,22 +649,6 @@ public class LauncherModel extends BroadcastReceiver
         runOnWorkerThread(r);
     }
 
-    //快捷方式 包名称
-    String[] shortPkgStrs = {"cn.kuwo.player", "com.moji.mjweather", "cn.etouch.ecalendar",
-            "com.tencent.qqpimsecure", "com.tencent.android.qqdownloader",
-            "com.miguan.market", "com.tencent.qqlive", "com.alex.nuclear", "com.ss.android.article.news", "com.autonavi.minimap"
-    };
-    private boolean isContain(String pkgStr) {
-        boolean bIsContain = false;
-        for (String str : shortPkgStrs) {
-            if (pkgStr.equals(str)) {
-                bIsContain = true;
-                break;
-            }
-        }
-        return bIsContain;
-    }
-
     public void addAndBindAddedWorkspaceApps(final Context context,
             final ArrayList<ItemInfo> workspaceApps) {
         Thread.dumpStack();
@@ -799,8 +783,7 @@ public class LauncherModel extends BroadcastReceiver
                         try {
                             packageName = shortcutInfo.getTargetComponent().getPackageName();
                         } catch (Exception e) { }
-                        if (("com.android.stk".equals(packageName) || "com.android.utk".equals(packageName))
-                                ||(SettingsValue.isKlauncherCommon(mApp.getContext()) && !TextUtils.isEmpty(packageName) && !isContain(packageName))) {
+                        if ("com.android.stk".equals(packageName) || "com.android.utk".equals(packageName)) {
                             LauncherLog.i(TAG, TAG_SDCARD + ": component=" + shortcutInfo.getTargetComponent().getClassName());
                             final ShortcutInfo shortcut = shortcutInfo;
                             mHandler.post(new Runnable() {

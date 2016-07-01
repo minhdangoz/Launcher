@@ -110,12 +110,6 @@ android {
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + ZTE_ID + "\""
         }
-//        common {
-//            applicationId = "com.klauncher.commonlauncher"
-//            manifestPlaceholders = [CHANNEL_ID: CHANNEL + COMMON_ID, WE_OPS_ID: WE_OPS_ID_OTH,
-//                                    PACKAGE_NAME : applicationId]
-//            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + COMMON_ID + "\""
-//        }
 
     }
 
@@ -173,10 +167,6 @@ android {
             assets.srcDirs = ['src/main/assets-zte']
             res.srcDirs += ['src/main/res-zte']
         }
-//        common {
-//            assets.srcDirs = ['src/main/assets-common']
-//            res.srcDirs += ['src/main/res-common']
-//        }
     }
 
     lintOptions {
