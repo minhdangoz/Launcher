@@ -405,6 +405,26 @@
         </receiver>
         <service android:name="com.klauncher.ext.ClockWidgetService"
             android:exported="false" />
+        <!--搜索wiget-->
+        <receiver
+            android:name="com.klauncher.ext.SearchWidgetProvider"
+            android:label="@string/search_widget_name">
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/search_widget_info"/>
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.SCREEN_ON"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.intent.action.DATE_CHANGED"/>
+                <action android:name="android.intent.action.LOCALE_CHANGED"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="com.klauncher.action.ACTION_CLOCK_UPDATE"/>
+            </intent-filter>
+        </receiver>
         
         <!-- The settings provider contains Home's data, like the workspace favorites -->
         <provider
@@ -413,7 +433,7 @@
             android:exported="true"
             android:writePermission="com.klauncher.launcher.permission.WRITE_SETTINGS"
             android:readPermission="com.klauncher.launcher.permission.READ_SETTINGS" />
-
+        <!--设备管理器注册 取消激活锁屏 -->
         <receiver android:name="com.klauncher.ext.KLauncherDeviceAdminReceiver"
             android:label="@string/cm_application_name"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
