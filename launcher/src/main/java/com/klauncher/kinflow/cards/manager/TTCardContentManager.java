@@ -29,7 +29,7 @@ public class TTCardContentManager extends BaseCardContentManager {
 //        @Override
 //        public void handleMessage(Message msg) {
 //            switch (msg.what) {
-//                case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO:
+//                case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO_SDK:
 //                    if (msg.arg1 == AsynchronousGet.SUCCESS) {
 //                        mArticleListArrays = (List<Article>[]) msg.obj;
 //                        mMainControlHandler.sendMessage(msg);
@@ -74,7 +74,7 @@ public class TTCardContentManager extends BaseCardContentManager {
             @Override
             public void onArticleListReceived(boolean b, List<Article> list) {
 
-                Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO);
+                Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO_SDK);
                 if (!b) {
                     TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
                 }else {
@@ -96,7 +96,7 @@ public class TTCardContentManager extends BaseCardContentManager {
         //目前今日头条不支持按channel获取新闻.此处可以忽略,为下一个版本准备
         this.mChannelId = CardIdMap.getTouTiaoChannelId(cardInfo.getCardSecondTypeId());
         this.mMainControlHandler = handler;
-        Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO);
+        Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_TOUTIAO_SDK);
         TTCardContentManager.this.mMainControlHandler.sendMessage(msg);
     }
 

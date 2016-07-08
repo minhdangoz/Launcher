@@ -20,6 +20,7 @@ public class OpenMode {
     public static final int ID_JIN_RI_TOU_TIAO = 2;//对应打开方式:Uri
     public static final int ID_QQ_BROWSER = 23;//对应打开方式:component
     public static final int ID_BAIDU_BROWSER = 9;//对应打开方式:component
+    public static final int ID_UC_BROWSER = 19; // UC浏览器
     public static final int ID_SYSTEM_SETTING = 37; // 系统设置
     public static final int ID_SOUGOU_SOUSUO = 30; // 搜狗搜索
     public static final int ID_MOJI_TIANQI = 4; // 搜狗搜索
@@ -29,6 +30,7 @@ public class OpenMode {
     public static final int ID_BAIDU_SOUSUO = 10; // 百度搜索----手机百度
 
     public static final String COMPONENT_NAME_QQ_BROWSER = "com.tencent.mtt/com.tencent.mtt.SplashActivity";
+    public static final String COMPONENT_NAME_UC_BROWSER = "com.UCMobile/com.UCMobile.main.UCMobile";
     public static final String COMPONENT_NAME_BAIDU_BROWSER_1 = "com.baidu.browser.apps_sj/com.baidu.browser.framework.BdBrowserActivity";
     public static final String COMPONENT_NAME_BAIDU_BROWSER_2 = "com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity";
     public static final String COMPONENT_NAME_JINRI_TOUTIAO = "com.ss.android.article.news/com.ss.android.article.news.activity.SplashActivity";
@@ -58,7 +60,7 @@ public class OpenMode {
     private String currentFirstOpenMode = FIRST_OPEN_MODE_TYPE_DEFAULT;
     private String mOpenUrl;
 
-    public Intent setFirstIntent(int id) {
+    public Intent setFirstIntent(int id) {//ID决定第一打开方式
         firstIntent.setAction(Intent.ACTION_VIEW);
         switch (id) {
             case ID_INTERNAL_BROWSER:
@@ -71,6 +73,10 @@ public class OpenMode {
             case ID_QQ_BROWSER:
                 currentFirstOpenMode = FIRST_OPEN_MODE_TYPE_COMPONENT;//设置当前打开方式
                 setComponent(COMPONENT_NAME_QQ_BROWSER);
+                break;
+            case ID_UC_BROWSER:
+                currentFirstOpenMode = FIRST_OPEN_MODE_TYPE_COMPONENT;//设置第一打开方式为component
+                setComponent(COMPONENT_NAME_UC_BROWSER);
                 break;
             case ID_SOUGOU_SOUSUO:
                 setComponent(COMPONENT_NAME_SOUGOU_SOUSUO);
