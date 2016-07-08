@@ -27,8 +27,11 @@ public class CommonShareData {
     public static void init(Context context){
         sharedPreferences = context.getSharedPreferences(COMMON_SHAREDPREFERENCE,Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED,String.valueOf(0));
-        putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL,String.valueOf(0));
+        putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(0));
+        putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, String.valueOf(0));
+        if (getLong(Const.NAVIGATION_LOCAL_FIRST_INIT, -1) == -1) {
+            putLong(Const.NAVIGATION_LOCAL_FIRST_INIT, System.currentTimeMillis());
+        }
     }
 
     public static boolean containsKey(String key) {
