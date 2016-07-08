@@ -571,15 +571,15 @@
 
         <!--kinflow end-->
         <!--开机启动快捷方式管理 开始-->
-        <receiver android:name="com.klauncher.ext.KlauncherStartupReceiver">
+        <!--<receiver android:name="com.klauncher.ext.KlauncherStartupReceiver">
             <intent-filter>
-                <!--<action android:name="android.intent.action.PACKAGE_ADDED"/> &lt;!&ndash;PACKAGE_REMOVED&ndash;&gt;
+                &lt;!&ndash;<action android:name="android.intent.action.PACKAGE_ADDED"/> &lt;!&ndash;PACKAGE_REMOVED&ndash;&gt;
                 <data android:scheme="package"/>  &lt;!&ndash; 一定要添加此节点 &ndash;&gt;
-                <action android:name="android.intent.action.PACKAGE_ADDED"/>-->
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>&ndash;&gt;
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
 
             </intent-filter>
-        </receiver>
+        </receiver>-->
         <service android:name="com.klauncher.ext.ShortCutManagerService"/>
         <!--开机启动快捷方式管理结束-->
         <!-- 个推SDK配置开始 -->
