@@ -38,8 +38,16 @@ public class CardContentManagerFactory {
             case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
                 cardContentManager = new YDCardContentManager(context);
                 break;
-            case CardIdMap.CARD_TYPE_NEWS_TT_REDIAN://头条
-                cardContentManager = new TTCardContentManager(context);
+            case CardIdMap.CARD_TYPE_NEWS_TT_REDIAN://头条热点
+            case CardIdMap.CARD_TYPE_NEWS_TT_SHEHUI://头条社会
+            case CardIdMap.CARD_TYPE_NEWS_TT_YULE://头条娱乐
+            case CardIdMap.CARD_TYPE_NEWS_TT_CAIJING://头条财经
+            case CardIdMap.CARD_TYPE_NEWS_TT_TIYU://头条体育
+            case CardIdMap.CARD_TYPE_NEWS_TT_KEJI://头条科技
+            case CardIdMap.CARD_TYPE_NEWS_TT_JUNSHI://头条军事
+            case CardIdMap.CARD_TYPE_NEWS_TT_QICHE://头条汽车
+//                cardContentManager = new TTCardContentManager(context);
+                cardContentManager = new JRTTCardContentManager(context);
                 break;
             case CardIdMap.ADVERTISEMENT_YOKMOB:
                 cardContentManager = new YMCardContentManager(context);

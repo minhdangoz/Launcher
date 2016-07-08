@@ -11,7 +11,9 @@ import android.util.AndroidRuntimeException;
 
 import com.klauncher.kinflow.cards.manager.BaseCardContentManager;
 import com.klauncher.kinflow.cards.manager.CardContentManagerFactory;
+import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.common.utils.OpenMode;
+import com.klauncher.launcher.BuildConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -124,7 +126,7 @@ public class CardInfo implements Parcelable {
         Intent firstIntent = openMode.getFirstIntent();
         try {
             Uri uri = null;
-            String openType = openMode.getCurrentFirstOpenMode();
+            String openType = openMode.getCurrentFirstOpenMode();//获取当前第一打开方式
             switch (openType) {
                 case OpenMode.FIRST_OPEN_MODE_TYPE_URI:
                     uri = Uri.parse(openUri);
@@ -137,11 +139,27 @@ public class CardInfo implements Parcelable {
             }
             firstIntent.setData(uri);
             context.startActivity(openMode.getFirstIntent());
-            finalOpenComponent = openMode.getFirstIntent().getComponent().getPackageName();
+
+            if (!openType.equals(OpenMode.FIRST_OPEN_MODE_TYPE_URI)) {//第一打开方式非uri
+                finalOpenComponent = openMode.getFirstIntent().getComponent().getPackageName();
+            } else {//第一打开方式为uri
+                //获取第一打开方式的id
+                int id = Integer.parseInt(this.cardOpenOptionList.get(0));
+                switch (id) {
+                    case OpenMode.ID_JIN_RI_TOU_TIAO:
+                        finalOpenComponent = Const.TOUTIAO_packageName;
+                        break;
+                    default:
+                        finalOpenComponent = BuildConfig.APPLICATION_ID;
+                        break;
+                }
+            }
 
         } catch (Exception e) {
             try {
                 Intent secondIntent = openMode.getSecondIntent();
+//                Log.e("Kinflow", "open: 当前第一打开方式失败,错误原因:"+e.getMessage()+"\n" +
+//                        "尝试使用第二打开方式: " + secondIntent.getComponent().toString());
                 if (null==secondIntent.getComponent())  {
                     throw new AndroidRuntimeException("Unknown action intent...");
                 }
@@ -149,6 +167,8 @@ public class CardInfo implements Parcelable {
                 finalOpenComponent = openMode.getSecondIntent().getComponent().getPackageName();
             } catch (Exception e1) {
                 Intent thirdIntent = openMode.getThirdIntent();
+//                Log.e("Kinflow", "open: 当前第二打开方式失败,错误原因:"+e1.getMessage()+
+//                        "\n尝试使用第三打开方式: "+thirdIntent.getComponent().toString());
                 context.startActivity(thirdIntent);
                 finalOpenComponent = openMode.getThirdIntent().getComponent().getPackageName();
             }

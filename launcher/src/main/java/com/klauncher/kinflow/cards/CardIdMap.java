@@ -21,8 +21,16 @@ public class CardIdMap {
         public static final int ADVERTISEMENT_ADVIEW = 101;//不认识
         public static final int ADVERTISEMENT_BAIDU = 102;//不认识
         //新闻分类----今日头条
-        public static final int CARD_TYPE_NEWS_TT_REDIAN = 301;//不认识
-        public static final int CARD_TYPE_NEWS_TT_SHEHUI = 302;//不认识
+        //频道名称,推荐(__all__),热点 (news_hot),社会 (news_society),娱乐 (news_entertainment),科技 (news_tech),汽车(news_car), 财经(news_finance),军事 (news_military),体育 (news_sports)
+        public static final int CARD_TYPE_NEWS_TT_REDIAN = 301;//热点
+        public static final int CARD_TYPE_NEWS_TT_SHEHUI = 302;//社会
+        public static final int CARD_TYPE_NEWS_TT_YULE = 303;//娱乐
+        public static final int CARD_TYPE_NEWS_TT_CAIJING = 304;//财经
+        public static final int CARD_TYPE_NEWS_TT_TIYU = 305;//体育
+        public static final int CARD_TYPE_NEWS_TT_KEJI = 306;//科技
+        public static final int CARD_TYPE_NEWS_TT_JUNSHI = 307;//军事
+        public static final int CARD_TYPE_NEWS_TT_QICHE = 309;//汽车
+
         //新闻分类----一点资讯
         public static final int CARD_TYPE_NEWS_YD_JINGXUAN = 350;
         public static final int CARD_TYPE_NEWS_YD_REDIAN = 351;
@@ -45,10 +53,25 @@ public class CardIdMap {
         public static final int CARD_TYPE_NEWS_YD_LVYOU = 368;
 
     public static boolean isKnow(int cardSecondTypeId){
-        if (cardSecondTypeId==ADVERTISEMENT_YOKMOB||(cardSecondTypeId>=350&&cardSecondTypeId<=368))
+        if (cardSecondTypeId==ADVERTISEMENT_YOKMOB
+                ||(cardSecondTypeId>=350&&cardSecondTypeId<=368)
+                ||(cardSecondTypeId>=301&&cardSecondTypeId<=307)||cardSecondTypeId==309
+                )
             return true;
         return false;
     }
+
+    /**
+     * 今日头条定义的Channel也就是category
+     */
+    public static final String JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_REDIAN = "news_hot";//热点
+    public static final String JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_SHEHUI = "news_society";//社会
+    public static final String JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_YULE = "news_entertainment";//娱乐
+    public static final String JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_KEJI = "news_tech";//科技
+    public static final String JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_QICHE = "news_car";//汽车
+    public static final String JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_CARJING = "news_finance";//财经
+    public static final String JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_JUNSHI = "news_military";//军事
+    public static final String JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_TIYU = "news_sports";//体育
 
     /**
      * 一点资讯定义的ChannelID.也就是key
@@ -190,6 +213,7 @@ public class CardIdMap {
     }
 
     /**
+     * 此方法用于今日头条SDK
      *此方法用于通过{@link com.klauncher.kinflow.cards.model.CardInfo#cardSecondTypeId}
      *获取头条channel频道的的方法.
      *@version 1.0
@@ -207,4 +231,40 @@ public class CardIdMap {
         return channelId;
     }
 
+    /**
+     *此方法适用于今日头条API版本,对应JRTTCardContentManager
+     * @param cardSecondTypeId
+     * @return
+     */
+    public static String getTouTiaoCategory (int cardSecondTypeId) {
+        String category = JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_REDIAN;
+        switch (cardSecondTypeId) {
+            case CARD_TYPE_NEWS_TT_REDIAN:
+                category = JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_REDIAN;
+                break;
+            case CARD_TYPE_NEWS_TT_SHEHUI:
+                category = JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_SHEHUI;
+                break;
+            case CARD_TYPE_NEWS_TT_YULE:
+                category = JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_YULE;
+                break;
+            case CARD_TYPE_NEWS_TT_CAIJING:
+                category = JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_CARJING;
+                break;
+            case CARD_TYPE_NEWS_TT_TIYU:
+                category = JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_TIYU;
+                break;
+            case CARD_TYPE_NEWS_TT_KEJI:
+                category = JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_KEJI;
+                break;
+            case CARD_TYPE_NEWS_TT_JUNSHI:
+                category = JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_JUNSHI;
+                break;
+            case CARD_TYPE_NEWS_TT_QICHE:
+                category = JINRITOUTIAO_CUSTOM_ARTICLE_CATEGORY_QICHE;
+                break;
+
+        }
+        return category;
+    }
 }

@@ -43,6 +43,20 @@ public class Const {
      */
 //    public static final String URI_TOUTIAO_ARTICLE_DETAIL = "snssdk143://detail?gd_label=delong&groupid=";//第一版
     public static final String URI_TOUTIAO_ARTICLE_DETAIL = "snssdk143://detail?gd_label=click_wap_delong_detail&groupid=";//第二版
+    public static final String TOUTIAO_SECURE_KEY = "cde8fee9e391062045d05c7848859464";//partner与client_id相同，都是delong；secure_key与client_secret相同都是cde8fee9e391062045d05c7848859464
+    public static final String TOUTIAO_PARTNER = "delong";//partner与client_id相同，都是delong；secure_key与client_secret相同都是cde8fee9e391062045d05c7848859464
+    public static final String TOUTIAO_URL_ACCESS_TOKEN = "http://open.snssdk.com/auth/access/web/";
+    public static final String URL_JINRITOUTIAO_GET_CUSTOM_ARTICLE = "http://open.snssdk.com/data/stream/v3/";
+    public static final String TOUTIAO_COMMON_PARTNER = "delong";
+    public static final String TOUTIAO_CUSTOM_ARTICLE_CATEGORY_TUIJIAN = "__all__";
+    public static final String TOUTIAO_CUSTOM_ARTICLE_CATEGORY_REDIAN = "news_hot";
+    public static final String TOUTIAO_CUSTOM_ARTICLE_CATEGORY_SHEHUI = "news_society";
+    public static final String TOUTIAO_CUSTOM_ARTICLE_CATEGORY_YULE = "news_entertainment";
+    public static final String TOUTIAO_CUSTOM_ARTICLE_CATEGORY_KEJI = "news_tech";
+    public static final String TOUTIAO_CUSTOM_ARTICLE_CATEGORY_QICHE = "news_car";
+    public static final String TOUTIAO_CUSTOM_ARTICLE_CATEGORY_CARJING = "news_finance";
+    public static final String TOUTIAO_CUSTOM_ARTICLE_CATEGORY_JUNSHI = "news_military";
+    public static final String TOUTIAO_CUSTOM_ARTICLE_CATEGORY_TIYU = "news_sports";
 
     /*
     *server

@@ -74,6 +74,13 @@ public class DateUtils {
         return calendar;
     }
 
+    public Calendar second2Calendar (long seconds) {
+        Calendar calendar = getDefaultCalendar();
+        calendar.clear();
+        calendar.setTimeInMillis(seconds*1000);
+        return calendar;
+    }
+
 
     /**
      * 如果是今天,则显示时:分.否则显示月-日
@@ -90,6 +97,31 @@ public class DateUtils {
             e.printStackTrace();
         }
         Calendar disPlayCalendar = millis2Calendar(date.getTime());
+        Calendar currentCalendar = Calendar.getInstance();
+
+        boolean isSameDay = isSameYear(disPlayCalendar, currentCalendar) &&
+                isSameMonth(disPlayCalendar, currentCalendar) &&
+                isSameDay(disPlayCalendar, currentCalendar);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        if (isSameDay) {
+            int hour = disPlayCalendar.get(Calendar.HOUR_OF_DAY);
+            stringBuilder = hour < 10 ? stringBuilder.append("0").append(String.valueOf(hour)) : stringBuilder.append(String.valueOf(hour));
+            stringBuilder.append(":");
+            int minute = disPlayCalendar.get(Calendar.MINUTE);
+            stringBuilder = minute < 10 ? stringBuilder.append("0").append(String.valueOf(minute)) : stringBuilder.append(minute);
+        } else {
+            int month = disPlayCalendar.get(Calendar.MONTH) + 1;
+            stringBuilder = month<10?stringBuilder.append("0").append(String.valueOf(month)):stringBuilder.append(month);
+            stringBuilder.append("-");
+            int day = disPlayCalendar.get(Calendar.DAY_OF_MONTH);
+            stringBuilder = day<10?stringBuilder.append("0").append(String.valueOf(day)):stringBuilder.append(String.valueOf(day));
+        }
+        return stringBuilder.toString();
+    }
+
+    public String second2TimeOrDate (long seconds) {
+        Calendar disPlayCalendar = second2Calendar(seconds);
         Calendar currentCalendar = Calendar.getInstance();
 
         boolean isSameDay = isSameYear(disPlayCalendar, currentCalendar) &&

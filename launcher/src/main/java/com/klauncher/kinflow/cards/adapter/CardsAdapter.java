@@ -126,7 +126,18 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
                 case CardIdMap.CARD_TYPE_NEWS_YD_LVYOU:
                     view = LayoutInflater.from(mContext).inflate(R.layout.card_info_news_yidian, parent, false);
                     return new YDCardViewHolder(view,mContext);
+                case CardIdMap.CARD_TYPE_NEWS_TT_REDIAN://头条热点
+                case CardIdMap.CARD_TYPE_NEWS_TT_SHEHUI://头条社会
+                case CardIdMap.CARD_TYPE_NEWS_TT_YULE://头条娱乐
+                case CardIdMap.CARD_TYPE_NEWS_TT_CAIJING://头条财经
+                case CardIdMap.CARD_TYPE_NEWS_TT_TIYU://头条体育
+                case CardIdMap.CARD_TYPE_NEWS_TT_KEJI://头条科技
+                case CardIdMap.CARD_TYPE_NEWS_TT_JUNSHI://头条军事
+                case CardIdMap.CARD_TYPE_NEWS_TT_QICHE://头条汽车
+                    view = LayoutInflater.from(mContext).inflate(R.layout.card_info_news_yidian, parent, false);
+                    return new JRTTCardViewHolder(view,mContext);
                 default:
+                    log("未知的view啊 ,大哥===================");
                     view = LayoutInflater.from(mContext).inflate(R.layout.card_info_unknown, parent, false);
                     break;
             }
@@ -184,6 +195,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardViewHolder> {
                 //初始化cardInfo数据
                 ydCardViewHolder.setmCardInfo(card);
 
+            } else if (holder instanceof JRTTCardViewHolder) {//还缺少事件监听设置
+                JRTTCardViewHolder jrttCardViewHolder = (JRTTCardViewHolder) holder;
+                jrttCardViewHolder.getJrttHeadWith1ImageLayout().setOnClickListener(jrttCardViewHolder);
+                jrttCardViewHolder.getJrttHeadWith3ImageLayout().setOnClickListener(jrttCardViewHolder);
+                jrttCardViewHolder.getTvChangeNews().setOnClickListener(jrttCardViewHolder);
+                jrttCardViewHolder.getTvMoreNews().setOnClickListener(jrttCardViewHolder);
+                jrttCardViewHolder.setJrttCardInfo(card);
             }
 //        else if (holder instanceof TTCardViewHolder) {
 //            TTCardViewHolder ttCardViewHolder = (TTCardViewHolder) holder;
