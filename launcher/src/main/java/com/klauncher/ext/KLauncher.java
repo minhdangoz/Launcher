@@ -51,6 +51,7 @@ import com.klauncher.kinflow.search.model.HotWordItemDecoration;
 import com.klauncher.kinflow.utilities.Dips;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.utilities.NetworkUtils;
+import com.klauncher.kinflow.views.PopupWindowDialog;
 import com.klauncher.kinflow.weather.model.Weather;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
@@ -106,6 +107,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     PullToRefreshScrollView mPullRefreshScrollView;
     ScrollView mScrollView;
     RecyclerView mCardsView;
+    PopupWindowDialog mPopupWindowDialog;
 
     private HotWord hotWord1 = HotWord.getDefaultHotWord1();
     private HotWord hotWord2 = HotWord.getDefaultHotWord2();
@@ -121,11 +123,12 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 if (mNetworkConnected != NetworkUtils.isNetworkAvailable(context)) {
                     mNetworkConnected = NetworkUtils.isNetworkAvailable(context);
                     if (mNetworkConnected) {//断开变为连接:
-                        mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
-                                MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-                                MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-                                MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
-                        );
+//                        mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
+//                                MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
+//                                MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
+//                                MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
+//                        );
+                        requestKinflowData();
                     } else {//
 
                     }
@@ -396,17 +399,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             //异步获取所有
 //        requestLocation();//此版本已没有天气模块,但是保留天气模块相关代码
             mMainControl = new MainControl(KLauncher.this, this);
-            if (NetworkUtils.isNetworkAvailable(KLauncher.this)) {
-                mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
-                        MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-                        MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-                        MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
-//                            MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH,
-//                            MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST
-                );
-            }else {
-                Toast.makeText(KLauncher.this, KLauncher.this.getResources().getString(R.string.kinflow_string_connection_error), Toast.LENGTH_SHORT).show();
-            }
             //注册监听
             CacheNavigation.getInstance().registerOnSharedPreferenceChangeListener(this);
 //        CacheLocation.getInstance().registerOnSharedPreferenceChangeListener(this);//此版本已没有天气模块,但是保留天气模块相关代码
@@ -415,22 +407,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
                 @Override
                 public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                    //当下拉刷新的时候
-                    //                requestLocation();
-                    //loadCardList
-                    if (NetworkUtils.isNetworkAvailable(KLauncher.this)) {
-                        mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
-                                MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-                                MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-                                MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
-//                            MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH,
-//                            MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST
-                        );
-                    }else {
-                        Toast.makeText(KLauncher.this, KLauncher.this.getResources().getString(R.string.kinflow_string_connection_error), Toast.LENGTH_SHORT).show();
-                        onCompleted();
-                    }
-
+                    requestKinflowData();
                 }
             });
 
@@ -438,15 +415,14 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             mScrollView.setFillViewport(true);
             mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);//关闭加载更多
             //
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//A
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);//B
-//        toggleHideyBar();
             //注册网络监听
             IntentFilter filter = new IntentFilter();
             filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
             filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
             filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
             this.registerReceiver(mWifiChangeReceiver, filter);
+            //存储第一次使用并初始化弹框
+            CommonShareData.putBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW,true);
         } catch (Exception e) {
             log("初始化信息流的时候出错initKinflow: " + e.getMessage());
         }
@@ -457,6 +433,32 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.onCreate(savedInstanceState, persistentState);
     }
 
+    public PopupWindowDialog getPopupWindowDialog() {
+        try {
+            if (null==mPopupWindowDialog) mPopupWindowDialog = new PopupWindowDialog(this, new PopupWindowDialog.PopupWindowDialogListener() {
+                @Override
+                public void cancleClick() {
+                    CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);
+                    CommonShareData.putBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW, true);//将是否为第一次使用信息流修改为true
+                    mPopupWindowDialog.dismissPopupWindowDialog();
+                }
+
+                @Override
+                public void okClick() {
+                    if (mPopupWindowDialog.getCompoundState())
+                        CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, true);//用户允许始终使用网络
+                    CommonShareData.putBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW, false);//将是否为第一次使用信息流修改为false
+                    mPopupWindowDialog.dismissPopupWindowDialog();
+                    requestKinflowData();
+                }
+            });
+        } catch (Exception e) {
+            log("获取getPopupWindowDialog时出错");
+            mPopupWindowDialog = new PopupWindowDialog(this);
+        } finally {
+            return mPopupWindowDialog;
+        }
+    }
 
     @Override
     public void scrollToKinflow() {
@@ -469,9 +471,52 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             if (CommonUtils.getInstance().allowActive2345()) {
                 CommonUtils.getInstance().openDefaultBrowserUrl(this, Const.URL_2345_HOMEPAGE);
             }
+            boolean isFirstUseKinflow = CommonShareData.getBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW,false);
+            boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET,false);//用户允许信息流使用网络
+            if (isFirstUseKinflow) {//第一次使用信息流:请求数据;不是第一次请求数据,啥也不做.
+                if (userAllowKinflowUseNet) {//用户允许使用网络
+                    requestKinflowData();
+                } else {//用户不允许使用网络
+                    showFirstUseHint();
+                }
+            }
+//            else {
+//                log("不是第一次使用信息流界面,啥也不做");
+//            }
+            //
         } catch (Exception e) {
-            log("每天一次跳转到2345界面出错");
+            log("scrollToKinflow时发生错误:" + e.getMessage());
         }
+    }
+
+    private void showFirstUseHint() {
+        try {
+            onCompleted();//如果正在刷新,则停止
+            getPopupWindowDialog().showPopupWindowDialog();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void requestKinflowData () {
+        try {
+            //用户是否允许信息流使用网络发起请求
+            //二,用户允许信息流使用网络
+            if (NetworkUtils.isNetworkAvailable(KLauncher.this)) {//用户允许信息流使用网络并且当前网络可用
+                mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
+                        MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
+                        MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
+                        MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
+                );
+            } else {//用户允许信息流使用网络但是当前网络不可用
+                Toast.makeText(KLauncher.this, KLauncher.this.getResources().getString(R.string.kinflow_string_connection_error), Toast.LENGTH_SHORT).show();
+                onCompleted();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "requestKinflowData: 请求数据失败");
+            onCompleted();
+        }
+
     }
 
     @Override
@@ -666,67 +711,98 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     public void onCompleted() {
-        mPullRefreshScrollView.onRefreshComplete();
+        try {
+            if (mPullRefreshScrollView.isRefreshing())
+            mPullRefreshScrollView.onRefreshComplete();
+        } catch (Exception e) {
+            try {
+                log("onCompleted: 停止刷新时,出错:"+e.getMessage());
+                if (null!=mPullRefreshScrollView) {
+                    mPullRefreshScrollView.onRefreshComplete();
+                } else {
+                    View kinflowView = getLayoutInflater().inflate(R.layout.activity_main, null);
+                    mPullRefreshScrollView = (PullToRefreshScrollView) kinflowView.findViewById(R.id.pull_refresh_scrollview);
+                    mPullRefreshScrollView.onRefreshComplete();
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void onHotWordUpdate(List<HotWord> hotWordList) {
-        //更新热词
-        if (null != hotWordList && hotWordList.size() != 0) {
-            log("==========更新热词===========");
-            hintHotWord = hotWordList.get(0);
-            tv_searchHint.setHint(hintHotWord.getWord());
-            hotWord1 = hotWordList.get(1);
-            tv_hotWord1.setText(hotWord1.getWord());
-            hotWord2 = hotWordList.get(2);
-            tv_hotWord2.setText(hotWord2.getWord());
-            topHotWord = hotWordList.get(3);
-            tv_hotWordTop.setText(topHotWord.getWord());
+        try {
+            //更新热词
+            if (null != hotWordList && hotWordList.size() != 0) {
+                hintHotWord = hotWordList.get(0);
+                tv_searchHint.setHint(hintHotWord.getWord());
+                hotWord1 = hotWordList.get(1);
+                tv_hotWord1.setText(hotWord1.getWord());
+                hotWord2 = hotWordList.get(2);
+                tv_hotWord2.setText(hotWord2.getWord());
+                topHotWord = hotWordList.get(3);
+                tv_hotWordTop.setText(topHotWord.getWord());
+            }
+        } catch (Exception e) {
+            log("onHotWordUpdate: 更新热词时,出错:"+e.getMessage());
         }
+
     }
 
     @Override
     public void onNavigationUpdate(List<Navigation> navigationList) {
-        //更新导航页
-        if (null != navigationList && navigationList.size() != 0) {
-            log("==========更新导航页===========");
-            NavigationAdapter adapter = (NavigationAdapter) navigationRecyclerView.getAdapter();
-            adapter.updateNavigationList(navigationList);
-            adapter.notifyDataSetChanged();
+        try {
+            //更新导航页
+            if (null != navigationList && navigationList.size() != 0) {
+                NavigationAdapter adapter = (NavigationAdapter) navigationRecyclerView.getAdapter();
+                adapter.updateNavigationList(navigationList);
+                adapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            log("onNavigationUpdate: 更新导航时出错:"+e.getMessage());
         }
+
     }
 
     @Override
     public void onCardInfoUpdate(List<CardInfo> cardInfoList) {
-        //更新CardsAdapter
-        if (null != cardInfoList && cardInfoList.size() != 0) {
-            log("==========更新CardsAdapter===========");
-//            CardsAdapter cardsAdapter = (CardsAdapter) mCardsView.getAdapter();
-//            cardsAdapter.updateCards(cardInfoList);
-            mCardsView.removeAllViews();
-            CardsAdapter cardsAdapter = new CardsAdapter(this, cardInfoList);
-            mCardsView.setAdapter(cardsAdapter);
+        try {
+            //更新CardsAdapter
+            if (null != cardInfoList && cardInfoList.size() != 0) {
+    //            CardsAdapter cardsAdapter = (CardsAdapter) mCardsView.getAdapter();
+    //            cardsAdapter.updateCards(cardInfoList);
+                mCardsView.removeAllViews();
+                CardsAdapter cardsAdapter = new CardsAdapter(this, cardInfoList);
+                mCardsView.setAdapter(cardsAdapter);
+            }
+        } catch (Exception e) {
+            log("onCardInfoUpdate: 更新Card数据的时候出错:"+e.getMessage());
         }
+
     }
 
     @Override
     public void onAddAdview(CardInfo cardInfo) {
-        CardsAdapter adapter = (CardsAdapter) mCardsView.getAdapter();
-        if (null == adapter) return;
-        int adapterItemCount = adapter.getItemCount();
-        if (adapterItemCount <= 1) {
-            log("Card的个数<=1,所以不添加adview广告");
-            return;
+        try {
+            CardsAdapter adapter = (CardsAdapter) mCardsView.getAdapter();
+            if (null == adapter) return;
+            int adapterItemCount = adapter.getItemCount();
+            if (adapterItemCount <= 1) {
+                log("Card的个数<=1,所以不添加adview广告");
+                return;
+            }
+            int type = adapter.getItemViewType(adapter.getItemCount() - 1);
+            if (type != CardIdMap.ADVERTISEMENT_ADVIEW) {//没有adview----添加
+                adapter.addCard(cardInfo);
+            } else if (type == CardIdMap.ADVERTISEMENT_ADVIEW) {//有adview-----删除换新
+                adapter.notifyItemRemoved(adapter.getItemCount() - 1);
+                adapter.addCard(cardInfo);
+            }
+        } catch (Exception e) {
+            log("onAddAdview: 时发生错误:"+e.getMessage());
         }
-        int type = adapter.getItemViewType(adapter.getItemCount() - 1);
-        if (type != CardIdMap.ADVERTISEMENT_ADVIEW) {//没有adview----添加
-            adapter.addCard(cardInfo);
-            log("==========添加adview完成==========");
-        } else if (type == CardIdMap.ADVERTISEMENT_ADVIEW) {//有adview-----删除换新
-            adapter.notifyItemRemoved(adapter.getItemCount() - 1);
-            adapter.addCard(cardInfo);
-            log("==========更新adview完成==========");
-        }
+
     }
 
     final protected static void log(String msg) {

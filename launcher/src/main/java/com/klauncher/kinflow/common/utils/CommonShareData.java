@@ -19,6 +19,8 @@ public class CommonShareData {
     public static final String KEY_APP_ACTIVE = "app_active";
     public static final String KEY_APP_PACKAGE_NAME = "app_package_name";
     public static final String KEY_JINRITOUTIAO_ACCESS_TOKEN = "jinritoutiao_access_token";
+    public static final String KEY_IS_FIRST_USE_KINFLOW  = "is_first_use_kinflow";
+    public static final String KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET = "user_allow_kinflow_use_net";
 
     public static final int DEFAULT_OPERATOR_DELAY = 72;
     public static final int DEFAULT_ACTIVE_INTERVAL_2345 = 12;
