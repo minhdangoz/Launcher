@@ -50,8 +50,8 @@ public class KLauncherApplication extends Application {
         //本公司sdk统计:MobileStatistics.init(Context context,String productId,String clientChannel);
 //        MobileStatistics.init(this, BuildConfig.CHANNEL_ID, "103");//productID 用BuildConfig.CHANNEL_ID,channel=103
         MobileStatistics.init(this, "103", BuildConfig.CHANNEL_ID);//productID用103,channel=用BuildConfig.CHANNEL_ID
-        MobileStatistics.flushBuffer(50, 10 * 60, TimeUnit.MINUTES);//全部设置为默认值
-//        MobileStatistics.flushBuffer(-1, 10 * 60, TimeUnit.MINUTES);//全部设置为默认值
+        MobileStatistics.flushBuffer(1, 10 * 60, TimeUnit.MINUTES);//正式参数 上传阈值 50->1
+//        MobileStatistics.flushBuffer(-1, 10 * 60, TimeUnit.MINUTES);//默认值参数 随时上报
 
         //三个个缓存文件
         CommonShareData.init(getApplicationContext());
