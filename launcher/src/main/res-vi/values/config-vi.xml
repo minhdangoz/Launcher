@@ -32,11 +32,8 @@
         <item>com.ss.android.article.news</item>
     </array>
 
-    <string name="config_icon_com.miguan.market">com.vivo.game</string>
-    <string name="config_icon_com.tencent.android.qqdownloader">com.bbk.appstore</string>
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.android.bbkmusic,com.android.music,com.android.mediacenter</string>
-    <string name="config_icon_com.tencent.qqlive">com.android.VideoPlayer</string>
     <string name="config_icon_com.UCMobile">com.vivo.browser,com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.iqoo.secure</string>
     <string name="config_icon_cn.etouch.ecalendar">com.bbk.calendar,com.android.calendar</string>

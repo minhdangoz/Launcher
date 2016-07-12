@@ -20,11 +20,8 @@
         <item>com.ss.android.article.news</item>
     </array>
 
-    <string name="config_icon_com.miguan.market">com.nearme.gamecenter</string>
-    <string name="config_icon_com.tencent.android.qqdownloader">com.oppo.market</string>
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.oppo.music</string>
-    <string name="config_icon_com.tencent.qqlive">com.oppo.video</string>
     <string name="config_icon_com.UCMobile">com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.color.safecenter,com.coloros.safecenter</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
