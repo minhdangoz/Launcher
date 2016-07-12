@@ -15,7 +15,6 @@
         <item>com.tencent.android.qqdownloader</item>
         <item>com.alex.nuclear</item>
         <item>cn.kuwo.player</item>
-        <item>com.duomi.android</item>
         <item>com.tencent.qqlive</item>
         <item>cn.ninegame.gamemanager</item>
         <item>com.UCMobile</item>
@@ -23,15 +22,14 @@
         <item>cn.etouch.ecalendar</item>
         <item>com.youloft.calendar</item>
         <item>com.moji.mjweather</item>
-        <item>com.ss.android.article.news</item>
         <item>com.baidu.BaiduMap</item>
         <item>com.autonavi.minimap</item>
+        <item>com.ss.android.article.news</item>
     </array>
 
     <string name="config_icon_com.miguan.market">com.xiaomi.gamecenter</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.xiaomi.market</string>
     <string name="config_icon_cn.kuwo.player">com.miui.player</string>
-    <string name="config_icon_com.duomi.android">com.miui.player</string>
     <string name="config_icon_com.tencent.qqlive">com.miui.video</string>
     <string name="config_cn.ninegame.gamemanager">com.xiaomi.gamecenter</string>
     <string name="config_icon_com.UCMobile">com.android.browser</string>

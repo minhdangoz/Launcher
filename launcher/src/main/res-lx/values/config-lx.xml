@@ -17,18 +17,17 @@
         <item>com.tencent.android.qqdownloader</item>
         <item>com.alex.nuclear</item>
         <item>cn.kuwo.player</item>
-        <item>com.duomi.android</item>
         <item>com.tencent.qqlive</item>
         <item>com.UCMobile</item>
         <item>com.tencent.qqpimsecure</item>
         <item>cn.etouch.ecalendar</item>
         <item>com.moji.mjweather</item>
+        <item>com.ss.android.article.news</item>
     </array>
 
     <string name="config_icon_com.miguan.market">com.lenovo.gameworldphone</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.lenovo.leos.appstore</string>
     <string name="config_icon_cn.kuwo.player">com.lenovo.music,com.android.music</string>
-    <string name="config_icon_com.duomi.android">com.lenovo.music,com.android.music</string>
     <string name="config_icon_com.tencent.qqlive">com.lenovo.videoplayer,com.lenovo.video,com.ontim.videoplayer,com.mediatek.videoplayer,com.android.music/com.android.music.video.MovieListActivity</string>
     <string name="config_icon_com.UCMobile">com.lenovo.browser,com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.lenovo.safecenter,com.lenovo.security</string>

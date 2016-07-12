@@ -14,16 +14,15 @@
         <item>com.tencent.android.qqdownloader</item>
         <item>com.alex.nuclear</item>
         <item>cn.kuwo.player</item>
-        <item>com.duomi.android</item>
         <item>com.tencent.qqlive</item>
         <item>com.UCMobile</item>
         <item>com.tencent.qqpimsecure</item>
         <item>cn.etouch.ecalendar</item>
         <item>com.moji.mjweather</item>
+        <item>com.ss.android.article.news</item>
     </array>
 
     <string name="config_icon_cn.kuwo.player">com.android.music,com.coolpad.music</string>
-    <string name="config_icon_com.duomi.android">com.android.music,com.coolpad.music</string>
     <string name="config_icon_com.tencent.qqlive">com.mediatek.videoplayer/com.mediatek.videoplayer.MovieListActivity,com.android.music/com.android.music.VideoBrowserActivity,com.yulong.android.videoplayer</string>
     <string name="config_icon_com.UCMobile">com.android.browser,com.qihoo.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.yulong.android.security,com.qiku.android.cloudsync</string>
