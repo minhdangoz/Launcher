@@ -1,6 +1,6 @@
-{
+	{
     "4x4": {
-        "rows": "4",
+        "rows":  "4",
         "columns": "4",
         "iconsize": "52",
         "textsize": "11",
@@ -28,3 +28,5 @@
         "hotseat": "6"
     }
 }
+
+	
