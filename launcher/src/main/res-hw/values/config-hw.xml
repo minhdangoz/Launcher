@@ -37,9 +37,9 @@
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.android.mediacenter</string>
     <string name="config_icon_com.tencent.qqlive">com.huawei.hwvplayer,com.huawei.hwvplayer.youku</string>
-    <string name="config_icon_com.tencent.mtt">com.android.browser</string>
+    <string name="config_icon_com.tencent.mtt">com.android.browser,com.seal.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.huawei.systemmanager</string>
-    <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
+    <string name="config_icon_cn.etouch.ecalendar">com.android.calendar,com.android.qidian.calendar</string>
     <string name="config_icon_com.moji.mjweather">com.huawei.android.totemweather</string>
 
     <bool name="kinflow_switch_default">true</bool>
