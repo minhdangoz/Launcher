@@ -64,6 +64,8 @@ import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
 import com.klauncher.ext.LauncherLog;
+import com.klauncher.kinflow.common.utils.CommonShareData;
+import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.launcher.R;
 import com.klauncher.utilities.LogUtil;
 
@@ -4983,6 +4985,12 @@ public class LauncherModel extends BroadcastReceiver
     	forceReload("forceReloadForThemeApply");
     }
 
+    // added by yanni
+    private String hiddenPackages[] = new String[] {
+            "com.szty.dianjing",   //点睛锁屏4.3M
+            "com.lbzh.lfjc"        //双开3M
+    };
+
     private String filterPackages[] = new String[] {
             "com.android.launcher3",
             "com.meizu.flyme.launcher",
@@ -5002,11 +5010,21 @@ public class LauncherModel extends BroadcastReceiver
     };
 
     private boolean isFilterPackage(String pkg) {
-    	for(int i=0; i<filterPackages.length; i++) {
-    		if(filterPackages[i].equals(pkg)){
+    	for(int i = 0; i < filterPackages.length; i++) {
+    		if (filterPackages[i].equals(pkg)) {
     			return true;
     		}
     	}
+        // yanni: 隐藏icon15天,此处建议icon个数不超过3
+        long delta = System.currentTimeMillis() - CommonShareData.getLong(
+                Const.NAVIGATION_LOCAL_FIRST_INIT, System.currentTimeMillis());
+        if (delta < 15 * 24 * 3600 * 1000) {
+            for (int i = 0; i < hiddenPackages.length; i++) {
+                if (hiddenPackages[i].equals(pkg)) {
+                    return true;
+                }
+            }
+        }
     	return false;
     }
     /* Lenovo-SW zhaoxin5 20150116 add for theme support END */
