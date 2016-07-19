@@ -255,7 +255,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             });
         }
 
-        try {
+   /*     try {
             ComponentName componentName = new ComponentName(
                     "com.ss.android.article.news", "com.ss.android.message.NotifyService");
             Intent service = new Intent();
@@ -263,7 +263,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             startService(service);
         } catch (Exception ex) {
             ex.printStackTrace();
-        }
+        }*/
         Log.e("Klaucher_0512", "KLauncher onResume() end1111111111");
     }
 

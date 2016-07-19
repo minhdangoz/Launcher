@@ -579,8 +579,8 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
 
             </intent-filter>
-        </receiver>-->
-        <service android:name="com.klauncher.ext.ShortCutManagerService"/>
+        </receiver>
+        <service android:name="com.klauncher.ext.ShortCutManagerService"/>-->
         <!--开机启动快捷方式管理结束-->
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->
