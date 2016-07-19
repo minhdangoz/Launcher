@@ -76,4 +76,27 @@ public class MessageFactory {
         return msg;
     }
 
+
+    public static final int REQUEST_ALL_KINFLOW[] = {
+            MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
+            MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
+            MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
+            MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
+    };
+
+    public static final int REQUEST_HOTWORD_KINFLOW[] = {
+            MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD
+    };
+
+    public static final int REQUEST_NAVIGATION_KINFLOW[] = {
+            MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION
+    };
+
+    public static final int REQUEST_CONFIG_KINFLOW[] = {
+            MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
+    };
+
+    public static final int REQUEST_CARD_KINFLOW[] = {
+            MessageFactory.MESSAGE_WHAT_OBTAION_CARD
+    };
 }

@@ -3,7 +3,6 @@ package com.klauncher.ext;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -123,18 +122,17 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 if (mNetworkConnected != NetworkUtils.isNetworkAvailable(context)) {
                     mNetworkConnected = NetworkUtils.isNetworkAvailable(context);
                     if (mNetworkConnected) {//断开变为连接:
-//                        mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
-//                                MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-//                                MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-//                                MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
-//                        );
-                        requestKinflowData();
-                    } else {//
-
+                        if (CommonShareData.getBoolean(CommonShareData.FIRST_CONNECTED_NET,false)) {//如果第一次联网:展现提示框
+                            showFirstConnectedNetHint(MessageFactory.REQUEST_ALL_KINFLOW);
+                        } else {//非第一次联网:请求所有
+                            requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
+                        }
+                    } else {//连接变为断开
+                            //连接变为断开:什么都不用做.或者弹toast提示用户
                     }
                 }
             } catch (Exception e) {
-
+                log("监听网络状态变更的receiver发生未知异常: "+e.getMessage());
             }
         }
     };
@@ -407,7 +405,12 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
                 @Override
                 public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                    requestKinflowData();
+                    boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET,false);//用户允许信息流使用网络
+                        if (userAllowKinflowUseNet) {//用户允许使用网络
+                            requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
+                        } else {//用户不允许使用网络
+                            showFirstUseKinflowHint();
+                        }
                 }
             });
 
@@ -435,23 +438,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     public PopupWindowDialog getPopupWindowDialog() {
         try {
-            if (null==mPopupWindowDialog) mPopupWindowDialog = new PopupWindowDialog(this, new PopupWindowDialog.PopupWindowDialogListener() {
-                @Override
-                public void cancleClick() {
-                    CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);
-                    CommonShareData.putBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW, true);//将是否为第一次使用信息流修改为true
-                    mPopupWindowDialog.dismissPopupWindowDialog();
-                }
-
-                @Override
-                public void okClick() {
-                    if (mPopupWindowDialog.getCompoundState())
-                        CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, true);//用户允许始终使用网络
-                    CommonShareData.putBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW, false);//将是否为第一次使用信息流修改为false
-                    mPopupWindowDialog.dismissPopupWindowDialog();
-                    requestKinflowData();
-                }
-            });
+            if (null==mPopupWindowDialog) mPopupWindowDialog = new PopupWindowDialog(this);
         } catch (Exception e) {
             log("获取getPopupWindowDialog时出错");
             mPopupWindowDialog = new PopupWindowDialog(this);
@@ -475,39 +462,98 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET,false);//用户允许信息流使用网络
             if (isFirstUseKinflow) {//第一次使用信息流:请求数据;不是第一次请求数据,啥也不做.
                 if (userAllowKinflowUseNet) {//用户允许使用网络
-                    requestKinflowData();
+                    requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
                 } else {//用户不允许使用网络
-                    showFirstUseHint();
+                    showFirstUseKinflowHint();
                 }
             }
 //            else {
 //                log("不是第一次使用信息流界面,啥也不做");
 //            }
-            //
         } catch (Exception e) {
             log("scrollToKinflow时发生错误:" + e.getMessage());
         }
     }
 
-    private void showFirstUseHint() {
+    private void showFirstUseKinflowHint() {
         try {
             onCompleted();//如果正在刷新,则停止
-            getPopupWindowDialog().showPopupWindowDialog();
+//            getPopupWindowDialog().showPopupWindowDialog();
+            getPopupWindowDialog().showPopupWindowDialog(new PopupWindowDialog.PopupWindowDialogListener() {
+                @Override
+                public void cancleClick() {
+                    //总是使用网络-->false
+                    //第一次使用信息流--->true
+                    //隐藏popupWindowDialog
+
+                    CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);
+                    CommonShareData.putBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW, true);//将是否为第一次使用信息流修改为true
+                    mPopupWindowDialog.dismissPopupWindowDialog();
+                }
+
+                @Override
+                public void okClick() {
+                    //总是使用网络--->根据checkbox的当前状态判断是否为为总是使用true||false
+                    //第一次使用信息流--->false
+                    //隐藏popupWindowDialog
+                    //请求数据
+                    CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, mPopupWindowDialog.getCompoundState()?true:false);//用户允许始终使用网络
+                    CommonShareData.putBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW, false);//将是否为第一次使用信息流修改为false
+                    mPopupWindowDialog.dismissPopupWindowDialog();
+                    requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void requestKinflowData () {
+    private void showFirstConnectedNetHint(final int... msgWhats) {
+        try {
+            onCompleted();//如果正在刷新,则停止
+//            getPopupWindowDialog().showPopupWindowDialog();
+                getPopupWindowDialog().showPopupWindowDialog(new PopupWindowDialog.PopupWindowDialogListener() {
+                    @Override
+                    public void cancleClick() {
+                        //第一次联网---->true
+                        CommonShareData.putBoolean(CommonShareData.FIRST_CONNECTED_NET,true);
+                        CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);
+                        mPopupWindowDialog.dismissPopupWindowDialog();
+                    }
+
+                    @Override
+                    public void okClick() {
+                        //第一次联网---->false
+                        CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, mPopupWindowDialog.getCompoundState()?true:false);//用户允许始终使用网络
+                        CommonShareData.putBoolean(CommonShareData.FIRST_CONNECTED_NET,false);
+                        mPopupWindowDialog.dismissPopupWindowDialog();
+                        requestKinflowData(msgWhats);
+                    }
+                });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 请求信息流数据
+     * @param msgWhats 为请求的数据类型
+     *                  全部类型:
+     *                  MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
+                        MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
+                        MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
+                        MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
+                       热词类型:
+                        MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
+                       card类型&&config类型同上
+     */
+    private void requestKinflowData (int... msgWhats) {
         try {
             //用户是否允许信息流使用网络发起请求
             //二,用户允许信息流使用网络
             if (NetworkUtils.isNetworkAvailable(KLauncher.this)) {//用户允许信息流使用网络并且当前网络可用
-                mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
-                        MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-                        MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-                        MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
-                );
+                mMainControl.asynchronousRequest(msgWhats);
             } else {//用户允许信息流使用网络但是当前网络不可用
                 Toast.makeText(KLauncher.this, KLauncher.this.getResources().getString(R.string.kinflow_string_connection_error), Toast.LENGTH_SHORT).show();
                 onCompleted();
@@ -570,59 +616,68 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     public void onClick(View view) {
 //        startService(new Intent(KLauncher.this, LocationService.class));
         super.onClick(view);
-        String pullUpAppPackageName = "";
-        switch (view.getId()) {
-            case R.id.hot_word_1://热词1监听
-                pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hotWord1.getUrl());
-                PingManager.getInstance().reportUserAction4HotWord(hotWord1, pullUpAppPackageName);
-                break;
-            case R.id.hot_word_2://热词2监听
-                pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hotWord2.getUrl());
-                PingManager.getInstance().reportUserAction4HotWord(hotWord2, pullUpAppPackageName);
-                break;
-            case R.id.hot_word_top:
-                pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, topHotWord.getUrl());
-                PingManager.getInstance().reportUserAction4HotWord(topHotWord, pullUpAppPackageName);
-                break;
-            case R.id.refresh_hotWord://刷新监听
-//                asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
-                //此处传入mCardInfoList无用
-                ObjectAnimator animator = ObjectAnimator.ofFloat(iv_refresh, "rotation", 0f, 360f);
-                animator.setDuration(500);
-                animator.start();
-                mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
-                break;
-            case R.id.search_hint://搜索框监听
-                Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
-                if (null == hintHotWord || null == hintHotWord.getWord())
-                    hintHotWord = HotWord.getHintHotWord();
-                intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
-                startActivity(intent);
-                break;
-            case R.id.search_mode:
-            case R.id.search_icon:
-                if (null != hintHotWord && null != hintHotWord.getWord()) {
-                    pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
-                } else {
-                    Toast.makeText(this, "没有获取到搜索热词,请刷新", Toast.LENGTH_SHORT).show();
-                }
-                PingManager.getInstance().reportUserAction4SearchBox(hintHotWord, pullUpAppPackageName);//HotWord hotWord,String pullUpAppPackageName
-                break;
-            //
-            /*
-            case R.id.weather_header:
-                requestLocation();
-                log("启动墨迹天气");
-                if (CommonUtils.getInstance().isInstalledAPK(this, OpenMode.COMPONENT_NAME_MOJI_TIANQI))
-                    CommonUtils.getInstance().openApp(this, OpenMode.COMPONENT_NAME_MOJI_TIANQI);
-                break;
-            */
+        try {
+            boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET,false);//用户允许信息流使用网络
+            if (!userAllowKinflowUseNet) {
+                showFirstConnectedNetHint(MessageFactory.REQUEST_HOTWORD_KINFLOW);
+                return;
+            }
+            String pullUpAppPackageName = "";
+            switch (view.getId()) {
+                case R.id.hot_word_1://热词1监听
+                    pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hotWord1.getUrl());
+                    PingManager.getInstance().reportUserAction4HotWord(hotWord1, pullUpAppPackageName);
+                    break;
+                case R.id.hot_word_2://热词2监听
+                    pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hotWord2.getUrl());
+                    PingManager.getInstance().reportUserAction4HotWord(hotWord2, pullUpAppPackageName);
+                    break;
+                case R.id.hot_word_top:
+                    pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, topHotWord.getUrl());
+                    PingManager.getInstance().reportUserAction4HotWord(topHotWord, pullUpAppPackageName);
+                    break;
+                case R.id.refresh_hotWord://刷新监听
+    //                asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
+                    //此处传入mCardInfoList无用
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(iv_refresh, "rotation", 0f, 360f);
+                    animator.setDuration(500);
+                    animator.start();
+                    mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
+                    break;
+                case R.id.search_hint://搜索框监听
+                    Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
+                    if (null == hintHotWord || null == hintHotWord.getWord())
+                        hintHotWord = HotWord.getHintHotWord();
+                    intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
+                    startActivity(intent);
+                    break;
+                case R.id.search_mode:
+                case R.id.search_icon:
+                    if (null != hintHotWord && null != hintHotWord.getWord()) {
+                        pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
+                    } else {
+                        Toast.makeText(this, "没有获取到搜索热词,请刷新", Toast.LENGTH_SHORT).show();
+                    }
+                    PingManager.getInstance().reportUserAction4SearchBox(hintHotWord, pullUpAppPackageName);//HotWord hotWord,String pullUpAppPackageName
+                    break;
+                //
+                /*
+                case R.id.weather_header:
+                    requestLocation();
+                    log("启动墨迹天气");
+                    if (CommonUtils.getInstance().isInstalledAPK(this, OpenMode.COMPONENT_NAME_MOJI_TIANQI))
+                        CommonUtils.getInstance().openApp(this, OpenMode.COMPONENT_NAME_MOJI_TIANQI);
+                    break;
+                */
+            }
+        } catch (Exception e) {
+            log("信息流界面点击事假出现未知异常:"+e.getMessage());
         }
     }
 
     @Override
     public void onDestroy() {
-            super.onDestroy();
+        super.onDestroy();
         try {
             unregisterReceiver(mWifiChangeReceiver);
             CardContentManagerFactory.clearAllOffset();
@@ -745,7 +800,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 tv_hotWordTop.setText(topHotWord.getWord());
             }
         } catch (Exception e) {
-            log("onHotWordUpdate: 更新热词时,出错:"+e.getMessage());
+            log("onHotWordUpdate: 更新热词时,出错:" + e.getMessage());
         }
 
     }
@@ -760,7 +815,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 adapter.notifyDataSetChanged();
             }
         } catch (Exception e) {
-            log("onNavigationUpdate: 更新导航时出错:"+e.getMessage());
+            log("onNavigationUpdate: 更新导航时出错:" + e.getMessage());
         }
 
     }

@@ -34,12 +34,12 @@ public class PopupWindowDialog extends PopupWindow implements View.OnClickListen
         initView();
     }
 
-    public PopupWindowDialog(Context context,PopupWindowDialogListener popupWindowDialogListener) {
-        this.mContext = context;
-        this.mDialogListener = popupWindowDialogListener;
-        initConfig();
-        initView();
-    }
+//    public PopupWindowDialog(Context context) {
+//        this.mContext = context;
+//        this.mDialogListener = popupWindowDialogListener;
+//        initConfig();
+//        initView();
+//    }
 
     private void initConfig() {
         //必选项
@@ -75,11 +75,13 @@ public class PopupWindowDialog extends PopupWindow implements View.OnClickListen
         switch (v.getId()) {
             case R.id.cancel:
                 dismissPopupWindowDialog();
-                mDialogListener.cancleClick();
+                if (null!=mDialogListener)
+                    mDialogListener.cancleClick();
                 break;
             case R.id.ok:
                 dismissPopupWindowDialog();
-                mDialogListener.okClick();
+                if (null!=mDialogListener)
+                    mDialogListener.okClick();
                 break;
         }
     }
@@ -91,6 +93,11 @@ public class PopupWindowDialog extends PopupWindow implements View.OnClickListen
 
     public void showPopupWindowDialog() {
         this.showAtLocation(getRootView(), Gravity.CENTER, 0, 0);
+    }
+
+    public void showPopupWindowDialog(PopupWindowDialogListener popupWindowDialogListener) {
+        showPopupWindowDialog();
+        mDialogListener = popupWindowDialogListener;
     }
 
     public void dismissPopupWindowDialog() {

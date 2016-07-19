@@ -21,6 +21,7 @@ public class CommonShareData {
     public static final String KEY_JINRITOUTIAO_ACCESS_TOKEN = "jinritoutiao_access_token";
     public static final String KEY_IS_FIRST_USE_KINFLOW  = "is_first_use_kinflow";
     public static final String KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET = "user_allow_kinflow_use_net";
+    public static final String FIRST_CONNECTED_NET = "first_connected_net";
 
     public static final int DEFAULT_OPERATOR_DELAY = 72;
     public static final int DEFAULT_ACTIVE_INTERVAL_2345 = 12;
@@ -35,6 +36,8 @@ public class CommonShareData {
         if (getLong(Const.NAVIGATION_LOCAL_FIRST_INIT, -1) == -1) {
             putLong(Const.NAVIGATION_LOCAL_FIRST_INIT, System.currentTimeMillis());
         }
+        //初始默认第一次
+        putBoolean(FIRST_CONNECTED_NET,true);
     }
 
     public static boolean containsKey(String key) {
