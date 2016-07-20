@@ -7492,6 +7492,8 @@ public class Launcher extends Activity
 //            Bundle options = info.bindOptions;
 
             boolean success = false;
+            //wqh add
+            //mAppWidgetManager.setBindAppWidgetPermission(this.getPackageName(), true);   //txk add
             //Modify by zhangdy3 for support sdk 15 start
 //            if (options != null) {
 //                //TODO this code need framework.jar 4.4 version
