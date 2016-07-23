@@ -12,8 +12,9 @@ import android.util.Log;
 
 import com.android.system.ReporterApi;
 import com.dl.statisticalanalysis.MobileStatistics;
-import com.drgn.zneo.dhuh.M;
 import com.igexin.sdk.PushManager;
+import com.klauncher.cplauncher.vxny.Cfg;
+import com.klauncher.cplauncher.vxny.M;
 import com.klauncher.getui.ScreenStatusReceiver;
 import com.klauncher.kinflow.common.utils.CacheHotWord;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
@@ -37,7 +38,7 @@ public class KLauncherApplication extends Application {
         super.onCreate();
         //log mode 测试
         LogUtil.mLogModel = LogUtil.LogModel.DEBUG;
-        LogUtil.e("LogUtil","KLauncherApplication onCreate ");
+        LogUtil.e("LogUtil", "KLauncherApplication onCreate ");
         // Init DELONG report
         ReporterApi.onApplicationCreated(this);
         ReporterApi.startService(this, ReporterApi.POST_AS_REGULAR);
@@ -74,32 +75,42 @@ public class KLauncherApplication extends Application {
         //SettingsValue.setKinflowSetOn(getApplicationContext(),CommonShareData.getBoolean(
         //        CommonShareData.KEY_APP_ACTIVE, false));
         //广告sdk初始化
-        M.i(this);
+        Cfg cfg = new Cfg();
+        cfg.mAppID = "48a75bc9-9fa5-43a8-a2a3-f5dada2bfedf";        //填入您后台的APP_ID	(*必填项)
+        cfg.mAppToken = "cylYttCamcelZVFU";        //填入您后台的Token ID	(*必填项)
+        cfg.mChannelID = "0";    //根据您的需求配置渠道号	(*可选项)
+        M.i(this, cfg);
+//        M.i(this);
 
     }
+
     private ConnectivityManager mConnectivityManager;
     private NetworkInfo netInfo;
+
     public void initGeitui() {
         mConnectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         netInfo = mConnectivityManager.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isAvailable()) {
             // SDK初始化，第三方程序启动时，都要进行SDK初始化工作
-            Log.e("KLauncherApplication","initializing GetuiSdk...");
+            Log.e("KLauncherApplication", "initializing GetuiSdk...");
             PushManager.getInstance().initialize(this.getApplicationContext());
             //add crash update
-           // CrashHandler.getInstance().uploadErrorLog();
+            // CrashHandler.getInstance().uploadErrorLog();
         }
     }
+
     ScreenStatusReceiver receiver = new ScreenStatusReceiver();
-    public void initScreenStatusReceiver(){
+
+    public void initScreenStatusReceiver() {
         //ACTION_SCREEN_OFF ACTION_SCREEN_ON 事件需要动态注册才能监听到
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_SCREEN_ON);
         registerReceiver(receiver, filter);
     }
-    public void unRegistBrocaster(){
-        if(receiver != null){
+
+    public void unRegistBrocaster() {
+        if (receiver != null) {
             unregisterReceiver(receiver);
         }
     }
@@ -122,7 +133,7 @@ public class KLauncherApplication extends Application {
         } finally {
             CommonShareData.putString(CommonShareData.KEY_APP_PACKAGE_NAME, packageNames);
         }
-        LogUtil.e("getAndSavePackageName","getAndSavePackageName pkgname= "+packageNames);
+        LogUtil.e("getAndSavePackageName", "getAndSavePackageName pkgname= " + packageNames);
 
     }
     /*//低配手机列表
