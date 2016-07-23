@@ -22,61 +22,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.klauncher.launcher">
 
-    <original-package android:name="com.android.launcher" />
+    <original-package android:name="com.android.launcher"/>
 
-    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="21" />
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="21"/>
 
     <permission
         android:name="com.klauncher.launcher.permission.INSTALL_SHORTCUT"
-        android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
-        android:protectionLevel="dangerous"
+        android:description="@string/permdesc_install_shortcut"
         android:label="@string/permlab_install_shortcut"
-        android:description="@string/permdesc_install_shortcut" />
+        android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
+        android:protectionLevel="dangerous"/>
     <permission
         android:name="com.klauncher.launcher.permission.UNINSTALL_SHORTCUT"
-        android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
-        android:protectionLevel="dangerous"
+        android:description="@string/permdesc_uninstall_shortcut"
         android:label="@string/permlab_uninstall_shortcut"
-        android:description="@string/permdesc_uninstall_shortcut"/>
+        android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
+        android:protectionLevel="dangerous"/>
     <permission
         android:name="com.klauncher.launcher.permission.READ_SETTINGS"
-        android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
-        android:protectionLevel="normal"
+        android:description="@string/permdesc_read_settings"
         android:label="@string/permlab_read_settings"
-        android:description="@string/permdesc_read_settings"/>
+        android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
+        android:protectionLevel="normal"/>
     <permission
         android:name="com.klauncher.launcher.permission.WRITE_SETTINGS"
-        android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
-        android:protectionLevel="signatureOrSystem"
+        android:description="@string/permdesc_write_settings"
         android:label="@string/permlab_write_settings"
-        android:description="@string/permdesc_write_settings"/>
+        android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
+        android:protectionLevel="signatureOrSystem"/>
     <permission
         android:name="com.klauncher.launcher.permission.RECEIVE_LAUNCH_BROADCASTS"
         android:protectionLevel="signature"
         />
     <permission
         android:name="com.klauncher.launcher.permission.RECEIVE_FIRST_LOAD_BROADCAST"
-        android:protectionLevel="signatureOrSystem" />
+        android:protectionLevel="signatureOrSystem"/>
 
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.SET_WALLPAPER" />
-    <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
-    <uses-permission android:name="android.permission.BIND_APPWIDGET" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS"/>
+    <uses-permission android:name="android.permission.BIND_APPWIDGET"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
- 	<!--往sdcard中写入数据的权限 -->
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--往sdcard中写入数据的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="com.klauncher.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="com.klauncher.launcher.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="com.klauncher.launcher.permission.RECEIVE_LAUNCH_BROADCASTS" />
-    <uses-permission android:name="com.klauncher.launcher.permission.RECEIVE_FIRST_LOAD_BROADCAST" />
-    <uses-permission android:name="cyanogenmod.permission.PROTECTED_APP" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="com.klauncher.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.klauncher.launcher.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="com.klauncher.launcher.permission.RECEIVE_LAUNCH_BROADCASTS"/>
+    <uses-permission android:name="com.klauncher.launcher.permission.RECEIVE_FIRST_LOAD_BROADCAST"/>
+    <uses-permission android:name="cyanogenmod.permission.PROTECTED_APP"/>
     <!-- Lenovo-SW zhaoxin5 20150529 add for 2 layer support  -->
-	<uses-permission android:name="com.lenovo.launcher.permission.READ_SETTINGS" />
-	<uses-permission android:name="com.lenovo.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.lenovo.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.lenovo.launcher.permission.WRITE_SETTINGS"/>
     <!-- Lenovo-SW zhaoxin5 20150529 add for 2 layer support  -->
     <!-- vivo  BEGIN-->
     <uses-permission android:name="com.bbk.launcher2.permission.READ_SETTINGS"/>
@@ -134,18 +136,18 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <!--个推权限配置开始-->
     <!-- 支持iBeancon 需要蓝牙权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <!-- 自定义权限 -->
-    <uses-permission android:name="getui.permission.GetuiService.com.klauncher.launcher" />
+    <uses-permission android:name="getui.permission.GetuiService.com.klauncher.launcher"/>
     <permission
         android:name="getui.permission.GetuiService.com.klauncher.launcher"
-        android:protectionLevel="normal" >
+        android:protectionLevel="normal">
     </permission>
     <!-- 个推SDK权限配置结束 -->
     <!-- LqOps需要的权限 END -->
     <!--监听用户解锁-->
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
     <!--android:name="com.android.launcher3.LauncherApplication"-->
     <!--tools:replace="android:icon, android:title,android:background"-->
     <!--广告sdk start-->
@@ -171,38 +173,40 @@
         android:icon="@mipmap/ic_launcher_home"
         android:label="@string/cm_application_name"
         android:largeHeap="@bool/config_largeHeap"
+        android:requiredForAllUsers="true"
         android:restoreAnyVersion="true"
         android:supportsRtl="true"
-        tools:replace="icon,label"
-        android:requiredForAllUsers="true">
+        tools:replace="icon,label">
 
         <activity
             android:name="com.klauncher.ext.KLauncher"
-            android:launchMode="singleTask"
             android:clearTaskOnLaunch="true"
+            android:configChanges="mcc|mnc|keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:theme="@style/Theme"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"
-            android:configChanges="mcc|mnc|keyboardHidden|orientation">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.HOME" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.MONKEY"/>
             </intent-filter>
         </activity>
 
         <activity
             android:name="com.android.launcher3.ToggleWeightWatcher"
-            android:label="@string/toggle_weight_watcher"
             android:enabled="@bool/debug_memory_enabled"
-            android:icon="@mipmap/ic_launcher_home">
+            android:icon="@mipmap/ic_launcher_home"
+            android:label="@string/toggle_weight_watcher">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <!--
@@ -237,71 +241,73 @@
         <!-- Debugging tools -->
         <activity
             android:name="com.android.launcher3.MemoryDumpActivity"
-            android:theme="@android:style/Theme.NoDisplay"
-            android:label="@string/debug_memory_activity"
             android:enabled="@bool/debug_memory_enabled"
             android:excludeFromRecents="true"
             android:icon="@mipmap/ic_launcher_home"
+            android:label="@string/debug_memory_activity"
+            android:theme="@android:style/Theme.NoDisplay"
             >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-	 <!-- Lenovo-SW zhangyj19 20150806 add setting function start -->
+        <!-- Lenovo-SW zhangyj19 20150806 add setting function start -->
         <activity
             android:name="com.android.launcher3.settings.LauncherSettingActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light"
+            android:label="@string/menu_desktop_settings"
             android:screenOrientation="portrait"
-            android:label="@string/menu_desktop_settings">
+            android:theme="@android:style/Theme.DeviceDefault.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
             android:name="com.android.launcher3.settings.HomescreenActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light"
+            android:label="@string/home_screen_settings"
             android:screenOrientation="portrait"
-            android:label="@string/home_screen_settings">
+            android:theme="@android:style/Theme.DeviceDefault.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
             android:name="com.android.launcher3.settings.DrawerActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light"
+            android:label="@string/drawer_settings"
             android:screenOrientation="portrait"
-            android:label="@string/drawer_settings">
+            android:theme="@android:style/Theme.DeviceDefault.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
             android:name="com.android.launcher3.settings.BackupRestoreActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light"
+            android:label="@string/menu_sense_settings"
             android:screenOrientation="portrait"
-            android:label="@string/menu_sense_settings">
+            android:theme="@android:style/Theme.DeviceDefault.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity
             android:name="com.android.launcher3.settings.TransitionEffectsActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light"
+            android:label="@string/scroll_effect_text"
             android:screenOrientation="portrait"
-            android:label="@string/scroll_effect_text">
+            android:theme="@android:style/Theme.DeviceDefault.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 
-        <service android:name="com.android.launcher3.MemoryTracker"
+        <service
+            android:name="com.android.launcher3.MemoryTracker"
             android:enabled="@bool/debug_memory_enabled"
             >
         </service>
@@ -317,7 +323,7 @@
 
         <receiver android:name="com.klauncher.ext.DefaultLauncherReceiver">
             <intent-filter>
-                <action android:name="com.klauncher.launcher.action.DEFAULT_LAUNCHER" />
+                <action android:name="com.klauncher.launcher.action.DEFAULT_LAUNCHER"/>
             </intent-filter>
         </receiver>
 
@@ -326,10 +332,11 @@
             android:name="com.android.launcher3.InstallShortcutReceiver"
             android:permission="com.klauncher.launcher.permission.INSTALL_SHORTCUT">
             <intent-filter>
-                <action android:name="com.klauncher.launcher.action.INSTALL_SHORTCUT" />
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <data android:scheme="package" />
+                <action android:name="com.klauncher.launcher.action.INSTALL_SHORTCUT"/>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+
+                <data android:scheme="package"/>
             </intent-filter>
         </receiver>
 
@@ -338,12 +345,12 @@
             android:name="com.android.launcher3.UninstallShortcutReceiver"
             android:permission="com.klauncher.launcher.permission.UNINSTALL_SHORTCUT">
             <intent-filter>
-                <action android:name="com.klauncher.launcher.action.UNINSTALL_SHORTCUT" />
+                <action android:name="com.klauncher.launcher.action.UNINSTALL_SHORTCUT"/>
             </intent-filter>
         </receiver>
 
         <!-- Intent received used to initialize a restored widget -->
-        <receiver android:name="com.android.launcher3.AppWidgetsRestoredReceiver" >
+        <receiver android:name="com.android.launcher3.AppWidgetsRestoredReceiver">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_HOST_RESTORED"/>
             </intent-filter>
@@ -354,45 +361,47 @@
             android:name="com.android.launcher3.UserInitializeReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.USER_INITIALIZE" />
+                <action android:name="android.intent.action.USER_INITIALIZE"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.android.launcher3.PackageChangedReceiver" >
+        <receiver android:name="com.android.launcher3.PackageChangedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_CHANGED"/>
                 <action android:name="android.intent.action.PACKAGE_REPLACED"/>
                 <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+
                 <data android:scheme="package"></data>
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.android.launcher3.StartupReceiver" >
+        <receiver android:name="com.android.launcher3.StartupReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.android.launcher3.ThemeChangedReceiver" >
+        <receiver android:name="com.android.launcher3.ThemeChangedReceiver">
             <intent-filter>
                 <action android:name="org.cyanogenmod.intent.action.THEME_CHANGED"/>
             </intent-filter>
         </receiver>
 
-        <activity android:name="com.klauncher.ext.SearchActivity"
+        <activity
+            android:name="com.klauncher.ext.SearchActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"
-            android:windowSoftInputMode="stateAlwaysVisible"
-            android:screenOrientation="portrait">
+            android:windowSoftInputMode="stateAlwaysVisible">
         </activity>
         <receiver
             android:name="com.klauncher.ext.ClockWidgetProvider"
             android:label="@string/clock_widget_name">
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/clock_widget_info" />
+                android:resource="@xml/clock_widget_info"/>
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.intent.action.MAIN"/>
 
                 <action android:name="android.intent.action.TIME_SET"/>
                 <action android:name="android.intent.action.SCREEN_ON"/>
@@ -400,11 +409,12 @@
                 <action android:name="android.intent.action.DATE_CHANGED"/>
                 <action android:name="android.intent.action.LOCALE_CHANGED"/>
                 <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
-                <action android:name="com.klauncher.action.ACTION_CLOCK_UPDATE" />
+                <action android:name="com.klauncher.action.ACTION_CLOCK_UPDATE"/>
             </intent-filter>
         </receiver>
-        <service android:name="com.klauncher.ext.ClockWidgetService"
-            android:exported="false" />
+        <service
+            android:name="com.klauncher.ext.ClockWidgetService"
+            android:exported="false"/>
         <!--搜索wiget-->
         <receiver
             android:name="com.klauncher.ext.SearchWidgetProvider"
@@ -425,36 +435,45 @@
                 <action android:name="com.klauncher.action.ACTION_CLOCK_UPDATE"/>
             </intent-filter>
         </receiver>
-        
+
         <!-- The settings provider contains Home's data, like the workspace favorites -->
         <provider
             android:name="com.android.launcher3.LauncherProvider"
             android:authorities="com.klauncher.launcher.settings"
             android:exported="true"
-            android:writePermission="com.klauncher.launcher.permission.WRITE_SETTINGS"
-            android:readPermission="com.klauncher.launcher.permission.READ_SETTINGS" />
+            android:readPermission="com.klauncher.launcher.permission.READ_SETTINGS"
+            android:writePermission="com.klauncher.launcher.permission.WRITE_SETTINGS"/>
         <!--设备管理器注册 取消激活锁屏 -->
-        <receiver android:name="com.klauncher.ext.KLauncherDeviceAdminReceiver"
+        <receiver
+            android:name="com.klauncher.ext.KLauncherDeviceAdminReceiver"
             android:label="@string/cm_application_name"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
-            <meta-data android:name="android.app.device_admin"
-                android:resource="@xml/device_admin" />
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin"/>
             <intent-filter>
-                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
             </intent-filter>
         </receiver>
 
-        <meta-data android:name="android.nfc.disable_beam_default"
-                       android:value="true" />
+        <meta-data
+            android:name="android.nfc.disable_beam_default"
+            android:value="true"/>
         <!-- Delong SDK -->
         <meta-data
             android:name="AppReporterSource"
             android:value="1101"/>
-        <meta-data android:name="KappChannel" android:value="${CHANNEL_ID}"/>
+        <meta-data
+            android:name="KappChannel"
+            android:value="${CHANNEL_ID}"/>
 
         <!-- Umeng SDK -->
-        <meta-data android:name="UMENG_APPKEY" android:value="574727a067e58e34760010bd"/>
-        <meta-data android:name="UMENG_CHANNEL" android:value="${CHANNEL_ID}"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="574727a067e58e34760010bd"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${CHANNEL_ID}"/>
 
         <!-- LqOps申明的组件 BEGIN -->
         <meta-data
@@ -586,20 +605,20 @@
         <!-- 配置的第三方参数属性 -->
         <meta-data
             android:name="PUSH_APPID"
-            android:value="w92wUNNf9u6sEZBfeerVX8" />
+            android:value="w92wUNNf9u6sEZBfeerVX8"/>
         <meta-data
             android:name="PUSH_APPKEY"
-            android:value="L6JeXEKNhQ6Jboewj0qAr5" />
+            android:value="L6JeXEKNhQ6Jboewj0qAr5"/>
         <meta-data
             android:name="PUSH_APPSECRET"
-            android:value="eoJufj4VuCA5hAVkoaSr34" />
+            android:value="eoJufj4VuCA5hAVkoaSr34"/>
         <!-- 配置第三方Receiver -->
         <receiver
             android:name="com.klauncher.getui.PushDemoReceiver"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <!--H44kD61jdc9ZsdGlcGUiG3-->替换为<!--w92wUNNf9u6sEZBfeerVX8-->
-                <action android:name="com.igexin.sdk.action.w92wUNNf9u6sEZBfeerVX8" />
+                <action android:name="com.igexin.sdk.action.w92wUNNf9u6sEZBfeerVX8"/>
             </intent-filter>
         </receiver>
         <!-- 配置SDK核心服务 -->
@@ -607,31 +626,31 @@
             android:name="com.igexin.sdk.PushService"
             android:exported="true"
             android:label="NotificationCenter"
-            android:process=":pushservice" >
+            android:process=":pushservice">
         </service>
         <service
             android:name="com.igexin.sdk.PushServiceUser"
             android:exported="true"
-            android:label="NotificationCenterUser" >
+            android:label="NotificationCenterUser">
         </service>
 
-        <receiver android:name="com.igexin.sdk.PushReceiver" >
+        <receiver android:name="com.igexin.sdk.PushReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="com.igexin.sdk.action.refreshls" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="com.igexin.sdk.action.refreshls"/>
                 <!-- 以下三项为可选的action声明，可大大提高service存活率和消息到达速度 -->
-                <action android:name="android.intent.action.MEDIA_MOUNTED" />
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+                <action android:name="android.intent.action.MEDIA_MOUNTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.igexin.sdk.PushManagerReceiver"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.igexin.sdk.action.pushmanager" />
+                <action android:name="com.igexin.sdk.action.pushmanager"/>
             </intent-filter>
         </receiver>
 
@@ -641,23 +660,24 @@
             android:exported="false"
             android:process=":pushservice"
             android:taskAffinity="com.igexin.sdk.PushActivityTask"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
 
         <service
             android:name="com.igexin.download.DownloadService"
-            android:process=":pushservice" />
+            android:process=":pushservice"/>
 
-        <receiver android:name="com.igexin.download.DownloadReceiver" >
+        <receiver android:name="com.igexin.download.DownloadReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
         <provider
             android:name="com.igexin.download.DownloadProvider"
             android:authorities="downloads.com.klauncher.launcher"
             android:exported="true"
-            android:process=":pushservice" />
+            android:process=":pushservice"/>
+
         <activity
             android:name="com.igexin.getuiext.activity.GetuiExtActivity"
             android:configChanges="orientation|keyboard|keyboardHidden"
@@ -665,53 +685,54 @@
             android:exported="false"
             android:process=":pushservice"
             android:taskAffinity="android.task.myServicetask"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity
             android:name="com.igexin.sdk.GActivity"
             android:excludeFromRecents="true"
             android:exported="true"
             android:process=":pushservice"
             android:taskAffinity="com.igexin.sdk.PushActivityTask"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <receiver
             android:name="com.igexin.getuiext.service.PayloadReceiver"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <!-- 这个com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4固定，不能修改 -->
-                <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4" />
+                <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4"/>
                 <!-- android:name="com.igexin.sdk.action.第三方的appId" -->
-                <action android:name="com.igexin.sdk.action.w92wUNNf9u6sEZBfeerVX8" />
+                <action android:name="com.igexin.sdk.action.w92wUNNf9u6sEZBfeerVX8"/>
             </intent-filter>
         </receiver>
+
         <service
             android:name="com.igexin.getuiext.service.GetuiExtService"
-            android:process=":pushservice" />
+            android:process=":pushservice"/>
         <service
             android:name="com.igexin.getuiext.service.GetuiExtService"
-            android:process=":pushservice" />
+            android:process=":pushservice"/>
         <service
-            android:name="com.klauncher.getui.NotifyClickService" />
+            android:name="com.klauncher.getui.NotifyClickService"/>
 
         <!-- 个推SDK配置结束 -->
         <!--网络状态监听广播-->
         <receiver
             android:name="com.klauncher.getui.NetStatusReceiver"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.net.wifi.STATE_CHANGE" />
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.STATE_CHANGE"/>
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
         <!--屏幕变化监听广播-->
         <receiver
             android:name="com.klauncher.getui.ScreenStatusReceiver"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.intent.action.SCREEN_OFF" />
-                <action android:name="android.intent.action.SCREEN_ON" />
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.intent.action.SCREEN_OFF"/>
+                <action android:name="android.intent.action.SCREEN_ON"/>
             </intent-filter>
         </receiver>
         <!--默认桌面弹框-->
@@ -730,10 +751,10 @@
         <activity
             android:name="com.klauncher.getui.HomeSelector"
             android:label="HomeSelector"/>
-        <!--广告sdk start-->
-        <receiver android:name="com.drgn.zneo.dqqdhw.a.a.c.b">
+        <!--广告sdk begin-->
+        <receiver android:name="com.klauncher.cplauncher.vajcvw.a.a.c.b">
             <intent-filter>
-                <action android:name="com.drgn.zneo.ci"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <intent-filter>
@@ -744,19 +765,22 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-            <intent-filter>
-                <action android:name="com.drgn.zneo.wu"/>
-            </intent-filter>
         </receiver>
-        <service android:name="com.drgn.zneo.dqqdhw.a.a.c.c">
+        <service android:name="com.klauncher.cplauncher.vajcvw.a.a.c.c">
             <intent-filter>
-                <action android:name="com_drgn_zneo.service"/>
+                <action android:name="com_klauncher_cplauncher.service"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>
-        <activity android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale|uiMode" android:excludeFromRecents="true" android:name="com.drgn.zneo.dqqdhw.a.a.c.a" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:taskAffinity="com.drgn.zneo" android:exported="true">
+        <activity
+            android:name="com.klauncher.cplauncher.vajcvw.a.a.c.a"
+            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale|uiMode"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:taskAffinity="com.klauncher.cplauncher"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
-                <action android:name="com_drgn_zneo.activity"/>
+                <action android:name="com_klauncher_cplauncher.activity"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
