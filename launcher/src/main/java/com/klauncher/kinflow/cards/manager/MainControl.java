@@ -3,6 +3,7 @@ package com.klauncher.kinflow.cards.manager;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -90,6 +91,13 @@ public class MainControl {
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YOKMOB:
                             log("获取到yokmob");
                             break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAIN_AMAP_BACKGROUND_DIANYING:
+                            log("获取到amap的电影院,背景图url数据");
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAIN_AMAP_BACKGROUND_YULE:
+                            log("获取到amap的娱乐,背景图url数据");
+                            break;
+
 //                case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH:
 //                    log("获取到config");
 //                    //配置打开与否&&当前运行的设备是否允许
@@ -176,6 +184,13 @@ public class MainControl {
                                             YMCardContentManager ymCardContentManager = (YMCardContentManager) cardInfo.getmCardContentManager();
                                             if (null != ymCardContentManager.getImageUrl() && null != ymCardContentManager.getClickUrl() && isSuccess)
                                                 filiterCardInfoList.add(cardInfo);
+                                            break;
+                                        case CardIdMap.CARD_TYPE_SKIP_AMAP_DIANYING:
+                                        case CardIdMap.CARD_TYPE_SKIP_AMAP_YULE:
+                                            AmapCardContentManager amapCardContentManager = ((AmapCardContentManager) cardInfo.getmCardContentManager());
+                                            if (!TextUtils.isEmpty(amapCardContentManager.getImageUrl())) {
+                                                filiterCardInfoList.add(cardInfo);
+                                            }
                                             break;
 //                                    case CardIdMap.ADVERTISEMENT_ADVIEW:
 //                                        break;

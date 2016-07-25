@@ -52,10 +52,14 @@ public class CardIdMap {
         public static final int CARD_TYPE_NEWS_YD_JIANSHEN = 367;
         public static final int CARD_TYPE_NEWS_YD_LVYOU = 368;
 
+    public static final int CARD_TYPE_SKIP_AMAP_DIANYING = 501;
+    public static final int CARD_TYPE_SKIP_AMAP_YULE = 502;
+
     public static boolean isKnow(int cardSecondTypeId){
         if (cardSecondTypeId==ADVERTISEMENT_YOKMOB
-                ||(cardSecondTypeId>=350&&cardSecondTypeId<=368)
-                ||(cardSecondTypeId>=301&&cardSecondTypeId<=307)||cardSecondTypeId==309
+                ||(cardSecondTypeId>=350&&cardSecondTypeId<=368)//一点资讯
+                ||(cardSecondTypeId>=301&&cardSecondTypeId<=307)||cardSecondTypeId==309//今日头条
+                ||(cardSecondTypeId>=501&&cardSecondTypeId<=502)//amap跳转
                 )
             return true;
         return false;

@@ -22,6 +22,9 @@ public class MessageFactory {
     public static final int MESSAGE_WHAT_OBTAIN_CONFIG = 13;//获取所有config
     public static final int MESSAGE_WHAT_OBTAIN_TOUTIAO_API_TOKEN = 14;//获取头条TOKEN,通过api
     public static final int MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE = 15;//获取头条ARTICLE,通过api
+    public static final int MESSAGE_WHAT_OBTAIN_AMAP_BACKGROUND_DIANYING = 16;//获取到amap的电影背景图的url
+    public static final int MESSAGE_WHAT_OBTAIN_AMAP_BACKGROUND_YULE = 17;//获取到amap的娱乐(周末去哪儿)背景图的url
+
 
     public static Message createMessage(int what) {
         Message msg = Message.obtain();
@@ -71,7 +74,12 @@ public class MessageFactory {
             case MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE:
                 msg.what = MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE;
                 break;
-
+            case MESSAGE_WHAT_OBTAIN_AMAP_BACKGROUND_DIANYING:
+                msg.what = MESSAGE_WHAT_OBTAIN_AMAP_BACKGROUND_DIANYING;
+                break;
+            case MESSAGE_WHAT_OBTAIN_AMAP_BACKGROUND_YULE:
+                msg.what = MESSAGE_WHAT_OBTAIN_AMAP_BACKGROUND_YULE;
+                break;
         }
         return msg;
     }

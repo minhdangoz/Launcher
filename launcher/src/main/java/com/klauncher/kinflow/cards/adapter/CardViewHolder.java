@@ -18,6 +18,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.klauncher.kinflow.cards.CardIdMap;
+import com.klauncher.kinflow.cards.control.AmapSkipManager;
+import com.klauncher.kinflow.cards.manager.AmapCardContentManager;
 import com.klauncher.kinflow.cards.manager.JRTTCardContentManager;
 import com.klauncher.kinflow.cards.manager.YDCardContentManager;
 import com.klauncher.kinflow.cards.manager.YMCardContentManager;
@@ -139,10 +142,12 @@ class AdbannerCardViewHolder extends CardViewHolder implements View.OnClickListe
     private Context mContext;
     private CardInfo mCardInfo;//data
     public ImageView bannerImage;//view
+    private AmapSkipManager mAmapSkipManager;
 
     public AdbannerCardViewHolder(Context context, View itemView) {
         super(itemView);
         this.mContext = context;
+        mAmapSkipManager = new AmapSkipManager(this.mContext);
         bannerImage = (ImageView) itemView.findViewById(R.id.banner_iv_image);
     }
 
@@ -153,22 +158,37 @@ class AdbannerCardViewHolder extends CardViewHolder implements View.OnClickListe
     public void setCardInfo(CardInfo cardInfo) {
         try {
             this.mCardInfo = cardInfo;
-            YMCardContentManager mManager = (YMCardContentManager) mCardInfo.getmCardContentManager();
-            Picasso.with(mContext).load(mManager.getImageUrl()).into(bannerImage);
+            int secondTypeId = mCardInfo.getCardSecondTypeId();
+            if (secondTypeId== CardIdMap.CARD_TYPE_SKIP_AMAP_DIANYING||secondTypeId== CardIdMap.CARD_TYPE_SKIP_AMAP_YULE) {
+                AmapCardContentManager mManager = (AmapCardContentManager) mCardInfo.getmCardContentManager();
+                Picasso.with(mContext).load(mManager.getImageUrl()).into(bannerImage);
+            }else {
+                YMCardContentManager mManager = (YMCardContentManager) mCardInfo.getmCardContentManager();
+                Picasso.with(mContext).load(mManager.getImageUrl()).into(bannerImage);
+            }
         } catch (Exception e) {
-            Log.i("Kinflow", "给yokmob添加数据的时候出错:AdbannerCardViewHolder.setCardInfo");
+            Log.i("Kinflow", "给yokmob添加数据的时候出错:AdbannerCardViewHolder.setCardInfo:报错信息="+e.getMessage());
         }
 
     }
 
     @Override
     public void onClick(View v) {
+        Log.e("Kinflow", "===========yokmob被点击===========");
         try {
-            YMCardContentManager mManager = (YMCardContentManager) mCardInfo.getmCardContentManager();
-//        KinflowBrower.openUrl(mContext,mManager.getClickUrl());
-            Bundle extras = new Bundle();
-            extras.putString(OpenMode.OPEN_URL_KEY, mManager.getClickUrl());
-            this.mCardInfo.open(mContext, extras);
+            if (mCardInfo.getCardSecondTypeId()== CardIdMap.CARD_TYPE_SKIP_AMAP_DIANYING) {
+//                AmapSkipManager.getInstance(mContext).skip2Amap(AmapSkipManager.getInstance(mContext).getArroundPoi("电影院"));
+                mAmapSkipManager.skip2Amap(mAmapSkipManager.getArroundPoi("电影院"));
+
+            } else if (mCardInfo.getCardSecondTypeId()== CardIdMap.CARD_TYPE_SKIP_AMAP_YULE) {
+//                AmapSkipManager.getInstance(mContext).skip2Amap(AmapSkipManager.getInstance(mContext).getArroundPoi("娱乐"));
+                mAmapSkipManager.skip2Amap(mAmapSkipManager.getArroundPoi("娱乐"));
+            }else {
+                YMCardContentManager mManager = (YMCardContentManager) mCardInfo.getmCardContentManager();
+                Bundle extras = new Bundle();
+                extras.putString(OpenMode.OPEN_URL_KEY, mManager.getClickUrl());
+                this.mCardInfo.open(mContext, extras);
+            }
         } catch (Exception e) {
             Log.e("Kinflow", "onClick: yokmob时出错");
         }

@@ -71,6 +71,11 @@ public class YMCardContentManager extends BaseCardContentManager {
                 Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YOKMOB);
                 msg.arg1 = -1;
                 mMainControlHandler.sendMessage(msg);
+            } else {
+                log("服务器端配置的yokmob美女大图的json数据有误,可能为:1>json为空;2>json不包含img字段;3>json不包含clc字段. \njson="+json.toString());
+                Message msg = MessageFactory.createMessage(MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YOKMOB);
+                msg.arg1 = -1;
+                mMainControlHandler.sendMessage(msg);
             }
         } catch (Exception e) {
             log("请求YOKMOB时出错:"+e.getMessage());
