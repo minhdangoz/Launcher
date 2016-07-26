@@ -119,6 +119,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         @Override
         public void onReceive(Context context, Intent intent) {
             try {
+                if (!hasCustomContentToLeft()) return;//如果没有打开信息流,则不作处理.
                 if (mNetworkConnected != NetworkUtils.isNetworkAvailable(context)) {
                     mNetworkConnected = NetworkUtils.isNetworkAvailable(context);
                     if (mNetworkConnected) {//断开变为连接:
@@ -530,11 +531,76 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                         requestKinflowData(msgWhats);
                     }
                 });
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private void onViewClickedHintConnectedNet(final int viewId) {
+        try {
+            onCompleted();//如果正在刷新,则停止
+            getPopupWindowDialog().showPopupWindowDialog();
+            getPopupWindowDialog().showPopupWindowDialog(new PopupWindowDialog.PopupWindowDialogListener() {
+                @Override
+                public void cancleClick() {
+                    //第一次联网---->true
+                    CommonShareData.putBoolean(CommonShareData.FIRST_CONNECTED_NET,true);
+                    CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);
+                    mPopupWindowDialog.dismissPopupWindowDialog();
+                }
+
+                @Override
+                public void okClick() {
+                    //第一次联网---->false
+                    CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, mPopupWindowDialog.getCompoundState()?true:false);//用户允许始终使用网络
+                    CommonShareData.putBoolean(CommonShareData.FIRST_CONNECTED_NET, false);
+                    mPopupWindowDialog.dismissPopupWindowDialog();
+                    //--
+                    String pullUpAppPackageName = "";
+                    switch (viewId) {
+                        case R.id.hot_word_1://热词1监听
+                                pullUpAppPackageName = CommonUtils.getInstance().openHotWord(KLauncher.this, hotWord1.getUrl());
+                                PingManager.getInstance().reportUserAction4HotWord(hotWord1, pullUpAppPackageName);
+                            break;
+                        case R.id.hot_word_2://热词2监听
+                                pullUpAppPackageName = CommonUtils.getInstance().openHotWord(KLauncher.this, hotWord2.getUrl());
+                                PingManager.getInstance().reportUserAction4HotWord(hotWord2, pullUpAppPackageName);
+                            break;
+                        case R.id.hot_word_top:
+                                pullUpAppPackageName = CommonUtils.getInstance().openHotWord(KLauncher.this, topHotWord.getUrl());
+                                PingManager.getInstance().reportUserAction4HotWord(topHotWord, pullUpAppPackageName);
+                            break;
+                        case R.id.refresh_hotWord://刷新监听
+                                ObjectAnimator animator = ObjectAnimator.ofFloat(iv_refresh, "rotation", 0f, 360f);
+                                animator.setDuration(500);
+                                animator.start();
+                                mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
+                            break;
+                        case R.id.search_hint://搜索框监听
+                                Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
+                                if (null == hintHotWord || null == hintHotWord.getWord())
+                                    hintHotWord = HotWord.getHintHotWord();
+                                intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
+                                startActivity(intent);
+                            break;
+                        case R.id.search_mode:
+                        case R.id.search_icon:
+                                if (null != hintHotWord && null != hintHotWord.getWord()) {
+                                    pullUpAppPackageName = CommonUtils.getInstance().openHotWord(KLauncher.this, hintHotWord.getUrl());
+                                } else {
+                                    Toast.makeText(KLauncher.this, "没有获取到搜索热词,请刷新", Toast.LENGTH_SHORT).show();
+                                }
+                                PingManager.getInstance().reportUserAction4SearchBox(hintHotWord, pullUpAppPackageName);//HotWord hotWord,String pullUpAppPackageName
+                            break;
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     /**
      * 请求信息流数据
@@ -618,47 +684,68 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.onClick(view);
         try {
             boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET,false);//用户允许信息流使用网络
-            if (!userAllowKinflowUseNet) {
-                showFirstConnectedNetHint(MessageFactory.REQUEST_HOTWORD_KINFLOW);
-                return;
-            }
             String pullUpAppPackageName = "";
             switch (view.getId()) {
                 case R.id.hot_word_1://热词1监听
-                    pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hotWord1.getUrl());
-                    PingManager.getInstance().reportUserAction4HotWord(hotWord1, pullUpAppPackageName);
+                    if (userAllowKinflowUseNet) {
+                        pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hotWord1.getUrl());
+                        PingManager.getInstance().reportUserAction4HotWord(hotWord1, pullUpAppPackageName);
+                    } else {
+                        onViewClickedHintConnectedNet(R.id.hot_word_1);
+                    }
+
                     break;
                 case R.id.hot_word_2://热词2监听
-                    pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hotWord2.getUrl());
-                    PingManager.getInstance().reportUserAction4HotWord(hotWord2, pullUpAppPackageName);
+                    if (userAllowKinflowUseNet) {
+                        pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hotWord2.getUrl());
+                        PingManager.getInstance().reportUserAction4HotWord(hotWord2, pullUpAppPackageName);
+                    } else {
+                        onViewClickedHintConnectedNet(R.id.hot_word_2);
+                    }
                     break;
                 case R.id.hot_word_top:
-                    pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, topHotWord.getUrl());
-                    PingManager.getInstance().reportUserAction4HotWord(topHotWord, pullUpAppPackageName);
+                    if (userAllowKinflowUseNet) {
+                        pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, topHotWord.getUrl());
+                        PingManager.getInstance().reportUserAction4HotWord(topHotWord, pullUpAppPackageName);
+                    } else {
+                        onViewClickedHintConnectedNet(R.id.hot_word_top);
+                    }
+
                     break;
                 case R.id.refresh_hotWord://刷新监听
-    //                asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
-                    //此处传入mCardInfoList无用
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(iv_refresh, "rotation", 0f, 360f);
-                    animator.setDuration(500);
-                    animator.start();
-                    mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
+                    if (userAllowKinflowUseNet) {
+                        ObjectAnimator animator = ObjectAnimator.ofFloat(iv_refresh, "rotation", 0f, 360f);
+                        animator.setDuration(500);
+                        animator.start();
+                        mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
+                    } else {
+                        onViewClickedHintConnectedNet(R.id.refresh_hotWord);
+                    }
                     break;
                 case R.id.search_hint://搜索框监听
-                    Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
-                    if (null == hintHotWord || null == hintHotWord.getWord())
-                        hintHotWord = HotWord.getHintHotWord();
-                    intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
-                    startActivity(intent);
+                    if (userAllowKinflowUseNet) {
+                        Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
+                        if (null == hintHotWord || null == hintHotWord.getWord())
+                            hintHotWord = HotWord.getHintHotWord();
+                        intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
+                        startActivity(intent);
+                    } else {
+                        onViewClickedHintConnectedNet(R.id.search_hint);
+                    }
+
                     break;
                 case R.id.search_mode:
                 case R.id.search_icon:
-                    if (null != hintHotWord && null != hintHotWord.getWord()) {
-                        pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
+                    if (userAllowKinflowUseNet) {
+                        if (null != hintHotWord && null != hintHotWord.getWord()) {
+                            pullUpAppPackageName = CommonUtils.getInstance().openHotWord(this, hintHotWord.getUrl());
+                        } else {
+                            Toast.makeText(this, "没有获取到搜索热词,请刷新", Toast.LENGTH_SHORT).show();
+                        }
+                        PingManager.getInstance().reportUserAction4SearchBox(hintHotWord, pullUpAppPackageName);//HotWord hotWord,String pullUpAppPackageName
                     } else {
-                        Toast.makeText(this, "没有获取到搜索热词,请刷新", Toast.LENGTH_SHORT).show();
+                        onViewClickedHintConnectedNet(R.id.search_icon);
                     }
-                    PingManager.getInstance().reportUserAction4SearchBox(hintHotWord, pullUpAppPackageName);//HotWord hotWord,String pullUpAppPackageName
                     break;
                 //
                 /*
@@ -767,7 +854,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     public void onCompleted() {
         try {
-            if (mPullRefreshScrollView.isRefreshing())
+            if ((null!=mPullRefreshScrollView)&&mPullRefreshScrollView.isRefreshing())
             mPullRefreshScrollView.onRefreshComplete();
         } catch (Exception e) {
             try {
