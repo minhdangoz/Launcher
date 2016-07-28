@@ -44,9 +44,10 @@ public class KinflowBrower extends Activity {
         mWebView = (WebView) findViewById(R.id.webView);
 
         WebSettings webSettings = mWebView.getSettings();//通过WevView获取WevSitting
-        webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(true);
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);//网页加载不完全，有可能是你的DOM储存API没有打开
+
         webSettings.setLoadsImagesAutomatically(true);
 
 

@@ -1,30 +1,30 @@
 {
-    "lastModified": 1464454740000,
+    "lastModified": 1469639555000,
     "updateInterval": "31230000",
     "cards": [
         {
-            "id": "29",
-            "tyd": "3,351",
-            "carn": "热门新闻",
+            "id": "46",
+            "tyd": "3,301",
+            "carn": "今日头条热点新闻",
             "fot": "热点新闻",
-            "ord": "6",
-            "tyn": "新闻类,一点资讯热点",
-            "ext": "{\"clc\":\"http://www.yidianzixun.com/home?page=channel&id=hot\"}",
-            "ops": [
-                "23",
-                "com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity",
-                "0"
-            ],
-            "th": ""
-        },
-        {
-            "id": "34",
-            "tyd": "3,352",
-            "carn": "社会新闻",
-            "fot": "社会新闻",
             "ord": "19",
-            "tyn": "新闻类,一点资讯社会",
-            "ext": "{\"clc\":\"http://www.yidianzixun.com/home?page=channel&keyword=%E7%A4%BE%E4%BC%9A\"}",
+            "tyn": "新闻类,今日头条热点",
+            "ext": "{\"clc\":\"m.toutiao.com/?channel=news_hot#channel=news_hot\"}",
+            "ops": [
+                "2",
+                "com.tencent.mtt/com.tencent.mtt.SplashActivity",
+                "0"
+            ],
+            "th": ""
+        },
+        {
+            "id": "44",
+            "tyd": "1,100",
+            "carn": "美女图",
+            "fot": "",
+            "ord": "27",
+            "tyn": "广告类,yokmob",
+            "ext": "{\"img\":\"http://www.opgirl.cn/delong/images/26.jpg\",\"clc\":\"http://www.opgirl.cn/?did=150#cid=4\"}",
             "ops": [
                 "9",
                 "com.tencent.mtt/com.tencent.mtt.SplashActivity",
@@ -33,13 +33,13 @@
             "th": ""
         },
         {
-            "id": "30",
-            "tyd": "3,353",
-            "carn": "娱乐新闻",
-            "fot": "娱乐新闻",
-            "ord": "27",
-            "tyn": "新闻类,一点资讯娱乐",
-            "ext": "{\"clc\":\"http://www.yidianzixun.com/home?page=channel&keyword=%E5%A8%B1%E4%B9%90\"}",
+            "id": "47",
+            "tyd": "3,302",
+            "carn": "今日头条社会新闻",
+            "fot": "社会新闻",
+            "ord": "33",
+            "tyn": "新闻类,今日头条社会",
+            "ext": "{\"clc\":\"m.toutiao.com/?channel=news_society#channel=news_society\"}",
             "ops": [
                 "23",
                 "com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity",
@@ -48,13 +48,13 @@
             "th": ""
         },
         {
-            "id": "35",
-            "tyd": "3,364",
-            "carn": "搞笑段子",
-            "fot": "搞笑段子",
-            "ord": "28",
-            "tyn": "新闻类,一点资讯搞笑",
-            "ext": "{\"clc\":\"http://www.yidianzixun.com/home?page=channel&keyword=%E6%90%9E%E7%AC%91\"}",
+            "id": "48",
+            "tyd": "3,305",
+            "carn": "今日头条体育新闻",
+            "fot": "体育新闻",
+            "ord": "34",
+            "tyn": "新闻类,今日头条体育",
+            "ext": "{\"clc\":\"m.toutiao.com/?channel=news_sports#channel=news_sports\"}",
             "ops": [
                 "9",
                 "com.tencent.mtt/com.tencent.mtt.SplashActivity",
@@ -63,13 +63,28 @@
             "th": ""
         },
         {
-            "id": "36",
-            "tyd": "3,365",
-            "carn": "视频新闻",
-            "fot": "视频新闻",
-            "ord": "29",
-            "tyn": "新闻类,一点资讯视频",
-            "ext": "{\"clc\":\"http://www.yidianzixun.com/home?page=channel&keyword=%E8%A7%86%E9%A2%91\"}",
+            "id": "49",
+            "tyd": "3,303",
+            "carn": "今日头条娱乐新闻",
+            "fot": "娱乐新闻",
+            "ord": "35",
+            "tyn": "新闻类,今日头条娱乐",
+            "ext": "{\"clc\":\"m.toutiao.com/?channel=news_entertainment#channel=news_entertainment\"}",
+            "ops": [
+                "9",
+                "com.tencent.mtt/com.tencent.mtt.SplashActivity",
+                "0"
+            ],
+            "th": ""
+        },
+        {
+            "id": "50",
+            "tyd": "3,304",
+            "carn": "今日头条财经新闻",
+            "fot": "财经新闻",
+            "ord": "36",
+            "tyn": "新闻类,今日头条财经",
+            "ext": "{\"clc\":\"m.toutiao.com/?channel=news_finance#channel=news_finance\"}",
             "ops": [
                 "23",
                 "com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity",
