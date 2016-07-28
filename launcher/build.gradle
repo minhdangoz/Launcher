@@ -46,67 +46,67 @@ android {
     productFlavors{
         xiaomi {
             applicationId = "com.klauncher.xmlauncher"
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + XIAOMI_ID, WE_OPS_ID: WE_OPS_ID_XMZ,
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + XIAOMI_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + XIAOMI_ID + "\""
         }
         huawei {
             applicationId = "com.klauncher.hwlauncher"
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + HUAWEI_ID, WE_OPS_ID: WE_OPS_ID_HWS,
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + HUAWEI_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + HUAWEI_ID + "\""
         }
         lenovo {
             applicationId = "com.klauncher.lxlauncher"
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + LENOVO_ID, WE_OPS_ID: WE_OPS_ID_LK,
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + LENOVO_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LENOVO_ID + "\""
         }
         coolpad {
             applicationId = "com.klauncher.cplauncher"
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + COOLPAD_ID, WE_OPS_ID: WE_OPS_ID_LK,
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + COOLPAD_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + COOLPAD_ID + "\""
         }
         meizu {
             applicationId = "com.klauncher.mzlauncher"
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + MEIZU_ID, WE_OPS_ID: WE_OPS_ID_XMZ,
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + MEIZU_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + MEIZU_ID + "\""
         }
         samsung {
             applicationId = "com.klauncher.sxlauncher"
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + SAMSUNG_ID, WE_OPS_ID: WE_OPS_ID_HWS,
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + SAMSUNG_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + SAMSUNG_ID + "\""
         }
         oppo {
             applicationId = "com.klauncher.oplauncher"
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + OPPO_ID, WE_OPS_ID: WE_OPS_ID_OV,
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + OPPO_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + OPPO_ID + "\""
         }
         leshi {
             applicationId = "com.klauncher.lslauncher"
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + LESHI_ID, WE_OPS_ID: WE_OPS_ID_OTH,
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + LESHI_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LESHI_ID + "\""
         }
         vivo {
             applicationId = "com.klauncher.vilauncher"
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + VIVO_ID, WE_OPS_ID: WE_OPS_ID_OTH,
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + VIVO_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + VIVO_ID + "\""
         }
         jinli {
             applicationId = "com.klauncher.jllauncher"
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + JINLI_ID, WE_OPS_ID: WE_OPS_ID_OTH,
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + JINLI_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + JINLI_ID + "\""
         }
         zte {
             applicationId = "com.klauncher.ztelauncher"
-            manifestPlaceholders = [CHANNEL_ID: CHANNEL + ZTE_ID, WE_OPS_ID: WE_OPS_ID_OTH,
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + ZTE_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + ZTE_ID + "\""
         }
