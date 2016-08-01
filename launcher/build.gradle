@@ -204,12 +204,61 @@ android {
     }
 }
 
+//add by hw start - 渠道编译特定jar包
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+def String getCurrentFlavor() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+
+    Pattern pattern;
+
+    if (tskReqStr.contains("assemble"))
+        pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    else
+        pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
+
+    Matcher matcher = pattern.matcher(tskReqStr)
+
+    if (matcher.find())
+        return matcher.group(1).toLowerCase()
+    else {
+        println "NO MATCH FOUND"
+        return "";
+    }
+}
+
+gradle.projectsEvaluated {
+    preBuild.dependsOn(applyGoogleServiceByProperty)
+}
+// Then check on the parameter, which comes from the command line
+task applyGoogleServiceByProperty {
+    println getCurrentFlavor();
+    def flavorType = ""
+    flavorType = getCurrentFlavor();
+    if (flavorType.equals("payedCn")) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+}
+
 dependencies {
     compile(name: 'delong-reporter', ext: 'aar')
-    compile fileTree(include: ['*.jar'], exclude: 'android-support-v4.jar', dir: 'libs')
+//    compile fileTree(dir: 'libs', exclude: 'android-support-v4.jar', include: ['*.jar'])
+    def currentFlavor = getCurrentFlavor()
+    println "currentFlavor : " + currentFlavor
+    if (currentFlavor.equals("coolpad") || currentFlavor.equals("lenovo")) {
+        compile fileTree(dir: 'libs', exclude: ['android-support-v4.jar', 'lqops_AdSDK_V2_WebEye_Active_android.jar'], include: ['*.jar'])
+//        compile files('libs/uu_release.jar')
+    } else {
+        compile fileTree(dir: 'libs', exclude: ['android-support-v4.jar', 'uu_release.jar'], include: ['*.jar'])
+//        compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    }
+    //add by hw end - 渠道编译特定jar包
     provided files('dynamic_lib/icu-classes.jar')
     compile project(':theme')
     compile project(':notifier')
+    compile project(':process')
     compile 'com.android.support:recyclerview-v7:23.2.1'
     compile 'com.umeng.analytics:analytics:latest.integration'
     //kinflow
@@ -222,6 +271,13 @@ dependencies {
     compile (name:'statisticalanalysis-release',ext:'aar')
     compile (name:'getuiadrecelibrary-release',ext:'aar')
     //opmain 精简
-    compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+//    compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    //add by hw start - 渠道编译特定jar包
+    if (currentFlavor.equals("coolpad") || currentFlavor.equals("lenovo")) {
+        compile files('libs/uu_release.jar')
+    } else {
+        compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    }
+    //add by hw end - 渠道编译特定jar包
 }
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }

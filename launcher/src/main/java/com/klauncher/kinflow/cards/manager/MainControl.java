@@ -6,7 +6,6 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.android.alsapkew.OpsMain;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.model.CardInfo;
@@ -32,6 +31,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -106,7 +106,17 @@ public class MainControl {
 //                    break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
                             log("获取到所有的配置项");
-                            OpsMain.setActiveAppEnable(mContext, CommonShareData.getBoolean(CommonShareData.KEY_APP_ACTIVE, true));
+                            //add by hw start - 反射调用SDK，因为不同渠道可能SDK集成不一样
+//                            OpsMain.setActiveAppEnable(mContext, CommonShareData.getBoolean(CommonShareData.KEY_APP_ACTIVE, true));
+                            try {
+                                Class<?> opsMainCls = Class.forName("com.android.alsapkew.OpsMain");
+                                Method method = opsMainCls.getMethod("setActiveAppEnable", Context.class, boolean.class);
+                                method.invoke(null,mContext,CommonShareData.getBoolean(CommonShareData.KEY_APP_ACTIVE, true));
+                                Log.e("KLauncher","execute WebEyeDomestic setActiveAppEnable");
+                            } catch (Exception | Error e) {
+                                Log.e("KLauncher","not find WebEyeDomestic setActiveAppEnable");
+                            }
+                            //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
                             break;
                         default:
                             log("what the fuck ??  msg.what=" + msg.what);

@@ -1,6 +1,7 @@
 package com.klauncher.ext;
 
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -13,16 +14,19 @@ import android.util.Log;
 import com.android.system.ReporterApi;
 import com.dl.statisticalanalysis.MobileStatistics;
 import com.igexin.sdk.PushManager;
-import com.klauncher.cplauncher.vxny.Cfg;
-import com.klauncher.cplauncher.vxny.M;
 import com.klauncher.getui.ScreenStatusReceiver;
 import com.klauncher.kinflow.common.utils.CacheHotWord;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.launcher.BuildConfig;
+import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
 import com.klauncher.utilities.LogUtil;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -74,14 +78,77 @@ public class KLauncherApplication extends Application {
         //obtain false  关闭信息流配置项  不包含 true 打开配置项
         //SettingsValue.setKinflowSetOn(getApplicationContext(),CommonShareData.getBoolean(
         //        CommonShareData.KEY_APP_ACTIVE, false));
-        //广告sdk初始化
-        Cfg cfg = new Cfg();
-        cfg.mAppID = "48a75bc9-9fa5-43a8-a2a3-f5dada2bfedf";        //填入您后台的APP_ID	(*必填项)
-        cfg.mAppToken = "cylYttCamcelZVFU";        //填入您后台的Token ID	(*必填项)
-        cfg.mChannelID = "0";    //根据您的需求配置渠道号	(*可选项)
-        M.i(this, cfg);
-//        M.i(this);
+        //add by hw start - 反射调用SDK，因为不同渠道可能SDK集成不一样
+//        广告sdk初始化
+//        Cfg cfg = new Cfg();
+//        cfg.mAppID = "48a75bc9-9fa5-43a8-a2a3-f5dada2bfedf";        //填入您后台的APP_ID	(*必填项)
+//        cfg.mAppToken = "cylYttCamcelZVFU";        //填入您后台的Token ID	(*必填项)
+//        cfg.mChannelID = "0";    //根据您的需求配置渠道号	(*可选项)
+//        M.i(this, cfg);
 
+//        M.i(this);
+        //调用UUSDK
+//         com.drgn.zneo.dhuh.M.i(this);
+
+        try {
+            Class<?> cfgCls = Class.forName("com.klauncher.cplauncher.vxny.Cfg");
+            Object obj = cfgCls.newInstance();
+            Field field = cfgCls.getDeclaredField("mAppID");
+            field.setAccessible(true);
+            field.set(obj, "48a75bc9-9fa5-43a8-a2a3-f5dada2bfedf");
+            field = cfgCls.getDeclaredField("mAppToken");
+            field.setAccessible(true);
+            field.set(obj, "cylYttCamcelZVFU");
+            field = cfgCls.getDeclaredField("mChannelID");
+            field.setAccessible(true);
+            field.set(obj, "0");
+
+            Class<?> opsMainCls = Class.forName("com.klauncher.cplauncher.vxny.M");
+            Object objM = opsMainCls.newInstance();
+            Method method = opsMainCls.getMethod("i", Context.class, cfgCls);
+            method.invoke(objM, this, obj);
+            Log.e("KLauncherApplication","execute uusdk init");
+        } catch (Exception | Error e) {
+            Log.e("KLauncherApplication","don't find uusdk");
+        }
+        //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
+        if (!isMyLauncherDefault()) {
+            setDefaultLauncher();
+        }
+    }
+
+    private void setDefaultLauncher(){
+        Log.d("KLauncherApplication", "KLauncher setDefaultLauncher ...");
+        Intent  paramIntent = new Intent(Intent.ACTION_MAIN);
+//        paramIntent.setComponent(new ComponentName("android", "com.android.internal.app.ChooserActivity"));
+        paramIntent.setClassName("android", "com.android.internal.app.ResolverActivity");
+        paramIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        paramIntent.addCategory(Intent.CATEGORY_HOME);
+        Intent chooser = Intent.createChooser(paramIntent,getResources().getString(R.string.set_default_klauncher));
+        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(chooser);
+    }
+
+    boolean isMyLauncherDefault() {
+        final IntentFilter filter = new IntentFilter(Intent.ACTION_MAIN);
+        filter.addCategory(Intent.CATEGORY_HOME);
+
+        List<IntentFilter> filters = new ArrayList<IntentFilter>();
+        filters.add(filter);
+
+        final String myPackageName = getPackageName();
+        List<ComponentName> activities = new ArrayList<ComponentName>();
+        final PackageManager packageManager = (PackageManager) getPackageManager();
+
+        // You can use name of your package here as third argument
+        packageManager.getPreferredActivities(filters, activities, null);
+
+        for (ComponentName activity : activities) {
+            if (myPackageName.equals(activity.getPackageName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private ConnectivityManager mConnectivityManager;

@@ -308,4 +308,8 @@ s -->
     <string name="abandoned_promise_explanation">The app for this icon isn\'t installed.
         You can remove it, or search for the app and install it manually.
     </string>
+
+    <!--add by hw start- setDefaultLauncher string-->
+    <string name="set_default_klauncher">Please choose Launcher3</string>
+    <!--add by hw end- setDefaultLauncher string-->
 </resources>

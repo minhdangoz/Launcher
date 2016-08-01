@@ -125,4 +125,8 @@
     
     <string name="switch_2_single_layer_toast">切换到iOS模式</string>
     <string name="switch_2_double_layer_toast">切换到Android模式</string>
+
+    <!--add by hw start- setDefaultLauncher string-->
+    <string name="set_default_klauncher">请选择 默认桌面</string>
+    <!--add by hw end- setDefaultLauncher string-->
 </resources>
