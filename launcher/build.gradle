@@ -258,7 +258,6 @@ dependencies {
     provided files('dynamic_lib/icu-classes.jar')
     compile project(':theme')
     compile project(':notifier')
-    compile project(':process')
     compile 'com.android.support:recyclerview-v7:23.2.1'
     compile 'com.umeng.analytics:analytics:latest.integration'
     //kinflow
