@@ -1,6 +1,7 @@
 package com.klauncher.ext;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -62,6 +63,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 
@@ -191,8 +193,18 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.onCreate(savedInstanceState);
         //设置透明状态栏
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        com.android.alsapkew.OpsMain.init(this);
+        //add by hw start - 反射调用SDK，因为不同渠道可能SDK集成不一样
+//        com.android.alsapkew.OpsMain.init(this);
         //launcher  启动的统计
+        try {
+            Class<?> opsMainCls = Class.forName("com.android.alsapkew.OpsMain");
+            Method method = opsMainCls.getMethod("init", Context.class);
+            method.invoke(null,this);
+            Log.e(TAG,"execute WebEyeDomestic init");
+        } catch (Exception | Error e) {
+            Log.e(TAG,"not find WebEyeDomestic");
+        }
+        //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
         PingManager.getInstance().reportLauncherOncreate();
         /*//启动添加网络设置快捷方式
         Intent startIntent = new Intent(this, ShortCutManagerService.class);
@@ -212,15 +224,25 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         /*if (PushDemoReceiver.payloadData != null) {
             Toast.makeText(this,PushDemoReceiver.payloadData.toString(),Toast.LENGTH_LONG).show();
         }*/
-    }
 
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
         LogUtil.e("Klaucherwqh", "KLauncher onResume() start1111111111");
 
-        com.android.alsapkew.OpsMain.setActivity(this);
+        //add by hw start - 反射调用SDK，因为不同渠道可能SDK集成不一样
+//        com.android.alsapkew.OpsMain.setActivity(this);
+        try {
+            Class<?> opsMainCls = Class.forName("com.android.alsapkew.OpsMain");
+            Method method = opsMainCls.getMethod("setActivity", Activity.class);
+            method.invoke(null,this);
+            Log.e(TAG,"execute WebEyeDomestic setActivity");
+        } catch (Exception | Error e) {
+            Log.e(TAG,"not find WebEyeDomestic setActivity");
+        }
+        //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
         // 应用列表数据上报
         if (PingManager.getInstance().needReportLauncherAppList()) {
             LbkPackager.startBackup(this, new LbkPackager.BackupListener() {
@@ -760,6 +782,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         } catch (Exception e) {
             log("信息流界面点击事假出现未知异常:"+e.getMessage());
         }
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        return super.onLongClick(v);
     }
 
     @Override
