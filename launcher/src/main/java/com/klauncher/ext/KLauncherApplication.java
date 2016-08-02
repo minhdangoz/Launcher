@@ -9,6 +9,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.system.ReporterApi;
@@ -114,19 +116,31 @@ public class KLauncherApplication extends Application {
         //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
         if (!isMyLauncherDefault()) {
             setDefaultLauncher();
+        } else {
+            Log.d("KLauncherApplication","KLauncher is default");
         }
     }
 
     private void setDefaultLauncher(){
-        Log.d("KLauncherApplication", "KLauncher setDefaultLauncher ...");
+        Log.d("KLauncherApplication", "KLauncher setDefaultLauncher : "  + Build.MANUFACTURER);
         Intent  paramIntent = new Intent(Intent.ACTION_MAIN);
-//        paramIntent.setComponent(new ComponentName("android", "com.android.internal.app.ChooserActivity"));
-        paramIntent.setClassName("android", "com.android.internal.app.ResolverActivity");
-        paramIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        paramIntent.addCategory(Intent.CATEGORY_HOME);
-        Intent chooser = Intent.createChooser(paramIntent,getResources().getString(R.string.set_default_klauncher));
-        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(chooser);
+
+        /*if (TextUtils.equals(Build.MANUFACTURER, "HUAWEI")) {
+//            paramIntent.setComponent(new ComponentName("com.huawei.android.internal.app", "com.huawei.android.internal.app.HwResolverActivity"));
+//            paramIntent.setClassName("com.huawei.android.internal.app","com.huawei.android.internal.app.HwResolverActivity");
+            paramIntent.addCategory(Intent.CATEGORY_HOME);
+            paramIntent.addCategory(Intent.CATEGORY_DEFAULT);
+            paramIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(paramIntent);
+        } else */if (TextUtils.equals(Build.MANUFACTURER, "Xiaomi")) {
+            paramIntent.setComponent(new ComponentName("android", "com.android.internal.app.ResolverActivity"));
+            paramIntent.addCategory(Intent.CATEGORY_HOME);
+            paramIntent.addCategory(Intent.CATEGORY_DEFAULT);
+            Intent chooser = Intent.createChooser(paramIntent, getResources().getString(R.string.set_default_klauncher));
+            chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(chooser);
+        }
+
     }
 
     boolean isMyLauncherDefault() {
