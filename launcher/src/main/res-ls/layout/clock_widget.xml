@@ -14,13 +14,13 @@
         <ImageView
             android:id="@+id/img_clock_hour_0"
             android:layout_width="44dp"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"/>
         <ImageView
             android:id="@+id/img_clock_hour_1"
             android:layout_width="44dp"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:layout_toRightOf="@id/img_clock_hour_0"/>
@@ -39,14 +39,14 @@
         <ImageView
             android:id="@+id/img_clock_minute_0"
             android:layout_width="44dp"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:layout_toRightOf="@id/txt_clock_seg"/>
         <ImageView
             android:id="@+id/img_clock_minute_1"
             android:layout_width="44dp"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:layout_toRightOf="@id/img_clock_minute_0"/>
