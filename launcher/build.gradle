@@ -124,10 +124,12 @@ android {
         xiaomi {
             assets.srcDirs = ['src/main/assets-xm']
             res.srcDirs += ['src/main/res-xm']
+            manifest.srcFile 'src/main/res-xm/AndroidManifest.xml'
         }
         huawei {
             assets.srcDirs = ['src/main/assets-hw']
             res.srcDirs += ['src/main/res-hw']
+            manifest.srcFile 'src/main/res-hw/AndroidManifest.xml'
         }
         lenovo {
             assets.srcDirs = ['src/main/assets-lx']
@@ -142,30 +144,37 @@ android {
         meizu {
             assets.srcDirs = ['src/main/assets-mz']
             res.srcDirs += ['src/main/res-mz']
+            manifest.srcFile 'src/main/res-mz/AndroidManifest.xml'
         }
         samsung {
             assets.srcDirs = ['src/main/assets-sx']
             res.srcDirs += ['src/main/res-sx']
+            manifest.srcFile 'src/main/res-sx/AndroidManifest.xml'
         }
         oppo {
             assets.srcDirs = ['src/main/assets-op']
             res.srcDirs += ['src/main/res-op']
+            manifest.srcFile 'src/main/res-op/AndroidManifest.xml'
         }
         leshi {
             assets.srcDirs = ['src/main/assets-ls']
             res.srcDirs += ['src/main/res-ls']
+            manifest.srcFile 'src/main/res-ls/AndroidManifest.xml'
         }
         vivo {
             assets.srcDirs = ['src/main/assets-vi']
             res.srcDirs += ['src/main/res-vi']
+            manifest.srcFile 'src/main/res-vi/AndroidManifest.xml'
         }
         jinli {
             assets.srcDirs = ['src/main/assets-jl']
             res.srcDirs += ['src/main/res-jl']
+            manifest.srcFile 'src/main/res-jl/AndroidManifest.xml'
         }
         zte {
             assets.srcDirs = ['src/main/assets-zte']
             res.srcDirs += ['src/main/res-zte']
+            manifest.srcFile 'src/main/res-zte/AndroidManifest.xml'
         }
     }
 
@@ -244,16 +253,25 @@ task applyGoogleServiceByProperty {
 
 dependencies {
     compile(name: 'delong-reporter', ext: 'aar')
-//    compile fileTree(dir: 'libs', exclude: 'android-support-v4.jar', include: ['*.jar'])
+        compile fileTree(dir: 'libs', exclude: 'android-support-v4.jar', include: ['*.jar'])
     def currentFlavor = getCurrentFlavor()
     println "currentFlavor : " + currentFlavor
-    if (currentFlavor.equals("coolpad") || currentFlavor.equals("lenovo")) {
-        compile fileTree(dir: 'libs', exclude: ['android-support-v4.jar', 'lqops_AdSDK_V2_WebEye_Active_android.jar'], include: ['*.jar'])
-//        compile files('libs/uu_release.jar')
-    } else {
-        compile fileTree(dir: 'libs', exclude: ['android-support-v4.jar', 'uu_release.jar'], include: ['*.jar'])
-//        compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    }
+//    if (currentFlavor.equals("coolpad") || currentFlavor.equals("lenovo")) {
+//    } else {
+//
+//    }
+
+    xiaomiCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    huaweiCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    lenovoCompile files('uulibs/uu_release.jar')
+    coolpadCompile files('uulibs/uu_release.jar')
+    meizuCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    samsungCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    oppoCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    leshiCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    vivoCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    jinliCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    zteCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
     //add by hw end - 渠道编译特定jar包
     provided files('dynamic_lib/icu-classes.jar')
     compile project(':theme')
@@ -267,16 +285,9 @@ dependencies {
     compile 'com.android.support:cardview-v7:21.0.3'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
-    compile (name:'statisticalanalysis-release',ext:'aar')
-    compile (name:'getuiadrecelibrary-release',ext:'aar')
+    compile(name: 'statisticalanalysis-release', ext: 'aar')
+    compile(name: 'getuiadrecelibrary-release', ext: 'aar')
     //opmain 精简
-//    compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    //add by hw start - 渠道编译特定jar包
-    if (currentFlavor.equals("coolpad") || currentFlavor.equals("lenovo")) {
-        compile files('libs/uu_release.jar')
-    } else {
-        compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    }
-    //add by hw end - 渠道编译特定jar包
+    //    compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
 }
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }

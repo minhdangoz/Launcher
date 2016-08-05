@@ -58,5 +58,4 @@
 -keepattributes *Annotation*
 -dontwarn com.klauncher.cplauncher.vajcvw.**
 -keep public class com.klauncher.cplauncher.vajcvw.**{ *; }
--keep public class com.klauncher.cplauncher.vajcvw.**{ *; }
 -keep public class com.klauncher.cplauncher.vxny.**{*;}

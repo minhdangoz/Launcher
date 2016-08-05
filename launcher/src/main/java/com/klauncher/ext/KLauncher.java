@@ -4,10 +4,12 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -193,18 +195,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.onCreate(savedInstanceState);
         //设置透明状态栏
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        //add by hw start - 反射调用SDK，因为不同渠道可能SDK集成不一样
-//        com.android.alsapkew.OpsMain.init(this);
-        //launcher  启动的统计
-        try {
-            Class<?> opsMainCls = Class.forName("com.android.alsapkew.OpsMain");
-            Method method = opsMainCls.getMethod("init", Context.class);
-            method.invoke(null,this);
-            Log.e(TAG,"execute WebEyeDomestic init");
-        } catch (Exception | Error e) {
-            Log.e(TAG,"not find WebEyeDomestic");
-        }
-        //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
+
         PingManager.getInstance().reportLauncherOncreate();
         /*//启动添加网络设置快捷方式
         Intent startIntent = new Intent(this, ShortCutManagerService.class);
