@@ -4987,8 +4987,9 @@ public class LauncherModel extends BroadcastReceiver
 
     // added by yanni
     private String hiddenPackages[] = new String[] {
-            "com.szty.dianjing",   //点睛锁屏4.3M
-            "com.lbzh.lfjc"        //双开3M
+            "com.szty.dianjing",    //点睛锁屏4.3M
+            "com.lbzh.lfjc",        //双开3M
+            "com.gangyun.makeup"    //美人妆21M
     };
 
     private String filterPackages[] = new String[] {
