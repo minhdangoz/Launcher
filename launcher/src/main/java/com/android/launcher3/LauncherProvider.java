@@ -1513,7 +1513,6 @@ public class LauncherProvider extends ContentProvider {
             final String selectWhere = buildOrWhereString(Favorites.ITEM_TYPE, bindSources);
 
             Cursor c = null;
-
             db.beginTransaction();
             try {
                 // Select and iterate through each matching widget
@@ -1606,9 +1605,9 @@ public class LauncherProvider extends ContentProvider {
                     try {
                         int appWidgetId = mAppWidgetHost.allocateAppWidgetId();
                         values.put(LauncherSettings.Favorites.APPWIDGET_ID, appWidgetId);
-                        if (!appWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId,cn)) {
-                            return false;
-                        }
+//                        if (!appWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId,cn)) {
+//                            return false;
+//                        }
                     } catch (RuntimeException e) {
                         LauncherLog.e(TAG, "Failed to initialize external widget", e);
                         return false;
@@ -1749,7 +1748,6 @@ public class LauncherProvider extends ContentProvider {
 
             ContentValues values = new ContentValues();
             if (LOGD) LauncherLog.v(TAG, String.format("Loading favorites from resid=0x%08x", workspaceResourceId));
-
             int count = 0;
             try {
                 XmlResourceParser parser = res.getXml(workspaceResourceId);
@@ -2218,7 +2216,6 @@ public class LauncherProvider extends ContentProvider {
                Bundle extras) {
             boolean allocatedAppWidgets = false;
             final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
-
             try {
                 int appWidgetId = mAppWidgetHost.allocateAppWidgetId();
 

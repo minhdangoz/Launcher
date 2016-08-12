@@ -47,8 +47,9 @@ public class MenuController {
         widgetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showMenuItem(mLauncher.getWidgetListPanel());
-                mToolTipBar.updateToolTip(R.string.editmode_add_widget);
+//                showMenuItem(mLauncher.getWidgetListPanel());
+//                mToolTipBar.updateToolTip(R.string.editmode_add_widget);
+                mLauncher.startPickAppWidget();
             }
         });
         widgetButton.setOnTouchListener(mLauncher.getHapticFeedbackTouchListener());

@@ -54,6 +54,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
@@ -129,16 +130,17 @@ import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsController;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
-import com.dl.statisticalanalysis.MobileStatistics;
 import com.klauncher.ext.ClockWidgetProvider;
-import com.klauncher.kinflow.common.utils.CommonShareData;
+import com.klauncher.ext.ClockWidgetView;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.ext.SearchActivity;
+import com.klauncher.ext.SearchWidgetView;
+import com.klauncher.ext.ThemeResourceUtils;
+import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
+import com.klauncher.theme.ThemeController;
 import com.klauncher.utilities.LogUtil;
 import com.umeng.analytics.MobclickAgent;
-import com.klauncher.theme.ThemeController;
-import com.klauncher.launcher.R;
-import com.klauncher.ext.LauncherLog;
-import com.klauncher.ext.ThemeResourceUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -1160,6 +1162,53 @@ public class Launcher extends Activity
                     break;
             }
             return;
+        } else if (requestCode == REQUEST_PICK_APPWIDGET) {
+            if (resultCode == RESULT_OK) {
+                final int appWidgetId;
+                int widgetId = data != null ? data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
+                        : -1;
+                if (widgetId < 0) {
+                    appWidgetId = pendingAddWidgetId;
+                } else {
+                    appWidgetId = widgetId;
+                }
+                AppWidgetProviderInfo info = mAppWidgetManager.getAppWidgetInfo(appWidgetId);
+
+                PendingAddWidgetInfo createItemInfo = getPendingAddWidgetInfo(info);
+                int currentScreen = getCurrentWorkspaceScreen();
+                Workspace workspace = getWorkspace();
+                CellLayout layout = (CellLayout) workspace.getPageAt(currentScreen);
+
+                ItemInfo itemInfo = (ItemInfo) createItemInfo;
+                int[] targetCell = new int[2];
+
+                boolean showOutOfSpaceMessage = true;
+                if (layout != null) {
+                    // it will change span of widget. by zhangxh14
+                    // layout.calculateSpans(itemInfo);
+                    if (itemInfo != null) {
+                        showOutOfSpaceMessage = !layout.findCellForSpan(targetCell, itemInfo.spanX, itemInfo.spanY);
+                    } else {
+                        showOutOfSpaceMessage = !layout.findCellForSpan(targetCell, 1, 1);
+                    }
+                }
+
+                if (showOutOfSpaceMessage) {
+                    // there are no enough spaces for this widget to add in
+                    showOutOfSpaceMessage(false);
+                } else {
+                    createItemInfo.cellX = targetCell[0];
+                    createItemInfo.cellY = targetCell[1];
+                    createItemInfo.container = LauncherSettings.Favorites.CONTAINER_DESKTOP;
+                    createItemInfo.screenId = workspace.getIdForScreen(layout);
+                    resetAddInfo();
+                    setAddInfo(createItemInfo);
+                    addAppWidgetImpl(appWidgetId, createItemInfo, null, createItemInfo.info);
+                }
+
+
+            }
+            return;
         }
 
         boolean isWidgetDrop = (requestCode == REQUEST_PICK_APPWIDGET ||
@@ -1304,6 +1353,20 @@ public class Launcher extends Activity
 		/*Lenovo-sw [zhanggx1] [MODEL] [2013-01-16] [begin] (for auto reorder)*/
 		autoReorder("onActivityResult, end");
 		/*Lenovo-sw [zhanggx1] [MODEL] [2013-01-16] [end]*/
+    }
+
+    private PendingAddWidgetInfo getPendingAddWidgetInfo(AppWidgetProviderInfo aInfo) {
+        PendingAddWidgetInfo createItemInfo = new PendingAddWidgetInfo(
+                aInfo, null, null);
+        // Determine the widget spans and min resize spans.
+        int[] spanXY = Launcher.getSpanForWidget(this, aInfo);
+        createItemInfo.spanX = spanXY[0];
+        createItemInfo.spanY = spanXY[1];
+        int[] minSpanXY = Launcher.getMinSpanForWidget(this, aInfo);
+        createItemInfo.minSpanX = minSpanXY[0];
+        createItemInfo.minSpanY = minSpanXY[1];
+        createItemInfo.title = aInfo.label;
+        return createItemInfo;
     }
 
     private PendingAddArguments preparePendingAddArgs(int requestCode, Intent data, int
@@ -5725,7 +5788,6 @@ public class Launcher extends Activity
         if (waitUntilResume(r)) {
             return;
         }
-
         // Get the list of added shortcuts and intersect them with the set of shortcuts here
         final AnimatorSet anim = LauncherAnimUtils.createAnimatorSet();
         final Collection<Animator> bounceAnims = new ArrayList<Animator>();
@@ -5857,6 +5919,61 @@ public class Launcher extends Activity
             Log.d(TAG, "bindAppWidget: " + item);
         }
         final Workspace workspace = mWorkspace;
+        if (item.providerName.toString().contains(LauncherModel.KLAUNCHER_WIDGET_CLOCK_CLASS) ) {
+            LayoutInflater flater = LayoutInflater.from(this);
+            ClockWidgetView view = new ClockWidgetView(this);
+            view.setTag(item);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                PackageManager packageManager = getPackageManager();
+                if (packageManager != null) {
+                    Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
+                            Intent.CATEGORY_LAUNCHER).setComponent(
+                            new ComponentName("com.android.deskclock", "com.android.deskclock.DeskClock"));
+                    ResolveInfo resolved = packageManager.resolveActivity(AlarmClockIntent,
+                            PackageManager.MATCH_DEFAULT_ONLY);
+                    if (resolved != null) {
+                        startActivity(AlarmClockIntent);
+                    }
+                }
+                }
+            });
+
+            workspace.addInScreen(view, item.container, item.screenId, item.cellX,
+                    item.cellY, item.spanX, item.spanY, false);
+//            addWidgetToAutoAdvanceIfNeeded(item.hostView, appWidgetInfo);
+
+            workspace.requestLayout();
+            return;
+        }else if( item.providerName.toString().contains(LauncherModel.KLAUNCHER_WIDGET_SEARCH_CLASS)){
+            final SearchWidgetView view = new SearchWidgetView(this);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    if (view.isAppInstalled(Launcher.this, "com.sogou.activity.src")) {
+                        intent.setAction(Intent.ACTION_MAIN);
+                        intent.setClassName("com.sogou.activity.src", "com.sogou.activity.src.SplashActivity");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    } else if (!view.isAppInstalled(Launcher.this, "com.sogou.activity.src") && view.isAppInstalled(Launcher.this, "com.baidu.searchbox")) {
+                        intent.setAction(Intent.ACTION_MAIN);
+                        intent.setClassName("com.baidu.searchbox", "com.baidu.searchbox.SplashActivity");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    } else {
+                        intent = new Intent(Launcher.this, SearchActivity.class);
+                    }
+                    startActivity(intent);
+                }
+            });
+            view.setTag(item);
+            workspace.addInScreen(view, item.container, item.screenId, item.cellX,
+                    item.cellY, item.spanX, item.spanY, false);
+//            addWidgetToAutoAdvanceIfNeeded(item.hostView, appWidgetInfo);
+
+            workspace.requestLayout();
+            return;
+        }
 
         AppWidgetProviderInfo appWidgetInfo;
         if (((item.restoreStatus & LauncherAppWidgetInfo.FLAG_PROVIDER_NOT_READY) == 0) &&
@@ -5888,16 +6005,16 @@ public class Launcher extends Activity
                     newWidgetId, appWidgetInfo, options);
 
             // TODO consider showing a permission dialog when the widget is clicked.
-            if (!success) {
-                mAppWidgetHost.deleteAppWidgetId(newWidgetId);
-                if (DEBUG_WIDGETS) {
-                    Log.d(TAG, "Removing restored widget: id=" + item.appWidgetId
-                            + " belongs to component " + item.providerName
-                            + ", as the launcher is unable to bing a new widget id");
-                }
-                LauncherModel.deleteItemFromDatabase(this, item);
-                return;
-            }
+//            if (!success) {
+//                mAppWidgetHost.deleteAppWidgetId(newWidgetId);
+//                if (DEBUG_WIDGETS) {
+//                    Log.d(TAG, "Removing restored widget: id=" + item.appWidgetId
+//                            + " belongs to component " + item.providerName
+//                            + ", as the launcher is unable to bing a new widget id");
+//                }
+//                LauncherModel.deleteItemFromDatabase(this, item);
+//                return;
+//            }
 
             item.appWidgetId = newWidgetId;
 
@@ -8596,6 +8713,13 @@ public class Launcher extends Activity
 		}
 	}
     /*Lenovo-sw zhangyj19 add 2015/09/06 add search app modify end*/
+
+    public void startPickAppWidget(){
+        int appWidgetId = mAppWidgetHost.allocateAppWidgetId();
+        Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
+        pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        startActivityForResult(pickIntent, REQUEST_PICK_APPWIDGET);
+    }
 }
 
 interface LauncherTransitionable {

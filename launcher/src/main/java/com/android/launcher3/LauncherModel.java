@@ -48,8 +48,8 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.provider.BaseColumns;
-import android.text.TextUtils;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 
@@ -62,7 +62,6 @@ import com.android.launcher3.compat.PackageInstallerCompat.PackageInstallInfo;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsProvider;
-import com.android.launcher3.settings.SettingsValue;
 import com.klauncher.ext.LauncherLog;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
@@ -128,6 +127,9 @@ public class LauncherModel extends BroadcastReceiver
     private LoaderTask mLoaderTask;
     private boolean mIsLoaderTaskRunning;
     private volatile boolean mFlushingWorkerThread;
+
+    public static final String KLAUNCHER_WIDGET_CLOCK_CLASS = "com.klauncher.ext.ClockWidgetProvider";
+    public static final String KLAUNCHER_WIDGET_SEARCH_CLASS = "com.klauncher.ext.SearchWidgetProvider";
 
     // Specific runnable types that are run on the main thread deferred handler, this allows us to
     // clear all queued binding runnables when the Launcher activity is destroyed.
@@ -3131,18 +3133,22 @@ public class LauncherModel extends BroadcastReceiver
                                         ComponentName.unflattenFromString(savedProvider);
 
                                 final int restoreStatus = c.getInt(restoredIndex);
-                                final boolean isIdValid = (restoreStatus &
+                                boolean isIdValid = (restoreStatus &
                                         LauncherAppWidgetInfo.FLAG_ID_NOT_VALID) == 0;
 
                                 final boolean wasProviderReady = (restoreStatus &
                                         LauncherAppWidgetInfo.FLAG_PROVIDER_NOT_READY) == 0;
-
+//                                isIdValid = false;
                                 final AppWidgetProviderInfo provider = isIdValid
                                         ? widgets.getAppWidgetInfo(appWidgetId)
                                         : findAppWidgetProviderInfoWithComponent(context, component);
 
+                                boolean isKlauncherWidget = false;
+                                if (component.toString().contains(KLAUNCHER_WIDGET_CLOCK_CLASS) || component.toString().contains(KLAUNCHER_WIDGET_SEARCH_CLASS)) {
+                                    isKlauncherWidget = true;
+                                }
                                 final boolean isProviderReady = isValidProvider(provider);
-                                if (!isSafeMode && wasProviderReady && !isProviderReady) {
+                                if (!isSafeMode && wasProviderReady && !isProviderReady && !isKlauncherWidget) {
                                     String log = "Deleting widget that isn't installed anymore: "
                                             + "id=" + id + " appWidgetId=" + appWidgetId;
                                     Log.e(TAG, log);
@@ -3181,7 +3187,9 @@ public class LauncherModel extends BroadcastReceiver
 
                                         if ((restoreStatus & LauncherAppWidgetInfo.FLAG_RESTORE_STARTED) != 0) {
                                             // Restore has started once.
-                                        } else if (installingPkgs.contains(component.getPackageName())) {
+                                        } else if(isKlauncherWidget){
+
+                                        }else if (installingPkgs.contains(component.getPackageName())) {
                                             // App restore has started. Update the flag
                                             appWidgetInfo.restoreStatus |=
                                                     LauncherAppWidgetInfo.FLAG_RESTORE_STARTED;

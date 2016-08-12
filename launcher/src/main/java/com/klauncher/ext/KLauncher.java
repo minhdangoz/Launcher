@@ -4,12 +4,10 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -468,6 +466,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         PingManager.sIsKinflowIsUsed = false;
         LogUtil.e("sIsKinflowIsUsed", "scrollToKinflow" + PingManager.sIsKinflowIsUsed);
 //        log("滑到信息流界面");
+        if (!NetworkUtils.isNetworkAvailable(this)) {
+            return;
+        }
         try {
             if (CommonUtils.getInstance().allowActive2345()) {
                 CommonUtils.getInstance().openDefaultBrowserUrl(this, Const.URL_2345_HOMEPAGE);
@@ -476,7 +477,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET,false);//用户允许信息流使用网络
             if (isFirstUseKinflow) {//第一次使用信息流:请求数据;不是第一次请求数据,啥也不做.
                 if (userAllowKinflowUseNet) {//用户允许使用网络
-                    requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
+//                    requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
                 } else {//用户不允许使用网络
                     showFirstUseKinflowHint();
                 }
@@ -530,7 +531,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     @Override
                     public void cancleClick() {
                         //第一次联网---->true
-                        CommonShareData.putBoolean(CommonShareData.FIRST_CONNECTED_NET,true);
+                        CommonShareData.putBoolean(CommonShareData.FIRST_CONNECTED_NET, true);
                         CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);
                         mPopupWindowDialog.dismissPopupWindowDialog();
                     }

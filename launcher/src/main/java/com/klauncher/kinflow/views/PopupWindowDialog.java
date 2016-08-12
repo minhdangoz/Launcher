@@ -12,6 +12,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.klauncher.ext.KLauncherApplication;
+import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.launcher.R;
 
 /**
@@ -96,6 +97,7 @@ public class PopupWindowDialog extends PopupWindow implements View.OnClickListen
     }
 
     public void showPopupWindowDialog(PopupWindowDialogListener popupWindowDialogListener) {
+        CommonShareData.putBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW, false);
         showPopupWindowDialog();
         mDialogListener = popupWindowDialogListener;
     }
