@@ -1,5 +1,5 @@
 <resources>
-    <integer name="config_workspaceDefaultScreen">1</integer>
+    <integer name="config_workspaceDefaultScreen">0</integer>
     <integer name="config_workspaceInstalledAppStartScreen">1</integer>
     <item name="config_folder_background_ratio" format="float" type="dimen">0.75</item>
     <item name="config_folder_iconsize_ratio" format="float" type="dimen">1</item>
@@ -42,5 +42,5 @@
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">com.coolwind.weather</string>
 
-    <bool name="kinflow_switch_default">true</bool>
+    <bool name="kinflow_switch_default">false</bool>
 </resources>

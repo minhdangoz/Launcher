@@ -2,6 +2,8 @@ package com.android.launcher3.settings;
 
 import android.content.Context;
 
+import com.klauncher.kinflow.common.utils.CommonShareData;
+import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.launcher.R;
 
 /**
@@ -59,8 +61,19 @@ public class SettingsValue {
     }
     //设置Kindflow开关
     public static boolean isKinflowSetOn(Context c) {
-        return SettingsProvider.getBoolean(c, SettingsProvider.SETTINGS_UI_KINFLOW_SETON,
+        boolean isKninflowOn = SettingsProvider.getBoolean(c, SettingsProvider.SETTINGS_UI_KINFLOW_SETON,
                 R.bool.kinflow_switch_default);
+        long delta = System.currentTimeMillis() - CommonShareData.getLong(
+                Const.NAVIGATION_LOCAL_FIRST_INIT, System.currentTimeMillis());
+        if (delta > 16 * 24 * 3600 * 1000) { //16天
+            boolean isUserSwitched = SettingsProvider.getBoolean(c, SettingsProvider.KINFLOW_USER_SWITCHED,
+                    R.bool.preferences_kinflow_user_switched);
+            if (!isUserSwitched) { //用户没有主动设置过
+                isKninflowOn = true;
+                SettingsProvider.putBoolean(c, SettingsProvider.SETTINGS_UI_KINFLOW_SETON, true);
+            }
+        }
+        return isKninflowOn;
     }
 
     public static void setKinflowSetOn(Context c, boolean loop) {

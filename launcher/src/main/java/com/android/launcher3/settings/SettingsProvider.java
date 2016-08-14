@@ -58,6 +58,7 @@ public final class SettingsProvider {
     public static final String SETTINGS_UI_KINFLOW_SETON = "ui_kinflow_seton";
     public static final String KINFLOW_REPORT_SETOFF = "kinflow_report_setoff";
     public static final String KINFLOW_REPORT_SETON = "kinflow_report_seton";
+    public static final String KINFLOW_USER_SWITCHED = "kinflow_user_switched";
     public static final String SHORTCUT_WIFI_SETTING = "shortcut_wifi_seting";
     public static final String SHORTCUT_ADD_KLANCHER = "shortcut_add_klancher";
     /*Lenovo-sw zhangyj19 add 2015/09/09 add search app definition begin */

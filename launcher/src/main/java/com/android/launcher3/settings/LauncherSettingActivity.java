@@ -139,18 +139,19 @@ public class LauncherSettingActivity extends SettingBaseActivity implements OnPr
 	 * 是否显示kinflow信息流设置
 	 */
 	private void setKinflowSet() {
+		SettingsProvider.putBoolean(this, SettingsProvider.KINFLOW_USER_SWITCHED, true);
 		boolean current = SettingsValue.isKinflowSetOn(this);
 		SettingsValue.setKinflowSetOn(this, !current);
 		// need call Launcher to start show or hide kinflow
 		mLauncher.invalidateHasCustomContentToLeft();
-		if(!SettingsValue.isKinflowSetOn(this) && !SettingsValue.isKinflowOffReport(this)){
+		if (!SettingsValue.isKinflowSetOn(this) && !SettingsValue.isKinflowOffReport(this)) {
 			//信息流关闭时间上报统计
-			MobclickAgent.onEvent(this, "kinflow_set_off" );
+			MobclickAgent.onEvent(this, "kinflow_set_off");
 			SettingsValue.setKinflowOffReport(this,true);
 		}
-		if(SettingsValue.isKinflowSetOn(this) && !SettingsValue.isKinflowOnReport(this)){
+		if (SettingsValue.isKinflowSetOn(this) && !SettingsValue.isKinflowOnReport(this)) {
 			//信息流打开时间上报统计
-			MobclickAgent.onEvent(this, "kinflow_set_on" );
+			MobclickAgent.onEvent(this, "kinflow_set_on");
 			SettingsValue.setKinflowOnReport(this,true);
 		}
 		return;
