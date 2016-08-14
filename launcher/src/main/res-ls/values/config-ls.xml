@@ -29,6 +29,7 @@
         <item>cn.etouch.ecalendar</item>
         <item>com.moji.mjweather</item>
         <item>com.ss.android.article.news</item>
+        <item>com.dl.explorer</item>
     </array>
 
     <string name="config_icon_com.miguan.market">com.letv.games</string>
@@ -39,6 +40,7 @@
     <string name="config_icon_com.tencent.qqpimsecure">com.letv.android.supermanager</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">sina.mobile.tianqitongletv,com.letv.android.weather</string>
+    <string name="config_icon_com.dl.explorer">com.letv.android.filemanager,com.mediatek.filemanager,com.android.qrdfileexplorer</string>
 
     <bool name="kinflow_switch_default">true</bool>
 </resources>

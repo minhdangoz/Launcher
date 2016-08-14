@@ -30,6 +30,7 @@
         <item>cn.etouch.ecalendar.cpa</item>
         <item>com.moji.mjweather</item>
         <item>com.ss.android.article.news</item>
+        <item>com.dl.explorer</item>
     </array>
 
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
@@ -39,6 +40,7 @@
     <string name="config_icon_cn.etouch.ecalendar">com.bbk.calendar,com.android.calendar</string>
     <string name="config_icon_cn.etouch.ecalendar.cpa">com.bbk.calendar,com.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">com.vivo.weather</string>
+    <string name="config_icon_com.dl.explorer">com.android.filemanager,com.mediatek.filemanager,com.android.qrdfileexplorer</string>
 
     <bool name="kinflow_switch_default">false</bool>
 </resources>

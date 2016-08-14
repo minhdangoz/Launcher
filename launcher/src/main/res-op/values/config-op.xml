@@ -18,6 +18,7 @@
         <item>cn.etouch.ecalendar</item>
         <item>com.moji.mjweather</item>
         <item>com.ss.android.article.news</item>
+        <item>com.dl.explorer</item>
     </array>
 
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
@@ -26,6 +27,7 @@
     <string name="config_icon_com.tencent.qqpimsecure">com.color.safecenter,com.coloros.safecenter</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">com.oppo.weather,com.coloros.weather</string>
+    <string name="config_icon_com.dl.explorer">com.oppo.filemanager,com.coloros.filemanager</string>
 
     <bool name="kinflow_switch_default">false</bool>
 </resources>

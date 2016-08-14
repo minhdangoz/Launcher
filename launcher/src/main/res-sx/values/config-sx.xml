@@ -18,6 +18,7 @@
         <item>cn.etouch.ecalendar</item>
         <item>com.moji.mjweather</item>
         <item>com.ss.android.article.news</item>
+        <item>com.dl.explorer</item>
     </array>
     <string name="config_icon_com.miguan.market">com.samsung.android.game.gamehome</string>
     <string name="config_icon_cn.kuwo.player">com.sec.android.app.music,com.samsung.android.app.music.chn</string>
@@ -25,6 +26,7 @@
     <string name="config_icon_com.tencent.qqlive">com.samsung.video,com.samsung.everglades.video,com.samsung.android.video,com.samsung.android.onlinevideo</string>
     <string name="config_icon_com.UCMobile">com.android.browser,com.sec.android.app.sbrowser</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
+    <string name="config_icon_com.dl.explorer">com.sec.android.app.myfiles</string>
 
     <bool name="kinflow_switch_default">true</bool>
 </resources>

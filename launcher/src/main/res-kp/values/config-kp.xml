@@ -20,6 +20,7 @@
         <item>cn.etouch.ecalendar</item>
         <item>com.moji.mjweather</item>
         <item>com.ss.android.article.news</item>
+        <item>com.dl.explorer</item>
     </array>
 
     <string name="config_icon_cn.kuwo.player">com.android.music,com.coolpad.music</string>
@@ -30,6 +31,7 @@
     <string name="config_icon_com.moji.mjweather">com.chinamobile.mcloud,com.icoolme.android.weather</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.yulong.android.coolmart</string>
     <string name="config_icon_com.miguan.market">com.yulong.android.gamecenter</string>
+    <string name="config_icon_com.dl.explorer">com.mediatek.filemanager,com.android.qrdfileexplorer,com.yulong.android.filebrowser,com.sprd.fileexplorer</string>
 
     <bool name="kinflow_switch_default">true</bool>
 </resources>
