@@ -4091,7 +4091,10 @@ public class LauncherModel extends BroadcastReceiver
                             if (si.isPromise() && si.getTargetComponent() != null
                                     && launcherApps.isPackageEnabledForProfile(
                                             si.getTargetComponent().getPackageName(), user)) {
-                                installedPackages.add(si.getTargetComponent().getPackageName());
+                                //Yanni: do not add filtered package
+                                if (!isFilterPackage(si.getTargetComponent().getPackageName())) {
+                                    installedPackages.add(si.getTargetComponent().getPackageName());
+                                }
                             }
                         } else if (info instanceof LauncherAppWidgetInfo) {
                             LauncherAppWidgetInfo widget = (LauncherAppWidgetInfo) info;
