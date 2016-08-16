@@ -490,7 +490,7 @@
                 <data android:scheme="package"></data>
             </intent-filter>
         </receiver>
-         LqOps申明的组件 END
+         <!--LqOps申明的组件 END-->
         <!--set  android:theme Transparent 无标题-->
         <activity
             android:name="com.klauncher.kinflow.search.SearchActivity"
