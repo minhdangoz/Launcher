@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.kapp.xin.view.Interstitial;
 import com.klauncher.launcher.R;
 
 
@@ -38,6 +39,7 @@ public class KinflowBrower extends Activity {
         url = intent.getStringExtra(KEY_EXTRA_URL);
 
         mWebView.loadUrl(url);
+        Interstitial.getInstance(this,"1002","10005").showAd();
     }
 
     void initWebView(){
