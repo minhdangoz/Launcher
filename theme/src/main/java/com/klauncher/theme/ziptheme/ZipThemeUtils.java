@@ -1,20 +1,5 @@
 package com.klauncher.theme.ziptheme;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Enumeration;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-
-import com.klauncher.theme.Utilities;
-import com.klauncher.theme.ThemeUtils;
-import com.klauncher.theme.util.ThemeLog;
-
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
@@ -23,6 +8,21 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
+
+import com.klauncher.theme.ThemeUtils;
+import com.klauncher.theme.Utilities;
+import com.klauncher.theme.util.ThemeLog;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class ZipThemeUtils {
 	private static final String TAG = "ZipThemeUtils";
@@ -85,11 +85,12 @@ public class ZipThemeUtils {
     }
 	
     private static Bitmap resizeDrawable(Drawable drawable, int width, Context launcherApplication) {
-        if (drawable.getIntrinsicWidth() != width) {
+//        if (drawable.getIntrinsicWidth() != width) {
+
             return Utilities.createIconBitmapForZipTheme(drawable, launcherApplication);
-        } else {
-            return ((BitmapDrawable) drawable).getBitmap();
-        }
+//        } else {
+//            return ((BitmapDrawable) drawable).getBitmap();
+//        }
     }
     
     private static Bitmap findIconBitmapByIdNameFromZip(String iconName, Context launcherApplication, String pkg, int iconId) {
@@ -101,7 +102,13 @@ public class ZipThemeUtils {
         	Bitmap bg = ThemeUtils.getThemeIconBg()[0];
         	Bitmap fg = ThemeUtils.getThemeIconBg()[1];
         	Bitmap mask = ThemeUtils.getThemeIconBg()[2];
-        	Resources res = null;
+            if (bg == null) {
+                setThemeIconBg(launcherApplication);
+                 bg = ThemeUtils.getThemeIconBg()[0];
+                 fg = ThemeUtils.getThemeIconBg()[1];
+                 mask = ThemeUtils.getThemeIconBg()[2];
+            }
+            Resources res = null;
 			try {
 				//ThemeLog.i("xixia", "pkg:"+pkg+",iconId:"+iconId);
 				res = launcherApplication.getPackageManager().getResourcesForApplication(pkg);
@@ -109,6 +116,7 @@ public class ZipThemeUtils {
 	        	drawable = res.getDrawableForDensity(iconId, sIconDpi);
 			} catch (NameNotFoundException e) {
 				ThemeLog.i(TAG, "findIconBitmapByIdNameFromZip error", e);
+                e.printStackTrace();
 			}
             return Utilities.composeIcon(drawable, bg, fg, mask, launcherApplication);
         }
@@ -144,6 +152,7 @@ public class ZipThemeUtils {
                 e.printStackTrace();
             }
         }
+
         return null;
     }
     
@@ -207,6 +216,33 @@ public class ZipThemeUtils {
                     Drawable drawable = loadDrawable(resName[0], context);
                     if (drawable == null && resName[1] != null && !resName[1].equals(resName[0])) {
                         drawable = loadDrawable(resName[1], context);
+                    }
+
+                    if (drawable == null) {
+//                        if (drawable == null) {
+                            Bitmap bg = ThemeUtils.getThemeIconBg()[0];
+                            Bitmap fg = ThemeUtils.getThemeIconBg()[1];
+                            Bitmap mask = ThemeUtils.getThemeIconBg()[2];
+                            if (bg == null) {
+                                setThemeIconBg(context);
+                                bg = ThemeUtils.getThemeIconBg()[0];
+                                fg = ThemeUtils.getThemeIconBg()[1];
+                                mask = ThemeUtils.getThemeIconBg()[2];
+                            }
+                        if (bg != null) {
+
+                            try {
+                                //ThemeLog.i("xixia", "pkg:"+pkg+",iconId:"+iconId);
+                                res = context.getPackageManager().getResourcesForApplication(packageName);
+                                sIconDpi = ThemeUtils.updateIconDpi(context);
+                                drawable = res.getDrawableForDensity(iconId, sIconDpi);
+                            } catch (NameNotFoundException e) {
+                                ThemeLog.i(TAG, "findIconBitmapByIdNameFromZip error", e);
+                                e.printStackTrace();
+                            }
+                            return Utilities.composeIcon(drawable, bg, fg, mask, context);
+//                        return findIconBitmapByIdNameFromZip(resName[0], context, packageName, iconId);
+                        }
                     }
                     if (drawable != null) {
                         return Utilities.createIconBitmapForZipTheme(drawable, context);

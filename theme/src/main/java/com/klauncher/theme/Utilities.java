@@ -14,8 +14,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
-
-import com.klauncher.theme.R;
+import android.util.Log;
 
 public class Utilities {
 
@@ -522,7 +521,6 @@ public class Utilities {
                 if (fg != null) {
                     canvas.drawBitmap(fg, 0f, 0f, null);
                 }
-
                 canvas.setBitmap(null);
                 return bitmap;
             }

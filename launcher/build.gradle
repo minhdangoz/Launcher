@@ -253,14 +253,13 @@ task applyGoogleServiceByProperty {
 
 dependencies {
     compile(name: 'delong-reporter', ext: 'aar')
-        compile fileTree(dir: 'libs', exclude: 'android-support-v4.jar', include: ['*.jar'])
+    compile fileTree(dir: 'libs', exclude: 'android-support-v4.jar', include: ['*.jar'])
     def currentFlavor = getCurrentFlavor()
     println "currentFlavor : " + currentFlavor
-//    if (currentFlavor.equals("coolpad") || currentFlavor.equals("lenovo")) {
-//    } else {
-//
-//    }
-
+    //    if (currentFlavor.equals("coolpad") || currentFlavor.equals("lenovo")) {
+    //    } else {
+    //
+    //    }
     xiaomiCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
     huaweiCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
     lenovoCompile files('uulibs/uu_release.jar')
@@ -289,5 +288,6 @@ dependencies {
     compile(name: 'getuiadrecelibrary-release', ext: 'aar')
     //opmain 精简
     //    compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    compile files('libs/KappAdSdk_v2.1.jar')
 }
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }
