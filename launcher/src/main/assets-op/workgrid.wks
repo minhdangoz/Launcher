@@ -9,7 +9,7 @@
     "5x4": {
         "rows": "5",
         "columns": "4",
-        "iconsize": "60",
+        "iconsize": "52",
         "textsize": "11",
         "hotseat": "5"
     },
