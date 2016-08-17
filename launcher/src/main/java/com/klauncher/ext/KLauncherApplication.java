@@ -1,5 +1,6 @@
 package com.klauncher.ext;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
@@ -42,6 +43,9 @@ public class KLauncherApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (isMultiProgressInit()) {
+            return;
+        }
         //log mode 测试
         LogUtil.mLogModel = LogUtil.LogModel.DEBUG;
         LogUtil.e("LogUtil", "KLauncherApplication onCreate ");
@@ -132,6 +136,27 @@ public class KLauncherApplication extends Application {
         } else {
             Log.d("KLauncherApplication","KLauncher is default");
         }
+    }
+
+    private boolean isMultiProgressInit()
+    {
+        int pid = android.os.Process.myPid();
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo info : am.getRunningAppProcesses())
+        {
+            if ((info.pid == pid && info.processName.contains(":pushservice")))
+            {
+                Log.d("KLauncherApplication","isMultiProgressInit true , processName : " + info.processName);
+                return true;
+            }else if (info.pid == pid && info.processName.equals("com.android.system.safe")) {
+                // Init DELONG report
+                ReporterApi.onApplicationCreated(this);
+                ReporterApi.startService(this, ReporterApi.POST_AS_REGULAR);
+                return true;
+        }
+        }
+        Log.d("KLauncherApplication","isFirstProgressInit , pid " + pid);
+        return false;
     }
 
     private void setDefaultLauncher(){
