@@ -539,12 +539,12 @@ public class Launcher extends Activity
             }
         }
     }
-
+    MockAppWidgetReceiver mockAppReceiver;
     private void registerAppWidgetReceiver() {
-        MockAppWidgetReceiver receiver = new MockAppWidgetReceiver();
+        mockAppReceiver = new MockAppWidgetReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.klauncher.action.MOCK_APP_WIDGET");
-        registerReceiver(receiver, filter);
+        registerReceiver(mockAppReceiver, filter);
     }
 
     @Override
@@ -666,6 +666,7 @@ public class Launcher extends Activity
 
         // Support theme
         applyDefaultTheme();
+        //vivo error
         registerAppWidgetReceiver();
     }
 
@@ -2978,6 +2979,10 @@ public class Launcher extends Activity
         LauncherAnimUtils.onDestroyActivity();
 
         unregisterReceiver(protectedAppsChangedReceiver);
+        //取消mockAppReceiver广播注册
+        if(mockAppReceiver != null){
+            unregisterReceiver(mockAppReceiver);
+        }
     }
 
     public DragController getDragController() {
