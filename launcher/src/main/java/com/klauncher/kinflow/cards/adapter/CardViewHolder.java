@@ -164,11 +164,17 @@ class AdbannerCardViewHolder extends CardViewHolder implements View.OnClickListe
     @Override
     public void onClick(View v) {
         try {
+            String clickType = "";
+            String imageUrl = "";
             YMCardContentManager mManager = (YMCardContentManager) mCardInfo.getmCardContentManager();
 //        KinflowBrower.openUrl(mContext,mManager.getClickUrl());
             Bundle extras = new Bundle();
             extras.putString(OpenMode.OPEN_URL_KEY, mManager.getClickUrl());
             this.mCardInfo.open(mContext, extras);
+
+            clickType = PingManager.VALUE_BIG_IMAGE_CLICK_TYPE_YOKMOB;
+            imageUrl = mManager.getClickUrl();
+            PingManager.getInstance().reportUserAction4BigImage(clickType,imageUrl);
         } catch (Exception e) {
             Log.e("Kinflow", "onClick: yokmob时出错");
         }

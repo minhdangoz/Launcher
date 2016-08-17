@@ -214,6 +214,7 @@ public class PingManager {
     public static final String USER_ACTION_CLICK_SEARCHBOX = "click_search_icon";
     public static final String USER_ACTION_CLICK_CARD_NEWS_OPEN = "click_open_card_news";
     public static final String USER_ACTION_CLICK_CARD_NAVIGATION= "click_navigation";
+    public static final String USER_ACTION_CLICK_CARD_BIG_IMAGE= "click_big_image";
 
     public static final String KEY_HOTWORD_CONTENT_FROM= "hotWordFrom";
     public static final String KEY_PULL_UP_APP_PACKAGENAME= "pullUpAppPackageName";
@@ -222,6 +223,11 @@ public class PingManager {
     public static final String KEY_CARD_SECOND_TYPE_ID= "cardSecondTypeId";
     public static final String KEY_NAVIGATION_URL= "navigationUrl";
     public static final String KEY_BANNER_FROM= "bannerFrom";
+    public static final String KEY_CLICK_BIG_IMAGE_TYPE = "bigImageType";
+    public static final String KEY_CLICK_BIG_IMAGE_URL = "bigImageUrl";
+    public static final String VALUE_BIG_IMAGE_CLICK_TYPE_GAODE_DIANYINGYUAN = "gaode_dianYingYuan";
+    public static final String VALUE_BIG_IMAGE_CLICK_TYPE_GAODE_YULE = "gaode_yuLe";
+    public static final String VALUE_BIG_IMAGE_CLICK_TYPE_YOKMOB = "yokmob";
     public static final String VALUE_HOTWORD_CONTENT_FROM_BAIDU= "baidu";
     public static final String VALUE_HOTWORD_CONTENT_FROM_SHENMA= "shenma";
     public static final String VALUE_CARD_CONTENT_FROM_YIDIANZIXUN= "yiDianZiXun";
@@ -357,6 +363,14 @@ public class PingManager {
 //        toLog("新闻被点击上报信息:",pingMap);
         MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_NAVIGATION, pingMap);
         return  pingMap;
+    }
+
+    public Map<String,String> reportUserAction4BigImage (String bigImageClickType,String imageUrl) {
+        Map<String, String> pingMap = new HashMap<>();
+        pingMap.put(KEY_CLICK_BIG_IMAGE_TYPE,bigImageClickType);
+        pingMap.put(KEY_CLICK_BIG_IMAGE_URL,imageUrl);
+        MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_BIG_IMAGE,pingMap);
+        return pingMap;
     }
 
     public void toLog(String actionName,Map<String, String> pingMap) {

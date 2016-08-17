@@ -8,7 +8,7 @@
     <!-- Lenovo-SW zhaoxin5 20150626 set default transition effect to stack END -->
     <bool name="preferences_interface_homescreen_scrolling_wallpaper_scroll_default">false</bool>
     <bool name="preferences_interface_homescreen_scrolling_page_outlines_default">@bool/config_workspaceDefaultShowOutlines</bool>
-    <bool name="preferences_interface_homescreen_scrolling_fade_adjacent_default">@@bool/config_workspaceFadeAdjacentScreens</bool>
+    <bool name="preferences_interface_homescreen_scrolling_fade_adjacent_default">@bool/config_workspaceFadeAdjacentScreens</bool>
     <bool name="preferences_interface_homescreen_hide_icon_labels_default">false</bool>
     <!-- Lenovo-SW zhaoxin5 20150626 set default transition effect to stack START -->
     <string name="preferences_interface_drawer_scrolling_transition_effect">none</string>
