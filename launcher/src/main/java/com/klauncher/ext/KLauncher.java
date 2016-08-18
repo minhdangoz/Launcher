@@ -126,7 +126,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     mNetworkConnected = NetworkUtils.isNetworkAvailable(context);
                     if (mNetworkConnected) {//断开变为连接:
                         if (CommonShareData.getBoolean(CommonShareData.FIRST_CONNECTED_NET,false)) {//如果第一次联网:展现提示框
-                            showFirstConnectedNetHint(MessageFactory.REQUEST_ALL_KINFLOW);
+//                            showFirstConnectedNetHint(MessageFactory.REQUEST_ALL_KINFLOW);
                         } else {//非第一次联网:请求所有
                             requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
                         }

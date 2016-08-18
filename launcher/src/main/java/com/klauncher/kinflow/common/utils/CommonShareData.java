@@ -3,8 +3,16 @@ package com.klauncher.kinflow.common.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
+import java.io.IOException;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by xixionghui on 16/4/6.
@@ -28,16 +36,49 @@ public class CommonShareData {
 
     public static SharedPreferences sharedPreferences;
     public static SharedPreferences.Editor editor;
-    public static void init(Context context){
-        sharedPreferences = context.getSharedPreferences(COMMON_SHAREDPREFERENCE,Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(0));
-        putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, String.valueOf(0));
-        if (getLong(Const.NAVIGATION_LOCAL_FIRST_INIT, -1) == -1) {
-            putLong(Const.NAVIGATION_LOCAL_FIRST_INIT, System.currentTimeMillis());
+    public static void init(final Context context){
+        if (sharedPreferences == null) {
+            sharedPreferences = context.getSharedPreferences(COMMON_SHAREDPREFERENCE,Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
         }
-        //初始默认第一次
-        putBoolean(FIRST_CONNECTED_NET,true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                long time = getCurrentNetworkTime();
+                if ( time != -1) {
+                    putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(0));
+                    putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, String.valueOf(0));
+                    if (getLong(Const.NAVIGATION_LOCAL_FIRST_INIT, -1) == -1) {
+                        putLong(Const.NAVIGATION_LOCAL_FIRST_INIT, time);
+                    }
+                    //初始默认第一次
+                    putBoolean(FIRST_CONNECTED_NET,true);
+                }
+            }
+        }).start();
+
+    }
+
+    public static long getCurrentNetworkTime(){
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url("http://api.klauncher.com/v1/card/gettime/").build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            if (response.isSuccessful()) {
+                String str = response.body().string();
+                Pattern p = Pattern.compile("\\d+");
+                Matcher m = p.matcher(str);
+                m.find();
+                Log.d("CommonShareData", "getCurrentNetworkTime : " + m.group());
+                return Long.getLong(m.group());
+            } else {
+                Log.d("CommonShareData", "getCurrentNetworkTime failed  ");
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     public static boolean containsKey(String key) {
