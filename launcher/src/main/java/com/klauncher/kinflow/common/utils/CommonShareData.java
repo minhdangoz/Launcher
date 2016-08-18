@@ -64,6 +64,7 @@ public class CommonShareData {
         Request request = new Request.Builder().url("http://api.klauncher.com/v1/card/gettime/").build();
         Response response = null;
         try {
+            Log.d("CommonShareData", "getCurrentNetworkTime start");
             response = client.newCall(request).execute();
             if (response.isSuccessful()) {
                 String str = response.body().string();
