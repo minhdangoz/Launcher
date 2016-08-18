@@ -71,7 +71,7 @@ public class CommonShareData {
                 Matcher m = p.matcher(str);
                 m.find();
                 Log.d("CommonShareData", "getCurrentNetworkTime : " + m.group());
-                return Long.getLong(m.group());
+                return Long.parseLong(m.group());
             } else {
                 Log.d("CommonShareData", "getCurrentNetworkTime failed  ");
             }
