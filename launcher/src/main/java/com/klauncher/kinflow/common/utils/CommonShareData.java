@@ -5,10 +5,12 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -52,14 +54,13 @@ public class CommonShareData {
                         putLong(Const.NAVIGATION_LOCAL_FIRST_INIT, time);
                     }
                     //初始默认第一次
-                    putBoolean(FIRST_CONNECTED_NET,true);
                 }
             }
         }).start();
-
+        putBoolean(FIRST_CONNECTED_NET,true);
     }
 
-    public static long getCurrentNetworkTime(){
+    public static long getCurrentNetworkTime() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url("http://api.klauncher.com/v1/card/gettime/").build();
         Response response = null;
@@ -68,17 +69,23 @@ public class CommonShareData {
             response = client.newCall(request).execute();
             if (response.isSuccessful()) {
                 String str = response.body().string();
-                Pattern p = Pattern.compile("\\d+");
-                Matcher m = p.matcher(str);
-                m.find();
-                Log.d("CommonShareData", "getCurrentNetworkTime : " + m.group());
-                return Long.parseLong(m.group());
-            } else {
-                Log.d("CommonShareData", "getCurrentNetworkTime failed  ");
+                try {
+                    JSONArray jsonArray = new JSONArray(str);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject timeObj = (JSONObject) jsonArray.opt(i);
+
+                        Log.d("CommonShareData", "getCurrentNetworkTime : " + timeObj.getString("time"));
+                        return Long.parseLong(timeObj.getString("time"));
+                    }
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.d("CommonShareData", "getCurrentNetworkTime failed  ");
         return -1;
     }
 
