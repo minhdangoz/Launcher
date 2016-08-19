@@ -43,7 +43,6 @@ import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.CommonUtils;
-import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.navigation.adapter.NavigationAdapter;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
@@ -461,6 +460,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     public void scrollToKinflow() {
+        log("进入信息流");
         //super.scrollToKinflow();
         //初始化 是否试用 fasle
         PingManager.sIsKinflowIsUsed = false;
@@ -471,7 +471,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         }
         try {
             if (CommonUtils.getInstance().allowActive2345()) {
-                CommonUtils.getInstance().openDefaultBrowserUrl(this, Const.URL_2345_HOMEPAGE);
+                String skipUrl = CommonUtils.getInstance().nextSkipUrl();
+                CommonUtils.getInstance().openDefaultBrowserUrl(this, skipUrl);
             }
             boolean isFirstUseKinflow = CommonShareData.getBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW,false);
             boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET,false);//用户允许信息流使用网络
@@ -967,7 +968,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     }
 
     final protected static void log(String msg) {
-        KinflowLog.i(msg);
+        KinflowLog.e(msg);
     }
 
 }

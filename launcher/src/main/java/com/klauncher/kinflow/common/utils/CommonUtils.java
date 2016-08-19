@@ -439,21 +439,26 @@ public class CommonUtils {
      * @return
      */
     public boolean allowActive2345() {
-        if (!CommonShareData.getBoolean("active_2345", false)) {
+        if (!CommonShareData.getBoolean(CommonShareData.KEY_ACTIVE_2345, false)) {//如果后台配置不打开2345跳转,则返回false
+//            Log.e("Kinflow", "后台配置不允许跳转,返回false");
             return false;
         }
         if (!canOperateNow()) {
+//            Log.e("Kinflow", "首次激活一定时间内不可以运营,返回false");
             return false;
         }
-        if (isSkipedInterval()) {
-//            Log.i("Kinflow","24h以内已经跳转过,所以不在跳转");
-            return false;
-        } else {//超过24小时还没有自动跳转过
+//        if (isSkipedInterval()) {
+//            Log.e("Kinflow", "24h以内已经跳转过,所以不在跳转,返回false");
+//            return false;
+//        }
+        else {//超过24小时还没有自动跳转过
             if (random()) {//随机为跳转
+//                Log.e("Kinflow", "24h以内没有跳转过,随机:跳转,返回true");
                 CommonShareData.putLong(Const.KEY_LAST_SKIP_TIME, Calendar.getInstance().getTimeInMillis());
 //                Log.i("Kinflow", "24h以内没有跳转过,随机:跳转");
                 return  true;
             } else {//随机为不跳转
+//                Log.e("Kinflow", "24h以内没有跳转过,随机:不跳转,返回false");
 //                Log.i("Kinflow","24h以内没有跳转过,随机:不跳转");
                 return false;
             }
@@ -465,15 +470,18 @@ public class CommonUtils {
      * @return
      */
     public boolean canOperateNow() {
-        long configFirstUpdateMillis = CommonShareData.getLong(CommonShareData.KEY_CONFIG_FIRST_UPDATE, -1);
-        if (configFirstUpdateMillis == -1) {
+        //1.获取config的最后更新时间
+        long configFirstUpdateMillis = CommonShareData.getLong(CommonShareData.KEY_CONFIG_FIRST_UPDATE, -1);//config最新更新时间,精确到毫秒
+        if (configFirstUpdateMillis == -1) {//如果尚未更新config,则将最后更新config时间修改为当前时间.
             configFirstUpdateMillis = System.currentTimeMillis();
             CommonShareData.putLong(CommonShareData.KEY_CONFIG_FIRST_UPDATE, System.currentTimeMillis());
         }
+        //2.通过config的最后更新时间计算开启运营跳转网页的时间
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(configFirstUpdateMillis);
         calendar.add(Calendar.HOUR_OF_DAY, CommonShareData.getInt(
                 CommonShareData.KEY_OPERATOR_DELAY, CommonShareData.DEFAULT_OPERATOR_DELAY));
+        //3.如果当前时间已经超过运营跳转网页的时间,则返回true.否则返回false
         if (Calendar.getInstance().after(calendar)) {
             return true;
         } else {
@@ -508,5 +516,28 @@ public class CommonUtils {
             default:
                 return false;
         }
+    }
+
+
+    public String nextSkipUrl() {
+        String urlAddress = Const.URL_2345_HOMEPAGE;
+        try {
+        String urlList = CommonShareData.getString(CommonShareData.KEY_WEBPAGE_SKIP_URL_LIST,Const.URL_2345_HOMEPAGE);
+//            String urlList = "http://m.2345.com/?sc_delong,http://m.baidu.com/s?from=1010445i,https://sina.cn/,https://m.hao123.com/";
+            String[] urls = urlList.split(",");
+            if (urlList.length()==0) return urlAddress;
+            int cursor = CommonShareData.getInt(CommonShareData.KEY__URL_LIST_CURSOR,0);
+            urlAddress = urls[cursor];
+            //修改cursor
+            if (cursor==urls.length) {
+                cursor = 0;
+            }else {
+                cursor++;
+            }
+            CommonShareData.putInt(CommonShareData.KEY__URL_LIST_CURSOR,cursor);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return urlAddress;
     }
 }

@@ -132,12 +132,15 @@ public final class AsynchronousGet {
                                 parseTimestamp(responseBodyStr);
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH:
+                                log("config_swtich =  " + url);
                                 parseConfigSwitch(responseBodyStr);
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST:
+                                log("function_list =  " + url);
                                 parseConfigList(responseBodyStr);
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
+                                log("config =  " + url);
                                 parseConfig(responseBodyStr);
                                 break;
                             default:
@@ -151,7 +154,7 @@ public final class AsynchronousGet {
                         log("Message.what=" + msg.what + "的响应体为空,url=" + url);
                         msg.arg1 = RESPONSE_FAIL;//RESPONSE_NULL
                         if (!handler.hasMessages(msg.what))
-                        handler.sendMessage(msg);
+                            handler.sendMessage(msg);
                     }
                 }
             });
@@ -439,7 +442,7 @@ public final class AsynchronousGet {
             if (null == jsonArrayFunList || jsonArrayFunList.length() == 0) {
                 msg.arg1 = RESPONSE_FAIL;
             } else {
-                if (!CommonShareData.containsKey(CommonShareData.KEY_CONFIG_FIRST_UPDATE)) {
+                if (!CommonShareData.containsKey(CommonShareData.KEY_CONFIG_FIRST_UPDATE)) {//config更新时间
                     CommonShareData.putLong(CommonShareData.KEY_CONFIG_FIRST_UPDATE,
                             System.currentTimeMillis());
                 }
@@ -471,14 +474,19 @@ public final class AsynchronousGet {
                         } else if ("sm_prct".equals(key)) {
                             String value = funJson.optString(key);
                             CommonShareData.putString(key, value);
-                        } else if (CommonShareData.KEY_ACTIVE_2345.equals(key)) {
+                        } else if (CommonShareData.KEY_ACTIVE_2345.equals(key)) {//是否激活2345跳转---->网页跳转
                             String value = funJson.optString(key);
-                            CommonShareData.putBoolean(key, "1".equals(value));
-                        } else if (CommonShareData.KEY_ACTIVE_INTERVAL_2345.equals(key)) {
+                            CommonShareData.putBoolean(key, "1".equals(value));//如果为1,则激活跳转,否则关闭跳转
+                        } else if (CommonShareData.KEY_ACTIVE_INTERVAL_2345.equals(key)) {//网页跳转的间隔时间
                             String value = funJson.optString(key);
                             try {
                                 CommonShareData.putInt(key, Integer.valueOf(value));
                             } catch (Exception e) { }
+                        } else if (CommonShareData.KEY_WEBPAGE_SKIP_URL_LIST.equals(key)) {//跳转网页的,网址列表
+//                            String urlList = "http://m.2345.com/?sc_delong,http://m.baidu.com/s?from=1010445i,https://sina.cn/,https://m.hao123.com/";
+//                                CommonShareData.putString(key,urlList);
+
+                                CommonShareData.putString(key,funJson.optString(key));
                         } else if (CommonShareData.KEY_OPERATOR_DELAY.equals(key)) {
                             String value = funJson.optString(key);
                             try {
@@ -506,6 +514,6 @@ public final class AsynchronousGet {
     }
 
     final protected static void log(String msg) {
-        KinflowLog.i(msg);
+        KinflowLog.e(msg);
     }
 }

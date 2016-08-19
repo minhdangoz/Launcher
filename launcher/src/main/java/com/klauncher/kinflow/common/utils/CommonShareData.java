@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -25,7 +24,9 @@ public class CommonShareData {
     public static final String KEY_CONFIG_FIRST_UPDATE = "config_last_update";
     public static final String KEY_OPERATOR_DELAY = "opt_delay";
     public static final String KEY_ACTIVE_2345 = "active_2345";
-    public static final String KEY_ACTIVE_INTERVAL_2345 = "act_val_2345";
+    public static final String KEY_ACTIVE_INTERVAL_2345 = "act_val_2345";//间隔时长,单位小时
+    public static final String KEY_WEBPAGE_SKIP_URL_LIST = "webpage_skip_url_list";
+    public static final String KEY__URL_LIST_CURSOR = "url_list_cursor";
     public static final String KEY_APP_ACTIVE = "app_active";
     public static final String KEY_APP_PACKAGE_NAME = "app_package_name";
     public static final String KEY_JINRITOUTIAO_ACCESS_TOKEN = "jinritoutiao_access_token";
@@ -33,7 +34,7 @@ public class CommonShareData {
     public static final String KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET = "user_allow_kinflow_use_net";
     public static final String FIRST_CONNECTED_NET = "first_connected_net";
 
-    public static final int DEFAULT_OPERATOR_DELAY = 72;
+    public static final int DEFAULT_OPERATOR_DELAY = 72;//默认开启网页(2345)跳转的延长时间(单位:小时)
     public static final int DEFAULT_ACTIVE_INTERVAL_2345 = 12;
 
     public static SharedPreferences sharedPreferences;
