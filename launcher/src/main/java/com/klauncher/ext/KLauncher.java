@@ -472,7 +472,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         try {
             if (CommonUtils.getInstance().allowActive2345()) {
                 String skipUrl = CommonUtils.getInstance().nextSkipUrl();
-                CommonUtils.getInstance().openDefaultBrowserUrl(this, skipUrl);
+                CommonUtils.getInstance().openDefaultBrowserUrl(this, skipUrl);//跳转--->埋点统计
+                PingManager.getInstance().reportAutoAction4Skip2Url(skipUrl);
             }
             boolean isFirstUseKinflow = CommonShareData.getBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW,false);
             boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET,false);//用户允许信息流使用网络

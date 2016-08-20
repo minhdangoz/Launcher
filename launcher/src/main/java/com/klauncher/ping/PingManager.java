@@ -215,6 +215,7 @@ public class PingManager {
     public static final String USER_ACTION_CLICK_CARD_NEWS_OPEN = "click_open_card_news";
     public static final String USER_ACTION_CLICK_CARD_NAVIGATION= "click_navigation";
     public static final String USER_ACTION_CLICK_CARD_BIG_IMAGE= "click_big_image";
+    public static final String USER_ACTION_AUTO_SKIP_WEBPAGE= "auto_skip_webpage";
 
     public static final String KEY_HOTWORD_CONTENT_FROM= "hotWordFrom";
     public static final String KEY_PULL_UP_APP_PACKAGENAME= "pullUpAppPackageName";
@@ -225,6 +226,7 @@ public class PingManager {
     public static final String KEY_BANNER_FROM= "bannerFrom";
     public static final String KEY_CLICK_BIG_IMAGE_TYPE = "bigImageType";
     public static final String KEY_CLICK_BIG_IMAGE_URL = "bigImageUrl";
+    public static final String KEY_AUTO_SKIP_URL = "autoSkipUrl";
     public static final String VALUE_BIG_IMAGE_CLICK_TYPE_GAODE_DIANYINGYUAN = "gaode_dianYingYuan";
     public static final String VALUE_BIG_IMAGE_CLICK_TYPE_GAODE_YULE = "gaode_yuLe";
     public static final String VALUE_BIG_IMAGE_CLICK_TYPE_YOKMOB = "yokmob";
@@ -370,6 +372,13 @@ public class PingManager {
         pingMap.put(KEY_CLICK_BIG_IMAGE_TYPE,bigImageClickType);
         pingMap.put(KEY_CLICK_BIG_IMAGE_URL,imageUrl);
         MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_BIG_IMAGE,pingMap);
+        return pingMap;
+    }
+
+    public Map<String,String> reportAutoAction4Skip2Url (String skip2Url) {
+        Map<String, String> pingMap = new HashMap<>();
+        pingMap.put(KEY_AUTO_SKIP_URL, skip2Url);
+        MobileStatistics.onEvent(USER_ACTION_AUTO_SKIP_WEBPAGE, pingMap);
         return pingMap;
     }
 
