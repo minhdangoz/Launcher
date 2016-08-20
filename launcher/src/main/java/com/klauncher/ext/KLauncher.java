@@ -460,7 +460,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     public void scrollToKinflow() {
-        log("进入信息流");
         //super.scrollToKinflow();
         //初始化 是否试用 fasle
         PingManager.sIsKinflowIsUsed = false;
