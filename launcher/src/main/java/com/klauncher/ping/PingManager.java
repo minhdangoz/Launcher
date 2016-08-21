@@ -223,6 +223,7 @@ public class PingManager {
     public static final String KEY_CARD_CONTENT_FROM= "cardContentFrom";
     public static final String KEY_CARD_SECOND_TYPE_ID= "cardSecondTypeId";
     public static final String KEY_NAVIGATION_URL= "navigationUrl";
+    public static final String KEY_NAVIGATION_ORDER= "navigationOrder";
     public static final String KEY_BANNER_FROM= "bannerFrom";
     public static final String KEY_CLICK_BIG_IMAGE_TYPE = "bigImageType";
     public static final String KEY_CLICK_BIG_IMAGE_URL = "bigImageUrl";
@@ -362,6 +363,7 @@ public class PingManager {
 //        pingMap.put("action", USER_ACTION_CLICK_CARD_NAVIGATION);
         //添加来源标识
         pingMap.put(KEY_NAVIGATION_URL, navigation.getNavUrl());
+        pingMap.put(KEY_NAVIGATION_ORDER, String.valueOf(navigation.getNavOrder()));
 //        toLog("新闻被点击上报信息:",pingMap);
         MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_NAVIGATION, pingMap);
         return  pingMap;
