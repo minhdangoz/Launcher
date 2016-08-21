@@ -359,12 +359,10 @@ public class PingManager {
     public Map<String, String> reportUserAction4Navigation(Navigation navigation){
         sIsKinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
-        //添加action
-//        pingMap.put("action", USER_ACTION_CLICK_CARD_NAVIGATION);
-        //添加来源标识
+        //添加事件key---value
         pingMap.put(KEY_NAVIGATION_URL, navigation.getNavUrl());
         pingMap.put(KEY_NAVIGATION_ORDER, String.valueOf(navigation.getNavOrder()));
-//        toLog("新闻被点击上报信息:",pingMap);
+        //添加事件tag
         MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_NAVIGATION, pingMap);
         return  pingMap;
     }
