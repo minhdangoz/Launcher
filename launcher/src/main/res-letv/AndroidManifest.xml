@@ -491,6 +491,32 @@
             </intent-filter>
         </receiver>
         <!-- LqOps申明的组件 END -->
+        <!-- GDT sdk begin -->
+        <service
+            android:name="com.qq.e.comm.DownloadService"
+            android:exported="false" >
+        </service>
+
+        <activity
+            android:name="com.qq.e.ads.ADActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" >
+        </activity>
+        <!-- GDT sdk end   -->
+        <!-- baidu sdk begin -->
+        <activity
+            android:name="com.baidu.mobads.AppActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:taskAffinity="com.baidu.mobads.second"
+            />
+
+        <!-- 信息流广告必须添加 -->
+        <activity
+            android:name="com.baidu.mobad.feeds.BaiduActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:taskAffinity="com.baidu.mobads.second"
+            />
+        <!-- baidu sdk end -->
         <!--set  android:theme Transparent 无标题-->
         <activity
             android:name="com.klauncher.kinflow.search.SearchActivity"

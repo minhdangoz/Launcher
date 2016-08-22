@@ -279,6 +279,7 @@ dependencies {
     samsungCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
     oppoCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
     leshiCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    letvCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
     vivoCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
     jinliCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
     zteCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')

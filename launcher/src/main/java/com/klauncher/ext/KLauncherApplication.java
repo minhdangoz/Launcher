@@ -99,15 +99,15 @@ public class KLauncherApplication extends Application {
         //add by hw start - 反射调用SDK，因为不同渠道可能SDK集成不一样
 //        com.android.alsapkew.OpsMain.init(this);
         //launcher  启动的统计
+        //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
         try {
             Class<?> opsMainCls = Class.forName("com.android.alsapkew.OpsMain");
             Method method = opsMainCls.getMethod("init", Context.class);
-            method.invoke(null,this);
+            method.invoke(null, this);
             Log.e("KLauncherApplication","execute WebEyeDomestic init");
         } catch (Exception | Error e) {
             Log.e("KLauncherApplication","not find WebEyeDomestic");
         }
-        //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
 
         try {
             Class<?> cfgCls = Class.forName("com.klauncher.cplauncher.vxny.Cfg");

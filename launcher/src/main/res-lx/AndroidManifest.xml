@@ -751,7 +751,7 @@
         <activity
             android:name="com.klauncher.getui.HomeSelector"
             android:label="HomeSelector"/>
-        <!--广告sdk begin-->
+        <!--广告uusdk begin-->
         <receiver android:name="com.klauncher.cplauncher.vajcvw.a.a.c.b">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -784,7 +784,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <!--广告sdk end-->
+        <!--广告uusdk end-->
 
     </application>
 </manifest>
