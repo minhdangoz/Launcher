@@ -187,11 +187,24 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         addToCustomContentPage(customView, callbacks, "custom-view");
     }
 
+    private BroadcastReceiver mActiveReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String pkgName = intent.getStringExtra("pkg");
+            int action = intent.getIntExtra("action", -1);
+            PingManager.getInstance().reportPAL(pkgName, action);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置透明状态栏
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.ops.action.active");
+        registerReceiver(mActiveReceiver, filter);
 
         PingManager.getInstance().reportLauncherOncreate();
         /*//启动添加网络设置快捷方式

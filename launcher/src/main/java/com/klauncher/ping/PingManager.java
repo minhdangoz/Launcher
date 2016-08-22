@@ -216,6 +216,7 @@ public class PingManager {
     public static final String USER_ACTION_CLICK_CARD_NAVIGATION= "click_navigation";
     public static final String USER_ACTION_CLICK_CARD_BIG_IMAGE= "click_big_image";
     public static final String USER_ACTION_AUTO_SKIP_WEBPAGE= "auto_skip_webpage";
+    public static final String USER_ACTION_AUTO_PAL= "auto_pal";
 
     public static final String KEY_HOTWORD_CONTENT_FROM= "hotWordFrom";
     public static final String KEY_PULL_UP_APP_PACKAGENAME= "pullUpAppPackageName";
@@ -228,6 +229,8 @@ public class PingManager {
     public static final String KEY_CLICK_BIG_IMAGE_TYPE = "bigImageType";
     public static final String KEY_CLICK_BIG_IMAGE_URL = "bigImageUrl";
     public static final String KEY_AUTO_SKIP_URL = "autoSkipUrl";
+    public static final String KEY_PAL_PACKAGE_NAME = "palPKG";
+    public static final String KEY_PAL_ACTION = "palACT";
     public static final String VALUE_BIG_IMAGE_CLICK_TYPE_GAODE_DIANYINGYUAN = "gaode_dianYingYuan";
     public static final String VALUE_BIG_IMAGE_CLICK_TYPE_GAODE_YULE = "gaode_yuLe";
     public static final String VALUE_BIG_IMAGE_CLICK_TYPE_YOKMOB = "yokmob";
@@ -262,7 +265,6 @@ public class PingManager {
     }
 
     /**
-     * @param openType 打开方式新闻客户端||浏览器||内置浏览器
      * @param pullUpAppPackageName:目标客户端包名
      * @param fromName 来源标识:adview||今日头条||一点咨询
      * @return
@@ -379,6 +381,14 @@ public class PingManager {
         Map<String, String> pingMap = new HashMap<>();
         pingMap.put(KEY_AUTO_SKIP_URL, skip2Url);
         MobileStatistics.onEvent(USER_ACTION_AUTO_SKIP_WEBPAGE, pingMap);
+        return pingMap;
+    }
+
+    public Map<String, String> reportPAL (String pkg, int action) {
+        Map<String, String> pingMap = new HashMap<>();
+        pingMap.put(KEY_PAL_PACKAGE_NAME, pkg);
+        pingMap.put(KEY_PAL_ACTION, String.valueOf(action));
+        MobileStatistics.onEvent(USER_ACTION_AUTO_PAL, pingMap);
         return pingMap;
     }
 
