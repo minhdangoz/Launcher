@@ -92,6 +92,12 @@ android {
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LESHI_ID + "\""
         }
+        letv {
+            applicationId = "com.klauncher.lslauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + LESHI_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LESHI_ID + "\""
+        }
         vivo {
             applicationId = "com.klauncher.vilauncher"
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + VIVO_ID, WE_OPS_ID: KAPP_OPS_ID,
@@ -160,6 +166,11 @@ android {
             assets.srcDirs = ['src/main/assets-ls']
             res.srcDirs += ['src/main/res-ls']
             manifest.srcFile 'src/main/res-ls/AndroidManifest.xml'
+        }
+        letv {
+            assets.srcDirs = ['src/main/assets-letv']
+            res.srcDirs += ['src/main/res-letv']
+            manifest.srcFile 'src/main/res-letv/AndroidManifest.xml'
         }
         vivo {
             assets.srcDirs = ['src/main/assets-vi']
