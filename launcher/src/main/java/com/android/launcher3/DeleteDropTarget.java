@@ -47,6 +47,7 @@ import com.android.launcher3.compat.UserHandleCompat;
 import com.klauncher.launcher.R;
 import com.klauncher.ext.KLauncherAppDisguise;
 import com.klauncher.ping.PingManager;
+import com.klauncher.utilities.LogUtil;
 
 public class DeleteDropTarget extends ButtonDropTarget {
     private static int DELETE_ANIMATION_DURATION = 285;
@@ -174,13 +175,16 @@ public class DeleteDropTarget extends ButtonDropTarget {
 
         if (info instanceof ItemInfo) {
             ItemInfo item = (ItemInfo) info;
+            LogUtil.d("willAcceptDrop",item.toString());
             if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPWIDGET ||
                     item.itemType == LauncherSettings.Favorites.ITEM_TYPE_SHORTCUT) {
+                LogUtil.d("willAcceptDrop",item.toString());
                 return true;
             }
 
             if (!LauncherAppState.isDisableAllApps() &&
                     item.itemType == LauncherSettings.Favorites.ITEM_TYPE_FOLDER) {
+                LogUtil.d("willAcceptDrop",item.toString());
                 return true;
             }
 

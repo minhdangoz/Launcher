@@ -50,7 +50,7 @@ public class SearchWidgetView extends FrameLayout {
     }
 
     private void init(){
-        mRootView.setOnClickListener(new LinearLayout.OnClickListener() {
+       /* mRootView.setOnClickListener(new LinearLayout.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -71,7 +71,7 @@ public class SearchWidgetView extends FrameLayout {
                 }
                 mContext.startActivity(intent);
             }
-        });
+        });*/
     }
 
     public boolean isAppInstalled(Context context, String packageName) {
