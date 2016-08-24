@@ -41,6 +41,9 @@ public class PingManager {
     public static final String USER_ACTION_INSTALL = "klauncher_action_install";
     public static final String USER_ACTION_REPORTAPPLIST = "klauncher_action_reportLauncherAppList";
     public static final String KLAUNCHER_ONCREATE_REPORT = "klauncher_action_launcherOnCreate";
+    //搜索widget点击上报
+    public static final String KLAUNCHER_WIDGET_BAIDU_SEARCH = "klauncher_widget_baidu_search";
+    public static final String KLAUNCHER_WIDGET_SOUGOU_SEARCH = "klauncher_widget_sogou_search";
 
     private static final int MAX_BUFFER_SIZE = 10;
     private static final String SP_PING = "ping";

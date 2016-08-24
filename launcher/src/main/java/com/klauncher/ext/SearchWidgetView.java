@@ -1,14 +1,18 @@
 package com.klauncher.ext;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.klauncher.launcher.R;
+import com.klauncher.ping.PingManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +30,7 @@ public class SearchWidgetView extends FrameLayout {
         mRootView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.search_widget, this, false);
         addView(mRootView);
         mContext = context;
-//        init();
+        init();
     }
 
     public SearchWidgetView(Context context, AttributeSet attrs) {
@@ -34,7 +38,7 @@ public class SearchWidgetView extends FrameLayout {
         mRootView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.search_widget, this, false);
         addView(mRootView);
         mContext = context;
-//        init();
+        init();
     }
 
     public SearchWidgetView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -42,28 +46,32 @@ public class SearchWidgetView extends FrameLayout {
         mRootView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.search_widget, this, false);
         addView(mRootView);
         mContext = context;
-//        init();
+        init();
     }
 
     private void init(){
-//        mRootView.setOnClickListener(new LinearLayout.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent();
-//                if ( isAppInstalled(mContext, "com.sogou.activity.src")) {
-//                    intent.setAction(Intent.ACTION_MAIN);
-//                    intent.setClassName("com.sogou.activity.src","com.sogou.activity.src.SplashActivity");
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                }else if(!isAppInstalled(mContext, "com.sogou.activity.src")&& isAppInstalled(mContext,"com.baidu.searchbox")){
-//                    intent.setAction(Intent.ACTION_MAIN);
-//                    intent.setClassName("com.baidu.searchbox","com.baidu.searchbox.SplashActivity");
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                }else {
-//                    intent = new Intent(mContext, SearchActivity.class);
-//                }
-//                mContext.startActivity(intent);
-//            }
-//        });
+        mRootView.setOnClickListener(new LinearLayout.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                if ( isAppInstalled(mContext, "com.sogou.activity.src")) {
+                    intent.setAction(Intent.ACTION_MAIN);
+                    intent.setClassName("com.sogou.activity.src","com.sogou.activity.src.SplashActivity");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    PingManager.getInstance().reportUserAction4App(
+                            PingManager.KLAUNCHER_WIDGET_SOUGOU_SEARCH, mContext.getPackageName());
+                }else if(!isAppInstalled(mContext, "com.sogou.activity.src")&& isAppInstalled(mContext,"com.baidu.searchbox")){
+                    intent.setAction(Intent.ACTION_MAIN);
+                    intent.setClassName("com.baidu.searchbox","com.baidu.searchbox.SplashActivity");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    PingManager.getInstance().reportUserAction4App(
+                            PingManager.KLAUNCHER_WIDGET_BAIDU_SEARCH, mContext.getPackageName());
+                }else {
+                    intent = new Intent(mContext, SearchActivity.class);
+                }
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     public boolean isAppInstalled(Context context, String packageName) {

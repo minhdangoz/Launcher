@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.klauncher.launcher.R;
+import com.klauncher.utilities.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,10 @@ import java.util.List;
  * Search widget
  */
 public class SearchWidgetProvider extends AppWidgetProvider {
+    @Override
+    public void onEnabled(Context context) {
+        super.onEnabled(context);
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -53,12 +58,9 @@ public class SearchWidgetProvider extends AppWidgetProvider {
             // Get the layout for the App Widget and attach an on-click listener
             // to the button
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.search_widget);
-            Log.d("RemoteViews","onReceive search_widget 1111");
             views.setOnClickPendingIntent(R.id.search_widget_bar, pendingIntent);
-            Log.d("RemoteViews","onReceive search_widget 222");
             // Tell the AppWidgetManager to perform an update on the current app widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
-            Log.d("RemoteViews","onReceive search_widget 333");
         }
     }
     public boolean isAppInstalled(Context context, String packageName) {
