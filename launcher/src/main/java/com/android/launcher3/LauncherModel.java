@@ -5018,7 +5018,9 @@ public class LauncherModel extends BroadcastReceiver
             "com.sohu.inputmethod.sogou",
             "com.miui.securitycenter",
             "com.lenovo.launcher",
-            "com.gionee.amisystem"
+            "com.gionee.amisystem",
+            "com.letv.games",
+            "com.letv.app.appstore"
     };
 
     private boolean isFilterPackage(String pkg) {
