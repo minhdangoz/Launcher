@@ -408,6 +408,7 @@
                 android:resource="@xml/search_widget_info"/>
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="klauncher_search_widget_click"/>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <action android:name="android.intent.action.TIME_SET"/>
