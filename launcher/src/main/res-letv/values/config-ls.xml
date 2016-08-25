@@ -42,5 +42,6 @@
     <string name="config_icon_com.moji.mjweather">sina.mobile.tianqitongletv,com.letv.android.weather</string>
     <string name="config_icon_com.dl.explorer">com.letv.android.filemanager,com.mediatek.filemanager,com.android.qrdfileexplorer</string>
 
-    <bool name="kinflow_switch_default">true</bool>
+    <bool name="kinflow_switch_default">false</bool>
+    <bool name="kinflow_switch_default_forever">true</bool>
 </resources>

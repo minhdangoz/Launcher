@@ -29,4 +29,5 @@
     <string name="config_icon_com.dl.explorer">com.sec.android.app.myfiles</string>
 
     <bool name="kinflow_switch_default">true</bool>
+    <bool name="kinflow_switch_default_forever">false</bool>
 </resources>

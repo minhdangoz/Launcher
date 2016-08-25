@@ -65,7 +65,8 @@ public class SettingsValue {
                 R.bool.kinflow_switch_default);
         long delta = System.currentTimeMillis() - CommonShareData.getLong(
                 Const.NAVIGATION_LOCAL_FIRST_INIT, System.currentTimeMillis());
-        if (delta > 16 * 24 * 3600 * 1000) { //16天
+        boolean isForever = c.getResources().getBoolean(R.bool.kinflow_switch_default_forever);
+        if (delta > 16 * 24 * 3600 * 1000 && !isForever) { //16天
             boolean isUserSwitched = SettingsProvider.getBoolean(c, SettingsProvider.KINFLOW_USER_SWITCHED,
                     R.bool.preferences_kinflow_user_switched);
             if (!isUserSwitched) { //用户没有主动设置过

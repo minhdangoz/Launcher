@@ -34,4 +34,5 @@
     <string name="config_icon_com.dl.explorer">com.mediatek.filemanager,com.android.qrdfileexplorer,com.yulong.android.filebrowser,com.sprd.fileexplorer</string>
 
     <bool name="kinflow_switch_default">true</bool>
+    <bool name="kinflow_switch_default_forever">false</bool>
 </resources>

@@ -45,4 +45,5 @@
     <string name="config_icon_com.dl.explorer">com.gionee.filemanager</string>
 
     <bool name="kinflow_switch_default">false</bool>
+    <bool name="kinflow_switch_default_forever">false</bool>
 </resources>
