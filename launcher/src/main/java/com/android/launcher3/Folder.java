@@ -24,7 +24,10 @@ import android.animation.PropertyValuesHolder;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.Rect;
@@ -48,8 +51,6 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -82,6 +83,12 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             "cyanogenmod.intent.action.PACKAGE_PROTECTED_STATE";
     private static final String PROTECTED_COMPONENTS =
             "cyanogenmod.intent.action.PACKAGE_PROTECTED_COMPONENTS";
+    private static final String PACKAGE_MIGUAN = "com.miguan.market";
+    private static final String PACKAGE_YINGYONGBAO = "com.tencent.android.qqdownloader";
+    private static final String PACKAGE_360_ZHUSHOU = "com.qihoo.appstore";
+    private static final String PACKAGE_SOUGOU_ZHUSHOU = "com.sogou.androidtool";
+
+    private String[] mPlusPackages = {PACKAGE_MIGUAN, PACKAGE_YINGYONGBAO, PACKAGE_360_ZHUSHOU, PACKAGE_SOUGOU_ZHUSHOU};
 
     protected DragController mDragController;
     protected Launcher mLauncher;
@@ -156,6 +163,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     private boolean mUninstallSuccessful;
 
     private boolean mHiddenFolder = false;
+    private BubbleTextView mPlusIcon;
+    private static final int PLUS_ICON_ID = -10011001;
 
     /**
      * Used to inflate the Workspace from XML.
@@ -207,6 +216,44 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         super.onFinishInflate();
         mScrollView = (ScrollView) findViewById(R.id.scroll_view);
         mContent = (CellLayout) findViewById(R.id.folder_content);
+        mPlusIcon  = (BubbleTextView) mInflater.inflate(R.layout.folder_application, this, false);
+//        Drawable icon = mLauncher.getResources().getDrawable(R.drawable.ic_add_page);
+//        icon.setBounds(0, 0, Utilities.sIconTextureWidth, Utilities.sIconTextureHeight);
+        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.ic_add_page);
+        ;
+        // Lenovo-sw:yuanyl2, Add edit mode function.
+//        iconHeight = b.getHeight();
+        LauncherAppState app = LauncherAppState.getInstance();
+
+        FastBitmapDrawable iconDrawable = Utilities.createIconDrawable(b);
+        mPlusIcon.setCompoundDrawables(null, iconDrawable, null, null);
+        /** Lenovo-SW zhaoxin5 20150817 KOLEOSROW-976 END */
+        mPlusIcon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PackageManager packageManager = mLauncher.getPackageManager();
+                Intent intent = null;
+                int lenth = mPlusPackages.length;
+                for (int i = 0; i < lenth; i++) {
+                    intent = packageManager.getLaunchIntentForPackage(mPlusPackages[i]);
+                    if (intent != null) {
+                        break;
+                    }
+                }
+                if (intent == null) {
+                    Log.d(TAG, "Folder plus icon can not start : no package");
+                } else {
+                    try {
+                        mLauncher.startActivity(intent);
+                    } catch (Exception e) {
+                        Log.d(TAG, "Folder plus icon can not start exception : " + e.toString());
+                    }
+
+                }
+            }
+        });
+
+//        mPlusIcon.setImageDrawable(icon);
         int measureSpec = MeasureSpec.UNSPECIFIED;
 
         mFocusIndicatorHandler = new FocusIndicatorView(getContext());
@@ -214,7 +261,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         mFocusIndicatorHandler.getLayoutParams().height = FocusIndicatorView.DEFAULT_LAYOUT_SIZE;
         mFocusIndicatorHandler.getLayoutParams().width = FocusIndicatorView.DEFAULT_LAYOUT_SIZE;
 
-        LauncherAppState app = LauncherAppState.getInstance();
+//        LauncherAppState app = LauncherAppState.getInstance();
         DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
 
         mContent.setCellDimensions(grid.folderCellWidthPx, grid.folderCellHeightPx);
@@ -334,7 +381,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             if (!v.isInTouchMode()) {
                 return false;
             }
-
+            if (mPlusIcon.getParent() != null) {
+                mContent.removeView(mPlusIcon);
+            }
             mLauncher.getWorkspace().beginDragShared(v, this);
 
             mCurrentDragInfo = item;
@@ -708,6 +757,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         // Make sure the folder picks up the last drag move even if the finger doesn't move.
         if (mDragController.isDragging()) {
             mDragController.forceTouchMove();
+        } else {
+            addPlusIconlast();
         }
     }
 
@@ -836,7 +887,49 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         boolean insert = false;
         textView.setOnKeyListener(new FolderKeyEventListener());
         mContent.addViewToCellLayout(textView, insert ? 0 : -1, (int)item.id, lp, true);
+        Log.d(TAG, "Folder addViewToCellLayout ");
         return textView;
+    }
+
+    private void addPlusIconlast(){
+        boolean isExist = isPlusIconPackageExist();
+        if (!isExist || mPlusIcon.getParent() != null ) {
+            return;
+        }
+        ShortcutInfo info = new ShortcutInfo();
+        info.spanX = 1;
+        info.spanY = 1;
+        if (!findAndSetEmptyCells(info)) {
+            // The current layout is full, can we expand it?
+            setupContentForNumItems(getItemCount() + 1);
+            findAndSetEmptyCells(info);
+        }
+        if (mContent.getChildAt(info.cellX, info.cellY) != null || info.cellX < 0 || info.cellY < 0
+                || info.cellX >= mContent.getCountX() || info.cellY >= mContent.getCountY()) {
+            // This shouldn't happen, log it.
+            Log.e(TAG, "Folder order not properly persisted during bind");
+            if (!findAndSetEmptyCells(info)) {
+                return;
+            }
+        }
+        CellLayout.LayoutParams lp =
+                new CellLayout.LayoutParams(info.cellX, info.cellY, 1, 1);
+        mContent.addViewToCellLayout(mPlusIcon, -1, PLUS_ICON_ID, lp, true);
+    }
+
+    private boolean isPlusIconPackageExist(){
+        boolean isExist = false;
+        PackageManager packageManager = mLauncher.getPackageManager();
+        Intent intent = null;
+        int lenth = mPlusPackages.length;
+        for (int i = 0; i < lenth; i++) {
+            intent = packageManager.getLaunchIntentForPackage(mPlusPackages[i]);
+            if (intent != null && intent.getComponent() != null) {
+                isExist = true;
+                break;
+            }
+        }
+        return isExist;
     }
 
     public void onDragEnter(DragObject d) {
@@ -1023,6 +1116,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
 
     public void onDropCompleted(final View target, final DragObject d,
             final boolean isFlingToDelete, final boolean success) {
+
         if (mDeferDropAfterUninstall) {
             Log.d(TAG, "Deferred handling drop because waiting for uninstall.");
             mDeferredAction = new Runnable() {
@@ -1056,6 +1150,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                 }
                 completeDragExit();
             }
+        } else {
+            addPlusIconlast();
         }
 
         mDeleteFolderOnDropCompleted = false;
@@ -1129,8 +1225,10 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         for (int i = 0; i < list.size(); i++) {
             View v = list.get(i);
             ItemInfo info = (ItemInfo) v.getTag();
-            LauncherModel.moveItemInDatabase(mLauncher, info, mInfo.id, 0,
-                    info.cellX, info.cellY);
+            if (info != null) {
+                LauncherModel.moveItemInDatabase(mLauncher, info, mInfo.id, 0,
+                        info.cellX, info.cellY);
+            }
         }
     }
 
@@ -1197,8 +1295,12 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         */
         countY = count/mMaxCountX;
         countYMode = count%mMaxCountX;
-        if(countYMode > 0){
-           countY = countY + 1;
+        if (countYMode > 0) {
+            countY = countY + 1;
+        } else {
+            if (isPlusIconPackageExist()) {
+                countY = countY + 1;
+            }
         }
         mContent.setGridSize(mMaxCountX, countY);
         arrangeChildren(list);
@@ -1410,6 +1512,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         DragLayer parent = (DragLayer) getParent();
         if (parent != null) {
             parent.removeView(this);
+        }
+        if (mPlusIcon.getParent() != null) {
+            mContent.removeView(mPlusIcon);
         }
         mDragController.removeDropTarget((DropTarget) this);
         clearFocus();
@@ -1629,6 +1734,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         mSuppressOnAdd = false;
         // Clear the drag info, as it is no longer being dragged.
         mCurrentDragInfo = null;
+        addPlusIconlast();
     }
 
     // This is used so the item doesn't immediately appear in the folder when added. In one case
@@ -1636,11 +1742,17 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     // to correspond to the animation of the icon back into the folder. This is
     public void hideItem(ShortcutInfo info) {
         View v = getViewForInfo(info);
-        v.setVisibility(INVISIBLE);
+
+        if (v != null) {
+            v.setVisibility(INVISIBLE);
+        }
     }
     public void showItem(ShortcutInfo info) {
         View v = getViewForInfo(info);
-        v.setVisibility(VISIBLE);
+        if (v != null) {
+            v.setVisibility(VISIBLE);
+        }
+
     }
 
     public void onAdd(ShortcutInfo item) {
@@ -1705,7 +1817,11 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                 for (int i = 0; i < mContent.getCountX(); i++) {
                     View v = mContent.getChildAt(i, j);
                     if (v != null) {
-                        mItemsInReadingOrder.add(v);
+                        if (PLUS_ICON_ID == v.getId()) {
+                        } else {
+                            mItemsInReadingOrder.add(v);
+                        }
+
                     }
                 }
             }
