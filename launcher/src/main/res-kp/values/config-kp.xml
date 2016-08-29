@@ -23,7 +23,7 @@
         <item>com.dl.explorer</item>
     </array>
 
-    <string name="config_icon_cn.kuwo.player">com.android.music,com.coolpad.music</string>
+    <string name="config_icon_com.duomi.android">com.android.music,com.coolpad.music</string>
     <string name="config_icon_com.tencent.qqlive">com.mediatek.videoplayer/com.mediatek.videoplayer.MovieListActivity,com.android.music/com.android.music.VideoBrowserActivity,com.yulong.android.videoplayer</string>
     <string name="config_icon_com.UCMobile">com.android.browser,com.qihoo.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.yulong.android.security,com.qiku.android.cloudsync</string>
