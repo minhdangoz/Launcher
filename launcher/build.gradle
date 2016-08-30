@@ -263,7 +263,7 @@ task applyGoogleServiceByProperty {
 }
 
 dependencies {
-    compile(name: 'delong-reporter', ext: 'aar')
+//    compile(name: 'delong-reporter', ext: 'aar')
     compile fileTree(dir: 'libs', exclude: 'android-support-v4.jar', include: ['*.jar'])
     def currentFlavor = getCurrentFlavor()
     println "currentFlavor : " + currentFlavor
