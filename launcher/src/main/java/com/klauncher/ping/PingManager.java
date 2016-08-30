@@ -220,7 +220,9 @@ public class PingManager {
     public static final String USER_ACTION_CLICK_CARD_BIG_IMAGE= "click_big_image";
     public static final String USER_ACTION_AUTO_SKIP_WEBPAGE= "auto_skip_webpage";
     public static final String USER_ACTION_AUTO_PAL= "auto_pal";
+    public static final String USER_ACTION_CLICK_FOLFER_PLUS = "click_folder_plus";
 
+    public static final String KEY_FOLFER_PLUS_PACKAGE= "packageName";
     public static final String KEY_HOTWORD_CONTENT_FROM= "hotWordFrom";
     public static final String KEY_PULL_UP_APP_PACKAGENAME= "pullUpAppPackageName";
     public static final String KEY_PULL_UP_APP_CRC32= "pullUpAppCRC32";
@@ -392,6 +394,13 @@ public class PingManager {
         pingMap.put(KEY_PAL_PACKAGE_NAME, pkg);
         pingMap.put(KEY_PAL_ACTION, String.valueOf(action));
         MobileStatistics.onEvent(USER_ACTION_AUTO_PAL, pingMap);
+        return pingMap;
+    }
+
+    public Map<String, String> reportUserAction4ClickFolderPlus(String pkg) {
+        Map<String, String> pingMap = new HashMap<>();
+        pingMap.put(KEY_FOLFER_PLUS_PACKAGE, pkg);
+        MobileStatistics.onEvent(USER_ACTION_CLICK_FOLFER_PLUS, pingMap);
         return pingMap;
     }
 
