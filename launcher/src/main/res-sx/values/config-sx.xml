@@ -11,7 +11,7 @@
         <item>com.miguan.market</item>
         <item>com.tencent.android.qqdownloader</item>
         <item>com.alex.nuclear</item>
-        <item>com.duomi.android</item>
+        <item>cn.kuwo.player</item>
         <item>com.tencent.qqlive</item>
         <item>com.UCMobile</item>
         <item>com.tencent.qqpimsecure</item>
@@ -21,7 +21,7 @@
         <item>com.dl.explorer</item>
     </array>
     <string name="config_icon_com.miguan.market">com.samsung.android.game.gamehome</string>
-    <string name="config_icon_com.duomi.android">com.sec.android.app.music,com.samsung.android.app.music.chn</string>
+    <string name="config_icon_cn.kuwo.player">com.sec.android.app.music,com.samsung.android.app.music.chn</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.sec.android.app.samsungapps</string>
     <string name="config_icon_com.tencent.qqlive">com.samsung.video,com.samsung.everglades.video,com.samsung.android.video,com.samsung.android.onlinevideo</string>
     <string name="config_icon_com.UCMobile">com.android.browser,com.sec.android.app.sbrowser</string>
