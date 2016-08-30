@@ -63,6 +63,7 @@ import android.widget.Toast;
 import com.android.launcher3.FolderInfo.FolderListener;
 import com.android.launcher3.settings.SettingsProvider;
 import com.klauncher.launcher.R;
+import com.klauncher.ping.PingManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -219,14 +220,17 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         mPlusIcon  = (BubbleTextView) mInflater.inflate(R.layout.folder_application, this, false);
 //        Drawable icon = mLauncher.getResources().getDrawable(R.drawable.ic_add_page);
 //        icon.setBounds(0, 0, Utilities.sIconTextureWidth, Utilities.sIconTextureHeight);
-        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.ic_add_page);
+        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.folder_add_icon);
         ;
         // Lenovo-sw:yuanyl2, Add edit mode function.
 //        iconHeight = b.getHeight();
         LauncherAppState app = LauncherAppState.getInstance();
 
         FastBitmapDrawable iconDrawable = Utilities.createIconDrawable(b);
+        mPlusIcon.setCompoundDrawablePadding((int) getResources().getDimension(R.dimen.folder_plus_icon_padding));
         mPlusIcon.setCompoundDrawables(null, iconDrawable, null, null);
+        mPlusIcon.setText(R.string.folder_plus_text);
+
         /** Lenovo-SW zhaoxin5 20150817 KOLEOSROW-976 END */
         mPlusIcon.setOnClickListener(new OnClickListener() {
             @Override
@@ -236,19 +240,15 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                 int lenth = mPlusPackages.length;
                 for (int i = 0; i < lenth; i++) {
                     intent = packageManager.getLaunchIntentForPackage(mPlusPackages[i]);
-                    if (intent != null) {
+                    if (intent != null && intent.getComponent() != null) {
+                        try {
+                            PingManager.getInstance().reportUserAction4ClickFolderPlus(mPlusPackages[i]);
+                            mLauncher.startActivity(intent);
+                        } catch (Exception e) {
+                            Log.d(TAG, "Folder plus icon can not start exception : " + e.toString());
+                        }
                         break;
                     }
-                }
-                if (intent == null) {
-                    Log.d(TAG, "Folder plus icon can not start : no package");
-                } else {
-                    try {
-                        mLauncher.startActivity(intent);
-                    } catch (Exception e) {
-                        Log.d(TAG, "Folder plus icon can not start exception : " + e.toString());
-                    }
-
                 }
             }
         });

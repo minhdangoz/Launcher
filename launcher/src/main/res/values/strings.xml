@@ -311,5 +311,6 @@ s -->
 
     <!--add by hw start- setDefaultLauncher string-->
     <string name="set_default_klauncher">Please choose Launcher3</string>
+    <string name="folder_plus_text">add</string>
     <!--add by hw end- setDefaultLauncher string-->
 </resources>

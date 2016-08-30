@@ -128,5 +128,6 @@
 
     <!--add by hw start- setDefaultLauncher string-->
     <string name="set_default_klauncher">请选择 默认桌面</string>
+    <string name="folder_plus_text">添加</string>
     <!--add by hw end- setDefaultLauncher string-->
 </resources>
