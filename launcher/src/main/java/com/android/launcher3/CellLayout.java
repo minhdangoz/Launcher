@@ -3163,6 +3163,10 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
                 (Math.max((countY - 1), 0) * mHeightGap);
     }
     public int getDesiredHeight()  {
+        //固定高度 3行
+        if(mCountY <4){
+            mCountY = 3;
+        }
         return getPaddingTop() + getPaddingBottom() + (mCountY * mCellHeight) +
                 (Math.max((mCountY - 1), 0) * mHeightGap);
     }

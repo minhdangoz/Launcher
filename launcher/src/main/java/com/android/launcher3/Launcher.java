@@ -3562,6 +3562,7 @@ public class Launcher extends Activity
             onClickAppShortcut(v);
         } else if (tag instanceof FolderInfo) {
             if (v instanceof FolderIcon) {
+                //文件夹点击入口
                 onClickFolderIcon(v);
             }
         } else if (v == mAllAppsButton) {
@@ -4188,7 +4189,8 @@ public class Launcher extends Activity
     public void openFolder(FolderIcon folderIcon) {
         Folder folder = folderIcon.getFolder();
         FolderInfo info = folder.mInfo;
-
+        //根据 文件夹名称 设置文件夹ID
+        info.setFolderId();
         if (info.hidden) {
             folder.startHiddenFolderManager();
             return;
@@ -4199,7 +4201,19 @@ public class Launcher extends Activity
         // Just verify that the folder hasn't already been added to the DragLayer.
         // There was a one-off crash where the folder had a parent already.
         if (folder.getParent() == null) {
-            mDragLayer.addView(folder);
+            //加载初始化推荐应用
+            folder.initAPUS(info.folderId,false);
+            LauncherAppState app = LauncherAppState.getInstance();
+            DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
+            int folderWidth = 3*grid.folderCellWidthPx;
+            DragLayer.LayoutParams params = new  DragLayer.LayoutParams(folderWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
+            //左右边距
+            WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+            int screenWidth = wm.getDefaultDisplay().getWidth();
+            int  margin = (screenWidth - 3*grid.folderCellWidthPx)/2;
+            params.gravity = Gravity.BOTTOM;
+            params.setMargins(margin,50,margin,0);
+            mDragLayer.addView(folder,params);
             mDragController.addDropTarget((DropTarget) folder);
         } else {
             Log.w(TAG, "Opening folder (" + folder + ") which already has a parent (" +
@@ -4243,7 +4257,10 @@ public class Launcher extends Activity
             }
             /** Lenovo-SW zhaoxin5 20150701 LANCHROW-181 END */
         }
-        
+        //dimiss bannar 广告弹框
+        if(folder.bannerPopuWindow != null && folder.bannerPopuWindow.isShowing()){
+            folder.bannerPopuWindow.dismiss();
+        }
         /** Lenovo-SW zhaoxin5 20150812 从文件夹中启动应用关闭退出文件夹的动画 START */
         if(animate) {
             folder.animateClosed();	
@@ -5630,6 +5647,16 @@ public class Launcher extends Activity
             return false;
         }
     }
+    /*public boolean setLoadOnResume() {
+        if (mPaused) {
+            Log.i(TAG, "setLoadOnResume");
+            mOnResumeNeedsLoad = true;
+            //mOnResumeLoaderTaskFlags = flags;
+            return true;
+        } else {
+            return false;
+        }
+    }*/
     /** Lenovo-SW zhaoxin5 20150810 fix bug, restore can not success END */
     
     /**
@@ -5957,16 +5984,28 @@ public class Launcher extends Activity
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent();
+                    int searchType = 0;//搜索 类型 1 搜狗搜索 2  百度搜索
                     if (view.isAppInstalled(Launcher.this, "com.sogou.activity.src")) {
                         intent.setAction(Intent.ACTION_MAIN);
                         intent.setClassName("com.sogou.activity.src", "com.sogou.activity.src.SplashActivity");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        searchType = 1;
                     } else if (!view.isAppInstalled(Launcher.this, "com.sogou.activity.src") && view.isAppInstalled(Launcher.this, "com.baidu.searchbox")) {
                         intent.setAction(Intent.ACTION_MAIN);
                         intent.setClassName("com.baidu.searchbox", "com.baidu.searchbox.SplashActivity");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        searchType = 2;
                     } else {
                         intent = new Intent(Launcher.this, SearchActivity.class);
+                    }
+                    if (searchType == 1) {
+                        PingManager.getInstance().reportUserAction4App(
+                                PingManager.KLAUNCHER_WIDGET_SOUGOU_SEARCH, Launcher.this.getPackageName());
+                        LogUtil.d(TAG, "PingManager SOUGOU ");
+                    } else if (searchType == 2) {
+                        PingManager.getInstance().reportUserAction4App(
+                                PingManager.KLAUNCHER_WIDGET_BAIDU_SEARCH, Launcher.this.getPackageName());
+                        LogUtil.d(TAG, "PingManager BAIDU ");
                     }
                     startActivity(intent);
                 }

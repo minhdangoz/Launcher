@@ -132,7 +132,8 @@
     <integer name="config_folderScaleDuration">400</integer>
     <!-- Lenovo-sw:zhangyj19, modify folder default row and line. -->
     <integer name="config_folderMaxColumn">3</integer>
-    <integer name="config_folderMaxRow">4</integer>
+    <!--<integer name="config_folderMaxRow">4</integer>-->
+    <integer name="config_folderMaxRow">3</integer>
     <!-- Lenovo-sw:zhangyj19, modify folder default max num. -->
     <integer name="config_folderMaxNum">64</integer>
 

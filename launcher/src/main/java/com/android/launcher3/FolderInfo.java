@@ -20,6 +20,7 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import com.android.launcher3.compat.UserHandleCompat;
+import com.klauncher.biddingos.distribute.data.AppInfoDataManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +29,24 @@ import java.util.Arrays;
  * Represents a folder containing shortcuts or apps.
  */
 public class FolderInfo extends ItemInfo {
+    public String folderId;
+
+    /**
+     * 设置文件夹id 请求广告
+     */
+    public void setFolderId() {
+        if ("系统工具".equals(title.toString().trim())) {
+            folderId = AppInfoDataManager.AD_PLACEMENT_MODULE_XI_TONG_GONG_JU;
+        } else if ("便捷生活".equals(title.toString().trim())) {
+            folderId = AppInfoDataManager.AD_PLACEMENT_MODULE_BIAN_JIE_SHENG_HUO;
+        } else if ("新闻阅读".equals(title.toString().trim())) {
+            folderId = AppInfoDataManager.AD_PLACEMENT_MODULE_XIN_WEN_YUE_DU;
+        } else if ("影音娱乐".equals(title.toString().trim())) {
+            folderId = AppInfoDataManager.AD_PLACEMENT_MODULE_YING_YIN_YU_LE;
+        } else {
+            folderId = AppInfoDataManager.AD_PLACEMENT_MODULE_MO_REN;
+        }
+    }
 
     /**
      * Whether this folder has been opened

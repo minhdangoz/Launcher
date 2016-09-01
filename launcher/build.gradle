@@ -301,5 +301,6 @@ dependencies {
     //opmain 精简
     //    compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
     compile files('libs/KappAdSdk_v2.1.jar')
+    compile project(':biddingoslib')
 }
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }

@@ -227,18 +227,23 @@ public class DeleteDropTarget extends ButtonDropTarget {
     public void onDragStart(DragSource source, Object info, int dragAction) {
         /** Lenovo-SW zhaoxin5 20150702 LANCHROW-187 START */
         super.onDragStart(source, info, dragAction);
+        Thread.dumpStack();
+        LogUtil.d("wqh_DeleteDropTarget","onDragStart");
         /** Lenovo-SW zhaoxin5 20150702 LANCHROW-187 END */
         boolean isVisible = true;
         boolean useUninstallLabel = !LauncherAppState.isDisableAllApps() &&
-                isAllAppsApplication(source, info);
-
+                isAllAppsApplication(source, info);//
+        LogUtil.d("wqh_DeleteDropTarget",!LauncherAppState.isDisableAllApps()+"&&"+isAllAppsApplication(source, info));
+        LogUtil.d("wqh_DeleteDropTarget","useUninstallLabel"+useUninstallLabel);
         /** Lenovo-SW zhaoxin5 20150701 LANCHROW-184 START */
-        if (isWorkspaceApplication(info)) {
+        if (isWorkspaceApplication(info)) {//是桌面应用 卸载
             // judge if this is an ShortcutInfo that can be uninstall
+            LogUtil.d("wqh_DeleteDropTarget","isWorkspaceApplication"+isWorkspaceApplication(info));
             useUninstallLabel = true;
         }
         /** Lenovo-SW zhaoxin5 20150701 LANCHROW-184 END */
-
+        LogUtil.d("wqh_DeleteDropTarget",!useUninstallLabel+"&&"+source.supportsDeleteDropTarget());
+        //删除 使用  //  useUninstallLabel
         boolean useDeleteLabel = !useUninstallLabel && source.supportsDeleteDropTarget();
 
         // If we are dragging an application from AppsCustomize, only show the control if we can

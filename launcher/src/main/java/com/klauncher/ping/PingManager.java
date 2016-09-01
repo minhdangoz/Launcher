@@ -12,6 +12,7 @@ import android.util.Log;
 import com.dl.statisticalanalysis.MobileStatistics;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
+import com.klauncher.utilities.LogUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +21,7 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
@@ -44,7 +46,8 @@ public class PingManager {
     //搜索widget点击上报
     public static final String KLAUNCHER_WIDGET_BAIDU_SEARCH = "klauncher_widget_baidu_search";
     public static final String KLAUNCHER_WIDGET_SOUGOU_SEARCH = "klauncher_widget_sogou_search";
-
+	//文件夹广告 品效通点击下载安装时间统计
+    public static final String KLAUNCHER_PINXIAOTONG_DOWNLOAD = "klauncher_action_pinxiaotong_download";
     private static final int MAX_BUFFER_SIZE = 10;
     private static final String SP_PING = "ping";
     private static final String KEY_PING_APPLIST_LAST_REPORT = "lst_rpt_app";
@@ -181,6 +184,43 @@ public class PingManager {
         } finally {
             try {
                 MobileStatistics.onEvent(action, pingMap);
+            } catch (Exception e) {
+
+            }
+
+        }
+    }
+    public void reportUserActionMap4App(String action, String packageName, Map<String, String> map) {
+        Map<String, String> pingMap = new HashMap<>();
+        pingMap.put("action", action);
+        pingMap.put("source", "1");
+        pingMap.put("pkg_name", packageName);
+        //遍历数据
+        Iterator iter = map.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            String key = (String)entry.getKey();
+            String val = (String)entry.getValue();
+            pingMap.put(key, val);
+        }
+        pingMap.put(KEY_PING_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
+        try {
+            PackageInfo packageInfo = mContext.getPackageManager().getPackageInfo(
+                    packageName, PackageManager.GET_SIGNATURES);
+            ApplicationInfo applicationInfo = mContext.getPackageManager().getApplicationInfo(
+                    packageName, PackageManager.GET_META_DATA);
+            pingMap.put("version_code", String.valueOf(packageInfo.versionCode));
+            pingMap.put("crc", getApkFileSFCrc32(applicationInfo.sourceDir));
+            pingMap.put("md5", getFileMD5(applicationInfo.sourceDir));
+            // ping(1, pingMap);
+            //sdk 埋点变更
+            //MobileStatistics.onEvent(action, pingMap);
+
+        } catch (PackageManager.NameNotFoundException e) {
+        } finally {
+            try {
+                MobileStatistics.onEvent(action, pingMap);
+                LogUtil.d("reportUserActionMap4App","  onEvent 点击下载上报成功");
             } catch (Exception e) {
 
             }
@@ -401,6 +441,7 @@ public class PingManager {
         Map<String, String> pingMap = new HashMap<>();
         pingMap.put(KEY_FOLFER_PLUS_PACKAGE, pkg);
         MobileStatistics.onEvent(USER_ACTION_CLICK_FOLFER_PLUS, pingMap);
+        LogUtil.d("reportUserAction4ClickFolderPlus",pkg);
         return pingMap;
     }
 

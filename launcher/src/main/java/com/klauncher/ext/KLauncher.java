@@ -25,6 +25,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alpsdroid.ads.commons.AdConfigType;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.backup.LbkPackager;
 import com.android.launcher3.backup.LbkUtil;
@@ -32,6 +33,7 @@ import com.android.launcher3.settings.SettingsValue;
 import com.dl.statisticalanalysis.MobileStatistics;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.klauncher.biddingos.commons.AdConfigHelperImpl;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.adapter.CardItemDecoration;
@@ -226,6 +228,16 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             Toast.makeText(this,PushDemoReceiver.payloadData.toString(),Toast.LENGTH_LONG).show();
         }*/
 
+        //品效通sdk初始化
+        int type= AdConfigType.BUSINESS_TYPE_FEEDS | AdConfigType.BUSINESS_TYPE_BANNER|
+                AdConfigType.BUSINESS_TYPE_FLOW|AdConfigType.BUSINESS_TYPE_INTERSTITIAL;
+        //int adType, Context context, String mid, String afid, String secret, String kid, boolean debuggable
+        //mid        媒体商代理ID
+        //afid       媒体商ID
+        //secret     密钥
+        //kid        秘钥ID
+//        new AdConfigHelperImpl().init(type, this, "2", "22", "0aa498b313271973f3a310b47b555d2b", "3", true);
+        new AdConfigHelperImpl().init(AdConfigType.BUSINESS_TYPE_AD, this, "2", "111", "15a0979c75a33892e0856df72506702a", "46", false);
     }
 
     @Override
