@@ -3170,8 +3170,13 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
         /*return getPaddingTop() + getPaddingBottom() + (mCountY * mCellHeight) +
                 (Math.max((mCountY - 1), 0) * mHeightGap);*/
         //固定高度 3行
-        return getPaddingTop() + getPaddingBottom() + (3 * mCellHeight) +
-                (Math.max((mCountY - 1), 0) * mHeightGap);
+        if(mCountY <4) {
+            return getPaddingTop() + getPaddingBottom() + (3 * mCellHeight) +
+                    (2 * mHeightGap);
+        }else {
+            return getPaddingTop() + getPaddingBottom() + (mCountY * mCellHeight) +
+                    (Math.max((mCountY - 1), 0) * mHeightGap);
+        }
     }
 
     public boolean isOccupied(int x, int y) {
