@@ -2836,12 +2836,14 @@ public class CellLayout extends ViewGroup {
                 for (int x = startX; x < endX; x++) {
                     for (int i = 0; i < spanX; i++) {
                         for (int j = 0; j < spanY; j++) {
-                            if (occupied[x + i][y + j]) {
-                                // small optimization: we can skip to after the column we just found
-                                // an occupied cell
-                                x += i;
-                                continue inner;
-                            }
+                            //if(x+i<occupied.length && y + j<occupied[x+i].length) {//异常数组越界判断 出现原因待查
+                                if (occupied[x + i][y + j]) {//error
+                                    // small optimization: we can skip to after the column we just found
+                                    // an occupied cell
+                                    x += i;
+                                    continue inner;
+                                }
+                            //}
                         }
                     }
                     if (cellXY != null) {
@@ -3142,7 +3144,9 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
         if (cellX < 0 || cellY < 0) return;
         for (int x = cellX; x < cellX + spanX && x < mCountX; x++) {
             for (int y = cellY; y < cellY + spanY && y < mCountY; y++) {
-                occupied[x][y] = value;
+                //if (x < occupied.length && y < occupied[x].length) {//异常数组越界判断 出现原因待查
+                    occupied[x][y] = value;
+                //}
             }
         }
     }
