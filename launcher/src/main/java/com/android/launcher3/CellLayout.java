@@ -2836,14 +2836,12 @@ public class CellLayout extends ViewGroup {
                 for (int x = startX; x < endX; x++) {
                     for (int i = 0; i < spanX; i++) {
                         for (int j = 0; j < spanY; j++) {
-                            //if(x+i<occupied.length && y + j<occupied[x+i].length) {//异常数组越界判断 出现原因待查
                                 if (occupied[x + i][y + j]) {//error
                                     // small optimization: we can skip to after the column we just found
                                     // an occupied cell
                                     x += i;
                                     continue inner;
                                 }
-                            //}
                         }
                     }
                     if (cellXY != null) {
@@ -3144,9 +3142,7 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
         if (cellX < 0 || cellY < 0) return;
         for (int x = cellX; x < cellX + spanX && x < mCountX; x++) {
             for (int y = cellY; y < cellY + spanY && y < mCountY; y++) {
-                //if (x < occupied.length && y < occupied[x].length) {//异常数组越界判断 出现原因待查
                     occupied[x][y] = value;
-                //}
             }
         }
     }
@@ -3168,10 +3164,13 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
     }
     public int getDesiredHeight()  {
         //固定高度 3行
-        if(mCountY <4){
+        /*if(mCountY <4){
             mCountY = 3;
-        }
-        return getPaddingTop() + getPaddingBottom() + (mCountY * mCellHeight) +
+        }*/
+        /*return getPaddingTop() + getPaddingBottom() + (mCountY * mCellHeight) +
+                (Math.max((mCountY - 1), 0) * mHeightGap);*/
+        //固定高度 3行
+        return getPaddingTop() + getPaddingBottom() + (3 * mCellHeight) +
                 (Math.max((mCountY - 1), 0) * mHeightGap);
     }
 
