@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.TransitionDrawable;
@@ -32,6 +31,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.UserManager;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -44,8 +44,8 @@ import android.view.animation.LinearInterpolator;
 
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.android.launcher3.compat.UserHandleCompat;
-import com.klauncher.launcher.R;
 import com.klauncher.ext.KLauncherAppDisguise;
+import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
 import com.klauncher.utilities.LogUtil;
 
@@ -57,6 +57,7 @@ public class DeleteDropTarget extends ButtonDropTarget {
     private static int MODE_FLING_DELETE_ALONG_VECTOR = 1;
 
     private final int mFlingDeleteMode = MODE_FLING_DELETE_ALONG_VECTOR;
+    public static final String SEARCH_BOX_CLASS_NAME = "com.klauncher.ext.SearchWidgetProvider";
 
     private ColorStateList mOriginalTextColor;
     private TransitionDrawable mUninstallDrawable;
@@ -175,11 +176,22 @@ public class DeleteDropTarget extends ButtonDropTarget {
 
         if (info instanceof ItemInfo) {
             ItemInfo item = (ItemInfo) info;
-            LogUtil.d("willAcceptDrop",item.toString());
-            if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPWIDGET ||
-                    item.itemType == LauncherSettings.Favorites.ITEM_TYPE_SHORTCUT) {
+            Log.d("willAcceptDrop",item.toString() + " type : " + item.itemType);
+            if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_SHORTCUT) {
                 LogUtil.d("willAcceptDrop",item.toString());
                 return true;
+            }
+
+            if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPWIDGET) {
+                LauncherAppWidgetInfo law = (LauncherAppWidgetInfo) info;
+                String className = law.providerName.getClassName();
+                Log.d("hw","ITEM_TYPE_APPWIDGET " + law.toString() + " p " + law.providerName);
+                //can't delete serchbox
+                if (TextUtils.equals(className,SEARCH_BOX_CLASS_NAME)) {
+                    return false;
+                } else {
+                    return true;
+                }
             }
 
             if (!LauncherAppState.isDisableAllApps() &&

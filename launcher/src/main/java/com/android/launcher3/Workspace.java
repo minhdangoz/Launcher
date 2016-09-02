@@ -79,6 +79,7 @@ import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
 import com.klauncher.ext.LauncherLog;
+import com.klauncher.ext.SearchWidgetView;
 import com.klauncher.launcher.R;
 import com.klauncher.utilities.LogUtil;
 
@@ -1157,6 +1158,10 @@ public class Workspace extends SmoothPagedView
             // outside of the defined grid
             // maybe we should be deleting these items from the LauncherModel?
             Launcher.addDumpLog(TAG, "Failed to add to item at (" + lp.cellX + "," + lp.cellY + ") to CellLayout", true);
+        } else {
+            if (child instanceof SearchWidgetView) {
+                mLauncher.setMySearchWidgetScreenId((int) screenId -1);
+            }
         }
 
         if (!(child instanceof Folder)) {

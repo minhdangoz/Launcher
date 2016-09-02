@@ -440,6 +440,8 @@ public class Launcher extends Activity
 
     private static ArrayList<ComponentName> mIntentsOnWorkspaceFromUpgradePath = null;
 
+    private int mMySearchWidgetScreenId = -1;
+
     // Holds the page that we need to animate to, and the icon views that we need to animate up
     // when we scroll to that page on resume.
     private ImageView mFolderIconImageView;
@@ -1176,6 +1178,7 @@ public class Launcher extends Activity
                 AppWidgetProviderInfo info = mAppWidgetManager.getAppWidgetInfo(appWidgetId);
 
                 PendingAddWidgetInfo createItemInfo = getPendingAddWidgetInfo(info);
+
                 int currentScreen = getCurrentWorkspaceScreen();
                 Workspace workspace = getWorkspace();
                 CellLayout layout = (CellLayout) workspace.getPageAt(currentScreen);
@@ -2423,7 +2426,14 @@ public class Launcher extends Activity
             showOutOfSpaceMessage(isHotseatLayout(layout));
             return;
         }
-
+        if (appWidgetInfo !=null && appWidgetInfo.provider.getClassName().equals(DeleteDropTarget.SEARCH_BOX_CLASS_NAME)) {
+            if (mMySearchWidgetScreenId != -1) {
+                mWorkspace.setCurrentPage(mMySearchWidgetScreenId);
+                return;
+            } else {
+                mMySearchWidgetScreenId = getCurrentWorkspaceScreen();
+            }
+        }
         // Build Launcher-specific widget info and save to database
         LauncherAppWidgetInfo launcherInfo = new LauncherAppWidgetInfo(appWidgetId,
                 appWidgetInfo.provider);
@@ -6010,6 +6020,7 @@ public class Launcher extends Activity
                     startActivity(intent);
                 }
             });
+            mMySearchWidgetScreenId = (int) item.screenId -1;
             view.setTag(item);
             workspace.addInScreen(view, item.container, item.screenId, item.cellX,
                     item.cellY, item.spanX, item.spanY, false);
@@ -6101,6 +6112,10 @@ public class Launcher extends Activity
             Log.d(TAG, "bound widget id=" + item.appWidgetId + " in "
                     + (SystemClock.uptimeMillis() - start) + "ms");
         }
+    }
+
+    public void setMySearchWidgetScreenId(int id) {
+        mMySearchWidgetScreenId = id;
     }
 
     /**
