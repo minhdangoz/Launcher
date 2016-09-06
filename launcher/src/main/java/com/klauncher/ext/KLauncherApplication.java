@@ -138,7 +138,7 @@ public class KLauncherApplication extends Application {
         }
     }
 
-    private boolean isMultiProgressInit()
+    public boolean isMultiProgressInit()
     {
         int pid = android.os.Process.myPid();
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);

@@ -1,13 +1,13 @@
 package com.android.launcher3.backup;
 
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
-
-import org.xmlpull.v1.XmlPullParserFactory;
-import org.xmlpull.v1.XmlSerializer;
+import android.content.ComponentName;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAppState;
@@ -16,13 +16,12 @@ import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.klauncher.ext.LauncherLog;
 
-import android.content.ComponentName;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
+import org.xmlpull.v1.XmlPullParserFactory;
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * 原来的6.3格式的Launcher的备份文件LBK格式的备份类
@@ -1019,9 +1018,11 @@ public class LbkPackager {
                     	// 得到packagName和className
                         final Intent intent;
                         final ComponentName cn;
+
+						LauncherLog.i(TAG, "dispatchPackageShortcutAndApp title "+ title +  "intentStr : " + intentStr);
                         try {
                             intent = Intent.parseUri(intentStr, 0);
-                        } catch (URISyntaxException e) {
+                        } catch (Exception e) {
                             // bogus intent?
                             Launcher.addDumpLog(TAG,
                                     "skipping invalid intent uri", true);

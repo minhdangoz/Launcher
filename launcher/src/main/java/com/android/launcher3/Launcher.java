@@ -620,24 +620,24 @@ public class Launcher extends Activity
             android.os.Debug.stopMethodTracing();
         }
 
-        if (!mRestoring) {//不需要恢复 第一次加载
-            if (DISABLE_SYNCHRONOUS_BINDING_CURRENT_PAGE) {
-                LauncherLog.i("xixia", "onCreate befor loader task 1");
-                // If the user leaves launcher, then we should just load items asynchronously when
-                // they return.
-                /* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
-                //Launcher 加载lbk数据入口
-                mModel.startLoader(true, PagedView.INVALID_RESTORE_PAGE, ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(this));
-            	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
-            } else {//从 lbk文件恢复
-                LauncherLog.i("xixia", "onCreate befor loader task 2");
-                // We only load the page synchronously if the user rotates (or triggers a
-                // configuration change) while launcher is in the foreground
-            	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
-                mModel.startLoader(true, mWorkspace.getRestorePage(), ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(this));
-            	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
-            }
-        }
+//        if (!mRestoring) {//不需要恢复 第一次加载
+//            if (DISABLE_SYNCHRONOUS_BINDING_CURRENT_PAGE) {
+//                LauncherLog.i("xixia", "onCreate befor loader task 1");
+//                // If the user leaves launcher, then we should just load items asynchronously when
+//                // they return.
+//                /* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+//                //Launcher 加载lbk数据入口
+//                mModel.startLoader(true, PagedView.INVALID_RESTORE_PAGE, ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(this));
+//            	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+//            } else {//从 lbk文件恢复
+//                LauncherLog.i("xixia", "onCreate befor loader task 2");
+//                // We only load the page synchronously if the user rotates (or triggers a
+//                // configuration change) while launcher is in the foreground
+//            	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+//                mModel.startLoader(true, mWorkspace.getRestorePage(), ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(this));
+//            	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+//            }
+//        }
 
         // For handling default keys
         mDefaultKeySsb = new SpannableStringBuilder();
@@ -665,7 +665,6 @@ public class Launcher extends Activity
         /** Lenovo-SW zhaoxin5 20150721 add for auto-reorder support START */
         LauncherAppState.getLauncherProvider().setLauncherProviderChangeListener(this);
         /** Lenovo-SW zhaoxin5 20150721 add for auto-reorder support END */
-
         // Support theme
         applyDefaultTheme();
         //vivo error
@@ -2497,6 +2496,26 @@ public class Launcher extends Activity
             } else if (LauncherAppsCompat.ACTION_MANAGED_PROFILE_ADDED.equals(action)
                     || LauncherAppsCompat.ACTION_MANAGED_PROFILE_REMOVED.equals(action)) {
                 getModel().forceReload("ACTION_MANAGED_PROFILE_ADDED or ACTION_MANAGED_PROFILE_REMOVED");
+            } else if (ThemeController.ACTION_LAUNCHER_THEME_FORCE_RELOAD_LAUNCHER.equals(action)) {
+                Log.d(TAG,"ACTION_LAUNCHER_THEME_FORCE_RELOAD_LAUNCHER");
+                if (!mRestoring) {//不需要恢复 第一次加载
+                    if (DISABLE_SYNCHRONOUS_BINDING_CURRENT_PAGE) {
+                        LauncherLog.i("xixia", "onCreate befor loader task 1");
+                        // If the user leaves launcher, then we should just load items asynchronously when
+                        // they return.
+                /* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+                        //Launcher 加载lbk数据入口
+                        mModel.startLoader(true, PagedView.INVALID_RESTORE_PAGE, ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(Launcher.this));
+            	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+                    } else {//从 lbk文件恢复
+                        LauncherLog.i("xixia", "onCreate befor loader task 2");
+                        // We only load the page synchronously if the user rotates (or triggers a
+                        // configuration change) while launcher is in the foreground
+            	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+                        mModel.startLoader(true, mWorkspace.getRestorePage(), ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(Launcher.this));
+            	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+                    }
+                }
             }
         }
     };
@@ -2516,6 +2535,7 @@ public class Launcher extends Activity
             filter.addAction(DebugIntents.DELETE_DATABASE);
             filter.addAction(DebugIntents.MIGRATE_DATABASE);
         }
+        filter.addAction(ThemeController.ACTION_LAUNCHER_THEME_FORCE_RELOAD_LAUNCHER);
         registerReceiver(mReceiver, filter);
         //Lenovo-sw zhangyj19 delete 2015/09/10 KOLEOSROW-1309 delete FirstFrameAnimatorHelper function
         //FirstFrameAnimatorHelper.initializeDrawListener(getWindow().getDecorView());

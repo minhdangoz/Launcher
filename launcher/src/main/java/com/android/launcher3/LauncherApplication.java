@@ -34,6 +34,9 @@ public class LauncherApplication extends KLauncherApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (isMultiProgressInit()) {
+            return;
+        }
         if(mLogArray == null)
         	mLogArray = new String[mLoglength];
         LAUNCHER_SHOW_UNREAD_NUMBER = getResources().getBoolean(

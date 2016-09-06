@@ -264,7 +264,7 @@ public class DynamicGrid {
 
             InputStream ims = assetManager.open("workgrid.wks");
             strResponse = getStringFromInputStream(ims);
-            Log.e("wcrow", "strResponse = " + strResponse);
+            Log.e("wcrow", "strResponse = " + strResponse + " MODEL : " + Build.MODEL);
             JSONObject json = new JSONObject(strResponse);
             try {
                 JSONObject jsonModel = json.optJSONObject(Build.MODEL);

@@ -1,16 +1,15 @@
 package com.klauncher.theme;
 
-import com.klauncher.theme.apktheme.ApkTheme;
-import com.klauncher.theme.ziptheme.ZipTheme;
-import com.klauncher.theme.settings.SettingsProvider;
-import com.klauncher.theme.util.ThemeLog;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Environment;
+
+import com.klauncher.theme.apktheme.ApkTheme;
+import com.klauncher.theme.settings.SettingsProvider;
+import com.klauncher.theme.util.ThemeLog;
+import com.klauncher.theme.ziptheme.ZipTheme;
 
 import java.io.File;
 
@@ -48,11 +47,12 @@ public class ThemeController extends BroadcastReceiver{
 		}
 		
 		// zip theme
-		IntentFilter filter = new IntentFilter(ACTION_LAUNCHER_THEME_ZIP);
-		mContext.registerReceiver(this, filter);
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ACTION_LAUNCHER_THEME_ZIP);
+//		mContext.registerReceiver(this, filter);
 		
 		// apk theme
-		filter = new IntentFilter(ACTION_LAUNCHER_THEME_APK);
+		filter.addAction(ACTION_LAUNCHER_THEME_APK);
 		mContext.registerReceiver(this, filter);
 
 		try {
