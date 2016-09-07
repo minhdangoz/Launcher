@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/kinflow_scrolling_header"
+              android:orientation="vertical">
+    <include layout="@layout/kinflow_scrolling_title"/>
+
+    <!--快捷导航:Navigataion部分-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/navigation_recyclerView"
+        style="@style/kinflow_commont_match_parent_width"
+        android:layout_marginTop="12dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/kinflow_color_typeface_main"/>
+
+</LinearLayout>

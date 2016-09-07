@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:id="@+id/adapter_navigation"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:drawablePadding="2dp"
+          android:drawableTop="@drawable/refresh"
+          android:ellipsize="end"
+          android:gravity="center"
+          android:paddingBottom="2dp"
+          android:paddingTop="2dp"
+          android:singleLine="true"
+          android:text="快捷键"
+          android:background="@drawable/kinflow_shortcut_background_selector"
+          android:textColor="@color/color_black"
+          android:textSize="14sp"></TextView>

@@ -762,6 +762,10 @@
         <activity
             android:name="com.klauncher.getui.HomeSelector"
             android:label="HomeSelector"/>
+        <activity android:name="com.klauncher.kinflow.Kinflow2Activity"
+                  android:theme="@style/Theme"/>
+        <activity android:name="com.klauncher.kinflow.Kinflow2Activity2"
+                  android:theme="@style/Theme"/>
 
     </application>
 </manifest>

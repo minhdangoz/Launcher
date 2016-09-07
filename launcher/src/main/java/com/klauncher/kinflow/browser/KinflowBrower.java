@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -33,13 +34,25 @@ public class KinflowBrower extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
 
-        initWebView();
 
-        Intent intent = getIntent();
-        url = intent.getStringExtra(KEY_EXTRA_URL);
+        try {
+            initWebView();
 
-        mWebView.loadUrl(url);
-        Interstitial.getInstance(this,"1002","10005").showAd();
+            Intent intent = getIntent();
+            url = intent.getStringExtra(KEY_EXTRA_URL);
+
+            mWebView.loadUrl(url);
+            try {
+                Interstitial.getInstance(this,"1002","10005").showAd();
+            } catch (Exception e) {
+                Log.e("Kinflow","KinflowBrower中的Interstitial获取实例失败");
+                Interstitial.getInstance(this,"1002","10005").showAd();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        }
+
     }
 
     void initWebView(){

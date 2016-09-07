@@ -12,7 +12,6 @@ import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v7.internal.widget.CompatTextView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +31,7 @@ import com.android.launcher3.settings.SettingsValue;
 import com.dl.statisticalanalysis.MobileStatistics;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.klauncher.kinflow.Kinflow2Activity;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.adapter.CardItemDecoration;
@@ -97,9 +97,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     ImageView iv_searchMode;
     ImageView iv_searchIcon;
     TextView tv_searchHint;
-    CompatTextView tv_hotWord1;
-    CompatTextView tv_hotWord2;
-    CompatTextView tv_hotWordTop;
+    TextView tv_hotWord1;
+    TextView tv_hotWord2;
+    TextView tv_hotWordTop;
     ImageView iv_refresh;
     RelativeLayout randomNewsLine;
     RecyclerView navigationRecyclerView;
@@ -385,9 +385,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             tv_searchHint = (TextView) kinflowView.findViewById(R.id.search_hint);
             iv_searchMode = (ImageView) kinflowView.findViewById(R.id.search_mode);
             iv_searchIcon = (ImageView) kinflowView.findViewById(R.id.search_icon);
-            tv_hotWordTop = (CompatTextView) kinflowView.findViewById(R.id.hot_word_top);
-            tv_hotWord1 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_1);
-            tv_hotWord2 = (CompatTextView) kinflowView.findViewById(R.id.hot_word_2);
+            tv_hotWordTop = (TextView) kinflowView.findViewById(R.id.hot_word_top);
+            tv_hotWord1 = (TextView) kinflowView.findViewById(R.id.hot_word_1);
+            tv_hotWord2 = (TextView) kinflowView.findViewById(R.id.hot_word_2);
             iv_refresh = (ImageView) kinflowView.findViewById(R.id.refresh_hotWord);
             randomNewsLine = (RelativeLayout) kinflowView.findViewById(R.id.random_news_line);
             navigationRecyclerView = (RecyclerView) kinflowView.findViewById(R.id.navigation_recyclerView);
@@ -751,15 +751,18 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     }
                     break;
                 case R.id.search_hint://搜索框监听
-                    if (userAllowKinflowUseNet) {
-                        Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
-                        if (null == hintHotWord || null == hintHotWord.getWord())
-                            hintHotWord = HotWord.getHintHotWord();
-                        intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
-                        startActivity(intent);
-                    } else {
-                        onViewClickedHintConnectedNet(R.id.search_hint);
-                    }
+//                    if (userAllowKinflowUseNet) {
+//                        Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
+//                        if (null == hintHotWord || null == hintHotWord.getWord())
+//                            hintHotWord = HotWord.getHintHotWord();
+//                        intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
+//                        startActivity(intent);
+//                    } else {
+//                        onViewClickedHintConnectedNet(R.id.search_hint);
+//                    }
+
+                    startActivity(new Intent(this, Kinflow2Activity.class));
+//                    startActivity(new Intent(this, Kinflow2Activity2.class));
 
                     break;
                 case R.id.search_mode:

@@ -31,6 +31,9 @@ public class JinRiTouTiaoArticle implements Parcelable {
     private int bury_count;//踩的数量
     private int comment_count;//评论的数量
 
+    private String share_url;//新闻的分享链接:第二版出现
+    private String label;//细粒度的文章标签:如置顶,图片,视频,推广等。由于 tip 和 label 都可以控制标签显示,所以二者有优先 级,label 如果有值则使用 label,如果没有 则去判断 tip 字段
+
     private ImageInfo middle_image;//右图的信息
     private List<ImageInfo> large_image_list;//大图列表的信息
     private List<ImageInfo> image_list;//三图列表的信息
@@ -46,7 +49,9 @@ public class JinRiTouTiaoArticle implements Parcelable {
                 ", display_time=" + display_time +
                 ", abstractArticle='" + abstractArticle + '\'' +
                 ", article_url='" + article_url + '\'' +
+                ", share_url='" + share_url + '\'' +
                 ", tip=" + tip +
+                ", label=" + label +
                 ", digg_count=" + digg_count +
                 ", bury_count=" + bury_count +
                 ", comment_count=" + comment_count +
@@ -56,18 +61,87 @@ public class JinRiTouTiaoArticle implements Parcelable {
                 '}';
     }
 
+    /**
+     * 第一版
+     * @param articleJsonObject
+     */
+//    public JinRiTouTiaoArticle(JSONObject articleJsonObject) {
+//        Log.e(TAG, "获取到的今日头条JSON对象:\n"+articleJsonObject.toString());
+//        try {
+//            this.group_id = articleJsonObject.optLong("group_id");//新闻的 id
+//            this.title = articleJsonObject.optString("title");//新闻的标题
+//            this.source = articleJsonObject.optString("source");//新闻的来源
+//            this.url = articleJsonObject.optString("url");//新闻的来源的网址
+//            this.publish_time = articleJsonObject.optLong("publish_time");//新闻的发表时间:时间戳
+//            this.display_time = articleJsonObject.optLong("display_time");//新闻展示时间:时间戳
+//            this.abstractArticle = articleJsonObject.optString("abstract");//新闻的简介
+//            this.article_url = articleJsonObject.optString("article_url");//新闻的头条网址
+//            this.tip = articleJsonObject.optInt("tip");//新闻的热、荐的状态:0, 无额外信息. 默认 ;1 代表 热  ; 10 代表 推荐  ; 11 代表推荐 + 热 (1|2)
+//            this.digg_count = articleJsonObject.optInt("digg_count");//顶的数量
+//            this.bury_count = articleJsonObject.optInt("bury_count");//踩的数量
+//            this.comment_count = articleJsonObject.optInt("comment_count");//评论的数量
+//            //1,右图信息
+//            if (articleJsonObject.isNull("middle_image")) {//图片信息为空
+//                Log.e(TAG, "parseJinRiTouTiao: 右图信息为空");
+//            } else {//对JinRiTouTiaoArticle.ImageInfo解析,middleImage全部替换为image
+//                this.middle_image = new ImageInfo(articleJsonObject.optJSONObject("middle_image"));
+//            }
+//            //2,三图列表的信息
+//            List<ImageInfo> imageInfos_three = new ArrayList<>();
+//            if (articleJsonObject.isNull("image_list")) {
+//                Log.e(TAG, "parseJinRiTouTiao: 三图列表的信息为空");
+//            } else {
+//                JSONArray imageListJSONArray = articleJsonObject.optJSONArray("image_list");
+//                if (null == imageListJSONArray || imageListJSONArray.length() == 0) {
+//                    Log.e(TAG, "parseJinRiTouTiao: 三图列表的信息为空");
+//                } else {
+//                    int imageListJSONArrayLength = imageListJSONArray.length();
+//                    for (int i = 0; i < imageListJSONArrayLength; i++) {
+//                        imageInfos_three.add(new ImageInfo(imageListJSONArray.optJSONObject(i)));
+//                    }
+//                }
+//            }
+//            this.image_list = imageInfos_three;
+//            //3,大图列表的信息
+//            List<ImageInfo> imageInfos_large = new ArrayList<>();
+//            if (articleJsonObject.isNull("large_image_list")) {
+//                Log.e(TAG, "parseJinRiTouTiao: 大图列表的信息为空");
+//            } else {
+//                JSONArray largeImageJSONArray = articleJsonObject.optJSONArray("large_image_list");
+//                if (null == largeImageJSONArray || largeImageJSONArray.length() == 0) {
+//                    Log.e(TAG, "parseJinRiTouTiao: 大图列表的信息为空");
+//                } else {
+//                    int largeImageLstJSONArrayLength = largeImageJSONArray.length();
+//                    for (int j = 0; j < largeImageLstJSONArrayLength; j++) {
+//                        imageInfos_large.add(new ImageInfo(largeImageJSONArray.optJSONObject(j)));
+//                    }
+//                }
+//            }
+//            this.large_image_list = imageInfos_large;
+//        } catch (Exception e) {
+//            Log.e(TAG, "JinRiTouTiaoArticle: 解析JinRiTouTiaoArticle时,出错" + e.getMessage());
+//        }
+//    }
+
+    /**
+     * 第二版
+     * @param articleJsonObject
+     */
     public JinRiTouTiaoArticle(JSONObject articleJsonObject) {
         Log.e(TAG, "获取到的今日头条JSON对象:\n"+articleJsonObject.toString());
         try {
             this.group_id = articleJsonObject.optLong("group_id");//新闻的 id
             this.title = articleJsonObject.optString("title");//新闻的标题
             this.source = articleJsonObject.optString("source");//新闻的来源
+            this.article_url = articleJsonObject.optString("article_url");//新闻的头条网址
             this.url = articleJsonObject.optString("url");//新闻的来源的网址
-            this.publish_time = articleJsonObject.optLong("publish_time");//新闻的发表时间:时间戳
+//            this.publish_time = articleJsonObject.optLong("publish_time");//新闻的发表时间:时间戳
+            this.publish_time = articleJsonObject.optLong("behot_time");//新闻的发表时间:时间戳
             this.display_time = articleJsonObject.optLong("display_time");//新闻展示时间:时间戳
             this.abstractArticle = articleJsonObject.optString("abstract");//新闻的简介
-            this.article_url = articleJsonObject.optString("article_url");//新闻的头条网址
+            this.share_url = articleJsonObject.optString("share_url");//新闻的分享链接
             this.tip = articleJsonObject.optInt("tip");//新闻的热、荐的状态:0, 无额外信息. 默认 ;1 代表 热  ; 10 代表 推荐  ; 11 代表推荐 + 热 (1|2)
+            this.label = articleJsonObject.optString("label");//细粒度的文章标签:label 都可以控制标签显示,所以二者有优先 级,label 如果有值则使用 label,如果没有 则去判断 tip 字段
             this.digg_count = articleJsonObject.optInt("digg_count");//顶的数量
             this.bury_count = articleJsonObject.optInt("bury_count");//踩的数量
             this.comment_count = articleJsonObject.optInt("comment_count");//评论的数量
@@ -178,12 +252,28 @@ public class JinRiTouTiaoArticle implements Parcelable {
         this.article_url = article_url;
     }
 
+    public String getShare_url() {
+        return share_url;
+    }
+
+    public void setShare_url(String share_url) {
+        this.share_url = share_url;
+    }
+
     public int getTip() {
         return tip;
     }
 
     public void setTip(int tip) {
         this.tip = tip;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public int getDigg_count() {
@@ -256,7 +346,9 @@ public class JinRiTouTiaoArticle implements Parcelable {
         dest.writeLong(this.display_time);
         dest.writeString(this.abstractArticle);
         dest.writeString(this.article_url);
+        dest.writeString(this.share_url);
         dest.writeInt(this.tip);
+        dest.writeString(this.label);
         dest.writeInt(this.digg_count);
         dest.writeInt(this.bury_count);
         dest.writeInt(this.comment_count);
@@ -274,7 +366,9 @@ public class JinRiTouTiaoArticle implements Parcelable {
         this.display_time = in.readLong();
         this.abstractArticle = in.readString();
         this.article_url = in.readString();
+        this.share_url = in.readString();
         this.tip = in.readInt();
+        this.label = in.readString();
         this.digg_count = in.readInt();
         this.bury_count = in.readInt();
         this.comment_count = in.readInt();

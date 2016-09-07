@@ -22,4 +22,12 @@
     <string name="kinflow_string_wifi_setting">网络未连接，点击前往设置wifi网络？</string>
     <string name="wifi_setting">无线网络设置</string>
 
+    <string name="head_title">UC头条</string>
+    <string name="navi_content">NaviContent_网址导航区</string>
+    <string name="content_title">新闻头部导航</string>
+    <string name="content">新闻内容区</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_demo">DemoActivity</string>
 </resources>

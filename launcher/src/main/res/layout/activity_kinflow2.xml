@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    tools:context="com.klauncher.kinflow.Kinflow2Activity">
+
+
+    <include
+        android:id="@+id/kinflow_scrolling_header"
+        layout="@layout/kinflow_scrolling_header"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/kinflow_body"
+        style="@style/kinflow_commont_match_parent_all"
+        android:layout_below="@id/kinflow_scrolling_header"
+        android:padding="16dp"/>
+
+
+</RelativeLayout>

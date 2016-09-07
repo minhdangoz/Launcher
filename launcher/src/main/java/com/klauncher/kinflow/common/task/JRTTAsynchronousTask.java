@@ -82,20 +82,25 @@ public class JRTTAsynchronousTask {
         Response response = null;
         try {
             String timestamp = String.valueOf((int) ((System.currentTimeMillis()) / 1000));
-            String nonce = CommonUtils.getInstance().getRandomString(5);//生成5个随机字符串
+            String nonce = CommonUtils.getInstance().getRandomString(5);//安全参数:生成5个随机字符串
             RequestBody formBody = new FormBody.Builder()
-                    .add("timestamp", timestamp)
-                    .add("nonce", nonce)
+                    .add("timestamp", timestamp)//安全参数:时间戳
+                    .add("nonce", nonce)//安全参数:生成5个随机字符串
+                    .add("partner", Const.TOUTIAO_PARTNER)//公共参数:合作伙伴的id
+                    .add("signature", CommonUtils.SHA1(CommonUtils.orderLexicographical(new String[]{Const.TOUTIAO_SECURE_KEY, timestamp, nonce})))//安全参数:加密签名
+
                     .add("uuid", TelephonyUtils.getIMEI(mContext))
-                    .add("partner", Const.TOUTIAO_PARTNER)
-                    .add("signature", CommonUtils.SHA1(CommonUtils.orderLexicographical(new String[]{Const.TOUTIAO_SECURE_KEY, timestamp, nonce})))
+                    .add("openudid", TelephonyUtils.getDeviceId(mContext))//ANDROID_ID
+                    .add("os", "Android")
+                    .add("os_version", TelephonyUtils.getOsVersion())
+                    .add("device_mode", TelephonyUtils.getDM())//设备型号
                     .build();
 
             Request request = new Request.Builder()
                     .url(Const.TOUTIAO_URL_ACCESS_TOKEN)
                     .post(formBody)
                     .build();
-            Log.e(TAG, "accessToken的请求体编写完毕,开始执行请求=============================");
+            Log.e(TAG, "accessToken的请求体编写完毕,开始执行请求=============================url = "+request.url());
             response = mClient.newCall(request).execute();
             if (response.isSuccessful()) {//服务器有响应
                 Log.e(TAG, "accessToken: 服务器端有响应");
@@ -264,10 +269,18 @@ public class JRTTAsynchronousTask {
         sbUrl.append("&").append("category").append("=").append(category);
 //        sbUrl.append("&").append(Const.REQUEST_PARAMETER_KEY_JINRITOUTIAO_CUSTOM_ARTICLE_MIN_BEHOT_TIME).append("=").append(DateUtils.calendar2Seconds(DateUtils.subtractionHour(24)));//24小时之内的数据
 //        sbUrl.append("&").append(Const.REQUEST_PARAMETER_KEY_JINRITOUTIAO_CUSTOM_ARTICLE_MAX_BEHOT_TIME).append("=").append(DateUtils.calendar2Seconds(Calendar.getInstance()));//从当前时间点往前的数据
-        sbUrl.append("&").append("count").append("=").append(JRTTCardContentManager.REQUEST_ARTICLE_COUNT);//请求15条数据
+        sbUrl.append("&").append("count").append("=").append(JRTTCardContentManager.REQUEST_ARTICLE_COUNT);//请求5条数据
         return sbUrl.toString();
     }
 
+    /**
+     * 获取公共参数:
+     * 签名,时间戳,随机数,合作方id,token
+     * @param signature
+     * @param timestamp
+     * @param nonce
+     * @return
+     */
     private StringBuilder getCommonParameter(String signature, String timestamp, String nonce) {
         StringBuilder sbUrl = new StringBuilder(Const.URL_JINRITOUTIAO_GET_CUSTOM_ARTICLE);
         sbUrl.append("?").append("signature").append("=").append(signature);
