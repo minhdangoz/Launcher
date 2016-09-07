@@ -4231,18 +4231,26 @@ public class Launcher extends Activity
         // Just verify that the folder hasn't already been added to the DragLayer.
         // There was a one-off crash where the folder had a parent already.
         if (folder.getParent() == null) {
-            //加载初始化推荐应用
-            folder.initAPUS(info.folderId,false);
             LauncherAppState app = LauncherAppState.getInstance();
             DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
-            int folderWidth = 3*grid.folderCellWidthPx;
-            DragLayer.LayoutParams params = new  DragLayer.LayoutParams(folderWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
-            //左右边距
             WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
             int screenWidth = wm.getDefaultDisplay().getWidth();
+            int screenHeight = wm.getDefaultDisplay().getHeight();
+            int folderWidth = 3*grid.folderCellWidthPx;
+            int folderHeight = (int)(screenHeight*0.9);
+            int folderMargTop = (int)(screenHeight*0.1);
+            //加载初始化推荐应用
+            folder.initAPUS(info.folderId,false);
+            //DragLayer.LayoutParams params = new  DragLayer.LayoutParams(folderWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
+            DragLayer.LayoutParams params = new  DragLayer.LayoutParams(folderWidth, folderHeight);
+            LogUtil.d("wqh_Folder",folderWidth+" x "+folderHeight);
+            //左右边距
             int  margin = (screenWidth - 3*grid.folderCellWidthPx)/2;
+            /*params.gravity = Gravity.CENTER_VERTICAL;
+            params.setMargins(margin,folderMargTop,margin,0);*/
             params.gravity = Gravity.BOTTOM;
-            params.setMargins(margin,50,margin,0);
+            //params.setMargins(margin,50,margin,0);
+            params.setMargins(margin,folderMargTop,margin,0);
             mDragLayer.addView(folder,params);
             mDragController.addDropTarget((DropTarget) folder);
         } else {
