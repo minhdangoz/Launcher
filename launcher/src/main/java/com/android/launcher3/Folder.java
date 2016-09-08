@@ -2309,7 +2309,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             };
             imageView.setTag(target);
             int iconSize = LauncherAppState.getInstance().getDynamicGrid().getDeviceProfile().iconSizePx;
-            Picasso.with(mLauncher).load(appInfo.getApp_logo()).resize((int) (0.8 * iconSize), (int) (0.8 * iconSize)).centerCrop().networkPolicy(NetworkPolicy.OFFLINE).into(imageView);
+            Picasso.with(mLauncher).load(appInfo.getApp_logo()).resize((int) (0.8 * iconSize), (int) (0.8 * iconSize)).centerCrop().into(imageView);//networkPolicy(NetworkPolicy.OFFLINE).
 
             imageView.setLayoutParams(new LayoutParams(iconSize, iconSize));
             textview.setText(appInfo.getApp_name());
@@ -2402,7 +2402,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             };
             ivBannerIcon.setTag(target);
             int iconSize = LauncherAppState.getInstance().getDynamicGrid().getDeviceProfile().iconSizePx;
-            Picasso.with(mLauncher).load(appInfo.getApp_logo()).resize((int) (1.2 * iconSize), (int) (1.2 * iconSize)).centerCrop().networkPolicy(NetworkPolicy.OFFLINE).into(ivBannerIcon);
+            Picasso.with(mLauncher).load(appInfo.getApp_logo()).resize((int) (1.2 * iconSize), (int) (1.2 * iconSize)).centerCrop().into(ivBannerIcon);//.networkPolicy(NetworkPolicy.OFFLINE)
 
             TextView tvBannerName = (TextView) itemView.findViewById(R.id.tv_adapkbanner_name);
             tvBannerName.setText(appInfo.getApp_name());
