@@ -63,7 +63,8 @@ RecyclerView解析:http://zjutkz.net/2016/03/29/%E9%87%8D%E5%A4%8D%E9%80%A0%E8%B
 
 
 
-
+模仿UC实现:
+http://www.jianshu.com/p/f7989a2a3ec2
 
 
 

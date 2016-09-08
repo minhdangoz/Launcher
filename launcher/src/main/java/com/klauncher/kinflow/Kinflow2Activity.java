@@ -116,7 +116,7 @@ public class Kinflow2Activity extends Activity implements View.OnClickListener{
 //                            for (int j = 0 ; j < jinRiTouTiaoArticleList.size() ; j++) {
 //                                Log.e(TAG, "今日头条toString结果 = "+jinRiTouTiaoArticleList.get(j).toString());
 //                            }
-                            Toast.makeText(Kinflow2Activity.this, "获取今日头条内容成功,当前所在线程:"+Thread.currentThread().getName(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Kinflow2Activity.this, "获取今日头条内容成功,获取到的头条个数="+jinRiTouTiaoArticleList.size(), Toast.LENGTH_SHORT).show();
 //                            kinflow2NewsAdapter.updateAdapter(jinRiTouTiaoArticleList);
                             mNewsBodyRecyclerView.setAdapter(new Kinflow2NewsAdapter(Kinflow2Activity.this,jinRiTouTiaoArticleList));
                         } else {//获取article失败

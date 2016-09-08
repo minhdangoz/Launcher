@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class JRTTCardContentManager extends BaseCardContentManager {
     public static final String TAG = "Kinflow";
-    public static final int REQUEST_ARTICLE_COUNT = 5;
+    public static final int REQUEST_ARTICLE_COUNT = 25;
     private CardInfo mCardInfo;
     private Handler mainControlHandler;//MainControl的handler
 

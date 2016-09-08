@@ -269,7 +269,7 @@ public class JRTTAsynchronousTask {
         sbUrl.append("&").append("category").append("=").append(category);
 //        sbUrl.append("&").append(Const.REQUEST_PARAMETER_KEY_JINRITOUTIAO_CUSTOM_ARTICLE_MIN_BEHOT_TIME).append("=").append(DateUtils.calendar2Seconds(DateUtils.subtractionHour(24)));//24小时之内的数据
 //        sbUrl.append("&").append(Const.REQUEST_PARAMETER_KEY_JINRITOUTIAO_CUSTOM_ARTICLE_MAX_BEHOT_TIME).append("=").append(DateUtils.calendar2Seconds(Calendar.getInstance()));//从当前时间点往前的数据
-        sbUrl.append("&").append("count").append("=").append(JRTTCardContentManager.REQUEST_ARTICLE_COUNT);//请求5条数据
+        sbUrl.append("&").append("count").append("=").append(JRTTCardContentManager.REQUEST_ARTICLE_COUNT);//请求25条数据
         return sbUrl.toString();
     }
 

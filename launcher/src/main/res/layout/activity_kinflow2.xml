@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white"
-    tools:context="com.klauncher.kinflow.Kinflow2Activity">
+    android:background="@color/color_white">
 
+
+
+ <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
 
     <include
         android:id="@+id/kinflow_scrolling_header"
@@ -14,10 +18,12 @@
 
 
     <android.support.v7.widget.RecyclerView
+        android:padding="16dp"
         android:id="@+id/kinflow_body"
-        style="@style/kinflow_commont_match_parent_all"
         android:layout_below="@id/kinflow_scrolling_header"
-        android:padding="16dp"/>
+        style="@style/kinflow_commont_match_parent_all"/>
+
+ </RelativeLayout>
 
 
-</RelativeLayout>
+</ScrollView>
