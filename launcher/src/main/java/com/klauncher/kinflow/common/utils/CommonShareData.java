@@ -32,6 +32,8 @@ public class CommonShareData {
     public static final String KEY_JINRITOUTIAO_ACCESS_TOKEN = "jinritoutiao_access_token";
     public static final String KEY_IS_FIRST_USE_KINFLOW  = "is_first_use_kinflow";
     public static final String KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET = "user_allow_kinflow_use_net";
+    public static final String KEY_ARTICLE_MIN_BEHOT_TIME = "min_behot_time";
+    public static final String KEY_ARTICLE_MAX_BEHOT_TIME = "max_behot_time";
     public static final String FIRST_CONNECTED_NET = "first_connected_net";
 
     public static final int DEFAULT_OPERATOR_DELAY = 72;//默认开启网页(2345)跳转的延长时间(单位:小时)

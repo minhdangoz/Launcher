@@ -4,10 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.klauncher.kinflow.common.utils.DateUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -22,6 +25,7 @@ public class JinRiTouTiaoArticle implements Parcelable {
 //    private String site;//新闻的来源:site不需要了，用source字段
     private String source;//新闻的来源:site不需要了，用source字段
     private String url;//新闻的来源的网址
+    private long behot_time;//新闻展示时间:第二版出现,替代publish_time和display_time
     private long publish_time;//新闻的发表时间:时间戳
     private long display_time;//新闻展示时间:时间戳
     private String abstractArticle;//新闻的简介
@@ -45,6 +49,7 @@ public class JinRiTouTiaoArticle implements Parcelable {
                 ", title='" + title + '\'' +
                 ", source='" + source + '\'' +
                 ", url='" + url + '\'' +
+                ", behot_time='" + behot_time + '\'' +
                 ", publish_time=" + publish_time +
                 ", display_time=" + display_time +
                 ", abstractArticle='" + abstractArticle + '\'' +
@@ -135,9 +140,13 @@ public class JinRiTouTiaoArticle implements Parcelable {
             this.source = articleJsonObject.optString("source");//新闻的来源
             this.article_url = articleJsonObject.optString("article_url");//新闻的头条网址
             this.url = articleJsonObject.optString("url");//新闻的来源的网址
-//            this.publish_time = articleJsonObject.optLong("publish_time");//新闻的发表时间:时间戳
-            this.publish_time = articleJsonObject.optLong("behot_time");//新闻的发表时间:时间戳
-            this.display_time = articleJsonObject.optLong("display_time");//新闻展示时间:时间戳
+            this.behot_time = articleJsonObject.optLong("behot_time");//新闻展示时间:第二版出现,替代publish_time和display_time
+            if (articleJsonObject.optLong("publish_time")==0) {
+                this.publish_time = this.behot_time;//如果没有publish_time这个字段,则使用
+            } else {
+                this.publish_time = articleJsonObject.optLong("publish_time");//新闻的发表时间:时间戳
+            }
+            this.display_time = articleJsonObject.optLong("display_time");//新闻展示时间aa:时间戳
             this.abstractArticle = articleJsonObject.optString("abstract");//新闻的简介
             this.share_url = articleJsonObject.optString("share_url");//新闻的分享链接
             this.tip = articleJsonObject.optInt("tip");//新闻的热、荐的状态:0, 无额外信息. 默认 ;1 代表 热  ; 10 代表 推荐  ; 11 代表推荐 + 热 (1|2)
@@ -220,8 +229,20 @@ public class JinRiTouTiaoArticle implements Parcelable {
         this.url = url;
     }
 
+    public long getBehot_time() {
+        return behot_time;
+    }
+
+    public void setBehot_time(long behot_time) {
+        this.behot_time = behot_time;
+    }
+
     public long getPublish_time() {
-        return publish_time;
+        long publishTime = this.publish_time;
+        if (publishTime==0) publishTime = this.display_time;
+        if (publishTime==0) publishTime = this.behot_time;
+        if (publishTime==0) publishTime= DateUtils.getInstance().calendar2Seconds(Calendar.getInstance());
+        return publishTime;
     }
 
     public void setPublish_time(long publish_time) {
@@ -342,6 +363,7 @@ public class JinRiTouTiaoArticle implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.source);
         dest.writeString(this.url);
+        dest.writeLong(this.behot_time);
         dest.writeLong(this.publish_time);
         dest.writeLong(this.display_time);
         dest.writeString(this.abstractArticle);
@@ -362,6 +384,7 @@ public class JinRiTouTiaoArticle implements Parcelable {
         this.title = in.readString();
         this.source = in.readString();
         this.url = in.readString();
+        this.behot_time = in.readLong();
         this.publish_time = in.readLong();
         this.display_time = in.readLong();
         this.abstractArticle = in.readString();

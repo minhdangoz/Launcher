@@ -81,6 +81,10 @@ public class DateUtils {
         return calendar;
     }
 
+    public long calendar2Seconds (Calendar calendar) {
+        return calendar.getTimeInMillis()/1000;
+    }
+
 
     /**
      * 如果是今天,则显示时:分.否则显示月-日

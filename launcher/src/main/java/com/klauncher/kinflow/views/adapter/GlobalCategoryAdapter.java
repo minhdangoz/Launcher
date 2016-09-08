@@ -86,30 +86,4 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<GlobalCategor
         }
     }
 
-    /**
-     * 定义ViewHolder
-     */
-//    public class GlobalCategoryAdapterViewHolder extends RecyclerView.ViewHolder {
-//        Button categoryButton;
-//
-//        public GlobalCategoryAdapterViewHolder(View itemView) {
-//            super(itemView);
-//            categoryButton = (Button) itemView.findViewById(R.id.category_button);
-//        }
-//        public void bindData(GlobalCategory globalCategory) {
-//            if (globalCategory.allFieldsIsNotNull()) {
-//                categoryButton.setText(globalCategory.getCategoryName());
-//                //button.setCompoundDrawables(left, top, right, bottom);
-//
-//                int pixels = pixels(Dips.deviceDpi(mContext));
-//                Drawable drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(globalCategory.getCategoryIcon()));
-//                drawable.setBounds(0, 0, pixels,pixels);
-//                categoryButton.setCompoundDrawables(null,
-//                        drawable,
-//                        null,
-//                        null);
-//            }
-//        }
-//    }
-
 }

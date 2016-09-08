@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -226,6 +227,7 @@ public class JRTTAsynchronousTask {
                             } else {
                                 mMessage.arg1 = SUCCESS;
                                 mMessage.obj = jinRiTouTiaoArticleList;
+                                behotTimeCompare(jinRiTouTiaoArticleList);
                             }
                         } catch (IOException ioException) {
                             Log.e(TAG, "响应体创建JSONObject时,出错,位于:new JSONObject(responseBody.string())" + ioException.getMessage());
@@ -255,6 +257,24 @@ public class JRTTAsynchronousTask {
         }
     }
 
+    public void behotTimeCompare (List<JinRiTouTiaoArticle> jinRiTouTiaoArticleList) {
+
+        try {
+            JinRiTouTiaoArticle minJinRiTouTiaoArticle = jinRiTouTiaoArticleList.get(0);
+            JinRiTouTiaoArticle maxJinRiTouTiaoArticle = jinRiTouTiaoArticleList.get(0);
+            int size = jinRiTouTiaoArticleList.size();
+            for (int i = 1; i < size; i++) {
+                JinRiTouTiaoArticle currentJinRiTouTiaoArticle = jinRiTouTiaoArticleList.get(i);
+                if (currentJinRiTouTiaoArticle.getBehot_time()<minJinRiTouTiaoArticle.getBehot_time()) minJinRiTouTiaoArticle = currentJinRiTouTiaoArticle;
+                if (currentJinRiTouTiaoArticle.getBehot_time()>maxJinRiTouTiaoArticle.getBehot_time()) maxJinRiTouTiaoArticle = currentJinRiTouTiaoArticle;
+            }
+            CommonShareData.putLong(CommonShareData.KEY_ARTICLE_MIN_BEHOT_TIME,maxJinRiTouTiaoArticle.getBehot_time());//返回上一刷历史的文章中最 大的那个时间戳
+            CommonShareData.putLong(CommonShareData.KEY_ARTICLE_MAX_BEHOT_TIME,minJinRiTouTiaoArticle.getBehot_time());//上一刷最小的时间戳
+        } catch (Exception e) {
+            Log.e(TAG, "behotTimeCompare: 存储minbeHotTime和maxbeHotTime时出错,详情:"+e.getMessage());
+        }
+
+    }
 
     /**
      * 此方法是管理刷新,获取更多,请求条数等操作的入口
@@ -267,8 +287,10 @@ public class JRTTAsynchronousTask {
         String signature = CommonUtils.SHA1(CommonUtils.orderLexicographical(new String[]{Const.TOUTIAO_SECURE_KEY, timestamp, nonce}));
         StringBuilder sbUrl = getCommonParameter(signature, timestamp, nonce);
         sbUrl.append("&").append("category").append("=").append(category);
-//        sbUrl.append("&").append(Const.REQUEST_PARAMETER_KEY_JINRITOUTIAO_CUSTOM_ARTICLE_MIN_BEHOT_TIME).append("=").append(DateUtils.calendar2Seconds(DateUtils.subtractionHour(24)));//24小时之内的数据
-//        sbUrl.append("&").append(Const.REQUEST_PARAMETER_KEY_JINRITOUTIAO_CUSTOM_ARTICLE_MAX_BEHOT_TIME).append("=").append(DateUtils.calendar2Seconds(Calendar.getInstance()));//从当前时间点往前的数据
+        sbUrl.append("&").append("min_behot_ time").append("=").append(CommonShareData.getLong(CommonShareData.KEY_ARTICLE_MIN_BEHOT_TIME,-1));//refresh 时使用:如果客户端没有历史,传入当前时间戳-10
+        long maxBehotTime = CommonShareData.getLong(CommonShareData.KEY_ARTICLE_MAX_BEHOT_TIME, Calendar.getInstance().getTimeInMillis() / 1000);
+        sbUrl.append("&").append("max_behot _time").append("=").append(maxBehotTime);//loadmore时使用:如果没有历史,则传递当前时间戳
+        Log.e(TAG, "getJinRiTouTiaoArticleListUrl: max_behot_time = "+maxBehotTime);
         sbUrl.append("&").append("count").append("=").append(JRTTCardContentManager.REQUEST_ARTICLE_COUNT);//请求25条数据
         return sbUrl.toString();
     }

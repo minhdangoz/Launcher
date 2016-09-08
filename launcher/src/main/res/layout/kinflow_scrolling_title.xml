@@ -6,7 +6,7 @@
               android:paddingTop="16dp"
               android:paddingBottom="6dp"
               android:layout_gravity="center"
-              android:gravity="center"
+
               android:orientation="vertical">
 
     <!--时事热点-->

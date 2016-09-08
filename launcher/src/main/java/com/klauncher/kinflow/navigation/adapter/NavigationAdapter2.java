@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,20 +31,41 @@ import java.util.List;
 public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.NavigationAdapterViewHolder> {
 
     private Context context;
-    private List<Navigation> navigationList;
+    private List<Navigation> mNavigationList;
     private LayoutInflater inflater;
     PopupWindowDialog mPopupWindowDialog;
 
     public NavigationAdapter2(Context mContext, List<Navigation> navigationList) {
         this.context = mContext;
-        this.navigationList = navigationList;
+        this.mNavigationList = navigationList;
         inflater = LayoutInflater.from(mContext);
         mPopupWindowDialog = getPopupWindowDialog();
     }
 
-    public void updateNavigationList(List<Navigation> list) {
-        navigationList.clear();
-        navigationList.addAll(list);
+    public void updateNavigationList(List<Navigation> newNavigationList) {
+        //如果不满足个数,则按照位置指定替换..如果超出指定个数则忽略
+        int size = newNavigationList.size();
+        Log.e("Kinflow","要更新的Navigation个数="+newNavigationList.size());
+        if (size==10) {
+            mNavigationList.clear();
+            mNavigationList.addAll(newNavigationList);
+        }else if (size<10) {//啥也不做
+            mNavigationList.clear();
+            mNavigationList.addAll(newNavigationList);
+            mNavigationList.addAll(CacheNavigation.getInstance().createAllDefaultNavigation().subList(0,10-newNavigationList.size()));
+        }else if (size>10) {
+            mNavigationList.clear();
+            mNavigationList = newNavigationList.subList(0, 10);
+        }
+        notifyDataSetChanged();
+    }
+
+    private void replaceNavigation(Navigation navigation) {
+        int position = navigation.getNavOrder();
+        if (mNavigationList.size()>position) {
+           mNavigationList.remove(position);
+            mNavigationList.add(position,navigation);
+        }
     }
 
     @Override
@@ -55,11 +77,11 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
     @Override
     public void onBindViewHolder(NavigationAdapterViewHolder holder, int position) {
         try {
-            Navigation navigation = navigationList.get(position);
+            Navigation navigation = mNavigationList.get(position);
             if (null==navigation||null==navigation.getNavName()||null==navigation.getNavIcon()) {
-                this.navigationList.remove(position);
+                this.mNavigationList.remove(position);
                 navigation = CacheNavigation.getInstance().createDefaultNavigation(position);
-                this.navigationList.add(position,navigation);
+                this.mNavigationList.add(position, navigation);
             }
             //navigation-pixels
             int pixels = pixels(Dips.deviceDpi(context));
@@ -139,7 +161,7 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
 
     @Override
     public int getItemCount() {
-        return null == navigationList ? 0 : navigationList.size();
+        return null == mNavigationList ? 0 : mNavigationList.size();
     }
 
     public PopupWindowDialog getPopupWindowDialog() {
@@ -206,7 +228,7 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
                     @Override
                     public void onClick(View v) {
                         int position = getPosition();//新版用getLayoutPosition
-                        Navigation navigation = navigationList.get(position);
+                        Navigation navigation = mNavigationList.get(position);
 
                         boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET,false);//用户允许信息流使用网络
                         if (!userAllowKinflowUseNet) {

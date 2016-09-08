@@ -279,6 +279,7 @@ public class MainControl {
      * @param msgWhats
      */
     public void asynchronousRequest(int... msgWhats) {
+
         try {
             isSuccess = false;
             this.mRequestTypes = msgWhats;
@@ -324,6 +325,9 @@ public class MainControl {
                                     BaseCardContentManager cardContentManager = cardInfo.getmCardContentManager();
                                     mRequestSemaphore.acquire();
                                     cardContentManager.requestCardContent(mHandler, cardInfo);
+
+                                    //kinflow2:只有一个Card请求即可,跳出循环
+                                    return;
                                 }
                             }
                             break;
@@ -339,6 +343,9 @@ public class MainControl {
             }
         } catch (Exception e) {
             Log.e("Kinflow", "asynchronousRequest: MainControl发起请求时,发生未知错误");
+            for (int i = 0 ;i < permitCount ;i++) {
+                mHandler.sendEmptyMessage(MessageFactory.MESSAGE_WHAT_ORROR);
+            }
         }
 
     }

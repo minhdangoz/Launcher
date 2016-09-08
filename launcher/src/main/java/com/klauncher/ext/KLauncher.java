@@ -19,6 +19,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -31,7 +32,6 @@ import com.android.launcher3.settings.SettingsValue;
 import com.dl.statisticalanalysis.MobileStatistics;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
-import com.klauncher.kinflow.Kinflow2Activity;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.adapter.CardItemDecoration;
@@ -43,14 +43,20 @@ import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.CommonUtils;
+import com.klauncher.kinflow.model.GlobalCategory;
 import com.klauncher.kinflow.navigation.adapter.NavigationAdapter;
+import com.klauncher.kinflow.navigation.adapter.NavigationAdapter2;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
 import com.klauncher.kinflow.search.model.HotWordItemDecoration;
+import com.klauncher.kinflow.utilities.CollectionsUtils;
 import com.klauncher.kinflow.utilities.Dips;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.utilities.NetworkUtils;
 import com.klauncher.kinflow.views.PopupWindowDialog;
+import com.klauncher.kinflow.views.adapter.GlobalCategoryAdapter;
+import com.klauncher.kinflow.views.adapter.Kinflow2NewsAdapter;
+import com.klauncher.kinflow.views.recyclerView.itemDecoration.ItemDecorationDivider;
 import com.klauncher.kinflow.weather.model.Weather;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
@@ -65,6 +71,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
+
 
 public class KLauncher extends Launcher implements SharedPreferences.OnSharedPreferenceChangeListener, MainControl.ResponseListener {
 
@@ -109,6 +116,13 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     RecyclerView mCardsView;
     PopupWindowDialog mPopupWindowDialog;
 
+    //----kinflow2以下
+    RecyclerView mGlobalCategoryRecyclerView, mNavigationRecyclerView, mNewsBodyRecyclerView;
+    LinearLayout mLinearLayoutHeader;
+    RelativeLayout searchLayout;
+    Kinflow2NewsAdapter kinflow2NewsAdapter;
+    //----kinflow2以上
+
     private HotWord hotWord1 = HotWord.getDefaultHotWord1();
     private HotWord hotWord2 = HotWord.getDefaultHotWord2();
     private HotWord hintHotWord = HotWord.getHintHotWord();
@@ -151,13 +165,15 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     public void populateCustomContentContainer() {
         Log.e("Klaucher_0512", "KLauncher populateCustomContentContainer()");
         //View customView = getLayoutInflater().inflate(R.layout.custom, null);
-        View customView = getLayoutInflater().inflate(R.layout.activity_main, null);
+//        View customView = getLayoutInflater().inflate(R.layout.activity_main, null);
+        View customView = getLayoutInflater().inflate(R.layout.activity_kinflow2, null);
         /*mWebView = (WebView) customView.findViewById(R.id.webcontent);
         if (null != mWebView) {
             setupWebView();
 		}*/
         //mLayoutContent = (LinearLayout) customView.findViewById(R.id.layoutcontent);
-        initKinflow(customView);
+        initKinflowView(customView);
+        initKinflowData();
 
         CustomContentCallbacks callbacks = new CustomContentCallbacks() {
             @Override
@@ -367,10 +383,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             view.loadUrl(url);
         }
     }*/
-    int downX, downY;
-    private int DRAG_X_THROD = 0;
-    private int SCROLL_X = 0;
-    private final int ANIM_DURATION = 300;
 
     private void initKinflow(View customview) {
         try {
@@ -453,6 +465,74 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         } catch (Exception e) {
             log("初始化信息流的时候出错initKinflow: " + e.getMessage());
         }
+    }
+
+    private void initKinflowView(View kinflowRootView){
+        //底部刷新
+        mPullRefreshScrollView = (PullToRefreshScrollView) kinflowRootView.findViewById(R.id.pull_refresh_scrollview);
+        //头部
+        mLinearLayoutHeader = (LinearLayout) kinflowRootView.findViewById(R.id.kinflow_scrolling_header);
+        tv_hotWordTop = (TextView) mLinearLayoutHeader.findViewById(R.id.hot_word_top);
+        tv_hotWordTop.setOnClickListener(this);
+        tv_hotWordTop.setText(topHotWord.getWord());
+        searchLayout = (RelativeLayout) mLinearLayoutHeader.findViewById(R.id.search_layout);
+        searchLayout.setOnClickListener(this);
+        //总体分类
+        mGlobalCategoryRecyclerView = (RecyclerView) kinflowRootView.findViewById(R.id.global_category_recyclerView);
+        mGlobalCategoryRecyclerView.setLayoutManager(new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false));
+        mGlobalCategoryRecyclerView.setAdapter(new GlobalCategoryAdapter(this, GlobalCategory.getDefaultGlobalCategoryList()));
+        //快捷导航
+        mNavigationRecyclerView = (RecyclerView) kinflowRootView.findViewById(R.id.navigation_recyclerView);
+        mNavigationRecyclerView.setLayoutManager(new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false));
+        List<Navigation> navigationList = CacheNavigation.getInstance().getAll();
+        Collections.sort(navigationList);
+        mNavigationRecyclerView.setAdapter(new NavigationAdapter2(KLauncher.this, navigationList));
+        mNavigationRecyclerView.addItemDecoration(new HotWordItemDecoration(16, 32, false));
+        //新闻体部分
+        mNewsBodyRecyclerView = (RecyclerView) kinflowRootView.findViewById(R.id.kinflow_body);
+        mNewsBodyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mNewsBodyRecyclerView.addItemDecoration(new ItemDecorationDivider(this, LinearLayoutManager.VERTICAL));
+//        mNewsBodyRecyclerView.addOnScrollListener(mHidingScrollListener);
+
+
+        kinflow2NewsAdapter = new Kinflow2NewsAdapter(this,null);
+        mNewsBodyRecyclerView.setAdapter(kinflow2NewsAdapter);
+        //other
+    }
+
+    private void initKinflowData() {
+        CardsListManager.getInstance().init(this);
+        mMainControl = new MainControl(KLauncher.this, this);
+        //注册监听
+        CacheNavigation.getInstance().registerOnSharedPreferenceChangeListener(this);
+//        CacheLocation.getInstance().registerOnSharedPreferenceChangeListener(this);//此版本已没有天气模块,但是保留天气模块相关代码
+        //初始化下拉刷新
+        mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+
+            @Override
+            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);//用户允许信息流使用网络
+                if (userAllowKinflowUseNet) {//用户允许使用网络
+                    requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
+                } else {//用户不允许使用网络
+                    showFirstUseKinflowHint();
+                }
+            }
+        });
+
+        mScrollView = mPullRefreshScrollView.getRefreshableView();
+        mScrollView.setFillViewport(true);
+        mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);//关闭加载更多
+        //
+        //注册网络监听
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        this.registerReceiver(mWifiChangeReceiver, filter);
+        //存储第一次使用并初始化弹框
+        CommonShareData.putBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW, true);
+
     }
 
     @Override
@@ -554,7 +634,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     public void okClick() {
                         //第一次联网---->false
                         CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, mPopupWindowDialog.getCompoundState()?true:false);//用户允许始终使用网络
-                        CommonShareData.putBoolean(CommonShareData.FIRST_CONNECTED_NET,false);
+                        CommonShareData.putBoolean(CommonShareData.FIRST_CONNECTED_NET, false);
                         mPopupWindowDialog.dismissPopupWindowDialog();
                         requestKinflowData(msgWhats);
                     }
@@ -751,18 +831,15 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     }
                     break;
                 case R.id.search_hint://搜索框监听
-//                    if (userAllowKinflowUseNet) {
-//                        Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
-//                        if (null == hintHotWord || null == hintHotWord.getWord())
-//                            hintHotWord = HotWord.getHintHotWord();
-//                        intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
-//                        startActivity(intent);
-//                    } else {
-//                        onViewClickedHintConnectedNet(R.id.search_hint);
-//                    }
-
-                    startActivity(new Intent(this, Kinflow2Activity.class));
-//                    startActivity(new Intent(this, Kinflow2Activity2.class));
+                    if (userAllowKinflowUseNet) {
+                        Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
+                        if (null == hintHotWord || null == hintHotWord.getWord())
+                            hintHotWord = HotWord.getHintHotWord();
+                        intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
+                        startActivity(intent);
+                    } else {
+                        onViewClickedHintConnectedNet(R.id.search_hint);
+                    }
 
                     break;
                 case R.id.search_mode:
@@ -778,6 +855,18 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                         onViewClickedHintConnectedNet(R.id.search_icon);
                     }
                     break;
+                case R.id.search_layout:
+                    if (userAllowKinflowUseNet) {
+                        Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
+                        if (null == hintHotWord || null == hintHotWord.getWord())
+                            hintHotWord = HotWord.getHintHotWord();
+                        intent.putExtra(com.klauncher.kinflow.search.SearchActivity.HITN_HOT_WORD_KEY, hintHotWord);
+                        startActivity(intent);
+                    } else {
+                        onViewClickedHintConnectedNet(R.id.search_hint);
+                    }
+//                    startActivity(new Intent(this,SearchActivity.class));
+                    break;
                 //
                 /*
                 case R.id.weather_header:
@@ -789,7 +878,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 */
             }
         } catch (Exception e) {
-            log("信息流界面点击事假出现未知异常:"+e.getMessage());
+            log("信息流界面点击事假出现未知异常:" + e.getMessage());
         }
     }
 
@@ -913,13 +1002,17 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         try {
             //更新热词
             if (null != hotWordList && hotWordList.size() != 0) {
-                hintHotWord = hotWordList.get(0);
-                tv_searchHint.setHint(hintHotWord.getWord());
-                hotWord1 = hotWordList.get(1);
-                tv_hotWord1.setText(hotWord1.getWord());
-                hotWord2 = hotWordList.get(2);
-                tv_hotWord2.setText(hotWord2.getWord());
-                topHotWord = hotWordList.get(3);
+                //kinflow1
+//                hintHotWord = hotWordList.get(0);
+//                tv_searchHint.setHint(hintHotWord.getWord());
+//                hotWord1 = hotWordList.get(1);
+//                tv_hotWord1.setText(hotWord1.getWord());
+//                hotWord2 = hotWordList.get(2);
+//                tv_hotWord2.setText(hotWord2.getWord());
+//                topHotWord = hotWordList.get(3);
+//                tv_hotWordTop.setText(topHotWord.getWord());
+                //kinflow2
+                 topHotWord = hotWordList.get(3);
                 tv_hotWordTop.setText(topHotWord.getWord());
             }
         } catch (Exception e) {
@@ -931,11 +1024,23 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     public void onNavigationUpdate(List<Navigation> navigationList) {
         try {
-            //更新导航页
-            if (null != navigationList && navigationList.size() != 0) {
-                NavigationAdapter adapter = (NavigationAdapter) navigationRecyclerView.getAdapter();
-                adapter.updateNavigationList(navigationList);
-                adapter.notifyDataSetChanged();
+//            if (null != navigationList && navigationList.size() != 0) {
+//                NavigationAdapter2 adapter = (NavigationAdapter2) mNavigationRecyclerView.getAdapter();
+//                adapter.updateNavigationList(navigationList);
+//                adapter.notifyDataSetChanged();
+//            }
+
+            if (!CollectionsUtils.collectionIsNull(navigationList)) {
+                if (navigationList.size()>=5) {//可以满足global
+//                  //1.更新globalCategory:navigationList.subList(0,5);
+
+                    //2.更新Navigation
+                    NavigationAdapter2 adapter = (NavigationAdapter2) mNavigationRecyclerView.getAdapter();
+                    adapter.updateNavigationList(navigationList.subList(5, navigationList.size()));
+
+                }else {//连global都不能满足
+
+                }
             }
         } catch (Exception e) {
             log("onNavigationUpdate: 更新导航时出错:" + e.getMessage());
@@ -946,13 +1051,18 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     public void onCardInfoUpdate(List<CardInfo> cardInfoList) {
         try {
-            //更新CardsAdapter
+            //kinflow1:更新CardsAdapter
+            /*
             if (null != cardInfoList && cardInfoList.size() != 0) {
-    //            CardsAdapter cardsAdapter = (CardsAdapter) mCardsView.getAdapter();
-    //            cardsAdapter.updateCards(cardInfoList);
                 mCardsView.removeAllViews();
                 CardsAdapter cardsAdapter = new CardsAdapter(this, cardInfoList);
                 mCardsView.setAdapter(cardsAdapter);
+            }
+            */
+            //kinflow2:
+            if (null != cardInfoList && cardInfoList.size() != 0) {
+                mNewsBodyRecyclerView.removeAllViews();
+                kinflow2NewsAdapter.addData(this, cardInfoList.get(0));
             }
         } catch (Exception e) {
             log("onCardInfoUpdate: 更新Card数据的时候出错:"+e.getMessage());
