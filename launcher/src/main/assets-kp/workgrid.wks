@@ -19,5 +19,12 @@
         "iconsize": "58",
         "textsize": "11",
         "hotseat": "5"
+    },
+    "1501_M02": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "62",
+        "textsize": "12",
+        "hotseat": "5"
     }
 }
