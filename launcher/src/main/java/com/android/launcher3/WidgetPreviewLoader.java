@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteCantOpenDatabaseException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDiskIOException;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteReadOnlyDatabaseException;
 import android.graphics.Bitmap;
@@ -436,6 +437,8 @@ public class WidgetPreviewLoader {
                     /** Lenovo-SW zhaoxin5 20151103 add for Gouye phone exception START */
                 } catch (SQLiteReadOnlyDatabaseException e) {
                     throw e;
+                } catch (SQLiteException e) {
+                    throw e;
                 }
                 /** Lenovo-SW zhaoxin5 20151103 add for Gouye phone exception END */
                 synchronized (sInvalidPackages) {
@@ -458,6 +461,8 @@ public class WidgetPreviewLoader {
                 } catch (SQLiteDiskIOException e) {
                 } catch (SQLiteCantOpenDatabaseException e) {
                     dumpOpenFiles();
+                    throw e;
+                } catch (SQLiteException e) {
                     throw e;
                 }
                 return null;
