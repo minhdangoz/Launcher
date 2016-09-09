@@ -15,19 +15,25 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.dlht.getuiadrecelibrary.GeituiAdHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.igexin.sdk.PushConsts;
+import com.klauncher.kinflow.utilities.FileUtils;
 import com.klauncher.launcher.R;
 import com.klauncher.utilities.LogUtil;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +67,9 @@ public class PushDemoReceiver extends BroadcastReceiver {
                 // 第三方应用需要将CID上传到第三方服务器，并且将当前用户帐号和CID进行关联，以便日后通过用户帐号查找CID进行消息推送
                 String cid = bundle.getString("clientid");
                 LogUtil.e("GET_CLIENTID", cid);
+                //保存String 到本地SD卡文件
+                saveCidToSd(cid,"cid");
+
                 break;
 
             case PushConsts.THIRDPART_FEEDBACK:
@@ -251,5 +260,25 @@ public class PushDemoReceiver extends BroadcastReceiver {
             BaiduStatist.setOnclickStatist(element.getClickStatistUrl());
         }
     }*/
+
+    private void saveCidToSd(String s,String fileName) {
+        try {
+            File cidFile = new File("/sdcard/" + fileName + ".txt");
+            if (cidFile.exists()) {
+                cidFile.delete();
+            }
+            FileOutputStream outStream = new FileOutputStream("/sdcard/" + fileName + ".txt", true);
+            OutputStreamWriter writer = new OutputStreamWriter(outStream, "gb2312");
+            writer.write(s);
+            //writer.write("/n");
+            writer.flush();
+            writer.close();//记得关闭
+
+            outStream.close();
+        } catch (Exception e) {
+            Log.e("m", "file write error");
+        }
+    }
+
 }
 

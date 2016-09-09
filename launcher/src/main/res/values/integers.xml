@@ -1,3 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <integer name="folder_height_scale">1</integer>
 </resources>

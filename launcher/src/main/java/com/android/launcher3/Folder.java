@@ -736,6 +736,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         //setScaleY(1f);
         setScaleX(getOverviewModeScale());
         setScaleY(getOverviewModeScale());
+        LogUtil.d("prepareReveal",""+getOverviewModeScale());
      /*Lenovo-sw zhangyj19 add 2015/06/18 modify folder style  end */
         setAlpha(1f);
         mState = STATE_SMALL;
@@ -1561,7 +1562,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                 (res.getInteger(R.integer.config_folderMaxRow) * mContent.getCellHeight()) +
                 (2 * mContent.getHeightGap())) ;
         boolean intercept = mLauncher.getWorkspace().isInOverviewMode();
-
+        int folderScale = res.getInteger(R.integer.folder_height_scale);
+        LogUtil.d("folderScale","folderScale = "+folderScale);
         int mFolderPaddingTop = res.getDimensionPixelSize(R.dimen.folder_preview_padding);
         if(intercept){
             return scrollHeight + mFolderPaddingTop;
