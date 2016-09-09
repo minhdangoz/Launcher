@@ -615,7 +615,6 @@ public class Launcher extends Activity
 
         mSavedState = savedInstanceState;
         restoreState(mSavedState);
-
         if (PROFILE_STARTUP) {
             android.os.Debug.stopMethodTracing();
         }
@@ -1477,7 +1476,7 @@ public class Launcher extends Activity
         setWorkspaceBackground(mState == State.WORKSPACE);
 
         mPaused = false;
-        if (mRestoring || mOnResumeNeedsLoad) {
+        if (/*mRestoring || */mOnResumeNeedsLoad) {
             setWorkspaceLoading(true);
             /* Lenovo-SW zhaoxin5 20150529 add for 2 Layer support */
             int flags = (mOnResumeLoaderTaskFlags == Integer.MIN_VALUE ? ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(this) 
@@ -2506,7 +2505,7 @@ public class Launcher extends Activity
                 /* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
                         //Launcher 加载lbk数据入口
                         mModel.startLoader(true, PagedView.INVALID_RESTORE_PAGE, ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(Launcher.this));
-            	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+                /* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
                     } else {//从 lbk文件恢复
                         LauncherLog.i("xixia", "onCreate befor loader task 2");
                         // We only load the page synchronously if the user rotates (or triggers a
@@ -2515,6 +2514,16 @@ public class Launcher extends Activity
                         mModel.startLoader(true, mWorkspace.getRestorePage(), ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(Launcher.this));
             	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
                     }
+                } else {
+                    setWorkspaceLoading(true);
+            /* Lenovo-SW zhaoxin5 20150529 add for 2 Layer support */
+                    int flags = (mOnResumeLoaderTaskFlags == Integer.MIN_VALUE ? ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(Launcher.this)
+                            : mOnResumeLoaderTaskFlags);
+                    mModel.startLoader(true, PagedView.INVALID_RESTORE_PAGE, flags);
+            /* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+                    mRestoring = false;
+                    /** Lenovo-SW zhaoxin5 20150810 fix bug, restore can not success START */
+                    mOnResumeLoaderTaskFlags = Integer.MIN_VALUE;
                 }
             }
         }
@@ -2918,6 +2927,7 @@ public class Launcher extends Activity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG,"onSaveInstanceState");
         if (mWorkspace.getChildCount() > 0) {
             outState.putInt(RUNTIME_STATE_CURRENT_SCREEN,
                     mWorkspace.getCurrentPageOffsetFromCustomContent());
