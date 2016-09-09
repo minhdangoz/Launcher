@@ -268,8 +268,12 @@ public class JRTTAsynchronousTask {
                 if (currentJinRiTouTiaoArticle.getBehot_time()<minJinRiTouTiaoArticle.getBehot_time()) minJinRiTouTiaoArticle = currentJinRiTouTiaoArticle;
                 if (currentJinRiTouTiaoArticle.getBehot_time()>maxJinRiTouTiaoArticle.getBehot_time()) maxJinRiTouTiaoArticle = currentJinRiTouTiaoArticle;
             }
-            CommonShareData.putLong(CommonShareData.KEY_ARTICLE_MIN_BEHOT_TIME,maxJinRiTouTiaoArticle.getBehot_time());//返回上一刷历史的文章中最 大的那个时间戳
-            CommonShareData.putLong(CommonShareData.KEY_ARTICLE_MAX_BEHOT_TIME,minJinRiTouTiaoArticle.getBehot_time());//上一刷最小的时间戳
+
+            long minBehotTime = maxJinRiTouTiaoArticle.getBehot_time();//返回上一刷历史的文章中最 大的那个时间戳
+            long maxBehotTime = minJinRiTouTiaoArticle.getBehot_time();//上一刷最小的时间戳
+            CommonShareData.putLong(CommonShareData.KEY_ARTICLE_MIN_BEHOT_TIME,minBehotTime);
+            CommonShareData.putLong(CommonShareData.KEY_ARTICLE_MAX_BEHOT_TIME,maxBehotTime);
+            Log.e(TAG, "behotTimeCompare: 存储behotTime, minBehotTime="+minBehotTime+"  ,maxBehotTime="+maxBehotTime);
         } catch (Exception e) {
             Log.e(TAG, "behotTimeCompare: 存储minbeHotTime和maxbeHotTime时出错,详情:"+e.getMessage());
         }
@@ -287,10 +291,13 @@ public class JRTTAsynchronousTask {
         String signature = CommonUtils.SHA1(CommonUtils.orderLexicographical(new String[]{Const.TOUTIAO_SECURE_KEY, timestamp, nonce}));
         StringBuilder sbUrl = getCommonParameter(signature, timestamp, nonce);
         sbUrl.append("&").append("category").append("=").append(category);
-        sbUrl.append("&").append("min_behot_ time").append("=").append(CommonShareData.getLong(CommonShareData.KEY_ARTICLE_MIN_BEHOT_TIME,-1));//refresh 时使用:如果客户端没有历史,传入当前时间戳-10
+
+        long minBehotTime = CommonShareData.getLong(CommonShareData.KEY_ARTICLE_MIN_BEHOT_TIME, -1);
+//        sbUrl.append("&").append("min_behot_time").append("=").append(String.valueOf(minBehotTime));//refresh 时使用:如果客户端没有历史,传入当前时间戳-10
         long maxBehotTime = CommonShareData.getLong(CommonShareData.KEY_ARTICLE_MAX_BEHOT_TIME, Calendar.getInstance().getTimeInMillis() / 1000);
-        sbUrl.append("&").append("max_behot _time").append("=").append(maxBehotTime);//loadmore时使用:如果没有历史,则传递当前时间戳
-        Log.e(TAG, "getJinRiTouTiaoArticleListUrl: max_behot_time = "+maxBehotTime);
+        sbUrl.append("&").append("max_behot_time").append("=").append(String.valueOf(maxBehotTime));//loadmore时使用:如果没有历史,则传递当前时间戳
+
+        Log.e(TAG, "getJinRiTouTiaoArticleListUrl:请求今日头条使用的behot:    max_behot_time=" + maxBehotTime + "  minBhehot="+minBehotTime);
         sbUrl.append("&").append("count").append("=").append(JRTTCardContentManager.REQUEST_ARTICLE_COUNT);//请求25条数据
         return sbUrl.toString();
     }
