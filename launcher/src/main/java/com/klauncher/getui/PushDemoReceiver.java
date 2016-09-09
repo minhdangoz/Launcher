@@ -68,7 +68,7 @@ public class PushDemoReceiver extends BroadcastReceiver {
                 String cid = bundle.getString("clientid");
                 LogUtil.e("GET_CLIENTID", cid);
                 //保存String 到本地SD卡文件
-                saveCidToSd(cid,"cid");
+                //saveCidToSd(cid,"cid");
 
                 break;
 
