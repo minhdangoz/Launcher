@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Set;
 
 import okhttp3.OkHttpClient;
@@ -153,5 +154,10 @@ public class CommonShareData {
 
     public static void clearInt(String key){
         editor.putInt(key,0);
+    }
+
+    public static void resetArticleBehot(){
+        putLong(CommonShareData.KEY_ARTICLE_MAX_BEHOT_TIME, Calendar.getInstance().getTimeInMillis() / 1000);
+        putLong(CommonShareData.KEY_ARTICLE_MIN_BEHOT_TIME, -1);
     }
 }

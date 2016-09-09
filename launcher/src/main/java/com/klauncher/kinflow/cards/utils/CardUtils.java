@@ -126,17 +126,18 @@ public class CardUtils {
 
     /**
      * 对获取到的一点咨询进行排序.尽量保证第一个是有图的
+     *
      * @param yiDianModelList
      * @return
      */
     public static List<YiDianModel> sortYiDianModelList(List<YiDianModel> yiDianModelList) {
         LinkedList<YiDianModel> sortListYiDianModel = new LinkedList<>();
         int size = yiDianModelList.size();
-        for (int i = 0 ; i < size ; i++) {
-           YiDianModel yiDianModel = yiDianModelList.get(i);
-            if (yiDianModel.getImages().length>0) {//如果有图,则放入第一个
+        for (int i = 0; i < size; i++) {
+            YiDianModel yiDianModel = yiDianModelList.get(i);
+            if (yiDianModel.getImages().length > 0) {//如果有图,则放入第一个
                 sortListYiDianModel.addFirst(yiDianModel);
-            }else {
+            } else {
                 sortListYiDianModel.add(yiDianModel);
             }
         }
@@ -145,26 +146,33 @@ public class CardUtils {
 
     /**
      * 判断是否超过了4个小时
+     *
      * @return
      */
     private static boolean isOver4hour() {
         Calendar latestModifiedCalendar = DateUtils.getInstance().millis2Calendar(CommonShareData.getString(Const.KEY_CARD_CLEAR_OFFSET, "0"));//默认最后更新时间为0
-        latestModifiedCalendar.add(Calendar.SECOND,14400);//14400S=4hour
+        latestModifiedCalendar.add(Calendar.SECOND, 14400);//14400S=4hour
         if (latestModifiedCalendar.before(Calendar.getInstance())) return true;
         return false;
     }
 
-    public static void clearOffset () {
-        if (isOver4hour()) {
+    public static void clearOffset() {
+        new Thread() {
+            @Override
+            public void run() {
+                if (isOver4hour()) {
 //            log("超过4小时清空offset");
-            Log.i("Kinflow","超过4小时清空offset");
-            CardContentManagerFactory.clearAllOffset();
-            try {
-                CommonShareData.putString(Const.KEY_CARD_CLEAR_OFFSET,String.valueOf(Calendar.getInstance().getTimeInMillis()));
-            } catch (Exception e) {
-                e.printStackTrace();
+                    Log.i("Kinflow", "超过4小时清空offset");
+                    CardContentManagerFactory.clearAllOffset();
+                    try {
+                        CommonShareData.resetArticleBehot();//清空今日头条beHot
+                        CommonShareData.putString(Const.KEY_CARD_CLEAR_OFFSET, String.valueOf(Calendar.getInstance().getTimeInMillis()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        }
+        }.start();
     }
 }
 

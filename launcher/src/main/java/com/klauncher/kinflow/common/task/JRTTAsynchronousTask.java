@@ -292,12 +292,12 @@ public class JRTTAsynchronousTask {
         StringBuilder sbUrl = getCommonParameter(signature, timestamp, nonce);
         sbUrl.append("&").append("category").append("=").append(category);
 
-        long minBehotTime = CommonShareData.getLong(CommonShareData.KEY_ARTICLE_MIN_BEHOT_TIME, -1);
+//        long minBehotTime = CommonShareData.getLong(CommonShareData.KEY_ARTICLE_MIN_BEHOT_TIME, -1);
 //        sbUrl.append("&").append("min_behot_time").append("=").append(String.valueOf(minBehotTime));//refresh 时使用:如果客户端没有历史,传入当前时间戳-10
         long maxBehotTime = CommonShareData.getLong(CommonShareData.KEY_ARTICLE_MAX_BEHOT_TIME, Calendar.getInstance().getTimeInMillis() / 1000);
         sbUrl.append("&").append("max_behot_time").append("=").append(String.valueOf(maxBehotTime));//loadmore时使用:如果没有历史,则传递当前时间戳
 
-        Log.e(TAG, "getJinRiTouTiaoArticleListUrl:请求今日头条使用的behot:    max_behot_time=" + maxBehotTime + "  minBhehot="+minBehotTime);
+//        Log.e(TAG, "getJinRiTouTiaoArticleListUrl:请求今日头条使用的behot:    max_behot_time=" + maxBehotTime + "  minBhehot="+minBehotTime);
         sbUrl.append("&").append("count").append("=").append(JRTTCardContentManager.REQUEST_ARTICLE_COUNT);//请求25条数据
         return sbUrl.toString();
     }
