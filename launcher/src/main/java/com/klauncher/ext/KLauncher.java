@@ -121,6 +121,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     LinearLayout mLinearLayoutHeader;
     RelativeLayout searchLayout;
     Kinflow2NewsAdapter kinflow2NewsAdapter;
+    TextView mTextViewLoaderMore,mTextViewConnect2Net;
     //----kinflow2以上
 
     private HotWord hotWord1 = HotWord.getDefaultHotWord1();
@@ -138,6 +139,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 if (mNetworkConnected != NetworkUtils.isNetworkAvailable(context)) {
                     mNetworkConnected = NetworkUtils.isNetworkAvailable(context);
                     if (mNetworkConnected) {//断开变为连接:
+                        mTextViewConnect2Net.setVisibility(View.GONE);
                         if (CommonShareData.getBoolean(CommonShareData.FIRST_CONNECTED_NET,false)) {//如果第一次联网:展现提示框
 //                            showFirstConnectedNetHint(MessageFactory.REQUEST_ALL_KINFLOW);
                         } else {//非第一次联网:请求所有
@@ -145,6 +147,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                         }
                     } else {//连接变为断开
                             //连接变为断开:什么都不用做.或者弹toast提示用户
+                        mTextViewConnect2Net.setVisibility(View.VISIBLE);
                     }
                 }
             } catch (Exception e) {
@@ -499,6 +502,10 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         kinflow2NewsAdapter = new Kinflow2NewsAdapter(this,null);
         mNewsBodyRecyclerView.setAdapter(kinflow2NewsAdapter);
         //other
+        mTextViewLoaderMore = (TextView) kinflowRootView.findViewById(R.id.load_more);
+        mTextViewLoaderMore.setOnClickListener(this);
+        mTextViewConnect2Net = (TextView) kinflowRootView.findViewById(R.id.connect_net);
+        mTextViewConnect2Net.setOnClickListener(this);
     }
 
     private void initKinflowData() {
@@ -868,6 +875,14 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     }
 //                    startActivity(new Intent(this,SearchActivity.class));
                     break;
+
+                case R.id.load_more:
+                    Toast.makeText(this, "加载更多", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.connect_net:
+                    Toast.makeText(this, "连接网络", Toast.LENGTH_SHORT).show();
+                    break;
+
                 //
                 /*
                 case R.id.weather_header:
@@ -1051,6 +1066,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             if (null != cardInfoList && cardInfoList.size() != 0) {
                 mNewsBodyRecyclerView.removeAllViews();
                 kinflow2NewsAdapter.addData(this, cardInfoList.get(0));
+                mTextViewLoaderMore.setVisibility(View.VISIBLE);
             }
         } catch (Exception e) {
             log("onCardInfoUpdate: 更新Card数据的时候出错:"+e.getMessage());

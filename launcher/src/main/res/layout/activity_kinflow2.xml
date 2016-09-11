@@ -22,19 +22,40 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:paddingBottom="16dp">
 
             <include
                 android:id="@+id/kinflow_scrolling_header"
                 layout="@layout/kinflow_scrolling_header"/>
 
+            <TextView
+                android:id="@+id/connect_net"
+                android:layout_below="@id/kinflow_scrolling_header"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="连接网络"
+                android:visibility="gone"
+                android:gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="16sp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/kinflow_body"
                 style="@style/kinflow_commont_match_parent_width"
-                android:layout_below="@id/kinflow_scrolling_header"
+                android:layout_below="@id/connect_net"
                 android:padding="16dp"/>
 
+            <TextView
+                android:id="@+id/load_more"
+                android:layout_below="@id/kinflow_body"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="加载更多"
+                android:visibility="gone"
+                android:gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="16sp"/>
         </RelativeLayout>
     </ScrollView>
 
