@@ -70,7 +70,7 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
 
     @Override
     public NavigationAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = this.inflater.inflate(R.layout.adapter_navigation3, parent, false);
+        View view = this.inflater.inflate(R.layout.adapter_navigation2, parent, false);
         return new NavigationAdapterViewHolder(view);
     }
 
