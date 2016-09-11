@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -470,6 +471,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     private void initKinflowView(View kinflowRootView){
         //底部刷新
         mPullRefreshScrollView = (PullToRefreshScrollView) kinflowRootView.findViewById(R.id.pull_refresh_scrollview);
+        mPullRefreshScrollView.setBackgroundColor(Color.parseColor("#57ADE3"));
         //头部
         mLinearLayoutHeader = (LinearLayout) kinflowRootView.findViewById(R.id.kinflow_scrolling_header);
         tv_hotWordTop = (TextView) mLinearLayoutHeader.findViewById(R.id.hot_word_top);

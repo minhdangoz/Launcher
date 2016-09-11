@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+    android:id="@+id/pull_refresh_scrollview"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ptr="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/pull_refresh_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="12dp"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
+    android:paddingBottom="12dp"
     android:scrollbars="none"
     ptr:ptrAnimationStyle="flip"
     ptr:ptrMode="both"
-    android:background="@color/color_white">
+    >
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/color_white">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingBottom="16dp">
 
             <include
                 android:id="@+id/kinflow_scrolling_header"
