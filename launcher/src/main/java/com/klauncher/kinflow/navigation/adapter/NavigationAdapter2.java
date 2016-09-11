@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.klauncher.kinflow.common.utils.CacheNavigation;
@@ -69,7 +70,7 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
 
     @Override
     public NavigationAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = this.inflater.inflate(R.layout.adapter_navigation2, parent, false);
+        View view = this.inflater.inflate(R.layout.adapter_navigation3, parent, false);
         return new NavigationAdapterViewHolder(view);
     }
 
@@ -86,10 +87,10 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
             int pixels = pixels(Dips.deviceDpi(context));
 
             //navigation-name
-            holder.tv_navigation.setText(navigation.getNavName());
+            holder.navigationName.setText(navigation.getNavName());
 
             //navigation-name-color
-//            holder.tv_navigation.setTextColor(Color.BLACK);
+//            holder.navigationName.setTextColor(Color.BLACK);
 
             //navigation-icon
             String navIcon = navigation.getNavIcon();
@@ -124,28 +125,17 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
 
                 }
                 Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
-    //            drawable.setBounds(0, 0, context.getResources().getInteger(R.integer.kinflow_integer_navigataion_icon_bound), context.getResources().getInteger(R.integer.kinflow_integer_navigataion_icon_bound));
-    //            if (Dips.getDensity(context)>=2){
-    //                drawable.setBounds(0, 0, 48,48);
-    //            } else {
-    //                drawable.setBounds(0, 0, 32,32);
-    //            }
                 drawable.setBounds(0, 0, pixels,pixels);
-                holder.tv_navigation.setCompoundDrawables(null, drawable, null, null);
+                holder.navigationIcon.setImageDrawable(drawable);
                 return;
             }
+
             byte[] decodedString = Base64.decode(navIcon, Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             if (null != decodedByte) {
                 Drawable drawable = new BitmapDrawable(context.getResources(), decodedByte);
-    //            drawable.setBounds(0, 0, context.getResources().getInteger(R.integer.kinflow_integer_navigataion_icon_bound), context.getResources().getInteger(R.integer.kinflow_integer_navigataion_icon_bound));
-    //            if (Dips.getDensity(context)>=2){
-    //                drawable.setBounds(0, 0, 48,48);
-    //            } else {
-    //                drawable.setBounds(0, 0, 32,32);
-    //            }
                 drawable.setBounds(0, 0, pixels,pixels);
-                holder.tv_navigation.setCompoundDrawables(null, drawable, null, null);
+                holder.navigationIcon.setImageDrawable(drawable);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -216,20 +206,22 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
     }
 
     public class NavigationAdapterViewHolder extends RecyclerView.ViewHolder {
-        private TextView tv_navigation;
+        private TextView navigationName;
+        private ImageView navigationIcon;
 
         public NavigationAdapterViewHolder(View itemView) {
             super(itemView);
 
             try {
-                tv_navigation = (TextView) itemView.findViewById(R.id.adapter_navigation);
-                tv_navigation.setOnClickListener(new View.OnClickListener() {
+                navigationIcon = (ImageView) itemView.findViewById(R.id.navigation_icon);
+                navigationName = (TextView) itemView.findViewById(R.id.navigation_name);
+                itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int position = getPosition();//新版用getLayoutPosition
                         Navigation navigation = mNavigationList.get(position);
 
-                        boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET,false);//用户允许信息流使用网络
+                        boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);//用户允许信息流使用网络
                         if (!userAllowKinflowUseNet) {
                             showFirstConnectedNetHint(navigation);
                             return;
