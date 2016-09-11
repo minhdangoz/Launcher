@@ -52,7 +52,6 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
         }else if (size<10) {//啥也不做
             mNavigationList.clear();
             mNavigationList.addAll(newNavigationList);
-            mNavigationList.addAll(CacheNavigation.getInstance().createAllDefaultNavigation().subList(0,10-newNavigationList.size()));
         }else if (size>10) {
             mNavigationList.clear();
             mNavigationList = newNavigationList.subList(0, 10);

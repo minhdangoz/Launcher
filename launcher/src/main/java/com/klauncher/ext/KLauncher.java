@@ -50,7 +50,6 @@ import com.klauncher.kinflow.navigation.adapter.NavigationAdapter2;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
 import com.klauncher.kinflow.search.model.HotWordItemDecoration;
-import com.klauncher.kinflow.utilities.CollectionsUtils;
 import com.klauncher.kinflow.utilities.Dips;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.utilities.NetworkUtils;
@@ -1026,23 +1025,10 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     public void onNavigationUpdate(List<Navigation> navigationList) {
         try {
-//            if (null != navigationList && navigationList.size() != 0) {
-//                NavigationAdapter2 adapter = (NavigationAdapter2) mNavigationRecyclerView.getAdapter();
-//                adapter.updateNavigationList(navigationList);
-//                adapter.notifyDataSetChanged();
-//            }
-
-            if (!CollectionsUtils.collectionIsNull(navigationList)) {
-                if (navigationList.size()>=5) {//可以满足global
-//                  //1.更新globalCategory:navigationList.subList(0,5);
-
-                    //2.更新Navigation
-                    NavigationAdapter2 adapter = (NavigationAdapter2) mNavigationRecyclerView.getAdapter();
-                    adapter.updateNavigationList(navigationList.subList(5, navigationList.size()));
-
-                }else {//连global都不能满足
-
-                }
+            if (null != navigationList && navigationList.size() != 0) {
+                NavigationAdapter2 adapter = (NavigationAdapter2) mNavigationRecyclerView.getAdapter();
+                adapter.updateNavigationList(navigationList);
+                adapter.notifyDataSetChanged();
             }
         } catch (Exception e) {
             log("onNavigationUpdate: 更新导航时出错:" + e.getMessage());
