@@ -302,7 +302,7 @@ public class MainControl {
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                             mRequestSemaphore.acquire();
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.NAVIGATION_GET);
+                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.NAVIGATION_GET_TEST);
                             break;
     //                    case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH:
     //                        mRequestSemaphore.acquire();

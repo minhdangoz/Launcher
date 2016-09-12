@@ -88,7 +88,7 @@ public class GlobalCategory implements Parcelable {
             switch (i) {
                 case 0://网址
                     name = "网址";
-                    resId = R.drawable.notification_tool_light_app;//这里应该是网址
+                    resId = R.drawable.notification_tool_light_web;//这里应该是网址
                     break;
                 case 1://小说
                     name = "小说";
@@ -100,7 +100,7 @@ public class GlobalCategory implements Parcelable {
                     break;
                 case 3://奇趣
                     name = "奇趣";
-                    resId = R.drawable.notification_tool_light_video;//这里应该是奇趣
+                    resId = R.drawable.notification_tool_light_funny;//这里应该是奇趣
                     break;
                 case 4://应用
                     name = "应用";

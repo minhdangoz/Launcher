@@ -70,6 +70,7 @@ public class Const {
     public static final String CARD_GET = REALEASE_HOST+"/v1/card?cid="+REALEASE_CID;
 //    public static final String NAVIGATION_GET = REALEASE_HOST+"/v1/nav?cid="+REALEASE_CID;
     public static final String NAVIGATION_GET = REALEASE_HOST+"/v1/nav/mobile?cid="+REALEASE_CID;
+    public static final String NAVIGATION_GET_TEST = "http://test.api.klauncher.com/kplatform/v1/nav/mobile?cid=1001_2101_10100000000";
     public static final String NAVIGATION_LOCAL_FIRST_INIT = "local_init";
     public static final String NAVIGATION_LOCAL_LAST_MODIFIED = "local_lastModified";
     public static final String NAVIGATION_LOCAL_SERVER_MODIFIED = "lastModified";
