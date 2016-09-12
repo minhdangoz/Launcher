@@ -19,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -121,7 +122,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     LinearLayout mLinearLayoutHeader;
     RelativeLayout searchLayout;
     Kinflow2NewsAdapter kinflow2NewsAdapter;
-    TextView mTextViewLoaderMore,mTextViewConnect2Net;
+    TextView mTextViewLoaderMore;
+    Button mButtonConnect2Net;
     //----kinflow2以上
 
     private HotWord hotWord1 = HotWord.getDefaultHotWord1();
@@ -139,7 +141,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 if (mNetworkConnected != NetworkUtils.isNetworkAvailable(context)) {
                     mNetworkConnected = NetworkUtils.isNetworkAvailable(context);
                     if (mNetworkConnected) {//断开变为连接:
-                        mTextViewConnect2Net.setVisibility(View.GONE);
+                        mButtonConnect2Net.setVisibility(View.GONE);
                         if (CommonShareData.getBoolean(CommonShareData.FIRST_CONNECTED_NET,false)) {//如果第一次联网:展现提示框
 //                            showFirstConnectedNetHint(MessageFactory.REQUEST_ALL_KINFLOW);
                         } else {//非第一次联网:请求所有
@@ -147,7 +149,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                         }
                     } else {//连接变为断开
                             //连接变为断开:什么都不用做.或者弹toast提示用户
-                        mTextViewConnect2Net.setVisibility(View.VISIBLE);
+                        mButtonConnect2Net.setVisibility(View.VISIBLE);
                     }
                 }
             } catch (Exception e) {
@@ -504,8 +506,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         //other
         mTextViewLoaderMore = (TextView) kinflowRootView.findViewById(R.id.load_more);
         mTextViewLoaderMore.setOnClickListener(this);
-        mTextViewConnect2Net = (TextView) kinflowRootView.findViewById(R.id.connect_net);
-        mTextViewConnect2Net.setOnClickListener(this);
+        mButtonConnect2Net = (Button) kinflowRootView.findViewById(R.id.connect_net);
+        mButtonConnect2Net.setOnClickListener(this);
     }
 
     private void initKinflowData() {
@@ -880,7 +882,19 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     Toast.makeText(this, "加载更多", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.connect_net:
-                    Toast.makeText(this, "连接网络", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "连接网络", Toast.LENGTH_SHORT).show();
+                    try {
+                        Intent intentWifi=new Intent();
+                        if (android.os.Build.VERSION.SDK_INT > 10) {
+                            intentWifi.setAction(android.provider.Settings.ACTION_SETTINGS);
+                        } else {
+                            intentWifi.setAction(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
+                        }
+                        this.startActivity(intentWifi);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "打开网络设置失败,请在设置中手动打开", Toast.LENGTH_SHORT).show();
+                        log("打开网络设置失败,请在设置中手动打开");
+                    }
                     break;
 
                 //

@@ -46,7 +46,6 @@ public class Kinflow2NewsAdapter extends BaseRecyclerViewAdapter<JinRiTouTiaoArt
      */
     public Kinflow2NewsAdapter(Context context, List<JinRiTouTiaoArticle> elementList) {
         super(context, elementList);
-        Log.e(TAG, "Kinflow2NewsAdapter: 构造函数");
     }
 
 //    public Kinflow2NewsAdapter(Context context,CardInfo cardInfo){
