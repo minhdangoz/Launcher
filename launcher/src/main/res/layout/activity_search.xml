@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/search_header"
         style="@style/kinflow_commont_match_parent_width"
-        android:background="@android:color/black"
+        android:background="@color/kinflow_title_background"
         android:paddingBottom="16dp"
         android:paddingLeft="8dp"
         android:paddingTop="16dp">

@@ -55,7 +55,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_toRightOf="@id/search_icon"
                 android:gravity="center_vertical"
-                android:text="@string/kinflow_string_search_hint"
+                android:hint="@string/kinflow_string_search_hint"
                 android:textColor="@color/kinflow_color_typeface_main"/>
         </RelativeLayout>
     </RelativeLayout>

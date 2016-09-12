@@ -481,6 +481,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         tv_hotWordTop = (TextView) mLinearLayoutHeader.findViewById(R.id.hot_word_top);
         tv_hotWordTop.setOnClickListener(this);
         tv_hotWordTop.setText(topHotWord.getWord());
+        tv_searchHint = (TextView) mLinearLayoutHeader.findViewById(R.id.search_hint);
+        tv_searchHint.setText(hintHotWord.getWord());
         searchLayout = (RelativeLayout) mLinearLayoutHeader.findViewById(R.id.search_layout);
         searchLayout.setOnClickListener(this);
         //总体分类
@@ -1042,6 +1044,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 //                topHotWord = hotWordList.get(3);
 //                tv_hotWordTop.setText(topHotWord.getWord());
                 //kinflow2
+                hintHotWord = hotWordList.get(0);
+                tv_searchHint.setHint(hintHotWord.getWord());
+//                ((TextView)(mLinearLayoutHeader.findViewById(R.id.search_hint))).setHint(hintHotWord.getWord());
                  topHotWord = hotWordList.get(3);
                 tv_hotWordTop.setText(topHotWord.getWord());
             }
