@@ -36,7 +36,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
-import com.klauncher.kinflow.cards.adapter.CardItemDecoration;
 import com.klauncher.kinflow.cards.adapter.CardsAdapter;
 import com.klauncher.kinflow.cards.manager.CardContentManagerFactory;
 import com.klauncher.kinflow.cards.manager.MainControl;
@@ -46,12 +45,10 @@ import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.model.GlobalCategory;
-import com.klauncher.kinflow.navigation.adapter.NavigationAdapter;
 import com.klauncher.kinflow.navigation.adapter.NavigationAdapter2;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
 import com.klauncher.kinflow.search.model.HotWordItemDecoration;
-import com.klauncher.kinflow.utilities.Dips;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.utilities.NetworkUtils;
 import com.klauncher.kinflow.views.PopupWindowDialog;
@@ -389,88 +386,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         }
     }*/
 
-    private void initKinflow(View customview) {
-        try {
-            // View kinflowView = getLayoutInflater().inflate(R.layout.activity_main, null);
-            View kinflowView = customview;
-            //initview
-            mWeatherLayout = (RelativeLayout) kinflowView.findViewById(R.id.weather_header);
-            tv_temperature = (TextView) kinflowView.findViewById(R.id.temperature);
-            tv_city = (TextView) kinflowView.findViewById(R.id.city);
-            tv_weather = (TextView) kinflowView.findViewById(R.id.weather);
-            iv_weatherType = (ImageView) kinflowView.findViewById(R.id.weather_type);
-            tv_searchHint = (TextView) kinflowView.findViewById(R.id.search_hint);
-            iv_searchMode = (ImageView) kinflowView.findViewById(R.id.search_mode);
-            iv_searchIcon = (ImageView) kinflowView.findViewById(R.id.search_icon);
-            tv_hotWordTop = (TextView) kinflowView.findViewById(R.id.hot_word_top);
-            tv_hotWord1 = (TextView) kinflowView.findViewById(R.id.hot_word_1);
-            tv_hotWord2 = (TextView) kinflowView.findViewById(R.id.hot_word_2);
-            iv_refresh = (ImageView) kinflowView.findViewById(R.id.refresh_hotWord);
-            randomNewsLine = (RelativeLayout) kinflowView.findViewById(R.id.random_news_line);
-            navigationRecyclerView = (RecyclerView) kinflowView.findViewById(R.id.navigation_recyclerView);
-            mCardsView = (RecyclerView) kinflowView.findViewById(R.id.scroll_view_cards);
-            mPullRefreshScrollView = (PullToRefreshScrollView) kinflowView.findViewById(R.id.pull_refresh_scrollview);
-            //mLayoutContent.addView(kinflowView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-            //listener
-            tv_searchHint.setOnClickListener(this);
-            iv_searchMode.setOnClickListener(this);
-            iv_searchIcon.setOnClickListener(this);
-            iv_refresh.setOnClickListener(this);
-            tv_hotWordTop.setOnClickListener(this);
-            tv_hotWord1.setOnClickListener(this);
-            tv_hotWord2.setOnClickListener(this);
-            mWeatherLayout.setOnClickListener(this);
-            //初始化数据---default data
-            CardsListManager.getInstance().init(this);
-            tv_hotWord1.setText(hotWord1.getWord());
-            tv_hotWord2.setText(hotWord2.getWord());
-            navigationRecyclerView.setLayoutManager(new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false));
-            List<Navigation> navigationList = CacheNavigation.getInstance().getAll();
-            Collections.sort(navigationList);
-            navigationRecyclerView.setAdapter(new NavigationAdapter(KLauncher.this, navigationList));
-            navigationRecyclerView.addItemDecoration(new HotWordItemDecoration(16, 32, false));
-
-            mCardsView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-            mCardsView.addItemDecoration(new CardItemDecoration(Dips.dipsToIntPixels(12, this)));
-            //mCardInfoList = CardsListManager.getInstance().getInfos();
-            mCardsView.setAdapter(new CardsAdapter(this, null));//最初传入空,等待收到数据后更新
-
-            //异步获取所有
-//        requestLocation();//此版本已没有天气模块,但是保留天气模块相关代码
-            mMainControl = new MainControl(KLauncher.this, this);
-            //注册监听
-            CacheNavigation.getInstance().registerOnSharedPreferenceChangeListener(this);
-//        CacheLocation.getInstance().registerOnSharedPreferenceChangeListener(this);//此版本已没有天气模块,但是保留天气模块相关代码
-            //初始化下拉刷新
-            mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
-
-                @Override
-                public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                    boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET,false);//用户允许信息流使用网络
-                        if (userAllowKinflowUseNet) {//用户允许使用网络
-                            requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
-                        } else {//用户不允许使用网络
-                            showFirstUseKinflowHint();
-                        }
-                }
-            });
-
-            mScrollView = mPullRefreshScrollView.getRefreshableView();
-            mScrollView.setFillViewport(true);
-            mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);//关闭加载更多
-            //
-            //注册网络监听
-            IntentFilter filter = new IntentFilter();
-            filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-            filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-            this.registerReceiver(mWifiChangeReceiver, filter);
-            //存储第一次使用并初始化弹框
-            CommonShareData.putBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW,true);
-        } catch (Exception e) {
-            log("初始化信息流的时候出错initKinflow: " + e.getMessage());
-        }
-    }
 
     private void initKinflowView(View kinflowRootView){
         //底部刷新
@@ -482,7 +397,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         tv_hotWordTop.setOnClickListener(this);
         tv_hotWordTop.setText(topHotWord.getWord());
         tv_searchHint = (TextView) mLinearLayoutHeader.findViewById(R.id.search_hint);
-        tv_searchHint.setText(hintHotWord.getWord());
+        tv_searchHint.setHint(hintHotWord.getWord());
         searchLayout = (RelativeLayout) mLinearLayoutHeader.findViewById(R.id.search_layout);
         searchLayout.setOnClickListener(this);
         //总体分类
