@@ -86,12 +86,12 @@ android {
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + OPPO_ID + "\""
         }
-        /*leshi {
+        leshi {
             applicationId = "com.klauncher.lslauncher"
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + LESHI_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LESHI_ID + "\""
-        }*/
+        }
         letv {
             applicationId = "com.klauncher.lslauncher"
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + LESHI_ID, WE_OPS_ID: KAPP_OPS_ID,
