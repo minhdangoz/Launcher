@@ -57,16 +57,16 @@ public class ClockWidgetProvider extends AppWidgetProvider {
                 for (int appWidgetId : appWidgetIds) {
                     appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId,
                             R.id.clock_widget_bar);
-                    Log.d("RemoteViews", "onReceive clock_widget 1111");
+//                    Log.d("RemoteViews", "onReceive clock_widget 1111");
                     RemoteViews widget = new RemoteViews(context.getPackageName(),
                             R.layout.clock_widget);
-                    Log.d("RemoteViews", "onReceive clock_widget 222");
+//                    Log.d("RemoteViews", "onReceive clock_widget 222");
                     updateViews(context, widget);
-                    Log.d("RemoteViews", "onReceive clock_widget 333");
+//                    Log.d("RemoteViews", "onReceive clock_widget 333");
 
                     appWidgetManager.partiallyUpdateAppWidget(appWidgetId, widget);
 
-                    Log.d("RemoteViews", "onReceive clock_widget 444");
+//                    Log.d("RemoteViews", "onReceive clock_widget 444");
                 }
             }
         }

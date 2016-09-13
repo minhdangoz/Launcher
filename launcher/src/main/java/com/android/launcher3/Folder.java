@@ -1125,6 +1125,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         return (getLayoutDirection() == LAYOUT_DIRECTION_RTL);
     }
 
+    int oldDragOverY = -1;
+    boolean oldDirectUp = false;
     public void onDragOver(DragObject d) {
         final DragView dragView = d.dragView;
         final int scrollOffset = mScrollView.getScrollY();
@@ -1144,33 +1146,129 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         r[1] -= getPaddingTop();
 
         final long downTime = SystemClock.uptimeMillis();
-        final MotionEvent translatedEv = MotionEvent.obtain(
-                downTime, downTime, MotionEvent.ACTION_MOVE, d.x, d.y, 0);
 
-        if (!mAutoScrollHelper.isEnabled()) {
-            mAutoScrollHelper.setEnabled(true);
-        }
+        if (d.y - oldDragOverY > 0) {
+            final MotionEvent translatedEv = MotionEvent.obtain(
+                    downTime, downTime, MotionEvent.ACTION_MOVE, 0, d.y + mAdApkContainHeight, 0);
 
-        final boolean handled = mAutoScrollHelper.onTouch(this, translatedEv);
-        translatedEv.recycle();
-
-        if (handled) {
-            mReorderAlarm.cancelAlarm();
-        } else {
-            mTargetCell = mContent.findNearestArea(
-                    (int) r[0], (int) r[1] + scrollOffset, 1, 1, mTargetCell);
-            if (isLayoutRtl()) {
-                mTargetCell[0] = mContent.getCountX() - mTargetCell[0] - 1;
+            if (!mAutoScrollHelper.isEnabled()) {
+                mAutoScrollHelper.setEnabled(true);
             }
-            if (mTargetCell[0] != mPreviousTargetCell[0]
-                    || mTargetCell[1] != mPreviousTargetCell[1]) {
+
+            final boolean handled = mAutoScrollHelper.onTouch(this, translatedEv);
+            translatedEv.recycle();
+
+            if (handled) {
                 mReorderAlarm.cancelAlarm();
-                mReorderAlarm.setOnAlarmListener(mReorderAlarmListener);
-                mReorderAlarm.setAlarm(REORDER_DELAY);
-                mPreviousTargetCell[0] = mTargetCell[0];
-                mPreviousTargetCell[1] = mTargetCell[1];
+            } else {
+                mTargetCell = mContent.findNearestArea(
+                        (int) r[0], (int) r[1] + scrollOffset, 1, 1, mTargetCell);
+                if (isLayoutRtl()) {
+                    mTargetCell[0] = mContent.getCountX() - mTargetCell[0] - 1;
+                }
+                if (mTargetCell[0] != mPreviousTargetCell[0]
+                        || mTargetCell[1] != mPreviousTargetCell[1]) {
+                    mReorderAlarm.cancelAlarm();
+                    mReorderAlarm.setOnAlarmListener(mReorderAlarmListener);
+                    mReorderAlarm.setAlarm(REORDER_DELAY);
+                    mPreviousTargetCell[0] = mTargetCell[0];
+                    mPreviousTargetCell[1] = mTargetCell[1];
+                }
+            }
+            oldDragOverY = d.y;
+            oldDirectUp = false;
+        } else if (d.y - oldDragOverY < 0) {
+            final MotionEvent translatedEv = MotionEvent.obtain(
+                    downTime, downTime, MotionEvent.ACTION_MOVE, 0, d.y - 20, 0);
+
+            if (!mAutoScrollHelper.isEnabled()) {
+                mAutoScrollHelper.setEnabled(true);
+            }
+
+            final boolean handled = mAutoScrollHelper.onTouch(this, translatedEv);
+            translatedEv.recycle();
+
+            if (handled) {
+                mReorderAlarm.cancelAlarm();
+            } else {
+                mTargetCell = mContent.findNearestArea(
+                        (int) r[0], (int) r[1] + scrollOffset, 1, 1, mTargetCell);
+                if (isLayoutRtl()) {
+                    mTargetCell[0] = mContent.getCountX() - mTargetCell[0] - 1;
+                }
+                if (mTargetCell[0] != mPreviousTargetCell[0]
+                        || mTargetCell[1] != mPreviousTargetCell[1]) {
+                    mReorderAlarm.cancelAlarm();
+                    mReorderAlarm.setOnAlarmListener(mReorderAlarmListener);
+                    mReorderAlarm.setAlarm(REORDER_DELAY);
+                    mPreviousTargetCell[0] = mTargetCell[0];
+                    mPreviousTargetCell[1] = mTargetCell[1];
+                }
+            }
+            oldDragOverY = d.y;
+            oldDirectUp = true;
+        } else {
+            if (oldDirectUp) {
+                final MotionEvent translatedEv = MotionEvent.obtain(
+                        downTime, downTime, MotionEvent.ACTION_MOVE,0, d.y - 20, 0);
+
+                if (!mAutoScrollHelper.isEnabled()) {
+                    mAutoScrollHelper.setEnabled(true);
+                }
+
+                final boolean handled = mAutoScrollHelper.onTouch(this, translatedEv);
+                translatedEv.recycle();
+
+                if (handled) {
+                    mReorderAlarm.cancelAlarm();
+                } else {
+                    mTargetCell = mContent.findNearestArea(
+                            (int) r[0], (int) r[1] + scrollOffset, 1, 1, mTargetCell);
+                    if (isLayoutRtl()) {
+                        mTargetCell[0] = mContent.getCountX() - mTargetCell[0] - 1;
+                    }
+                    if (mTargetCell[0] != mPreviousTargetCell[0]
+                            || mTargetCell[1] != mPreviousTargetCell[1]) {
+                        mReorderAlarm.cancelAlarm();
+                        mReorderAlarm.setOnAlarmListener(mReorderAlarmListener);
+                        mReorderAlarm.setAlarm(REORDER_DELAY);
+                        mPreviousTargetCell[0] = mTargetCell[0];
+                        mPreviousTargetCell[1] = mTargetCell[1];
+                    }
+                }
+                oldDragOverY = d.y;
+            } else {
+                final MotionEvent translatedEv = MotionEvent.obtain(
+                        downTime, downTime, MotionEvent.ACTION_MOVE, 0, d.y + mAdApkContainHeight, 0);
+
+                if (!mAutoScrollHelper.isEnabled()) {
+                    mAutoScrollHelper.setEnabled(true);
+                }
+
+                final boolean handled = mAutoScrollHelper.onTouch(this, translatedEv);
+                translatedEv.recycle();
+
+                if (handled) {
+                    mReorderAlarm.cancelAlarm();
+                } else {
+                    mTargetCell = mContent.findNearestArea(
+                            (int) r[0], (int) r[1] + scrollOffset, 1, 1, mTargetCell);
+                    if (isLayoutRtl()) {
+                        mTargetCell[0] = mContent.getCountX() - mTargetCell[0] - 1;
+                    }
+                    if (mTargetCell[0] != mPreviousTargetCell[0]
+                            || mTargetCell[1] != mPreviousTargetCell[1]) {
+                        mReorderAlarm.cancelAlarm();
+                        mReorderAlarm.setOnAlarmListener(mReorderAlarmListener);
+                        mReorderAlarm.setAlarm(REORDER_DELAY);
+                        mPreviousTargetCell[0] = mTargetCell[0];
+                        mPreviousTargetCell[1] = mTargetCell[1];
+                    }
+                }
+                oldDragOverY = d.y;
             }
         }
+
     }
 
     // This is used to compute the visual center of the dragView. The idea is that
