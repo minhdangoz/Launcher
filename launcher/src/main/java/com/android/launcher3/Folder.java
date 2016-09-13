@@ -1124,7 +1124,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
     public boolean isLayoutRtl() {
         return (getLayoutDirection() == LAYOUT_DIRECTION_RTL);
     }
-
+    //解决 向下 scrollView不能滑动问题
     int oldDragOverY = -1;
     boolean oldDirectUp = false;
     public void onDragOver(DragObject d) {
@@ -1146,7 +1146,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         r[1] -= getPaddingTop();
 
         final long downTime = SystemClock.uptimeMillis();
-
+        //向下滑动
         if (d.y - oldDragOverY > 0) {
             final MotionEvent translatedEv = MotionEvent.obtain(
                     downTime, downTime, MotionEvent.ACTION_MOVE, 0, d.y + mAdApkContainHeight, 0);
@@ -1177,7 +1177,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             }
             oldDragOverY = d.y;
             oldDirectUp = false;
-        } else if (d.y - oldDragOverY < 0) {
+        } else if (d.y - oldDragOverY < 0) {//向上滑动
             final MotionEvent translatedEv = MotionEvent.obtain(
                     downTime, downTime, MotionEvent.ACTION_MOVE, 0, d.y - 20, 0);
 
@@ -1207,7 +1207,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             }
             oldDragOverY = d.y;
             oldDirectUp = true;
-        } else {
+        } else {//划出文件夹
             if (oldDirectUp) {
                 final MotionEvent translatedEv = MotionEvent.obtain(
                         downTime, downTime, MotionEvent.ACTION_MOVE,0, d.y - 20, 0);
@@ -1656,9 +1656,22 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
         Resources res = getResources();
         //Lenovo-sw zhangyj19 add 2015/07/08 modify folder default row and line
+        LogUtil.d("config_folderMaxRow","config_folderMaxRow = "+res.getInteger(R.integer.config_folderMaxRow));
         int scrollHeight =  (int) (getPaddingTop() + getPaddingBottom() +
                 (res.getInteger(R.integer.config_folderMaxRow) * mContent.getCellHeight()) +
-                (2 * mContent.getHeightGap())) ;
+                (3 * mContent.getHeightGap())) ;
+        //与屏幕高度比较
+        WindowManager wm = (WindowManager) mLauncher.getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();//屏幕宽度
+        int height = wm.getDefaultDisplay().getHeight();
+        LogUtil.d("getScrollHeight","screenHeight = "+height);
+        LogUtil.d("getScrollHeight","folderheight ="+(getPaddingTop() + getPaddingBottom() + mFolderNameHeight + scrollHeight + mAdApkContainHeight));
+        if(getPaddingTop() + getPaddingBottom() + mFolderNameHeight + scrollHeight + mAdApkContainHeight >= (int)(height*0.8)){
+            scrollHeight =  (int) (getPaddingTop() + getPaddingBottom() +
+                    (3 * mContent.getCellHeight()) +
+                    (2 * mContent.getHeightGap())) ;
+        }
+
         boolean intercept = mLauncher.getWorkspace().isInOverviewMode();
         int folderScale = res.getInteger(R.integer.folder_height_scale);
         LogUtil.d("folderScale","folderScale = "+folderScale);
@@ -2409,7 +2422,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             };
             imageView.setTag(target);
             int iconSize = LauncherAppState.getInstance().getDynamicGrid().getDeviceProfile().iconSizePx;
-            Picasso.with(mLauncher).load(appInfo.getApp_logo()).resize((int) (0.8 * iconSize), (int) (0.8 * iconSize)).centerCrop().into(imageView);//networkPolicy(NetworkPolicy.OFFLINE).
+            Picasso.with(mLauncher)
+                    .load(appInfo.getApp_logo())
+                    .resize((int) (0.8 * iconSize), (int) (0.8 * iconSize)).centerCrop().into(imageView);//networkPolicy(NetworkPolicy.OFFLINE).
 
             imageView.setLayoutParams(new LayoutParams(iconSize, iconSize));
             textview.setText(appInfo.getApp_name());
@@ -2536,6 +2551,8 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                         PingManager.getInstance().reportUserActionMap4App(PingManager.KLAUNCHER_PINXIAOTONG_DOWNLOAD,
                                 mLauncher.getPackageName(),reportMap);
                         LogUtil.d("reportUserActionMap4App","点击下载上报成功");
+                        //隐藏详情页面
+                        bannerPopuWindow.dismiss();
                     }
                 }
             });

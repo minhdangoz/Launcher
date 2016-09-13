@@ -3169,10 +3169,10 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
         }*/
         /*return getPaddingTop() + getPaddingBottom() + (mCountY * mCellHeight) +
                 (Math.max((mCountY - 1), 0) * mHeightGap);*/
-        //固定高度 3行
-        if(mCountY <4) {
-            return getPaddingTop() + getPaddingBottom() + (3 * mCellHeight) +
-                    (2 * mHeightGap);
+        //固定高度 4行
+        if(mCountY <5) {
+            return getPaddingTop() + getPaddingBottom() + (4 * mCellHeight) +
+                    (3 * mHeightGap);
         }else {
             return getPaddingTop() + getPaddingBottom() + (mCountY * mCellHeight) +
                     (Math.max((mCountY - 1), 0) * mHeightGap);

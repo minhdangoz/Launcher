@@ -184,4 +184,5 @@
     <dimen name="header_footer_top_bottom_padding">12dp</dimen>
 
     <dimen name="folder_plus_icon_padding">7dp</dimen>
+    <dimen name="folder_title_marginbottom">5dp</dimen>
 </resources>
