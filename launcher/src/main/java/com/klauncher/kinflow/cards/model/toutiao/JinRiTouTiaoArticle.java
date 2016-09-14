@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import com.klauncher.kinflow.common.utils.DateUtils;
+import com.klauncher.kinflow.utilities.CollectionsUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -343,6 +344,19 @@ public class JinRiTouTiaoArticle implements Parcelable {
 
     public void setImage_list(List<ImageInfo> image_list) {
         this.image_list = image_list;
+    }
+
+    public static final int IMAGE_TYPE_0_IMAGE = 0;
+    public static final int IMAGE_TYPE_1_IMAGE = 1;
+    public static final int IMAGE_TYPE_3_IMAGE = 3;
+    public static final int IMAGE_TYPE_LARGE_IMAGE = 10;
+
+    //图片展示的优 先 级 顺 序 为 large_image_list> image_list> middle_image>无图
+    public int getImageType () {
+        if (!CollectionsUtils.collectionIsNull(this.large_image_list)) return IMAGE_TYPE_LARGE_IMAGE;
+        if (!CollectionsUtils.collectionIsNull(this.image_list)) return IMAGE_TYPE_3_IMAGE;
+        if (null!=this.middle_image) return IMAGE_TYPE_1_IMAGE;
+        return IMAGE_TYPE_0_IMAGE;
     }
 
     public static Creator<JinRiTouTiaoArticle> getCREATOR() {

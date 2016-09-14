@@ -54,7 +54,10 @@
                 android:id="@+id/kinflow_body"
                 style="@style/kinflow_commont_match_parent_width"
                 android:layout_below="@id/kinflow_news_top_line"
-                android:padding="16dp"/>
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp"
+                />
 
             <TextView
                 android:id="@+id/load_more"

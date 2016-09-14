@@ -142,8 +142,11 @@ public class Kinflow2NewsAdapter extends BaseRecyclerViewAdapter<JinRiTouTiaoArt
     }
 
     public class NewsApdaterViewHolder<T> extends BaseRecyclerViewHolder<JinRiTouTiaoArticle> {
-        RelativeLayout mBigImageLayout,m3ImageLayout;
-        LinearLayout m1ImageLayout;
+        //4个根布局:大图,三图,0图,1图
+        RelativeLayout m0ImageLayout,m3ImageLayout;
+        LinearLayout m1ImageLayout,mBigImageLayout;
+        //0Image
+        TextView m0ImageFooter,m0ImageTitle;
         //bigImage
         TextView mBigNewsHeader,mBigNewsFooter;
         ImageView mBigImage;
@@ -163,11 +166,43 @@ public class Kinflow2NewsAdapter extends BaseRecyclerViewAdapter<JinRiTouTiaoArt
         @Override
         public void initView(View itemRootView) {
             Log.e(TAG, "initView: ");
+            //无图
+            m0ImageLayout = (RelativeLayout) itemRootView.findViewById(R.id.kinflow_news_0image);
+            m0ImageFooter = (TextView) m0ImageLayout.findViewById(R.id.yidian_news_publish_time);
+            m0ImageTitle = (TextView) m0ImageLayout.findViewById(R.id.yidian_news_title);
+            m0ImageLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    JinRiTouTiaoArticle jinRiTouTiaoArticle = mElementList.get(getPosition());
+                    Bundle extras = new Bundle();
+                    String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
+
+                    extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
+                    extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + jinRiTouTiaoArticle.getGroup_id());
+                    String finalOpenComponent_Head1Imapge = jrttCardInfo.open(mContext, extras);
+                    if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
+                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO, String.valueOf(jrttCardInfo.getCardSecondTypeId()));
+                }
+            });
             //大图
-            mBigImageLayout = (RelativeLayout) itemRootView.findViewById(R.id.kinflow_big_image);
+            mBigImageLayout = (LinearLayout) itemRootView.findViewById(R.id.kinflow_big_image);
             mBigNewsHeader = (TextView) mBigImageLayout.findViewById(R.id.yidian_news_title);
             mBigNewsFooter = (TextView) mBigImageLayout.findViewById(R.id.yidian_news_publish_time);
             mBigImage = (ImageView) mBigImageLayout.findViewById(R.id.big_image);
+            mBigImageLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Toast.makeText(mContext, "大图布局被点击", Toast.LENGTH_SHORT).show();
+                    JinRiTouTiaoArticle jinRiTouTiaoArticle = mElementList.get(getPosition());
+                    Bundle extras = new Bundle();
+                    String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
+                    extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
+                    extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + jinRiTouTiaoArticle.getGroup_id());
+                    String finalOpenComponent_Head3Imapge = jrttCardInfo.open(mContext, extras);
+                    if (!TextUtils.isEmpty(finalOpenComponent_Head3Imapge))
+                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO, String.valueOf(jrttCardInfo.getCardSecondTypeId()));
+                }
+            });
             //一张图片
             m1ImageLayout = (LinearLayout) itemRootView.findViewById(R.id.kinflow_news_1image);
             m1ImageFooter = (TextView) m1ImageLayout.findViewById(R.id.yidian_news_publish_time);
@@ -212,6 +247,7 @@ public class Kinflow2NewsAdapter extends BaseRecyclerViewAdapter<JinRiTouTiaoArt
         @Override
         public void bundData2View(JinRiTouTiaoArticle modelData) {
             Log.e(TAG, "bundData2View: ");
+            /*
             //根据图片张数,提供展现方式
             List<JinRiTouTiaoArticle.ImageInfo> threeImageList = modelData.getImage_list();
             if (null != threeImageList && threeImageList.size() >= 3) {//三图模式有数据&&确实有三张图
@@ -221,6 +257,50 @@ public class Kinflow2NewsAdapter extends BaseRecyclerViewAdapter<JinRiTouTiaoArt
                 m1ImageLayout.setVisibility(View.VISIBLE);
                 addJrttHeadWith1Image(modelData);
             }
+            */
+
+            //Kinflow2://图片展示的优 先 级 顺 序 为 large_image_list> image_list> middle_image>无图
+            switch (modelData.getImageType()) {
+                case JinRiTouTiaoArticle.IMAGE_TYPE_LARGE_IMAGE:
+                    mBigImageLayout.setVisibility(View.VISIBLE);
+                    addJrttHeadWithLargeImage(modelData);
+                    break;
+                case JinRiTouTiaoArticle.IMAGE_TYPE_3_IMAGE:
+                    m3ImageLayout.setVisibility(View.VISIBLE);
+                    addJrttHeadWith3Image(modelData);
+                    break;
+                case JinRiTouTiaoArticle.IMAGE_TYPE_1_IMAGE:
+                    m1ImageLayout.setVisibility(View.VISIBLE);
+                    addJrttHeadWith1Image(modelData);
+                    break;
+                case JinRiTouTiaoArticle.IMAGE_TYPE_0_IMAGE:
+                    m0ImageLayout.setVisibility(View.VISIBLE);
+                    addJrttHeadWith0Image(modelData);
+                    break;
+            }
+        }
+
+        void addJrttHeadWithLargeImage (JinRiTouTiaoArticle mFirstJrttArticle) {
+            Log.e(TAG, "addJrttHeadWithLargeImage: ===============加载大图====================");
+            mBigNewsHeader.setText(mFirstJrttArticle.getTitle());
+            mBigNewsFooter.setText(DateUtils.getInstance().second2TimeOrDate(mFirstJrttArticle.getPublish_time()));
+            List<JinRiTouTiaoArticle.ImageInfo> largeImageInfoList = mFirstJrttArticle.getLarge_image_list();
+            Target target = new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    mBigImage.setImageBitmap(bitmap);
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                }
+            };
+            mBigImage.setTag(target);
+            loadImage(largeImageInfoList.get(0), mBigImage);
         }
 
         void addJrttHeadWith3Image(JinRiTouTiaoArticle mFirstJrttArticle) {
@@ -314,6 +394,12 @@ public class Kinflow2NewsAdapter extends BaseRecyclerViewAdapter<JinRiTouTiaoArt
                 Log.e("Kinflow", "addJrttHeadWith1Image: 一张图片也没有,添加默认图片");
                 m1ImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.no_image_show));
             }
+        }
+
+        void addJrttHeadWith0Image(JinRiTouTiaoArticle mFirstJrttArticle) {
+            Log.e("Kinflow", "addJrttHeadWith1Image: 开始添加0张图片的今日头条Card");
+            m0ImageTitle.setText(mFirstJrttArticle.getTitle());
+            m0ImageFooter.setText(DateUtils.getInstance().second2TimeOrDate(mFirstJrttArticle.getPublish_time()));
         }
 
         void loadImage(JinRiTouTiaoArticle.ImageInfo imageInfo, ImageView toutiaoImage) {

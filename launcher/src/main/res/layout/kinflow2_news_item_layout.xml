@@ -4,6 +4,12 @@
                 android:layout_height="wrap_content">
 
     <include
+        android:id="@+id/kinflow_news_0image"
+        layout="@layout/yidian_head_0image"
+        android:visibility="gone"/>
+
+
+    <include
         android:id="@+id/kinflow_big_image"
         layout="@layout/item_big_image"
         android:visibility="gone"/>
