@@ -1657,29 +1657,40 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         Resources res = getResources();
         //Lenovo-sw zhangyj19 add 2015/07/08 modify folder default row and line
         LogUtil.d("config_folderMaxRow","config_folderMaxRow = "+res.getInteger(R.integer.config_folderMaxRow));
-        int scrollHeight =  (int) (getPaddingTop() + getPaddingBottom() +
+        /*int scrollHeight =  (int) (getPaddingTop() + getPaddingBottom() +
                 (res.getInteger(R.integer.config_folderMaxRow) * mContent.getCellHeight()) +
-                (3 * mContent.getHeightGap())) ;
+                (3 * mContent.getHeightGap())) ;*/
         //与屏幕高度比较
         WindowManager wm = (WindowManager) mLauncher.getSystemService(Context.WINDOW_SERVICE);
         int width = wm.getDefaultDisplay().getWidth();//屏幕宽度
         int height = wm.getDefaultDisplay().getHeight();
-        LogUtil.d("getScrollHeight","screenHeight = "+height);
-        LogUtil.d("getScrollHeight","folderheight ="+(getPaddingTop() + getPaddingBottom() + mFolderNameHeight + scrollHeight + mAdApkContainHeight));
+        LogUtil.d("getScrollHeight()","height = "+height);
+        int scrollHeight = height - (getPaddingTop() + getPaddingBottom() + mFolderNameHeight  + mAdApkContainHeight+dip2px(mLauncher,100));
+        LogUtil.d("getScrollHeight()","scrollHeight"+scrollHeight);
+        //动态计算scrollView
+       /* LogUtil.d("getScrollHeight","folderheight ="+(getPaddingTop() + getPaddingBottom() + mFolderNameHeight + scrollHeight + mAdApkContainHeight));
         if(getPaddingTop() + getPaddingBottom() + mFolderNameHeight + scrollHeight + mAdApkContainHeight >= (int)(height*0.8)){
             scrollHeight =  (int) (getPaddingTop() + getPaddingBottom() +
                     (3 * mContent.getCellHeight()) +
                     (2 * mContent.getHeightGap())) ;
-        }
+        }*/
 
         boolean intercept = mLauncher.getWorkspace().isInOverviewMode();
         int folderScale = res.getInteger(R.integer.folder_height_scale);
         LogUtil.d("folderScale","folderScale = "+folderScale);
         int mFolderPaddingTop = res.getDimensionPixelSize(R.dimen.folder_preview_padding);
+        LogUtil.d("getScrollHeight()","intercept"+intercept);
         if(intercept){
+            LogUtil.d("getScrollHeight()","intercept"+(scrollHeight + mFolderPaddingTop));
             return scrollHeight + mFolderPaddingTop;
+
         } else {
-            return Math.min(scrollHeight, mContent.getDesiredHeight()) + mFolderPaddingTop;
+            LogUtil.d("getScrollHeight()","scrollHeight"+scrollHeight);
+            LogUtil.d("getScrollHeight()","getDesiredHeight"+mContent.getDesiredHeight());
+            LogUtil.d("getScrollHeight()","mFolderPaddingTop"+mFolderPaddingTop);
+
+            //return Math.min(scrollHeight, mContent.getDesiredHeight()) + mFolderPaddingTop;
+            return scrollHeight + mFolderPaddingTop;
         }
     }
     private int getScrollWidth() {

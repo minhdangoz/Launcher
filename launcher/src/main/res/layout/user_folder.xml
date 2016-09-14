@@ -17,6 +17,7 @@
 <com.android.launcher3.Folder xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="100dp"
     android:orientation="vertical"
     android:gravity="center_horizontal">
     <RelativeLayout
@@ -24,7 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -78,7 +78,7 @@
     <FrameLayout
         android:id="@+id/framelayout_adapks_contain"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="130dp"
         android:layout_marginTop="10dp">
 
         <View
@@ -90,7 +90,7 @@
         <LinearLayout
             android:id="@+id/ll_adapks_contain"
             android:layout_width="fill_parent"
-            android:layout_height="140dp"
+            android:layout_height="130dp"
             android:layout_gravity="bottom"
             android:gravity="bottom|center_horizontal"
             android:orientation="vertical"
@@ -100,11 +100,8 @@
                 android:id="@+id/relative_apkus_refesh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
                 android:visibility="invisible">
 
                 <TextView
@@ -113,7 +110,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="20dp"
                     android:gravity="center"
-                    android:padding="10dp"
+                    android:padding="5dp"
                     android:text="@string/pingxiaotong_ad_title"
                     android:textColor="@color/color_white"
                     android:textSize="13dp"/>
@@ -124,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
-                    android:padding="10dp"
+                    android:padding="5dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/icon_folder_refesh"
                     />

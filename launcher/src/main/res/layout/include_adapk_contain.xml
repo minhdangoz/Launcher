@@ -3,31 +3,15 @@
               android:id="@+id/ll_adapk_contain"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_gravity="center"
               android:background="@color/bg_trans"
+              android:gravity="top|center_horizontal"
               android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tv_adapks_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:singleLine="true"
-        android:text="@string/pingxiaotong_ad_title"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:orientation="horizontal"
         android:weightSum="3.0">
-
 
         <LinearLayout
             android:id="@+id/ll_adapk1"

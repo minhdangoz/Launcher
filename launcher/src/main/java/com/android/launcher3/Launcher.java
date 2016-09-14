@@ -4261,7 +4261,8 @@ public class Launcher extends Activity
             params.setMargins(margin,folderMargTop,margin,0);*/
             params.gravity = Gravity.BOTTOM;
             //params.gravity = Gravity.CENTER_VERTICAL;
-            params.setMargins(margin,50,margin,0);
+            //params.setMargins(margin,50,margin,0);
+            params.setMargins(margin,100,margin,0);
 //            params.setMargins(margin,folderMargTop,margin,0);
             mDragLayer.addView(folder,params);
             mDragController.addDropTarget((DropTarget) folder);
