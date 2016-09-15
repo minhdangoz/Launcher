@@ -447,10 +447,10 @@ public class CommonUtils {
 //            Log.e("Kinflow", "首次激活一定时间内不可以运营,返回false");
             return false;
         }
-//        if (isSkipedInterval()) {
+        if (isSkipedInterval()) {
 //            Log.e("Kinflow", "24h以内已经跳转过,所以不在跳转,返回false");
-//            return false;
-//        }
+            return false;
+        }
         else {//超过24小时还没有自动跳转过
             if (random()) {//随机为跳转
 //                Log.e("Kinflow", "24h以内没有跳转过,随机:跳转,返回true");
