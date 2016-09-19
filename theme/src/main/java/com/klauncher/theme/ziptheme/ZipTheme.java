@@ -79,7 +79,59 @@ public class ZipTheme implements ITheme {
 		if(justReloadLauncher){
             ThemeUtils.sendBroadcastToForceReloadLauncher(mContext, mZipThemeFilePath);
 		} else {
-			new ApplyZipThemeTask().execute(new Object[] { "", mZipThemeFilePath, "true"});
+//			new ApplyZipThemeTask().execute(new Object[] { "", mZipThemeFilePath, "true"});
+
+            Object arg0[] = new Object[] { "", mZipThemeFilePath, "true"};
+            final String themePath = arg0[1] == null ? null : arg0[1].toString();
+            final boolean needCopy = arg0[2] == null ? true : Boolean.parseBoolean(arg0[2].toString());
+            boolean result = true;
+            if (themePath == null) {
+                result = false;
+                ZipThemeUtils.sendZipThemeApplyFailed();
+                return ;
+            }
+            if (needCopy) {
+                exportResource();
+                result = ZipThemeUtils.copyThemePkgToLocal(mContext.getFilesDir().getAbsoluteFile(), themePath);
+            }
+            if (!result) {
+                ZipThemeUtils.sendZipThemeApplyFailed();
+                cleanResource();
+                return ;
+            }
+            try {
+                ZipThemeUtils.unZipFileResDotZip(mContext.getFilesDir().getAbsoluteFile());
+            } catch (Exception e) {
+                ThemeLog.i(TAG, "ApplyZipThemeTask error happened!", e);
+                ZipThemeUtils.sendZipThemeApplyFailed();
+                cleanResource();
+                return ;
+            }
+            // mark and preparations.
+            //markThemeType(themeType);
+            //checkCanShowActiveIcon();
+            //setThemeIconBg(false);
+            ZipThemeUtils.applyWallpaper(mContext, getDefaultWallpaper(), mZipThemeFilePath);
+            ZipThemeUtils.setThemeIconBg(mContext);
+            /*int color = getColorFromZipPkg(R.color.apps_icon_text_color, R.color.apps_icon_text_color);
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(mLa).edit();
+            editor.putInt(PREF_ICON_TEXT_STYLE, color);
+            editor.commit();
+            mCurrentColor = color;*/
+
+//            if (arg0.length > 2) {
+//                mFlag = arg0[2] == null ? null : arg0[2].toString();
+//            }
+            /*boolean rst = */
+            //mContext.getModel().forceReloadForThemeApply();
+            /*LauncherAppState.getInstance().getModel().changeThemeIcon(mLa, mFlag, true);*/
+            ThemeUtils.sendBroadcastToForceReloadLauncher(mContext, mZipThemeFilePath);
+            /*if(!rst){
+            	ZipThemeUtils.sendZipThemeApplyFailed();
+            }else{
+            	ZipThemeUtils.sendZipThemeApplySuccess();
+            }*/
+            cleanResource();
 		}
 	}
 

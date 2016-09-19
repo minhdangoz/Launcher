@@ -665,7 +665,7 @@ public class Launcher extends Activity
         LauncherAppState.getLauncherProvider().setLauncherProviderChangeListener(this);
         /** Lenovo-SW zhaoxin5 20150721 add for auto-reorder support END */
         // Support theme
-        applyDefaultTheme();
+//        applyDefaultTheme();
         //vivo error
         registerAppWidgetReceiver();
     }
