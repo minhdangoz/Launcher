@@ -290,7 +290,17 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                     if (intent != null && intent.getComponent() != null) {
                         try {
                             PingManager.getInstance().reportUserAction4ClickFolderPlus(mPlusPackages[i]);
-                            mLauncher.startActivity(intent);
+                            if (i == 0) {
+                                Intent intentMiguan = new Intent("com.miguan.market.service.START_PAGE");
+                                intentMiguan.setPackage("com.miguan.market");
+                                if (mLauncher.getPackageManager().resolveService(intentMiguan, 0) != null) {
+                                    intentMiguan.putExtra("key_class", intent.getComponent().getClassName());//Activity class 名称
+                                    intentMiguan.putExtra("key_bundle", new Bundle());// 需要传递的内部参数，如果没有直接new一个新的Bundle类即可
+                                    mLauncher.startService(intentMiguan);
+                                }
+                            } else {
+                                mLauncher.startActivity(intent);
+                            }
                         } catch (Exception e) {
                             Log.d(TAG, "Folder plus icon can not start exception : " + e.toString());
                         }
