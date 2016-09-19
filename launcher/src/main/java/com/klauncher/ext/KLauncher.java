@@ -390,7 +390,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     private void initKinflowView(View kinflowRootView){
         //底部刷新
         mPullRefreshScrollView = (PullToRefreshScrollView) kinflowRootView.findViewById(R.id.pull_refresh_scrollview);
-        mPullRefreshScrollView.setBackgroundColor(Color.parseColor("#57ADE3"));
+        mPullRefreshScrollView.setBackgroundColor(Color.parseColor("#29588F"));
         //头部
         mLinearLayoutHeader = (LinearLayout) kinflowRootView.findViewById(R.id.kinflow_scrolling_header);
         tv_hotWordTop = (TextView) mLinearLayoutHeader.findViewById(R.id.hot_word_top);
@@ -421,8 +421,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         kinflow2NewsAdapter = new Kinflow2NewsAdapter(this,null);
         mNewsBodyRecyclerView.setAdapter(kinflow2NewsAdapter);
         //other
-        mTextViewLoaderMore = (TextView) kinflowRootView.findViewById(R.id.load_more);
-        mTextViewLoaderMore.setOnClickListener(this);
+//        mTextViewLoaderMore = (TextView) kinflowRootView.findViewById(R.id.load_more);
+//        mTextViewLoaderMore.setOnClickListener(this);
         mButtonConnect2Net = (Button) kinflowRootView.findViewById(R.id.connect_net);
         mButtonConnect2Net.setOnClickListener(this);
     }
@@ -795,9 +795,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 //                    startActivity(new Intent(this,SearchActivity.class));
                     break;
 
-                case R.id.load_more:
-                    Toast.makeText(this, "加载更多", Toast.LENGTH_SHORT).show();
-                    break;
+//                case R.id.load_more:
+//                    Toast.makeText(this, "加载更多", Toast.LENGTH_SHORT).show();
+//                    break;
                 case R.id.connect_net:
 //                    Toast.makeText(this, "连接网络", Toast.LENGTH_SHORT).show();
                     try {
