@@ -23,7 +23,6 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.cards.model.yidian.YiDianModel;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
@@ -209,8 +208,9 @@ public final class AsynchronousGet {
             }
 
             for (int i = 0; i < navigationsLength; i++) {
-                Navigation navigation = new Navigation();
+//                Navigation navigation = new Navigation();
                 JSONObject navigationJsonObject = navigationJsonArray.getJSONObject(i);
+                /*
                 navigation.setNavId(navigationJsonObject.optString(Navigation.NAV_ID));
                 navigation.setNavName(navigationJsonObject.optString(Navigation.NAV_NAME));
                 navigation.setNavIcon(navigationJsonObject.optString(Navigation.NAV_ICON));
@@ -230,7 +230,8 @@ public final class AsynchronousGet {
                     }
                 }
                 navigation.setNavOpenOptions(opsList);
-                navigationList.add(navigation);
+                */
+                navigationList.add(new Navigation(navigationJsonObject));
             }
             msg.arg1 = SUCCESS;
             msg.obj = navigationList;

@@ -7,7 +7,12 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.kinflow.common.utils.OpenMode;
+import com.klauncher.kinflow.utilities.KinflowLog;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +62,8 @@ public class Navigation implements Parcelable, Comparable {
         } catch (Exception e) {
             try {
                 Intent secondIntent = openMode.getSecondIntent();
-                if (null==secondIntent.getComponent()) throw new Exception("服务器返回的数据为空字符串或者没有按照指定格式返回数据");
+                if (null == secondIntent.getComponent())
+                    throw new Exception("服务器返回的数据为空字符串或者没有按照指定格式返回数据");
                 context.startActivity(openMode.getSecondIntent());
             } catch (Exception e1) {
                 Intent thridIntent = openMode.getThirdIntent();
@@ -76,7 +82,7 @@ public class Navigation implements Parcelable, Comparable {
         this.navIcon = navIcon;
         this.navUrl = navUrl;
         this.navOrder = navOrder;
-        if (null==navOpenOptions||navOpenOptions.size()==0) {
+        if (null == navOpenOptions || navOpenOptions.size() == 0) {
             List<String> ops = new ArrayList<>();
             ops.add("23");
             ops.add("com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity");
@@ -192,5 +198,43 @@ public class Navigation implements Parcelable, Comparable {
             return 1;
         }
         return 0;
+    }
+
+    //以下为kinflow第二版========================================================
+    private Context mContext;
+
+    public Context getContext() {
+        if (null != mContext)
+            return mContext;
+        return KLauncherApplication.mKLauncherApplication;
+    }
+
+    public Navigation(JSONObject navigationJsonObject) {
+
+        try {
+            //内容部分
+            this.navId = navigationJsonObject.optString(Navigation.NAV_ID);
+            this.navName = navigationJsonObject.optString(Navigation.NAV_NAME);
+            this.navIcon = navigationJsonObject.optString(Navigation.NAV_ICON);
+            this.navUrl = navigationJsonObject.optString(Navigation.NAV_URL);
+            this.navOrder = navigationJsonObject.optInt(Navigation.NAV_ORDER);
+            //控制部分--打开方式
+            JSONArray opsJsonArray = navigationJsonObject.optJSONArray(NAV_OPEN_OPTIONS);
+            List<String> opsList = new ArrayList<>();
+            int opsJsonArrayLength = opsJsonArray.length();
+            if (opsJsonArrayLength <= 0) {
+                opsList.add("com.tencent.mtt/com.tencent.mtt.SplashActivity");
+                opsList.add("com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity");
+                opsList.add("com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower");
+            } else {
+                for (int j = 0; j < opsJsonArrayLength; j++) {
+                    opsList.add(opsJsonArray.optString(j));
+                }
+            }
+            this.navOpenOptions = opsList;
+        } catch (Exception e) {
+            KinflowLog.e("Navigation导航数据解析时出现错误,详情: " + e.getMessage());
+        }
+
     }
 }
