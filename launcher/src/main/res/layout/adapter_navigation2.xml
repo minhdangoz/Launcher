@@ -8,8 +8,8 @@
 
     <com.klauncher.kinflow.views.commonViews.ShapedImageView
         android:id="@+id/navigation_icon"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:layout_gravity="center"
         app:round_radius="4dp"
         app:shape_mode="round_rect"
@@ -25,5 +25,5 @@
         android:singleLine="true"
         android:text="导航"
         android:textColor="@color/color_black"
-        android:textSize="14sp"/>
+        android:textSize="12sp"/>
 </LinearLayout>

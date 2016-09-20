@@ -2,6 +2,8 @@ package com.klauncher.kinflow.utilities;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 
 import com.klauncher.ext.KLauncherApplication;
@@ -33,5 +35,9 @@ public class ResourceUtils {
 
     public Drawable resId2Drawable (int resId) {
        return getResource().getDrawable(resId);
+    }
+
+    public Bitmap res2Bitmap (int resId) {
+        return BitmapFactory.decodeResource(getResource(),resId);
     }
 }

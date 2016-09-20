@@ -17,7 +17,6 @@ import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.task.JRTTAsynchronousTask;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
-import com.klauncher.kinflow.model.GlobalCategory;
 import com.klauncher.kinflow.navigation.adapter.NavigationAdapter2;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWordItemDecoration;
@@ -57,7 +56,8 @@ public class Kinflow2Activity extends Activity implements View.OnClickListener{
         //总体分类
         mGlobalCategoryRecyclerView = (RecyclerView) findViewById(R.id.global_category_recyclerView);
         mGlobalCategoryRecyclerView.setLayoutManager(new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false));
-        mGlobalCategoryRecyclerView.setAdapter(new GlobalCategoryAdapter(this, GlobalCategory.getDefaultGlobalCategoryList()));
+//        mGlobalCategoryRecyclerView.setAdapter(new GlobalCategoryAdapter(this, GlobalCategory.getDefaultGlobalCategoryList()));
+        mGlobalCategoryRecyclerView.setAdapter(new GlobalCategoryAdapter(this, CacheNavigation.getInstance().createAllDefaultGlobalNavigation()));
         //快捷导航
         mNavigationRecyclerView = (RecyclerView) findViewById(R.id.navigation_recyclerView);
         mNavigationRecyclerView.setLayoutManager(new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false));

@@ -84,7 +84,7 @@ public class GlobalCategory implements Parcelable {
         List<GlobalCategory> globalCategoryList = new ArrayList<>();
         for(int i = 0 ; i <5 ; i++) {
             String name = "导航";
-            int resId = R.drawable.notification_tool_light_app;
+            int resId = R.drawable.notification_tool_light_web;
             switch (i) {
                 case 0://网址
                     name = "网址";

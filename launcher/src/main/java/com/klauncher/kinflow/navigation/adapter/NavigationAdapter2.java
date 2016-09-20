@@ -20,6 +20,7 @@ import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.utilities.Dips;
+import com.klauncher.kinflow.utilities.ResourceUtils;
 import com.klauncher.kinflow.views.PopupWindowDialog;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
@@ -95,7 +96,7 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
             //navigation-icon
             String navIcon = navigation.getNavIcon();
 
-            if (navIcon.startsWith("default/")) {
+            if (navIcon.startsWith("default_web/")) {
                 Bitmap bitmap = null;
                 switch (position) {
                     case 0://新浪
@@ -123,6 +124,31 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
                         bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.more);
                         break;
 
+                }
+                Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
+                drawable.setBounds(0, 0, pixels,pixels);
+                holder.navigationIcon.setImageDrawable(drawable);
+                return;
+            }
+
+            if (navIcon.startsWith("default_content/")) {
+                Bitmap bitmap = null;
+                switch (position) {
+                    case 0://网址
+                        bitmap = ResourceUtils.instance.res2Bitmap(R.drawable.notification_tool_light_web);
+                        break;
+                    case 1://小说
+                        bitmap = ResourceUtils.instance.res2Bitmap(R.drawable.notification_tool_light_novel);
+                        break;
+                    case 2://视频
+                        bitmap = ResourceUtils.instance.res2Bitmap(R.drawable.notification_tool_light_video);
+                        break;
+                    case 3://奇趣
+                        bitmap = ResourceUtils.instance.res2Bitmap(R.drawable.notification_tool_light_funny);
+                        break;
+                    case 4://应用
+                        bitmap = ResourceUtils.instance.res2Bitmap(R.drawable.notification_tool_light_app);
+                        break;
                 }
                 Drawable drawable = new BitmapDrawable(context.getResources(), bitmap);
                 drawable.setBounds(0, 0, pixels,pixels);
