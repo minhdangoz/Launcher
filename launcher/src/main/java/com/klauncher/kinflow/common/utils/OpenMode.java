@@ -138,6 +138,20 @@ public class OpenMode {
         }
     }
 
+    public Intent setFirstIntent(String packNameAndClassName, String openUrl) {
+        firstIntent.setAction(Intent.ACTION_VIEW);
+        if (TextUtils.isEmpty(packNameAndClassName)) return firstIntent;
+        String[] cn = packNameAndClassName.split("/");
+        if (cn.length == 2) {
+            ComponentName componentName = new ComponentName(cn[0], cn[1]);
+            firstIntent.setComponent(componentName);
+        }
+        if (openUrl != null) {
+            firstIntent.setData(Uri.parse(openUrl));
+        }
+        return firstIntent;
+    }
+
     public Intent setSecondIntent(String packNameAndClassName, String openUrl) {
         secondIntent.setAction(Intent.ACTION_VIEW);
         if (TextUtils.isEmpty(packNameAndClassName)) return secondIntent;
@@ -184,6 +198,7 @@ public class OpenMode {
                         firstIntent.putExtra(KinflowBrower.KEY_EXTRA_URL, openUrl);
                         firstIntent.setData(Uri.parse(openUrl));
                     }
+//                    setFirstIntent(cardOpenOptionList.get(i), openUrl);//信息流第二版使用
                     break;
                 case 1:
                     setSecondIntent(cardOpenOptionList.get(i), openUrl);
