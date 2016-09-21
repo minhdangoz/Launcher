@@ -10,6 +10,7 @@ public class MessageFactory {
     public static final int MESSAGE_WHAT_OBTAION_CARD = 1;//获取Card的MESSAGE_WHAT
     public static final int MESSAGE_WHAT_OBTAION_HOTWORD = 2;//获取百度热词的MESSAGE_WHAT
     public static final int MESSAGE_WHAT_OBTAION_NAVIGATION = 3;//获取Navigation的MESSAGE_WHAT
+    public static final int MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY = 31;//获取Navigation的MESSAGE_WHAT
     public static final int MESSAGE_WHAT_OBTAION_CITY_NAME = 4;//获取当前位置的城市名称
     public static final int MESSAGE_WHAT_OBTAION_CITY_WEATHER = 5;//获取天气
     public static final int MESSAGE_WHAT_OBTAION_NEWS_YIDIAN = 6;//获取一点资讯
@@ -80,6 +81,7 @@ public class MessageFactory {
     public static final int REQUEST_ALL_KINFLOW[] = {
             MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
             MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
+            MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY,
             MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
             MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
     };
