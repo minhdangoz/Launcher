@@ -986,6 +986,20 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     }
 
     @Override
+    public void onGlobalCategoryNavigationUpdate(List<Navigation> navigationList) {
+            log("onGlobalCategoryNavigationUpdate: 开始更新全局导航");
+        try {
+            if (null != navigationList && navigationList.size() != 0) {
+                if (navigationList.size()>5) navigationList = navigationList.subList(0,5);
+                GlobalCategoryAdapter adapter = (GlobalCategoryAdapter) mGlobalCategoryRecyclerView.getAdapter();
+                adapter.updateAdapter(navigationList);
+            }
+        } catch (Exception e) {
+            log("onGlobalCategoryNavigationUpdate: 更新全局导航时出错:" + e.getMessage());
+        }
+    }
+
+    @Override
     public void onCardInfoUpdate(List<CardInfo> cardInfoList) {
         try {
             //kinflow1:更新CardsAdapter

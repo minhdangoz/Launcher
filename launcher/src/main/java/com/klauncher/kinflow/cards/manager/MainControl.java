@@ -54,6 +54,7 @@ public class MainControl {
     private List<CardInfo> mCardInfoList = new ArrayList<>();
     List<HotWord> mRandomHotWordList = new ArrayList<>();
     List<Navigation> mNavigationList = new ArrayList<>();
+    List<Navigation> mGlobalCategoryNavigationList = new ArrayList<>();//kinflow2:顶部内容导航使用
     boolean isSuccess;//获取数据成功与否
     private Handler mHandler = new Handler() {
         @Override
@@ -74,6 +75,12 @@ public class MainControl {
                                 Collections.sort(mNavigationList);
                             }
                             log("获取到导航");
+                        case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY://获取到globalCategory
+                            if (null != msg.obj) {
+                                mGlobalCategoryNavigationList = (List<Navigation>) msg.obj;
+                                Collections.sort(mGlobalCategoryNavigationList);
+                            }
+                            log("获取到全局导航");//kinflow2
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YIDIAN://获取一点咨询
                             log("获取到一点资讯,msg.what=" + msg.what);
@@ -135,6 +142,12 @@ public class MainControl {
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                                 mListener.onNavigationUpdate(mNavigationList);
+                                break;
+
+                            case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
+                                log("MainControl.收到GlobalCategoryNavigation,准备回调到Klauncher");
+                                //kinflow2
+                                mListener.onGlobalCategoryNavigationUpdate(mGlobalCategoryNavigationList);
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
 //                            mCardInfoList
@@ -274,7 +287,7 @@ public class MainControl {
 
 
     /**
-     * 可请求一个或者多个
+     * 可请求一个或者多个类别(不是个数)
      *
      * @param msgWhats
      */
@@ -285,7 +298,7 @@ public class MainControl {
             this.mRequestTypes = msgWhats;
 //        this.mCardInfoList = cardInfoList;
             this.mCardInfoList = CardsListManager.getInstance().getInfos();
-            permitCount = mCardInfoList.size() + 3;
+            permitCount = mCardInfoList.size() + 4;
             StringBuilder sb = new StringBuilder();
             for (CardInfo cardInfo :
                     mCardInfoList) {
@@ -303,6 +316,11 @@ public class MainControl {
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                             mRequestSemaphore.acquire();
                             new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.NAVIGATION_GET_TEST);
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
+                            //kinflow2:接口地址需要变化
+                            mRequestSemaphore.acquire();
+                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY).run(Const.NAVIGATION_GET_TEST);
                             break;
     //                    case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH:
     //                        mRequestSemaphore.acquire();
@@ -372,7 +390,9 @@ public class MainControl {
 
         void onHotWordUpdate(List<HotWord> hotWordList);
 
-        void onNavigationUpdate(List<Navigation> navigationList);
+        void onNavigationUpdate(List<Navigation> navigationList);//地址导航
+
+        void onGlobalCategoryNavigationUpdate(List<Navigation> navigationList);//内容导航
 
         void onCardInfoUpdate(List<CardInfo> cardInfoList);
 

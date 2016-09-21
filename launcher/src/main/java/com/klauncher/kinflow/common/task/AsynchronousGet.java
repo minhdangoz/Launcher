@@ -120,6 +120,9 @@ public final class AsynchronousGet {
                             case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                                 parseNavigation(responseBodyStr);
                                 break;
+                            case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
+                                parseNavigation(responseBodyStr);
+                                break;
                             //此版本已没有天气模块,但是保留天气模块相关代码
 //                    case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME:
 //                        parseLocaiton(responseBodyStr);
