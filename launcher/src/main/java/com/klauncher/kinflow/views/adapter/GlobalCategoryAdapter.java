@@ -18,7 +18,7 @@ import com.klauncher.kinflow.utilities.Dips;
 import com.klauncher.kinflow.utilities.ResourceUtils;
 import com.klauncher.kinflow.views.PopupWindowDialog;
 import com.klauncher.kinflow.views.recyclerView.adapter.BaseRecyclerViewAdapter;
-import com.klauncher.kinflow.views.recyclerView.adapter.BaseRecyclerViewHolder;
+import com.klauncher.kinflow.views.recyclerView.viewHolder.BaseRecyclerViewHolder;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
 

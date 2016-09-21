@@ -38,8 +38,10 @@ import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.adapter.CardsAdapter;
 import com.klauncher.kinflow.cards.manager.CardContentManagerFactory;
+import com.klauncher.kinflow.cards.manager.JRTTCardContentManager;
 import com.klauncher.kinflow.cards.manager.MainControl;
 import com.klauncher.kinflow.cards.model.CardInfo;
+import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
@@ -53,6 +55,9 @@ import com.klauncher.kinflow.utilities.NetworkUtils;
 import com.klauncher.kinflow.views.PopupWindowDialog;
 import com.klauncher.kinflow.views.adapter.GlobalCategoryAdapter;
 import com.klauncher.kinflow.views.adapter.Kinflow2NewsAdapter;
+import com.klauncher.kinflow.views.adapter.Kinflow2NewsAdapter2;
+import com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData;
+import com.klauncher.kinflow.views.recyclerView.data.YokmobBanner;
 import com.klauncher.kinflow.views.recyclerView.itemDecoration.ItemDecorationDivider;
 import com.klauncher.kinflow.weather.model.Weather;
 import com.klauncher.launcher.R;
@@ -66,6 +71,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -118,6 +124,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     LinearLayout mLinearLayoutHeader;
     RelativeLayout searchLayout;
     Kinflow2NewsAdapter kinflow2NewsAdapter;
+    Kinflow2NewsAdapter2 mKinflow2NewsAdapter2;
     TextView mTextViewLoaderMore;
     Button mButtonConnect2Net;
     //----kinflow2以上
@@ -417,9 +424,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mNewsBodyRecyclerView.addItemDecoration(new ItemDecorationDivider(this, LinearLayoutManager.VERTICAL));
 //        mNewsBodyRecyclerView.addOnScrollListener(mHidingScrollListener);
 
-
-        kinflow2NewsAdapter = new Kinflow2NewsAdapter(this,null);
-        mNewsBodyRecyclerView.setAdapter(kinflow2NewsAdapter);
+//        kinflow2NewsAdapter = new Kinflow2NewsAdapter(this,null);
+        mKinflow2NewsAdapter2 = new Kinflow2NewsAdapter2(this,null);
+        mNewsBodyRecyclerView.setAdapter(mKinflow2NewsAdapter2);
         //other
 //        mTextViewLoaderMore = (TextView) kinflowRootView.findViewById(R.id.load_more);
 //        mTextViewLoaderMore.setOnClickListener(this);
@@ -1012,9 +1019,19 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             */
             //kinflow2:
             if (null != cardInfoList && cardInfoList.size() != 0) {
+//                mNewsBodyRecyclerView.removeAllViews();
+//                kinflow2NewsAdapter.addData(this, cardInfoList.get(0));
+//                if (null!=mTextViewLoaderMore) mTextViewLoaderMore.setVisibility(View.VISIBLE);
+                //
                 mNewsBodyRecyclerView.removeAllViews();
-                kinflow2NewsAdapter.addData(this, cardInfoList.get(0));
-                mTextViewLoaderMore.setVisibility(View.VISIBLE);
+                List<BaseRecyclerViewAdapterData> baseRecyclerViewAdapterDataList = new ArrayList<>();//此处声明应该放到外面----
+                JRTTCardContentManager jrttCardContentManager = (JRTTCardContentManager) cardInfoList.get(0).getmCardContentManager();
+                List<JinRiTouTiaoArticle> jinRiTouTiaoArticleList = jrttCardContentManager.getJinRiTouTiaoArticleList();
+                baseRecyclerViewAdapterDataList.addAll(jinRiTouTiaoArticleList);
+                YokmobBanner yokmobBanner = new YokmobBanner("http://www.opgirl.cn/delong/images/0.jpg","http://m.998pa.com/meinv/xinggan/");
+//                baseRecyclerViewAdapterDataList.add(yokmobBanner);
+                baseRecyclerViewAdapterDataList.add(3,yokmobBanner);
+                mKinflow2NewsAdapter2.updateAdapter(baseRecyclerViewAdapterDataList);
             }
         } catch (Exception e) {
             log("onCardInfoUpdate: 更新Card数据的时候出错:"+e.getMessage());

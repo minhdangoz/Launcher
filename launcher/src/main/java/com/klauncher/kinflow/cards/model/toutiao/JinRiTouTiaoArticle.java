@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.klauncher.kinflow.common.utils.DateUtils;
 import com.klauncher.kinflow.utilities.CollectionsUtils;
+import com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * Created by xixionghui on 16/6/13.
  */
-public class JinRiTouTiaoArticle implements Parcelable {
+public class JinRiTouTiaoArticle extends com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData implements Parcelable {
 
     public static final String TAG = "Kinflow";
 
@@ -193,6 +194,8 @@ public class JinRiTouTiaoArticle implements Parcelable {
                 }
             }
             this.large_image_list = imageInfos_large;
+            //设置类型
+            setType(BaseRecyclerViewAdapterData.TYPE_NEWS);
         } catch (Exception e) {
             Log.e(TAG, "JinRiTouTiaoArticle: 解析JinRiTouTiaoArticle时,出错" + e.getMessage());
         }

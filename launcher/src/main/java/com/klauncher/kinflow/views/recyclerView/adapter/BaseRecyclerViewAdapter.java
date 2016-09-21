@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 
 import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.kinflow.utilities.CollectionsUtils;
+import com.klauncher.kinflow.views.recyclerView.viewHolder.BaseRecyclerViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.klauncher.kinflow.views.recyclerView.adapter;
+package com.klauncher.kinflow.views.recyclerView.viewHolder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
