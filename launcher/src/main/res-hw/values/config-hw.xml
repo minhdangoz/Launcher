@@ -25,10 +25,10 @@
         <item>cn.kuwo.player</item>
         <item>com.tencent.qqlive</item>
         <item>com.UCMobile</item>
-        <item>com.tencent.mtt</item>
+        <item>sogou.mobile.explorer</item>
         <item>com.tencent.qqpimsecure</item>
         <item>cn.etouch.ecalendar</item>
-        <item>com.moji.mjweather</item>
+        <item>com.calendar.UI</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
     </array>
@@ -38,10 +38,10 @@
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.android.mediacenter</string>
     <string name="config_icon_com.tencent.qqlive">com.huawei.hwvplayer,com.huawei.hwvplayer.youku</string>
-    <string name="config_icon_com.tencent.mtt">com.android.browser,com.seal.browser</string>
+    <string name="config_icon_sogou.mobile.explorer">com.android.browser,com.seal.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.huawei.systemmanager</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar,com.android.qidian.calendar</string>
-    <string name="config_icon_com.moji.mjweather">com.huawei.android.totemweather</string>
+    <string name="config_icon_com.calendar.UI">com.huawei.android.totemweather</string>
     <string name="config_icon_com.dl.explorer">com.huawei.hidisk</string>
 
     <bool name="kinflow_switch_default">true</bool>
