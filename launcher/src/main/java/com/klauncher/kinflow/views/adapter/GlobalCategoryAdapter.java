@@ -155,7 +155,10 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
 
         try {
             Bundle extras = new Bundle();
-            extras.putString(OpenMode.OPEN_URL_KEY, navigation.getNavUrl());
+            String navUrl = navigation.getNavUrl();
+            if (!navUrl.startsWith("http://"))
+                navUrl = "http://"+ navUrl;
+            extras.putString(OpenMode.OPEN_URL_KEY, navUrl);
             navigation.open(mContext, extras);
             PingManager.getInstance().reportUserAction4Navigation(navigation);
         } catch (Exception e) {

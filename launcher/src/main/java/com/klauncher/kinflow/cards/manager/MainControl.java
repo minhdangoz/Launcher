@@ -315,12 +315,12 @@ public class MainControl {
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
                             mRequestSemaphore.acquire();
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.NAVIGATION_GET_TEST);
+                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run("http://test.api.klauncher.com/kplatform/v1/webnav/mobile?cid=1001_2101_10100000000");
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
                             //kinflow2:接口地址需要变化
                             mRequestSemaphore.acquire();
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY).run(Const.NAVIGATION_GET_TEST);
+                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY).run("http://test.api.klauncher.com/kplatform/v1/contentnav/mobile?cid=1001_2101_10100000000");
                             break;
     //                    case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH:
     //                        mRequestSemaphore.acquire();
@@ -380,7 +380,7 @@ public class MainControl {
 
 
     final protected static void log(String msg) {
-        KinflowLog.i(msg);
+        KinflowLog.e(msg);
     }
 
     public interface ResponseListener {

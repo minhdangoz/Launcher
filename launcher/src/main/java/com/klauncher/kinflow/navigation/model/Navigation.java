@@ -8,6 +8,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.klauncher.ext.KLauncherApplication;
+import com.klauncher.kinflow.browser.KinflowBrower;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.utilities.KinflowLog;
 
@@ -66,8 +67,15 @@ public class Navigation implements Parcelable, Comparable {
                     throw new Exception("服务器返回的数据为空字符串或者没有按照指定格式返回数据");
                 context.startActivity(openMode.getSecondIntent());
             } catch (Exception e1) {
-                Intent thridIntent = openMode.getThirdIntent();
-                context.startActivity(thridIntent);
+                try {
+                    Intent thridIntent = openMode.getThirdIntent();
+                    context.startActivity(thridIntent);
+                } catch (Exception e2) {//三种打开方式均失败情况
+                    Intent myIntent = new Intent(mContext, KinflowBrower.class);
+                    myIntent.setData(Uri.parse(openUrl));
+                    context.startActivity(myIntent);
+                }
+
             }
         }
     }

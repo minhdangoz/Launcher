@@ -980,6 +980,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
     @Override
     public void onNavigationUpdate(List<Navigation> navigationList) {
+            log("onGlobalCategoryNavigationUpdate: 开始更新网页导航");
         try {
             if (null != navigationList && navigationList.size() != 0) {
                 NavigationAdapter2 adapter = (NavigationAdapter2) mNavigationRecyclerView.getAdapter();

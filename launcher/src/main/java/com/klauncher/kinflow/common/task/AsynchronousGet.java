@@ -203,7 +203,8 @@ public final class AsynchronousGet {
                 msg.arg1 = OBTAIN_RESULT_NULL;
                 return;
             }
-            JSONArray navigationJsonArray = jsonObjectAll.getJSONArray("cards");
+//            JSONArray navigationJsonArray = jsonObjectAll.getJSONArray("cards");//kinfow1
+            JSONArray navigationJsonArray = jsonObjectAll.getJSONArray("wnavs");//kinfow2
             int navigationsLength = navigationJsonArray.length();
             if (null == navigationJsonArray || navigationsLength == 0) {
                 msg.arg1 = OBTAIN_RESULT_NULL;
