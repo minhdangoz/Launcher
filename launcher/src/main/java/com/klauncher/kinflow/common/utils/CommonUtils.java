@@ -540,4 +540,86 @@ public class CommonUtils {
         }
         return urlAddress;
     }
+
+    //====
+    //=============
+
+    public boolean allowUrlSkip() {
+        if (!CommonShareData.getBoolean(CommonShareData.KEY_ACTIVE_2345, false)) {//如果后台配置不打开2345跳转,则返回false
+//            Log.e("Kinflow", "后台配置不允许跳转,返回false");
+            return false;
+        }
+        if (!canOperateNow()) {
+//            Log.e("Kinflow", "首次激活一定时间内不可以运营,返回false");
+            return false;
+        }
+
+        if (inOperationDuration()) {//运营时间段内
+            //获取最大允许运营次数
+            String urlList = CommonShareData.getString(CommonShareData.KEY_WEBPAGE_SKIP_URL_LIST,Const.URL_2345_HOMEPAGE);
+            String[] urls = urlList.split(",");
+            //获取已经运营的次数
+            int skipTimes = CommonShareData.getInt(CommonShareData.KEY_ACTIVE_2345_SKIP_TIMES,0);
+            //如果已经达到最大运营次数,则不允许运营.否则可以运营
+            if (skipTimes>=urls.length) {
+                return false;
+            }else {
+//                return true;
+                return random();
+            }
+        }else {//进入下一个运营阶段
+            CommonShareData.putInt(CommonShareData.KEY_ACTIVE_2345_SKIP_TIMES,0);
+//            return true;
+            return random();
+        }
+    }
+
+    public String currentSkipUrl() {
+        //声明跳转网页
+        String skipUrl  = Const.URL_2345_HOMEPAGE;
+        //获取url跳转列表
+        String urlList = CommonShareData.getString(CommonShareData.KEY_WEBPAGE_SKIP_URL_LIST,Const.URL_2345_HOMEPAGE);
+        String[] urls = urlList.split(",");
+        //获取当前cursor,默认为0
+        int cursor = CommonShareData.getInt(CommonShareData.KEY__URL_LIST_CURSOR,0);
+//        if (cursor>=urls.length) cursor = 0;
+        //计算本次跳转的url
+        skipUrl = urls[cursor];
+        //计算下一次跳转的cursor
+        cursor++;
+        //判断指针是否>=长度,当==长度时必须置为0
+        if (cursor>=urls.length) cursor = 0;
+        //存储下次跳转的cursor:PutInt
+        CommonShareData.putInt(CommonShareData.KEY__URL_LIST_CURSOR,cursor);
+        return skipUrl;
+    }
+
+    public void saveOnceSkip() {
+        //当次运营是第几次跳转
+        int currentSkipTimes = CommonShareData.getInt(CommonShareData.KEY_ACTIVE_2345_SKIP_TIMES,0)+1;
+        //如果是新一轮的跳转则保存时间
+        if (currentSkipTimes==1)
+            CommonShareData.putLong(Const.KEY_LAST_SKIP_TIME,Calendar.getInstance().getTimeInMillis());
+        //保存一次跳转运营次数
+        CommonShareData.putInt(CommonShareData.KEY_ACTIVE_2345_SKIP_TIMES,currentSkipTimes);
+    }
+
+    /**
+     * 在运营时长内
+     */
+    private boolean inOperationDuration() {
+        //获取上一次运营时间
+        long lastSkipTime = CommonShareData.getLong(Const.KEY_LAST_SKIP_TIME, 0);
+        //计算下次运营时间
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(lastSkipTime);
+        calendar.add(Calendar.HOUR_OF_DAY, CommonShareData.getInt(
+                CommonShareData.KEY_ACTIVE_INTERVAL_2345, CommonShareData.DEFAULT_ACTIVE_INTERVAL_2345));
+        //如果当前时间在下次运营时间之前则证明在运营时间段内.否则证明在运营时间段之外
+        if (Calendar.getInstance().before(calendar)) {
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

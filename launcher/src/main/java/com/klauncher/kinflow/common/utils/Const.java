@@ -21,7 +21,7 @@ public class Const {
     public static final String HOTWORD_TYPE_TIYU ="tiyu";
     public static final String HOTWORD_TYPE_SHUMA ="shuma";
     public static String URL_HOT_WORD = "http://api.m.baidu.com/?type=hot&c="+HOTWORD_TYPE_SHISHI+"&from="+ BAIDU_TRADE_ID_HOTWORD;
-    public static String URL_SEARCH_WITH_BAIDU = "http://m.baidu.com/s?from"+ BAIDU_TRADE_ID_HOTWORD +"&word=";//最后面需要拼接关键字
+    public static String URL_SEARCH_WITH_BAIDU = "http://m.baidu.com/s?from="+ BAIDU_TRADE_ID_HOTWORD +"&word=";//最后面需要拼接关键字
 
     /**
      * 神马搜索

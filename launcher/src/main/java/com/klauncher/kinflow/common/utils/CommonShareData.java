@@ -25,6 +25,7 @@ public class CommonShareData {
     public static final String KEY_CONFIG_FIRST_UPDATE = "config_last_update";
     public static final String KEY_OPERATOR_DELAY = "opt_delay";
     public static final String KEY_ACTIVE_2345 = "active_2345";
+    public static final String KEY_ACTIVE_2345_SKIP_TIMES = "active_2345_SKIP_TIMES";
     public static final String KEY_ACTIVE_INTERVAL_2345 = "act_val_2345";//间隔时长,单位小时
     public static final String KEY_WEBPAGE_SKIP_URL_LIST = "webpage_skip_url_list";
     public static final String KEY__URL_LIST_CURSOR = "url_list_cursor";
