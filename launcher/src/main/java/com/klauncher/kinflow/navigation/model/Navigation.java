@@ -24,6 +24,9 @@ import java.util.List;
 public class Navigation implements Parcelable, Comparable {
 
 
+    public static final String rootJsonKey_CONTENT_NAVIGATION  = "cnavs";
+    public static final String rootJsonKey_WEB_NAVIGATION  = "wnavs";
+
     public static final String NAV_ID = "nd";
     public static final String NAV_NAME = "nn";
     public static final String NAV_ICON = "ni";

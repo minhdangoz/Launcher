@@ -36,6 +36,9 @@ public class MessageFactory {
             case MESSAGE_WHAT_OBTAION_NAVIGATION:
                 msg.what = MESSAGE_WHAT_OBTAION_NAVIGATION;
                 break;
+            case MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
+                msg.what =MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY;
+                break;
             case MESSAGE_WHAT_OBTAION_CITY_NAME:
                 msg.what = MESSAGE_WHAT_OBTAION_CITY_NAME;
                 break;

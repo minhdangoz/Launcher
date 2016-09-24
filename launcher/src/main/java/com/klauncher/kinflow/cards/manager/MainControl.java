@@ -75,6 +75,7 @@ public class MainControl {
                                 Collections.sort(mNavigationList);
                             }
                             log("获取到导航");
+                            break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY://获取到globalCategory
                             if (null != msg.obj) {
                                 mGlobalCategoryNavigationList = (List<Navigation>) msg.obj;

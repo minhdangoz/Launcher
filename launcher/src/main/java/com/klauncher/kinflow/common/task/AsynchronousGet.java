@@ -118,10 +118,11 @@ public final class AsynchronousGet {
                                 parseHotWord(responseBodyStr);
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
-                                parseNavigation(responseBodyStr);
+                                parseNavigation(responseBodyStr,Navigation.rootJsonKey_WEB_NAVIGATION);
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
-                                parseNavigation(responseBodyStr);
+                                log("准备解析全局内容导航:\n"+responseBodyStr);
+                                parseNavigation(responseBodyStr,Navigation.rootJsonKey_CONTENT_NAVIGATION);
                                 break;
                             //此版本已没有天气模块,但是保留天气模块相关代码
 //                    case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME:
@@ -192,7 +193,7 @@ public final class AsynchronousGet {
         }
     }
 
-    void parseNavigation(String responseBody) {
+    void parseNavigation(String responseBody,String jsonRootKey) {
         List<Navigation> navigationList = new ArrayList<>();
         ;
         try {
@@ -204,7 +205,7 @@ public final class AsynchronousGet {
                 return;
             }
 //            JSONArray navigationJsonArray = jsonObjectAll.getJSONArray("cards");//kinfow1
-            JSONArray navigationJsonArray = jsonObjectAll.getJSONArray("wnavs");//kinfow2
+            JSONArray navigationJsonArray = jsonObjectAll.getJSONArray(jsonRootKey);//kinfow2
             int navigationsLength = navigationJsonArray.length();
             if (null == navigationJsonArray || navigationsLength == 0) {
                 msg.arg1 = OBTAIN_RESULT_NULL;
@@ -239,12 +240,14 @@ public final class AsynchronousGet {
             }
             msg.arg1 = SUCCESS;
             msg.obj = navigationList;
-            CommonShareData.putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(Calendar.getInstance().getTimeInMillis()));
-            CommonShareData.putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, jsonObjectAll.optString(Const.NAVIGATION_SERVER_UPDATE_INTERVAL));
-            CacheNavigation.getInstance().putNavigationList(navigationList);
+            if (jsonRootKey.equals(Navigation.rootJsonKey_WEB_NAVIGATION)) {
+                CommonShareData.putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(Calendar.getInstance().getTimeInMillis()));
+                CommonShareData.putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, jsonObjectAll.optString(Const.NAVIGATION_SERVER_UPDATE_INTERVAL));
+                CacheNavigation.getInstance().putNavigationList(navigationList);
+            }
         } catch (Exception e) {
             msg.arg1 = PARSE_ERROR;
-            Log.d("AsynchronousGet", ("Navigation解析出错：" + e.getMessage()));
+            Log.e("AsynchronousGet", ("Navigation解析出错：" + e.getMessage()));
         } finally {
             handler.sendMessage(msg);
 //            if (msg.arg1 == SUCCESS)
