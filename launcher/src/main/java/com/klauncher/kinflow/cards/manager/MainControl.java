@@ -9,10 +9,12 @@ import android.widget.Toast;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.model.CardInfo;
+import com.klauncher.kinflow.cards.model.sougou.SougouSearchArticle;
 import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
 import com.klauncher.kinflow.cards.utils.CardUtils;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.task.AsynchronousGet;
+import com.klauncher.kinflow.common.task.OkHttpPost;
 import com.klauncher.kinflow.common.task.SearchAsynchronousGet;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
@@ -349,6 +351,22 @@ public class MainControl {
                                     return;
                                 }
                             }
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE:
+                            new Thread(){
+                                @Override
+                                public void run() {
+                                    try {
+                                        //添加参数
+                                        OkHttpPost okHttpPost = new OkHttpPost(mHandler,MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE);
+                                        //发请求
+                                        okHttpPost.post(SougouSearchArticle.URL_SOUGOU_ARTICLE,SougouSearchArticle.getPostJsonBody(90,10));
+                                        //发起请求
+                                    } catch (Exception e) {
+                                        KinflowLog.w("请求搜狗搜索时,发生错误:"+e.getMessage());
+                                    }
+                                }
+                            }.start();
                             break;
                         default:
                             log("未知请求,what=" + what);

@@ -447,7 +447,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);//用户允许信息流使用网络
                 if (userAllowKinflowUseNet) {//用户允许使用网络
-                    requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
+//                    requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
+                    requestKinflowData(MessageFactory.REQUEST_SOUGOU_SEARCH_ARTICLE);
                 } else {//用户不允许使用网络
                     showFirstUseKinflowHint();
                 }
@@ -548,7 +549,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     CommonShareData.putBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, mPopupWindowDialog.getCompoundState()?true:false);//用户允许始终使用网络
                     CommonShareData.putBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW, false);//将是否为第一次使用信息流修改为false
                     mPopupWindowDialog.dismissPopupWindowDialog();
-                    requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
+//                    requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
+                    requestKinflowData(MessageFactory.REQUEST_SOUGOU_SEARCH_ARTICLE);
                 }
             });
         } catch (Exception e) {

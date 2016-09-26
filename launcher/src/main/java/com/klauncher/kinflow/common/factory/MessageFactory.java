@@ -23,6 +23,7 @@ public class MessageFactory {
     public static final int MESSAGE_WHAT_OBTAIN_CONFIG = 13;//获取所有config
     public static final int MESSAGE_WHAT_OBTAIN_TOUTIAO_API_TOKEN = 14;//获取头条TOKEN,通过api
     public static final int MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE = 15;//获取头条ARTICLE,通过api
+    public static final int MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE = 16;//获取到搜狗搜索新闻
 
     public static Message createMessage(int what) {
         Message msg = Message.obtain();
@@ -75,7 +76,9 @@ public class MessageFactory {
             case MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE:
                 msg.what = MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE;
                 break;
-
+            case MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE:
+                msg.what = MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE;
+                break;
         }
         return msg;
     }
@@ -103,5 +106,9 @@ public class MessageFactory {
 
     public static final int REQUEST_CARD_KINFLOW[] = {
             MessageFactory.MESSAGE_WHAT_OBTAION_CARD
+    };
+
+    public static final int REQUEST_SOUGOU_SEARCH_ARTICLE[] = {
+            MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE
     };
 }
