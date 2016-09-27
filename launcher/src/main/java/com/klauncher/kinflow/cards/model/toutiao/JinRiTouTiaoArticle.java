@@ -135,7 +135,7 @@ public class JinRiTouTiaoArticle extends com.klauncher.kinflow.views.recyclerVie
      * @param articleJsonObject
      */
     public JinRiTouTiaoArticle(JSONObject articleJsonObject) {
-        Log.e(TAG, "获取到的今日头条JSON对象:\n"+articleJsonObject.toString());
+//        Log.e(TAG, "获取到的今日头条JSON对象:\n"+articleJsonObject.toString());
         try {
             this.group_id = articleJsonObject.optLong("group_id");//新闻的 id
             this.title = articleJsonObject.optString("title");//新闻的标题

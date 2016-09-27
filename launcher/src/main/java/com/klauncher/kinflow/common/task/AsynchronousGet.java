@@ -23,6 +23,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.klauncher.kinflow.cards.model.server.ServerController;
 import com.klauncher.kinflow.cards.model.yidian.YiDianModel;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
@@ -142,6 +143,9 @@ public final class AsynchronousGet {
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
                                 parseConfig(responseBodyStr);
+                                break;
+                            case MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER:
+                                parseServerController(responseBodyStr);
                                 break;
                             default:
                                 log("未知请求,URL=" + url);
@@ -472,7 +476,7 @@ public final class AsynchronousGet {
                             }
                         } else if ("kinfo".equals(key)) {
                             String value = funJson.optString(key);
-                            CommonShareData.putString(key,value);
+                            CommonShareData.putString(key, value);
                         } else if ("bd_prct".equals(key)) {
                             String value = funJson.optString(key);
                             CommonShareData.putString(key, value);
@@ -513,6 +517,19 @@ public final class AsynchronousGet {
 //                    + "  当前设备名称= " + Build.MODEL
 //            );
         }
+    }
+
+    public void parseServerController(String responseJsonStr) {
+
+        try {
+            JSONObject responseJsonObject = new JSONObject(responseJsonStr);
+            log("开始解析服务器端控制ServiceController,开始打印:\n");
+            ServerController serverController = new ServerController(responseJsonObject);
+            log(serverController.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     final protected static void log(String msg) {

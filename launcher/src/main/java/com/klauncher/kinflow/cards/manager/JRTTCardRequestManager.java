@@ -7,7 +7,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.klauncher.kinflow.cards.CardIdMap;
-import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.task.JRTTAsynchronousTask;
@@ -19,11 +18,12 @@ import java.util.List;
  * Created by xixionghui on 16/6/14.
  * 此为今日头条API版本的CardContentManager
  */
-public class JRTTCardContentManager extends BaseCardContentManager {
+public class JRTTCardRequestManager {
     public static final String TAG = "Kinflow";
     public static final int REQUEST_ARTICLE_COUNT = 25;
-    private CardInfo mCardInfo;
+    private int channelId = CardIdMap.CARD_TYPE_NEWS_TT_REDIAN;
     private Handler mainControlHandler;//MainControl的handler
+    private Context mContext;
 
     private List<JinRiTouTiaoArticle> jinRiTouTiaoArticleList = new ArrayList<>();
 
@@ -40,11 +40,11 @@ public class JRTTCardContentManager extends BaseCardContentManager {
                 case MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_TOKEN:
                     try {
                         if (JRTTAsynchronousTask.SUCCESS==msg.arg1&& null != msg.obj) {//获取token成功:继续发起请求article
-//                            Log.e(TAG, "handleMessage: 获取头条token成功");
+                            Log.e(TAG, "handleMessage: 获取头条token成功");
 //                            log("JRTTCardContentManager获取到token后在handler中处理数据时,当前所在线程 = " + Thread.currentThread().getName());
-                            new JRTTAsynchronousTask(mContext, mRefreshHandler,MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE).getJinRiToutiaoArticle(CardIdMap.getTouTiaoCategory(mCardInfo.getCardSecondTypeId()));
+                            new JRTTAsynchronousTask(mContext, mRefreshHandler,MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE).getJinRiToutiaoArticle(CardIdMap.getTouTiaoCategory(channelId));
                         } else {//获取token失败:通知MainControl获取失败
-//                            Log.e(TAG, "handleMessage: 获取头条token失败");
+                            Log.e(TAG, "handleMessage: 获取头条token失败");
                             sendMessage2MainControl(msg);
                         }
                     } catch (Exception e) {//发生异常:通知MainControl获取失败
@@ -55,7 +55,7 @@ public class JRTTCardContentManager extends BaseCardContentManager {
                 case MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE:
                     try {
                         if (msg.arg1 == JRTTAsynchronousTask.SUCCESS&& null != msg.obj) {//获取article成功
-//                            Log.e(TAG, "handleMessage: 获取头条article成功");
+                            Log.e(TAG, "handleMessage: 获取头条article成功");
                             jinRiTouTiaoArticleList.clear();
                             jinRiTouTiaoArticleList = (List<JinRiTouTiaoArticle>) msg.obj;
 //                            Log.e(TAG, "获取到的今日头条个数="+mJinRiTouTiaoArticleList.size()+" ,分别为:\n");
@@ -87,6 +87,7 @@ public class JRTTCardContentManager extends BaseCardContentManager {
             Message msg2Main = Message.obtain();
             msg2Main.arg1 = msg.arg1;
             msg2Main.what = msg.what;
+            msg2Main.obj = jinRiTouTiaoArticleList;
             mainControlHandler.sendMessage(msg2Main);
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,14 +97,10 @@ public class JRTTCardContentManager extends BaseCardContentManager {
     /**
      * @param context
      */
-    public JRTTCardContentManager(Context context) {
-        super(context);
+    public JRTTCardRequestManager(Context context,int channelId) {
+        this.mContext = context;
+        this.channelId = channelId;
     }
-
-    /**
-     * 左下
-     */
-    @Override
     public void moreNews() {//这里应该是一个回调
         Toast.makeText(mContext, "更多今日头条新闻", Toast.LENGTH_SHORT).show();
     }
@@ -123,10 +120,6 @@ public class JRTTCardContentManager extends BaseCardContentManager {
     }
 
 
-    /**
-     * 右下
-     */
-    @Override
     public void changeNews() {
 
     }
@@ -141,12 +134,9 @@ public class JRTTCardContentManager extends BaseCardContentManager {
         this.jinRiTouTiaoArticleList = jinRiTouTiaoArticleList;
     }
 
-    @Override
-    public void requestCardContent(Handler mainControlHandler, CardInfo cardInfo) {
+    public void requestCardContent(Handler mainControlHandler) {
         try {
-            this.mCardInfo = cardInfo;
             this.mainControlHandler = mainControlHandler;
-
 //        new JRTTAsynchronousTask(mContext, mRefreshHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_TOKEN).accessToken();
             new Thread(new Runnable() {
                 @Override
@@ -170,7 +160,7 @@ public class JRTTCardContentManager extends BaseCardContentManager {
                         if (JRTTAsynchronousTask.SUCCESS==msg.arg1&& null != msg.obj) {//获取token成功:继续发起请求article
 //                            Log.e(TAG, "mMoreHandler: 获取头条token成功");
 //                            log("JRTTCardContentManager获取到token后在handler中处理数据时,当前所在线程 = " + Thread.currentThread().getName());
-                            new JRTTAsynchronousTask(mContext, mMoreHandler,MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE).getJinRiToutiaoArticle(CardIdMap.getTouTiaoCategory(mCardInfo.getCardSecondTypeId()));
+                            new JRTTAsynchronousTask(mContext, mMoreHandler,MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE).getJinRiToutiaoArticle(CardIdMap.getTouTiaoCategory(channelId));
                         } else {//获取token失败:通知MainControl获取失败
 //                            Log.e(TAG, "mMoreHandler: 获取头条token失败");
                             if (null!=mJrttCallback) mJrttCallback.onFial("服务器繁忙,或者网络连接错误");

@@ -53,10 +53,12 @@ public class MainControl {
     private Semaphore mRequestSemaphore;
     private int permitCount;//信号量
     private int[] mRequestTypes;
-    private List<CardInfo> mCardInfoList = new ArrayList<>();
+    private List<CardInfo> mCardInfoList = new ArrayList<>();//第一版:第二版已经废除
     List<HotWord> mRandomHotWordList = new ArrayList<>();
     List<Navigation> mNavigationList = new ArrayList<>();
     List<Navigation> mGlobalCategoryNavigationList = new ArrayList<>();//kinflow2:顶部内容导航使用
+    List<SougouSearchArticle> mSougouSearchArticleList = new ArrayList<>();//搜狗新闻
+    List<JinRiTouTiaoArticle> mJinRiTouTiaoArticleList = new ArrayList<>();//今日头条api版本,版本号:072614
     boolean isSuccess;//获取数据成功与否
     private Handler mHandler = new Handler() {
         @Override
@@ -94,9 +96,6 @@ public class MainControl {
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_TOKEN:
                             log("MainControl获取到今日头条API的token");
                             break;
-                        case MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE:
-                            log("MainControl获取到今日头条API的article");
-                            break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NEWS_YOKMOB:
                             log("获取到yokmob");
                             break;
@@ -128,12 +127,41 @@ public class MainControl {
                             }
                             //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
                             break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE:
+                            log("获取到搜狗搜索新闻");
+                            if (null!=msg.obj) {
+                                mSougouSearchArticleList = (List<SougouSearchArticle>) msg.obj;
+                                for (SougouSearchArticle news :
+                                        mSougouSearchArticleList) {
+                                    log("获取到的搜狗新闻详情:" + news.toString());
+                                }
+                            }
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE:
+                            log("MainControl获取到今日头条API的article");
+                            if (null!=msg.obj) {
+                                mJinRiTouTiaoArticleList = (List<JinRiTouTiaoArticle>) msg.obj;
+                                for (JinRiTouTiaoArticle jinRiTouTiaoArticle :
+                                        mJinRiTouTiaoArticleList) {
+                                    log("获取到今日头条新闻详情:"+jinRiTouTiaoArticle.toString());
+                                }
+                            }else {
+                                log("没有获取到今日头条数据msg.obj==null");
+                            }
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER:
+                            log("获取到新闻和广告部分的控制器");
+                            break;
                         default:
                             log("what the fuck ??  msg.what=" + msg.what);
                             break;
 
                     }
+                } else {
+                    KinflowLog.w("获取数据失败msg.what = "+msg.what);
                 }
+
+
                 //当信号量全部收到
                 if (mRequestSemaphore.availablePermits() == permitCount) {
 //            mListener.onCompleted(mRandomHotWordList,mNavigationList,mCardInfoList);
@@ -151,6 +179,12 @@ public class MainControl {
                                 log("MainControl.收到GlobalCategoryNavigation,准备回调到Klauncher");
                                 //kinflow2
                                 mListener.onGlobalCategoryNavigationUpdate(mGlobalCategoryNavigationList);
+                                break;
+                            case MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE:
+                                log("赋值搜狗搜索新闻集合&&准备对数据进行结合");
+                                break;
+                            case MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER:
+                                log("赋值新闻控制器集合&&准备对数据进行结合");
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
 //                            mCardInfoList
@@ -223,6 +257,8 @@ public class MainControl {
 
                         }
                     }
+                } else {//如果信号量没有全部收到并且已经超时,则依旧停止刷新旋转.
+
                 }
             } catch (Exception e) {
                 log("MainControl在Handler中处理Message时,发生异常:" + e.getMessage());
@@ -301,7 +337,7 @@ public class MainControl {
             this.mRequestTypes = msgWhats;
 //        this.mCardInfoList = cardInfoList;
             this.mCardInfoList = CardsListManager.getInstance().getInfos();
-            permitCount = mCardInfoList.size() + 4;
+            permitCount = mCardInfoList.size() + 4;//申请的个数,不一定释放
             StringBuilder sb = new StringBuilder();
             for (CardInfo cardInfo :
                     mCardInfoList) {
@@ -367,6 +403,75 @@ public class MainControl {
                                     }
                                 }
                             }.start();
+                            break;
+                        default:
+                            log("未知请求,what=" + what);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    for (int i = 0 ;i < permitCount ;i++) {
+                        mHandler.sendEmptyMessage(MessageFactory.MESSAGE_WHAT_ORROR);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e("Kinflow", "asynchronousRequest: MainControl发起请求时,发生未知错误");
+            for (int i = 0 ;i < permitCount ;i++) {
+                mHandler.sendEmptyMessage(MessageFactory.MESSAGE_WHAT_ORROR);
+            }
+        }
+
+    }
+
+    public void asynchronousRequest_kinflow2(int... msgWhats) {
+
+        try {
+            isSuccess = false;
+            this.mRequestTypes = msgWhats;
+            permitCount = msgWhats.length;
+            mRequestSemaphore = new Semaphore(permitCount);
+            for (int what : msgWhats) {
+                try {
+                    switch (what) {
+                        case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
+                            mRequestSemaphore.acquire();
+                            new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.rateSearchEnum());
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
+                            mRequestSemaphore.acquire();
+                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run("http://test.api.klauncher.com/kplatform/v1/webnav/mobile?cid=1001_2101_10100000000");
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
+                            //kinflow2:接口地址需要变化
+                            mRequestSemaphore.acquire();
+                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY).run("http://test.api.klauncher.com/kplatform/v1/contentnav/mobile?cid=1001_2101_10100000000");
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
+                            mRequestSemaphore.acquire();
+                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG).run(Const.CONFIG);
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE:
+                            new Thread(){
+                                @Override
+                                public void run() {
+                                    try {
+                                        //添加参数
+                                        OkHttpPost okHttpPost = new OkHttpPost(mHandler,MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE);
+                                        //发请求
+                                        okHttpPost.post(SougouSearchArticle.URL_SOUGOU_ARTICLE,SougouSearchArticle.getPostJsonBody(90,10));
+                                        //发起请求
+                                    } catch (Exception e) {
+                                        KinflowLog.w("请求搜狗搜索时,发生错误:"+e.getMessage());
+                                    }
+                                }
+                            }.start();
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE:
+                            new JRTTCardRequestManager(mContext,CardIdMap.CARD_TYPE_NEWS_TT_REDIAN).requestCardContent(mHandler);
+                            break;
+                        case MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER:
+                            new AsynchronousGet(mHandler,MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER)
+                                    .run("http://test.api.klauncher.com/kplatform/v1/news/mobile?cid=1001_2101_10100000000");
                             break;
                         default:
                             log("未知请求,what=" + what);

@@ -668,7 +668,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             //用户是否允许信息流使用网络发起请求
             //二,用户允许信息流使用网络
             if (NetworkUtils.isNetworkAvailable(KLauncher.this)) {//用户允许信息流使用网络并且当前网络可用
-                mMainControl.asynchronousRequest(msgWhats);
+//                mMainControl.asynchronousRequest(msgWhats);
+                mMainControl.asynchronousRequest_kinflow2(msgWhats);
             } else {//用户允许信息流使用网络但是当前网络不可用
                 Toast.makeText(KLauncher.this, KLauncher.this.getResources().getString(R.string.kinflow_string_connection_error), Toast.LENGTH_SHORT).show();
                 onCompleted();

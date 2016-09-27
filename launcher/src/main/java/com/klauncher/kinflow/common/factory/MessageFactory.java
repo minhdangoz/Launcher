@@ -24,6 +24,7 @@ public class MessageFactory {
     public static final int MESSAGE_WHAT_OBTAIN_TOUTIAO_API_TOKEN = 14;//获取头条TOKEN,通过api
     public static final int MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE = 15;//获取头条ARTICLE,通过api
     public static final int MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE = 16;//获取到搜狗搜索新闻
+    public static final int MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER = 17;//信息流第二版,后台控制:数据类型:新闻1,广告23,打开方式,广告信息,广告位置.新闻数据具体类型不再指定(搜狗搜索新闻和今日头条新闻交替显示).
 
     public static Message createMessage(int what) {
         Message msg = Message.obtain();
@@ -79,17 +80,22 @@ public class MessageFactory {
             case MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE:
                 msg.what = MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE;
                 break;
+            case MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER:
+                msg.what = MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER;
+                break;
         }
         return msg;
     }
 
 
     public static final int REQUEST_ALL_KINFLOW[] = {
-            MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
-            MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-            MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY,
-            MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-            MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
+            MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,//热词
+            MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,//网页导航
+            MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY,//内容导航
+            MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG,//config配置信息
+            MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE,//搜狗搜索新闻----待完成
+            MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE,//api版本的头条新闻----待完成
+            MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER//kinflow2后台控制----待完成
     };
 
     public static final int REQUEST_HOTWORD_KINFLOW[] = {

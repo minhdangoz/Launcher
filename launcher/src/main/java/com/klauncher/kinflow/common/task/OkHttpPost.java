@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.klauncher.kinflow.cards.model.sougou.SougouSearchArticle;
 import com.klauncher.kinflow.common.factory.MessageFactory;
+import com.klauncher.kinflow.utilities.CollectionsUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -65,21 +66,29 @@ public class OkHttpPost {
 
     private void parseResponse(Response response) {
         try {
-            NetStatus netStatus = null;
+            mMessage.arg1 = AsynchronousGet.CONNECTION_ERROR;
             //服务端有响应
             if (response.isSuccessful()) {//搜狗搜索的服务器有响应了,但是不一定获取数据成功.
-                netStatus = NetStatus.RESPONSE_SUCCESS;
                 List<SougouSearchArticle> sougouSearchArticleList = parseSouGouSearchNews(new JSONObject(response.body().string()));
+                /*
                 for (SougouSearchArticle news :
                         sougouSearchArticleList) {
-                    Log.w("kinflow2", "获取到的搜狗新闻详情:" + news.toString());
+                    Log.w("kinflow", "获取到的搜狗新闻详情:" + news.toString());
+                }
+                */
+                if (CollectionsUtils.collectionIsNull(sougouSearchArticleList)) {
+                    mMessage.arg1 = AsynchronousGet.OBTAIN_RESULT_NULL;
+                } else {
+                    mMessage.arg1 = AsynchronousGet.SUCCESS;
+                    mMessage.obj = sougouSearchArticleList;
                 }
             }else {
                 //服务器端无响应
-                netStatus = NetStatus.RESPONSE_FAIL;
+                mMessage.arg1 = AsynchronousGet.OBTAIN_RESULT_NULL;
             }
+            mHandler.sendMessage(mMessage);
         } catch (Exception e) {
-            Log.w("kinflow2","解析搜狗响应体,出现错误:"+e.getMessage());
+            Log.w("kinflow","解析搜狗响应体,出现错误:"+e.getMessage());
         }
 
     }
@@ -89,13 +98,13 @@ public class OkHttpPost {
         try {
             int status = jsonObject.optInt("status",0);//默认为出错
             if (status == SougouSearchArticle.RESPONSE_STATUS_ERROR) {
-                    Log.w("Kinflow2","搜狗搜索服务器有响应,但是状态错误,导致没有数据");
+                    Log.w("Kinflow","搜狗搜索服务器有响应,但是状态错误,导致没有数据");
             }
             if (status == SougouSearchArticle.RESPONSE_STATUS_SUCCESS) {//返回数据正常----正式开始解析数据
                 JSONArray sougouSearchNewsJsonArray = jsonObject.optJSONArray("result");
                 if (null==sougouSearchNewsJsonArray||
                         sougouSearchNewsJsonArray.length()==0) {
-                    Log.w("Kinflow2","获取到搜狗搜索新闻数据为空");
+                    Log.w("Kinflow","获取到搜狗搜索新闻数据为空");
                 }else {
                     for (int i = 0; i < sougouSearchNewsJsonArray.length(); i++) {
                         sougouSearchArticleList.add(new SougouSearchArticle(sougouSearchNewsJsonArray.optJSONObject(i)));
