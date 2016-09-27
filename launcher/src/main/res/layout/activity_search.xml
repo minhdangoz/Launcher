@@ -41,8 +41,6 @@
             android:focusableInTouchMode="true"
             android:hint="@string/kinflow_string_search_hint_shishi"
             android:singleLine="true"
-            android:textColor="@color/color_black"
-
             android:textSize="16sp"/>
     </RelativeLayout>
 
