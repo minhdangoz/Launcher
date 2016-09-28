@@ -16,6 +16,13 @@ import java.util.Arrays;
 public class SougouSearchArticle implements Parcelable {
 
     public static final String URL_SOUGOU_ARTICLE = "http://wxrd.appsearch.m.sogou.com:80/dist_sogou?mid=3fb7DeLongDeskTop";
+
+    /**
+     * 最多返回100条，支持指定起始位置（skip）取一定数量（limit）的文章
+     * @param skip 起始位置
+     * @param limit 指定数量的文章
+     * @return
+     */
     public static String getPostJsonBody(int skip,int limit) {
         String postJson = "{"
                 + "\"ver\":\"4.9.0\","
