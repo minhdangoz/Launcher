@@ -37,6 +37,7 @@ public class CommonShareData {
     public static final String KEY_ARTICLE_MIN_BEHOT_TIME = "min_behot_time";
     public static final String KEY_ARTICLE_MAX_BEHOT_TIME = "max_behot_time";
     public static final String FIRST_CONNECTED_NET = "first_connected_net";
+    public static final String SOUGOU_SEARCH_NEWS_SKIP = "sougou_news_skip";
 
     public static final int DEFAULT_OPERATOR_DELAY = 72;//默认开启网页(2345)跳转的延长时间(单位:小时)
     public static final int DEFAULT_ACTIVE_INTERVAL_2345 = 12;
@@ -160,5 +161,39 @@ public class CommonShareData {
     public static void resetArticleBehot(){
         putLong(CommonShareData.KEY_ARTICLE_MAX_BEHOT_TIME, Calendar.getInstance().getTimeInMillis() / 1000);
         putLong(CommonShareData.KEY_ARTICLE_MIN_BEHOT_TIME, -1);
+    }
+
+
+    public static void clearCache(){
+
+        try {
+            new Thread(){
+                @Override
+                public void run() {
+
+                    try {
+                        if (isOver4hour())
+                            resetArticleBehot();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    /**
+     * 判断是否超过了4个小时
+     *
+     * @return
+     */
+    private static boolean isOver4hour() {
+        Calendar latestModifiedCalendar = DateUtils.getInstance().millis2Calendar(CommonShareData.getString(Const.KEY_CARD_CLEAR_OFFSET, "0"));//默认最后更新时间为0
+        latestModifiedCalendar.add(Calendar.SECOND, 14400);//14400S=4hour
+        if (latestModifiedCalendar.before(Calendar.getInstance())) return true;
+        return false;
     }
 }

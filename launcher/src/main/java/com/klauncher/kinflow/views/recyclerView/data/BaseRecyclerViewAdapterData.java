@@ -18,7 +18,8 @@ import java.util.List;
 public class BaseRecyclerViewAdapterData {
 
     public static final int TYPE_BANNER = 11;
-    public static final int TYPE_NEWS = 12;
+    public static final int TYPE_NEWS_JINRITOUTIAO = 12;
+    public static final int TYPE_NEWS_SOUGOU = 13;
 
     public int type;
     public int order;

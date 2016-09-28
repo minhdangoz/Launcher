@@ -38,10 +38,8 @@ import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.adapter.CardsAdapter;
 import com.klauncher.kinflow.cards.manager.CardContentManagerFactory;
-import com.klauncher.kinflow.cards.manager.JRTTCardContentManager;
 import com.klauncher.kinflow.cards.manager.MainControl;
 import com.klauncher.kinflow.cards.model.CardInfo;
-import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
@@ -57,7 +55,6 @@ import com.klauncher.kinflow.views.adapter.GlobalCategoryAdapter;
 import com.klauncher.kinflow.views.adapter.Kinflow2NewsAdapter;
 import com.klauncher.kinflow.views.adapter.Kinflow2NewsAdapter2;
 import com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData;
-import com.klauncher.kinflow.views.recyclerView.data.YokmobBanner;
 import com.klauncher.kinflow.views.recyclerView.itemDecoration.ItemDecorationDivider;
 import com.klauncher.kinflow.weather.model.Weather;
 import com.klauncher.launcher.R;
@@ -71,7 +68,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -550,7 +546,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     CommonShareData.putBoolean(CommonShareData.KEY_IS_FIRST_USE_KINFLOW, false);//将是否为第一次使用信息流修改为false
                     mPopupWindowDialog.dismissPopupWindowDialog();
                     requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
-//                    requestKinflowData(MessageFactory.REQUEST_SOUGOU_SEARCH_ARTICLE);
                 }
             });
         } catch (Exception e) {
@@ -623,7 +618,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                                 ObjectAnimator animator = ObjectAnimator.ofFloat(iv_refresh, "rotation", 0f, 360f);
                                 animator.setDuration(500);
                                 animator.start();
-                                mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
+//                                mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
                             break;
                         case R.id.search_hint://搜索框监听
                                 Intent intent = new Intent(KLauncher.this, com.klauncher.kinflow.search.SearchActivity.class);
@@ -767,7 +762,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                         ObjectAnimator animator = ObjectAnimator.ofFloat(iv_refresh, "rotation", 0f, 360f);
                         animator.setDuration(500);
                         animator.start();
-                        mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
+//                        mMainControl.asynchronousRequest(MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD);
                     } else {
                         onViewClickedHintConnectedNet(R.id.refresh_hotWord);
                     }
@@ -1015,37 +1010,33 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         }
     }
 
-    @Override
+    /**
+     * kinflow1使用onCardInfoUpdate更新内容,kinflow2使用onNewsAndAdUpdate更新内容
+     * @param cardInfoList
+     */
     public void onCardInfoUpdate(List<CardInfo> cardInfoList) {
         try {
             //kinflow1:更新CardsAdapter
-            /*
             if (null != cardInfoList && cardInfoList.size() != 0) {
                 mCardsView.removeAllViews();
                 CardsAdapter cardsAdapter = new CardsAdapter(this, cardInfoList);
                 mCardsView.setAdapter(cardsAdapter);
             }
-            */
-            //kinflow2:
-            if (null != cardInfoList && cardInfoList.size() != 0) {
-//                mNewsBodyRecyclerView.removeAllViews();
-//                kinflow2NewsAdapter.addData(this, cardInfoList.get(0));
-//                if (null!=mTextViewLoaderMore) mTextViewLoaderMore.setVisibility(View.VISIBLE);
-                //
-                mNewsBodyRecyclerView.removeAllViews();
-                List<BaseRecyclerViewAdapterData> baseRecyclerViewAdapterDataList = new ArrayList<>();//此处声明应该放到外面----
-                JRTTCardContentManager jrttCardContentManager = (JRTTCardContentManager) cardInfoList.get(0).getmCardContentManager();
-                List<JinRiTouTiaoArticle> jinRiTouTiaoArticleList = jrttCardContentManager.getJinRiTouTiaoArticleList();
-                baseRecyclerViewAdapterDataList.addAll(jinRiTouTiaoArticleList);
-                YokmobBanner yokmobBanner = new YokmobBanner("http://www.opgirl.cn/delong/images/0.jpg","http://m.998pa.com/meinv/xinggan/");
-//                baseRecyclerViewAdapterDataList.add(yokmobBanner);
-                baseRecyclerViewAdapterDataList.add(3,yokmobBanner);
-                mKinflow2NewsAdapter2.updateAdapter(baseRecyclerViewAdapterDataList);
-            }
+
         } catch (Exception e) {
             log("onCardInfoUpdate: 更新Card数据的时候出错:"+e.getMessage());
         }
 
+    }
+
+    @Override
+    public void onNewsAndAdUpdate(List<BaseRecyclerViewAdapterData> baseRecyclerViewAdapterDataList) {
+        mNewsBodyRecyclerView.removeAllViews();
+        /*
+        YokmobBanner yokmobBanner = new YokmobBanner("http://www.opgirl.cn/delong/images/0.jpg","http://m.998pa.com/meinv/xinggan/");
+        baseRecyclerViewAdapterDataList.add(3,yokmobBanner);
+        */
+        mKinflow2NewsAdapter2.updateAdapter(baseRecyclerViewAdapterDataList);
     }
 
     @Override

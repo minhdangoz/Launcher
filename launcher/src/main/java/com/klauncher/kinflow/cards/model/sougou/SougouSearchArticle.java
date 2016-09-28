@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,7 +15,9 @@ import java.util.Arrays;
 /**
  * Created by xixionghui on 16/9/26.
  */
-public class SougouSearchArticle implements Parcelable {
+public class SougouSearchArticle extends BaseRecyclerViewAdapterData implements Parcelable {
+
+    public static final int ONCE_REQUEST_LIMIT = 5;
 
     public static final String URL_SOUGOU_ARTICLE = "http://wxrd.appsearch.m.sogou.com:80/dist_sogou?mid=3fb7DeLongDeskTop";
 
@@ -131,6 +135,12 @@ public class SougouSearchArticle implements Parcelable {
         this.img_list = img_list;
     }
 
+    public boolean hasImage() {
+        if (null==this.img_list||img_list.length==0)
+            return false;
+        return true;
+    }
+
     @Override
     public String toString() {
         return "SougouSearchArticle{" +
@@ -228,6 +238,8 @@ public class SougouSearchArticle implements Parcelable {
             for (int i = 0; i < length; i++) {
                 img_list[i] = imageListJsonArray.optString(i);
             }
+            //解析完毕,设置type
+            setType(TYPE_NEWS_SOUGOU);
         } catch (Exception e) {
             Log.w("kinflow2","在解析搜狗搜索新闻时出错: "+e.getMessage());
         }

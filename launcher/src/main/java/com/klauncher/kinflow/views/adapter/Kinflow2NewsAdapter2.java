@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.klauncher.kinflow.cards.model.sougou.SougouSearchArticle;
 import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.common.utils.DateUtils;
@@ -60,10 +61,14 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
     @Override
     public BaseRecyclerViewHolder<BaseRecyclerViewAdapterData> onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemRootView = null;
-        if (viewType==BaseRecyclerViewAdapterData.TYPE_NEWS) {
+        if (viewType == BaseRecyclerViewAdapterData.TYPE_NEWS_JINRITOUTIAO) {
             itemRootView = LayoutInflater.from(mContext).inflate(R.layout.kinflow2_news_item_layout,parent,false);
-            return new NewsApdaterViewHolder (itemRootView);
-        }else if (viewType == BaseRecyclerViewAdapterData.TYPE_BANNER) {
+            return new JrttNewsApdaterViewHolder(itemRootView);
+        } else if (viewType == BaseRecyclerViewAdapterData.TYPE_NEWS_SOUGOU) {
+            itemRootView = LayoutInflater.from(mContext).inflate(R.layout.kinflow2_news_item_layout,parent,false);
+            return new SouGouNewsApdaterViewHolder(itemRootView);
+
+        } else if (viewType == BaseRecyclerViewAdapterData.TYPE_BANNER) {
             itemRootView = LayoutInflater.from(mContext).inflate(R.layout.card_info_ads_banner, parent, false);
             return new BannerAdaperHolder(itemRootView);
         }else {
@@ -122,7 +127,10 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
         }
     }
 
-    public class NewsApdaterViewHolder extends BaseRecyclerViewHolder<BaseRecyclerViewAdapterData> {
+    /**
+     * 今日头条新闻adapter
+     */
+    public class JrttNewsApdaterViewHolder extends BaseRecyclerViewHolder<BaseRecyclerViewAdapterData> {
         //4个根布局:大图,三图,0图,1图
         RelativeLayout m0ImageLayout,m3ImageLayout;
         LinearLayout m1ImageLayout,mBigImageLayout;
@@ -139,7 +147,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
         ImageView m3ImageLeft,m3ImageMiddle,m3ImageRight;
 
 
-        public NewsApdaterViewHolder(View itemView) {
+        public JrttNewsApdaterViewHolder(View itemView) {
             super(itemView);
         }
 
@@ -284,7 +292,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
         }
 
         void addJrttHeadWith3Image(JinRiTouTiaoArticle mFirstJrttArticle) {
-            Log.e("Kinflow", "addJrttHeadWith3Image: 开始添加三张图片的今日头条Card");
+//            Log.e("Kinflow", "addJrttHeadWith3Image: 开始添加三张图片的今日头条Card");
 //            final TextView tv_title = (TextView) mJrttHeadWith3ImageLayout.findViewById(R.id.yidian_news_title);
 //            final TextView tv_publishTime = (TextView) mJrttHeadWith3ImageLayout.findViewById(R.id.yidian_news_publish_time);
 //            final ImageView iv_yidianImageLeft = (ImageView) mJrttHeadWith3ImageLayout.findViewById(R.id.yidian_image_left);
@@ -342,7 +350,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
         }
 
         void addJrttHeadWith1Image(JinRiTouTiaoArticle mFirstJrttArticle) {
-            Log.e("Kinflow", "addJrttHeadWith1Image: 开始添加一张图片的今日头条Card");
+//            Log.e("Kinflow", "addJrttHeadWith1Image: 开始添加一张图片的今日头条Card");
             //布局
 //            final TextView tv_title = (TextView) mJrttHeadWith1ImageLayout.findViewById(R.id.yidian_news_title);
 //            final TextView tv_publishTime = (TextView) mJrttHeadWith1ImageLayout.findViewById(R.id.yidian_news_publish_time);
@@ -377,7 +385,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
         }
 
         void addJrttHeadWith0Image(JinRiTouTiaoArticle mFirstJrttArticle) {
-            Log.e("Kinflow", "addJrttHeadWith1Image: 开始添加0张图片的今日头条Card");
+//            Log.e("Kinflow", "addJrttHeadWith1Image: 开始添加0张图片的今日头条Card");
             m0ImageTitle.setText(mFirstJrttArticle.getTitle());
             m0ImageFooter.setText(DateUtils.getInstance().second2TimeOrDate(mFirstJrttArticle.getPublish_time()));
         }
@@ -385,12 +393,124 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
         void loadImage(JinRiTouTiaoArticle.ImageInfo imageInfo, ImageView toutiaoImage) {
             List<JinRiTouTiaoArticle.ImageUrl> imageUrlList = imageInfo.getUrl_list();
             if (null != imageUrlList && imageUrlList.size() != 0) {
-                Log.e("Kinflow", "今日头条Card加载图片loadImage,一张图片的url = " + imageUrlList.get(0).getUrl());
+//                Log.e("Kinflow", "今日头条Card加载图片loadImage,一张图片的url = " + imageUrlList.get(0).getUrl());
                 Picasso.with(mContext).load(imageUrlList.get(0).getUrl()).fit().centerCrop().into(toutiaoImage);
             } else {//加载默认
-                Log.e("Kinflow", "今日头条Card加载图片loadImage,一张图片也没有,添加默认图片");
+//                Log.e("Kinflow", "今日头条Card加载图片loadImage,一张图片也没有,添加默认图片");
                 toutiaoImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.no_image_show));
             }
+        }
+    }
+
+    /**
+     * 搜狗adapterViewHolder
+     */
+    public class SouGouNewsApdaterViewHolder extends BaseRecyclerViewHolder<BaseRecyclerViewAdapterData> {
+        //4个根布局:大图,三图,0图,1图
+        RelativeLayout m0ImageLayout;
+        LinearLayout m1ImageLayout;
+        //0Image
+        TextView m0ImageFooter,m0ImageTitle;
+        //1Image
+        TextView m1ImageFooter,m1ImageTitle;
+        ImageView m1ImageView;
+
+
+        public SouGouNewsApdaterViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        public static final String TAG = "Kinflow";
+        @Override
+        public void initView(View itemRootView) {
+            Log.e(TAG, "initView: ");
+            //无图
+            m0ImageLayout = (RelativeLayout) itemRootView.findViewById(R.id.kinflow_news_0image);
+            m0ImageFooter = (TextView) m0ImageLayout.findViewById(R.id.yidian_news_publish_time);
+            m0ImageTitle = (TextView) m0ImageLayout.findViewById(R.id.yidian_news_title);
+            m0ImageLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, "搜狗搜索新闻的,无图被点击", Toast.LENGTH_SHORT).show();
+                    JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle) mElementList.get(getPosition());
+                    Bundle extras = new Bundle();
+                    String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
+
+                    extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
+                    extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + jinRiTouTiaoArticle.getGroup_id());
+                    /*
+                    String finalOpenComponent_Head1Imapge = jrttCardInfo.open(mContext, extras);
+                    if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
+                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO, String.valueOf(jrttCardInfo.getCardSecondTypeId()));
+                    */
+                }
+            });
+
+            //一张图片
+            m1ImageLayout = (LinearLayout) itemRootView.findViewById(R.id.kinflow_news_1image);
+            m1ImageFooter = (TextView) m1ImageLayout.findViewById(R.id.yidian_news_publish_time);
+            m1ImageTitle = (TextView) m1ImageLayout.findViewById(R.id.yidian_news_title);
+            m1ImageView = (ImageView) m1ImageLayout.findViewById(R.id.yidian_image);
+            m1ImageLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, "搜狗搜索新闻的一张图被点击", Toast.LENGTH_SHORT).show();
+                    SougouSearchArticle sougouSearchArticle = (SougouSearchArticle)mElementList.get(getPosition());
+                    Bundle extras = new Bundle();
+                    String articleUrl = TextUtils.isEmpty(sougouSearchArticle.getOpen_link())? sougouSearchArticle.getLink() : sougouSearchArticle.getOpen_link();
+
+                    extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
+                    extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + sougouSearchArticle.getSchema());
+                    /*
+                    String finalOpenComponent_Head1Imapge = jrttCardInfo.open(mContext, extras);
+                    if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
+                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO, String.valueOf(jrttCardInfo.getCardSecondTypeId()));
+                    */
+                }
+            });
+        }
+
+        @Override
+        public void bundData2View(BaseRecyclerViewAdapterData modelData) {
+            SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) modelData;
+            //如果有图就加载图,如果无图则加载标题
+            if (sougouSearchArticle.hasImage()) {//有图模式
+                m1ImageLayout.setVisibility(View.VISIBLE);
+                addSouGouHeadWith1Image(sougouSearchArticle);
+            }else {//无图模式
+                m0ImageLayout.setVisibility(View.VISIBLE);
+                addSouGouHeadWith0Image(sougouSearchArticle);
+            }
+        }
+
+        void addSouGouHeadWith1Image(SougouSearchArticle sougouSearchArticle) {
+            Log.e("Kinflow", "addSouGouHeadWith1Image: 开始添加一张图片的搜狗搜索新闻");
+            //布局
+            //数据
+            m1ImageTitle.setText(sougouSearchArticle.getTitle());
+            m1ImageFooter.setText(DateUtils.getInstance().second2TimeOrDate(sougouSearchArticle.getPage_time()/1000));
+            Target target = new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    m1ImageView.setImageBitmap(bitmap);
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                }
+            };
+            m1ImageView.setTag(target);
+            Picasso.with(mContext).load(sougouSearchArticle.getImg_list()[0]).fit().centerCrop().into(m1ImageView);
+        }
+
+        void addSouGouHeadWith0Image(SougouSearchArticle sougouSearchArticle) {
+            Log.e("Kinflow", "addSouGouHeadWith0Image: 开始添加无图的搜狗搜索新闻");
+            m0ImageTitle.setText(sougouSearchArticle.getTitle());
+            m0ImageFooter.setText(DateUtils.getInstance().second2TimeOrDate(sougouSearchArticle.getPage_time()/1000));
         }
     }
 }

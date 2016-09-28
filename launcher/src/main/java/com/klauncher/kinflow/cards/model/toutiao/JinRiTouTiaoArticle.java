@@ -195,7 +195,7 @@ public class JinRiTouTiaoArticle extends com.klauncher.kinflow.views.recyclerVie
             }
             this.large_image_list = imageInfos_large;
             //设置类型
-            setType(BaseRecyclerViewAdapterData.TYPE_NEWS);
+            setType(BaseRecyclerViewAdapterData.TYPE_NEWS_JINRITOUTIAO);
         } catch (Exception e) {
             Log.e(TAG, "JinRiTouTiaoArticle: 解析JinRiTouTiaoArticle时,出错" + e.getMessage());
         }
