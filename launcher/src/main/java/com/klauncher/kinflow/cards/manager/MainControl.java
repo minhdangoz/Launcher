@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.model.CardInfo;
+import com.klauncher.kinflow.cards.model.server.ServerController;
 import com.klauncher.kinflow.cards.model.sougou.SougouSearchArticle;
 import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
 import com.klauncher.kinflow.cards.utils.CardUtils;
@@ -150,7 +151,12 @@ public class MainControl {
                             }
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER:
-                            log("获取到新闻和广告部分的控制器");
+                            ServerController serverController = (ServerController) msg.obj;
+                            if (serverController.isNull()) {
+                                log("获取到的新闻和广告部分的控制器为空");
+                            }else {
+                                log("获取到的新闻和广告部分的控制器详情:\n"+serverController.toString());
+                            }
                             break;
                         default:
                             log("what the fuck ??  msg.what=" + msg.what);

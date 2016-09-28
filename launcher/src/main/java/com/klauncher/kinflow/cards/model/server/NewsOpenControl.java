@@ -41,6 +41,23 @@ public class NewsOpenControl implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return "NewsOpenControl{" +
+                "newsOrder=" + newsOrder +
+                ", newsOpenOptions=" + newsOpenOptions +
+                '}';
+    }
+
+    private String newsOpenOptionToString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\n");//先换行
+        for (int i = 0; i < newsOpenOptions.size(); i++) {
+            stringBuilder.append("第"+i+"打开方式:"+newsOpenOptions.get(i)).append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }

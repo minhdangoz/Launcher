@@ -119,11 +119,11 @@ public final class AsynchronousGet {
                                 parseHotWord(responseBodyStr);
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
-                                parseNavigation(responseBodyStr,Navigation.rootJsonKey_WEB_NAVIGATION);
+                                parseNavigation(responseBodyStr, Navigation.rootJsonKey_WEB_NAVIGATION);
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
-                                log("准备解析全局内容导航:\n"+responseBodyStr);
-                                parseNavigation(responseBodyStr,Navigation.rootJsonKey_CONTENT_NAVIGATION);
+                                log("准备解析全局内容导航:\n" + responseBodyStr);
+                                parseNavigation(responseBodyStr, Navigation.rootJsonKey_CONTENT_NAVIGATION);
                                 break;
                             //此版本已没有天气模块,但是保留天气模块相关代码
 //                    case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME:
@@ -525,8 +525,15 @@ public final class AsynchronousGet {
             JSONObject responseJsonObject = new JSONObject(responseJsonStr);
             log("开始解析服务器端控制ServiceController,开始打印:\n");
             ServerController serverController = new ServerController(responseJsonObject);
-            log(serverController.toString());
+            if (serverController.isNull()) {
+                msg.arg1 = OBTAIN_RESULT_NULL;
+            }else {
+                msg.arg1 = SUCCESS;
+                msg.obj = serverController;
+                handler.sendMessage(msg);
+            }
         } catch (Exception e) {
+            log("解析服务端控制器的时候出错:"+e.getMessage());
             e.printStackTrace();
         }
 

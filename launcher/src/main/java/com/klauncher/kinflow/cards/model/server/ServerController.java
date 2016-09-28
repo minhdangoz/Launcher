@@ -3,6 +3,7 @@ package com.klauncher.kinflow.cards.model.server;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.klauncher.kinflow.utilities.CollectionsUtils;
 import com.klauncher.kinflow.utilities.KinflowLog;
 
 import org.json.JSONArray;
@@ -36,6 +37,12 @@ public class ServerController implements Parcelable {
         mAdControlList = adControlList;
     }
 
+    public boolean isNull () {
+        if (CollectionsUtils.collectionIsNull(mNewsOpenControlList)||CollectionsUtils.collectionIsNull(mAdControlList))
+            return true;
+        return false;
+    }
+
     @Override
     public String toString() {
         return "ServerController{" +
@@ -57,7 +64,7 @@ public class ServerController implements Parcelable {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\n");//先换行
         for (int i = 0; i < this.mAdControlList.size(); i++) {
-            stringBuilder.append("第").append(String.valueOf(i)).append("个新闻控制器详情:  ").append(mAdControlList.get(i).toString()).append("\n");
+            stringBuilder.append("第").append(String.valueOf(i)).append("个广告控制器详情:  ").append(mAdControlList.get(i).toString()).append("\n");
         }
         return stringBuilder.toString();
     }
