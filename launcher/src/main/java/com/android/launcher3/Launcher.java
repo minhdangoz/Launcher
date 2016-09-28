@@ -112,6 +112,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -2449,7 +2450,8 @@ public class Launcher extends Activity
                 LayoutInflater flater = LayoutInflater.from(this);
                 ClockWidgetView view = new ClockWidgetView(this);
                 view.setTag(launcherInfo);
-                view.setOnClickListener(new View.OnClickListener() {
+                RelativeLayout clockLayout = (RelativeLayout) view.findViewById(R.id.clock_layout);
+                clockLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         PackageManager packageManager = getPackageManager();
@@ -2461,6 +2463,21 @@ public class Launcher extends Activity
                                     PackageManager.MATCH_DEFAULT_ONLY);
                             if (resolved != null) {
                                 startActivity(AlarmClockIntent);
+                            }
+                        }
+                    }
+                });
+
+                RelativeLayout weatherLayout = (RelativeLayout) view.findViewById(R.id.weather_layout);
+                weatherLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PackageManager packageManager = getPackageManager();
+                        if (packageManager != null) {
+                            Intent intent = null;
+                            intent = packageManager.getLaunchIntentForPackage("com.calendar.UI");
+                            if (intent != null && intent.getComponent() != null) {
+                                startActivity(intent);
                             }
                         }
                     }
@@ -6034,20 +6051,36 @@ public class Launcher extends Activity
             LayoutInflater flater = LayoutInflater.from(this);
             ClockWidgetView view = new ClockWidgetView(this);
             view.setTag(item);
-            view.setOnClickListener(new View.OnClickListener() {
+            RelativeLayout clockLayout = (RelativeLayout) view.findViewById(R.id.clock_layout);
+            clockLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                PackageManager packageManager = getPackageManager();
-                if (packageManager != null) {
-                    Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
-                            Intent.CATEGORY_LAUNCHER).setComponent(
-                            new ComponentName("com.android.deskclock", "com.android.deskclock.DeskClock"));
-                    ResolveInfo resolved = packageManager.resolveActivity(AlarmClockIntent,
-                            PackageManager.MATCH_DEFAULT_ONLY);
-                    if (resolved != null) {
-                        startActivity(AlarmClockIntent);
+                    PackageManager packageManager = getPackageManager();
+                    if (packageManager != null) {
+                        Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
+                                Intent.CATEGORY_LAUNCHER).setComponent(
+                                new ComponentName("com.android.deskclock", "com.android.deskclock.DeskClock"));
+                        ResolveInfo resolved = packageManager.resolveActivity(AlarmClockIntent,
+                                PackageManager.MATCH_DEFAULT_ONLY);
+                        if (resolved != null) {
+                            startActivity(AlarmClockIntent);
+                        }
                     }
                 }
+            });
+
+            RelativeLayout weatherLayout = (RelativeLayout) view.findViewById(R.id.weather_layout);
+            weatherLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PackageManager packageManager = getPackageManager();
+                    if (packageManager != null) {
+                        Intent intent = null;
+                        intent = packageManager.getLaunchIntentForPackage("com.calendar.UI");
+                        if (intent != null && intent.getComponent() != null) {
+                            startActivity(intent);
+                        }
+                    }
                 }
             });
 

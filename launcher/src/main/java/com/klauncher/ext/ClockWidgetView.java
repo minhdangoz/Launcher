@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -410,7 +409,7 @@ public class ClockWidgetView extends FrameLayout {
     }
 
     OkHttpClient client = new OkHttpClient();
-    private static final String appEncryptKey= "(^g&vd+10001";
+    private static final String appEncryptKey= "online:hltq+(^g&%~vd+10003";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     String postGetWeather(String json) throws IOException {
         RequestBody jbody = RequestBody.create(JSON, json);
@@ -470,6 +469,9 @@ public class ClockWidgetView extends FrameLayout {
         urlBuild.append("idfa=");
         urlBuild.append(DeviceInfoUtils.getDeviceId(mContext));
         urlBuild.append("&");
+        urlBuild.append("imei=");
+        urlBuild.append(DeviceInfoUtils.getIMEI(mContext));
+        urlBuild.append("&");
         urlBuild.append("dm=");
         urlBuild.append(DeviceInfoUtils.getDM().replace(" ",""));
         urlBuild.append("&");
@@ -477,7 +479,7 @@ public class ClockWidgetView extends FrameLayout {
         urlBuild.append(DeviceInfoUtils.getNT(mContext));
         urlBuild.append("&");
         urlBuild.append("pid=");
-        urlBuild.append("10001");
+        urlBuild.append("10003");
         urlBuild.append("&");
         urlBuild.append("sv=");
         urlBuild.append(DeviceInfoUtils.getSoftwareVersion(mContext));
@@ -491,11 +493,12 @@ public class ClockWidgetView extends FrameLayout {
         urlBuild.append("marsLng=");
         urlBuild.append(aMapLocation.getLongitude());
         urlBuild.append("&");
+        long unixTime = System.currentTimeMillis() / 1000L;
         urlBuild.append("time=");
-        urlBuild.append(SystemClock.currentThreadTimeMillis());
+        urlBuild.append(unixTime);
         urlBuild.append("&");
         urlBuild.append("sign=");
-        urlBuild.append(DeviceInfoUtils.Md5Encode(SystemClock.currentThreadTimeMillis() + appEncryptKey));
+        urlBuild.append(DeviceInfoUtils.Md5Encode(unixTime + appEncryptKey));
         Log.d(TAG,"post : makeWeatherUrl :  " + urlBuild.toString());
         return urlBuild.toString();
     }
@@ -519,6 +522,9 @@ public class ClockWidgetView extends FrameLayout {
         urlBuild.append("idfa=");
         urlBuild.append(DeviceInfoUtils.getDeviceId(mContext));
         urlBuild.append("&");
+        urlBuild.append("imei=");
+        urlBuild.append(DeviceInfoUtils.getIMEI(mContext));
+        urlBuild.append("&");
         urlBuild.append("dm=");
         urlBuild.append(DeviceInfoUtils.getDM().replace(" ",""));
         urlBuild.append("&");
@@ -526,7 +532,7 @@ public class ClockWidgetView extends FrameLayout {
         urlBuild.append(DeviceInfoUtils.getNT(mContext));
         urlBuild.append("&");
         urlBuild.append("pid=");
-        urlBuild.append("10001");
+        urlBuild.append("10003");
         urlBuild.append("&");
         urlBuild.append("sv=");
         urlBuild.append(DeviceInfoUtils.getSoftwareVersion(mContext));
@@ -540,11 +546,12 @@ public class ClockWidgetView extends FrameLayout {
         urlBuild.append("marsLng=");
         urlBuild.append(aMapLocation.getLongitude());
         urlBuild.append("&");
+        long unixTime = System.currentTimeMillis() / 1000L;
         urlBuild.append("time=");
-        urlBuild.append(SystemClock.currentThreadTimeMillis());
+        urlBuild.append(unixTime);
         urlBuild.append("&");
         urlBuild.append("sign=");
-        urlBuild.append(DeviceInfoUtils.Md5Encode(SystemClock.currentThreadTimeMillis() + appEncryptKey));
+        urlBuild.append(DeviceInfoUtils.Md5Encode(unixTime + appEncryptKey));
         Log.d(TAG,"post : makeWeatherUrl :  " + urlBuild.toString());
         return urlBuild.toString();
     }
