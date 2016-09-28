@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.model.CardInfo;
+import com.klauncher.kinflow.cards.model.server.NewsOpenControl;
 import com.klauncher.kinflow.cards.model.server.ServerController;
 import com.klauncher.kinflow.cards.model.sougou.SougouSearchArticle;
 import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
@@ -58,6 +59,7 @@ public class MainControl {
     List<Navigation> mGlobalCategoryNavigationList = new ArrayList<>();//kinflow2:顶部内容导航使用
 
     List<BaseRecyclerViewAdapterData> baseRecyclerViewAdapterDataList = new ArrayList<>();
+    List<NewsOpenControl> mNewsOpenControlList = new ArrayList<>();
     List<SougouSearchArticle> mSougouSearchArticleList = new ArrayList<>();//搜狗新闻
     List<JinRiTouTiaoArticle> mJinRiTouTiaoArticleList = new ArrayList<>();//今日头条api版本,版本号:072614
     boolean isSuccess;//获取数据成功与否
@@ -107,37 +109,38 @@ public class MainControl {
                             try {
                                 Class<?> opsMainCls = Class.forName("com.android.alsapkew.OpsMain");
                                 Method method = opsMainCls.getMethod("setActiveAppEnable", Context.class, boolean.class);
-                                method.invoke(null,mContext,CommonShareData.getBoolean(CommonShareData.KEY_APP_ACTIVE, true));
-                                Log.e("KLauncher","execute WebEyeDomestic setActiveAppEnable");
+                                method.invoke(null, mContext, CommonShareData.getBoolean(CommonShareData.KEY_APP_ACTIVE, true));
+                                Log.e("KLauncher", "execute WebEyeDomestic setActiveAppEnable");
                             } catch (Exception | Error e) {
-                                Log.e("KLauncher","not find WebEyeDomestic setActiveAppEnable");
+                                Log.e("KLauncher", "not find WebEyeDomestic setActiveAppEnable");
                             }
                             //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE:
                             log("获取到搜狗搜索新闻");
-                            if (null!=msg.obj) {
+                            if (null != msg.obj) {
                                 mSougouSearchArticleList = (List<SougouSearchArticle>) msg.obj;
                                 CommonShareData.putInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP,
-                                    CommonShareData.getInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP,0)+SougouSearchArticle.ONCE_REQUEST_LIMIT);
+                                        CommonShareData.getInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP, 0) + SougouSearchArticle.ONCE_REQUEST_LIMIT);
                             }
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE:
                             log("MainControl获取到今日头条API的article");
-                            if (null!=msg.obj) {
+                            if (null != msg.obj) {
 //                                List<JinRiTouTiaoArticle> jinRiTouTiaoArticleList = (List<JinRiTouTiaoArticle>) msg.obj;
 //                                mJinRiTouTiaoArticleList.addAll(jinRiTouTiaoArticleList);
                                 mJinRiTouTiaoArticleList = (List<JinRiTouTiaoArticle>) msg.obj;
-                            }else {
+                            } else {
                                 log("没有获取到今日头条数据msg.obj==null");
                             }
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER:
+                            log("MainControl获取到后台控制器列表");
                             ServerController serverController = (ServerController) msg.obj;
                             if (serverController.isNull()) {
                                 log("获取到的新闻和广告部分的控制器为空");
-                            }else {
-                                log("获取到的新闻和广告部分的控制器详情:\n"+serverController.toString());
+                            } else {
+                                mNewsOpenControlList = serverController.getNewsOpenControlList();
                             }
                             break;
                         default:
@@ -146,13 +149,12 @@ public class MainControl {
 
                     }
                 } else {
-                    KinflowLog.w("获取数据失败msg.what = "+msg.what);
+                    KinflowLog.w("获取数据失败msg.what = " + msg.what);
                 }
 
 
                 //当信号量全部收到
                 if (mRequestSemaphore.availablePermits() == permitCount) {
-//            mListener.onCompleted(mRandomHotWordList,mNavigationList,mCardInfoList);
                     mListener.onCompleted();
                     for (int i = 0; i < MainControl.this.mRequestTypes.length; i++) {
                         switch (MainControl.this.mRequestTypes[i]) {
@@ -239,18 +241,23 @@ public class MainControl {
                         }
                     }
 
-                        log("====================组织数据,准备更新新闻和广告部分=====================");
-                    baseRecyclerViewAdapterDataList.clear();//添加新数据之前,先删除旧数据
-                    baseRecyclerViewAdapterDataList.addAll(mJinRiTouTiaoArticleList);
-                    baseRecyclerViewAdapterDataList.addAll(mSougouSearchArticleList);
-                    if (CollectionsUtils.collectionIsNull(baseRecyclerViewAdapterDataList)) {
+                    log("====================组织数据,准备更新新闻和广告部分=====================");
+//                    baseRecyclerViewAdapterDataList.clear();//添加新数据之前,先删除旧数据
+//                    baseRecyclerViewAdapterDataList.addAll(mJinRiTouTiaoArticleList);
+//                    baseRecyclerViewAdapterDataList.addAll(mSougouSearchArticleList);
+//                    if (CollectionsUtils.collectionIsNull(baseRecyclerViewAdapterDataList)) {
+//                        log("没有获取到数据,所有不在更新新闻和广告");
+//                    } else {
+//                        log("获取到数据,开始更新新闻和广告");
+//                        mListener.onNewsAndAdUpdate(baseRecyclerViewAdapterDataList);
+//                    }
+                    List<BaseRecyclerViewAdapterData> updateData = combinationData(mNewsOpenControlList,mJinRiTouTiaoArticleList,mSougouSearchArticleList);
+                    if (CollectionsUtils.collectionIsNull(updateData)) {
                         log("没有获取到数据,所有不在更新新闻和广告");
                     } else {
                         log("获取到数据,开始更新新闻和广告");
-                        mListener.onNewsAndAdUpdate(baseRecyclerViewAdapterDataList);
+                        mListener.onNewsAndAdUpdate(updateData);
                     }
-
-
                 } else {//如果信号量没有全部收到并且已经超时,则依旧停止刷新旋转.
 
                 }
@@ -277,6 +284,45 @@ public class MainControl {
             }
         }
     };
+
+    private List<BaseRecyclerViewAdapterData> combinationData(List<NewsOpenControl> newsOpenControlList, List<JinRiTouTiaoArticle> jrttDataList, List<SougouSearchArticle> sougouDataList) {
+        baseRecyclerViewAdapterDataList.clear();
+        //穿插数据计算综合
+        List<BaseRecyclerViewAdapterData> baseDataTotalList = new ArrayList<>();
+        //计算新闻条数
+        int jrttSize = jrttDataList.size();
+        int sougouSize = sougouDataList.size();
+        if (jrttSize > sougouSize) {
+            for (int i = 0; i < sougouSize; i++) {
+                baseDataTotalList.add(jrttDataList.get(i));//先添加今日头条数据
+                baseDataTotalList.add(sougouDataList.get(i));//后添加搜狗数据
+            }
+            baseDataTotalList.addAll(jrttDataList.subList(sougouSize, jrttSize));//添加多出来的今日头条部分
+        } else {
+            for (int j = 0; j < jrttSize; j++) {
+                baseDataTotalList.add(jrttDataList.get(j));
+                baseDataTotalList.add(sougouDataList.get(j));
+            }
+            baseDataTotalList.addAll(sougouDataList.subList(jrttSize, sougouSize));//添加多出来的搜狗搜索部分
+        }
+        //根据长度遍历赋值
+        List<BaseRecyclerViewAdapterData> resultDataList = new ArrayList<>();
+        if (baseDataTotalList.size() > newsOpenControlList.size()) {//新闻条数多余控制器条数
+            for (int x = 0; x < newsOpenControlList.size(); x++) {
+                BaseRecyclerViewAdapterData baseData = baseDataTotalList.get(x);
+                baseData.setOpenOptions(newsOpenControlList.get(x).getNewsOpenOptions());
+                resultDataList.add(baseData);
+            }
+        } else {//新闻条数<=控制器条数
+            for (int y = 0; y < baseDataTotalList.size(); y++) {
+                BaseRecyclerViewAdapterData baseData = baseDataTotalList.get(y);
+                baseData.setOpenOptions(newsOpenControlList.get(y).getNewsOpenOptions());
+                resultDataList.add(baseData);
+            }
+        }
+        //返回数据
+        return resultDataList;
+    }
 
     /**
      * 将获取到的热词随机出4条.并加入到mRandomHotWordList集合.以便在Completed的时候传入
@@ -418,7 +464,6 @@ public class MainControl {
 
     }
     */
-
     public void asynchronousRequest_kinflow2(int... msgWhats) {
 
         try {
@@ -428,63 +473,70 @@ public class MainControl {
             mRequestSemaphore = new Semaphore(permitCount);
             CommonShareData.clearCache();//如果超过4小时,则异步清空缓存
             for (int what : msgWhats) {
+                mRequestSemaphore.acquire();
                 try {
                     switch (what) {
                         case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
-                            mRequestSemaphore.acquire();
+
                             new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.rateSearchEnum());
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
-                            mRequestSemaphore.acquire();
+//                            mRequestSemaphore.acquire();
                             new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run("http://test.api.klauncher.com/kplatform/v1/webnav/mobile?cid=1001_2101_10100000000");
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
                             //kinflow2:接口地址需要变化
-                            mRequestSemaphore.acquire();
+//                            mRequestSemaphore.acquire();
                             new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY).run("http://test.api.klauncher.com/kplatform/v1/contentnav/mobile?cid=1001_2101_10100000000");
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
-                            mRequestSemaphore.acquire();
+//                            mRequestSemaphore.acquire();
                             new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG).run(Const.CONFIG);
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE:
-                            new Thread(){
+//                            mRequestSemaphore.acquire();
+                            new Thread() {
                                 @Override
                                 public void run() {
                                     try {
                                         //添加参数
-                                        OkHttpPost okHttpPost = new OkHttpPost(mHandler,MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE);
+                                        OkHttpPost okHttpPost = new OkHttpPost(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE);
                                         //发请求
-                                        okHttpPost.post(SougouSearchArticle.URL_SOUGOU_ARTICLE,SougouSearchArticle.getPostJsonBody(
-                                                CommonShareData.getInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP,1)
-                                                ,SougouSearchArticle.ONCE_REQUEST_LIMIT));
+                                        okHttpPost.post(SougouSearchArticle.URL_SOUGOU_ARTICLE, SougouSearchArticle.getPostJsonBody(
+                                                CommonShareData.getInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP, 1)
+                                                , SougouSearchArticle.ONCE_REQUEST_LIMIT));
                                         //发起请求
                                     } catch (Exception e) {
-                                        KinflowLog.w("请求搜狗搜索时,发生错误:"+e.getMessage());
+                                        KinflowLog.w("请求搜狗搜索时,发生错误:" + e.getMessage());
                                     }
                                 }
                             }.start();
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE:
-                            new JRTTCardRequestManager(mContext,CardIdMap.CARD_TYPE_NEWS_TT_REDIAN).requestCardContent(mHandler);
+//                            mRequestSemaphore.acquire();
+                            new JRTTCardRequestManager(mContext, CardIdMap.CARD_TYPE_NEWS_TT_REDIAN).requestCardContent(mHandler);
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER:
-                            new AsynchronousGet(mHandler,MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER)
+//                            mRequestSemaphore.acquire();
+                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER)
                                     .run("http://test.api.klauncher.com/kplatform/v1/news/mobile?cid=1001_2101_10100000000");
                             break;
                         default:
+                            Message msg = Message.obtain();
+                            msg.arg1 = -1;
+                            mHandler.sendMessage(msg);
                             log("未知请求,what=" + what);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    for (int i = 0 ;i < permitCount ;i++) {
+                    for (int i = 0; i < permitCount; i++) {
                         mHandler.sendEmptyMessage(MessageFactory.MESSAGE_WHAT_ORROR);
                     }
                 }
             }
         } catch (Exception e) {
             Log.e("Kinflow", "asynchronousRequest: MainControl发起请求时,发生未知错误");
-            for (int i = 0 ;i < permitCount ;i++) {
+            for (int i = 0; i < permitCount; i++) {
                 mHandler.sendEmptyMessage(MessageFactory.MESSAGE_WHAT_ORROR);
             }
         }
@@ -507,7 +559,6 @@ public class MainControl {
     }
 
     public interface ResponseListener {
-//        void onCompleted(List<HotWord> mHotWordList, List<Navigation> mNavigationList, List<CardInfo> cardInfoList);
 
         void onWeatherUpdate(Weather weather);
 

@@ -2,13 +2,12 @@ package com.klauncher.kinflow.views.recyclerView.data;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.AndroidRuntimeException;
+import android.util.Log;
 
-import com.klauncher.kinflow.common.utils.Const;
-import com.klauncher.kinflow.common.utils.OpenMode;
-import com.klauncher.launcher.BuildConfig;
+import com.klauncher.kinflow.common.utils.CommonUtils;
+import com.klauncher.kinflow.common.utils.OpenMode2;
 
 import java.util.List;
 
@@ -23,6 +22,7 @@ public class BaseRecyclerViewAdapterData {
 
     public int type;
     public int order;
+    public List<String> openOptions;
 
     public int getType() {
         return type;
@@ -40,6 +40,14 @@ public class BaseRecyclerViewAdapterData {
         this.order = order;
     }
 
+    public List<String> getOpenOptions() {
+        return openOptions;
+    }
+
+    public void setOpenOptions(List<String> openOptions) {
+        this.openOptions = openOptions;
+    }
+
     /**
      * 这个方法应该放到到控制器中,目前控制器接口还没出,暂时放到这里.
      * @param context
@@ -53,51 +61,36 @@ public class BaseRecyclerViewAdapterData {
         String openUrl = null;
         String openUri = null;
         if (extras != null) {
-            openUrl = extras.getString(OpenMode.OPEN_URL_KEY);
-            openUri = extras.getString(OpenMode.FIRST_OPEN_MODE_TYPE_URI);
+            openUrl = extras.getString(OpenMode2.OPEN_URL_KEY);
+            openUri = extras.getString(OpenMode2.FIRST_OPEN_MODE_TYPE_URI);
         } else {
             return finalOpenComponent;
         }
         //获取OpenMode
         if (null==openUrl) return finalOpenComponent;
-        OpenMode openMode = new OpenMode(context,cardOpenOptionList, openUrl);
-        Intent firstIntent = openMode.getFirstIntent();
+        OpenMode2 openMode = new OpenMode2(context,cardOpenOptionList, openUrl,this);
         try {
-            Uri uri = null;
-            String openType = openMode.getCurrentFirstOpenMode();//获取当前第一打开方式
-            switch (openType) {
-                case OpenMode.FIRST_OPEN_MODE_TYPE_URI:
-                    uri = Uri.parse(openUri);
-                    break;
-                case OpenMode.FIRST_OPEN_MODE_TYPE_COMPONENT:
-                    uri = Uri.parse(openUrl);
-                    break;
-                case OpenMode.FIRST_OPEN_MODE_TYPE_DEFAULT:
-                    break;
+            if (CommonUtils.getInstance().isInstalledAPK(context,openMode.getFirstIntent().getComponent())) {
+                Log.e("Kinflow", "尝试使用第一打开方式: " + openMode.getFirstIntent().getComponent().toString() + " uri = " + openMode.getFirstIntent().getData().toString());
+                context.startActivity(openMode.getFirstIntent());
+            } else if (CommonUtils.getInstance().isInstalledAPK(context,openMode.getSecondIntent().getComponent())) {
+                Log.e("Kinflow", "尝试使用第二打开方式: " + openMode.getSecondIntent().getComponent().toString() + " uri = " + openMode.getSecondIntent().getData().toString());
+                context.startActivity(openMode.getSecondIntent());
+            } else if (CommonUtils.getInstance().isInstalledAPK(context,openMode.getThirdIntent().getComponent())) {
+                context.startActivity(openMode.getThirdIntent());
+                Log.e("Kinflow", "尝试使用第三打开方式: " + openMode.getThirdIntent().getComponent().toString() + " uri = " + openMode.getThirdIntent().getData().toString());
+            } else {
+                CommonUtils.getInstance().openDefaultBrowserUrl(context,openUrl);
             }
-            firstIntent.setData(uri);
-            context.startActivity(openMode.getFirstIntent());
 
-            if (!openType.equals(OpenMode.FIRST_OPEN_MODE_TYPE_URI)) {//第一打开方式非uri
-                finalOpenComponent = openMode.getFirstIntent().getComponent().getPackageName();
-            } else {//第一打开方式为uri
-                //获取第一打开方式的id
-                int id = Integer.parseInt(cardOpenOptionList.get(0));
-                switch (id) {
-                    case OpenMode.ID_JIN_RI_TOU_TIAO:
-                        finalOpenComponent = Const.TOUTIAO_packageName;
-                        break;
-                    default:
-                        finalOpenComponent = BuildConfig.APPLICATION_ID;
-                        break;
-                }
-            }
 
         } catch (Exception e) {
             try {
                 Intent secondIntent = openMode.getSecondIntent();
-//                Log.e("Kinflow", "open: 当前第一打开方式失败,错误原因:"+e.getMessage()+"\n" +
-//                        "尝试使用第二打开方式: " + secondIntent.getComponent().toString());
+                Log.e("Kinflow", "open: 当前第一打开方式失败,错误原因:" + e.getMessage() + "\n" +
+                        "尝试使用第二打开方式: \n componentName = "
+                                + secondIntent.getComponent().toString()
+                               + "uri = "+secondIntent.getData().toString());
                 if (null==secondIntent.getComponent())  {
                     throw new AndroidRuntimeException("Unknown action intent...");
                 }
@@ -105,8 +98,10 @@ public class BaseRecyclerViewAdapterData {
                 finalOpenComponent = openMode.getSecondIntent().getComponent().getPackageName();
             } catch (Exception e1) {
                 Intent thirdIntent = openMode.getThirdIntent();
-//                Log.e("Kinflow", "open: 当前第二打开方式失败,错误原因:"+e1.getMessage()+
-//                        "\n尝试使用第三打开方式: "+thirdIntent.getComponent().toString());
+                Log.e("Kinflow", "open: 当前第二打开方式失败,错误原因:"+e1.getMessage()+
+                        "\n尝试使用第三打开方式: \n"
+                        + "componentName = "+thirdIntent.getComponent().toString()
+                        + "uri = "+ thirdIntent.getData().toString());
                 context.startActivity(thirdIntent);
                 finalOpenComponent = openMode.getThirdIntent().getComponent().getPackageName();
             }

@@ -169,6 +169,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
 
                     extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
                     extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + jinRiTouTiaoArticle.getGroup_id());
+                    jinRiTouTiaoArticle.open(mContext,extras,jinRiTouTiaoArticle.getOpenOptions());
                     /*
                     String finalOpenComponent_Head1Imapge = jrttCardInfo.open(mContext, extras);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
@@ -190,6 +191,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                     String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
                     extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
                     extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + jinRiTouTiaoArticle.getGroup_id());
+                    jinRiTouTiaoArticle.open(mContext, extras, jinRiTouTiaoArticle.getOpenOptions());
                     /*
                     String finalOpenComponent_Head3Imapge = jrttCardInfo.open(mContext, extras);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head3Imapge))
@@ -212,6 +214,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
 
                     extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
                     extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + jinRiTouTiaoArticle.getGroup_id());
+                    jinRiTouTiaoArticle.open(mContext, extras, jinRiTouTiaoArticle.getOpenOptions());
                     /*
                     String finalOpenComponent_Head1Imapge = jrttCardInfo.open(mContext, extras);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
@@ -235,6 +238,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                     String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
                     extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
                     extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + jinRiTouTiaoArticle.getGroup_id());
+                    jinRiTouTiaoArticle.open(mContext,extras,jinRiTouTiaoArticle.getOpenOptions());
                     /*
                     String finalOpenComponent_Head3Imapge = jrttCardInfo.open(mContext, extras);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head3Imapge))
@@ -432,12 +436,17 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(mContext, "搜狗搜索新闻的,无图被点击", Toast.LENGTH_SHORT).show();
-                    JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle) mElementList.get(getPosition());
+                    SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) mElementList.get(getPosition());
                     Bundle extras = new Bundle();
-                    String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
+                    String articleUrl = TextUtils.isEmpty(sougouSearchArticle.getOpen_link())? sougouSearchArticle.getLink() : sougouSearchArticle.getOpen_link();
 
                     extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
-                    extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + jinRiTouTiaoArticle.getGroup_id());
+                    extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + sougouSearchArticle.getSchema());
+                    sougouSearchArticle.open(mContext,
+                            extras,
+                            sougouSearchArticle.getOpenOptions()
+                    );
+
                     /*
                     String finalOpenComponent_Head1Imapge = jrttCardInfo.open(mContext, extras);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
@@ -461,6 +470,11 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
 
                     extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
                     extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + sougouSearchArticle.getSchema());
+                    sougouSearchArticle.open(
+                            mContext,
+                            extras,
+                            sougouSearchArticle.getOpenOptions()
+                    );
                     /*
                     String finalOpenComponent_Head1Imapge = jrttCardInfo.open(mContext, extras);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
