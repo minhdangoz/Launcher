@@ -185,7 +185,6 @@ public class DeleteDropTarget extends ButtonDropTarget {
             if (item.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPWIDGET) {
                 LauncherAppWidgetInfo law = (LauncherAppWidgetInfo) info;
                 String className = law.providerName.getClassName();
-                Log.d("hw","ITEM_TYPE_APPWIDGET " + law.toString() + " p " + law.providerName);
                 //can't delete serchbox
                 if (TextUtils.equals(className,SEARCH_BOX_CLASS_NAME)) {
                     return false;

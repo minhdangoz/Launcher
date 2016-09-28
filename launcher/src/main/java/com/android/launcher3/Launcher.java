@@ -2445,23 +2445,51 @@ public class Launcher extends Activity
                 container, screenId, cellXY[0], cellXY[1], false);
 
         if (!mRestoring) {
-            if (hostView == null) {
-                // Perform actual inflation because we're live
-                launcherInfo.hostView = mAppWidgetHost.createView(this, appWidgetId, appWidgetInfo);
-                launcherInfo.hostView.setAppWidget(appWidgetId, appWidgetInfo);
-            } else {
-                // The AppWidgetHostView has already been inflated and instantiated
-                launcherInfo.hostView = hostView;
+            if (appWidgetInfo.provider.getClassName().toString().contains(LauncherModel.KLAUNCHER_WIDGET_CLOCK_CLASS) ) {
+                LayoutInflater flater = LayoutInflater.from(this);
+                ClockWidgetView view = new ClockWidgetView(this);
+                view.setTag(launcherInfo);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PackageManager packageManager = getPackageManager();
+                        if (packageManager != null) {
+                            Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
+                                    Intent.CATEGORY_LAUNCHER).setComponent(
+                                    new ComponentName("com.android.deskclock", "com.android.deskclock.DeskClock"));
+                            ResolveInfo resolved = packageManager.resolveActivity(AlarmClockIntent,
+                                    PackageManager.MATCH_DEFAULT_ONLY);
+                            if (resolved != null) {
+                                startActivity(AlarmClockIntent);
+                            }
+                        }
+                    }
+                });
+
+                mWorkspace.addInScreen(view, container, screenId, cellXY[0], cellXY[1],
+                        launcherInfo.spanX, launcherInfo.spanY, isWorkspaceLocked());
+//            addWidgetToAutoAdvanceIfNeeded(item.hostView, appWidgetInfo);
+
+//                workspace.requestLayout();
+            }else {
+                if (hostView == null) {
+                    // Perform actual inflation because we're live
+                    launcherInfo.hostView = mAppWidgetHost.createView(this, appWidgetId, appWidgetInfo);
+                    launcherInfo.hostView.setAppWidget(appWidgetId, appWidgetInfo);
+                } else {
+                    // The AppWidgetHostView has already been inflated and instantiated
+                    launcherInfo.hostView = hostView;
+                }
+
+                launcherInfo.hostView.setTag(launcherInfo);
+                launcherInfo.hostView.setVisibility(View.VISIBLE);
+                launcherInfo.notifyWidgetSizeChanged(this);
+
+                mWorkspace.addInScreen(launcherInfo.hostView, container, screenId, cellXY[0], cellXY[1],
+                        launcherInfo.spanX, launcherInfo.spanY, isWorkspaceLocked());
+
+                addWidgetToAutoAdvanceIfNeeded(launcherInfo.hostView, appWidgetInfo);
             }
-
-            launcherInfo.hostView.setTag(launcherInfo);
-            launcherInfo.hostView.setVisibility(View.VISIBLE);
-            launcherInfo.notifyWidgetSizeChanged(this);
-
-            mWorkspace.addInScreen(launcherInfo.hostView, container, screenId, cellXY[0], cellXY[1],
-                    launcherInfo.spanX, launcherInfo.spanY, isWorkspaceLocked());
-
-            addWidgetToAutoAdvanceIfNeeded(launcherInfo.hostView, appWidgetInfo);
         }
         resetAddInfo();
     }

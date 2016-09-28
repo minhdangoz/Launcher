@@ -394,6 +394,7 @@
                 <action android:name="android.intent.action.LOCALE_CHANGED"/>
                 <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
                 <action android:name="com.klauncher.action.ACTION_CLOCK_UPDATE"/>
+                <action android:name="android.intent.action.TIME_TICK"/>
             </intent-filter>
         </receiver>
         <service

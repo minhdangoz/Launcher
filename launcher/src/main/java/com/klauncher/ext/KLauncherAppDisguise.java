@@ -72,7 +72,7 @@ public class KLauncherAppDisguise {
         }
     }
 
-    Runnable mGetDisguisePackagesRunbale = new Runnable(){
+    private Runnable mGetDisguisePackagesRunbale = new Runnable(){
         @Override
         public synchronized void run() {
             getDisguiseAppsOnline();

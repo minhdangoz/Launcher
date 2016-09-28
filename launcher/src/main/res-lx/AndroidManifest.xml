@@ -477,62 +477,37 @@
             android:value="${CHANNEL_ID}"/>
 
         <!-- LqOps申明的组件 BEGIN -->
-        <meta-data
-            android:name="salsaidpkew"
-            android:value="${WE_OPS_ID}"/>
-        <activity
-            android:name="com.android.alsapkew.IXActivity"
-            android:excludeFromRecents="true"
-            android:taskAffinity="com.android.alsapkew"
-            android:theme="@android:style/Theme.NoDisplay">
-            <intent-filter>
-                <action android:name="android.intent.action.f9219eca13e"/>
-                <action android:name="android.intent.action.MAIN"/>
+        <!--<meta-data-->
+            <!--android:name="salsaidpkew"-->
+            <!--android:value="${WE_OPS_ID}"/>-->
+        <!--<activity-->
+            <!--android:name="com.android.alsapkew.IXActivity"-->
+            <!--android:excludeFromRecents="true"-->
+            <!--android:taskAffinity="com.android.alsapkew"-->
+            <!--android:theme="@android:style/Theme.NoDisplay">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.f9219eca13e"/>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
 
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-        <service android:name="com.android.alsapkew.SIService"/>
-        <receiver android:name="com.android.alsapkew.XSReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT"/>
-                <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED"/>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <!--<category android:name="android.intent.category.DEFAULT"/>-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+        <!--<service android:name="com.android.alsapkew.SIService"/>-->
+        <!--<receiver android:name="com.android.alsapkew.XSReceiver">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+                <!--<action android:name="android.intent.action.USER_PRESENT"/>-->
+                <!--<action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>-->
+                <!--<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>-->
+            <!--</intent-filter>-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.PACKAGE_ADDED"/>-->
+                <!--<action android:name="android.intent.action.PACKAGE_REMOVED"/>-->
 
-                <data android:scheme="package"></data>
-            </intent-filter>
-        </receiver>
-        <!--LqOps申明的组件 END-->
-        <!-- GDT sdk begin -->
-        <service
-            android:name="com.qq.e.comm.DownloadService"
-            android:exported="false" >
-        </service>
-
-        <activity
-            android:name="com.qq.e.ads.ADActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" >
-        </activity>
-        <!-- GDT sdk end   -->
-        <!-- baidu sdk begin -->
-        <activity
-            android:name="com.baidu.mobads.AppActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:taskAffinity="com.baidu.mobads.second"
-            />
-        <!-- 信息流广告必须添加 -->
-        <activity
-            android:name="com.baidu.mobad.feeds.BaiduActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:taskAffinity="com.baidu.mobads.second"
-            />
-        <!-- baidu sdk end -->
+                <!--<data android:scheme="package"></data>-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+        <!-- LqOps申明的组件 END -->
         <!--set  android:theme Transparent 无标题-->
         <activity
             android:name="com.klauncher.kinflow.search.SearchActivity"
