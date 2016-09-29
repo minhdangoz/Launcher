@@ -520,7 +520,7 @@ public final class AsynchronousGet {
     }
 
     public void parseServerController(String responseJsonStr) {
-
+        /*
         try {
             JSONObject responseJsonObject = new JSONObject(responseJsonStr);
             log("开始解析服务器端控制ServiceController,开始打印:\n");
@@ -535,6 +535,24 @@ public final class AsynchronousGet {
         } catch (Exception e) {
             log("解析服务端控制器的时候出错:"+e.getMessage());
             e.printStackTrace();
+        }
+        */
+
+        try {
+            JSONObject responseJsonObject = new JSONObject(responseJsonStr);
+            log("开始解析服务器端控制ServiceController,开始打印:\n");
+            ServerController serverController = new ServerController(responseJsonObject);
+            if (serverController.isNull()) {
+                msg.arg1 = OBTAIN_RESULT_NULL;
+            }else {
+                msg.arg1 = SUCCESS;
+                msg.obj = serverController;
+            }
+        } catch (Exception e) {
+            log("解析服务端控制器的时候出错:"+e.getMessage());
+            msg.arg1 = PARSE_ERROR;
+        } finally {
+            handler.sendMessage(msg);
         }
 
     }

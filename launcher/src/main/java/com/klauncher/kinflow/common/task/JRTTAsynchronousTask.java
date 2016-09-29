@@ -164,6 +164,42 @@ public class JRTTAsynchronousTask {
 
     }
 
+    public void reportUserAppLog() {
+        Response response = null;
+        try {
+            String timestamp = String.valueOf((int) ((System.currentTimeMillis()) / 1000));
+            String nonce = CommonUtils.getInstance().getRandomString(5);//安全参数:生成5个随机字符串
+            RequestBody formBody = new FormBody.Builder()
+                    .add("timestamp", timestamp)//安全参数:时间戳
+                    .add("nonce", nonce)//安全参数:生成5个随机字符串
+                    .add("partner", Const.TOUTIAO_PARTNER)//公共参数:合作伙伴的id
+                    .add("signature", CommonUtils.SHA1(CommonUtils.orderLexicographical(new String[]{Const.TOUTIAO_SECURE_KEY, timestamp, nonce})))//安全参数:加密签名
+
+                    .add("events", TelephonyUtils.getIMEI(mContext))
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(Const.TOUTIAO_URL_ACCESS_TOKEN)
+                    .post(formBody)
+                    .build();
+            Log.e(TAG, "accessToken的请求体编写完毕,开始执行请求=============================url = "+request.url());
+            response = mClient.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getEventParams(String dataTime) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append("[{")
+                .append("\"category\"").append(":").append("\"open\"").append(",")
+                .append("\"tag\"").append(":").append("\"go_detail\"").append(",")
+                .append("\"datetime\"").append(":").append("\"").append(dataTime).append("\"")
+                .append("]}");
+        return stringBuilder.toString();
+    }
+
 
     /**
      * @param category 的来源应该由cardSecondTypeId决定

@@ -38,7 +38,9 @@ public class ServerController implements Parcelable {
     }
 
     public boolean isNull () {
-        if (CollectionsUtils.collectionIsNull(mNewsOpenControlList)||CollectionsUtils.collectionIsNull(mAdControlList))
+        if (CollectionsUtils.collectionIsNull(mNewsOpenControlList)
+//                ||CollectionsUtils.collectionIsNull(mAdControlList)
+                )
             return true;
         return false;
     }
