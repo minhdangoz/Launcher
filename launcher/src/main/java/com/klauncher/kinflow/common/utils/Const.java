@@ -81,6 +81,9 @@ public class Const {
 //    public static final String CONFIG_FUNCTION_LIST = TEST_HOST+"/v1/config/funclist?cid="+TEST_CID;
 //    public static final String CONFIG_FUNCTION_LIST = REALEASE_HOST+"/v1/config/funclist?cid="+REALEASE_CID;
     public static final String CONFIG = REALEASE_HOST+"/v2/config?cid="+REALEASE_CID;
+    public static final String KINFLOW2_SERVER_CONTROL = REALEASE_HOST+"/v1/news/mobile?cid="+REALEASE_CID;
+    public static final String KINFLOW2_NAVIGATION_WEB = REALEASE_HOST+"/v1/webnav/mobile?cid="+REALEASE_CID;
+    public static final String KINFLOW2_NAVIGATION_CONTENT = REALEASE_HOST+"/v1/contentnav/mobile?cid="+REALEASE_CID;
 
     //Android默认浏览器（Android新版本默认是chrome）
     public static final String DEFAULT_BROWSER_packageName = "com.android.browser";

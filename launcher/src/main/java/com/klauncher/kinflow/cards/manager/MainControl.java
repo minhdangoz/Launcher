@@ -482,12 +482,12 @@ public class MainControl {
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
 //                            mRequestSemaphore.acquire();
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run("http://test.api.klauncher.com/kplatform/v1/webnav/mobile?cid=1001_2101_10100000000");
+                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.KINFLOW2_NAVIGATION_WEB);
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
                             //kinflow2:接口地址需要变化
 //                            mRequestSemaphore.acquire();
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY).run("http://test.api.klauncher.com/kplatform/v1/contentnav/mobile?cid=1001_2101_10100000000");
+                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY).run(Const.KINFLOW2_NAVIGATION_CONTENT);
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
 //                            mRequestSemaphore.acquire();
@@ -519,7 +519,7 @@ public class MainControl {
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER:
 //                            mRequestSemaphore.acquire();
                             new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER)
-                                    .run("http://test.api.klauncher.com/kplatform/v1/news/mobile?cid=1001_2101_10100000000");
+                                    .run(Const.KINFLOW2_SERVER_CONTROL);
                             break;
                         default:
                             Message msg = Message.obtain();
