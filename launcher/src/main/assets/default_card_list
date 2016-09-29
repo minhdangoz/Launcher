@@ -18,21 +18,6 @@
             "th": ""
         },
         {
-            "id": "44",
-            "tyd": "1,100",
-            "carn": "美女图",
-            "fot": "",
-            "ord": "27",
-            "tyn": "广告类,yokmob",
-            "ext": "{\"img\":\"http://www.opgirl.cn/delong/images/26.jpg\",\"clc\":\"http://www.opgirl.cn/?did=150#cid=4\"}",
-            "ops": [
-                "9",
-                "com.tencent.mtt/com.tencent.mtt.SplashActivity",
-                "0"
-            ],
-            "th": ""
-        },
-        {
             "id": "47",
             "tyd": "3,302",
             "carn": "今日头条社会新闻",
