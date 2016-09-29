@@ -2450,26 +2450,26 @@ public class Launcher extends Activity
                 LayoutInflater flater = LayoutInflater.from(this);
                 ClockWidgetView view = new ClockWidgetView(this);
                 view.setTag(launcherInfo);
-                RelativeLayout clockLayout = (RelativeLayout) view.findViewById(R.id.clock_layout);
-                clockLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        PackageManager packageManager = getPackageManager();
-                        if (packageManager != null) {
-                            Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
-                                    Intent.CATEGORY_LAUNCHER).setComponent(
-                                    new ComponentName("com.android.deskclock", "com.android.deskclock.DeskClock"));
-                            ResolveInfo resolved = packageManager.resolveActivity(AlarmClockIntent,
-                                    PackageManager.MATCH_DEFAULT_ONLY);
-                            if (resolved != null) {
-                                startActivity(AlarmClockIntent);
-                            }
-                        }
-                    }
-                });
-
-                RelativeLayout weatherLayout = (RelativeLayout) view.findViewById(R.id.weather_layout);
-                weatherLayout.setOnClickListener(new View.OnClickListener() {
+//                RelativeLayout clockLayout = (RelativeLayout) view.findViewById(R.id.clock_layout);
+//                clockLayout.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        PackageManager packageManager = getPackageManager();
+//                        if (packageManager != null) {
+//                            Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
+//                                    Intent.CATEGORY_LAUNCHER).setComponent(
+//                                    new ComponentName("com.android.deskclock", "com.android.deskclock.DeskClock"));
+//                            ResolveInfo resolved = packageManager.resolveActivity(AlarmClockIntent,
+//                                    PackageManager.MATCH_DEFAULT_ONLY);
+//                            if (resolved != null) {
+//                                startActivity(AlarmClockIntent);
+//                            }
+//                        }
+//                    }
+//                });
+//
+//                RelativeLayout weatherLayout = (RelativeLayout) view.findViewById(R.id.weather_layout);
+                view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         PackageManager packageManager = getPackageManager();
@@ -6051,26 +6051,32 @@ public class Launcher extends Activity
             LayoutInflater flater = LayoutInflater.from(this);
             ClockWidgetView view = new ClockWidgetView(this);
             view.setTag(item);
-            RelativeLayout clockLayout = (RelativeLayout) view.findViewById(R.id.clock_layout);
-            clockLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PackageManager packageManager = getPackageManager();
-                    if (packageManager != null) {
-                        Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
-                                Intent.CATEGORY_LAUNCHER).setComponent(
-                                new ComponentName("com.android.deskclock", "com.android.deskclock.DeskClock"));
-                        ResolveInfo resolved = packageManager.resolveActivity(AlarmClockIntent,
-                                PackageManager.MATCH_DEFAULT_ONLY);
-                        if (resolved != null) {
-                            startActivity(AlarmClockIntent);
-                        }
-                    }
-                }
-            });
+//            RelativeLayout clockLayout = (RelativeLayout) view.findViewById(R.id.clock_layout);
+//            clockLayout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    PackageManager packageManager = getPackageManager();
+//                    if (packageManager != null) {
+//                        Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
+//                                Intent.CATEGORY_LAUNCHER).setComponent(
+//                                new ComponentName("com.android.deskclock", "com.android.deskclock.DeskClock"));
+//                        ResolveInfo resolved = packageManager.resolveActivity(AlarmClockIntent,
+//                                PackageManager.MATCH_DEFAULT_ONLY);
+//                        if (resolved != null) {
+//                            startActivity(AlarmClockIntent);
+//                        }
+//                    }
+//                }
+//            });
+//            clockLayout.setOnLongClickListener(new OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    return false;
+//                }
+//            });
 
-            RelativeLayout weatherLayout = (RelativeLayout) view.findViewById(R.id.weather_layout);
-            weatherLayout.setOnClickListener(new View.OnClickListener() {
+//            RelativeLayout weatherLayout = (RelativeLayout) view.findViewById(R.id.weather_layout);
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     PackageManager packageManager = getPackageManager();
