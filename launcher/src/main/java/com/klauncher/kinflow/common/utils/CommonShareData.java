@@ -173,7 +173,10 @@ public class CommonShareData {
 
                     try {
                         if (isOver4hour())
+                            //清空今日头条缓存
                             resetArticleBehot();
+                            //清空搜狗搜索新闻
+                            CommonShareData.putInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP,1);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
