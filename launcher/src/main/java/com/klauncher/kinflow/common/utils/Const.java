@@ -102,6 +102,11 @@ public class Const {
     public static final String TOUTIAO_packageName = "com.ss.android.article.news";
     public static final String TOUTIAO_mainActivity = "com.ss.android.article.news.activity.SplashActivity";
 
+    //搜狗搜索
+//    com.sogou.activity.src/com.sogou.activity.src.SplashActivity
+    public static final String SOUGOU_packageName = "com.sogou.activity.src";
+    public static final String SOUGOU_mainActivity = "com.sogou.activity.src.SplashActivity";
+
     //地理位置逆解析
     public static final String URL_GECODER_LOCATION ="http://api.map.baidu.com/geocoder?location=";//需要拼接三个参数:lat,lng,key
 

@@ -11,7 +11,7 @@ public class YokmobBanner extends BaseRecyclerViewAdapterData {
     public YokmobBanner (String imageUrl,String clickUrl) {
         this.imageUrl = imageUrl;
         this.clickUrl = clickUrl;
-        setType(BaseRecyclerViewAdapterData.TYPE_BANNER);
+        setKinflowConentType(BaseRecyclerViewAdapterData.TYPE_BANNER);
     }
 
     public String getImageUrl() {

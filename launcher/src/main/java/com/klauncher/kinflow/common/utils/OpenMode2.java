@@ -78,11 +78,11 @@ public class OpenMode2 {
             uri = Uri.parse(openUrl);
         }else if (packNameAndClassName.equals(CLIENT_SCHEMA)) {//对应新闻客户端
             //设置Component
-            if (mBaseData.getType() == BaseRecyclerViewAdapterData.TYPE_NEWS_JINRITOUTIAO) {
+            if (mBaseData.getKinflowConentType() == BaseRecyclerViewAdapterData.TYPE_NEWS_JINRITOUTIAO) {
                 packNameAndClassName = COMPONENT_NAME_JINRI_TOUTIAO;
                 JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle)mBaseData;
                 uri = Uri.parse(Const.URI_TOUTIAO_ARTICLE_DETAIL+jinRiTouTiaoArticle.getGroup_id());
-            } else if (mBaseData.getType() == BaseRecyclerViewAdapterData.TYPE_NEWS_SOUGOU) {
+            } else if (mBaseData.getKinflowConentType() == BaseRecyclerViewAdapterData.TYPE_NEWS_SOUGOU) {
                 packNameAndClassName = COMPONENT_NAME_SOUGOU_SOUSUO;
                 SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) mBaseData;
                 uri = Uri.parse(sougouSearchArticle.getSchema());
@@ -126,11 +126,11 @@ public class OpenMode2 {
             uri = Uri.parse(openUrl);
         }else if (packNameAndClassName.equals(CLIENT_SCHEMA)) {//对应新闻客户端
             //设置Component
-            if (mBaseData.getType() == BaseRecyclerViewAdapterData.TYPE_NEWS_JINRITOUTIAO) {
+            if (mBaseData.getKinflowConentType() == BaseRecyclerViewAdapterData.TYPE_NEWS_JINRITOUTIAO) {
                 packNameAndClassName = COMPONENT_NAME_JINRI_TOUTIAO;
                 JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle)mBaseData;
                 uri = Uri.parse(Const.URI_TOUTIAO_ARTICLE_DETAIL+jinRiTouTiaoArticle.getGroup_id());
-            } else if (mBaseData.getType() == BaseRecyclerViewAdapterData.TYPE_NEWS_SOUGOU) {
+            } else if (mBaseData.getKinflowConentType() == BaseRecyclerViewAdapterData.TYPE_NEWS_SOUGOU) {
                 packNameAndClassName = COMPONENT_NAME_SOUGOU_SOUSUO;
                 SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) mBaseData;
                 uri = Uri.parse(sougouSearchArticle.getSchema());

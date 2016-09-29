@@ -1,13 +1,22 @@
 package com.klauncher.kinflow.views.recyclerView.data;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.AndroidRuntimeException;
 import android.util.Log;
 
+import com.klauncher.kinflow.browser.KinflowBrower;
+import com.klauncher.kinflow.cards.model.sougou.SougouSearchArticle;
+import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
 import com.klauncher.kinflow.common.utils.CommonUtils;
+import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.common.utils.OpenMode2;
+import com.klauncher.kinflow.utilities.KinflowLog;
+import com.klauncher.launcher.BuildConfig;
 
 import java.util.List;
 
@@ -20,16 +29,16 @@ public class BaseRecyclerViewAdapterData {
     public static final int TYPE_NEWS_JINRITOUTIAO = 12;
     public static final int TYPE_NEWS_SOUGOU = 13;
 
-    public int type;
+    public int kinflowConentType;
     public int order;
     public List<String> openOptions;
 
-    public int getType() {
-        return type;
+    public int getKinflowConentType() {
+        return kinflowConentType;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setKinflowConentType(int kinflowConentType) {
+        this.kinflowConentType = kinflowConentType;
     }
 
     public int getOrder() {
@@ -109,5 +118,66 @@ public class BaseRecyclerViewAdapterData {
             //以下代码用于做统计使用
             return finalOpenComponent;
         }
+    }
+
+    private static final String INNER_BROWSER_PACKAGENAME = "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower";
+    private static final String CLIENT_SCHEMA = "xxx/www";
+
+    public String openByOrder (Context context) {
+
+        String finalOpenComponent = BuildConfig.APPLICATION_ID;
+        for (int i = 0; i < getOpenOptions().size(); i++) {
+            try {
+                KinflowLog.w("尝试第"+i+"打开方式");
+                String openComponentName = getOpenOptions().get(i);
+                Log.e("kinflow", "openByOrder: openComponentName"+openComponentName);
+                if (openComponentName.equals(INNER_BROWSER_PACKAGENAME)) {//用自带浏览器打开
+                    if (this.kinflowConentType == TYPE_NEWS_JINRITOUTIAO) {
+                        JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle) this;
+                        String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
+                        KinflowBrower.openUrl(context,articleUrl);
+                    } else if (this.kinflowConentType == TYPE_NEWS_SOUGOU) {
+                        SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) this;
+                        String articleUrl = TextUtils.isEmpty(sougouSearchArticle.getLink()) ? sougouSearchArticle.getOpen_link() : sougouSearchArticle.getLink();
+                        KinflowBrower.openUrl(context, articleUrl);
+                    }
+                    finalOpenComponent = BuildConfig.APPLICATION_ID;
+                }else if (openComponentName.equals(CLIENT_SCHEMA)) {//用新闻对应的客户端打开
+                    if (this.kinflowConentType == TYPE_NEWS_JINRITOUTIAO) {
+                        JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle) this;
+                        String uri = Const.URI_TOUTIAO_ARTICLE_DETAIL+jinRiTouTiaoArticle.getGroup_id();
+                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
+                        finalOpenComponent = Const.TOUTIAO_packageName;
+                    } else if (this.kinflowConentType == TYPE_NEWS_SOUGOU) {
+                        SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) this;
+                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(sougouSearchArticle.getSchema())));
+                        finalOpenComponent = Const.SOUGOU_packageName;
+                    }
+                }else {//用浏览器打开
+                    String articleUrl = "http://m.hao123.com/?union=1&from=1012581h&tn=ops1012581h";
+                    if (this.kinflowConentType == TYPE_NEWS_JINRITOUTIAO) {
+                        JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle) this;
+                        articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
+                    } else if (this.kinflowConentType == TYPE_NEWS_SOUGOU) {
+                        SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) this;
+                        articleUrl = TextUtils.isEmpty(sougouSearchArticle.getOpen_link())? sougouSearchArticle.getLink() : sougouSearchArticle.getOpen_link();
+                    }
+                    String[] cns = getOpenOptions().get(i).split("/");
+                    ComponentName componentName = new ComponentName(cns[0],cns[1]);
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                    browserIntent.setComponent(componentName);
+                    browserIntent.setData(Uri.parse(articleUrl));
+                    context.startActivity(browserIntent);
+                    finalOpenComponent = componentName.getPackageName();
+                }
+                return finalOpenComponent;
+            } catch (Exception e) {
+                KinflowLog.w("第" + i + "打开方式失败");
+                //判断如果是最后一个了,用默认打开,就别再继续了
+                continue;
+            }
+
+        }
+        return finalOpenComponent;
     }
 }

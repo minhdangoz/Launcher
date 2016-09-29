@@ -239,7 +239,7 @@ public class SougouSearchArticle extends BaseRecyclerViewAdapterData implements 
                 img_list[i] = imageListJsonArray.optString(i);
             }
             //解析完毕,设置type
-            setType(TYPE_NEWS_SOUGOU);
+            setKinflowConentType(BaseRecyclerViewAdapterData.TYPE_NEWS_SOUGOU);
         } catch (Exception e) {
             Log.w("kinflow2","在解析搜狗搜索新闻时出错: "+e.getMessage());
         }

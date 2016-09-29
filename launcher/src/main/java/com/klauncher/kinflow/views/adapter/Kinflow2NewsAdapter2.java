@@ -3,7 +3,6 @@ package com.klauncher.kinflow.views.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,17 +14,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.model.sougou.SougouSearchArticle;
 import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
-import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.common.utils.DateUtils;
-import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.views.recyclerView.adapter.BaseRecyclerViewAdapter;
 import com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData;
 import com.klauncher.kinflow.views.recyclerView.data.YokmobBanner;
 import com.klauncher.kinflow.views.recyclerView.viewHolder.BaseRecyclerViewHolder;
 import com.klauncher.launcher.R;
+import com.klauncher.ping.PingManager;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -44,7 +43,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
      */
     @Override
     public int getItemViewType(int position) {
-        return mElementList.get(position).getType();
+        return mElementList.get(position).getKinflowConentType();
     }
 
     /**
@@ -164,17 +163,14 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                 public void onClick(View v) {
                     Toast.makeText(mContext, "无图被点击", Toast.LENGTH_SHORT).show();
                     JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle) mElementList.get(getPosition());
-                    Bundle extras = new Bundle();
-                    String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
-
-                    extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
-                    extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + jinRiTouTiaoArticle.getGroup_id());
-                    jinRiTouTiaoArticle.open(mContext,extras,jinRiTouTiaoArticle.getOpenOptions());
-                    /*
-                    String finalOpenComponent_Head1Imapge = jrttCardInfo.open(mContext, extras);
-                    if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
-                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO, String.valueOf(jrttCardInfo.getCardSecondTypeId()));
-                    */
+                    String finalOpenComponent_Head0Imapge =  jinRiTouTiaoArticle.openByOrder(mContext);
+                    if (!TextUtils.isEmpty(finalOpenComponent_Head0Imapge))
+                    PingManager.getInstance().reportUserAction4NewsOpen(
+                            PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO,
+                            String.valueOf(CardIdMap.CARD_TYPE_NEWS_TT_REDIAN),
+                            finalOpenComponent_Head0Imapge,
+                            getPosition()
+                    );
                 }
             });
             //大图
@@ -187,16 +183,14 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                 public void onClick(View v) {
                     Toast.makeText(mContext, "大图布局被点击", Toast.LENGTH_SHORT).show();
                     JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle)mElementList.get(getPosition());
-                    Bundle extras = new Bundle();
-                    String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
-                    extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
-                    extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + jinRiTouTiaoArticle.getGroup_id());
-                    jinRiTouTiaoArticle.open(mContext, extras, jinRiTouTiaoArticle.getOpenOptions());
-                    /*
-                    String finalOpenComponent_Head3Imapge = jrttCardInfo.open(mContext, extras);
+                    String finalOpenComponent_Head3Imapge = jinRiTouTiaoArticle.openByOrder(mContext);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head3Imapge))
-                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO, String.valueOf(jrttCardInfo.getCardSecondTypeId()));
-                    */
+                        PingManager.getInstance().reportUserAction4NewsOpen(
+                                PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO,
+                                String.valueOf(CardIdMap.CARD_TYPE_NEWS_TT_REDIAN),
+                                finalOpenComponent_Head3Imapge,
+                                getPosition()
+                        );
                 }
             });
             //一张图片
@@ -209,17 +203,14 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                 public void onClick(View v) {
                     Toast.makeText(mContext, "一张图被点击", Toast.LENGTH_SHORT).show();
                     JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle)mElementList.get(getPosition());
-                    Bundle extras = new Bundle();
-                    String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
-
-                    extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
-                    extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + jinRiTouTiaoArticle.getGroup_id());
-                    jinRiTouTiaoArticle.open(mContext, extras, jinRiTouTiaoArticle.getOpenOptions());
-                    /*
-                    String finalOpenComponent_Head1Imapge = jrttCardInfo.open(mContext, extras);
+                    String finalOpenComponent_Head1Imapge = jinRiTouTiaoArticle.openByOrder(mContext);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
-                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO, String.valueOf(jrttCardInfo.getCardSecondTypeId()));
-                    */
+                        PingManager.getInstance().reportUserAction4NewsOpen(
+                                PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO,
+                                String.valueOf(CardIdMap.CARD_TYPE_NEWS_TT_REDIAN),
+                                finalOpenComponent_Head1Imapge,
+                                getPosition()
+                        );
                 }
             });
             //三张图片
@@ -234,16 +225,14 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                 public void onClick(View v) {
                     Toast.makeText(mContext, "三张图被点击", Toast.LENGTH_SHORT).show();
                     JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle)mElementList.get(getPosition());
-                    Bundle extras = new Bundle();
-                    String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
-                    extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
-                    extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + jinRiTouTiaoArticle.getGroup_id());
-                    jinRiTouTiaoArticle.open(mContext,extras,jinRiTouTiaoArticle.getOpenOptions());
-                    /*
-                    String finalOpenComponent_Head3Imapge = jrttCardInfo.open(mContext, extras);
+                    String finalOpenComponent_Head3Imapge = jinRiTouTiaoArticle.openByOrder(mContext);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head3Imapge))
-                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO, String.valueOf(jrttCardInfo.getCardSecondTypeId()));
-                    */
+                        PingManager.getInstance().reportUserAction4NewsOpen(
+                                PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO,
+                                String.valueOf(CardIdMap.CARD_TYPE_NEWS_TT_REDIAN),
+                                finalOpenComponent_Head3Imapge,
+                                getPosition()
+                        );
                 }
             });
         }
@@ -437,21 +426,15 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                 public void onClick(View v) {
                     Toast.makeText(mContext, "搜狗搜索新闻的,无图被点击", Toast.LENGTH_SHORT).show();
                     SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) mElementList.get(getPosition());
-                    Bundle extras = new Bundle();
-                    String articleUrl = TextUtils.isEmpty(sougouSearchArticle.getOpen_link())? sougouSearchArticle.getLink() : sougouSearchArticle.getOpen_link();
+                    String finalOpenComponent_Head0Imapge =  sougouSearchArticle.openByOrder(mContext);
+                    if (!TextUtils.isEmpty(finalOpenComponent_Head0Imapge))
+                        PingManager.getInstance().reportUserAction4NewsOpen(
+                                PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO,
+                                String.valueOf(CardIdMap.CARD_TYPE_NEWS_TT_REDIAN),
+                                finalOpenComponent_Head0Imapge,
+                                getPosition()
+                        );
 
-                    extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
-                    extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + sougouSearchArticle.getSchema());
-                    sougouSearchArticle.open(mContext,
-                            extras,
-                            sougouSearchArticle.getOpenOptions()
-                    );
-
-                    /*
-                    String finalOpenComponent_Head1Imapge = jrttCardInfo.open(mContext, extras);
-                    if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
-                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO, String.valueOf(jrttCardInfo.getCardSecondTypeId()));
-                    */
                 }
             });
 
@@ -465,21 +448,14 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                 public void onClick(View v) {
                     Toast.makeText(mContext, "搜狗搜索新闻的一张图被点击", Toast.LENGTH_SHORT).show();
                     SougouSearchArticle sougouSearchArticle = (SougouSearchArticle)mElementList.get(getPosition());
-                    Bundle extras = new Bundle();
-                    String articleUrl = TextUtils.isEmpty(sougouSearchArticle.getOpen_link())? sougouSearchArticle.getLink() : sougouSearchArticle.getOpen_link();
-
-                    extras.putString(OpenMode.OPEN_URL_KEY, articleUrl);
-                    extras.putString(OpenMode.FIRST_OPEN_MODE_TYPE_URI, Const.URI_TOUTIAO_ARTICLE_DETAIL + sougouSearchArticle.getSchema());
-                    sougouSearchArticle.open(
-                            mContext,
-                            extras,
-                            sougouSearchArticle.getOpenOptions()
-                    );
-                    /*
-                    String finalOpenComponent_Head1Imapge = jrttCardInfo.open(mContext, extras);
+                    String finalOpenComponent_Head1Imapge =  sougouSearchArticle.openByOrder(mContext);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
-                        PingManager.getInstance().reportUserAction4cardNewsOpen(PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO, String.valueOf(jrttCardInfo.getCardSecondTypeId()));
-                    */
+                        PingManager.getInstance().reportUserAction4NewsOpen(
+                                PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO,
+                                String.valueOf(CardIdMap.CARD_TYPE_NEWS_TT_REDIAN),
+                                finalOpenComponent_Head1Imapge,
+                                getPosition()
+                        );
                 }
             });
         }
