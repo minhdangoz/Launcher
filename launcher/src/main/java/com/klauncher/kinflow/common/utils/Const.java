@@ -47,6 +47,7 @@ public class Const {
     public static final String TOUTIAO_PARTNER = "delong";//partner与client_id相同，都是delong；secure_key与client_secret相同都是cde8fee9e391062045d05c7848859464
 //    public static final String TOUTIAO_URL_ACCESS_TOKEN = "http://open.snssdk.com/auth/access/web/";
     public static final String TOUTIAO_URL_ACCESS_TOKEN = "http://open.snssdk.com/auth/access/device/";
+    public static final String TOUTIAO_URL_USER_EVENT = "http://open.snssdk.com/log/app_log_for_partner/v1/";
     public static final String URL_JINRITOUTIAO_GET_CUSTOM_ARTICLE = "http://open.snssdk.com/data/stream/v3/";
     public static final String TOUTIAO_COMMON_PARTNER = "delong";
     public static final String TOUTIAO_CUSTOM_ARTICLE_CATEGORY_TUIJIAN = "__all__";

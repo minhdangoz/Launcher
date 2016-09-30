@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.model.sougou.SougouSearchArticle;
 import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
+import com.klauncher.kinflow.common.task.JRTTAsynchronousTask;
 import com.klauncher.kinflow.common.utils.DateUtils;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.views.recyclerView.adapter.BaseRecyclerViewAdapter;
@@ -171,6 +172,13 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                             finalOpenComponent_Head0Imapge,
                             getPosition()
                     );
+
+                    try {
+                        new JRTTAsynchronousTask(mContext).reportUserAppLog(jinRiTouTiaoArticle.getGroup_id());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 }
             });
             //大图
@@ -191,6 +199,11 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                                 finalOpenComponent_Head3Imapge,
                                 getPosition()
                         );
+                    try {
+                        new JRTTAsynchronousTask(mContext).reportUserAppLog(jinRiTouTiaoArticle.getGroup_id());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             //一张图片
@@ -211,6 +224,12 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                                 finalOpenComponent_Head1Imapge,
                                 getPosition()
                         );
+
+                    try {
+                        new JRTTAsynchronousTask(mContext).reportUserAppLog(jinRiTouTiaoArticle.getGroup_id());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             //三张图片
@@ -233,6 +252,11 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                                 finalOpenComponent_Head3Imapge,
                                 getPosition()
                         );
+                    try {
+                        new JRTTAsynchronousTask(mContext).reportUserAppLog(jinRiTouTiaoArticle.getGroup_id());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }

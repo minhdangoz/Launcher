@@ -32,6 +32,11 @@ public class DateUtils {
         return date;
     }
 
+    public String yyyy_MM_dd_HH_mm_ss () {
+        simpleDateFormat.applyPattern(PATTERN_TYPE_yyyy_MM_dd_HH_mm_ss);
+        return simpleDateFormat.format(new Date());
+    }
+
     /**
      * 获取时分
      *

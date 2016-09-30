@@ -12,6 +12,7 @@ import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.common.utils.Const;
+import com.klauncher.kinflow.common.utils.DateUtils;
 import com.klauncher.kinflow.utilities.TelephonyUtils;
 
 import org.json.JSONArray;
@@ -164,39 +165,59 @@ public class JRTTAsynchronousTask {
 
     }
 
-    public void reportUserAppLog() {
-        Response response = null;
-        try {
-            String timestamp = String.valueOf((int) ((System.currentTimeMillis()) / 1000));
-            String nonce = CommonUtils.getInstance().getRandomString(5);//安全参数:生成5个随机字符串
-            RequestBody formBody = new FormBody.Builder()
-                    .add("timestamp", timestamp)//安全参数:时间戳
-                    .add("nonce", nonce)//安全参数:生成5个随机字符串
-                    .add("partner", Const.TOUTIAO_PARTNER)//公共参数:合作伙伴的id
-                    .add("signature", CommonUtils.SHA1(CommonUtils.orderLexicographical(new String[]{Const.TOUTIAO_SECURE_KEY, timestamp, nonce})))//安全参数:加密签名
-
-                    .add("events", TelephonyUtils.getIMEI(mContext))
-                    .build();
-
-            Request request = new Request.Builder()
-                    .url(Const.TOUTIAO_URL_ACCESS_TOKEN)
-                    .post(formBody)
-                    .build();
-            Log.e(TAG, "accessToken的请求体编写完毕,开始执行请求=============================url = "+request.url());
-            response = mClient.newCall(request).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public JRTTAsynchronousTask (Context context) {
+        this.mContext = context;
     }
 
-    public String getEventParams(String dataTime) {
+    public void reportUserAppLog(final long group_Id) {
+        new Thread(){
+            @Override
+            public void run() {
+                Response response = null;
+                try {
+                    String timestamp = String.valueOf((int) ((System.currentTimeMillis()) / 1000));
+                    String nonce = CommonUtils.getInstance().getRandomString(5);//安全参数:生成5个随机字符串
+                    String signature = CommonUtils.SHA1(CommonUtils.orderLexicographical(new String[]{Const.TOUTIAO_SECURE_KEY, timestamp, nonce}));
+                    String events = getEventParams(DateUtils.getInstance().yyyy_MM_dd_HH_mm_ss(), group_Id);
+                    String accessToken = CommonShareData.getString(CommonShareData.KEY_JINRITOUTIAO_ACCESS_TOKEN, "");
+                    RequestBody formBody = new FormBody.Builder()
+                            .add("timestamp", timestamp)//安全参数:时间戳
+                            .add("nonce", nonce)//安全参数:生成5个随机字符串
+                            .add("partner", Const.TOUTIAO_PARTNER)//公共参数:合作伙伴的id
+                            .add("signature", signature)//安全参数:加密签名
+                            .add("access_token", accessToken)//token
+
+                            .add("events", events)
+                            .build();
+
+                    Request request = new Request.Builder()
+                            .url(Const.TOUTIAO_URL_USER_EVENT)
+                            .post(formBody)
+                            .build();
+                    response = mClient.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        String responseBodyJsonString = response.body().string();
+                        Log.e(TAG, "reportUserAppLog: responseBodyJsonString = "+responseBodyJsonString);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    Log.e(TAG, "run: 上报用户行为,出现未知错误:"+e.getMessage());
+                }
+            }
+        }.start();
+    }
+
+    public String getEventParams(String dataTime,long group_Id) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
                 .append("[{")
                 .append("\"category\"").append(":").append("\"open\"").append(",")
                 .append("\"tag\"").append(":").append("\"go_detail\"").append(",")
-                .append("\"datetime\"").append(":").append("\"").append(dataTime).append("\"")
-                .append("]}");
+                .append("\"datetime\"").append(":").append("\"").append(dataTime).append("\"").append(",")
+                .append("\"value\"").append(":").append(group_Id).append(",")
+                .append("\"label\"").append(":").append("\"click_news_hot\"")
+                .append("}]");
         return stringBuilder.toString();
     }
 
