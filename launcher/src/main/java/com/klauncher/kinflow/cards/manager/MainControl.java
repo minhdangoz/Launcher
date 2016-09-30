@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.cards.model.server.NewsOpenControl;
@@ -28,6 +29,7 @@ import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData;
 import com.klauncher.kinflow.weather.model.Weather;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -251,7 +253,7 @@ public class MainControl {
 //                        log("获取到数据,开始更新新闻和广告");
 //                        mListener.onNewsAndAdUpdate(baseRecyclerViewAdapterDataList);
 //                    }
-                    List<BaseRecyclerViewAdapterData> updateData = combinationData(mNewsOpenControlList,mJinRiTouTiaoArticleList,mSougouSearchArticleList);
+                    List<BaseRecyclerViewAdapterData> updateData = combinationData(mNewsOpenControlList, mJinRiTouTiaoArticleList, mSougouSearchArticleList);
                     if (CollectionsUtils.collectionIsNull(updateData)) {
                         log("没有获取到数据,所有不在更新新闻和广告");
                     } else {
@@ -287,6 +289,25 @@ public class MainControl {
 
     private List<BaseRecyclerViewAdapterData> combinationData(List<NewsOpenControl> newsOpenControlList, List<JinRiTouTiaoArticle> jrttDataList, List<SougouSearchArticle> sougouDataList) {
         baseRecyclerViewAdapterDataList.clear();
+        //如果获取到的新闻控制器为空,则使用缓存
+        if (CollectionsUtils.collectionIsNull(newsOpenControlList)) {
+
+            try {
+                InputStream is = KLauncherApplication.mKLauncherApplication.getAssets().open("default_server_control");
+                String json = FileUtils.loadStringFromStream(is);
+                JSONObject localJsonRoot = new JSONObject(json);
+                JSONArray newsOpenControlLocalJsonArray = localJsonRoot.optJSONArray("news");
+                int newsOpenControlLocalJsonLength = newsOpenControlLocalJsonArray.length();
+                for (int x = 0; x < newsOpenControlLocalJsonLength; x++) {
+                    newsOpenControlList.add(new NewsOpenControl(newsOpenControlLocalJsonArray.optJSONObject(x)));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
         //穿插数据计算综合
         List<BaseRecyclerViewAdapterData> baseDataTotalList = new ArrayList<>();
         //计算新闻条数

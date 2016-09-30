@@ -3,12 +3,15 @@ package com.klauncher.kinflow.cards.model.server;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.kinflow.utilities.CollectionsUtils;
+import com.klauncher.kinflow.utilities.FileUtils;
 import com.klauncher.kinflow.utilities.KinflowLog;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,6 +115,14 @@ public class ServerController implements Parcelable {
             int newsOpenControlLength = newsOpenControlJsonArray.length();
             if (newsOpenControlLength<=0) {
                 KinflowLog.w("使用存储到本地的新闻接口控制器(可使用assets)");
+                InputStream is = KLauncherApplication.mKLauncherApplication.getAssets().open("default_server_control");
+                String json = FileUtils.loadStringFromStream(is);
+                JSONObject localJsonRoot = new JSONObject(json);
+                JSONArray newsOpenControlLocalJsonArray = localJsonRoot.optJSONArray("news");
+                int newsOpenControlLocalJsonLength = newsOpenControlLocalJsonArray.length();
+                for (int x = 0; x < newsOpenControlLocalJsonLength; x++) {
+                    newsOpenControlList.add(new NewsOpenControl(newsOpenControlLocalJsonArray.optJSONObject(x)));
+                }
             }else {
                 for (int j = 0; j < newsOpenControlLength; j++) {
                     newsOpenControlList.add(new NewsOpenControl(newsOpenControlJsonArray.optJSONObject(j)));
