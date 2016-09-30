@@ -24,6 +24,7 @@
         <item>com.alex.nuclear</item>
         <item>cn.kuwo.player</item>
         <item>com.tencent.qqlive</item>
+        <item>com.tencent.mmt</item>
         <item>com.UCMobile</item>
         <item>sogou.mobile.explorer</item>
         <item>com.tencent.qqpimsecure</item>
@@ -38,7 +39,7 @@
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.android.mediacenter</string>
     <string name="config_icon_com.tencent.qqlive">com.huawei.hwvplayer,com.huawei.hwvplayer.youku</string>
-    <string name="config_icon_sogou.mobile.explorer">com.android.browser,com.seal.browser</string>
+    <string name="config_icon_com.tencent.mmt">com.android.browser,com.seal.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.huawei.systemmanager</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar,com.android.qidian.calendar</string>
     <string name="config_icon_com.calendar.UI">com.huawei.android.totemweather</string>
