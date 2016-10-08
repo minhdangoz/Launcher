@@ -17,7 +17,7 @@ import java.util.Arrays;
  */
 public class SougouSearchArticle extends BaseRecyclerViewAdapterData implements Parcelable {
 
-    public static final int ONCE_REQUEST_LIMIT = 5;
+    public static final int ONCE_REQUEST_LIMIT = 15;
 
     public static final String URL_SOUGOU_ARTICLE = "http://wxrd.appsearch.m.sogou.com:80/dist_sogou?mid=3fb7DeLongDeskTop";
 
