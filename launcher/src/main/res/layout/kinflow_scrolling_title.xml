@@ -10,6 +10,7 @@
               android:paddingTop="16dp">
 
     <!--时事热点-->
+    <!--
     <TextView
         android:id="@+id/hot_word_top"
         android:layout_width="wrap_content"
@@ -24,6 +25,15 @@
         android:textColor="@color/kinflow_color_typeface_main"
         android:textSize="16sp"
         />
+    -->
+
+    <com.klauncher.kinflow.weather.Kinflow2Weather
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 
     <!--搜索框-->
     <RelativeLayout

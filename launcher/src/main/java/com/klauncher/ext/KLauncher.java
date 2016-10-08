@@ -407,9 +407,9 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mPullRefreshScrollView.setBackgroundColor(Color.parseColor("#29588F"));
         //头部
         mLinearLayoutHeader = (LinearLayout) kinflowRootView.findViewById(R.id.kinflow_scrolling_header);
-        tv_hotWordTop = (TextView) mLinearLayoutHeader.findViewById(R.id.hot_word_top);
-        tv_hotWordTop.setOnClickListener(this);
-        tv_hotWordTop.setText(topHotWord.getWord());
+//        tv_hotWordTop = (TextView) mLinearLayoutHeader.findViewById(R.id.hot_word_top);
+//        tv_hotWordTop.setOnClickListener(this);
+//        tv_hotWordTop.setText(topHotWord.getWord());
         tv_searchHint = (TextView) mLinearLayoutHeader.findViewById(R.id.search_hint);
         tv_searchHint.setHint(hintHotWord.getWord());
         searchLayout = (RelativeLayout) mLinearLayoutHeader.findViewById(R.id.search_layout);

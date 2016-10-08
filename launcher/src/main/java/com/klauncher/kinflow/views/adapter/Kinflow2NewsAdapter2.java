@@ -162,7 +162,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
             m0ImageLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "无图被点击", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "无图被点击", Toast.LENGTH_SHORT).show();
                     JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle) mElementList.get(getPosition());
                     String finalOpenComponent_Head0Imapge =  jinRiTouTiaoArticle.openByOrder(mContext);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head0Imapge))
@@ -189,7 +189,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
             mBigImageLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "大图布局被点击", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "大图布局被点击", Toast.LENGTH_SHORT).show();
                     JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle)mElementList.get(getPosition());
                     String finalOpenComponent_Head3Imapge = jinRiTouTiaoArticle.openByOrder(mContext);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head3Imapge))
@@ -214,7 +214,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
             m1ImageLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "一张图被点击", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "一张图被点击", Toast.LENGTH_SHORT).show();
                     JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle)mElementList.get(getPosition());
                     String finalOpenComponent_Head1Imapge = jinRiTouTiaoArticle.openByOrder(mContext);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
@@ -242,7 +242,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
             m3ImageLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "三张图被点击", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "三张图被点击", Toast.LENGTH_SHORT).show();
                     JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle)mElementList.get(getPosition());
                     String finalOpenComponent_Head3Imapge = jinRiTouTiaoArticle.openByOrder(mContext);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head3Imapge))
@@ -448,7 +448,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
             m0ImageLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "搜狗搜索新闻的,无图被点击", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "搜狗搜索新闻的,无图被点击", Toast.LENGTH_SHORT).show();
                     SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) mElementList.get(getPosition());
                     String finalOpenComponent_Head0Imapge =  sougouSearchArticle.openByOrder(mContext);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head0Imapge))
@@ -470,7 +470,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
             m1ImageLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "搜狗搜索新闻的一张图被点击", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "搜狗搜索新闻的一张图被点击", Toast.LENGTH_SHORT).show();
                     SougouSearchArticle sougouSearchArticle = (SougouSearchArticle)mElementList.get(getPosition());
                     String finalOpenComponent_Head1Imapge =  sougouSearchArticle.openByOrder(mContext);
                     if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))

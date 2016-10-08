@@ -174,10 +174,27 @@ public class BaseRecyclerViewAdapterData {
             } catch (Exception e) {
                 KinflowLog.w("第" + i + "打开方式失败");
                 //判断如果是最后一个了,用默认打开,就别再继续了
-                continue;
+                if (i==getOpenOptions().size()-1) {
+                    finalOpenComponent = openWithInnerBrowser(context);
+                } else {
+                    continue;
+                }
             }
 
         }
         return finalOpenComponent;
+    }
+
+    private String openWithInnerBrowser(Context context) {
+        if (this.kinflowConentType == TYPE_NEWS_JINRITOUTIAO) {
+            JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle) this;
+            String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
+            KinflowBrower.openUrl(context,articleUrl);
+        } else if (this.kinflowConentType == TYPE_NEWS_SOUGOU) {
+            SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) this;
+            String articleUrl = TextUtils.isEmpty(sougouSearchArticle.getLink()) ? sougouSearchArticle.getOpen_link() : sougouSearchArticle.getLink();
+            KinflowBrower.openUrl(context, articleUrl);
+        }
+        return BuildConfig.APPLICATION_ID;
     }
 }
