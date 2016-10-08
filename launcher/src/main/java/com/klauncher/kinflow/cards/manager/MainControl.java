@@ -122,8 +122,11 @@ public class MainControl {
                             log("获取到搜狗搜索新闻");
                             if (null != msg.obj) {
                                 mSougouSearchArticleList = (List<SougouSearchArticle>) msg.obj;
-                                CommonShareData.putInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP,
-                                        CommonShareData.getInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP, 0) + SougouSearchArticle.ONCE_REQUEST_LIMIT);
+                                int previousSkip = CommonShareData.getInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP, 0);
+                                int nextSkip = previousSkip + SougouSearchArticle.ONCE_REQUEST_LIMIT;
+                                CommonShareData.putInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP, nextSkip);
+                            } else {
+                                log("获取到的搜狗搜索的新闻为空");
                             }
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE:
@@ -523,8 +526,9 @@ public class MainControl {
                                         //添加参数
                                         OkHttpPost okHttpPost = new OkHttpPost(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE);
                                         //发请求
+                                        int skip = CommonShareData.getInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP, 1);
                                         okHttpPost.post(SougouSearchArticle.URL_SOUGOU_ARTICLE, SougouSearchArticle.getPostJsonBody(
-                                                CommonShareData.getInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP, 1)
+                                                skip
                                                 , SougouSearchArticle.ONCE_REQUEST_LIMIT));
                                         //发起请求
                                     } catch (Exception e) {

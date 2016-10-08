@@ -60,6 +60,7 @@ public class OkHttpPost {
                 mMessage.arg1 = AsynchronousGet.OBTAIN_RESULT_NULL;
             } else {
                 mMessage.arg1 = AsynchronousGet.SUCCESS;
+                mMessage.obj = sougouSearchArticleList;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,12 +79,6 @@ public class OkHttpPost {
             //服务端有响应
             if (response.isSuccessful()) {//搜狗搜索的服务器有响应了,但是不一定获取数据成功.
                 sougouSearchArticleList = parseSouGouSearchNews(new JSONObject(response.body().string()));
-                if (CollectionsUtils.collectionIsNull(sougouSearchArticleList)) {
-                    mMessage.arg1 = AsynchronousGet.OBTAIN_RESULT_NULL;
-                } else {
-                    mMessage.arg1 = AsynchronousGet.SUCCESS;
-                    mMessage.obj = sougouSearchArticleList;
-                }
             } else {
                 //服务器端无响应
                 mMessage.arg1 = AsynchronousGet.OBTAIN_RESULT_NULL;

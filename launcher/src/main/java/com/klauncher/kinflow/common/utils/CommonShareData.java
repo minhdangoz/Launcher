@@ -63,7 +63,7 @@ public class CommonShareData {
                 }
             }
         }).start();
-        putBoolean(FIRST_CONNECTED_NET,true);
+        putBoolean(FIRST_CONNECTED_NET, true);
     }
 
     public static long getCurrentNetworkTime() {
@@ -155,7 +155,7 @@ public class CommonShareData {
     }
 
     public static void clearInt(String key){
-        editor.putInt(key,0);
+        editor.putInt(key, 0);
     }
 
     public static void resetArticleBehot(){
@@ -172,11 +172,14 @@ public class CommonShareData {
                 public void run() {
 
                     try {
-                        if (isOver4hour())
+                        if (isOver4hour()) {
                             //清空今日头条缓存
                             resetArticleBehot();
                             //清空搜狗搜索新闻
                             CommonShareData.putInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP,1);
+                            //当清空完毕值周记录一下当前时间
+                            CommonShareData.putString(Const.KEY_CARD_CLEAR_OFFSET,String.valueOf(Calendar.getInstance().getTimeInMillis()));
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
