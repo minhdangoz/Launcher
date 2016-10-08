@@ -112,6 +112,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -440,6 +441,8 @@ public class Launcher extends Activity
 
     private static ArrayList<ComponentName> mIntentsOnWorkspaceFromUpgradePath = null;
 
+    private int mMySearchWidgetScreenId = -1;
+
     // Holds the page that we need to animate to, and the icon views that we need to animate up
     // when we scroll to that page on resume.
     private ImageView mFolderIconImageView;
@@ -613,7 +616,6 @@ public class Launcher extends Activity
 
         mSavedState = savedInstanceState;
         restoreState(mSavedState);
-
         if (PROFILE_STARTUP) {
             android.os.Debug.stopMethodTracing();
         }
@@ -663,9 +665,8 @@ public class Launcher extends Activity
         /** Lenovo-SW zhaoxin5 20150721 add for auto-reorder support START */
         LauncherAppState.getLauncherProvider().setLauncherProviderChangeListener(this);
         /** Lenovo-SW zhaoxin5 20150721 add for auto-reorder support END */
-
         // Support theme
-        applyDefaultTheme();
+//        applyDefaultTheme();
         //vivo error
         registerAppWidgetReceiver();
     }
@@ -1176,6 +1177,7 @@ public class Launcher extends Activity
                 AppWidgetProviderInfo info = mAppWidgetManager.getAppWidgetInfo(appWidgetId);
 
                 PendingAddWidgetInfo createItemInfo = getPendingAddWidgetInfo(info);
+
                 int currentScreen = getCurrentWorkspaceScreen();
                 Workspace workspace = getWorkspace();
                 CellLayout layout = (CellLayout) workspace.getPageAt(currentScreen);
@@ -2423,7 +2425,14 @@ public class Launcher extends Activity
             showOutOfSpaceMessage(isHotseatLayout(layout));
             return;
         }
-
+        if (appWidgetInfo !=null && appWidgetInfo.provider.getClassName().equals(DeleteDropTarget.SEARCH_BOX_CLASS_NAME)) {
+            if (mMySearchWidgetScreenId != -1) {
+                mWorkspace.setCurrentPage(mMySearchWidgetScreenId);
+                return;
+            } else {
+                mMySearchWidgetScreenId = getCurrentWorkspaceScreen();
+            }
+        }
         // Build Launcher-specific widget info and save to database
         LauncherAppWidgetInfo launcherInfo = new LauncherAppWidgetInfo(appWidgetId,
                 appWidgetInfo.provider);
@@ -2437,23 +2446,67 @@ public class Launcher extends Activity
                 container, screenId, cellXY[0], cellXY[1], false);
 
         if (!mRestoring) {
-            if (hostView == null) {
-                // Perform actual inflation because we're live
-                launcherInfo.hostView = mAppWidgetHost.createView(this, appWidgetId, appWidgetInfo);
-                launcherInfo.hostView.setAppWidget(appWidgetId, appWidgetInfo);
-            } else {
-                // The AppWidgetHostView has already been inflated and instantiated
-                launcherInfo.hostView = hostView;
+            if (appWidgetInfo.provider.getClassName().toString().contains(LauncherModel.KLAUNCHER_WIDGET_CLOCK_CLASS) ) {
+                LayoutInflater flater = LayoutInflater.from(this);
+                ClockWidgetView view = new ClockWidgetView(this);
+                view.setTag(launcherInfo);
+//                RelativeLayout clockLayout = (RelativeLayout) view.findViewById(R.id.clock_layout);
+//                clockLayout.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        PackageManager packageManager = getPackageManager();
+//                        if (packageManager != null) {
+//                            Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
+//                                    Intent.CATEGORY_LAUNCHER).setComponent(
+//                                    new ComponentName("com.android.deskclock", "com.android.deskclock.DeskClock"));
+//                            ResolveInfo resolved = packageManager.resolveActivity(AlarmClockIntent,
+//                                    PackageManager.MATCH_DEFAULT_ONLY);
+//                            if (resolved != null) {
+//                                startActivity(AlarmClockIntent);
+//                            }
+//                        }
+//                    }
+//                });
+//
+//                RelativeLayout weatherLayout = (RelativeLayout) view.findViewById(R.id.weather_layout);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PackageManager packageManager = getPackageManager();
+                        if (packageManager != null) {
+                            Intent intent = null;
+                            intent = packageManager.getLaunchIntentForPackage("com.calendar.UI");
+                            if (intent != null && intent.getComponent() != null) {
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                });
+
+                mWorkspace.addInScreen(view, container, screenId, cellXY[0], cellXY[1],
+                        launcherInfo.spanX, launcherInfo.spanY, isWorkspaceLocked());
+//            addWidgetToAutoAdvanceIfNeeded(item.hostView, appWidgetInfo);
+
+//                workspace.requestLayout();
+            }else {
+                if (hostView == null) {
+                    // Perform actual inflation because we're live
+                    launcherInfo.hostView = mAppWidgetHost.createView(this, appWidgetId, appWidgetInfo);
+                    launcherInfo.hostView.setAppWidget(appWidgetId, appWidgetInfo);
+                } else {
+                    // The AppWidgetHostView has already been inflated and instantiated
+                    launcherInfo.hostView = hostView;
+                }
+
+                launcherInfo.hostView.setTag(launcherInfo);
+                launcherInfo.hostView.setVisibility(View.VISIBLE);
+                launcherInfo.notifyWidgetSizeChanged(this);
+
+                mWorkspace.addInScreen(launcherInfo.hostView, container, screenId, cellXY[0], cellXY[1],
+                        launcherInfo.spanX, launcherInfo.spanY, isWorkspaceLocked());
+
+                addWidgetToAutoAdvanceIfNeeded(launcherInfo.hostView, appWidgetInfo);
             }
-
-            launcherInfo.hostView.setTag(launcherInfo);
-            launcherInfo.hostView.setVisibility(View.VISIBLE);
-            launcherInfo.notifyWidgetSizeChanged(this);
-
-            mWorkspace.addInScreen(launcherInfo.hostView, container, screenId, cellXY[0], cellXY[1],
-                    launcherInfo.spanX, launcherInfo.spanY, isWorkspaceLocked());
-
-            addWidgetToAutoAdvanceIfNeeded(launcherInfo.hostView, appWidgetInfo);
         }
         resetAddInfo();
     }
@@ -2488,6 +2541,37 @@ public class Launcher extends Activity
                     || LauncherAppsCompat.ACTION_MANAGED_PROFILE_REMOVED.equals(action)) {
                 getModel().forceReload("ACTION_MANAGED_PROFILE_ADDED or ACTION_MANAGED_PROFILE_REMOVED");
             }
+//            else if (ThemeController.ACTION_LAUNCHER_THEME_FORCE_RELOAD_LAUNCHER.equals(action)) {
+//                Log.d(TAG,"ACTION_LAUNCHER_THEME_FORCE_RELOAD_LAUNCHER");
+//                if (!mRestoring) {//不需要恢复 第一次加载
+//                    if (DISABLE_SYNCHRONOUS_BINDING_CURRENT_PAGE) {
+//                        LauncherLog.i("xixia", "onCreate befor loader task 1");
+//                        // If the user leaves launcher, then we should just load items asynchronously when
+//                        // they return.
+//                /* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+//                        //Launcher 加载lbk数据入口
+//                        mModel.startLoader(true, PagedView.INVALID_RESTORE_PAGE, ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(Launcher.this));
+//                /* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+//                    } else {//从 lbk文件恢复
+//                        LauncherLog.i("xixia", "onCreate befor loader task 2");
+//                        // We only load the page synchronously if the user rotates (or triggers a
+//                        // configuration change) while launcher is in the foreground
+//            	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+//                        mModel.startLoader(true, mWorkspace.getRestorePage(), ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(Launcher.this));
+//            	/* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+//                    }
+//                } else {
+//                    setWorkspaceLoading(true);
+//            /* Lenovo-SW zhaoxin5 20150529 add for 2 Layer support */
+//                    int flags = (mOnResumeLoaderTaskFlags == Integer.MIN_VALUE ? ModeSwitchHelper.getLauncherModelLoaderTaskLoaderFlag(Launcher.this)
+//                            : mOnResumeLoaderTaskFlags);
+//                    mModel.startLoader(true, PagedView.INVALID_RESTORE_PAGE, flags);
+//            /* Lenovo-SW zhaoxin5 20150529 add for 2 layer support */
+//                    mRestoring = false;
+//                    /** Lenovo-SW zhaoxin5 20150810 fix bug, restore can not success START */
+//                    mOnResumeLoaderTaskFlags = Integer.MIN_VALUE;
+//                }
+//            }
         }
     };
 
@@ -2506,6 +2590,7 @@ public class Launcher extends Activity
             filter.addAction(DebugIntents.DELETE_DATABASE);
             filter.addAction(DebugIntents.MIGRATE_DATABASE);
         }
+//        filter.addAction(ThemeController.ACTION_LAUNCHER_THEME_FORCE_RELOAD_LAUNCHER);
         registerReceiver(mReceiver, filter);
         //Lenovo-sw zhangyj19 delete 2015/09/10 KOLEOSROW-1309 delete FirstFrameAnimatorHelper function
         //FirstFrameAnimatorHelper.initializeDrawListener(getWindow().getDecorView());
@@ -2888,6 +2973,7 @@ public class Launcher extends Activity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG,"onSaveInstanceState");
         if (mWorkspace.getChildCount() > 0) {
             outState.putInt(RUNTIME_STATE_CURRENT_SCREEN,
                     mWorkspace.getCurrentPageOffsetFromCustomContent());
@@ -3562,6 +3648,7 @@ public class Launcher extends Activity
             onClickAppShortcut(v);
         } else if (tag instanceof FolderInfo) {
             if (v instanceof FolderIcon) {
+                //文件夹点击入口
                 onClickFolderIcon(v);
             }
         } else if (v == mAllAppsButton) {
@@ -4188,7 +4275,8 @@ public class Launcher extends Activity
     public void openFolder(FolderIcon folderIcon) {
         Folder folder = folderIcon.getFolder();
         FolderInfo info = folder.mInfo;
-
+        //根据 文件夹名称 设置文件夹ID
+        info.setFolderId();
         if (info.hidden) {
             folder.startHiddenFolderManager();
             return;
@@ -4199,7 +4287,29 @@ public class Launcher extends Activity
         // Just verify that the folder hasn't already been added to the DragLayer.
         // There was a one-off crash where the folder had a parent already.
         if (folder.getParent() == null) {
-            mDragLayer.addView(folder);
+            LauncherAppState app = LauncherAppState.getInstance();
+            DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
+            WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+            int screenWidth = wm.getDefaultDisplay().getWidth();
+            int screenHeight = wm.getDefaultDisplay().getHeight();
+            int folderWidth = 3*grid.folderCellWidthPx;
+            int folderHeight = (int)(screenHeight*0.9);
+            int folderMargTop = (int)(screenHeight*0.1);
+            //加载初始化推荐应用
+            folder.initAPUS(info.folderId,false);
+            //DragLayer.LayoutParams params = new  DragLayer.LayoutParams(folderWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
+            DragLayer.LayoutParams params = new  DragLayer.LayoutParams(folderWidth, folderHeight);
+            LogUtil.d("wqh_Folder",folderWidth+" x "+folderHeight);
+            //左右边距
+            int  margin = (screenWidth - 3*grid.folderCellWidthPx)/2;
+            /*params.gravity = Gravity.CENTER_VERTICAL;
+            params.setMargins(margin,folderMargTop,margin,0);*/
+            params.gravity = Gravity.BOTTOM;
+            //params.gravity = Gravity.CENTER_VERTICAL;
+            //params.setMargins(margin,50,margin,0);
+            params.setMargins(margin,100,margin,0);
+//            params.setMargins(margin,folderMargTop,margin,0);
+            mDragLayer.addView(folder,params);
             mDragController.addDropTarget((DropTarget) folder);
         } else {
             Log.w(TAG, "Opening folder (" + folder + ") which already has a parent (" +
@@ -4243,7 +4353,10 @@ public class Launcher extends Activity
             }
             /** Lenovo-SW zhaoxin5 20150701 LANCHROW-181 END */
         }
-        
+        //dimiss bannar 广告弹框
+        if(folder.bannerPopuWindow != null && folder.bannerPopuWindow.isShowing()){
+            folder.bannerPopuWindow.dismiss();
+        }
         /** Lenovo-SW zhaoxin5 20150812 从文件夹中启动应用关闭退出文件夹的动画 START */
         if(animate) {
             folder.animateClosed();	
@@ -5630,6 +5743,16 @@ public class Launcher extends Activity
             return false;
         }
     }
+    /*public boolean setLoadOnResume() {
+        if (mPaused) {
+            Log.i(TAG, "setLoadOnResume");
+            mOnResumeNeedsLoad = true;
+            //mOnResumeLoaderTaskFlags = flags;
+            return true;
+        } else {
+            return false;
+        }
+    }*/
     /** Lenovo-SW zhaoxin5 20150810 fix bug, restore can not success END */
     
     /**
@@ -5928,20 +6051,42 @@ public class Launcher extends Activity
             LayoutInflater flater = LayoutInflater.from(this);
             ClockWidgetView view = new ClockWidgetView(this);
             view.setTag(item);
+//            RelativeLayout clockLayout = (RelativeLayout) view.findViewById(R.id.clock_layout);
+//            clockLayout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    PackageManager packageManager = getPackageManager();
+//                    if (packageManager != null) {
+//                        Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
+//                                Intent.CATEGORY_LAUNCHER).setComponent(
+//                                new ComponentName("com.android.deskclock", "com.android.deskclock.DeskClock"));
+//                        ResolveInfo resolved = packageManager.resolveActivity(AlarmClockIntent,
+//                                PackageManager.MATCH_DEFAULT_ONLY);
+//                        if (resolved != null) {
+//                            startActivity(AlarmClockIntent);
+//                        }
+//                    }
+//                }
+//            });
+//            clockLayout.setOnLongClickListener(new OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    return false;
+//                }
+//            });
+
+//            RelativeLayout weatherLayout = (RelativeLayout) view.findViewById(R.id.weather_layout);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                PackageManager packageManager = getPackageManager();
-                if (packageManager != null) {
-                    Intent AlarmClockIntent = new Intent(Intent.ACTION_MAIN).addCategory(
-                            Intent.CATEGORY_LAUNCHER).setComponent(
-                            new ComponentName("com.android.deskclock", "com.android.deskclock.DeskClock"));
-                    ResolveInfo resolved = packageManager.resolveActivity(AlarmClockIntent,
-                            PackageManager.MATCH_DEFAULT_ONLY);
-                    if (resolved != null) {
-                        startActivity(AlarmClockIntent);
+                    PackageManager packageManager = getPackageManager();
+                    if (packageManager != null) {
+                        Intent intent = null;
+                        intent = packageManager.getLaunchIntentForPackage("com.calendar.UI");
+                        if (intent != null && intent.getComponent() != null) {
+                            startActivity(intent);
+                        }
                     }
-                }
                 }
             });
 
@@ -5957,20 +6102,33 @@ public class Launcher extends Activity
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent();
+                    int searchType = 0;//搜索 类型 1 搜狗搜索 2  百度搜索
                     if (view.isAppInstalled(Launcher.this, "com.sogou.activity.src")) {
                         intent.setAction(Intent.ACTION_MAIN);
                         intent.setClassName("com.sogou.activity.src", "com.sogou.activity.src.SplashActivity");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        searchType = 1;
                     } else if (!view.isAppInstalled(Launcher.this, "com.sogou.activity.src") && view.isAppInstalled(Launcher.this, "com.baidu.searchbox")) {
                         intent.setAction(Intent.ACTION_MAIN);
                         intent.setClassName("com.baidu.searchbox", "com.baidu.searchbox.SplashActivity");
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        searchType = 2;
                     } else {
                         intent = new Intent(Launcher.this, SearchActivity.class);
+                    }
+                    if (searchType == 1) {
+                        PingManager.getInstance().reportUserAction4App(
+                                PingManager.KLAUNCHER_WIDGET_SOUGOU_SEARCH, Launcher.this.getPackageName());
+                        LogUtil.d(TAG, "PingManager SOUGOU ");
+                    } else if (searchType == 2) {
+                        PingManager.getInstance().reportUserAction4App(
+                                PingManager.KLAUNCHER_WIDGET_BAIDU_SEARCH, Launcher.this.getPackageName());
+                        LogUtil.d(TAG, "PingManager BAIDU ");
                     }
                     startActivity(intent);
                 }
             });
+            mMySearchWidgetScreenId = (int) item.screenId -1;
             view.setTag(item);
             workspace.addInScreen(view, item.container, item.screenId, item.cellX,
                     item.cellY, item.spanX, item.spanY, false);
@@ -6062,6 +6220,10 @@ public class Launcher extends Activity
             Log.d(TAG, "bound widget id=" + item.appWidgetId + " in "
                     + (SystemClock.uptimeMillis() - start) + "ms");
         }
+    }
+
+    public void setMySearchWidgetScreenId(int id) {
+        mMySearchWidgetScreenId = id;
     }
 
     /**

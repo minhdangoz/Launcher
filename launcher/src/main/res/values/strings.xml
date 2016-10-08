@@ -313,4 +313,10 @@ s -->
     <string name="set_default_klauncher">Please choose Launcher3</string>
     <string name="folder_plus_text">add</string>
     <!--add by hw end- setDefaultLauncher string-->
+    <string name="cancel_policy_tips">You do not need to cancel this policy manager...</string>
+    <!--setTag 使用-->
+    <item name="tag_first" type="id">
+    </item>
+    <item name="tag_second" type="id">
+    </item>	
 </resources>

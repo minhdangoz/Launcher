@@ -85,4 +85,11 @@
     <!--kinflow add-->
     <color name="default_window_bg">#f9f9f9</color>
     <color name="default_window_bg_night">#1a1b1d</color>
+    <color name="bg_trans">#00000000</color>
+    <!--文件夹广告资源-->
+    <color name="folder_cling_bg">#dd000000</color>
+    <color name="folder_setting_remane_text">#ffffffff</color>
+    <color name="folder_adapk_banner_btn">#ff51c422</color>
+    <color name="folder_cling_bg1">#00ffffff</color>
+
 </resources>

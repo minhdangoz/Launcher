@@ -1,2 +1,2 @@
-include ':launcher', ':notifier'
+include ':launcher', ':notifier', ':biddingoslib'
 include ':theme'

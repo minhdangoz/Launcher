@@ -17,11 +17,13 @@
         <item>com.duomi.android</item>
         <item>com.tencent.qqlive</item>
         <item>cn.ninegame.gamemanager</item>
+        <item>com.tencent.mmt</item>
         <item>com.UCMobile</item>
+        <item>sogou.mobile.explorer</item>
         <item>com.tencent.qqpimsecure</item>
         <item>cn.etouch.ecalendar</item>
         <item>com.youloft.calendar</item>
-        <item>com.moji.mjweather</item>
+        <item>com.calendar.UI</item>
         <item>com.baidu.BaiduMap</item>
         <item>com.autonavi.minimap</item>
         <item>com.ss.android.article.news</item>

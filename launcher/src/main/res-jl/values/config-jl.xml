@@ -5,9 +5,10 @@
     <item name="config_folder_iconsize_ratio" format="float" type="dimen">1</item>
     <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0.66</item>
     <array name="config_theme_load_keywords">
-        <!--<item>HUAWEI RIO-AL00,yongheng</item>
-        <item>HUAWEI RIO-UL00,yongheng</item>
-        <item>HUAWEI RIO-TL00,yongheng</item>
+        <item>GN8002,GN8002</item>
+        <item>GN8002S,GN8002</item>
+        <item>GN8003,GN8002</item>
+        <!--<item>HUAWEI RIO-TL00,yongheng</item>
         <item>HUAWEI NXT-AL10,yongheng</item>
         <item>HUAWEI MT7-TL10,yongheng</item>
         <item>HUAWEI MT7-TL00,yongheng</item>
@@ -24,11 +25,12 @@
         <item>com.alex.nuclear</item>
         <item>cn.kuwo.player</item>
         <item>com.tencent.qqlive</item>
+        <item>com.tencent.mmt</item>
         <item>com.UCMobile</item>
-        <item>com.tencent.mtt</item>
+        <item>sogou.mobile.explorer</item>
         <item>com.tencent.qqpimsecure</item>
         <item>cn.etouch.ecalendar</item>
-        <item>com.moji.mjweather</item>
+        <item>com.calendar.UI</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
     </array>
@@ -41,7 +43,7 @@
     <string name="config_icon_com.UCMobile">com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.gionee.softmanager</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
-    <string name="config_icon_com.moji.mjweather">com.coolwind.weather</string>
+    <string name="config_icon_com.calendar.UI">com.coolwind.weather</string>
     <string name="config_icon_com.dl.explorer">com.gionee.filemanager</string>
 
     <bool name="kinflow_switch_default">false</bool>

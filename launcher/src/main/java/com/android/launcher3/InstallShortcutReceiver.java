@@ -234,7 +234,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
 //                    PingManager.USER_ACTION_UNINSTALL, packageName);
 
         }
-
+        //监听不到 ACTION_INSTALL_SHORTCUT 广播
         if (!ACTION_INSTALL_SHORTCUT.equals(data.getAction())) {
             return;
         }
@@ -242,6 +242,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
         if (DBG) Log.d(TAG, "Got INSTALL_SHORTCUT: " + data.toUri(0));
 
         Intent intent = data.getParcelableExtra(Intent.EXTRA_SHORTCUT_INTENT);
+        LogUtil.d("InstallShortcutReceiver",data.getAction());
         if (intent == null) {
             return;
         }

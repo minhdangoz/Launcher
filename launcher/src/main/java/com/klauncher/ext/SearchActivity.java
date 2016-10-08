@@ -66,9 +66,17 @@ public class SearchActivity extends Activity {
         int width = displaymetrics.widthPixels;
         int height = displaymetrics.heightPixels;
 
+        int bmWidth = bm.getWidth();
+        int bmHeight = bm.getHeight();
+        if (width / 2 < bmWidth) {
+            bmWidth = width/2;
+        }
+        if (height / 2 < bmHeight) {
+            bmHeight = width/2;
+        }
         // 截取相应屏幕的Bitmap
         Bitmap pbm = Bitmap.createBitmap(bm, width/4, height/4,
-                width/2, height/2);
+                bmWidth, bmHeight);
         final Bitmap blurBmp = FastBlur.doBlur(pbm, 17, true);
         final Drawable newBitmapDrawable = new BitmapDrawable(getResources(), blurBmp); // 将Bitmap转换为Drawable
         rootView.post(new Runnable() {

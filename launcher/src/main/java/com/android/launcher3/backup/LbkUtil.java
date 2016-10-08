@@ -1,5 +1,20 @@
 package com.android.launcher3.backup;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
+import android.view.ContextThemeWrapper;
+
+import com.android.launcher3.LauncherAppState;
+import com.android.launcher3.ModeSwitchHelper.Mode;
+import com.android.launcher3.backup.LbkLoader.LbkFileFilter;
+import com.klauncher.ext.LauncherLog;
+import com.klauncher.launcher.R;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,21 +24,6 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
-
-import com.android.launcher3.LauncherAppState;
-import com.android.launcher3.ModeSwitchHelper.Mode;
-import com.android.launcher3.backup.LbkLoader.LbkFileFilter;
-import com.klauncher.ext.LauncherLog;
-import com.klauncher.launcher.R;
-
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Environment;
-import android.view.ContextThemeWrapper;
 
 public class LbkUtil {
 	
@@ -197,6 +197,8 @@ public class LbkUtil {
 				//6x4
 				name = "default2.lbk";
 			}
+		} else if (rows == 5 && columns == 5) {
+			name = "default5x5.lbk";
 		} else {
 			//5x4
 			name = "default.lbk";

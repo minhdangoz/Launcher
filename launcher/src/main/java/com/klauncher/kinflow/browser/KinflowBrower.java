@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -17,6 +16,9 @@ import com.klauncher.launcher.R;
  * Created by xixionghui on 2016/3/16.
  */
 public class KinflowBrower extends Activity {
+
+    private static long mRequestKappAdtime = -1;
+    private static final long REQUEST_KAPPAD_DURATION = 120 * 60 * 1000;
 
     public static void openUrl(Context context, String url) {
         Intent defaultBrower = new Intent(context, KinflowBrower.class);
@@ -34,23 +36,15 @@ public class KinflowBrower extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
 
+        initWebView();
 
-        try {
-            initWebView();
+        Intent intent = getIntent();
+        url = intent.getStringExtra(KEY_EXTRA_URL);
 
-            Intent intent = getIntent();
-            url = intent.getStringExtra(KEY_EXTRA_URL);
-
-            mWebView.loadUrl(url);
-            try {
-                Interstitial.getInstance(this,"1002","10005").showAd();
-            } catch (Exception e) {
-                Log.e("Kinflow","KinflowBrower中的Interstitial获取实例失败");
-                Interstitial.getInstance(this,"1002","10005").showAd();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        mWebView.loadUrl(url);
+        if (System.currentTimeMillis() - mRequestKappAdtime  >= REQUEST_KAPPAD_DURATION) {
+            Interstitial.getInstance(this,"1002","10005").showAd();
+            mRequestKappAdtime = System.currentTimeMillis();
         }
 
     }

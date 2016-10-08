@@ -18,10 +18,12 @@
         <item>com.alex.nuclear</item>
         <item>com.duomi.android</item>
         <item>com.tencent.qqlive</item>
+        <item>com.tencent.mmt</item>
         <item>com.UCMobile</item>
+        <item>sogou.mobile.explorer</item>
         <item>com.tencent.qqpimsecure</item>
         <item>cn.etouch.ecalendar</item>
-        <item>com.moji.mjweather</item>
+        <item>com.calendar.UI</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
     </array>
@@ -33,7 +35,7 @@
     <string name="config_icon_com.UCMobile">com.lenovo.browser,com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.lenovo.safecenter,com.lenovo.security</string>
     <string name="config_icon_cn.etouch.ecalendar">com.lenovo.calendar,com.android.calendar</string>
-    <string name="config_icon_com.moji.mjweather">sina.mobile.tianqitong</string>
+    <string name="config_icon_com.calendar.UI">sina.mobile.tianqitong</string>
     <string name="config_icon_com.dl.explorer">com.lenovo.FileBrowser,com.mediatek.filemanager,com.cyanogenmod.filemanager</string>
 
     <bool name="kinflow_switch_default">true</bool>

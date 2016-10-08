@@ -17,12 +17,14 @@
 package com.android.launcher3;
 
 import android.os.Build;
+import android.util.Log;
 
 import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.launcher.R;
 import com.klauncher.theme.ThemeController;
 
 public class LauncherApplication extends KLauncherApplication {
+    private static final String TAG = "LauncherApplication";
     public static boolean LAUNCHER_SHOW_UNREAD_NUMBER;
     public static boolean LAUNCHER_SHORTCUT_ENABLED;
     public static boolean SHOW_CTAPP_FEATURE;
@@ -34,6 +36,9 @@ public class LauncherApplication extends KLauncherApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (isMultiProgressInit()) {
+            return;
+        }
         if(mLogArray == null)
         	mLogArray = new String[mLoglength];
         LAUNCHER_SHOW_UNREAD_NUMBER = getResources().getBoolean(
@@ -70,6 +75,42 @@ public class LauncherApplication extends KLauncherApplication {
             }
         }
         mThemeController = new ThemeController(getApplicationContext(), themeName);
+        applyDefaultTheme();
+
+    }
+
+    private void applyDefaultTheme(){
+    	/*String[] parameters = Placement.getDefaultThemeParameters(this);*/
+        //String[] parameters = new String[]{"apk", ThemeController.DEFAULT_APK_THEME};
+
+        String[] keywords = getResources().getStringArray(R.array.config_theme_load_keywords);
+        String themeName = "default";
+        for (String keyword : keywords) {
+            String[] modelTheme = keyword.split(",");
+            if (Build.MODEL.contains(modelTheme[0])) {
+                themeName = modelTheme[1];
+                break;
+            }
+        }
+        String[] parameters = new String[]{"zip", ThemeController.UI_ZIP_THEME + themeName + ".ktm"};
+        boolean enableThemeMask = !Utilities.isRowProduct();
+        if (null != parameters) {
+//            Intent intent = new Intent();
+            if(parameters[0].equals("apk")){
+                Log.i(TAG, "apply default apk theme : " + parameters[1]);
+//                intent.setAction(ThemeController.ACTION_LAUNCHER_THEME_APK);
+//                intent.putExtra(ThemeController.ACTION_LAUNCHER_THEME_PACKAGE, parameters[1]);
+                mThemeController.handleTheme(ThemeController.ACTION_LAUNCHER_THEME_APK, parameters[1], enableThemeMask);
+            }else if(parameters[0].equals("zip")){
+                Log.i(TAG, "apply default zip theme : " + parameters[1]);
+//                intent.setAction(ThemeController.ACTION_LAUNCHER_THEME_ZIP);
+//                intent.putExtra(ThemeController.ACTION_LAUNCHER_THEME_PATH, parameters[1]);
+                mThemeController.handleTheme(ThemeController.ACTION_LAUNCHER_THEME_ZIP, parameters[1], enableThemeMask);
+
+            }
+//            intent.putExtra(ThemeController.EXTRA_LAUNCHER_THEME_ENABLE_THEME_MASK, enableThemeMask);
+//            this.sendBroadcast(intent);
+        }
     }
 
     public ThemeController getThemeController() {

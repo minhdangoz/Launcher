@@ -79,8 +79,11 @@ import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
 import com.klauncher.ext.LauncherLog;
+import com.klauncher.ext.SearchWidgetView;
+import com.klauncher.launcher.BuildConfig;
 import com.klauncher.launcher.R;
 import com.klauncher.utilities.LogUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -675,6 +678,9 @@ public class Workspace extends SmoothPagedView
         } else {
             setCurrentPage(getCurrentPage() + 1);
         }
+        HashMap<String,String> map = new HashMap<String,String>();
+        map.put("channel", BuildConfig.CHANNEL_ID);
+        MobclickAgent.onEvent(mLauncher, "kinflow_show", map);
     }
 
     public void removeCustomContentPage() {
@@ -1157,6 +1163,10 @@ public class Workspace extends SmoothPagedView
             // outside of the defined grid
             // maybe we should be deleting these items from the LauncherModel?
             Launcher.addDumpLog(TAG, "Failed to add to item at (" + lp.cellX + "," + lp.cellY + ") to CellLayout", true);
+        } else {
+            if (child instanceof SearchWidgetView) {
+                mLauncher.setMySearchWidgetScreenId((int) screenId -1);
+            }
         }
 
         if (!(child instanceof Folder)) {

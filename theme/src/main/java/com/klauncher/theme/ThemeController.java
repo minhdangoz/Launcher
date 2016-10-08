@@ -1,16 +1,15 @@
 package com.klauncher.theme;
 
-import com.klauncher.theme.apktheme.ApkTheme;
-import com.klauncher.theme.ziptheme.ZipTheme;
-import com.klauncher.theme.settings.SettingsProvider;
-import com.klauncher.theme.util.ThemeLog;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Environment;
+
+import com.klauncher.theme.apktheme.ApkTheme;
+import com.klauncher.theme.settings.SettingsProvider;
+import com.klauncher.theme.util.ThemeLog;
+import com.klauncher.theme.ziptheme.ZipTheme;
 
 import java.io.File;
 
@@ -48,11 +47,12 @@ public class ThemeController extends BroadcastReceiver{
 		}
 		
 		// zip theme
-		IntentFilter filter = new IntentFilter(ACTION_LAUNCHER_THEME_ZIP);
-		mContext.registerReceiver(this, filter);
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ACTION_LAUNCHER_THEME_ZIP);
+//		mContext.registerReceiver(this, filter);
 		
 		// apk theme
-		filter = new IntentFilter(ACTION_LAUNCHER_THEME_APK);
+		filter.addAction(ACTION_LAUNCHER_THEME_APK);
 		mContext.registerReceiver(this, filter);
 
 		try {
@@ -97,6 +97,34 @@ public class ThemeController extends BroadcastReceiver{
         	}
             mTheme.handleTheme(justRestartLauncher, enableThemeMask);
         }
+	}
+
+	public void handleTheme(String action, String themeInfo, boolean enableThemeMask){
+		ThemeLog.d(LOGTAG, "handleTheme=" + action);
+		try{
+			//add for receive zip theme apply broadcast start
+			if(ACTION_LAUNCHER_THEME_ZIP.equals(action)){
+	        	/* adb shell am broadcast -a action_themecenter_themechange_lelauncher_zip --es ThemePath data/data/com.lenovo.xlauncher/res.zip */
+				mTheme = new ZipTheme(mContext, themeInfo);
+			}else if(ACTION_LAUNCHER_THEME_APK.equals(action)){
+	        	/* adb shell am broadcast -a action_themecenter_themechange_lelauncher_apk --es ThemePackage com.lenovo.launcher.theme.lovecorner */
+				mTheme = new ApkTheme(mContext, themeInfo);
+			}
+		} catch (Exception e) {
+			ThemeLog.i(LOGTAG, "Error happened in init Theme!");
+			mTheme = null;
+		}
+		String currentTheme = SettingsProvider.getStringCustomDefault(mContext, SettingsProvider.SETTINGS_CURRENT_THEME, "");
+		ThemeLog.i(LOGTAG, "currentTheme:" + currentTheme + ",themeInfo:" + themeInfo + ", enableThemeMask:" + enableThemeMask);
+		if(null != mTheme){
+			// true表明已经加载过此主题,仅仅需要重新retart Launcher即可
+			boolean justRestartLauncher = currentTheme.equals(themeInfo);
+			if(!justRestartLauncher){
+				// false表明第一次加载此主题,需要记录当前主题信息,同时需要重启Launcher
+				SettingsProvider.putString(mContext, SettingsProvider.SETTINGS_CURRENT_THEME, themeInfo);
+			}
+			mTheme.handleTheme(justRestartLauncher, enableThemeMask);
+		}
 	}
 
 }

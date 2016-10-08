@@ -2836,12 +2836,12 @@ public class CellLayout extends ViewGroup {
                 for (int x = startX; x < endX; x++) {
                     for (int i = 0; i < spanX; i++) {
                         for (int j = 0; j < spanY; j++) {
-                            if (occupied[x + i][y + j]) {
-                                // small optimization: we can skip to after the column we just found
-                                // an occupied cell
-                                x += i;
-                                continue inner;
-                            }
+                                if (occupied[x + i][y + j]) {//error
+                                    // small optimization: we can skip to after the column we just found
+                                    // an occupied cell
+                                    x += i;
+                                    continue inner;
+                                }
                         }
                     }
                     if (cellXY != null) {
@@ -3142,7 +3142,7 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
         if (cellX < 0 || cellY < 0) return;
         for (int x = cellX; x < cellX + spanX && x < mCountX; x++) {
             for (int y = cellY; y < cellY + spanY && y < mCountY; y++) {
-                occupied[x][y] = value;
+                    occupied[x][y] = value;
             }
         }
     }
@@ -3163,8 +3163,20 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
                 (Math.max((countY - 1), 0) * mHeightGap);
     }
     public int getDesiredHeight()  {
-        return getPaddingTop() + getPaddingBottom() + (mCountY * mCellHeight) +
-                (Math.max((mCountY - 1), 0) * mHeightGap);
+        //固定高度 3行
+        /*if(mCountY <4){
+            mCountY = 3;
+        }*/
+        /*return getPaddingTop() + getPaddingBottom() + (mCountY * mCellHeight) +
+                (Math.max((mCountY - 1), 0) * mHeightGap);*/
+        //固定高度 4行
+        if(mCountY <5) {
+            return getPaddingTop() + getPaddingBottom() + (4 * mCellHeight) +
+                    (3 * mHeightGap);
+        }else {
+            return getPaddingTop() + getPaddingBottom() + (mCountY * mCellHeight) +
+                    (Math.max((mCountY - 1), 0) * mHeightGap);
+        }
     }
 
     public boolean isOccupied(int x, int y) {

@@ -394,6 +394,7 @@
                 <action android:name="android.intent.action.LOCALE_CHANGED"/>
                 <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
                 <action android:name="com.klauncher.action.ACTION_CLOCK_UPDATE"/>
+                <action android:name="android.intent.action.TIME_TICK"/>
             </intent-filter>
         </receiver>
         <service
@@ -767,5 +768,11 @@
         <activity android:name="com.klauncher.kinflow.Kinflow2Activity2"
                   android:theme="@style/Theme"/>
 
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="${GAODE_APIKEY}" />
+        <!-- 定位需要的服务 -->
+        <service android:name="com.amap.api.location.APSService" >
+        </service>
     </application>
 </manifest>

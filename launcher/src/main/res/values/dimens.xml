@@ -172,7 +172,7 @@
     <dimen name="search_bar_text_size">16.0sp</dimen>
 
     <dimen name="clock_widget_margin">5dip</dimen>
-    <dimen name="clock_widget_padding">8dip</dimen>
+    <dimen name="clock_widget_padding">6dip</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -184,4 +184,5 @@
     <dimen name="header_footer_top_bottom_padding">12dp</dimen>
 
     <dimen name="folder_plus_icon_padding">7dp</dimen>
+    <dimen name="folder_title_marginbottom">5dp</dimen>
 </resources>
