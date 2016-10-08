@@ -25,7 +25,6 @@ import com.klauncher.utilities.DeviceInfoUtils;
 import com.klauncher.utilities.WeakAsyncTask;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -144,7 +143,7 @@ public class Kinflow2Weather extends FrameLayout {
             // 执行一些操作
             try {
                 return target.postGetWeather(target.mLocationJson);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
@@ -171,7 +170,7 @@ public class Kinflow2Weather extends FrameLayout {
                 target.weatherTmp.setText(climate + "  " + nowTemp+"℃");
                 target.weatherCity.setText(cityName);
                 target.isHasUpdateWeather = true;
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 Log.d(TAG,"onPostExecute JSONException ");
             }
@@ -209,84 +208,110 @@ public class Kinflow2Weather extends FrameLayout {
 
     public Kinflow2Weather(Context context) {
         super(context);
-        mRootView = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.clock_widget, this, false);
-        addView(mRootView);
-        mContext = context;
-        init();
+        try {
+            mRootView = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.clock_widget, this, false);
+            addView(mRootView);
+            mContext = context;
+            init();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public Kinflow2Weather(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mRootView = (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.clock_widget, this, false);
-        addView(mRootView);
-        mContext = context;
-        init();
+        try {
+            mRootView = (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.clock_widget, this, false);
+            addView(mRootView);
+            mContext = context;
+            init();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public Kinflow2Weather(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mRootView = (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.clock_widget, this, false);
-        addView(mRootView);
-        mContext = context;
-        init();
+        try {
+            mRootView = (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.clock_widget, this, false);
+            addView(mRootView);
+            mContext = context;
+            init();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
      *
      */
     private void init() {
-        initLocation();
-        myHandler = new MyHandler(this);
-        hour0 = (ImageView) mRootView.findViewById(R.id.img_clock_hour_0);
-        hour1 = (ImageView) mRootView.findViewById(R.id.img_clock_hour_1);
-        minute0 = (ImageView) mRootView.findViewById(R.id.img_clock_minute_0);
-        minute1 = (ImageView) mRootView.findViewById(R.id.img_clock_minute_1);
-        weatherIcon = (ImageView) mRootView.findViewById(R.id.weather_icon);
-        weatherTmp = (TextView) mRootView.findViewById(R.id.weather_tmp);
-        weatherCity = (TextView) mRootView.findViewById(R.id.weather_city);
-        dateView = (TextView) mRootView.findViewById(R.id.clock_date);
-        dateView.setVisibility(View.GONE);
-        updateViews();
 
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_DATE_CHANGED);
-        filter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
-        filter.addAction(Intent.ACTION_TIME_CHANGED);
-        filter.addAction(Intent.ACTION_LOCALE_CHANGED);
-        filter.addAction(Intent.ACTION_SCREEN_ON);
-        filter.addAction(Intent.ACTION_USER_PRESENT);
-        filter.addAction(Intent.ACTION_TIME_TICK);
+
+        try {
+            initLocation();
+            myHandler = new MyHandler(this);
+            hour0 = (ImageView) mRootView.findViewById(R.id.img_clock_hour_0);
+            hour1 = (ImageView) mRootView.findViewById(R.id.img_clock_hour_1);
+            minute0 = (ImageView) mRootView.findViewById(R.id.img_clock_minute_0);
+            minute1 = (ImageView) mRootView.findViewById(R.id.img_clock_minute_1);
+            weatherIcon = (ImageView) mRootView.findViewById(R.id.weather_icon);
+            weatherTmp = (TextView) mRootView.findViewById(R.id.weather_tmp);
+            weatherCity = (TextView) mRootView.findViewById(R.id.weather_city);
+            dateView = (TextView) mRootView.findViewById(R.id.clock_date);
+            dateView.setVisibility(View.GONE);
+            updateViews();
+
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(Intent.ACTION_DATE_CHANGED);
+            filter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
+            filter.addAction(Intent.ACTION_TIME_CHANGED);
+            filter.addAction(Intent.ACTION_LOCALE_CHANGED);
+            filter.addAction(Intent.ACTION_SCREEN_ON);
+            filter.addAction(Intent.ACTION_USER_PRESENT);
+            filter.addAction(Intent.ACTION_TIME_TICK);
 //        filter.addAction(ClockWidgetService.ACTION_CLOCK_UPDATE);
-        mContext.registerReceiver(receiver, filter);
-        Log.d(TAG, "ClockWidgetProvider: onEnabled...");
+            mContext.registerReceiver(receiver, filter);
+            Log.d(TAG, "Kinflow2Weather: onEnabled...");
 //        Intent service = new Intent(mContext, ClockWidgetService.class);
 //        mContext.startService(service);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void initLocation(){
-        Log.d(TAG,"initLocation");
-        //初始化定位
-        mLocationClient = new AMapLocationClient(mContext);
+        try {
+            Log.d(TAG,"initLocation");
+            //初始化定位
+            mLocationClient = new AMapLocationClient(mContext);
 //设置定位回调监听
-        mLocationClient.setLocationListener(mLocationListener);
+            mLocationClient.setLocationListener(mLocationListener);
 
-        if (mLocationOption == null) {
-            mLocationOption = new AMapLocationClientOption();
-        }
-        //设置定位模式为AMapLocationMode.Battery_Saving，低功耗模式。
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
-        mLocationOption.setOnceLocation(true);
+            if (mLocationOption == null) {
+                mLocationOption = new AMapLocationClientOption();
+            }
+            //设置定位模式为AMapLocationMode.Battery_Saving，低功耗模式。
+            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
+            mLocationOption.setOnceLocation(true);
 
 //获取最近3s内精度最高的一次定位结果：
 //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
-        mLocationOption.setOnceLocationLatest(true);
-        mLocationOption.setNeedAddress(true);
-        mLocationOption.setWifiActiveScan(false);
-        //设置是否允许模拟位置,默认为false，不允许模拟位置
-        mLocationOption.setMockEnable(false);
+            mLocationOption.setOnceLocationLatest(true);
+            mLocationOption.setNeedAddress(true);
+            mLocationOption.setWifiActiveScan(false);
+            //设置是否允许模拟位置,默认为false，不允许模拟位置
+            mLocationOption.setMockEnable(false);
 //        mLocationOption.setProtocol(AMapLocationClientOption.AMapLocationProtocol.HTTP);
-        //给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
+            //给定位客户端对象设置定位参数
+            mLocationClient.setLocationOption(mLocationOption);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -309,70 +334,56 @@ public class Kinflow2Weather extends FrameLayout {
      * 更新时间和请求位置,当获取到位置变更后会请求天气
      */
     private void updateViews() {
-        /*
-        ContentResolver cv = mContext.getContentResolver();
-        String timeFormat = android.provider.Settings.System.getString(cv,
-                android.provider.Settings.System.TIME_12_24);
-        boolean is12hour = "12".equals(timeFormat);
-        if (isChina(mContext)) {
-            updateDate4China("12".equals(timeFormat));
-        } else {
-            updateDate4English("12".equals(timeFormat));
-        }
-        */
-
-        boolean is12hour = DeviceState.get12HourMode(mContext);
-//        if (isChina(mContext)) {
-//            updateDate4China(is12hour);
-//        } else {
-//            updateDate4English(is12hour);
-//        }
-
-
-        Calendar c = Calendar.getInstance();
-        int hour, minute;
-        minute = c.get(Calendar.MINUTE);
-        if (is12hour) {
-            hour = c.get(Calendar.HOUR);
-        } else {
-            hour = c.get(Calendar.HOUR_OF_DAY);
-        }
-        if (isHasUpdateWeather) {
-            if (DeviceInfoUtils.isWifiConnected(mContext)) {
-                if (hour % 2 == 0 && minute == 0) {
-                    getLocation();
-                }
-            } else if (DeviceInfoUtils.isMobileDataConnected(mContext)) {
-                if (hour % 4 == 0 && minute == 0) {
-                    getLocation();
-                }
+        try {
+            boolean is12hour = DeviceState.get12HourMode(mContext);
+            Calendar c = Calendar.getInstance();
+            int hour, minute;
+            minute = c.get(Calendar.MINUTE);
+            if (is12hour) {
+                hour = c.get(Calendar.HOUR);
+            } else {
+                hour = c.get(Calendar.HOUR_OF_DAY);
             }
-        } else {
-            if (DeviceInfoUtils.isWifiConnected(mContext)) {
-                if (isFirstReq) {
-                    getLocation();
-                    isFirstReq = false;
-                } else {
-                    if (minute % 10 == 0) {
+            if (isHasUpdateWeather) {
+                if (DeviceInfoUtils.isWifiConnected(mContext)) {
+                    if (hour % 2 == 0 && minute == 0) {
+                        getLocation();
+                    }
+                } else if (DeviceInfoUtils.isMobileDataConnected(mContext)) {
+                    if (hour % 4 == 0 && minute == 0) {
                         getLocation();
                     }
                 }
-            } else if (DeviceInfoUtils.isMobileDataConnected(mContext)) {
-                if (isFirstReq) {
-                    getLocation();
-                    isFirstReq = false;
-                } else {
-                    if (minute % 15 == 0) {
+            } else {
+                if (DeviceInfoUtils.isWifiConnected(mContext)) {
+                    if (isFirstReq) {
                         getLocation();
+                        isFirstReq = false;
+                    } else {
+                        if (minute % 10 == 0) {
+                            getLocation();
+                        }
+                    }
+                } else if (DeviceInfoUtils.isMobileDataConnected(mContext)) {
+                    if (isFirstReq) {
+                        getLocation();
+                        isFirstReq = false;
+                    } else {
+                        if (minute % 15 == 0) {
+                            getLocation();
+                        }
                     }
                 }
             }
+
+            hour0.setImageResource(CLOCK_IMAGES[hour / 10]);
+            hour1.setImageResource(CLOCK_IMAGES[hour % 10]);
+            minute0.setImageResource(CLOCK_IMAGES[minute / 10]);
+            minute1.setImageResource(CLOCK_IMAGES[minute % 10]);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        hour0.setImageResource(CLOCK_IMAGES[hour / 10]);
-        hour1.setImageResource(CLOCK_IMAGES[hour % 10]);
-        minute0.setImageResource(CLOCK_IMAGES[minute / 10]);
-        minute1.setImageResource(CLOCK_IMAGES[minute % 10]);
     }
 
 
@@ -416,13 +427,15 @@ public class Kinflow2Weather extends FrameLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mContext.unregisterReceiver(receiver);
-        if (mLocationClient != null) {
-            mLocationClient.stopLocation();
+        try {
+            mContext.unregisterReceiver(receiver);
+            if (mLocationClient != null) {
+                mLocationClient.stopLocation();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-//        Intent service = new Intent(mContext, ClockWidgetService.class);
-//        mContext.stopService(service);
     }
 
     OkHttpClient client = new OkHttpClient();
@@ -462,7 +475,7 @@ public class Kinflow2Weather extends FrameLayout {
                     Log.d(TAG, "post response1 failed");
                     return null;
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
