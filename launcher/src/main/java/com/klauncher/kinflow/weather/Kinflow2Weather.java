@@ -158,16 +158,24 @@ public class Kinflow2Weather extends FrameLayout {
                 String pubDate = contentObj.getString("pubDate");
                 JSONObject weatherObj = new JSONObject(contentObj.getString("weather"));
                 int nowTemp = weatherObj.getInt("nowTemp");
-                String climate = weatherObj.getString("climate");
+                String climate = weatherObj.getString("climate");//天气状况:阴,晴
                 String icon = weatherObj.getString("icon");
                 int highTemp = weatherObj.getInt("highTemp");
                 int lowTemp = weatherObj.getInt("lowTemp");
                 int humidity = contentObj.getInt("humidity");
-                String pm = contentObj.getString("pm");
+//                String pm = contentObj.getString("pm");
+                String pm = contentObj.optString("pm","优 45");//天气质量
                 Picasso.with(target.mContext)
                         .load(icon).fit().into(target.weatherIcon);
-                target.weatherTmp.setText(climate + "  " + nowTemp+"℃");
-                target.weatherCity.setText(cityName);
+
+                String[] airInfos = pm.split(" ");
+                String airExplainStr = "空气"+airInfos[0];
+                String airIndexStr = airInfos[1];
+                target.weatherTmp.setText(nowTemp+"\u00B0");//温度
+                target.weatherCity.setText(cityName);//城市
+                target.weatherExplain.setText(climate);//天气说明
+                target.airIndex.setText(airIndexStr);//空气指数
+                target.airExplain.setText(airExplainStr);//空气说明
                 target.isHasUpdateWeather = true;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -185,7 +193,8 @@ public class Kinflow2Weather extends FrameLayout {
     private RelativeLayout mRootView;
 //    private ImageView hour0, hour1, minute0, minute1;
     private ImageView weatherIcon;
-    private TextView weatherTmp, weatherCity;
+    private TextView weatherTmp, weatherCity,weatherExplain;
+    private TextView airIndex,airExplain;
 
 //    private TextView dateView;
 
@@ -260,6 +269,9 @@ public class Kinflow2Weather extends FrameLayout {
             weatherIcon = (ImageView) mRootView.findViewById(R.id.weather_icon);
             weatherTmp = (TextView) mRootView.findViewById(R.id.weather_tmp);
             weatherCity = (TextView) mRootView.findViewById(R.id.weather_city);
+            weatherExplain = (TextView) mRootView.findViewById(R.id.weather_explain);
+            airIndex = (TextView) mRootView.findViewById(R.id.air_index);
+            airExplain = (TextView) mRootView.findViewById(R.id.air_explain);
 //            dateView = (TextView) mRootView.findViewById(R.id.clock_date);
 //            dateView.setVisibility(View.GONE);
             updateViews();

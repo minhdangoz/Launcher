@@ -1,36 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/clock_widget_bar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
-    <RelativeLayout
-        android:id="@+id/weather_layout"
-        android:layout_marginLeft="8dp"
+
+    <!--温度-->
+    <TextView
+        style="@style/kinflow_commont_wrap_content"
+        android:id="@+id/weather_tmp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/weather_icon"
+        android:gravity="center"
+        android:text="17\u00B0"
+        android:textSize="36sp"
+        />
+
+    <!--天气icon-->
+    <ImageView
+        android:id="@+id/weather_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="22dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/weather_default_icon"/>
+
+    <!-- 中间:空气质量和地区-->
+    <TableLayout
+
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/weather_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/weather_default_icon"
-            android:scaleType="fitXY"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"/>
-        <TextView
-            android:id="@+id/weather_tmp"
-            android:layout_toRightOf="@id/weather_icon"
-            android:layout_marginLeft="22dp"
-            android:layout_marginTop="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/weather_city"
-            android:layout_below="@id/weather_tmp"
-            android:layout_marginTop="4dp"
-            android:layout_alignLeft="@id/weather_tmp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+        android:layout_height="48dp"
+        android:layout_toRightOf="@id/weather_tmp"
+        android:gravity="center_vertical">
+        <!--第一列-->
+        <TableRow
+            android:layout_marginLeft="12dp">
+            <TextView
+                android:id="@+id/air_index"/>
+            <TextView
+                android:id="@+id/air_explain"
+                android:layout_marginLeft="12dp"/>
+        </TableRow>
+
+        <!--第二列-->
+        <TableRow
+            android:layout_marginLeft="12dp">
+            <TextView
+                android:id="@+id/weather_city"/>
+            <TextView
+                android:id="@+id/weather_explain"
+                android:layout_marginLeft="12dp"/>
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>

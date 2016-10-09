@@ -530,6 +530,7 @@ public class MainControl {
                                         okHttpPost.post(SougouSearchArticle.URL_SOUGOU_ARTICLE, SougouSearchArticle.getPostJsonBody(
                                                 skip
                                                 , SougouSearchArticle.ONCE_REQUEST_LIMIT));
+//                                        KinflowLog.w("请求搜狗搜索新闻的 skip="+skip+"  ,limit="+SougouSearchArticle.ONCE_REQUEST_LIMIT);
                                         //发起请求
                                     } catch (Exception e) {
                                         KinflowLog.w("请求搜狗搜索时,发生错误:" + e.getMessage());
