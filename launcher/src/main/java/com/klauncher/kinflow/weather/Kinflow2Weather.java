@@ -9,7 +9,6 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -184,11 +183,11 @@ public class Kinflow2Weather extends FrameLayout {
     };
 
     private RelativeLayout mRootView;
-    private ImageView hour0, hour1, minute0, minute1;
+//    private ImageView hour0, hour1, minute0, minute1;
     private ImageView weatherIcon;
     private TextView weatherTmp, weatherCity;
 
-    private TextView dateView;
+//    private TextView dateView;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -209,7 +208,7 @@ public class Kinflow2Weather extends FrameLayout {
     public Kinflow2Weather(Context context) {
         super(context);
         try {
-            mRootView = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.clock_widget, this, false);
+            mRootView = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.layout_kinflow2_weather, this, false);
             addView(mRootView);
             mContext = context;
             init();
@@ -222,7 +221,7 @@ public class Kinflow2Weather extends FrameLayout {
     public Kinflow2Weather(Context context, AttributeSet attrs) {
         super(context, attrs);
         try {
-            mRootView = (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.clock_widget, this, false);
+            mRootView = (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.layout_kinflow2_weather, this, false);
             addView(mRootView);
             mContext = context;
             init();
@@ -235,7 +234,7 @@ public class Kinflow2Weather extends FrameLayout {
     public Kinflow2Weather(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         try {
-            mRootView = (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.clock_widget, this, false);
+            mRootView = (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.layout_kinflow2_weather, this, false);
             addView(mRootView);
             mContext = context;
             init();
@@ -254,15 +253,15 @@ public class Kinflow2Weather extends FrameLayout {
         try {
             initLocation();
             myHandler = new MyHandler(this);
-            hour0 = (ImageView) mRootView.findViewById(R.id.img_clock_hour_0);
-            hour1 = (ImageView) mRootView.findViewById(R.id.img_clock_hour_1);
-            minute0 = (ImageView) mRootView.findViewById(R.id.img_clock_minute_0);
-            minute1 = (ImageView) mRootView.findViewById(R.id.img_clock_minute_1);
+//            hour0 = (ImageView) mRootView.findViewById(R.id.img_clock_hour_0);
+//            hour1 = (ImageView) mRootView.findViewById(R.id.img_clock_hour_1);
+//            minute0 = (ImageView) mRootView.findViewById(R.id.img_clock_minute_0);
+//            minute1 = (ImageView) mRootView.findViewById(R.id.img_clock_minute_1);
             weatherIcon = (ImageView) mRootView.findViewById(R.id.weather_icon);
             weatherTmp = (TextView) mRootView.findViewById(R.id.weather_tmp);
             weatherCity = (TextView) mRootView.findViewById(R.id.weather_city);
-            dateView = (TextView) mRootView.findViewById(R.id.clock_date);
-            dateView.setVisibility(View.GONE);
+//            dateView = (TextView) mRootView.findViewById(R.id.clock_date);
+//            dateView.setVisibility(View.GONE);
             updateViews();
 
             IntentFilter filter = new IntentFilter();
@@ -376,10 +375,10 @@ public class Kinflow2Weather extends FrameLayout {
                 }
             }
 
-            hour0.setImageResource(CLOCK_IMAGES[hour / 10]);
-            hour1.setImageResource(CLOCK_IMAGES[hour % 10]);
-            minute0.setImageResource(CLOCK_IMAGES[minute / 10]);
-            minute1.setImageResource(CLOCK_IMAGES[minute % 10]);
+//            hour0.setImageResource(CLOCK_IMAGES[hour / 10]);
+//            hour1.setImageResource(CLOCK_IMAGES[hour % 10]);
+//            minute0.setImageResource(CLOCK_IMAGES[minute / 10]);
+//            minute1.setImageResource(CLOCK_IMAGES[minute % 10]);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -395,8 +394,8 @@ public class Kinflow2Weather extends FrameLayout {
         if (is12hour) {
             dateValue += " " + dateString.substring(dateString.length() - 3);
         }
-        dateView.setText(dateValue);
-    }
+//        dateView.setText(dateValue);
+    };
 
     private void updateDate4China(boolean is12hour) {
         DateFormat df = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.DEFAULT);
@@ -406,7 +405,7 @@ public class Kinflow2Weather extends FrameLayout {
             if (is12hour) {
                 dateValue += " " + dateSplit[1].substring(0, 2);
             }
-            dateView.setText(dateValue);
+//            dateView.setText(dateValue);
         }
     }
 
