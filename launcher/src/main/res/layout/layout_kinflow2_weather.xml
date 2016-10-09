@@ -9,15 +9,17 @@
 
     <!--温度-->
     <TextView
-        style="@style/kinflow_commont_wrap_content"
         android:id="@+id/weather_tmp"
+        style="@style/kinflow_commont_wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="3dp"
         android:layout_toRightOf="@id/weather_icon"
         android:gravity="center"
         android:text="17\u00B0"
-        android:textSize="36sp"
+        android:textColor="@color/color_white"
+        android:textSize="38sp"
         />
 
     <!--天气icon-->
@@ -26,6 +28,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="22dp"
         android:scaleType="fitXY"
         android:src="@drawable/weather_default_icon"/>
@@ -35,26 +38,51 @@
 
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@id/weather_tmp"
         android:gravity="center_vertical">
         <!--第一列-->
         <TableRow
             android:layout_marginLeft="12dp">
-            <TextView
-                android:id="@+id/air_index"/>
-            <TextView
-                android:id="@+id/air_explain"
-                android:layout_marginLeft="12dp"/>
+
+            <LinearLayout>
+
+                <TextView
+                    android:id="@+id/air_index"
+                    style="@style/kinflow_commont_wrap_content"
+                    android:background="@drawable/corner_rect_air_index"
+                    android:gravity="center"
+                    android:text="66"
+                    android:textColor="@color/color_white"/>
+
+                <TextView
+                    android:id="@+id/air_explain"
+                    style="@style/kinflow_commont_wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="空气良"
+                    android:textColor="@color/color_white"/>
+            </LinearLayout>
         </TableRow>
 
         <!--第二列-->
         <TableRow
             android:layout_marginLeft="12dp">
-            <TextView
-                android:id="@+id/weather_city"/>
-            <TextView
-                android:id="@+id/weather_explain"
-                android:layout_marginLeft="12dp"/>
+
+            <LinearLayout>
+
+                <TextView
+                    android:id="@+id/weather_city"
+                    style="@style/kinflow_commont_wrap_content"
+                    android:text="海淀区"
+                    android:textColor="@color/color_white"/>
+
+                <TextView
+                    android:id="@+id/weather_explain"
+                    style="@style/kinflow_commont_wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="晴"
+                    android:textColor="@color/color_white"/>
+            </LinearLayout>
         </TableRow>
     </TableLayout>
 </RelativeLayout>
