@@ -984,8 +984,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 hintHotWord = hotWordList.get(0);
                 tv_searchHint.setHint(hintHotWord.getWord());
 //                ((TextView)(mLinearLayoutHeader.findViewById(R.id.search_hint))).setHint(hintHotWord.getWord());
-                 topHotWord = hotWordList.get(3);
-                tv_hotWordTop.setText(topHotWord.getWord());
+//                 topHotWord = hotWordList.get(3);
+//                tv_hotWordTop.setText(topHotWord.getWord());
             }
         } catch (Exception e) {
             log("onHotWordUpdate: 更新热词时,出错:" + e.getMessage());

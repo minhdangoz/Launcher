@@ -20,6 +20,7 @@ import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.utilities.Dips;
+import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.utilities.ResourceUtils;
 import com.klauncher.kinflow.views.PopupWindowDialog;
 import com.klauncher.launcher.R;
@@ -226,7 +227,9 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
             if (!navUrl.startsWith("http://"))
                 navUrl = "http://"+ navUrl;
             extras.putString(OpenMode.OPEN_URL_KEY, navUrl);
-            navigation.open(context, extras);
+            KinflowLog.w(navigation.getNavigationList());
+//            navigation.open(context, extras);
+            navigation.openByOrder(context);
             PingManager.getInstance().reportUserAction4Navigation(navigation);
         } catch (Exception e) {
             e.printStackTrace();

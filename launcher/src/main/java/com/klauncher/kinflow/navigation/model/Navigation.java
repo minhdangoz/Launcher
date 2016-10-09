@@ -1,16 +1,20 @@
 package com.klauncher.kinflow.navigation.model;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.kinflow.browser.KinflowBrower;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.utilities.KinflowLog;
+import com.klauncher.launcher.BuildConfig;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -83,6 +87,38 @@ public class Navigation implements Parcelable, Comparable {
         }
     }
 
+    public String openByOrder (Context context) {
+        String finalOpenComponent = BuildConfig.APPLICATION_ID;
+        String articleUrl = "http://m.hao123.com/?union=1&from=1012581h&tn=ops1012581h";
+        String openUrl = TextUtils.isEmpty(getNavUrl())?articleUrl:getNavUrl();
+        for (int i = 0; i < getNavOpenOptions().size(); i++) {
+            try {
+                KinflowLog.w("尝试第" + i + "打开方式");
+                String openComponentName = getNavOpenOptions().get(i);
+                Log.e("kinflow", "openByOrder: openComponentName" + openComponentName);
+                    String[] cns = getNavOpenOptions().get(i).split("/");
+                    ComponentName componentName = new ComponentName(cns[0],cns[1]);
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                    browserIntent.setComponent(componentName);
+                    browserIntent.setData(Uri.parse(openUrl));
+                    context.startActivity(browserIntent);
+                    finalOpenComponent = componentName.getPackageName();
+                    return finalOpenComponent;
+            } catch (Exception e) {
+                KinflowLog.w("第" + i + "打开方式失败");
+                //判断如果是最后一个了,用默认打开,就别再继续了
+                if (i==getNavOpenOptions().size()-1) {
+//                    finalOpenComponent = openWithInnerBrowser(context);
+                    KinflowBrower.openUrl(context,openUrl);
+                } else {
+                    continue;
+                }
+            }
+
+        }
+        return finalOpenComponent;
+    }
+
     public Navigation() {
 //        "23", "com.baidu.browser.apps/com.baidu.browser.framework.BdBrowserActivity", "0"
     }
@@ -149,6 +185,14 @@ public class Navigation implements Parcelable, Comparable {
 
     public void setNavOpenOptions(List<String> navOpenOptions) {
         this.navOpenOptions = navOpenOptions;
+    }
+
+    public String getNavigationList() {
+        StringBuilder stringBuilder = new StringBuilder("第"+getNavOrder()+"个导航的大开方式如下:\n");
+        for (int i = 0; i < this.navOpenOptions.size(); i++) {
+            stringBuilder.append(this.navOpenOptions.get(i)).append(",");
+        }
+        return stringBuilder.toString();
     }
 
     @Override

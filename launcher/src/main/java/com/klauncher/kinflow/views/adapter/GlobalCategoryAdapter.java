@@ -15,6 +15,7 @@ import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.utilities.Dips;
+import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.utilities.ResourceUtils;
 import com.klauncher.kinflow.views.PopupWindowDialog;
 import com.klauncher.kinflow.views.recyclerView.adapter.BaseRecyclerViewAdapter;
@@ -159,7 +160,9 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
             if (!navUrl.startsWith("http://"))
                 navUrl = "http://"+ navUrl;
             extras.putString(OpenMode.OPEN_URL_KEY, navUrl);
-            navigation.open(mContext, extras);
+            KinflowLog.w(navigation.getNavigationList());
+//            navigation.open(mContext, extras);
+            navigation.openByOrder(mContext);
             PingManager.getInstance().reportUserAction4Navigation(navigation);
         } catch (Exception e) {
             e.printStackTrace();
