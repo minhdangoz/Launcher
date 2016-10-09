@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
 
     <!--温度-->
     <TextView
@@ -16,10 +18,12 @@
         android:layout_marginLeft="12dp"
         android:layout_marginTop="3dp"
         android:layout_toRightOf="@id/weather_icon"
+        android:fontFamily="sans-serif-thin"
         android:gravity="center"
         android:text="17\u00B0"
         android:textColor="@color/color_white"
         android:textSize="38sp"
+        android:textStyle="normal"
         />
 
     <!--天气icon-->
@@ -29,7 +33,6 @@
         android:layout_height="48dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="22dp"
         android:scaleType="fitXY"
         android:src="@drawable/weather_default_icon"/>
 
@@ -51,16 +54,20 @@
                     android:id="@+id/air_index"
                     style="@style/kinflow_commont_wrap_content"
                     android:background="@drawable/corner_rect_air_index"
+                    android:fontFamily="sans-serif-thin"
                     android:gravity="center"
                     android:text="66"
-                    android:textColor="@color/color_white"/>
+                    android:textColor="@color/color_white"
+                    android:textStyle="normal"/>
 
                 <TextView
                     android:id="@+id/air_explain"
                     style="@style/kinflow_commont_wrap_content"
                     android:layout_marginLeft="8dp"
+                    android:fontFamily="sans-serif-thin"
                     android:text="空气良"
-                    android:textColor="@color/color_white"/>
+                    android:textColor="@color/color_white"
+                    android:textStyle="normal"/>
             </LinearLayout>
         </TableRow>
 
@@ -73,15 +80,20 @@
                 <TextView
                     android:id="@+id/weather_city"
                     style="@style/kinflow_commont_wrap_content"
+                    android:fontFamily="sans-serif-thin"
                     android:text="海淀区"
-                    android:textColor="@color/color_white"/>
+                    android:textColor="@color/color_white"
+                    android:textStyle="normal"
+                    />
 
                 <TextView
                     android:id="@+id/weather_explain"
                     style="@style/kinflow_commont_wrap_content"
                     android:layout_marginLeft="8dp"
+                    android:fontFamily="sans-serif-thin"
                     android:text="晴"
-                    android:textColor="@color/color_white"/>
+                    android:textColor="@color/color_white"
+                    android:textStyle="normal"/>
             </LinearLayout>
         </TableRow>
     </TableLayout>
