@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -152,6 +153,9 @@ public class ClockWidgetView extends FrameLayout {
         @Override
         protected void onPostExecute(ClockWidgetView target, String resultInfo) {
             Log.d(TAG,"onPostExecute : " + resultInfo);
+            if (TextUtils.isEmpty(resultInfo)) {
+                return;
+            }
             try {
                 JSONObject obj = new JSONObject(resultInfo);
                 JSONObject contentObj = new JSONObject(obj.getString("content"));
@@ -170,9 +174,9 @@ public class ClockWidgetView extends FrameLayout {
                 target.weatherTmp.setText(climate + "  " + nowTemp+"℃");
                 target.weatherCity.setText(cityName);
                 target.isHasUpdateWeather = true;
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-                Log.d(TAG,"onPostExecute JSONException ");
+                Log.d(TAG,"onPostExecute Exception ");
             }
         }
     }
