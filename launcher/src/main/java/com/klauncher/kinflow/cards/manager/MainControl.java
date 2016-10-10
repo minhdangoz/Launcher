@@ -527,6 +527,15 @@ public class MainControl {
                                         OkHttpPost okHttpPost = new OkHttpPost(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE);
                                         //发请求
                                         int skip = CommonShareData.getInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP, 1);
+                                        if (skip>=100) {//提供数据的总数是100条,所以不能超过这个数
+                                                skip = 1;
+                                            new  Thread() {
+                                                @Override
+                                                public void run() {
+                                                    CommonShareData.putInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP, 1);
+                                                }
+                                            }.start();
+                                        }
                                         okHttpPost.post(SougouSearchArticle.URL_SOUGOU_ARTICLE, SougouSearchArticle.getPostJsonBody(
                                                 skip
                                                 , SougouSearchArticle.ONCE_REQUEST_LIMIT));

@@ -97,7 +97,7 @@ public class OkHttpPost {
         try {
             int status = jsonObject.optInt("status", 0);//默认为出错
             if (status == SougouSearchArticle.RESPONSE_STATUS_ERROR) {
-                Log.w("Kinflow", "搜狗搜索服务器有响应,但是状态错误,导致没有数据");
+//                Log.w("Kinflow", "搜狗搜索服务器有响应,但是状态错误,导致没有数据:status = "+status);
             }
             if (status == SougouSearchArticle.RESPONSE_STATUS_SUCCESS) {//返回数据正常----正式开始解析数据
                 JSONArray sougouSearchNewsJsonArray = jsonObject.optJSONArray("result");
