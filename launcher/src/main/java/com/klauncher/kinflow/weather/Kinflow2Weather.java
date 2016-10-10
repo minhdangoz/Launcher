@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.kinflow.common.utils.DeviceState;
 import com.klauncher.launcher.R;
 import com.klauncher.utilities.DeviceInfoUtils;
@@ -68,21 +70,21 @@ public class Kinflow2Weather extends FrameLayout {
                     Kinflow2Weather.this.aMapLocation = aMapLocation;
 //可在其中解析amapLocation获取相应内容。
                     Log.d(TAG,
-                    aMapLocation.getLocationType()+" "+//获取当前定位结果来源，如网络定位结果，详见定位类型表
-                    aMapLocation.getLatitude()+" "+//获取纬度
-                    aMapLocation.getLongitude()+" "+//获取经度
-                    aMapLocation.getAccuracy()+" "+//获取精度信息
-                    aMapLocation.getAddress()+" "+//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
-                    aMapLocation.getCountry()+" "+//国家信息
-                    aMapLocation.getProvince()+" "+//省信息
-                    aMapLocation.getCity()+" "+//城市信息
-                    aMapLocation.getDistrict()+" "+//城区信息
-                    aMapLocation.getStreet()+" "+//街道信息
-                    aMapLocation.getStreetNum()+" "+//街道门牌号信息
-                    aMapLocation.getCityCode()+" "+//城市编码
-                    aMapLocation.getAdCode()+" "+//地区编码
-                    aMapLocation.getAoiName()+" "+//获取当前定位点的AOI信息
-                    aMapLocation.getTime());
+                            aMapLocation.getLocationType() + " " +//获取当前定位结果来源，如网络定位结果，详见定位类型表
+                                    aMapLocation.getLatitude() + " " +//获取纬度
+                                    aMapLocation.getLongitude() + " " +//获取经度
+                                    aMapLocation.getAccuracy() + " " +//获取精度信息
+                                    aMapLocation.getAddress() + " " +//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
+                                    aMapLocation.getCountry() + " " +//国家信息
+                                    aMapLocation.getProvince() + " " +//省信息
+                                    aMapLocation.getCity() + " " +//城市信息
+                                    aMapLocation.getDistrict() + " " +//城区信息
+                                    aMapLocation.getStreet() + " " +//街道信息
+                                    aMapLocation.getStreetNum() + " " +//街道门牌号信息
+                                    aMapLocation.getCityCode() + " " +//城市编码
+                                    aMapLocation.getAdCode() + " " +//地区编码
+                                    aMapLocation.getAoiName() + " " +//获取当前定位点的AOI信息
+                                    aMapLocation.getTime());
 //获取定位时间
 //                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //                    Date date = new Date(aMapLocation.getTime());
@@ -90,19 +92,19 @@ public class Kinflow2Weather extends FrameLayout {
 
 
                     mLocationJson = "{\"address\":{\"SubLocality\":\""
-                            +aMapLocation.getDistrict()+"\",\"CountryCode\":\""+aMapLocation.getCountry()
-                            +"\",\"Name\":\""+aMapLocation.getAddress()+"\",\"State\":\""
-                            +aMapLocation.getProvince()+"\",\"FormattedAddressLines\":[\""+aMapLocation.getAddress()
-                            +"\"],\"Country\":\""+aMapLocation.getCountry()
-                            +"\",\"City\":\""+aMapLocation.getCity()+"\"},\"ip\"：\""+DeviceInfoUtils.getLocalIpAddress(mContext)+"\"}";
+                            + aMapLocation.getDistrict() + "\",\"CountryCode\":\"" + aMapLocation.getCountry()
+                            + "\",\"Name\":\"" + aMapLocation.getAddress() + "\",\"State\":\""
+                            + aMapLocation.getProvince() + "\",\"FormattedAddressLines\":[\"" + aMapLocation.getAddress()
+                            + "\"],\"Country\":\"" + aMapLocation.getCountry()
+                            + "\",\"City\":\"" + aMapLocation.getCity() + "\"},\"ip\"：\"" + DeviceInfoUtils.getLocalIpAddress(getMContext()) + "\"}";
 
 //                    myHandler.post(sRunnable);
 //                    Log.d(TAG," mLocationJson : " + mLocationJson);
                     myHandler.sendEmptyMessage(0);
 
-                }else {
+                } else {
                     //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                    Log.e(TAG,"AmapError location Error, ErrCode:"
+                    Log.e(TAG, "AmapError location Error, ErrCode:"
                             + aMapLocation.getErrorCode() + ", errInfo:"
                             + aMapLocation.getErrorInfo());
                 }
@@ -111,8 +113,10 @@ public class Kinflow2Weather extends FrameLayout {
     };
 
     MyHandler myHandler;
+
     private static class MyHandler extends Handler {
         WeakReference mClockWidget;
+
         MyHandler(Kinflow2Weather cwv) {
             mClockWidget = new WeakReference(cwv);
         }
@@ -120,7 +124,7 @@ public class Kinflow2Weather extends FrameLayout {
         @Override
         public void handleMessage(Message msg) {
             Kinflow2Weather cwv = (Kinflow2Weather) mClockWidget.get();
-            if (cwv !=null) {
+            if (cwv != null) {
                 switch (msg.what) {
                     case 0:
                         new MyTask(cwv).execute();
@@ -150,36 +154,40 @@ public class Kinflow2Weather extends FrameLayout {
 
         @Override
         protected void onPostExecute(Kinflow2Weather target, String resultInfo) {
-            Log.d(TAG,"onPostExecute : " + resultInfo);
+            Log.d(TAG, "onPostExecute : " + resultInfo);
             try {
-                JSONObject obj = new JSONObject(resultInfo);
-                JSONObject contentObj = new JSONObject(obj.getString("content"));
-                String cityName = contentObj.getString("cityName");
-                String pubDate = contentObj.getString("pubDate");
-                JSONObject weatherObj = new JSONObject(contentObj.getString("weather"));
-                int nowTemp = weatherObj.getInt("nowTemp");
-                String climate = weatherObj.getString("climate");//天气状况:阴,晴
-                String icon = weatherObj.getString("icon");
-                int highTemp = weatherObj.getInt("highTemp");
-                int lowTemp = weatherObj.getInt("lowTemp");
-                int humidity = contentObj.getInt("humidity");
+                if (TextUtils.isEmpty(resultInfo)) {
+                    return;
+                } else {
+                    JSONObject obj = new JSONObject(resultInfo);
+                    JSONObject contentObj = new JSONObject(obj.getString("content"));
+                    String cityName = contentObj.getString("cityName");
+                    String pubDate = contentObj.getString("pubDate");
+                    JSONObject weatherObj = new JSONObject(contentObj.getString("weather"));
+                    int nowTemp = weatherObj.getInt("nowTemp");
+                    String climate = weatherObj.getString("climate");//天气状况:阴,晴
+                    String icon = weatherObj.getString("icon");
+                    int highTemp = weatherObj.getInt("highTemp");
+                    int lowTemp = weatherObj.getInt("lowTemp");
+                    int humidity = contentObj.getInt("humidity");
 //                String pm = contentObj.getString("pm");
-                String pm = contentObj.optString("pm","优 45");//天气质量
-                Picasso.with(target.mContext)
-                        .load(icon).fit().into(target.weatherIcon);
+                    String pm = contentObj.optString("pm", "优 45");//天气质量
+                    Picasso.with(target.getMContext())
+                            .load(icon).fit().into(target.weatherIcon);
 
-                String[] airInfos = pm.split(" ");
-                String airExplainStr = "空气"+airInfos[0];
-                String airIndexStr = airInfos[1];
-                target.weatherTmp.setText(nowTemp+"\u00B0");//温度
-                target.weatherCity.setText(cityName);//城市
-                target.weatherExplain.setText(climate);//天气说明
-                target.airIndex.setText(airIndexStr);//空气指数
-                target.airExplain.setText(airExplainStr);//空气说明
-                target.isHasUpdateWeather = true;
+                    String[] airInfos = pm.split(" ");
+                    String airExplainStr = "空气" + airInfos[0];
+                    String airIndexStr = airInfos[1];
+                    target.weatherTmp.setText(nowTemp + "\u00B0");//温度
+                    target.weatherCity.setText(cityName);//城市
+                    target.weatherExplain.setText(climate);//天气说明
+                    target.airIndex.setText(airIndexStr);//空气指数
+                    target.airExplain.setText(airExplainStr);//空气说明
+                    target.isHasUpdateWeather = true;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.d(TAG,"onPostExecute JSONException ");
+                Log.d(TAG, "onPostExecute JSONException ");
             }
         }
     }
@@ -190,11 +198,17 @@ public class Kinflow2Weather extends FrameLayout {
             R.drawable.clock_8, R.drawable.clock_9
     };
 
+    public Context getMContext(){
+        if (null==mContext)
+            mContext = KLauncherApplication.mKLauncherApplication;
+        return mContext;
+    }
+
     private RelativeLayout mRootView;
-//    private ImageView hour0, hour1, minute0, minute1;
+    //    private ImageView hour0, hour1, minute0, minute1;
     private ImageView weatherIcon;
-    private TextView weatherTmp, weatherCity,weatherExplain;
-    private TextView airIndex,airExplain;
+    private TextView weatherTmp, weatherCity, weatherExplain;
+    private TextView airIndex, airExplain;
 
 //    private TextView dateView;
 
@@ -230,7 +244,7 @@ public class Kinflow2Weather extends FrameLayout {
     public Kinflow2Weather(Context context, AttributeSet attrs) {
         super(context, attrs);
         try {
-            mRootView = (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.layout_kinflow2_weather, this, false);
+            mRootView = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.layout_kinflow2_weather, this, false);
             addView(mRootView);
             mContext = context;
             init();
@@ -243,7 +257,7 @@ public class Kinflow2Weather extends FrameLayout {
     public Kinflow2Weather(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         try {
-            mRootView = (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.layout_kinflow2_weather, this, false);
+            mRootView = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.layout_kinflow2_weather, this, false);
             addView(mRootView);
             mContext = context;
             init();
@@ -284,22 +298,19 @@ public class Kinflow2Weather extends FrameLayout {
             filter.addAction(Intent.ACTION_SCREEN_ON);
             filter.addAction(Intent.ACTION_USER_PRESENT);
             filter.addAction(Intent.ACTION_TIME_TICK);
-//        filter.addAction(ClockWidgetService.ACTION_CLOCK_UPDATE);
-            mContext.registerReceiver(receiver, filter);
+            getMContext().registerReceiver(receiver, filter);
             Log.d(TAG, "Kinflow2Weather: onEnabled...");
-//        Intent service = new Intent(mContext, ClockWidgetService.class);
-//        mContext.startService(service);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    private void initLocation(){
+    private void initLocation() {
         try {
-            Log.d(TAG,"initLocation");
+            Log.d(TAG, "initLocation");
             //初始化定位
-            mLocationClient = new AMapLocationClient(mContext);
+            mLocationClient = new AMapLocationClient(getMContext());
 //设置定位回调监听
             mLocationClient.setLocationListener(mLocationListener);
 
@@ -326,9 +337,9 @@ public class Kinflow2Weather extends FrameLayout {
 
     }
 
-    private void getLocation(){
+    private void getLocation() {
         if (mLocationClient != null) {
-            Log.d(TAG,"getWeather Location");
+            Log.d(TAG, "getWeather Location");
             //启动定位
             mLocationClient.startLocation();
         }
@@ -346,7 +357,7 @@ public class Kinflow2Weather extends FrameLayout {
      */
     private void updateViews() {
         try {
-            boolean is12hour = DeviceState.get12HourMode(mContext);
+            boolean is12hour = DeviceState.get12HourMode(getMContext());
             Calendar c = Calendar.getInstance();
             int hour, minute;
             minute = c.get(Calendar.MINUTE);
@@ -356,17 +367,17 @@ public class Kinflow2Weather extends FrameLayout {
                 hour = c.get(Calendar.HOUR_OF_DAY);
             }
             if (isHasUpdateWeather) {
-                if (DeviceInfoUtils.isWifiConnected(mContext)) {
+                if (DeviceInfoUtils.isWifiConnected(getMContext())) {
                     if (hour % 2 == 0 && minute == 0) {
                         getLocation();
                     }
-                } else if (DeviceInfoUtils.isMobileDataConnected(mContext)) {
+                } else if (DeviceInfoUtils.isMobileDataConnected(getMContext())) {
                     if (hour % 4 == 0 && minute == 0) {
                         getLocation();
                     }
                 }
             } else {
-                if (DeviceInfoUtils.isWifiConnected(mContext)) {
+                if (DeviceInfoUtils.isWifiConnected(getMContext())) {
                     if (isFirstReq) {
                         getLocation();
                         isFirstReq = false;
@@ -375,7 +386,7 @@ public class Kinflow2Weather extends FrameLayout {
                             getLocation();
                         }
                     }
-                } else if (DeviceInfoUtils.isMobileDataConnected(mContext)) {
+                } else if (DeviceInfoUtils.isMobileDataConnected(getMContext())) {
                     if (isFirstReq) {
                         getLocation();
                         isFirstReq = false;
@@ -407,7 +418,9 @@ public class Kinflow2Weather extends FrameLayout {
             dateValue += " " + dateString.substring(dateString.length() - 3);
         }
 //        dateView.setText(dateValue);
-    };
+    }
+
+    ;
 
     private void updateDate4China(boolean is12hour) {
         DateFormat df = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.DEFAULT);
@@ -439,7 +452,7 @@ public class Kinflow2Weather extends FrameLayout {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         try {
-            mContext.unregisterReceiver(receiver);
+            getMContext().unregisterReceiver(receiver);
             if (mLocationClient != null) {
                 mLocationClient.stopLocation();
             }
@@ -450,8 +463,9 @@ public class Kinflow2Weather extends FrameLayout {
     }
 
     OkHttpClient client = new OkHttpClient();
-    private static final String appEncryptKey= "online:hltq+(^g&%~vd+10003";
+    private static final String appEncryptKey = "online:hltq+(^g&%~vd+10003";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
     String postGetWeather(String json) throws IOException {
         RequestBody jbody = RequestBody.create(JSON, json);
         Request requestLocate = new Request.Builder()
@@ -497,7 +511,7 @@ public class Kinflow2Weather extends FrameLayout {
 
     }
 
-    private String makeWeatherLocateUrl(){
+    private String makeWeatherLocateUrl() {
 
         StringBuilder urlBuild = new StringBuilder(WEATHER_LOCATE_SERVER);
         urlBuild.append("?");
@@ -508,22 +522,22 @@ public class Kinflow2Weather extends FrameLayout {
         urlBuild.append("1");
         urlBuild.append("&");
         urlBuild.append("idfa=");
-        urlBuild.append(DeviceInfoUtils.getDeviceId(mContext));
+        urlBuild.append(DeviceInfoUtils.getDeviceId(getMContext()));
         urlBuild.append("&");
         urlBuild.append("imei=");
-        urlBuild.append(DeviceInfoUtils.getIMEI(mContext));
+        urlBuild.append(DeviceInfoUtils.getIMEI(getMContext()));
         urlBuild.append("&");
         urlBuild.append("dm=");
-        urlBuild.append(DeviceInfoUtils.getDM().replace(" ",""));
+        urlBuild.append(DeviceInfoUtils.getDM().replace(" ", ""));
         urlBuild.append("&");
         urlBuild.append("nt=");
-        urlBuild.append(DeviceInfoUtils.getNT(mContext));
+        urlBuild.append(DeviceInfoUtils.getNT(getMContext()));
         urlBuild.append("&");
         urlBuild.append("pid=");
         urlBuild.append("10003");
         urlBuild.append("&");
         urlBuild.append("sv=");
-        urlBuild.append(DeviceInfoUtils.getSoftwareVersion(mContext));
+        urlBuild.append(DeviceInfoUtils.getSoftwareVersion(getMContext()));
         urlBuild.append("&");
         urlBuild.append("osv=");
         urlBuild.append(DeviceInfoUtils.getOsVersion());
@@ -540,11 +554,11 @@ public class Kinflow2Weather extends FrameLayout {
         urlBuild.append("&");
         urlBuild.append("sign=");
         urlBuild.append(DeviceInfoUtils.Md5Encode(unixTime + appEncryptKey));
-        Log.d(TAG,"post : makeWeatherUrl :  " + urlBuild.toString());
+        Log.d(TAG, "post : makeWeatherUrl :  " + urlBuild.toString());
         return urlBuild.toString();
     }
 
-    private String makeWeatherInfoUrl(String cityCode, String cityName){
+    private String makeWeatherInfoUrl(String cityCode, String cityName) {
 
         StringBuilder urlBuild = new StringBuilder(WEATHER_INFO_SERVER);
         urlBuild.append("?");
@@ -561,22 +575,22 @@ public class Kinflow2Weather extends FrameLayout {
         urlBuild.append("1");
         urlBuild.append("&");
         urlBuild.append("idfa=");
-        urlBuild.append(DeviceInfoUtils.getDeviceId(mContext));
+        urlBuild.append(DeviceInfoUtils.getDeviceId(getMContext()));
         urlBuild.append("&");
         urlBuild.append("imei=");
-        urlBuild.append(DeviceInfoUtils.getIMEI(mContext));
+        urlBuild.append(DeviceInfoUtils.getIMEI(getMContext()));
         urlBuild.append("&");
         urlBuild.append("dm=");
-        urlBuild.append(DeviceInfoUtils.getDM().replace(" ",""));
+        urlBuild.append(DeviceInfoUtils.getDM().replace(" ", ""));
         urlBuild.append("&");
         urlBuild.append("nt=");
-        urlBuild.append(DeviceInfoUtils.getNT(mContext));
+        urlBuild.append(DeviceInfoUtils.getNT(getMContext()));
         urlBuild.append("&");
         urlBuild.append("pid=");
         urlBuild.append("10003");
         urlBuild.append("&");
         urlBuild.append("sv=");
-        urlBuild.append(DeviceInfoUtils.getSoftwareVersion(mContext));
+        urlBuild.append(DeviceInfoUtils.getSoftwareVersion(getMContext()));
         urlBuild.append("&");
         urlBuild.append("osv=");
         urlBuild.append(DeviceInfoUtils.getOsVersion());
@@ -593,7 +607,7 @@ public class Kinflow2Weather extends FrameLayout {
         urlBuild.append("&");
         urlBuild.append("sign=");
         urlBuild.append(DeviceInfoUtils.Md5Encode(unixTime + appEncryptKey));
-        Log.d(TAG,"post : makeWeatherUrl :  " + urlBuild.toString());
+        Log.d(TAG, "post : makeWeatherUrl :  " + urlBuild.toString());
         return urlBuild.toString();
     }
 
