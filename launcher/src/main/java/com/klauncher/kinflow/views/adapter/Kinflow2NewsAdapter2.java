@@ -502,7 +502,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
             //布局
             //数据
             m1ImageTitle.setText(sougouSearchArticle.getTitle());
-            m1ImageFooter.setText(DateUtils.getInstance().second2TimeOrDate(sougouSearchArticle.getPage_time()/1000));
+            m1ImageFooter.setText(DateUtils.getInstance().second2TimeOrDate(sougouSearchArticle.getPage_time()));
             Target target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -524,7 +524,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
         void addSouGouHeadWith0Image(SougouSearchArticle sougouSearchArticle) {
             Log.e("Kinflow", "addSouGouHeadWith0Image: 开始添加无图的搜狗搜索新闻");
             m0ImageTitle.setText(sougouSearchArticle.getTitle());
-            m0ImageFooter.setText(DateUtils.getInstance().second2TimeOrDate(sougouSearchArticle.getPage_time()/1000));
+            m0ImageFooter.setText(DateUtils.getInstance().second2TimeOrDate(sougouSearchArticle.getPage_time()));
         }
     }
 }
