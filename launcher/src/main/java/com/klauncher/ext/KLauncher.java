@@ -418,6 +418,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mGlobalCategoryRecyclerView = (RecyclerView) kinflowRootView.findViewById(R.id.global_category_recyclerView);
         mGlobalCategoryRecyclerView.setLayoutManager(new GridLayoutManager(this, 5, GridLayoutManager.VERTICAL, false));
         mGlobalCategoryRecyclerView.setAdapter(new GlobalCategoryAdapter(this, CacheNavigation.getInstance().createAllDefaultGlobalNavigation()));
+        mGlobalCategoryRecyclerView.addItemDecoration(new HotWordItemDecoration(16, 32, false));
 //        mGlobalCategoryRecyclerView.setAdapter(new NavigationAdapter2(this,CacheNavigation.getInstance().createAllDefaultGlobalNavigation()));
         //快捷导航
         mNavigationRecyclerView = (RecyclerView) kinflowRootView.findViewById(R.id.navigation_recyclerView);
