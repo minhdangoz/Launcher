@@ -29,6 +29,7 @@
                 android:id="@+id/kinflow_scrolling_header"
                 layout="@layout/kinflow_scrolling_header"/>
 
+            <!--
             <Button
                 android:id="@+id/connect_net"
                 android:layout_width="match_parent"
@@ -40,24 +41,31 @@
                 android:background="#FDEEBB"
                 android:textSize="16sp"
                 android:visibility="gone"/>
+            -->
+            <com.klauncher.kinflow.views.commonViews.NoNetCardView
+                android:id="@+id/connect_net"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/kinflow_scrolling_header"
+                android:visibility="gone"/>
 
             <View
                 android:id="@+id/kinflow_news_top_line"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/connect_net"
-                android:background="#EFEFEF"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:background="#EFEFEF"
                 />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/kinflow_body"
                 style="@style/kinflow_commont_match_parent_width"
                 android:layout_below="@id/kinflow_news_top_line"
+                android:paddingBottom="16dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:paddingBottom="16dp"
                 />
 
             <!--
