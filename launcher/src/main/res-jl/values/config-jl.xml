@@ -8,6 +8,7 @@
         <item>GN8002,GN8002</item>
         <item>GN8002S,GN8002</item>
         <item>GN8003,GN8002</item>
+        <item>GN8001,GN8001</item>
         <!--<item>HUAWEI RIO-TL00,yongheng</item>
         <item>HUAWEI NXT-AL10,yongheng</item>
         <item>HUAWEI MT7-TL10,yongheng</item>
@@ -17,6 +18,11 @@
         <item>SCL-CL00,duocai</item>
         <item>SCL-TL00,duocai</item>
         <item>PLK-TL00,bazzar</item>-->
+    </array>
+
+    <array name="config_theme_load_icon_mask_padding">
+        <item>default,0</item>
+        <item>GN8001,100</item>
     </array>
 
     <array name="app_disguise_list">

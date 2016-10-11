@@ -25,7 +25,9 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.os.Build;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.launcher3.ModeSwitchHelper.Mode;
@@ -274,6 +276,22 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
     @Override
     public void onAvailableSizeChanged(DeviceProfile grid) {
         Utilities.setIconSize(grid.iconSizePx);
+        String[] keywords = sContext.getResources().getStringArray(R.array.config_theme_load_icon_mask_padding);
+        String mask_padding = "0";
+        String default_padding = "0";
+        for (String keyword : keywords) {
+            String[] modelTheme = keyword.split(",");
+            if (Build.MODEL.contains(modelTheme[0])) {
+                mask_padding = modelTheme[1];
+                break;
+            } else if ("default".equals(modelTheme[0])) {
+                default_padding = modelTheme[1];
+            }
+        }
+        if (TextUtils.equals("0",mask_padding)) {
+            mask_padding = default_padding;
+        }
+        com.klauncher.theme.Utilities.setIconSize(grid.iconSizePx,Integer.valueOf(mask_padding));
     }
 
     /* Lenovo zhaoxin5 20140902 add for single layer open or close START*/

@@ -27,11 +27,13 @@ public class Utilities {
     private static int sIconTextureWidth = -1;
     private static int sIconTextureHeight = -1;
     private static final Paint sIconPaint = new Paint();
+    private static int sIconMaskPadding = 0;
     
     private static void initStatics(Context context) {
         final Resources resources = context.getResources();
         sIconWidth = sIconHeight = (int) resources.getDimension(R.dimen.app_icon_size);
         sIconTextureWidth = sIconTextureHeight = sIconWidth;
+        Log.d("hw","initStatics sIconWidth : " + sIconWidth);
         sIconSWidth = sIconSHeight = resources.getDimensionPixelSize(R.dimen.app_icon_texture_size);
     }
 
@@ -39,8 +41,17 @@ public class Utilities {
         sCanvas.setDrawFilter(new PaintFlagsDrawFilter(Paint.DITHER_FLAG,
                 Paint.FILTER_BITMAP_FLAG));
     }
-	
-	public static Bitmap createBitmap(Drawable drawable, int width, int height, Context context) {
+
+    public static void setIconSize(int widthPx, int maskPddding) {
+
+        sIconWidth = sIconHeight = widthPx;
+        sIconTextureWidth = sIconTextureHeight = widthPx;
+        sIconMaskPadding = maskPddding;
+        Log.d("hw","setIconSize widthPx : " + widthPx);
+    }
+
+
+    public static Bitmap createBitmap(Drawable drawable, int width, int height, Context context) {
         try {
 			synchronized (sCanvas) { // we share the statics :-(
 				if (drawable == null) {
@@ -372,6 +383,9 @@ public class Utilities {
 	
 	public static Bitmap createIconBitmapForZipTheme(Drawable icon, Context context) {
         synchronized (sCanvas) { // we share the statics :-(
+            if (icon == null) {
+                return null;
+            }
             if (sIconWidth == -1) {
                 initStatics(context);
             }
@@ -390,6 +404,7 @@ public class Utilities {
                 if (bitmap != null && bitmap.getDensity() == Bitmap.DENSITY_NONE) {
                     bitmapDrawable.setTargetDensity(context.getResources().getDisplayMetrics());
                 }
+                return bitmap;
             }
             int sourceWidth = icon.getIntrinsicWidth();
             int sourceHeight = icon.getIntrinsicHeight();
@@ -456,6 +471,9 @@ public class Utilities {
     public static Bitmap composeIcon(Drawable icon, Bitmap bg, Bitmap fg, Bitmap mask, Context context) {
         try {
             synchronized (sCanvas) {
+                if (icon == null) {
+                    return null;
+                }
                 if (sIconWidth == -1) {
                     initStatics(context);
                 }
@@ -478,6 +496,22 @@ public class Utilities {
                     if (bitmap.getDensity() == Bitmap.DENSITY_NONE) {
                         bitmapDrawable.setTargetDensity(context.getResources().getDisplayMetrics());
                     }
+//                    final Canvas canvas = sCanvas;
+//                    Bitmap bitmap1 =  bitmap.copy(Bitmap.Config.ARGB_8888, true);
+//                    canvas.setBitmap(bitmap1);
+//                    // draw mask, background and foreground.
+//                if (mask != null) {
+//                    sIconPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+//                    canvas.drawBitmap(resizeImage(mask,bitmap1.getWidth(),bitmap1.getHeight()), 0f, 0f, sIconPaint);
+//                }
+//                if (bg != null) {
+//                    sIconPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+//                    canvas.drawBitmap(resizeImage(bg,bitmap1.getWidth(),bitmap1.getHeight()), 0f, 0f, sIconPaint);
+//                }
+////                if (fg != null) {
+////                    canvas.drawBitmap(fg, 0f, 0f, null);
+////                }
+//                    return bitmap1;
                 }
 
                 // width and height
@@ -493,11 +527,12 @@ public class Utilities {
                     }
                 }
 
-                int textureWidth = sIconWidth;
-                int textureHeight = sIconHeight;
+                int textureWidth = sIconWidth + sIconMaskPadding;
+                int textureHeight = sIconHeight + sIconMaskPadding;
+                Log.d("hw","composeIcon textureWidth : " + textureWidth);
 
                 // draw icon
-                final Bitmap bitmap = Bitmap.createBitmap(textureWidth, textureHeight,
+                final Bitmap bitmap = Bitmap.createBitmap(textureWidth , textureHeight,
                         Bitmap.Config.ARGB_8888);
                 final Canvas canvas = sCanvas;
                 canvas.setBitmap(bitmap);
@@ -512,15 +547,15 @@ public class Utilities {
                 // draw mask, background and foreground.
                 if (mask != null) {
                     sIconPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-                    canvas.drawBitmap(mask, 0f, 0f, sIconPaint);
+                    canvas.drawBitmap(resizeImage(mask,bitmap.getWidth(),bitmap.getHeight()), 0f, 0f, sIconPaint);
                 }
                 if (bg != null) {
                     sIconPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
-                    canvas.drawBitmap(bg, 0f, 0f, sIconPaint);
+                    canvas.drawBitmap(resizeImage(bg,bitmap.getWidth(),bitmap.getHeight()), 0f, 0f, sIconPaint);
                 }
-                if (fg != null) {
-                    canvas.drawBitmap(fg, 0f, 0f, null);
-                }
+//                if (fg != null) {
+//                    canvas.drawBitmap(fg, 0f, 0f, null);
+//                }
                 canvas.setBitmap(null);
                 return bitmap;
             }
@@ -528,6 +563,27 @@ public class Utilities {
             e.printStackTrace();
             return null;
         }
+    }
+
+    //使用Bitmap加Matrix来缩放
+    public static Bitmap resizeImage(Bitmap bitmap, int w, int h)
+    {
+        Bitmap BitmapOrg = bitmap;
+        int width = BitmapOrg.getWidth();
+        int height = BitmapOrg.getHeight();
+        int newWidth = w;
+        int newHeight = h;
+
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // if you want to rotate the Bitmap
+        // matrix.postRotate(45);
+        Bitmap resizedBitmap = Bitmap.createBitmap(BitmapOrg, 0, 0, width,
+                height, matrix, true);
+        return resizedBitmap;
     }
     public static int getIconWidth(Context context) {
         if (sIconWidth == -1) {

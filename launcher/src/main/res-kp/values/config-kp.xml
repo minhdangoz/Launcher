@@ -10,6 +10,10 @@
         <item>1501_M02,1501_M02</item>
     </array>
 
+    <array name="config_theme_load_icon_mask_padding">
+        <item>default,0</item>
+    </array>
+
     <array name="app_disguise_list">
         <item>com.miguan.market</item>
         <item>com.tencent.android.qqdownloader</item>

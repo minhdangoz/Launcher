@@ -33,5 +33,12 @@
         "iconsize": "64",
         "textsize": "11",
         "hotseat": "6"
+    },
+    "GN8001": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "68",
+        "textsize": "11",
+        "hotseat": "5"
     }
 }
