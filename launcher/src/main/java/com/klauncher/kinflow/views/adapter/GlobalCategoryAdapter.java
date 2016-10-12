@@ -9,7 +9,8 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.OpenMode;
@@ -51,7 +52,8 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
      */
     @Override
     public GlobalCategoryAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemRootView = mInflater.inflate(R.layout.category_button, parent, false);
+//        View itemRootView = mInflater.inflate(R.layout.category_button, parent, false);
+        View itemRootView = mInflater.inflate(R.layout.adapter_navigation_content, parent, false);
         return new GlobalCategoryAdapterViewHolder(itemRootView);
     }
 
@@ -63,8 +65,8 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
      */
     @Override
     public void onBindViewHolder(GlobalCategoryAdapterViewHolder holder, int position) {
-//        holder.bundData2View(mElementList.get(position));
-        holder.bundData2View(mElementList.get(position), position);
+        holder.bundData2View(mElementList.get(position));
+//        holder.bundData2View(mElementList.get(position), position);
     }
 
     private int pixels(int dpi) {
@@ -73,7 +75,9 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
     }
 
     public class GlobalCategoryAdapterViewHolder<T> extends BaseRecyclerViewHolder<Navigation> implements View.OnClickListener {
-        Button categoryButton;
+//        Button categoryButton;
+        private TextView navigationName;
+        private ImageView navigationIcon;
 
         public GlobalCategoryAdapterViewHolder(View itemView) {
             super(itemView);
@@ -81,18 +85,23 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
 
         @Override
         public void initView(View itemRootView) {
-            categoryButton = (Button) itemView.findViewById(R.id.shortcut_button);
-            categoryButton.setOnClickListener(this);
+//            categoryButton = (Button) itemView.findViewById(R.id.shortcut_button);
+//            categoryButton.setOnClickListener(this);
+            navigationIcon = (ImageView) itemRootView.findViewById(R.id.navigation_icon);
+            navigationName = (TextView) itemRootView.findViewById(R.id.navigation_name);
+            itemRootView.setOnClickListener(this);
         }
+
+//        @Override
+//        public void bundData2View(Navigation modelData) {
+//
+//        }
 
         @Override
-        public void bundData2View(Navigation modelData) {
-
-        }
-
-        public void bundData2View(Navigation navigation, int position) {
+        public void bundData2View(Navigation navigation) {
             this.modelData = navigation;
-            categoryButton.setText(navigation.getNavName());
+            int position = mElementList.indexOf(navigation);
+            navigationName.setText(navigation.getNavName());
             //button.setCompoundDrawables(left, top, right, bottom);
 
             int pixels = pixels(Dips.deviceDpi(mContext));
@@ -133,12 +142,13 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
                 }
             }
             drawable.setBounds(0, 0, pixels, pixels);
-            categoryButton.setCompoundDrawables
-                    (null,
-                            drawable,
-                            null,
-                            null);
-            categoryButton.setText(navigation.getNavName());
+//            categoryButton.setCompoundDrawables
+//                    (null,
+//                            drawable,
+//                            null,
+//                            null);
+            navigationIcon.setImageDrawable(drawable);
+            navigationName.setText(navigation.getNavName());
         }
 
         @Override
