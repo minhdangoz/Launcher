@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.OpenMode;
 import com.klauncher.kinflow.navigation.model.Navigation;
-import com.klauncher.kinflow.utilities.Dips;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.utilities.ResourceUtils;
 import com.klauncher.kinflow.views.PopupWindowDialog;
@@ -40,7 +39,12 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
      */
     public GlobalCategoryAdapter(Context context, List<Navigation> elementList) {
         super(context, elementList);
-        mPopupWindowDialog = getPopupWindowDialog();
+        try {
+            mPopupWindowDialog = getPopupWindowDialog();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -52,9 +56,8 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
      */
     @Override
     public GlobalCategoryAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View itemRootView = mInflater.inflate(R.layout.category_button, parent, false);
-        View itemRootView = mInflater.inflate(R.layout.adapter_navigation_content, parent, false);
-        return new GlobalCategoryAdapterViewHolder(itemRootView);
+            View itemRootView = mInflater.inflate(R.layout.adapter_navigation_content, parent, false);
+            return new GlobalCategoryAdapterViewHolder(itemRootView);
     }
 
     /**
@@ -66,7 +69,6 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
     @Override
     public void onBindViewHolder(GlobalCategoryAdapterViewHolder holder, int position) {
         holder.bundData2View(mElementList.get(position));
-//        holder.bundData2View(mElementList.get(position), position);
     }
 
     private int pixels(int dpi) {
@@ -75,7 +77,6 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
     }
 
     public class GlobalCategoryAdapterViewHolder<T> extends BaseRecyclerViewHolder<Navigation> implements View.OnClickListener {
-//        Button categoryButton;
         private TextView navigationName;
         private ImageView navigationIcon;
 
@@ -85,80 +86,82 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
 
         @Override
         public void initView(View itemRootView) {
-//            categoryButton = (Button) itemView.findViewById(R.id.shortcut_button);
-//            categoryButton.setOnClickListener(this);
-            navigationIcon = (ImageView) itemRootView.findViewById(R.id.navigation_icon);
-            navigationName = (TextView) itemRootView.findViewById(R.id.navigation_name);
-            itemRootView.setOnClickListener(this);
+            try {
+                navigationIcon = (ImageView) itemRootView.findViewById(R.id.navigation_icon);
+                navigationName = (TextView) itemRootView.findViewById(R.id.navigation_name);
+                itemRootView.setOnClickListener(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
-//        @Override
-//        public void bundData2View(Navigation modelData) {
-//
-//        }
 
         @Override
         public void bundData2View(Navigation navigation) {
-            this.modelData = navigation;
-            int position = mElementList.indexOf(navigation);
-            navigationName.setText(navigation.getNavName());
-            //button.setCompoundDrawables(left, top, right, bottom);
 
-            int pixels = pixels(Dips.deviceDpi(mContext));
-//            Drawable drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(navigation.getNavIcon()));
-//            drawable.setBounds(0, 0, pixels, pixels);
-//            categoryButton.setCompoundDrawables
-//                    (null,
-//                    drawable,
-//                    null,
-//                    null);
-
-            Drawable drawable = null;
-            String navIcon = navigation.getNavIcon();
-            if (navIcon.startsWith("default_content")) {
-//                drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(navIcon.replace("default_content/","")));
-                switch (position) {
-                    case 0:
-                        drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(R.drawable.notification_tool_light_web));
-                        break;
-                    case 1:
-                        drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(R.drawable.notification_tool_light_novel));
-                        break;
-                    case 2:
-                        drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(R.drawable.notification_tool_light_video));
-                        break;
-                    case 3:
-                        drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(R.drawable.notification_tool_light_funny));
-                        break;
-                    case 4:
-                        drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(R.drawable.notification_tool_light_app));
-                        break;
-                }
-            } else {
-                byte[] decodedString = Base64.decode(navIcon, Base64.DEFAULT);
-                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                if (null != decodedByte) {
-                    drawable = new BitmapDrawable(mContext.getResources(), decodedByte);
-                }
+            try {
+                this.modelData = navigation;
+                int position = mElementList.indexOf(navigation);
+                navigationName.setText(navigation.getNavName());
+//                int pixels = pixels(Dips.deviceDpi(mContext));
+                Drawable drawable = null;
+                String navIcon = navigation.getNavIcon();
+                if (navIcon.startsWith("default_content")) {
+    //                drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(navIcon.replace("default_content/","")));
+                    switch (position) {
+                        case 0:
+                            drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(R.drawable.notification_tool_light_web));
+                            break;
+                        case 1:
+                            drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(R.drawable.notification_tool_light_novel));
+                            break;
+                        case 2:
+                            drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(R.drawable.notification_tool_light_video));
+                            break;
+                        case 3:
+                            drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(R.drawable.notification_tool_light_funny));
+                            break;
+                        case 4:
+                            drawable = ResourceUtils.instance.resId2Drawable(Integer.valueOf(R.drawable.notification_tool_light_app));
+                            break;
+                    }
+                } else {
+                    /*
+                     byte[] decodedString = Base64.decode(navIcon, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            if (null != decodedByte) {
+                Drawable drawable = new BitmapDrawable(context.getResources(), decodedByte);
+                drawable.setBounds(0, 0, pixels,pixels);
+                holder.navigationIcon.setImageDrawable(drawable);
             }
-            drawable.setBounds(0, 0, pixels, pixels);
-//            categoryButton.setCompoundDrawables
-//                    (null,
-//                            drawable,
-//                            null,
-//                            null);
-            navigationIcon.setImageDrawable(drawable);
-            navigationName.setText(navigation.getNavName());
+                     */
+                    byte[] decodedString = Base64.decode(navIcon, Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    if (null != decodedByte) {
+                        drawable = new BitmapDrawable(mContext.getResources(), decodedByte);
+//                        drawable.setBounds(0, 0, pixels,pixels);
+                    }
+                }
+                navigationIcon.setImageDrawable(drawable);
+                navigationName.setText(navigation.getNavName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
 
         @Override
         public void onClick(View v) {
-            boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);//用户允许信息流使用网络
-            if (!userAllowKinflowUseNet) {
-                showFirstConnectedNetHint(this.modelData);
-                return;
+            try {
+                boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);//用户允许信息流使用网络
+                if (!userAllowKinflowUseNet) {
+                    showFirstConnectedNetHint(this.modelData);
+                    return;
+                }
+                clickNavigation(this.modelData);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            clickNavigation(this.modelData);
+
         }
     }
 
