@@ -368,9 +368,15 @@ public class MainControl {
     }
 
     public MainControl(Context mContext, ResponseListener listener) {
-        this.mContext = mContext;
-        this.mListener = listener;
-        getAdViewCardInfo();
+
+        try {
+            this.mContext = mContext;
+            this.mListener = listener;
+            getAdViewCardInfo();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     static final String ADVIEW_CARD_PATH = "adview_card";

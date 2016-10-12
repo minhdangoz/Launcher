@@ -171,16 +171,16 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     public void populateCustomContentContainer() {
         Log.e("Klaucher_0512", "KLauncher populateCustomContentContainer()");
-        //View customView = getLayoutInflater().inflate(R.layout.custom, null);
-//        View customView = getLayoutInflater().inflate(R.layout.activity_main, null);
-        View customView = getLayoutInflater().inflate(R.layout.activity_kinflow2, null);
-        /*mWebView = (WebView) customView.findViewById(R.id.webcontent);
-        if (null != mWebView) {
-            setupWebView();
-		}*/
-        //mLayoutContent = (LinearLayout) customView.findViewById(R.id.layoutcontent);
-        initKinflowView(customView);
-        initKinflowData();
+
+        View customView = null;
+        try {
+            customView = getLayoutInflater().inflate(R.layout.activity_kinflow2, null);
+            initKinflowView(customView);
+            initKinflowData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         CustomContentCallbacks callbacks = new CustomContentCallbacks() {
             @Override
