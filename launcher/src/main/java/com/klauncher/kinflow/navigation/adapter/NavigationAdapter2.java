@@ -39,41 +39,63 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
     PopupWindowDialog mPopupWindowDialog;
 
     public NavigationAdapter2(Context mContext, List<Navigation> navigationList) {
-        this.context = mContext;
-        this.mNavigationList = navigationList;
-        inflater = LayoutInflater.from(mContext);
-        mPopupWindowDialog = getPopupWindowDialog();
+
+        try {
+            this.context = mContext;
+            this.mNavigationList = navigationList;
+            inflater = LayoutInflater.from(mContext);
+            mPopupWindowDialog = getPopupWindowDialog();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void updateNavigationList(List<Navigation> newNavigationList) {
-        //如果不满足个数,则按照位置指定替换..如果超出指定个数则忽略
-        int size = newNavigationList.size();
-        Log.e("Kinflow","要更新的Navigation个数="+newNavigationList.size());
-        if (size==10) {
-            mNavigationList.clear();
-            mNavigationList.addAll(newNavigationList);
-        }else if (size<10) {//啥也不做
-            mNavigationList.clear();
-            mNavigationList.addAll(newNavigationList);
-        }else if (size>10) {
-            mNavigationList.clear();
-            mNavigationList = newNavigationList.subList(0, 10);
+
+        try {
+            //如果不满足个数,则按照位置指定替换..如果超出指定个数则忽略
+            int size = newNavigationList.size();
+            Log.e("Kinflow","要更新的Navigation个数="+newNavigationList.size());
+            if (size==10) {
+                mNavigationList.clear();
+                mNavigationList.addAll(newNavigationList);
+            }else if (size<10) {//啥也不做
+                mNavigationList.clear();
+                mNavigationList.addAll(newNavigationList);
+            }else if (size>10) {
+                mNavigationList.clear();
+                mNavigationList = newNavigationList.subList(0, 10);
+            }
+            notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        notifyDataSetChanged();
+
     }
 
     private void replaceNavigation(Navigation navigation) {
-        int position = navigation.getNavOrder();
-        if (mNavigationList.size()>position) {
-           mNavigationList.remove(position);
-            mNavigationList.add(position,navigation);
+
+        try {
+            int position = navigation.getNavOrder();
+            if (mNavigationList.size()>position) {
+               mNavigationList.remove(position);
+                mNavigationList.add(position,navigation);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     @Override
     public NavigationAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = this.inflater.inflate(R.layout.adapter_navigation2, parent, false);
-        return new NavigationAdapterViewHolder(view);
+        try {
+            View view = this.inflater.inflate(R.layout.adapter_navigation2, parent, false);
+            return new NavigationAdapterViewHolder(view);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
