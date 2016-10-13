@@ -26,5 +26,12 @@
         "iconsize": "72",
         "textsize": "14",
         "hotseat": "6"
+    },
+    "vivo V3Max A": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "64",
+        "textsize": "13",
+        "hotseat": "5"
     }
 }

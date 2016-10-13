@@ -40,5 +40,12 @@
         "iconsize": "62",
         "textsize": "13",
         "hotseat": "5"
+    },
+    "OPPO A37m": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "53",
+        "textsize": "13",
+        "hotseat": "5"
     }
 }
