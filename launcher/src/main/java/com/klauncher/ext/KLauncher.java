@@ -135,6 +135,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     private MainControl mMainControl;
 
     private boolean mNetworkConnected = true;
+    long startTime,endTime;
     private BroadcastReceiver mWifiChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -405,7 +406,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     private void initKinflowView(View kinflowRootView){
         //底部刷新
         mPullRefreshScrollView = (PullToRefreshScrollView) kinflowRootView.findViewById(R.id.pull_refresh_scrollview);
-        mPullRefreshScrollView.setBackgroundColor(Color.parseColor("#29588F"));
+        mPullRefreshScrollView.setBackgroundColor(Color.parseColor("#51A7C9"));
         //头部
         mLinearLayoutHeader = (LinearLayout) kinflowRootView.findViewById(R.id.kinflow_scrolling_header);
 //        tv_hotWordTop = (TextView) mLinearLayoutHeader.findViewById(R.id.hot_word_top);
@@ -458,6 +459,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);//用户允许信息流使用网络
                 if (userAllowKinflowUseNet) {//用户允许使用网络
+                    startTime = System.currentTimeMillis();
+                    Log.e("下拉刷新","下拉刷新的开始时间:"+startTime);
                     requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
 //                    requestKinflowData(MessageFactory.REQUEST_SOUGOU_SEARCH_ARTICLE);
                 } else {//用户不允许使用网络
@@ -966,6 +969,10 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 e1.printStackTrace();
             }
         }
+
+        endTime = System.currentTimeMillis();
+        Log.e("下拉刷新","下拉刷新的结束时间:"+endTime);
+        Log.e("下拉刷新","下拉刷新耗时:"+String.valueOf(endTime-startTime)+"\n"+"==================================================================="+"\n");
     }
 
     @Override

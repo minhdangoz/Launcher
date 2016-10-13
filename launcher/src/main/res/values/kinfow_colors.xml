@@ -35,7 +35,8 @@
 
     <!--Kinflow第二版-->
     <!--<color name="kinflow_title_background">#57ADE3</color>-->
-    <color name="kinflow_title_background">#29588F</color>
+    <!--<color name="kinflow_title_background">#29588F</color>-->
+    <color name="kinflow_title_background">#51A7C9</color>
     <color name="kinflow_all_category_backgroud_color">#52A4D7</color><!--82  164 215-->
     <color name="kinflow_all_shortcut_backgroud_color">#F2F2F2</color><!--242 242 242-->
 </resources>
