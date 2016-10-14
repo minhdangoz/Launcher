@@ -269,6 +269,7 @@ public class PingManager {
     public static final String KEY_PULL_UP_APP_CRC32= "pullUpAppCRC32";
     public static final String KEY_CARD_CONTENT_FROM= "cardContentFrom";
     public static final String KEY_CARD_SECOND_TYPE_ID= "cardSecondTypeId";
+    public static final String KEY_NAVIGATION_TYPE= "navigationType";
     public static final String KEY_NAVIGATION_URL= "navigationUrl";
     public static final String KEY_NAVIGATION_ORDER= "navigationOrder";
     public static final String KEY_BANNER_FROM= "bannerFrom";
@@ -284,6 +285,8 @@ public class PingManager {
     public static final String VALUE_HOTWORD_CONTENT_FROM_SHENMA= "shenma";
     public static final String VALUE_CARD_CONTENT_FROM_YIDIANZIXUN= "yiDianZiXun";
     public static final String VALUE_CARD_CONTENT_FROM_JINRITOUTIAO= "jinRiTouTiao";
+    public static final String VALUE_NAVIGATION_TYPE_CONTENT = "navigationContent";
+    public static final String VALUE_NAVIGATION_TYPE_WEB = "navigationWeb";
 
     public static boolean sIsKinflowIsUsed = false;
 
@@ -441,10 +444,11 @@ public class PingManager {
      * @param navigation
      * @return
      */
-    public Map<String, String> reportUserAction4NavigationOpen(Navigation navigation,String pullUpAppPackageName){
+    public Map<String, String> reportUserAction4NavigationOpen(String navigationType,Navigation navigation,String pullUpAppPackageName){
         sIsKinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加事件key---value
+        pingMap.put(KEY_NAVIGATION_TYPE,navigationType);
         pingMap.put(KEY_NAVIGATION_URL, navigation.getNavUrl());
         pingMap.put(KEY_NAVIGATION_ORDER, String.valueOf(navigation.getNavOrder()));
         pingMap.put(KEY_PULL_UP_APP_PACKAGENAME,pullUpAppPackageName);
