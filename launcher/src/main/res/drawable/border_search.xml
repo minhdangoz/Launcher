@@ -8,7 +8,9 @@
         android:top="1dp">
         <shape>
             <corners android:radius="2dp" />
-            <solid android:color="#ffffff" />
+            <!--<solid android:color="#80C2EA" />-->
+            <!--<solid android:color="#577CA6" />-->
+            <solid android:color="#72B4D3" />
             <padding
                 android:bottom="10dp"
                 android:left="10dp"

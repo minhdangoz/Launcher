@@ -265,6 +265,7 @@ public class PingManager {
     public static final String KEY_FOLFER_PLUS_PACKAGE= "packageName";
     public static final String KEY_HOTWORD_CONTENT_FROM= "hotWordFrom";
     public static final String KEY_PULL_UP_APP_PACKAGENAME= "pullUpAppPackageName";
+    public static final String POSITION_IN_LIST= "position_in_list";
     public static final String KEY_PULL_UP_APP_CRC32= "pullUpAppCRC32";
     public static final String KEY_CARD_CONTENT_FROM= "cardContentFrom";
     public static final String KEY_CARD_SECOND_TYPE_ID= "cardSecondTypeId";
@@ -403,12 +404,50 @@ public class PingManager {
         return  pingMap;
     }
 
+    /**
+     * 打开新闻(信息流第二版)
+     * @param fromName 内容来源
+     * @param cardSecondTypeId 内容id
+     * @param pullUpAppPackageName 打开新闻的app
+     * @param position 所在位置
+     * @return
+     */
+    public Map<String, String> reportUserAction4NewsOpen(String fromName,String cardSecondTypeId,String pullUpAppPackageName,int position){
+        sIsKinflowIsUsed = true;
+        Map<String, String> pingMap = new HashMap<>();
+        //添加事件key---value
+        pingMap.put(KEY_CARD_CONTENT_FROM, fromName);
+        pingMap.put(KEY_CARD_SECOND_TYPE_ID,cardSecondTypeId);
+        pingMap.put(KEY_PULL_UP_APP_PACKAGENAME,pullUpAppPackageName);
+        pingMap.put(POSITION_IN_LIST,String.valueOf(position));
+        ////添加事件tag
+        MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_NEWS_OPEN,pingMap);
+        return  pingMap;
+    }
+
     public Map<String, String> reportUserAction4Navigation(Navigation navigation){
         sIsKinflowIsUsed = true;
         Map<String, String> pingMap = new HashMap<>();
         //添加事件key---value
         pingMap.put(KEY_NAVIGATION_URL, navigation.getNavUrl());
         pingMap.put(KEY_NAVIGATION_ORDER, String.valueOf(navigation.getNavOrder()));
+        //添加事件tag
+        MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_NAVIGATION, pingMap);
+        return  pingMap;
+    }
+
+    /**
+     * 导航被打开
+     * @param navigation
+     * @return
+     */
+    public Map<String, String> reportUserAction4NavigationOpen(Navigation navigation,String pullUpAppPackageName){
+        sIsKinflowIsUsed = true;
+        Map<String, String> pingMap = new HashMap<>();
+        //添加事件key---value
+        pingMap.put(KEY_NAVIGATION_URL, navigation.getNavUrl());
+        pingMap.put(KEY_NAVIGATION_ORDER, String.valueOf(navigation.getNavOrder()));
+        pingMap.put(KEY_PULL_UP_APP_PACKAGENAME,pullUpAppPackageName);
         //添加事件tag
         MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_NAVIGATION, pingMap);
         return  pingMap;

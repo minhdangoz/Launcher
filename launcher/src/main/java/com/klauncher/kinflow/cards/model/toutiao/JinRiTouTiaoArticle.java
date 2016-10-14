@@ -4,16 +4,21 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.klauncher.kinflow.common.utils.DateUtils;
+import com.klauncher.kinflow.utilities.CollectionsUtils;
+import com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
  * Created by xixionghui on 16/6/13.
  */
-public class JinRiTouTiaoArticle implements Parcelable {
+public class JinRiTouTiaoArticle extends com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData implements Parcelable {
 
     public static final String TAG = "Kinflow";
 
@@ -22,6 +27,7 @@ public class JinRiTouTiaoArticle implements Parcelable {
 //    private String site;//新闻的来源:site不需要了，用source字段
     private String source;//新闻的来源:site不需要了，用source字段
     private String url;//新闻的来源的网址
+    private long behot_time;//新闻展示时间:第二版出现,替代publish_time和display_time
     private long publish_time;//新闻的发表时间:时间戳
     private long display_time;//新闻展示时间:时间戳
     private String abstractArticle;//新闻的简介
@@ -30,6 +36,9 @@ public class JinRiTouTiaoArticle implements Parcelable {
     private int digg_count;//顶的数量
     private int bury_count;//踩的数量
     private int comment_count;//评论的数量
+
+    private String share_url;//新闻的分享链接:第二版出现
+    private String label;//细粒度的文章标签:如置顶,图片,视频,推广等。由于 tip 和 label 都可以控制标签显示,所以二者有优先 级,label 如果有值则使用 label,如果没有 则去判断 tip 字段
 
     private ImageInfo middle_image;//右图的信息
     private List<ImageInfo> large_image_list;//大图列表的信息
@@ -42,11 +51,14 @@ public class JinRiTouTiaoArticle implements Parcelable {
                 ", title='" + title + '\'' +
                 ", source='" + source + '\'' +
                 ", url='" + url + '\'' +
+                ", behot_time='" + behot_time + '\'' +
                 ", publish_time=" + publish_time +
                 ", display_time=" + display_time +
                 ", abstractArticle='" + abstractArticle + '\'' +
                 ", article_url='" + article_url + '\'' +
+                ", share_url='" + share_url + '\'' +
                 ", tip=" + tip +
+                ", label=" + label +
                 ", digg_count=" + digg_count +
                 ", bury_count=" + bury_count +
                 ", comment_count=" + comment_count +
@@ -56,18 +68,91 @@ public class JinRiTouTiaoArticle implements Parcelable {
                 '}';
     }
 
+    /**
+     * 第一版
+     * @param articleJsonObject
+     */
+//    public JinRiTouTiaoArticle(JSONObject articleJsonObject) {
+//        Log.e(TAG, "获取到的今日头条JSON对象:\n"+articleJsonObject.toString());
+//        try {
+//            this.group_id = articleJsonObject.optLong("group_id");//新闻的 id
+//            this.title = articleJsonObject.optString("title");//新闻的标题
+//            this.source = articleJsonObject.optString("source");//新闻的来源
+//            this.url = articleJsonObject.optString("url");//新闻的来源的网址
+//            this.publish_time = articleJsonObject.optLong("publish_time");//新闻的发表时间:时间戳
+//            this.display_time = articleJsonObject.optLong("display_time");//新闻展示时间:时间戳
+//            this.abstractArticle = articleJsonObject.optString("abstract");//新闻的简介
+//            this.article_url = articleJsonObject.optString("article_url");//新闻的头条网址
+//            this.tip = articleJsonObject.optInt("tip");//新闻的热、荐的状态:0, 无额外信息. 默认 ;1 代表 热  ; 10 代表 推荐  ; 11 代表推荐 + 热 (1|2)
+//            this.digg_count = articleJsonObject.optInt("digg_count");//顶的数量
+//            this.bury_count = articleJsonObject.optInt("bury_count");//踩的数量
+//            this.comment_count = articleJsonObject.optInt("comment_count");//评论的数量
+//            //1,右图信息
+//            if (articleJsonObject.isNull("middle_image")) {//图片信息为空
+//                Log.e(TAG, "parseJinRiTouTiao: 右图信息为空");
+//            } else {//对JinRiTouTiaoArticle.ImageInfo解析,middleImage全部替换为image
+//                this.middle_image = new ImageInfo(articleJsonObject.optJSONObject("middle_image"));
+//            }
+//            //2,三图列表的信息
+//            List<ImageInfo> imageInfos_three = new ArrayList<>();
+//            if (articleJsonObject.isNull("image_list")) {
+//                Log.e(TAG, "parseJinRiTouTiao: 三图列表的信息为空");
+//            } else {
+//                JSONArray imageListJSONArray = articleJsonObject.optJSONArray("image_list");
+//                if (null == imageListJSONArray || imageListJSONArray.length() == 0) {
+//                    Log.e(TAG, "parseJinRiTouTiao: 三图列表的信息为空");
+//                } else {
+//                    int imageListJSONArrayLength = imageListJSONArray.length();
+//                    for (int i = 0; i < imageListJSONArrayLength; i++) {
+//                        imageInfos_three.add(new ImageInfo(imageListJSONArray.optJSONObject(i)));
+//                    }
+//                }
+//            }
+//            this.image_list = imageInfos_three;
+//            //3,大图列表的信息
+//            List<ImageInfo> imageInfos_large = new ArrayList<>();
+//            if (articleJsonObject.isNull("large_image_list")) {
+//                Log.e(TAG, "parseJinRiTouTiao: 大图列表的信息为空");
+//            } else {
+//                JSONArray largeImageJSONArray = articleJsonObject.optJSONArray("large_image_list");
+//                if (null == largeImageJSONArray || largeImageJSONArray.length() == 0) {
+//                    Log.e(TAG, "parseJinRiTouTiao: 大图列表的信息为空");
+//                } else {
+//                    int largeImageLstJSONArrayLength = largeImageJSONArray.length();
+//                    for (int j = 0; j < largeImageLstJSONArrayLength; j++) {
+//                        imageInfos_large.add(new ImageInfo(largeImageJSONArray.optJSONObject(j)));
+//                    }
+//                }
+//            }
+//            this.large_image_list = imageInfos_large;
+//        } catch (Exception e) {
+//            Log.e(TAG, "JinRiTouTiaoArticle: 解析JinRiTouTiaoArticle时,出错" + e.getMessage());
+//        }
+//    }
+
+    /**
+     * 第二版
+     * @param articleJsonObject
+     */
     public JinRiTouTiaoArticle(JSONObject articleJsonObject) {
-        Log.e(TAG, "获取到的今日头条JSON对象:\n"+articleJsonObject.toString());
+//        Log.e(TAG, "获取到的今日头条JSON对象:\n"+articleJsonObject.toString());
         try {
             this.group_id = articleJsonObject.optLong("group_id");//新闻的 id
             this.title = articleJsonObject.optString("title");//新闻的标题
             this.source = articleJsonObject.optString("source");//新闻的来源
-            this.url = articleJsonObject.optString("url");//新闻的来源的网址
-            this.publish_time = articleJsonObject.optLong("publish_time");//新闻的发表时间:时间戳
-            this.display_time = articleJsonObject.optLong("display_time");//新闻展示时间:时间戳
-            this.abstractArticle = articleJsonObject.optString("abstract");//新闻的简介
             this.article_url = articleJsonObject.optString("article_url");//新闻的头条网址
+            this.url = articleJsonObject.optString("url");//新闻的来源的网址
+            this.behot_time = articleJsonObject.optLong("behot_time");//新闻展示时间:第二版出现,替代publish_time和display_time
+            if (articleJsonObject.optLong("publish_time")==0) {
+                this.publish_time = this.behot_time;//如果没有publish_time这个字段,则使用
+            } else {
+                this.publish_time = articleJsonObject.optLong("publish_time");//新闻的发表时间:时间戳
+            }
+            this.display_time = articleJsonObject.optLong("display_time");//新闻展示时间aa:时间戳
+            this.abstractArticle = articleJsonObject.optString("abstract");//新闻的简介
+            this.share_url = articleJsonObject.optString("share_url");//新闻的分享链接
             this.tip = articleJsonObject.optInt("tip");//新闻的热、荐的状态:0, 无额外信息. 默认 ;1 代表 热  ; 10 代表 推荐  ; 11 代表推荐 + 热 (1|2)
+            this.label = articleJsonObject.optString("label");//细粒度的文章标签:label 都可以控制标签显示,所以二者有优先 级,label 如果有值则使用 label,如果没有 则去判断 tip 字段
             this.digg_count = articleJsonObject.optInt("digg_count");//顶的数量
             this.bury_count = articleJsonObject.optInt("bury_count");//踩的数量
             this.comment_count = articleJsonObject.optInt("comment_count");//评论的数量
@@ -109,6 +194,8 @@ public class JinRiTouTiaoArticle implements Parcelable {
                 }
             }
             this.large_image_list = imageInfos_large;
+            //设置类型
+            setKinflowConentType(BaseRecyclerViewAdapterData.TYPE_NEWS_JINRITOUTIAO);
         } catch (Exception e) {
             Log.e(TAG, "JinRiTouTiaoArticle: 解析JinRiTouTiaoArticle时,出错" + e.getMessage());
         }
@@ -146,8 +233,20 @@ public class JinRiTouTiaoArticle implements Parcelable {
         this.url = url;
     }
 
+    public long getBehot_time() {
+        return behot_time;
+    }
+
+    public void setBehot_time(long behot_time) {
+        this.behot_time = behot_time;
+    }
+
     public long getPublish_time() {
-        return publish_time;
+        long publishTime = this.publish_time;
+        if (publishTime==0) publishTime = this.display_time;
+        if (publishTime==0) publishTime = this.behot_time;
+        if (publishTime==0) publishTime= DateUtils.getInstance().calendar2Seconds(Calendar.getInstance());
+        return publishTime;
     }
 
     public void setPublish_time(long publish_time) {
@@ -178,12 +277,28 @@ public class JinRiTouTiaoArticle implements Parcelable {
         this.article_url = article_url;
     }
 
+    public String getShare_url() {
+        return share_url;
+    }
+
+    public void setShare_url(String share_url) {
+        this.share_url = share_url;
+    }
+
     public int getTip() {
         return tip;
     }
 
     public void setTip(int tip) {
         this.tip = tip;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public int getDigg_count() {
@@ -234,6 +349,19 @@ public class JinRiTouTiaoArticle implements Parcelable {
         this.image_list = image_list;
     }
 
+    public static final int IMAGE_TYPE_0_IMAGE = 0;
+    public static final int IMAGE_TYPE_1_IMAGE = 1;
+    public static final int IMAGE_TYPE_3_IMAGE = 3;
+    public static final int IMAGE_TYPE_LARGE_IMAGE = 10;
+
+    //图片展示的优 先 级 顺 序 为 large_image_list> image_list> middle_image>无图
+    public int getImageType () {
+        if (!CollectionsUtils.collectionIsNull(this.large_image_list)) return IMAGE_TYPE_LARGE_IMAGE;
+        if (!CollectionsUtils.collectionIsNull(this.image_list)) return IMAGE_TYPE_3_IMAGE;
+        if (null!=this.middle_image) return IMAGE_TYPE_1_IMAGE;
+        return IMAGE_TYPE_0_IMAGE;
+    }
+
     public static Creator<JinRiTouTiaoArticle> getCREATOR() {
         return CREATOR;
     }
@@ -252,11 +380,14 @@ public class JinRiTouTiaoArticle implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.source);
         dest.writeString(this.url);
+        dest.writeLong(this.behot_time);
         dest.writeLong(this.publish_time);
         dest.writeLong(this.display_time);
         dest.writeString(this.abstractArticle);
         dest.writeString(this.article_url);
+        dest.writeString(this.share_url);
         dest.writeInt(this.tip);
+        dest.writeString(this.label);
         dest.writeInt(this.digg_count);
         dest.writeInt(this.bury_count);
         dest.writeInt(this.comment_count);
@@ -270,11 +401,14 @@ public class JinRiTouTiaoArticle implements Parcelable {
         this.title = in.readString();
         this.source = in.readString();
         this.url = in.readString();
+        this.behot_time = in.readLong();
         this.publish_time = in.readLong();
         this.display_time = in.readLong();
         this.abstractArticle = in.readString();
         this.article_url = in.readString();
+        this.share_url = in.readString();
         this.tip = in.readInt();
+        this.label = in.readString();
         this.digg_count = in.readInt();
         this.bury_count = in.readInt();
         this.comment_count = in.readInt();

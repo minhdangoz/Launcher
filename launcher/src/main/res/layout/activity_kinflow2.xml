@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.handmark.pulltorefresh.library.PullToRefreshScrollView
+    android:id="@+id/pull_refresh_scrollview"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:paddingBottom="12dp"
+    android:scrollbars="none"
+    ptr:ptrAnimationStyle="flip"
+    ptr:ptrMode="both"
+    >
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:gravity="center">
+
+            <include
+                android:id="@+id/kinflow_scrolling_header"
+                layout="@layout/kinflow_scrolling_header"/>
+
+            <!--
+            <Button
+                android:id="@+id/connect_net"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_below="@id/kinflow_scrolling_header"
+                android:gravity="center"
+                android:text="网络不给力,请检查网络设置"
+                android:textColor="@color/color_black"
+                android:background="#FDEEBB"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+            -->
+            <com.klauncher.kinflow.views.commonViews.NoNetCardView
+                android:id="@+id/connect_net"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/kinflow_scrolling_header"
+                android:visibility="gone"/>
+
+            <View
+                android:id="@+id/kinflow_news_top_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/connect_net"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="#EFEFEF"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/kinflow_body"
+                style="@style/kinflow_commont_match_parent_width"
+                android:layout_below="@id/kinflow_news_top_line"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                />
+
+            <!--
+            <TextView
+                android:id="@+id/load_more"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@id/kinflow_body"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:text="加载更多"
+                android:textColor="@color/color_black"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+            -->
+        </RelativeLayout>
+    </ScrollView>
+
+</com.handmark.pulltorefresh.library.PullToRefreshScrollView>

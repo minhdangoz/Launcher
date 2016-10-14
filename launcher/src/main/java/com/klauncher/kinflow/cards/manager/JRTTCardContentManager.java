@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class JRTTCardContentManager extends BaseCardContentManager {
     public static final String TAG = "Kinflow";
-    public static final int REQUEST_ARTICLE_COUNT = 5;
+    public static final int REQUEST_ARTICLE_COUNT = 25;
     private CardInfo mCardInfo;
     private Handler mainControlHandler;//MainControl的handler
 
@@ -58,9 +58,9 @@ public class JRTTCardContentManager extends BaseCardContentManager {
 //                            Log.e(TAG, "handleMessage: 获取头条article成功");
                             jinRiTouTiaoArticleList.clear();
                             jinRiTouTiaoArticleList = (List<JinRiTouTiaoArticle>) msg.obj;
-//                            Log.e(TAG, "获取到的今日头条个数="+jinRiTouTiaoArticleList.size()+" ,分别为:\n");
-//                            for (int j = 0 ; j < jinRiTouTiaoArticleList.size() ; j++) {
-//                                Log.e(TAG, "今日头条toString结果 = "+jinRiTouTiaoArticleList.get(j).toString());
+//                            Log.e(TAG, "获取到的今日头条个数="+mJinRiTouTiaoArticleList.size()+" ,分别为:\n");
+//                            for (int j = 0 ; j < mJinRiTouTiaoArticleList.size() ; j++) {
+//                                Log.e(TAG, "今日头条toString结果 = "+mJinRiTouTiaoArticleList.get(j).toString());
 //                            }
                         } else {//获取article失败
                             Log.e(TAG, "handleMessage: 获取头条失败");
@@ -136,8 +136,8 @@ public class JRTTCardContentManager extends BaseCardContentManager {
     }
 
     public void setJinRiTouTiaoArticleList(List<JinRiTouTiaoArticle> jinRiTouTiaoArticleList) {
-//        this.jinRiTouTiaoArticleList.clear();
-//        this.jinRiTouTiaoArticleList.addAll(jinRiTouTiaoArticleList);
+//        this.mJinRiTouTiaoArticleList.clear();
+//        this.mJinRiTouTiaoArticleList.addAll(mJinRiTouTiaoArticleList);
         this.jinRiTouTiaoArticleList = jinRiTouTiaoArticleList;
     }
 

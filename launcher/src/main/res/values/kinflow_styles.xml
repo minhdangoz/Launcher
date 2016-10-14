@@ -31,4 +31,37 @@
     <style name="kinflow_hot_words_table_row" parent="@style/kinflow_commont_match_parent_width">
         <item name="android:layout_marginTop">12dp</item>
     </style>
+    
+    <style name="kinflow_total_category_button_style" parent="kinflow_commont_match_parent_width">
+        <item name="android:background">@drawable/kinflow_cagetory_background_selector</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:textColor">@color/kinflow_color_typeface_main</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="kinflow_shortcut_button_style" parent="kinflow_commont_match_parent_width">
+        <item name="android:background">@drawable/kinflow_shortcut_background_selector</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:textColor">@color/color_black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

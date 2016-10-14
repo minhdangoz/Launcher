@@ -38,4 +38,16 @@ public class DeviceState {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+
+    /**
+     * @return true if clock is set to 24-hour mode
+     */
+    public static boolean get24HourMode(final Context context) {
+        return android.text.format.DateFormat.is24HourFormat(context);
+    }
+
+
+    public static boolean get12HourMode(final Context context) {
+        return !android.text.format.DateFormat.is24HourFormat(context);
+    }
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="searchbar">false</item>
+    <item type="id" name="inputurl">false</item>
+    <item type="id" name="searchicon">false</item>
+    <item type="id" name="search">false</item>
+    <item type="id" name="splitline">false</item>
+</resources>

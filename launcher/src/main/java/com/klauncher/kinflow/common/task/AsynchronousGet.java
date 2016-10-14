@@ -23,7 +23,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.klauncher.kinflow.cards.model.CardInfo;
+import com.klauncher.kinflow.cards.model.server.ServerController;
 import com.klauncher.kinflow.cards.model.yidian.YiDianModel;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
@@ -119,7 +119,11 @@ public final class AsynchronousGet {
                                 parseHotWord(responseBodyStr);
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
-                                parseNavigation(responseBodyStr);
+                                parseNavigation(responseBodyStr, Navigation.rootJsonKey_WEB_NAVIGATION);
+                                break;
+                            case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
+                                log("准备解析全局内容导航:\n" + responseBodyStr);
+                                parseNavigation(responseBodyStr, Navigation.rootJsonKey_CONTENT_NAVIGATION);
                                 break;
                             //此版本已没有天气模块,但是保留天气模块相关代码
 //                    case MessageFactory.MESSAGE_WHAT_OBTAION_CITY_NAME:
@@ -139,6 +143,9 @@ public final class AsynchronousGet {
                                 break;
                             case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
                                 parseConfig(responseBodyStr);
+                                break;
+                            case MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER:
+                                parseServerController(responseBodyStr);
                                 break;
                             default:
                                 log("未知请求,URL=" + url);
@@ -190,7 +197,7 @@ public final class AsynchronousGet {
         }
     }
 
-    void parseNavigation(String responseBody) {
+    void parseNavigation(String responseBody,String jsonRootKey) {
         List<Navigation> navigationList = new ArrayList<>();
         ;
         try {
@@ -201,7 +208,8 @@ public final class AsynchronousGet {
                 msg.arg1 = OBTAIN_RESULT_NULL;
                 return;
             }
-            JSONArray navigationJsonArray = jsonObjectAll.getJSONArray("cards");
+//            JSONArray navigationJsonArray = jsonObjectAll.getJSONArray("cards");//kinfow1
+            JSONArray navigationJsonArray = jsonObjectAll.getJSONArray(jsonRootKey);//kinfow2
             int navigationsLength = navigationJsonArray.length();
             if (null == navigationJsonArray || navigationsLength == 0) {
                 msg.arg1 = OBTAIN_RESULT_NULL;
@@ -209,8 +217,9 @@ public final class AsynchronousGet {
             }
 
             for (int i = 0; i < navigationsLength; i++) {
-                Navigation navigation = new Navigation();
+//                Navigation navigation = new Navigation();
                 JSONObject navigationJsonObject = navigationJsonArray.getJSONObject(i);
+                /*
                 navigation.setNavId(navigationJsonObject.optString(Navigation.NAV_ID));
                 navigation.setNavName(navigationJsonObject.optString(Navigation.NAV_NAME));
                 navigation.setNavIcon(navigationJsonObject.optString(Navigation.NAV_ICON));
@@ -230,16 +239,19 @@ public final class AsynchronousGet {
                     }
                 }
                 navigation.setNavOpenOptions(opsList);
-                navigationList.add(navigation);
+                */
+                navigationList.add(new Navigation(navigationJsonObject));
             }
             msg.arg1 = SUCCESS;
             msg.obj = navigationList;
-            CommonShareData.putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(Calendar.getInstance().getTimeInMillis()));
-            CommonShareData.putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, jsonObjectAll.optString(Const.NAVIGATION_SERVER_UPDATE_INTERVAL));
-            CacheNavigation.getInstance().putNavigationList(navigationList);
+            if (jsonRootKey.equals(Navigation.rootJsonKey_WEB_NAVIGATION)) {
+                CommonShareData.putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(Calendar.getInstance().getTimeInMillis()));
+                CommonShareData.putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, jsonObjectAll.optString(Const.NAVIGATION_SERVER_UPDATE_INTERVAL));
+                CacheNavigation.getInstance().putNavigationList(navigationList);
+            }
         } catch (Exception e) {
             msg.arg1 = PARSE_ERROR;
-            Log.d("AsynchronousGet", ("Navigation解析出错：" + e.getMessage()));
+            Log.e("AsynchronousGet", ("Navigation解析出错：" + e.getMessage()));
         } finally {
             handler.sendMessage(msg);
 //            if (msg.arg1 == SUCCESS)
@@ -464,7 +476,7 @@ public final class AsynchronousGet {
                             }
                         } else if ("kinfo".equals(key)) {
                             String value = funJson.optString(key);
-                            CommonShareData.putString(key,value);
+                            CommonShareData.putString(key, value);
                         } else if ("bd_prct".equals(key)) {
                             String value = funJson.optString(key);
                             CommonShareData.putString(key, value);
@@ -505,6 +517,44 @@ public final class AsynchronousGet {
 //                    + "  当前设备名称= " + Build.MODEL
 //            );
         }
+    }
+
+    public void parseServerController(String responseJsonStr) {
+        /*
+        try {
+            JSONObject responseJsonObject = new JSONObject(responseJsonStr);
+            log("开始解析服务器端控制ServiceController,开始打印:\n");
+            ServerController serverController = new ServerController(responseJsonObject);
+            if (serverController.isNull()) {
+                msg.arg1 = OBTAIN_RESULT_NULL;
+            }else {
+                msg.arg1 = SUCCESS;
+                msg.obj = serverController;
+                handler.sendMessage(msg);
+            }
+        } catch (Exception e) {
+            log("解析服务端控制器的时候出错:"+e.getMessage());
+            e.printStackTrace();
+        }
+        */
+
+        try {
+            JSONObject responseJsonObject = new JSONObject(responseJsonStr);
+            log("开始解析服务器端控制ServiceController,开始打印:\n");
+            ServerController serverController = new ServerController(responseJsonObject);
+            if (serverController.isNull()) {
+                msg.arg1 = OBTAIN_RESULT_NULL;
+            }else {
+                msg.arg1 = SUCCESS;
+                msg.obj = serverController;
+            }
+        } catch (Exception e) {
+            log("解析服务端控制器的时候出错:"+e.getMessage());
+            msg.arg1 = PARSE_ERROR;
+        } finally {
+            handler.sendMessage(msg);
+        }
+
     }
 
     final protected static void log(String msg) {

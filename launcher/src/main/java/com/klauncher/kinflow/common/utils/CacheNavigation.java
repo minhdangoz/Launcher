@@ -41,6 +41,7 @@ public class CacheNavigation {
     public static final String DEFAULT_NAVIGATION_ICON_7 = "nav7";
 
     public static final int DEFAULT_NAVIGATION_COUNT = 8;
+    public static final int DEFAULT_GLOBAL_NAVIGATION_COUNT = 5;
 
     String fileName = "cacheNavigation";
 
@@ -263,7 +264,7 @@ public class CacheNavigation {
                     navigation.setNavUrl("http://sina.cn/");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
-                    navigation.setNavIcon("default/sina");
+                    navigation.setNavIcon("default_web/sina");
                     //有待剩余字段完成..
                     break;
                 case DEFAULT_ORDER_1:
@@ -273,7 +274,7 @@ public class CacheNavigation {
                     navigation.setNavUrl("http://www.taobao.com");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
-                    navigation.setNavIcon("default/taobao");
+                    navigation.setNavIcon("default_web/taobao");
                     //有待剩余字段完成..
                     break;
                 case DEFAULT_ORDER_2:
@@ -283,7 +284,7 @@ public class CacheNavigation {
                     navigation.setNavUrl("http://m.jd.com");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
-                    navigation.setNavIcon("default/jd");
+                    navigation.setNavIcon("default_web/jd");
                     //有待剩余字段完成..
                     break;
                 case DEFAULT_ORDER_3:
@@ -293,7 +294,7 @@ public class CacheNavigation {
                     navigation.setNavUrl("http://m.58.com");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
-                    navigation.setNavIcon("default/tongcheng");
+                    navigation.setNavIcon("default_web/tongcheng");
                     //有待剩余字段完成..
                     break;
                 case DEFAULT_ORDER_4:
@@ -303,7 +304,7 @@ public class CacheNavigation {
                     navigation.setNavUrl("http://i.meituan.com/");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
-                    navigation.setNavIcon("default/meituan");
+                    navigation.setNavIcon("default_web/meituan");
                     //有待剩余字段完成..
                     break;
                 case DEFAULT_ORDER_5:
@@ -313,7 +314,7 @@ public class CacheNavigation {
                     navigation.setNavUrl("http://m.ctrip.com");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
-                    navigation.setNavIcon("default/ctrip");
+                    navigation.setNavIcon("default_web/ctrip");
                     //有待剩余字段完成..
                     break;
                 case DEFAULT_ORDER_6:
@@ -323,7 +324,7 @@ public class CacheNavigation {
                     navigation.setNavUrl("http://www.youku.com/");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
-                    navigation.setNavIcon("default/youku");
+                    navigation.setNavIcon("default_web/youku");
                     //有待剩余字段完成..
                     break;
                 case DEFAULT_ORDER_7:
@@ -333,7 +334,7 @@ public class CacheNavigation {
                     navigation.setNavUrl("http://m.hao123.com/");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
-                    navigation.setNavIcon("default/");
+                    navigation.setNavIcon("default_web/more");
                     //有待剩余字段完成..
                     break;
             }
@@ -342,6 +343,72 @@ public class CacheNavigation {
         }
     }
 
+
+    /**
+     * 创建默认的Navigation对象，此对象不包含icon属性。
+     *
+     * @param order
+     * @return
+     */
+    public Navigation createDefaultGlobalNavigation(int order) {
+        synchronized (this) {
+            Navigation navigation = new Navigation();
+            List<String> navOpenOptions = new ArrayList<>();
+            switch (order) {
+                case DEFAULT_ORDER_0://网址
+                    navigation.setNavOrder(DEFAULT_ORDER_0);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_0));
+                    navigation.setNavName("网址");
+                    navigation.setNavUrl("http://m.hao123.com/?union=1&from=1000001a&tn=1000001a");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default_content/notification_tool_light_web");
+                    //有待剩余字段完成..
+                    break;
+                case DEFAULT_ORDER_1://小说
+                    navigation.setNavOrder(DEFAULT_ORDER_1);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_1));
+                    navigation.setNavName("小说");
+                    navigation.setNavUrl("http://book.hao123.com/?union=1&from=1000001a&tn=1000001a");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default_content/notification_tool_light_novel");
+                    //有待剩余字段完成..
+                    break;
+                case DEFAULT_ORDER_2:
+                    navigation.setNavOrder(DEFAULT_ORDER_2);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_2));
+                    navigation.setNavName("视频");
+                    navigation.setNavUrl("http://v.hao123.com/?union=1&from=1000001a&tn=1000001a");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default_content/notification_tool_light_video");
+                    //有待剩余字段完成..
+                    break;
+                case DEFAULT_ORDER_3:
+                    navigation.setNavOrder(DEFAULT_ORDER_3);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_3));
+                    navigation.setNavName("奇趣");
+                    navigation.setNavUrl("http://www.hao123.com/qiwenqushi/?union=1&from=1000001a&tn=1000001a");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default_content/notification_tool_light_funny");
+                    //有待剩余字段完成..
+                    break;
+                case DEFAULT_ORDER_4:
+                    navigation.setNavOrder(DEFAULT_ORDER_4);
+                    navigation.setNavId(String.valueOf(DEFAULT_ORDER_4));
+                    navigation.setNavName("应用");
+                    navigation.setNavUrl("http://www.wandoujia.com/apps");
+                    navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
+                    navigation.setNavOpenOptions(navOpenOptions);
+                    navigation.setNavIcon("default_content/notification_tool_light_app");
+                    //有待剩余字段完成..
+                    break;
+            }
+            return navigation;
+        }
+    }
 
     /**
      * 获取所有default Navigation，同上一样，不包含icon属性
@@ -353,6 +420,17 @@ public class CacheNavigation {
             List<Navigation> navigationList = new ArrayList<>();
             for (int i = 0; i < DEFAULT_NAVIGATION_COUNT; i++) {
                 navigationList.add(createDefaultNavigation(i));
+            }
+            return navigationList;
+        }
+    }
+
+
+    public List<Navigation> createAllDefaultGlobalNavigation() {
+        synchronized (this) {
+            List<Navigation> navigationList = new ArrayList<>();
+            for (int i = 0; i < DEFAULT_GLOBAL_NAVIGATION_COUNT; i++) {
+                navigationList.add(createDefaultGlobalNavigation(i));
             }
             return navigationList;
         }

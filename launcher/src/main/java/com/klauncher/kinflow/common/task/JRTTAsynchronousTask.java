@@ -12,6 +12,7 @@ import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.common.utils.Const;
+import com.klauncher.kinflow.common.utils.DateUtils;
 import com.klauncher.kinflow.utilities.TelephonyUtils;
 
 import org.json.JSONArray;
@@ -20,6 +21,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -82,20 +84,25 @@ public class JRTTAsynchronousTask {
         Response response = null;
         try {
             String timestamp = String.valueOf((int) ((System.currentTimeMillis()) / 1000));
-            String nonce = CommonUtils.getInstance().getRandomString(5);//生成5个随机字符串
+            String nonce = CommonUtils.getInstance().getRandomString(5);//安全参数:生成5个随机字符串
             RequestBody formBody = new FormBody.Builder()
-                    .add("timestamp", timestamp)
-                    .add("nonce", nonce)
+                    .add("timestamp", timestamp)//安全参数:时间戳
+                    .add("nonce", nonce)//安全参数:生成5个随机字符串
+                    .add("partner", Const.TOUTIAO_PARTNER)//公共参数:合作伙伴的id
+                    .add("signature", CommonUtils.SHA1(CommonUtils.orderLexicographical(new String[]{Const.TOUTIAO_SECURE_KEY, timestamp, nonce})))//安全参数:加密签名
+
                     .add("uuid", TelephonyUtils.getIMEI(mContext))
-                    .add("partner", Const.TOUTIAO_PARTNER)
-                    .add("signature", CommonUtils.SHA1(CommonUtils.orderLexicographical(new String[]{Const.TOUTIAO_SECURE_KEY, timestamp, nonce})))
+                    .add("openudid", TelephonyUtils.getDeviceId(mContext))//ANDROID_ID
+                    .add("os", "Android")
+                    .add("os_version", TelephonyUtils.getOsVersion())
+                    .add("device_mode", TelephonyUtils.getDM())//设备型号
                     .build();
 
             Request request = new Request.Builder()
                     .url(Const.TOUTIAO_URL_ACCESS_TOKEN)
                     .post(formBody)
                     .build();
-            Log.e(TAG, "accessToken的请求体编写完毕,开始执行请求=============================");
+            Log.e(TAG, "accessToken的请求体编写完毕,开始执行请求=============================url = "+request.url());
             response = mClient.newCall(request).execute();
             if (response.isSuccessful()) {//服务器有响应
                 Log.e(TAG, "accessToken: 服务器端有响应");
@@ -156,6 +163,62 @@ public class JRTTAsynchronousTask {
             }
         }
 
+    }
+
+    public JRTTAsynchronousTask (Context context) {
+        this.mContext = context;
+    }
+
+    public void reportUserAppLog(final long group_Id) {
+        new Thread(){
+            @Override
+            public void run() {
+                Response response = null;
+                try {
+                    String timestamp = String.valueOf((int) ((System.currentTimeMillis()) / 1000));
+                    String nonce = CommonUtils.getInstance().getRandomString(5);//安全参数:生成5个随机字符串
+                    String signature = CommonUtils.SHA1(CommonUtils.orderLexicographical(new String[]{Const.TOUTIAO_SECURE_KEY, timestamp, nonce}));
+                    String events = getEventParams(DateUtils.getInstance().yyyy_MM_dd_HH_mm_ss(), group_Id);
+                    String accessToken = CommonShareData.getString(CommonShareData.KEY_JINRITOUTIAO_ACCESS_TOKEN, "");
+                    RequestBody formBody = new FormBody.Builder()
+                            .add("timestamp", timestamp)//安全参数:时间戳
+                            .add("nonce", nonce)//安全参数:生成5个随机字符串
+                            .add("partner", Const.TOUTIAO_PARTNER)//公共参数:合作伙伴的id
+                            .add("signature", signature)//安全参数:加密签名
+                            .add("access_token", accessToken)//token
+
+                            .add("events", events)
+                            .build();
+
+                    Request request = new Request.Builder()
+                            .url(Const.TOUTIAO_URL_USER_EVENT)
+                            .post(formBody)
+                            .build();
+                    response = mClient.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        String responseBodyJsonString = response.body().string();
+                        Log.e(TAG, "reportUserAppLog: responseBodyJsonString = "+responseBodyJsonString);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    Log.e(TAG, "run: 上报用户行为,出现未知错误:"+e.getMessage());
+                }
+            }
+        }.start();
+    }
+
+    public String getEventParams(String dataTime,long group_Id) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append("[{")
+                .append("\"category\"").append(":").append("\"open\"").append(",")
+                .append("\"tag\"").append(":").append("\"go_detail\"").append(",")
+                .append("\"datetime\"").append(":").append("\"").append(dataTime).append("\"").append(",")
+                .append("\"value\"").append(":").append(group_Id).append(",")
+                .append("\"label\"").append(":").append("\"click_news_hot\"")
+                .append("}]");
+        return stringBuilder.toString();
     }
 
 
@@ -221,6 +284,7 @@ public class JRTTAsynchronousTask {
                             } else {
                                 mMessage.arg1 = SUCCESS;
                                 mMessage.obj = jinRiTouTiaoArticleList;
+                                behotTimeCompare(jinRiTouTiaoArticleList);
                             }
                         } catch (IOException ioException) {
                             Log.e(TAG, "响应体创建JSONObject时,出错,位于:new JSONObject(responseBody.string())" + ioException.getMessage());
@@ -250,6 +314,28 @@ public class JRTTAsynchronousTask {
         }
     }
 
+    public void behotTimeCompare (List<JinRiTouTiaoArticle> jinRiTouTiaoArticleList) {
+
+        try {
+            JinRiTouTiaoArticle minJinRiTouTiaoArticle = jinRiTouTiaoArticleList.get(0);
+            JinRiTouTiaoArticle maxJinRiTouTiaoArticle = jinRiTouTiaoArticleList.get(0);
+            int size = jinRiTouTiaoArticleList.size();
+            for (int i = 1; i < size; i++) {
+                JinRiTouTiaoArticle currentJinRiTouTiaoArticle = jinRiTouTiaoArticleList.get(i);
+                if (currentJinRiTouTiaoArticle.getBehot_time()<minJinRiTouTiaoArticle.getBehot_time()) minJinRiTouTiaoArticle = currentJinRiTouTiaoArticle;
+                if (currentJinRiTouTiaoArticle.getBehot_time()>maxJinRiTouTiaoArticle.getBehot_time()) maxJinRiTouTiaoArticle = currentJinRiTouTiaoArticle;
+            }
+
+            long minBehotTime = maxJinRiTouTiaoArticle.getBehot_time();//返回上一刷历史的文章中最 大的那个时间戳
+            long maxBehotTime = minJinRiTouTiaoArticle.getBehot_time();//上一刷最小的时间戳
+            CommonShareData.putLong(CommonShareData.KEY_ARTICLE_MIN_BEHOT_TIME,minBehotTime);
+            CommonShareData.putLong(CommonShareData.KEY_ARTICLE_MAX_BEHOT_TIME,maxBehotTime);
+            Log.e(TAG, "behotTimeCompare: 存储behotTime, minBehotTime="+minBehotTime+"  ,maxBehotTime="+maxBehotTime);
+        } catch (Exception e) {
+            Log.e(TAG, "behotTimeCompare: 存储minbeHotTime和maxbeHotTime时出错,详情:"+e.getMessage());
+        }
+
+    }
 
     /**
      * 此方法是管理刷新,获取更多,请求条数等操作的入口
@@ -262,12 +348,25 @@ public class JRTTAsynchronousTask {
         String signature = CommonUtils.SHA1(CommonUtils.orderLexicographical(new String[]{Const.TOUTIAO_SECURE_KEY, timestamp, nonce}));
         StringBuilder sbUrl = getCommonParameter(signature, timestamp, nonce);
         sbUrl.append("&").append("category").append("=").append(category);
-//        sbUrl.append("&").append(Const.REQUEST_PARAMETER_KEY_JINRITOUTIAO_CUSTOM_ARTICLE_MIN_BEHOT_TIME).append("=").append(DateUtils.calendar2Seconds(DateUtils.subtractionHour(24)));//24小时之内的数据
-//        sbUrl.append("&").append(Const.REQUEST_PARAMETER_KEY_JINRITOUTIAO_CUSTOM_ARTICLE_MAX_BEHOT_TIME).append("=").append(DateUtils.calendar2Seconds(Calendar.getInstance()));//从当前时间点往前的数据
-        sbUrl.append("&").append("count").append("=").append(JRTTCardContentManager.REQUEST_ARTICLE_COUNT);//请求15条数据
+
+//        long minBehotTime = CommonShareData.getLong(CommonShareData.KEY_ARTICLE_MIN_BEHOT_TIME, -1);
+//        sbUrl.append("&").append("min_behot_time").append("=").append(String.valueOf(minBehotTime));//refresh 时使用:如果客户端没有历史,传入当前时间戳-10
+        long maxBehotTime = CommonShareData.getLong(CommonShareData.KEY_ARTICLE_MAX_BEHOT_TIME, Calendar.getInstance().getTimeInMillis() / 1000);
+        sbUrl.append("&").append("max_behot_time").append("=").append(String.valueOf(maxBehotTime));//loadmore时使用:如果没有历史,则传递当前时间戳
+
+//        Log.e(TAG, "getJinRiTouTiaoArticleListUrl:请求今日头条使用的behot:    max_behot_time=" + maxBehotTime + "  minBhehot="+minBehotTime);
+        sbUrl.append("&").append("count").append("=").append(JRTTCardContentManager.REQUEST_ARTICLE_COUNT);//请求25条数据
         return sbUrl.toString();
     }
 
+    /**
+     * 获取公共参数:
+     * 签名,时间戳,随机数,合作方id,token
+     * @param signature
+     * @param timestamp
+     * @param nonce
+     * @return
+     */
     private StringBuilder getCommonParameter(String signature, String timestamp, String nonce) {
         StringBuilder sbUrl = new StringBuilder(Const.URL_JINRITOUTIAO_GET_CUSTOM_ARTICLE);
         sbUrl.append("?").append("signature").append("=").append(signature);

@@ -21,7 +21,7 @@ public class Const {
     public static final String HOTWORD_TYPE_TIYU ="tiyu";
     public static final String HOTWORD_TYPE_SHUMA ="shuma";
     public static String URL_HOT_WORD = "http://api.m.baidu.com/?type=hot&c="+HOTWORD_TYPE_SHISHI+"&from="+ BAIDU_TRADE_ID_HOTWORD;
-    public static String URL_SEARCH_WITH_BAIDU = "http://m.baidu.com/s?from"+ BAIDU_TRADE_ID_HOTWORD +"&word=";//最后面需要拼接关键字
+    public static String URL_SEARCH_WITH_BAIDU = "http://m.baidu.com/s?from="+ BAIDU_TRADE_ID_HOTWORD +"&word=";//最后面需要拼接关键字
 
     /**
      * 神马搜索
@@ -45,7 +45,9 @@ public class Const {
     public static final String URI_TOUTIAO_ARTICLE_DETAIL = "snssdk143://detail?gd_label=click_wap_delong_detail&groupid=";//第二版
     public static final String TOUTIAO_SECURE_KEY = "cde8fee9e391062045d05c7848859464";//partner与client_id相同，都是delong；secure_key与client_secret相同都是cde8fee9e391062045d05c7848859464
     public static final String TOUTIAO_PARTNER = "delong";//partner与client_id相同，都是delong；secure_key与client_secret相同都是cde8fee9e391062045d05c7848859464
-    public static final String TOUTIAO_URL_ACCESS_TOKEN = "http://open.snssdk.com/auth/access/web/";
+//    public static final String TOUTIAO_URL_ACCESS_TOKEN = "http://open.snssdk.com/auth/access/web/";
+    public static final String TOUTIAO_URL_ACCESS_TOKEN = "http://open.snssdk.com/auth/access/device/";
+    public static final String TOUTIAO_URL_USER_EVENT = "http://open.snssdk.com/log/app_log_for_partner/v1/";
     public static final String URL_JINRITOUTIAO_GET_CUSTOM_ARTICLE = "http://open.snssdk.com/data/stream/v3/";
     public static final String TOUTIAO_COMMON_PARTNER = "delong";
     public static final String TOUTIAO_CUSTOM_ARTICLE_CATEGORY_TUIJIAN = "__all__";
@@ -69,6 +71,7 @@ public class Const {
     public static final String CARD_GET = REALEASE_HOST+"/v1/card?cid="+REALEASE_CID;
 //    public static final String NAVIGATION_GET = REALEASE_HOST+"/v1/nav?cid="+REALEASE_CID;
     public static final String NAVIGATION_GET = REALEASE_HOST+"/v1/nav/mobile?cid="+REALEASE_CID;
+    public static final String NAVIGATION_GET_TEST = "http://test.api.klauncher.com/kplatform/v1/nav/mobile?cid=1001_2101_10100000000";
     public static final String NAVIGATION_LOCAL_FIRST_INIT = "local_init";
     public static final String NAVIGATION_LOCAL_LAST_MODIFIED = "local_lastModified";
     public static final String NAVIGATION_LOCAL_SERVER_MODIFIED = "lastModified";
@@ -79,6 +82,9 @@ public class Const {
 //    public static final String CONFIG_FUNCTION_LIST = TEST_HOST+"/v1/config/funclist?cid="+TEST_CID;
 //    public static final String CONFIG_FUNCTION_LIST = REALEASE_HOST+"/v1/config/funclist?cid="+REALEASE_CID;
     public static final String CONFIG = REALEASE_HOST+"/v2/config?cid="+REALEASE_CID;
+    public static final String KINFLOW2_SERVER_CONTROL = REALEASE_HOST+"/v1/news/mobile?cid="+REALEASE_CID;
+    public static final String KINFLOW2_NAVIGATION_WEB = REALEASE_HOST+"/v1/webnav/mobile?cid="+REALEASE_CID;
+    public static final String KINFLOW2_NAVIGATION_CONTENT = REALEASE_HOST+"/v1/contentnav/mobile?cid="+REALEASE_CID;
 
     //Android默认浏览器（Android新版本默认是chrome）
     public static final String DEFAULT_BROWSER_packageName = "com.android.browser";
@@ -99,6 +105,11 @@ public class Const {
     //今日头条
     public static final String TOUTIAO_packageName = "com.ss.android.article.news";
     public static final String TOUTIAO_mainActivity = "com.ss.android.article.news.activity.SplashActivity";
+
+    //搜狗搜索
+//    com.sogou.activity.src/com.sogou.activity.src.SplashActivity
+    public static final String SOUGOU_packageName = "com.sogou.activity.src";
+    public static final String SOUGOU_mainActivity = "com.sogou.activity.src.SplashActivity";
 
     //地理位置逆解析
     public static final String URL_GECODER_LOCATION ="http://api.map.baidu.com/geocoder?location=";//需要拼接三个参数:lat,lng,key

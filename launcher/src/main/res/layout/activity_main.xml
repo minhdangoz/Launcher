@@ -29,7 +29,7 @@
             layout="@layout/weather_header"
             android:visibility="gone"/>
 
-        <android.support.v7.internal.widget.CompatTextView
+        <TextView
             android:id="@+id/hot_word_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                 android:layout_toLeftOf="@id/refresh_hotWord"
                 android:stretchColumns="0,1">
 
-                <android.support.v7.internal.widget.CompatTextView
+                <TextView
                     android:id="@+id/hot_word_1"
                     style="@style/kinflow_commont_wrap_content"
                     android:layout_alignParentRight="true"
@@ -127,7 +127,7 @@
                     android:textSize="14sp"
                     />
 
-                <android.support.v7.internal.widget.CompatTextView
+                <TextView
                     android:id="@+id/hot_word_2"
                     style="@style/kinflow_commont_wrap_content"
                     android:layout_alignParentLeft="true"
