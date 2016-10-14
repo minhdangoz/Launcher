@@ -40,7 +40,10 @@ public class KinflowBrower extends Activity {
 
         Intent intent = getIntent();
         url = intent.getStringExtra(KEY_EXTRA_URL);
-
+        if (url.startsWith("www")){
+            url = "http://"+url;
+        }
+//        KinflowLog.e("开始加载网页:"+url);
         mWebView.loadUrl(url);
         if (System.currentTimeMillis() - mRequestKappAdtime  >= REQUEST_KAPPAD_DURATION) {
             Interstitial.getInstance(this,"1002","10005").showAd();

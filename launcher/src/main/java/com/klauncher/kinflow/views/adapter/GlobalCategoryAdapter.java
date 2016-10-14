@@ -56,8 +56,12 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
      */
     @Override
     public GlobalCategoryAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        try {
             View itemRootView = mInflater.inflate(R.layout.adapter_navigation_content, parent, false);
             return new GlobalCategoryAdapterViewHolder(itemRootView);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
@@ -68,7 +72,12 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
      */
     @Override
     public void onBindViewHolder(GlobalCategoryAdapterViewHolder holder, int position) {
-        holder.bundData2View(mElementList.get(position));
+        try {
+            holder.bundData2View(mElementList.get(position));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private int pixels(int dpi) {
