@@ -251,8 +251,9 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
             extras.putString(OpenMode.OPEN_URL_KEY, navUrl);
             KinflowLog.w(navigation.getNavigationList());
 //            navigation.open(context, extras);
-            navigation.openByOrder(context);
-            PingManager.getInstance().reportUserAction4Navigation(navigation);
+            String finalOpenComponent = navigation.openByOrder(context);
+//            PingManager.getInstance().reportUserAction4Navigation(navigation);
+            PingManager.getInstance().reportUserAction4NavigationOpen(PingManager.VALUE_NAVIGATION_TYPE_WEB,navigation,finalOpenComponent);
         } catch (Exception e) {
             e.printStackTrace();
         }

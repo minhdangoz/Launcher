@@ -184,8 +184,9 @@ public class GlobalCategoryAdapter extends BaseRecyclerViewAdapter<Navigation, G
             extras.putString(OpenMode.OPEN_URL_KEY, navUrl);
             KinflowLog.w(navigation.getNavigationList());
 //            navigation.open(mContext, extras);
-            navigation.openByOrder(mContext);
-            PingManager.getInstance().reportUserAction4Navigation(navigation);
+            String finalOpenComponent = navigation.openByOrder(mContext);
+//            PingManager.getInstance().reportUserAction4Navigation(navigation);
+            PingManager.getInstance().reportUserAction4NavigationOpen(PingManager.VALUE_NAVIGATION_TYPE_CONTENT,navigation,finalOpenComponent);
         } catch (Exception e) {
             e.printStackTrace();
         }
