@@ -25,6 +25,10 @@
         <item>GN8001,100</item>
     </array>
 
+    <array name="config_disable_hotseat_allapp">
+        <item>default,true</item>
+    </array>
+
     <array name="app_disguise_list">
         <item>com.miguan.market</item>
         <item>com.tencent.android.qqdownloader</item>

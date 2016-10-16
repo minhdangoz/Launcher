@@ -34,6 +34,10 @@
         <item>com.dl.explorer</item>
     </array>
 
+    <array name="config_disable_hotseat_allapp">
+        <item>default,true</item>
+    </array>
+
     <string name="config_icon_com.miguan.market">com.xiaomi.gamecenter</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.xiaomi.market</string>
     <string name="config_icon_com.duomi.android">com.miui.player</string>

@@ -26,5 +26,12 @@
         "iconsize": "62",
         "textsize": "12",
         "hotseat": "5"
+    },
+    "C106": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "55",
+        "textsize": "11",
+        "hotseat": "5"
     }
 }

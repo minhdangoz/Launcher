@@ -32,6 +32,10 @@
         <item>com.dl.explorer</item>
     </array>
 
+    <array name="config_disable_hotseat_allapp">
+        <item>default,true</item>
+    </array>
+
     <string name="config_icon_com.miguan.market">com.lenovo.gameworldphone</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.lenovo.leos.appstore</string>
     <string name="config_icon_com.duomi.android">com.lenovo.music,com.android.music</string>

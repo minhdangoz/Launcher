@@ -3750,6 +3750,16 @@ public class Launcher extends Activity
      */
     protected void onClickAllAppsButton(View v) {
         if (LOGD) Log.d(TAG, "onClickAllAppsButton");
+        if (!LauncherAppState.isDisableAllAppsHotseat()) {
+            try {
+                Intent intent = new Intent();
+                intent.setClassName("com.letv.android.letvlive", "com.letv.android.letvlive.LiveActivity");
+                startActivity(intent);
+                return;
+            } catch (Exception e) {
+                Log.e(TAG, " launch com.letv.android.letvlive.LiveActivity failed : " + e.toString());
+            }
+        }
         if (isAllAppsVisible()) {
             showWorkspace(true);
         } else {

@@ -29,6 +29,10 @@
         <item>com.dl.explorer</item>
     </array>
 
+    <array name="config_disable_hotseat_allapp">
+        <item>default,true</item>
+    </array>
+
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.oppo.music</string>
     <string name="config_icon_com.UCMobile">com.android.browser</string>

@@ -96,7 +96,7 @@ public class Hotseat extends FrameLayout {
         return hasVerticalHotseat() ? (mContent.getCountY() - (rank + 1)) : 0;
     }
     public boolean isAllAppsButtonRank(int rank) {
-        if (LauncherAppState.isDisableAllApps()) {
+        if (LauncherAppState.isDisableAllAppsHotseat()) {
             return false;
         } else {
             return rank == mAllAppsButtonRank;
@@ -133,7 +133,7 @@ public class Hotseat extends FrameLayout {
         
         // changed by xutg1, no ALL APPS icon in 1 layer workspace hotseat
         int numHotseatIcons = (int) grid.numHotseatIcons;
-        if (LauncherAppState.isDisableAllApps()) {
+        if (LauncherAppState.isDisableAllAppsHotseat()) {
             numHotseatIcons--;
         }
 
@@ -152,7 +152,7 @@ public class Hotseat extends FrameLayout {
     void resetLayout() {
         mContent.removeAllViewsInLayout();
 
-        if (!LauncherAppState.isDisableAllApps()) {
+        if (!LauncherAppState.isDisableAllAppsHotseat()) {
             // Add the Apps button
             Context context = getContext();
 
@@ -196,7 +196,7 @@ public class Hotseat extends FrameLayout {
     void addAllAppsFolder(IconCache iconCache,
             ArrayList<AppInfo> allApps, ArrayList<ComponentName> onWorkspace,
             Launcher launcher, Workspace workspace) {
-        if (LauncherAppState.isDisableAllApps()) {
+        if (LauncherAppState.isDisableAllAppsHotseat()) {
             FolderInfo fi = new FolderInfo();
 
             fi.cellX = getCellXFromOrder(mAllAppsButtonRank);
@@ -226,7 +226,7 @@ public class Hotseat extends FrameLayout {
     }
 
     void addAppsToAllAppsFolder(ArrayList<AppInfo> apps) {
-        if (LauncherAppState.isDisableAllApps()) {
+        if (LauncherAppState.isDisableAllAppsHotseat()) {
             View v = mContent.getChildAt(getCellXFromOrder(mAllAppsButtonRank), getCellYFromOrder(mAllAppsButtonRank));
             FolderIcon fi = null;
 
@@ -251,7 +251,7 @@ public class Hotseat extends FrameLayout {
         mContent = (CellLayout) findViewById(R.id.layout);
 
         int numHotseatIcons = (int) grid.numHotseatIcons;
-        if (LauncherAppState.isDisableAllApps()) {
+        if (LauncherAppState.isDisableAllAppsHotseat()) {
             numHotseatIcons--;
             // the padding should be 0 in 1 layer layout hotseat
             // mContent.setPadding(grid.getWorkspacePadding().left, 0, grid.getWorkspacePadding().right, 0);

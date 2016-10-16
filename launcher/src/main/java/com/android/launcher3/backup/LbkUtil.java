@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Environment;
 import android.view.ContextThemeWrapper;
 
@@ -182,6 +183,10 @@ public class LbkUtil {
 		Context context = LauncherAppState.getInstance().getContext();
 		//String model = Build.MODEL.replace(" ", "-");
 		//LauncherLog.i("wcrow", "model = " + model);
+		File modelFile = getBuildModelLbkFileFromPreloadDirectory();
+		if (modelFile != null ) {
+		    return modelFile;
+		}
 		String name;
 		//行数
 		float rows = LauncherAppState.getInstance().getDynamicGrid().getNumRows();
@@ -238,6 +243,36 @@ public class LbkUtil {
 //			return null;
 //		}
 //		return new File(getPreloadLbkFilePath());
+	}
+
+	public static File getBuildModelLbkFileFromPreloadDirectory() {
+		LauncherLog.i(TAG, "getLbkFileFromPreloadDirectory start!!!");
+		Context context = LauncherAppState.getInstance().getContext();
+		String name = new StringBuilder(Build.MODEL).append(".lbk").toString().replaceAll(" ","");
+		File cacheFile = new File(context.getCacheDir(), name);
+		if (cacheFile.exists()) {
+			return cacheFile;
+		}
+		try {
+			InputStream inputStream = context.getAssets().open(name);
+			try {
+				FileOutputStream outputStream = new FileOutputStream(cacheFile);
+				try {
+					byte[] buf = new byte[1024];
+					int len;
+					while ((len = inputStream.read(buf)) > 0) {
+						outputStream.write(buf, 0, len);
+					}
+				} finally {
+					outputStream.close();
+				}
+			} finally {
+				inputStream.close();
+			}
+		} catch (IOException e) {
+			return null;
+		}
+		return cacheFile;
 	}
 
     public static boolean isXLauncherBackupLbkFileExist() {

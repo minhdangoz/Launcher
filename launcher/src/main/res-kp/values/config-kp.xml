@@ -8,10 +8,16 @@
     <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0</item>
     <array name="config_theme_load_keywords">
         <item>1501_M02,1501_M02</item>
+        <item>C106,C106</item>
     </array>
 
     <array name="config_theme_load_icon_mask_padding">
         <item>default,0</item>
+    </array>
+
+    <array name="config_disable_hotseat_allapp">
+        <item>C106,false</item>
+        <item>default,true</item>
     </array>
 
     <array name="app_disguise_list">

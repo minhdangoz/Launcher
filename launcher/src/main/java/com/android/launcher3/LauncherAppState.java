@@ -296,7 +296,30 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
 
     /* Lenovo zhaoxin5 20140902 add for single layer open or close START*/
     public static boolean isDisableAllApps() {
+        Log.d("hw","isDisableAllApps : " + SettingsValue.isDisableAllApps(sContext));
     	return SettingsValue.isDisableAllApps(sContext);
+    }
+
+
+
+    public static boolean isDisableAllAppsHotseat() {
+        String[] keywords = sContext.getResources().getStringArray(R.array.config_disable_hotseat_allapp);
+        String disable = "";
+        String default_value = "";
+        for (String keyword : keywords) {
+            String[] modelTheme = keyword.split(",");
+            if (Build.MODEL.contains(modelTheme[0])) {
+                disable = modelTheme[1];
+                break;
+            } else if ("default".equals(modelTheme[0])) {
+                default_value = modelTheme[1];
+            }
+        }
+        if (TextUtils.equals("",disable)) {
+            disable = default_value;
+        }
+        Log.d("hw","isDisableAllAppsHotseat : " + disable);
+        return Boolean.parseBoolean(disable);
     }
 
     private Mode mCurrentMode = Mode.VIBEUI;
