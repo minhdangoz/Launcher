@@ -81,6 +81,7 @@ public class Const {
 //    public static final String CONFIG_SETTINGS_SWITCH = REALEASE_HOST+"/v1/config/switch?cid="+REALEASE_CID;
 //    public static final String CONFIG_FUNCTION_LIST = TEST_HOST+"/v1/config/funclist?cid="+TEST_CID;
 //    public static final String CONFIG_FUNCTION_LIST = REALEASE_HOST+"/v1/config/funclist?cid="+REALEASE_CID;
+    public static final String CONFIG_TEST = "http://test.api.klauncher.com/kplatform/v2/config?cid=1001_2101_10100000000";
     public static final String CONFIG = REALEASE_HOST+"/v2/config?cid="+REALEASE_CID;
     public static final String KINFLOW2_SERVER_CONTROL = REALEASE_HOST+"/v1/news/mobile?cid="+REALEASE_CID;
     public static final String KINFLOW2_NAVIGATION_WEB = REALEASE_HOST+"/v1/webnav/mobile?cid="+REALEASE_CID;
