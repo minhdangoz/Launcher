@@ -95,7 +95,7 @@ public class MessageFactory {
             MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG,//config配置信息
             MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE,//搜狗搜索新闻----待完成
             MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE,//api版本的头条新闻----待完成
-            MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER//kinflow2后台控制----待完成
+//            MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER//kinflow2后台控制----已经转移到ServerControlManager
     };
 
     public static final int REQUEST_HOTWORD_KINFLOW[] = {

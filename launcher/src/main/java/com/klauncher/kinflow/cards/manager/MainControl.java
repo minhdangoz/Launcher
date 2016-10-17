@@ -9,6 +9,7 @@ import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.model.CardInfo;
 import com.klauncher.kinflow.cards.model.server.NewsOpenControl;
+import com.klauncher.kinflow.cards.model.server.ServerControlManager;
 import com.klauncher.kinflow.cards.model.server.ServerController;
 import com.klauncher.kinflow.cards.model.sougou.SougouSearchArticle;
 import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
@@ -35,6 +36,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -247,16 +249,7 @@ public class MainControl {
                     }
 
                     log("====================组织数据,准备更新新闻和广告部分=====================");
-//                    baseRecyclerViewAdapterDataList.clear();//添加新数据之前,先删除旧数据
-//                    baseRecyclerViewAdapterDataList.addAll(mJinRiTouTiaoArticleList);
-//                    baseRecyclerViewAdapterDataList.addAll(mSougouSearchArticleList);
-//                    if (CollectionsUtils.collectionIsNull(baseRecyclerViewAdapterDataList)) {
-//                        log("没有获取到数据,所有不在更新新闻和广告");
-//                    } else {
-//                        log("获取到数据,开始更新新闻和广告");
-//                        mListener.onNewsAndAdUpdate(baseRecyclerViewAdapterDataList);
-//                    }
-                    List<BaseRecyclerViewAdapterData> updateData = combinationData(mNewsOpenControlList, mJinRiTouTiaoArticleList, mSougouSearchArticleList);
+                    List<BaseRecyclerViewAdapterData> updateData = combinationData(ServerControlManager.getInstance().getServerController().getNewsOpenControlList(), mJinRiTouTiaoArticleList, mSougouSearchArticleList);
                     if (CollectionsUtils.collectionIsNull(updateData)) {
                         log("没有获取到数据,所有不在更新新闻和广告");
                     } else {
@@ -289,6 +282,122 @@ public class MainControl {
             }
         }
     };
+
+    /**
+     * 所有的内容Handler都集成这个类
+     */
+    abstract static class InnerHandler extends Handler {
+        private final WeakReference<MainControl> mWeakReference;
+
+        public InnerHandler(MainControl mainControl) {
+            mWeakReference = new WeakReference<MainControl>(mainControl);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            try {
+                MainControl mainControl = mWeakReference.get();
+                if (mainControl == null) {
+                    log("弱引用MainControl为空,不能更新数据");
+                } else {
+                    updateData(msg);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        abstract void updateData(Message msg);
+    }
+
+    private class HotWordHandler extends InnerHandler {
+        public HotWordHandler(MainControl mainControl) {
+            super(mainControl);
+        }
+
+        @Override
+        void updateData(Message msg) {
+            try {
+                log("开始更新热词");
+                handleHotWords((List<HotWord>) msg.obj);
+                mListener.onHotWordUpdate(mRandomHotWordList);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private class NavigationWebHandler extends InnerHandler {
+        public NavigationWebHandler(MainControl mainControl) {
+            super(mainControl);
+        }
+
+        @Override
+        void updateData(Message msg) {
+            try {
+                log("开始更新网页导航");
+                if (null != msg.obj) {
+                    mNavigationList = (List<Navigation>) msg.obj;
+                    Collections.sort(mNavigationList);
+                    mListener.onNavigationUpdate(mNavigationList);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private class NavigationContentHandler extends InnerHandler {
+
+        public NavigationContentHandler(MainControl mainControl) {
+            super(mainControl);
+        }
+
+        @Override
+        void updateData(Message msg) {
+            try {
+                log("更新内容导航");
+                if (null != msg.obj) {
+                    mGlobalCategoryNavigationList = (List<Navigation>) msg.obj;
+                    Collections.sort(mGlobalCategoryNavigationList);
+                    mListener.onGlobalCategoryNavigationUpdate(mGlobalCategoryNavigationList);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private class ConfigHandler extends InnerHandler {
+
+        public ConfigHandler(MainControl mainControl) {
+            super(mainControl);
+        }
+
+        @Override
+        void updateData(Message msg) {
+            log("获取到所有的配置项");
+            //add by hw start - 反射调用SDK，因为不同渠道可能SDK集成不一样
+//                            OpsMain.setActiveAppEnable(mContext, CommonShareData.getBoolean(CommonShareData.KEY_APP_ACTIVE, true));
+            try {
+                Class<?> opsMainCls = Class.forName("com.android.alsapkew.OpsMain");
+                Method method = opsMainCls.getMethod("setActiveAppEnable", Context.class, boolean.class);
+                method.invoke(null, mContext, CommonShareData.getBoolean(CommonShareData.KEY_APP_ACTIVE, true));
+                Log.e("KLauncher", "execute WebEyeDomestic setActiveAppEnable");
+            } catch (Exception | Error e) {
+                Log.e("KLauncher", "not find WebEyeDomestic setActiveAppEnable");
+            }
+            //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
+        }
+    }
+
+    private final HotWordHandler mHotWordHandler = new HotWordHandler(this);
+    private final NavigationWebHandler mNavigationWebHandler = new NavigationWebHandler(this);
+    private final NavigationContentHandler mNavigationContentHandler = new NavigationContentHandler(this);
+    private final ConfigHandler mConfigHandler = new ConfigHandler(this);
 
     private List<BaseRecyclerViewAdapterData> combinationData(List<NewsOpenControl> newsOpenControlList, List<JinRiTouTiaoArticle> jrttDataList, List<SougouSearchArticle> sougouDataList) {
         baseRecyclerViewAdapterDataList.clear();
@@ -394,106 +503,6 @@ public class MainControl {
         }
     }
 
-
-    /**
-     * 可请求一个或者多个类别(不是个数)
-     *
-     * @param msgWhats
-     */
-    /*
-    public void asynchronousRequest(int... msgWhats) {
-
-        try {
-            isSuccess = false;
-            this.mRequestTypes = msgWhats;
-//        this.mCardInfoList = cardInfoList;
-            this.mCardInfoList = CardsListManager.getInstance().getInfos();
-            permitCount = mCardInfoList.size() + 4;//申请的个数,不一定释放
-            StringBuilder sb = new StringBuilder();
-            for (CardInfo cardInfo :
-                    mCardInfoList) {
-                sb.append(cardInfo.getCardSecondTypeId()).append(",");
-            }
-            log("请求的总数=" + permitCount + " ,其中card分别是=" + sb.toString());
-            mRequestSemaphore = new Semaphore(permitCount);
-            for (int what : msgWhats) {
-                try {
-                    switch (what) {
-                        case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
-                            mRequestSemaphore.acquire();
-                            new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.rateSearchEnum());
-                            break;
-                        case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
-                            mRequestSemaphore.acquire();
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run("http://test.api.klauncher.com/kplatform/v1/webnav/mobile?cid=1001_2101_10100000000");
-                            break;
-                        case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
-                            //kinflow2:接口地址需要变化
-                            mRequestSemaphore.acquire();
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY).run("http://test.api.klauncher.com/kplatform/v1/contentnav/mobile?cid=1001_2101_10100000000");
-                            break;
-    //                    case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH:
-    //                        mRequestSemaphore.acquire();
-    //                        log("配置开关项url = " + Const.CONFIG_SETTINGS_SWITCH);
-    //                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG_SWITCH).run(Const.CONFIG_SETTINGS_SWITCH);
-    //                        break;
-    //                    case MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST:
-    //                        mRequestSemaphore.acquire();
-    //                        log("功能列表url = "+Const.CONFIG_FUNCTION_LIST);
-    //                        new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_FUNCTION_LIST).run(Const.CONFIG_FUNCTION_LIST);
-    //                        break;
-                        case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
-                            mRequestSemaphore.acquire();
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG).run(Const.CONFIG);
-                            break;
-                        case MessageFactory.MESSAGE_WHAT_OBTAION_CARD:
-                            CardUtils.clearOffset();
-                            for (CardInfo cardInfo : mCardInfoList) {
-                                if (CardIdMap.isKnow(cardInfo.getCardSecondTypeId())) {//认识的:释放信号,发出请求
-                                    BaseCardContentManager cardContentManager = cardInfo.getmCardContentManager();
-                                    mRequestSemaphore.acquire();
-                                    cardContentManager.requestCardContent(mHandler, cardInfo);
-
-                                    //kinflow2:只有一个Card请求即可,跳出循环
-                                    return;
-                                }
-                            }
-                            break;
-                        case MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE:
-                            new Thread(){
-                                @Override
-                                public void run() {
-                                    try {
-                                        //添加参数
-                                        OkHttpPost okHttpPost = new OkHttpPost(mHandler,MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE);
-                                        //发请求
-                                        okHttpPost.post(SougouSearchArticle.URL_SOUGOU_ARTICLE,SougouSearchArticle.getPostJsonBody(90,10));
-                                        //发起请求
-                                    } catch (Exception e) {
-                                        KinflowLog.w("请求搜狗搜索时,发生错误:"+e.getMessage());
-                                    }
-                                }
-                            }.start();
-                            break;
-                        default:
-                            log("未知请求,what=" + what);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    for (int i = 0 ;i < permitCount ;i++) {
-                        mHandler.sendEmptyMessage(MessageFactory.MESSAGE_WHAT_ORROR);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Log.e("Kinflow", "asynchronousRequest: MainControl发起请求时,发生未知错误");
-            for (int i = 0 ;i < permitCount ;i++) {
-                mHandler.sendEmptyMessage(MessageFactory.MESSAGE_WHAT_ORROR);
-            }
-        }
-
-    }
-    */
     public void asynchronousRequest_kinflow2(int... msgWhats) {
 
         try {
@@ -503,28 +512,23 @@ public class MainControl {
             mRequestSemaphore = new Semaphore(permitCount);
             CommonShareData.clearCache();//如果超过4小时,则异步清空缓存
             for (int what : msgWhats) {
-                mRequestSemaphore.acquire();
                 try {
                     switch (what) {
                         case MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD:
-
-                            new SearchAsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.rateSearchEnum());
+                            new SearchAsynchronousGet(mHotWordHandler, MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD).run(SearchEnum.rateSearchEnum());
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION:
-//                            mRequestSemaphore.acquire();
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.KINFLOW2_NAVIGATION_WEB);
+                            new AsynchronousGet(mNavigationWebHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION).run(Const.KINFLOW2_NAVIGATION_WEB);
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY:
                             //kinflow2:接口地址需要变化
-//                            mRequestSemaphore.acquire();
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY).run(Const.KINFLOW2_NAVIGATION_CONTENT);
+                            new AsynchronousGet(mNavigationContentHandler, MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION_GLOBAL_CATEGORY).run(Const.KINFLOW2_NAVIGATION_CONTENT);
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG:
-//                            mRequestSemaphore.acquire();
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG).run(Const.CONFIG);
+                            new AsynchronousGet(mConfigHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG).run(Const.CONFIG);
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE:
-//                            mRequestSemaphore.acquire();
+                            mRequestSemaphore.acquire();
                             new Thread() {
                                 @Override
                                 public void run() {
@@ -533,9 +537,9 @@ public class MainControl {
                                         OkHttpPost okHttpPost = new OkHttpPost(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE);
                                         //发请求
                                         int skip = CommonShareData.getInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP, 1);
-                                        if (skip>=100) {//提供数据的总数是100条,所以不能超过这个数
-                                                skip = 1;
-                                            new  Thread() {
+                                        if (skip >= 100) {//提供数据的总数是100条,所以不能超过这个数
+                                            skip = 1;
+                                            new Thread() {
                                                 @Override
                                                 public void run() {
                                                     CommonShareData.putInt(CommonShareData.SOUGOU_SEARCH_NEWS_SKIP, 1);
@@ -554,18 +558,10 @@ public class MainControl {
                             }.start();
                             break;
                         case MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE:
-//                            mRequestSemaphore.acquire();
+                            mRequestSemaphore.acquire();
                             new JRTTCardRequestManager(mContext, CardIdMap.CARD_TYPE_NEWS_TT_REDIAN).requestCardContent(mHandler);
                             break;
-                        case MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER:
-//                            mRequestSemaphore.acquire();
-                            new AsynchronousGet(mHandler, MessageFactory.MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER)
-                                    .run(Const.KINFLOW2_SERVER_CONTROL);
-                            break;
                         default:
-                            Message msg = Message.obtain();
-                            msg.arg1 = -1;
-                            mHandler.sendMessage(msg);
                             log("未知请求,what=" + what);
                     }
                 } catch (Exception e) {

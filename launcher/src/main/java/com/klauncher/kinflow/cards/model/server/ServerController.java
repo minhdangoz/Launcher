@@ -58,18 +58,26 @@ public class ServerController implements Parcelable {
 
      String newsOpenControlToString () {
         StringBuilder stringBuilder = new StringBuilder();
-         stringBuilder.append("\n");//先换行
-         for (int i = 0; i < this.mNewsOpenControlList.size(); i++) {
-             stringBuilder.append("第").append(String.valueOf(i)).append("个新闻控制器详情:  ").append(mNewsOpenControlList.get(i).toString()).append("\n");
+         if (CollectionsUtils.collectionIsNull(this.mNewsOpenControlList)) {
+             stringBuilder.append("新闻控制数据为空");
+         } else {
+             stringBuilder.append("\n");//先换行
+             for (int i = 0; i < this.mNewsOpenControlList.size(); i++) {
+                 stringBuilder.append("第").append(String.valueOf(i)).append("个新闻控制器详情:  ").append(mNewsOpenControlList.get(i).toString()).append("\n");
+             }
          }
          return stringBuilder.toString();
     }
 
     String adOpenControlToString () {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\n");//先换行
-        for (int i = 0; i < this.mAdControlList.size(); i++) {
-            stringBuilder.append("第").append(String.valueOf(i)).append("个广告控制器详情:  ").append(mAdControlList.get(i).toString()).append("\n");
+        if (CollectionsUtils.collectionIsNull(this.mAdControlList)) {
+            stringBuilder.append("广告控制数据为空");
+        } else {
+            stringBuilder.append("\n");//先换行
+            for (int i = 0; i < this.mAdControlList.size(); i++) {
+                stringBuilder.append("第").append(String.valueOf(i)).append("个广告控制器详情:  ").append(mAdControlList.get(i).toString()).append("\n");
+            }
         }
         return stringBuilder.toString();
     }
