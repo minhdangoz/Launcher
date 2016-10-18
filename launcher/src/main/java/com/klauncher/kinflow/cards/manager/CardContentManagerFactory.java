@@ -57,6 +57,11 @@ public class CardContentManagerFactory {
                 break;
             case CardIdMap.ADVERTISEMENT_BAIDU:
                 break;
+            case CardIdMap.CARD_TYPE_SKIP_AMAP_DIANYING:
+            case CardIdMap.CARD_TYPE_SKIP_AMAP_YULE:
+                cardContentManager = new AmapCardContentManager(context);
+                break;
+
         }
         return cardContentManager;
     }
