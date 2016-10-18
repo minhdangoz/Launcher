@@ -7,9 +7,9 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:paddingBottom="12dp"
     android:scrollbars="none"
     ptr:ptrAnimationStyle="flip"
+    ptr:ptrHeaderBackground="@color/kinflow_title_background"
     ptr:ptrMode="both"
     >
 
