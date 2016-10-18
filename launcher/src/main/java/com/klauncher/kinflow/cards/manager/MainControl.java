@@ -28,6 +28,7 @@ import com.klauncher.kinflow.utilities.CollectionsUtils;
 import com.klauncher.kinflow.utilities.FileUtils;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData;
+import com.klauncher.kinflow.views.recyclerView.data.YokmobBanner;
 import com.klauncher.kinflow.weather.model.Weather;
 
 import org.json.JSONArray;
@@ -453,6 +454,9 @@ public class MainControl {
                 resultDataList.add(baseData);
             }
         }
+
+        //==============大图广告部分==============
+        resultDataList.add(YokmobBanner.getDefaultYokmobBanner());
         //返回数据
         return resultDataList;
     }
