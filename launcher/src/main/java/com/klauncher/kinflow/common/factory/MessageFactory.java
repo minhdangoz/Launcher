@@ -25,8 +25,8 @@ public class MessageFactory {
     public static final int MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE = 15;//获取头条ARTICLE,通过api
     public static final int MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE = 16;//获取到搜狗搜索新闻
     public static final int MESSAGE_WHAT_OBTAIN_KINFLOW2_SERVER_CONTROLLER = 17;//信息流第二版,后台控制:数据类型:新闻1,广告23,打开方式,广告信息,广告位置.新闻数据具体类型不再指定(搜狗搜索新闻和今日头条新闻交替显示).
-    public static final int MESSAGE_WHAT_OBTAIN_AMAP_BACKGROUND_DIANYING = 16;//获取到amap的电影背景图的url
-    public static final int MESSAGE_WHAT_OBTAIN_AMAP_BACKGROUND_YULE = 17;//获取到amap的娱乐(周末去哪儿)背景图的url
+    public static final int MESSAGE_WHAT_OBTAIN_AMAP_BACKGROUND_DIANYING = 18;//获取到amap的电影背景图的url-----可能用不到
+    public static final int MESSAGE_WHAT_OBTAIN_AMAP_BACKGROUND_YULE = 19;//获取到amap的娱乐(周末去哪儿)背景图的url------可能用不到
 
 
     public static Message createMessage(int what) {

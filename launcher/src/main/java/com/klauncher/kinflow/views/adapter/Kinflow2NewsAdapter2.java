@@ -3,6 +3,7 @@ package com.klauncher.kinflow.views.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,10 +15,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.klauncher.kinflow.cards.CardIdMap;
+import com.klauncher.kinflow.cards.control.AmapSkipManager;
 import com.klauncher.kinflow.cards.model.sougou.SougouSearchArticle;
 import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
 import com.klauncher.kinflow.common.task.JRTTAsynchronousTask;
-import com.klauncher.kinflow.common.utils.CommonUtils;
 import com.klauncher.kinflow.common.utils.DateUtils;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.views.recyclerView.adapter.BaseRecyclerViewAdapter;
@@ -114,8 +115,9 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
 
                 @Override
                 public void onClick(View v) {
-                    YokmobBanner yokmobBanner = (YokmobBanner) mElementList.get(getPosition());
-                    CommonUtils.getInstance().openDefaultBrowserUrl(mContext,yokmobBanner.getClickUrl());
+                    AmapSkipManager amapSkipManager = new AmapSkipManager(mContext);
+                    Uri arroundPoi_dianYingYuan = amapSkipManager.getArroundPoi("电影院");
+                    amapSkipManager.skip2Amap(arroundPoi_dianYingYuan);
                 }
             });
 
