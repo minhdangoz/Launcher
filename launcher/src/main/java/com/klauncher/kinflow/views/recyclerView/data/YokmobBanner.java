@@ -29,7 +29,7 @@ public class YokmobBanner extends BaseRecyclerViewAdapterData {
 
     public static YokmobBanner getDefaultYokmobBanner () {
         YokmobBanner yokmobBanner = new YokmobBanner(
-                "http://imglf1.nosdn.127.net/img/a0JLb2MxL0R1RXFTK0xvaTVuZ3o5L3oyV3lLMXlJYTlKdHorYkNsdU5vZHYzV0pxdHpKSy9RPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg",
+                "http://kapp.ufile.ucloud.com.cn/gaode.png",
                 "http://www.cnlofter.com/");
         return yokmobBanner;
     }

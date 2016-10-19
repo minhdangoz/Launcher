@@ -795,6 +795,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.onDestroy();
         try {
             unregisterReceiver(mWifiChangeReceiver);
+            unregisterReceiver(mActiveReceiver);
             CardContentManagerFactory.clearAllOffset();
             CacheNavigation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
 //          CacheLocation.getInstance().unregisterOnSharedPreferenceChangeListener(this);

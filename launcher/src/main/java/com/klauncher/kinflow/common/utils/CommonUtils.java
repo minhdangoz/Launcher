@@ -216,7 +216,8 @@ public class CommonUtils {
                     return true;
                 else return false;
             } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
+                return false;
+            } catch (Exception e) {
                 return false;
             }
         }

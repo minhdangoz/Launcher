@@ -92,15 +92,20 @@ public class AmapSkipManager {
         Log.e("Kinflow", ("要跳转高德的uri = " + uri.toString()));
         try {
             boolean isInstallAmap = CommonUtils.getInstance().isInstalledAPK(mContext, "com.autonavi.minimap/com.autonavi.map.activity.SplashActivity");
-            if (!isInstallAmap) {
-                launch(mContext,172556,"com.autonavi.minimap",6);
+            if (!isInstallAmap) {//如果没有安装高德
+                boolean isInstallMiGuan = CommonUtils.getInstance().isInstalledAPK(mContext, "com.miguan.market/com.miguan.market.component.SingleFragmentActivity");
+                if (isInstallMiGuan) {//安装了蜜罐
+//                    launch(mContext,172556,"com.autonavi.minimap",6);
+                    AmapSkipManager.testLaunchMarket(mContext);
+                } else {//没有安装蜜罐
+                    Toast.makeText(getContext(), "请先下载高德地图", Toast.LENGTH_LONG).show();
+                }
             } else {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     getContext().startActivity(intent);
                 }catch (ActivityNotFoundException exception) {
-//            Toast.makeText(getContext(), "您尚未安装高德地图", Toast.LENGTH_SHORT).show();
-                    launch(mContext,172556,"com.autonavi.minimap",6);
+                    AmapSkipManager.testLaunchMarket(mContext);
                 }
             }
         }  catch (Exception e) {
@@ -137,7 +142,35 @@ public class AmapSkipManager {
         } catch (ActivityNotFoundException activityNotFoundException) {
             Toast.makeText(getContext(), "请先下载高德地图", Toast.LENGTH_LONG).show();
         }catch (Exception e) {
-            e.printStackTrace();
+            Toast.makeText(getContext(), "请先下载高德地图", Toast.LENGTH_LONG).show();
         }
+    }
+
+
+    public static void testLaunchMarket(Context context){
+
+        try {
+            String className = "com.miguan.market.app_business.app_detail.ui.AppDetailFragment";
+            Bundle bundle = new Bundle();
+            bundle.putLong(APP_ID, 172556);
+            bundle.putString(PKG_NAME, "com.autonavi.minimap");
+            bundle.putInt(APP_CATEGORY_ID, 6);
+            bundle.putString(PAGE_TITLE, "应用详情");
+            bundle.putString(PAGE_CLASS_NAME, className);
+            bundle.putString(PAGE_TAG, className);
+
+            Intent intent = new Intent("com.miguan.market.service.START_PAGE");
+            intent.setPackage("com.miguan.market");
+            if(context.getPackageManager().resolveService(intent,0)!=null){
+                intent.putExtra("key_class","com.miguan.market.component.SingleFragmentActivity");
+                intent.putExtra("key_bundle",bundle);
+                context.startService(intent);
+            }else {
+                Toast.makeText(context, "请先下载高德地图", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(context, "请先下载高德地图", Toast.LENGTH_LONG).show();
+        }
+
     }
 }
