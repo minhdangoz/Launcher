@@ -35,11 +35,11 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.klauncher.biddingos.commons.AdConfigHelperImpl;
 import com.klauncher.kinflow.cards.CardIdMap;
-import com.klauncher.kinflow.cards.CardsListManager;
 import com.klauncher.kinflow.cards.adapter.CardsAdapter;
 import com.klauncher.kinflow.cards.manager.CardContentManagerFactory;
 import com.klauncher.kinflow.cards.manager.MainControl;
 import com.klauncher.kinflow.cards.model.CardInfo;
+import com.klauncher.kinflow.cards.model.server.ServerControlManager;
 import com.klauncher.kinflow.common.factory.MessageFactory;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
 import com.klauncher.kinflow.common.utils.CommonShareData;
@@ -332,76 +332,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.onBackPressed();
     }
 
-    /*private void setupWebView() {
-        mWebView.getSettings().setJavaScriptEnabled(true);//设置使用够执行JS脚本
-        mWebView.getSettings().setBuiltInZoomControls(true);//设置使支持缩放
-        mWebView.getSettings().setDisplayZoomControls(false);
-        mWebView.setWebViewClient(new WeWebViewClient());
-
-        mWebView.loadUrl(HOME_PAGE);
-    }
-
-    private class WeWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Log.d(TAG, "shouldOverrideUrlLoading: " + url);
-            if (!isShown) {
-                return super.shouldOverrideUrlLoading(view, url);
-            }
-
-            if (url.equals(NEWS_BAIDU)) {
-                view.loadUrl(url);
-                return true;
-            }
-
-            if (url.startsWith(HOME_PAGE)) {
-                view.loadUrl(url);
-            } else {
-                if (firstRun) {
-                    view.loadUrl(url);
-                    firstRun = false;
-                } else {
-                    start3rdActivity(view, url);
-                }
-            }
-            return true;
-        }
-
-        @Override
-        public void onReceivedError(WebView view, int errorCode,
-                                    String description, String failingUrl) {
-            Log.d(TAG, "onReceivedError: " + failingUrl);
-        }
-    }
-
-    private void start3rdActivity(WebView view, String url) {
-        try {
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.setComponent(new ComponentName(DEFAULT_APP_PACKAGENAME, DEFAULT_APP_CLASS));
-            Uri content_url = Uri.parse(url);
-            intent.setData(content_url);
-            startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            String message = APP_NAME + "未安装";
-            final AlertDialog aboutDialog = new AlertDialog.Builder(KLauncher.this).
-                    setMessage(message).
-                    setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent();
-                            intent.setAction(Intent.ACTION_VIEW);
-                            Uri content_url = Uri.parse(APP_DLD_LINK);
-                            intent.setData(content_url);
-                            startActivity(intent);
-                        }
-                    }).create();
-            aboutDialog.show();
-            view.loadUrl(url);
-        }
-    }*/
-
-
     private void initKinflowView(View kinflowRootView){
         //底部刷新
         mPullRefreshScrollView = (PullToRefreshScrollView) kinflowRootView.findViewById(R.id.pull_refresh_scrollview);
@@ -445,7 +375,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     }
 
     private void initKinflowData() {
-        CardsListManager.getInstance().init(this);
+//        CardsListManager.getInstance().init(this);
+        ServerControlManager.getInstance().init(this);
         mMainControl = new MainControl(KLauncher.this, this);
         //注册监听
         CacheNavigation.getInstance().registerOnSharedPreferenceChangeListener(this);
@@ -864,6 +795,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.onDestroy();
         try {
             unregisterReceiver(mWifiChangeReceiver);
+            unregisterReceiver(mActiveReceiver);
             CardContentManagerFactory.clearAllOffset();
             CacheNavigation.getInstance().unregisterOnSharedPreferenceChangeListener(this);
 //          CacheLocation.getInstance().unregisterOnSharedPreferenceChangeListener(this);

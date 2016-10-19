@@ -3,6 +3,7 @@ package com.klauncher.kinflow.views.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.klauncher.kinflow.cards.CardIdMap;
+import com.klauncher.kinflow.cards.control.AmapSkipManager;
 import com.klauncher.kinflow.cards.model.sougou.SougouSearchArticle;
 import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
 import com.klauncher.kinflow.common.task.JRTTAsynchronousTask;
@@ -35,6 +36,8 @@ import java.util.List;
  * Created by xixionghui on 16/9/21.
  */
 public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerViewAdapterData, BaseRecyclerViewHolder<BaseRecyclerViewAdapterData>> {
+
+    AmapSkipManager amapSkipManager = new AmapSkipManager(mContext);//高德跳转管理器
 
     /**
      * 决定ITEM类型
@@ -100,7 +103,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
 
     //==============================================================================================================================
 
-    public class BannerAdaperHolder extends BaseRecyclerViewHolder<BaseRecyclerViewAdapterData> implements View.OnClickListener {
+    public class BannerAdaperHolder extends BaseRecyclerViewHolder<BaseRecyclerViewAdapterData>{
         public ImageView bannerImage;//view
 
         public BannerAdaperHolder(View itemView) {
@@ -109,36 +112,37 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
 
         @Override
         public void initView(View itemRootView) {
-            bannerImage = (ImageView) itemView.findViewById(R.id.banner_iv_image);
-            bannerImage.setOnClickListener(this);
+            try {
+                bannerImage = (ImageView) itemView.findViewById(R.id.banner_iv_image);
+                itemRootView.setOnClickListener(new View.OnClickListener(){
 
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Uri arroundPoi_yuLe = amapSkipManager.getArroundPoi("娱乐");
+                            amapSkipManager.skip2Amap(arroundPoi_yuLe);
+                            String clickType = PingManager.VALUE_BIG_IMAGE_CLICK_TYPE_GAODE_YULE;
+                            String imageUrl = arroundPoi_yuLe.toString();
+                            PingManager.getInstance().reportUserAction4BigImage(clickType,imageUrl);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
         public void bundData2View(BaseRecyclerViewAdapterData modelData) {
-            YokmobBanner yokmobBanner = (YokmobBanner) modelData;
-            Picasso.with(mContext).load(yokmobBanner.getImageUrl()).into(bannerImage);
-        }
-
-        @Override
-        public void onClick(View v) {
             try {
-                Toast.makeText(mContext, "广告被点击", Toast.LENGTH_SHORT).show();
-                /*
-                String clickType = "";
-                String imageUrl = "";
-                YMCardContentManager mManager = (YMCardContentManager) mCardInfo.getmCardContentManager();
-                Bundle extras = new Bundle();
-                extras.putString(OpenMode.OPEN_URL_KEY, mManager.getClickUrl());
-                this.mCardInfo.open(mContext, extras);
-
-                clickType = PingManager.VALUE_BIG_IMAGE_CLICK_TYPE_YOKMOB;
-                imageUrl = mManager.getClickUrl();
-                PingManager.getInstance().reportUserAction4BigImage(clickType,imageUrl);
-                */
+                YokmobBanner yokmobBanner = (YokmobBanner) modelData;
+                Picasso.with(mContext).load(yokmobBanner.getImageUrl()).into(bannerImage);
             } catch (Exception e) {
-                Log.e("Kinflow", "onClick: yokmob时出错");
+                e.printStackTrace();
             }
+
         }
     }
 

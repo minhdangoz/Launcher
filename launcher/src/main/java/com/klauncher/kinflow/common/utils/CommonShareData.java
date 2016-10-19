@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.klauncher.kinflow.utilities.KinflowLog;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -45,54 +47,65 @@ public class CommonShareData {
     public static SharedPreferences sharedPreferences;
     public static SharedPreferences.Editor editor;
     public static void init(final Context context){
-        if (sharedPreferences == null) {
-            sharedPreferences = context.getSharedPreferences(COMMON_SHAREDPREFERENCE,Context.MODE_PRIVATE);
-            editor = sharedPreferences.edit();
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                long time = getCurrentNetworkTime();
-                if ( time != -1) {
-                    putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(0));
-                    putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, String.valueOf(0));
-                    if (getLong(Const.NAVIGATION_LOCAL_FIRST_INIT, -1) == -1) {
-                        putLong(Const.NAVIGATION_LOCAL_FIRST_INIT, time);
-                    }
-                    //初始默认第一次
-                }
+
+        try {
+            if (sharedPreferences == null) {
+                sharedPreferences = context.getSharedPreferences(COMMON_SHAREDPREFERENCE,Context.MODE_PRIVATE);
+                editor = sharedPreferences.edit();
             }
-        }).start();
-        putBoolean(FIRST_CONNECTED_NET, true);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    long time = getCurrentNetworkTime();
+                    if ( time != -1) {
+                        putString(Const.NAVIGATION_LOCAL_LAST_MODIFIED, String.valueOf(0));
+                        putString(Const.NAVIGATION_LOCAL_UPDATE_INTERVAL, String.valueOf(0));
+                        if (getLong(Const.NAVIGATION_LOCAL_FIRST_INIT, -1) == -1) {
+                            KinflowLog.e("写入local_init = "+time);
+                            putLong(Const.NAVIGATION_LOCAL_FIRST_INIT, time);
+                        }
+                        //初始默认第一次
+                    }
+                }
+            }).start();
+            putBoolean(FIRST_CONNECTED_NET, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static long getCurrentNetworkTime() {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("http://api.klauncher.com/v1/card/gettime/").build();
-        Response response = null;
-        try {
-            Log.d("CommonShareData", "getCurrentNetworkTime start");
-            response = client.newCall(request).execute();
-            if (response.isSuccessful()) {
-                String str = response.body().string();
-                try {
-                    JSONArray jsonArray = new JSONArray(str);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject timeObj = (JSONObject) jsonArray.opt(i);
 
-                        Log.d("CommonShareData", "getCurrentNetworkTime : " + timeObj.getString("time"));
-                        return Long.parseLong(timeObj.getString("time"));
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder().url("http://api.klauncher.com/v1/card/gettime/").build();
+            Response response = null;
+            try {
+                Log.d("CommonShareData", "getCurrentNetworkTime start");
+                response = client.newCall(request).execute();
+                if (response.isSuccessful()) {
+                    String str = response.body().string();
+                    try {
+                        JSONArray jsonArray = new JSONArray(str);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject timeObj = (JSONObject) jsonArray.opt(i);
+
+                            Log.d("CommonShareData", "getCurrentNetworkTime : " + timeObj.getString("time"));
+                            return Long.parseLong(timeObj.getString("time"));
+                        }
+                    } catch (Exception e) {
+                       return -1;
                     }
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
                 }
+            } catch (IOException e) {
+                return -1;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("CommonShareData", "getCurrentNetworkTime failed  ");
+            return -1;
+        } catch (Exception e) {
+            return -1;
         }
-        Log.d("CommonShareData", "getCurrentNetworkTime failed  ");
-        return -1;
     }
 
     public static boolean containsKey(String key) {

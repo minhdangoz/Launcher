@@ -60,6 +60,20 @@ public class CommonUtils {
         }
     }
 
+    public static boolean ArrayIsNull (Object[] arrays) {
+        if (arrays==null||arrays.length==0) return true;
+        return false;
+    }
+
+    public static boolean stringArrayContainsNull (String[] strings) {
+        if (ArrayIsNull(strings)) return true;
+        for (String content:
+                strings) {
+            if (TextUtils.isEmpty(content)) return true;
+        }
+        return false;
+    }
+
     //获取一个圆形的Bitmap
     public Bitmap getCircleBitmap(Bitmap bitmap) {
         final Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
@@ -202,7 +216,8 @@ public class CommonUtils {
                     return true;
                 else return false;
             } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
+                return false;
+            } catch (Exception e) {
                 return false;
             }
         }
