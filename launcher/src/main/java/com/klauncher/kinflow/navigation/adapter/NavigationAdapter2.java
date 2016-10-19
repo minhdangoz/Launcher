@@ -125,25 +125,31 @@ public class NavigationAdapter2 extends RecyclerView.Adapter<NavigationAdapter2.
                     case 0://新浪
                         bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.sina);
                         break;
-                    case 1://淘宝
+                    case 1://百度
+                        bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.icon_baidu);
+                        break;
+                    case 2://腾讯
+                        bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.icon_tencent);
+                        break;
+                    case 3://淘宝
                         bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.taobao);
                         break;
-                    case 2://京东
+                    case 4://京东
                         bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.jd);
                         break;
-                    case 3://同城
+                    case 5://同城
                         bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.tongcheng);
                         break;
-                    case 4://美团
+                    case 6://美团
                         bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.meituan);
                         break;
-                    case 5://携程
+                    case 7://携程
                         bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ctrip);
                         break;
-                    case 6://优酷
+                    case 8://优酷
                         bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.youku);
                         break;
-                    case 7://更多
+                    case 9://更多
                         bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.more);
                         break;
 

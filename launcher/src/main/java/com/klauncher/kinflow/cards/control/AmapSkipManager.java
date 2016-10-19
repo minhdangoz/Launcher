@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.kinflow.common.utils.CommonUtils;
-import com.klauncher.launcher.BuildConfig;
+import com.klauncher.kinflow.common.utils.Const;
 
 /**
  * Created by xixionghui on 16/7/22.
@@ -41,7 +41,7 @@ public class AmapSkipManager {
 
     //我的位置
     public Uri getMyLocation() {
-        return Uri.parse("androidamap://myLocation?sourceApplication=" + BuildConfig.APPLICATION_ID);
+        return Uri.parse("androidamap://myLocation?sourceApplication=" + Const.REPORT_PACKAGENAME);
     }
 
     /**
@@ -55,7 +55,7 @@ public class AmapSkipManager {
         if (CommonUtils.stringArrayContainsNull(points)) {
             Toast.makeText(getContext(), "请输入兴趣点", Toast.LENGTH_SHORT).show();
             //androidamap://openFeature?featureName=AroundSearch&sourceApplication=softname
-            return Uri.parse("androidamap://openFeature?featureName=AroundSearch&sourceApplication="+BuildConfig.APPLICATION_ID);
+            return Uri.parse("androidamap://openFeature?featureName=AroundSearch&sourceApplication="+Const.REPORT_PACKAGENAME);
         }
         StringBuilder stringBuilder = new StringBuilder();
         for (String point :
@@ -63,7 +63,7 @@ public class AmapSkipManager {
             stringBuilder.append(point).append("|");
         }
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        return Uri.parse("androidamap://arroundpoi?sourceApplication=" + BuildConfig.APPLICATION_ID+"&keywords="+stringBuilder.toString()+"&dev=0");
+        return Uri.parse("androidamap://arroundpoi?sourceApplication=" + Const.REPORT_PACKAGENAME+"&keywords="+stringBuilder.toString()+"&dev=0");
     }
 
     /**
@@ -76,7 +76,7 @@ public class AmapSkipManager {
         if (CommonUtils.stringArrayContainsNull(points)) {
             Toast.makeText(getContext(), "请输入兴趣点", Toast.LENGTH_SHORT).show();
             //androidamap://openFeature?featureName=AroundSearch&sourceApplication=softname
-            return Uri.parse("androidamap://openFeature?featureName=AroundSearch&sourceApplication="+BuildConfig.APPLICATION_ID);
+            return Uri.parse("androidamap://openFeature?featureName=AroundSearch&sourceApplication="+Const.REPORT_PACKAGENAME);
         }
         StringBuilder stringBuilder = new StringBuilder();
         for (String point :
@@ -84,7 +84,7 @@ public class AmapSkipManager {
             stringBuilder.append(point).append("|");
         }
         stringBuilder.deleteCharAt(stringBuilder.length()-1);
-        return Uri.parse("androidamap://poi?sourceApplication=" + BuildConfig.APPLICATION_ID+"&keywords="+stringBuilder.toString()+"&dev=0");
+        return Uri.parse("androidamap://poi?sourceApplication=" + Const.REPORT_PACKAGENAME+"&keywords="+stringBuilder.toString()+"&dev=0");
     }
 
 

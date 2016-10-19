@@ -8,6 +8,11 @@ import com.klauncher.launcher.BuildConfig;
 public class Const {
 
     /**
+     * common
+     */
+    public static final String REPORT_PACKAGENAME = "com.klauncher.launcher";
+
+    /**
      * 百度
      */
     public static final String BAIDU_APIKEY = "2f08b705803233298c235eedb74b84ab";//百度apiKey:应该没用了

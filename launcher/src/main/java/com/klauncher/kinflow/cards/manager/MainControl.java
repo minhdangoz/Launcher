@@ -456,7 +456,7 @@ public class MainControl {
         }
 
         //==============大图广告部分==============
-        resultDataList.add(YokmobBanner.getDefaultYokmobBanner());
+        resultDataList.add(0,YokmobBanner.getDefaultYokmobBanner());//放到第一位:对新闻类打开方式有无影响?
         //返回数据
         return resultDataList;
     }
