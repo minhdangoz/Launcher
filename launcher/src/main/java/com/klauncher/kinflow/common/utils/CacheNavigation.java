@@ -379,7 +379,7 @@ public class CacheNavigation {
                     navigation.setNavOrder(DEFAULT_ORDER_0);
                     navigation.setNavId(String.valueOf(DEFAULT_ORDER_0));
                     navigation.setNavName("网址");
-                    navigation.setNavUrl("http://m.hao123.com/?union=1&from=1000001a&tn=1000001a");
+                    navigation.setNavUrl("http://m.hao123.com/?union=1&from=1012581h&tn=ops1012581h");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
                     navigation.setNavIcon("default_content/notification_tool_light_web");
@@ -389,7 +389,7 @@ public class CacheNavigation {
                     navigation.setNavOrder(DEFAULT_ORDER_1);
                     navigation.setNavId(String.valueOf(DEFAULT_ORDER_1));
                     navigation.setNavName("小说");
-                    navigation.setNavUrl("http://book.hao123.com/?union=1&from=1000001a&tn=1000001a");
+                    navigation.setNavUrl("http://kzhuomian.ikanshu.cn/");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
                     navigation.setNavIcon("default_content/notification_tool_light_novel");
@@ -399,7 +399,7 @@ public class CacheNavigation {
                     navigation.setNavOrder(DEFAULT_ORDER_2);
                     navigation.setNavId(String.valueOf(DEFAULT_ORDER_2));
                     navigation.setNavName("视频");
-                    navigation.setNavUrl("http://v.hao123.com/?union=1&from=1000001a&tn=1000001a");
+                    navigation.setNavUrl("http://m.tv.sohu.com/");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
                     navigation.setNavIcon("default_content/notification_tool_light_video");
@@ -409,7 +409,7 @@ public class CacheNavigation {
                     navigation.setNavOrder(DEFAULT_ORDER_3);
                     navigation.setNavId(String.valueOf(DEFAULT_ORDER_3));
                     navigation.setNavName("奇趣");
-                    navigation.setNavUrl("http://www.hao123.com/qiwenqushi/?union=1&from=1000001a&tn=1000001a");
+                    navigation.setNavUrl("http://qiqu.uc.cn");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
                     navigation.setNavIcon("default_content/notification_tool_light_funny");
@@ -419,7 +419,7 @@ public class CacheNavigation {
                     navigation.setNavOrder(DEFAULT_ORDER_4);
                     navigation.setNavId(String.valueOf(DEFAULT_ORDER_4));
                     navigation.setNavName("应用");
-                    navigation.setNavUrl("http://www.wandoujia.com/apps");
+                    navigation.setNavUrl("http://app.qq.com/");
                     navOpenOptions.add("com.klauncher.kinflow/com.klauncher.kinflow.browser.KinflowBrower");
                     navigation.setNavOpenOptions(navOpenOptions);
                     navigation.setNavIcon("default_content/notification_tool_light_app");

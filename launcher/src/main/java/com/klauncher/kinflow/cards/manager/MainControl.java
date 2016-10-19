@@ -456,7 +456,12 @@ public class MainControl {
         }
 
         //==============大图广告部分==============
-        resultDataList.add(0,YokmobBanner.getDefaultYokmobBanner());//放到第一位:对新闻类打开方式有无影响?
+
+        if (resultDataList.size()>=9) {
+            resultDataList.add(8,YokmobBanner.getDefaultYokmobBanner());//放到第9位置
+        } else if (resultDataList.size()<9) {
+            resultDataList.add(YokmobBanner.getDefaultYokmobBanner());//最后一个位置
+        }
         //返回数据
         return resultDataList;
     }

@@ -37,6 +37,8 @@ import java.util.List;
  */
 public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerViewAdapterData, BaseRecyclerViewHolder<BaseRecyclerViewAdapterData>> {
 
+    AmapSkipManager amapSkipManager = new AmapSkipManager(mContext);//高德跳转管理器
+
     /**
      * 决定ITEM类型
      *
@@ -110,17 +112,26 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
 
         @Override
         public void initView(View itemRootView) {
-            bannerImage = (ImageView) itemView.findViewById(R.id.banner_iv_image);
-            itemRootView.setOnClickListener(new View.OnClickListener(){
+            try {
+                bannerImage = (ImageView) itemView.findViewById(R.id.banner_iv_image);
+                itemRootView.setOnClickListener(new View.OnClickListener(){
 
-                @Override
-                public void onClick(View v) {
-                    AmapSkipManager amapSkipManager = new AmapSkipManager(mContext);
-                    Uri arroundPoi_dianYingYuan = amapSkipManager.getArroundPoi("电影院");
-                    amapSkipManager.skip2Amap(arroundPoi_dianYingYuan);
-                }
-            });
-
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Uri arroundPoi_yuLe = amapSkipManager.getArroundPoi("娱乐");
+                            amapSkipManager.skip2Amap(arroundPoi_yuLe);
+                            String clickType = PingManager.VALUE_BIG_IMAGE_CLICK_TYPE_GAODE_YULE;
+                            String imageUrl = arroundPoi_yuLe.toString();
+                            PingManager.getInstance().reportUserAction4BigImage(clickType,imageUrl);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
