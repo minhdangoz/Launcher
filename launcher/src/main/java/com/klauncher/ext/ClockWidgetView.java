@@ -31,7 +31,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import okhttp3.MediaType;
@@ -310,11 +312,12 @@ public class ClockWidgetView extends FrameLayout {
         String timeFormat = android.provider.Settings.System.getString(cv,
                 android.provider.Settings.System.TIME_12_24);
         boolean is12hour = "12".equals(timeFormat);
-        if (isChina(mContext)) {
-            updateDate4China("12".equals(timeFormat));
-        } else {
-            updateDate4English("12".equals(timeFormat));
-        }
+//        if (isChina(mContext)) {
+//            updateDate4China("12".equals(timeFormat));
+//        } else {
+//            updateDate4English("12".equals(timeFormat));
+//        }
+        updateDate();
 
         Calendar c = Calendar.getInstance();
         int hour, minute;
@@ -360,6 +363,17 @@ public class ClockWidgetView extends FrameLayout {
         hour1.setImageResource(CLOCK_IMAGES[hour % 10]);
         minute0.setImageResource(CLOCK_IMAGES[minute / 10]);
         minute1.setImageResource(CLOCK_IMAGES[minute % 10]);
+    }
+
+    private void updateDate(){
+        Date now = new Date();
+        SimpleDateFormat sdf;
+        if (android.text.format.DateFormat.is24HourFormat(mContext)) {
+            sdf = new SimpleDateFormat("MM/dd E");
+        } else {
+            sdf = new SimpleDateFormat("MM/dd E a");
+        }
+        dateView.setText(sdf.format(now));
     }
 
 
