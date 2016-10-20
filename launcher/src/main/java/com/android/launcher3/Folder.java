@@ -855,6 +855,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             } else {
                 ll_adapks_contain.setVisibility(View.VISIBLE);
                 view_placeholder.setVisibility(View.GONE);
+                mScrollView.scrollTo(0,0);
                 mScrollView.setLayoutParams(new LinearLayout.LayoutParams(getContentWidth(), getScrollHeight()));
                mScrollView.setBackground(null);
             }
