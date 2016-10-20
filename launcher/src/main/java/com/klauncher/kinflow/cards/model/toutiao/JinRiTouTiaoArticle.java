@@ -356,10 +356,15 @@ public class JinRiTouTiaoArticle extends com.klauncher.kinflow.views.recyclerVie
 
     //图片展示的优 先 级 顺 序 为 large_image_list> image_list> middle_image>无图
     public int getImageType () {
-        if (!CollectionsUtils.collectionIsNull(this.large_image_list)) return IMAGE_TYPE_LARGE_IMAGE;
-        if (!CollectionsUtils.collectionIsNull(this.image_list)) return IMAGE_TYPE_3_IMAGE;
-        if (null!=this.middle_image) return IMAGE_TYPE_1_IMAGE;
-        return IMAGE_TYPE_0_IMAGE;
+        if (!CollectionsUtils.collectionIsNull(this.large_image_list)) {
+            return IMAGE_TYPE_LARGE_IMAGE;
+        }else if (!CollectionsUtils.collectionIsNull(this.image_list)) {
+            return IMAGE_TYPE_3_IMAGE;
+        } else  if ((null!=this.middle_image)&&(!CollectionsUtils.collectionIsNull(this.middle_image.getUrl_list()))) {
+            return IMAGE_TYPE_1_IMAGE;
+        } else {
+            return IMAGE_TYPE_0_IMAGE;
+        }
     }
 
     public static Creator<JinRiTouTiaoArticle> getCREATOR() {
