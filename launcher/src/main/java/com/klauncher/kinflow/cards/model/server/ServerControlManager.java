@@ -181,7 +181,7 @@ public class ServerControlManager {
             if (serverController.isNull()) {//为空啥也不做
 
             } else {//非空,则存储
-                CacheServerController.getInstance().putServerController(serverController);
+                CacheServerController.getInstance().putServerController(responseJsonStr);
             }
         } catch (Exception e) {
             KinflowLog.w("ServerControlManager.parseServerController出错 : " + e.getMessage());

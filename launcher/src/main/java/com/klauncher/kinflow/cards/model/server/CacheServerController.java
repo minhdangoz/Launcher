@@ -1,13 +1,15 @@
 package com.klauncher.kinflow.cards.model.server;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.text.TextUtils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.klauncher.ext.KLauncherApplication;
-import com.klauncher.kinflow.utilities.KinflowLog;
+import com.klauncher.kinflow.utilities.FileUtils;
+
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.nio.charset.Charset;
 
 /**
  * 作者:  xixionghui
@@ -17,100 +19,67 @@ import com.klauncher.kinflow.utilities.KinflowLog;
  */
 public class CacheServerController {
 
-    public static final String fileName = "cacheServerController";
-    public static final String keyName = "serverControllerKey";
+    private static final String SERVER_CONTROLLER_LIST = "server_control_list";
+    public Context mContext;
 
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-    private Gson gson;
-    private Context mContext;
-    private static CacheServerController instance = new CacheServerController();
+    public static CacheServerController instance = new CacheServerController();
 
-    private CacheServerController() {
-    }
-
-
-    public void init(Context context) {
-        synchronized (this) {
-            setContext(context);
-            sharedPreferences = getContext().getSharedPreferences(fileName, Context.MODE_PRIVATE);
-            editor = sharedPreferences.edit();
-            gson = new GsonBuilder().create();
-        }
-    }
-
-    public void setContext(Context context) {
-        if (null == context) {
-            mContext = KLauncherApplication.mKLauncherApplication;
-        } else {
-            mContext = context;
-        }
-    }
-
-    public Context getContext() {
-        if (null == mContext)
-            mContext = KLauncherApplication.mKLauncherApplication;
-        return mContext;
-    }
-
-    public static CacheServerController getInstance() {
+    public static CacheServerController getInstance () {
         return instance;
     }
 
-    public String serverController2String(ServerController serverController) {
-        synchronized (this) {
-            return gson.toJson(serverController);
-        }
+    public void init(Context context) {
+        this.mContext = context;
     }
 
-    public ServerController string2ServerController(String serverControllerString) {
+    public Context getContext () {
         synchronized (this) {
-            if (TextUtils.isEmpty(serverControllerString)) {//传进数据为空
-                return null;
-            } else {
-                return gson.fromJson(serverControllerString, ServerController.class);
+            try {
+                if (null==mContext)
+                    mContext = KLauncherApplication.mKLauncherApplication;
+                return mContext;
+            } catch (Exception e) {
+                return KLauncherApplication.mKLauncherApplication;
             }
         }
-    }
-
-    public void putServerController(ServerController serverController) {
-        try {
-            synchronized (this) {
-                if (null == serverController) return;
-                editor.putString(keyName, serverController2String(serverController));
-                editor.commit();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 
-    public ServerController getServerController() {
-        try {
-            synchronized (this) {
-                String serverControlJson = sharedPreferences.getString(keyName,null);
-                ServerController serverController = string2ServerController(serverControlJson);;
-                if (null==serverController||serverController.isNull()) {
-                    return null;
-                } else {
-                    return serverController;
+    private File getNavListFile() {
+        return new File(getContext().getFilesDir().getAbsolutePath() + "/" + SERVER_CONTROLLER_LIST);
+    }
+
+    public void putServerController(String resultData){
+        synchronized (this) {
+            try {
+                //        Log.e("Kinflow","要缓存的服务端控制器= "+resultData);
+                if (!resultData.isEmpty()) {
+                    FileUtils.write(resultData, getNavListFile(),
+                            Charset.defaultCharset());
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            KinflowLog.w("cacheServerController.getServerController出错: " + e.getMessage());
-            return null;
         }
+
     }
 
-    public void clearServerController() {
-        try {
-            synchronized (this) {
-                editor.clear();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    public ServerController getServerController(){
+        synchronized (this) {
+            ServerController serverController = null;
 
+            try {
+                File navFile = getNavListFile();
+                if (navFile.exists()) {
+                    String json = FileUtils.loadStringFromStream(new FileInputStream(navFile));
+//                    Log.e("Kinflow","获取到缓存数据= "+json);
+                    serverController = new ServerController(new JSONObject(json));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return serverController;
+        }
+
+    }
 }
