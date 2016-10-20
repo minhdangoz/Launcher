@@ -332,11 +332,10 @@
             android:name="com.android.launcher3.InstallShortcutReceiver"
             android:permission="com.klauncher.launcher.permission.INSTALL_SHORTCUT">
             <intent-filter>
+                <action android:name="com.android.launcher.action.INSTALL_SHORTCUT"/>
                 <action android:name="com.klauncher.launcher.action.INSTALL_SHORTCUT"/>
                 <action android:name="android.intent.action.PACKAGE_ADDED"/>
                 <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-
-                <data android:scheme="package"/>
             </intent-filter>
         </receiver>
 
@@ -345,6 +344,7 @@
             android:name="com.android.launcher3.UninstallShortcutReceiver"
             android:permission="com.klauncher.launcher.permission.UNINSTALL_SHORTCUT">
             <intent-filter>
+                <action android:name="com.android.launcher.action.UNINSTALL_SHORTCUT"/>
                 <action android:name="com.klauncher.launcher.action.UNINSTALL_SHORTCUT"/>
             </intent-filter>
         </receiver>
