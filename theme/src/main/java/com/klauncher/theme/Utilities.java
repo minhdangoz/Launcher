@@ -14,7 +14,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
-import android.util.Log;
 
 public class Utilities {
 
@@ -33,7 +32,6 @@ public class Utilities {
         final Resources resources = context.getResources();
         sIconWidth = sIconHeight = (int) resources.getDimension(R.dimen.app_icon_size);
         sIconTextureWidth = sIconTextureHeight = sIconWidth;
-        Log.d("hw","initStatics sIconWidth : " + sIconWidth);
         sIconSWidth = sIconSHeight = resources.getDimensionPixelSize(R.dimen.app_icon_texture_size);
     }
 
@@ -47,7 +45,6 @@ public class Utilities {
         sIconWidth = sIconHeight = widthPx;
         sIconTextureWidth = sIconTextureHeight = widthPx;
         sIconMaskPadding = maskPddding;
-        Log.d("hw","setIconSize widthPx : " + widthPx);
     }
 
 
@@ -529,7 +526,6 @@ public class Utilities {
 
                 int textureWidth = sIconWidth + sIconMaskPadding;
                 int textureHeight = sIconHeight + sIconMaskPadding;
-                Log.d("hw","composeIcon textureWidth : " + textureWidth);
 
                 // draw icon
                 final Bitmap bitmap = Bitmap.createBitmap(textureWidth , textureHeight,

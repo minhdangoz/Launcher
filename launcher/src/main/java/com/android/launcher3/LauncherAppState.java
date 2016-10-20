@@ -296,7 +296,6 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
 
     /* Lenovo zhaoxin5 20140902 add for single layer open or close START*/
     public static boolean isDisableAllApps() {
-        Log.d("hw","isDisableAllApps : " + SettingsValue.isDisableAllApps(sContext));
     	return SettingsValue.isDisableAllApps(sContext);
     }
 
@@ -318,7 +317,6 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
         if (TextUtils.equals("",disable)) {
             disable = default_value;
         }
-        Log.d("hw","isDisableAllAppsHotseat : " + disable);
         return Boolean.parseBoolean(disable);
     }
 
