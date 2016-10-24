@@ -89,26 +89,20 @@ public class AmapSkipManager {
 
 
    public void skip2Amap(Uri uri) {
-        Log.e("Kinflow", ("要跳转高德的uri = " + uri.toString()));
         try {
             boolean isInstallAmap = CommonUtils.getInstance().isInstalledAPK(mContext, "com.autonavi.minimap/com.autonavi.map.activity.SplashActivity");
             if (!isInstallAmap) {//如果没有安装高德
-                boolean isInstallMiGuan = CommonUtils.getInstance().isInstalledAPK(mContext, "com.miguan.market/com.miguan.market.component.SingleFragmentActivity");
-                if (isInstallMiGuan) {//安装了蜜罐
-//                    launch(mContext,172556,"com.autonavi.minimap",6);
-                    AmapSkipManager.testLaunchMarket(mContext);
-                } else {//没有安装蜜罐
-                    Toast.makeText(getContext(), "请先下载高德地图", Toast.LENGTH_LONG).show();
-                }
-            } else {
+                Toast.makeText(getContext(), "请先下载高德地图", Toast.LENGTH_LONG).show();
+            } else {//安装高德了
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     getContext().startActivity(intent);
                 }catch (ActivityNotFoundException exception) {
-                    AmapSkipManager.testLaunchMarket(mContext);
+                    Toast.makeText(getContext(), "请先下载高德地图", Toast.LENGTH_LONG).show();
                 }
             }
         }  catch (Exception e) {
+            Toast.makeText(getContext(), "如果您尚未安装高德地图,请先下载高德地图", Toast.LENGTH_LONG).show();
             Log.d("Kinflow", ("跳转到高德地图app,出现未知异常" + e.getMessage()));
         }
     }

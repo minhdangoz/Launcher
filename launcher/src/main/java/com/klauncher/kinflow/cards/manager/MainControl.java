@@ -457,10 +457,18 @@ public class MainControl {
 
         //==============大图广告部分==============
 
-        if (resultDataList.size()>=9) {
-            resultDataList.add(8,YokmobBanner.getDefaultYokmobBanner());//放到第9位置
-        } else if (resultDataList.size()<9) {
-            resultDataList.add(YokmobBanner.getDefaultYokmobBanner());//最后一个位置
+        if (resultDataList.size()>=5) {
+            try {
+                resultDataList.add(4,YokmobBanner.getDefaultYokmobBanner());//放到第9位置
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (0<resultDataList.size()&&resultDataList.size()<5) {
+            try {
+                resultDataList.add(YokmobBanner.getDefaultYokmobBanner());//最后一个位置
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         //返回数据
         return resultDataList;
