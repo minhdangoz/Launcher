@@ -289,23 +289,21 @@ dependencies {
     //    } else {
     //
     //    }
-    xiaomiCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    huaweiCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    huaweishuajiCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    xiaomiCompile files('uulibs/uu_release.jar')
+    huaweiCompile files('uulibs/uu_release.jar')
+    huaweishuajiCompile files('uulibs/uu_release.jar')
 
     lenovoCompile files('uulibs/uu_release.jar')
     coolpadCompile files('uulibs/uu_release.jar')
-    lenovoCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    coolpadCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
 
-    meizuCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    samsungCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    oppoCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    leshiCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    letvCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    vivoCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    jinliCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    zteCompile files('lqlibs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    meizuCompile files('uulibs/uu_release.jar')
+    samsungCompile files('uulibs/uu_release.jar')
+    oppoCompile files('uulibs/uu_release.jar')
+    leshiCompile files('uulibs/uu_release.jar')
+    letvCompile files('uulibs/uu_release.jar')
+    vivoCompile files('uulibs/uu_release.jar')
+    jinliCompile files('uulibs/uu_release.jar')
+    zteCompile files('uulibs/uu_release.jar')
     //add by hw end - 渠道编译特定jar包
     provided files('dynamic_lib/icu-classes.jar')
     compile project(':theme')

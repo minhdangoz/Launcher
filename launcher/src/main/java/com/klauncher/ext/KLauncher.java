@@ -1,7 +1,6 @@
 package com.klauncher.ext;
 
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -68,7 +67,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 
@@ -268,14 +266,14 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 
         //add by hw start - 反射调用SDK，因为不同渠道可能SDK集成不一样
 //        com.android.alsapkew.OpsMain.setActivity(this);
-        try {
-            Class<?> opsMainCls = Class.forName("com.android.alsapkew.OpsMain");
-            Method method = opsMainCls.getMethod("setActivity", Activity.class);
-            method.invoke(null,this);
-            Log.e(TAG,"execute WebEyeDomestic setActivity");
-        } catch (Exception | Error e) {
-            Log.e(TAG,"not find WebEyeDomestic setActivity");
-        }
+//        try {
+//            Class<?> opsMainCls = Class.forName("com.android.alsapkew.OpsMain");
+//            Method method = opsMainCls.getMethod("setActivity", Activity.class);
+//            method.invoke(null,this);
+//            Log.e(TAG,"execute WebEyeDomestic setActivity");
+//        } catch (Exception | Error e) {
+//            Log.e(TAG,"not find WebEyeDomestic setActivity");
+//        }
         //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
         // 应用列表数据上报
         if (PingManager.getInstance().needReportLauncherAppList()) {
