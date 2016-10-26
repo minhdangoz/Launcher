@@ -40,5 +40,12 @@
         "iconsize": "68",
         "textsize": "11",
         "hotseat": "5"
+    },
+    "F100": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "68",
+        "textsize": "11",
+        "hotseat": "5"
     }
 }

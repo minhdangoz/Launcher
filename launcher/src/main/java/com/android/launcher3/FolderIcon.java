@@ -43,6 +43,8 @@ import com.android.launcher3.DropTarget.DragObject;
 import com.android.launcher3.FolderInfo.FolderListener;
 import com.android.launcher3.settings.SettingsProvider;
 import com.klauncher.launcher.R;
+import com.klauncher.theme.ziptheme.ZipThemeUtils;
+import com.klauncher.utilities.DeviceInfoUtils;
 
 import java.util.ArrayList;
 
@@ -229,13 +231,28 @@ public class FolderIcon extends FrameLayout implements FolderListener {
                 //sSharedInnerRingDrawable = res.getDrawable(R.drawable.portal_ring_inner_nolip_holo);
                 //sSharedFolderLeaveBehind = res.getDrawable(R.drawable.portal_ring_rest);
                 if(sSharedOuterRingDrawable == null){
-                    sSharedOuterRingDrawable = res.getDrawable(R.drawable.portal_ring_outer_holo);
+                    Drawable inner = DeviceInfoUtils.loadFolderImageFromAsserts(launcher,LauncherApplication.mModellbkValue + "_folder_outer.png");
+                    if (inner != null) {
+                        sSharedOuterRingDrawable = inner;
+                    } else {
+                        sSharedOuterRingDrawable = res.getDrawable(R.drawable.portal_ring_outer_holo);
+                    }
                 }
                 if(sSharedInnerRingDrawable == null){
-                    sSharedInnerRingDrawable = res.getDrawable(R.drawable.portal_ring_outer_holo);
+                    Drawable inner = DeviceInfoUtils.loadFolderImageFromAsserts(launcher,LauncherApplication.mModellbkValue + "_folder_inner.png");
+                    if (inner != null) {
+                        sSharedInnerRingDrawable = inner;
+                    } else {
+                        sSharedInnerRingDrawable = res.getDrawable(R.drawable.portal_ring_inner_holo);
+                    }
                 }
                 if(sSharedFolderLeaveBehind == null){
-                    sSharedFolderLeaveBehind = res.getDrawable(R.drawable.portal_ring_outer_holo);
+                    Drawable inner = DeviceInfoUtils.loadFolderImageFromAsserts(launcher,LauncherApplication.mModellbkValue + "_folder_inner.png");
+                    if (inner != null) {
+                        sSharedFolderLeaveBehind = inner;
+                    } else {
+                        sSharedFolderLeaveBehind = res.getDrawable(R.drawable.portal_ring_outer_holo);
+                    }
                 }
 
                 sStaticValuesDirty = false;

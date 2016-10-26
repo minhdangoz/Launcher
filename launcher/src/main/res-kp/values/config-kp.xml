@@ -11,6 +11,9 @@
         <item>C106,C106</item>
     </array>
 
+    <array name="config_lbk_load_keywords">
+    </array>
+
     <array name="config_theme_load_icon_mask_padding">
         <item>default,0</item>
     </array>

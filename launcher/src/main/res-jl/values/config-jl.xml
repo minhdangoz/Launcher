@@ -9,6 +9,7 @@
         <item>GN8002S,GN8002</item>
         <item>GN8003,GN8002</item>
         <item>GN8001,GN8001</item>
+        <item>F100,F100</item>
         <!--<item>HUAWEI RIO-TL00,yongheng</item>
         <item>HUAWEI NXT-AL10,yongheng</item>
         <item>HUAWEI MT7-TL10,yongheng</item>
@@ -18,6 +19,30 @@
         <item>SCL-CL00,duocai</item>
         <item>SCL-TL00,duocai</item>
         <item>PLK-TL00,bazzar</item>-->
+    </array>
+
+    <array name="config_lbk_load_keywords">
+        <item>GN8002,GIONEEGN8002</item>
+        <item>GN8002S,GIONEEGN8002</item>
+        <item>GN8003,GIONEEGN8002</item>
+        <item>F100,GIONEEF100</item>
+        <item>F100A,GIONEEF100</item>
+        <item>F100S,GIONEEF100</item>
+        <item>GN3001,GIONEEGN3001</item>
+        <item>GN3002,GIONEEGN3001</item>
+        <item>GN3003,GIONEEGN3001</item>
+        <item>GN5001,GIONEEGN3001</item>
+        <item>GN5001S,GIONEEGN3001</item>
+        <item>GN5002,GIONEEGN3001</item>
+        <item>GN5003,GIONEEGN3001</item>
+        <item>F103,GIONEEGN3001</item>
+        <item>F103S,GIONEEGN3001</item>
+        <item>F105,GIONEEGN3001</item>
+        <item>GN8001,GIONEEGN3001</item>
+        <item>GN9010,GIONEEGN3001</item>
+        <item>GN9011,GIONEEGN3001</item>
+        <item>GN9012,GIONEEGN3001</item>
+        <item>GN9005,GIONEEGN3001</item>
     </array>
 
     <array name="config_theme_load_icon_mask_padding">

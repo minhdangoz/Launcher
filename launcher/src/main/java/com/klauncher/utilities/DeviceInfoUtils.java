@@ -1,6 +1,7 @@
 package com.klauncher.utilities;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -12,6 +13,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -671,5 +674,25 @@ public class DeviceInfoUtils {
         }
     }
 
+    /** 从assets 文件夹中读取图片 */
+    public static Drawable loadFolderImageFromAsserts(final Context ctx, String fileName) {
+        try {
+            InputStream is = ctx.getResources().getAssets().open(fileName);
+            return Drawable.createFromStream(is, null);
+        } catch (IOException e) {
+            if (e != null) {
+                e.printStackTrace();
+            }
+        } catch (OutOfMemoryError e) {
+            if (e != null) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            if (e != null) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
 }

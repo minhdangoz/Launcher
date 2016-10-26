@@ -6,11 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 
 import com.android.launcher3.LauncherAppState;
+import com.android.launcher3.LauncherApplication;
 import com.android.launcher3.ModeSwitchHelper.Mode;
 import com.android.launcher3.backup.LbkLoader.LbkFileFilter;
 import com.klauncher.ext.LauncherLog;
@@ -248,31 +249,34 @@ public class LbkUtil {
 	public static File getBuildModelLbkFileFromPreloadDirectory() {
 		LauncherLog.i(TAG, "getLbkFileFromPreloadDirectory start!!!");
 		Context context = LauncherAppState.getInstance().getContext();
-		String name = new StringBuilder(Build.MODEL).append(".lbk").toString().replaceAll(" ","");
-		File cacheFile = new File(context.getCacheDir(), name);
-		if (cacheFile.exists()) {
-			return cacheFile;
-		}
-		try {
-			InputStream inputStream = context.getAssets().open(name);
+		if (!TextUtils.isEmpty(LauncherApplication.mModellbkValue)) {
+			String name = new StringBuilder(LauncherApplication.mModellbkValue).append(".lbk").toString();
+			File cacheFile = new File(context.getCacheDir(), name);
+			if (cacheFile.exists()) {
+				return cacheFile;
+			}
 			try {
-				FileOutputStream outputStream = new FileOutputStream(cacheFile);
+				InputStream inputStream = context.getAssets().open(name);
 				try {
-					byte[] buf = new byte[1024];
-					int len;
-					while ((len = inputStream.read(buf)) > 0) {
-						outputStream.write(buf, 0, len);
+					FileOutputStream outputStream = new FileOutputStream(cacheFile);
+					try {
+						byte[] buf = new byte[1024];
+						int len;
+						while ((len = inputStream.read(buf)) > 0) {
+							outputStream.write(buf, 0, len);
+						}
+					} finally {
+						outputStream.close();
 					}
 				} finally {
-					outputStream.close();
+					inputStream.close();
 				}
-			} finally {
-				inputStream.close();
+			} catch (IOException e) {
+				return null;
 			}
-		} catch (IOException e) {
-			return null;
+			return cacheFile;
 		}
-		return cacheFile;
+		return null;
 	}
 
     public static boolean isXLauncherBackupLbkFileExist() {

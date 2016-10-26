@@ -32,6 +32,7 @@ public class LauncherApplication extends KLauncherApplication {
     public static int mIndexLog = 0;
     public static String[] mLogArray = null;
     public static int mLoglength = 500;
+    public static String mModellbkValue = "";
 
     @Override
     public void onCreate() {
@@ -49,6 +50,14 @@ public class LauncherApplication extends KLauncherApplication {
         LauncherAppState.setApplicationContext(this);
         LauncherAppState.getInstance();
 
+        String[] keywords = getResources().getStringArray(R.array.config_lbk_load_keywords);
+        for (String keyword : keywords) {
+            String[] modelTheme = keyword.split(",");
+            if (Build.MODEL.contains(modelTheme[0])) {
+                mModellbkValue = modelTheme[1];
+                break;
+            }
+        }
         /* Lenovo-SW zhaoxin5 20150116 add Theme support */
         initTheme();
         /* Lenovo-SW zhaoxin5 20150116 add Theme support */

@@ -8,8 +8,6 @@
  */
 package com.android.launcher3;
 
-import java.util.ArrayList;
-
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -19,8 +17,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.launcher3.FolderIcon.FolderRingAnimator;
-import com.android.launcher3.FolderIconStyleBase.PreviewItemDrawingParams;
 import com.klauncher.launcher.R;
+import com.klauncher.utilities.DeviceInfoUtils;
+
+import java.util.ArrayList;
 
 /**
  * 
@@ -42,8 +42,14 @@ public class FolderIconStylePile extends FolderIconStyleBase {
 		if(FolderRingAnimator.sSharedInnerRingDrawable != null){
 			mIcon.mPreviewBackground.setImageDrawable(FolderRingAnimator.sSharedInnerRingDrawable);
 		} else {
-			mIcon.mPreviewBackground.setImageDrawable(res
-					.getDrawable(R.drawable.portal_ring_inner_holo));
+			Drawable inner = DeviceInfoUtils.loadFolderImageFromAsserts(launcher,LauncherApplication.mModellbkValue + "_folder_inner.png");
+			if (inner != null) {
+				mIcon.mPreviewBackground.setImageDrawable(inner);
+			} else {
+				mIcon.mPreviewBackground.setImageDrawable(res
+						.getDrawable(R.drawable.portal_ring_inner_holo));
+			}
+
 		}
 		/*Lenovo-sw zhangyj19 add 2015/07/22 modify theme end*/
 	}
