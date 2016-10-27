@@ -13,6 +13,7 @@
         <item>default,0</item>
     </array>
     <array name="config_lbk_load_keywords">
+        <item>OPPO R9 Plusm A,OPPOR9m</item>
     </array>
     <array name="app_disguise_list">
         <item>com.miguan.market</item>
