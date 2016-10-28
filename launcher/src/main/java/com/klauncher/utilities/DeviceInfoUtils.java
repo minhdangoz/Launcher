@@ -106,46 +106,27 @@ public class DeviceInfoUtils {
      *
      * @return
      */
-    private String getDeviceInfo() {
+    public static String getDeviceInfo(Context context) {
         StringBuffer sb = new StringBuffer();
-        sb.append("主板：" + Build.BOARD);
-        sb.append(
-                "系统启动程序版本号：" + Build.BOOTLOADER);
-        sb.append(
-                "系统定制商：" + Build.BRAND);
-        sb.append(
-                "cpu指令集：" + Build.CPU_ABI);
-        sb.append(
-                "cpu指令集2 " + Build.CPU_ABI2);
-        sb.append(
-                "设置参数：" + Build.DEVICE);
-        sb.append(
-                "显示屏参数：" + Build.DISPLAY);
-        sb.append("无线电固件版本：" + Build.getRadioVersion());
-        sb.append(
-                "硬件识别码：" + Build.FINGERPRINT);
-        sb.append(
-                "硬件名称：" + Build.HARDWARE);
-        sb.append(
-                "HOST: " + Build.HOST);
-        sb.append(
-                "修订版本列表：" + Build.ID);
-        sb.append(
-                "硬件制造商：" + Build.MANUFACTURER);
-        sb.append(
-                "版本：" + Build.MODEL);
-        sb.append(
-                "硬件序列号： " + Build.SERIAL);
-        sb.append(
-                "手机制造商：" + Build.PRODUCT);
-        sb.append(
-                "描述Build的标签：" + Build.TAGS);
-        sb.append(
-                "时间:" + Build.TIME);
-        sb.append(
-                "builder类型：" + Build.TYPE);
-        sb.append(
-                "USER: " + Build.USER);
+        sb.append("型号：" + Build.MODEL + "\n");
+        sb.append("IMEI: " + getIMEI(context) + "\n");
+        sb.append("主板：" + Build.BOARD + "\n");
+        sb.append("系统启动程序版本号：" + Build.BOOTLOADER + "\n");
+        sb.append("系统定制商：" + Build.BRAND + "\n");
+        sb.append("cpu指令集：" + Build.CPU_ABI + "\n");
+        sb.append("cpu指令集2 ：" + Build.CPU_ABI2 + "\n");
+        sb.append("设备：" + Build.DEVICE + "\n");
+        sb.append("显示屏参数：" + Build.DISPLAY + "\n");
+        sb.append("硬件识别码：" + Build.FINGERPRINT + "\n");
+        sb.append("硬件名称：" + Build.HARDWARE + "\n");
+        sb.append("HOST: " + Build.HOST + "\n");
+        sb.append("修订版本id：" + Build.ID + "\n");
+        sb.append("厂商：" + Build.MANUFACTURER + "\n");
+        sb.append("硬件序列号： " + Build.SERIAL + "\n");
+        sb.append("产品：" + Build.PRODUCT + "\n");
+        sb.append("描述Build的标签：" + Build.TAGS + "\n");
+        sb.append("USER: " + Build.USER + "\n");
+
         return sb.toString();
     }
 /* 手机基础信息 end*/

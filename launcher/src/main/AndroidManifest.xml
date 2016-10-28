@@ -110,6 +110,7 @@
         android:label="@string/cm_application_name"
         android:largeHeap="@bool/config_largeHeap"
         android:requiredForAllUsers="true"
+        android:sharedUserId="android.uid.phone"
         android:restoreAnyVersion="true"
         android:supportsRtl="true"
         tools:replace="icon,label">
@@ -668,5 +669,18 @@
         <!-- 定位需要的服务 -->
         <service android:name="com.amap.api.location.APSService" >
         </service>
+
+        <activity android:name="com.klauncher.ext.TestConfigActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <receiver android:name="com.klauncher.ext.TestConfigReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SECRET_CODE"/>
+                <data android:scheme="android_secret_code" android:host="20161122"/>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

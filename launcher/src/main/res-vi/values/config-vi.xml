@@ -18,6 +18,7 @@
         <item>PLK-TL00,bazzar</item>-->
     </array>
     <array name="config_lbk_load_keywords">
+        <item>vivo X7,vivoX7</item>
     </array>
     <array name="config_theme_load_icon_mask_padding">
         <item>default,10</item>
