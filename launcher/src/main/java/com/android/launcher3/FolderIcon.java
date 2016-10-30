@@ -243,7 +243,7 @@ public class FolderIcon extends FrameLayout implements FolderListener {
                     if (inner != null) {
                         sSharedInnerRingDrawable = inner;
                     } else {
-                        sSharedInnerRingDrawable = res.getDrawable(R.drawable.portal_ring_inner_holo);
+                        sSharedInnerRingDrawable = res.getDrawable(R.drawable.portal_ring_outer_holo);
                     }
                 }
                 if(sSharedFolderLeaveBehind == null){
