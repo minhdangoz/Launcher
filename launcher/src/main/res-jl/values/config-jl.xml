@@ -68,8 +68,10 @@
         <item>com.calendar.UI</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
     </array>
 
+    <string name="config_icon_com.cootek.smartdialer">com.android.contacts/com.android.contacts.activities.DialtactsActivity</string>
     <string name="config_icon_com.miguan.market">gn.com.android.gamehall</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.gionee.aora.market,com.gionee.client</string>
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>

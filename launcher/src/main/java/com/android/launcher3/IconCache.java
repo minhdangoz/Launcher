@@ -356,13 +356,18 @@ public class IconCache {
                         }
                         // 没有找到theme，读取frontActivityIcon
                         if (themeBmp == null) {
-                            if (disguiseIconInfo.readFromApplication) {
-                                themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
-                                        mContext.getPackageManager().getApplicationIcon(activityInfo.packageName), mContext);
-                            } else {
+//                            else {
                                 themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
                                         mContext.getPackageManager().getActivityIcon(disguiseIconInfo.componentName), mContext);
+//                            }
+                            if (disguiseIconInfo.readFromApplication && themeBmp == null) {
+                                themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
+                                        mContext.getPackageManager().getApplicationIcon(activityInfo.packageName), mContext);
                             }
+//                            else {
+//                                themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
+//                                        mContext.getPackageManager().getActivityIcon(disguiseIconInfo.componentName), mContext);
+//                            }
                         }
                     } else {
                         // 没有任何伪装

@@ -43,8 +43,10 @@
         <item>com.calendar.UI</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
     </array>
 
+    <string name="config_icon_com.cootek.smartdialer">com.android.contacts/com.android.contacts.activities.DialtactsActivity,com.android.dialer/com.android.dialer.DialtactsActivity</string>
     <string name="config_icon_com.miguan.market">com.huawei.gamecenter</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.huawei.appmarket</string>
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>

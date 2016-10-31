@@ -33,12 +33,14 @@
         <item>com.autonavi.minimap</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
     </array>
 
     <array name="config_disable_hotseat_allapp">
         <item>default,true</item>
     </array>
 
+    <string name="config_icon_com.cootek.smartdialer">com.android.contacts/com.android.contacts.activities.TwelveKeyDialer</string>
     <string name="config_icon_com.miguan.market">com.xiaomi.gamecenter</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.xiaomi.market</string>
     <string name="config_icon_com.duomi.android">com.miui.player</string>

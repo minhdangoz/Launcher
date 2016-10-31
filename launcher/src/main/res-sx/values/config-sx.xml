@@ -30,7 +30,10 @@
         <item>com.calendar.UI</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
     </array>
+
+    <string name="config_icon_com.cootek.smartdialer">com.android.contacts/com.android.dialer.DialtactsActivity</string>
     <string name="config_icon_com.miguan.market">com.samsung.android.game.gamehome</string>
     <string name="config_icon_cn.kuwo.player">com.sec.android.app.music,com.samsung.android.app.music.chn</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.sec.android.app.samsungapps</string>

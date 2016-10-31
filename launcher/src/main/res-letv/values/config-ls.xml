@@ -35,6 +35,7 @@
         <item>com.calendar.UI</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
     </array>
 
     <array name="config_theme_load_icon_mask_padding">
@@ -45,6 +46,7 @@
         <item>default,false</item>
     </array>
 
+    <string name="config_icon_com.cootek.smartdialer">com.android.contacts/com.android.contacts.activities.DialtactsActivity</string>
     <string name="config_icon_com.miguan.market">com.letv.games</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.letv.app.appstore</string>
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>

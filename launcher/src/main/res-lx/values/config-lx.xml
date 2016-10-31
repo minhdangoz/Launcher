@@ -31,12 +31,14 @@
         <item>com.calendar.UI</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
     </array>
 
     <array name="config_disable_hotseat_allapp">
         <item>default,true</item>
     </array>
 
+    <string name="config_icon_com.cootek.smartdialer">com.lenovo.ideafriend/com.lenovo.ideafriend.alias.DialtactsActivity,com.android.dialer/com.android.dialer.DialtactsActivity,com.android.dialer/com.android.dialer.dialpad,com.android.dialer/com.android.dialer.HQDialtactsActivity</string>
     <string name="config_icon_com.miguan.market">com.lenovo.gameworldphone</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.lenovo.leos.appstore</string>
     <string name="config_icon_com.duomi.android">com.lenovo.music,com.android.music</string>

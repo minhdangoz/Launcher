@@ -37,8 +37,10 @@
         <item>com.calendar.UI</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
     </array>
 
+    <string name="config_icon_com.cootek.smartdialer">com.yulong.android.contacts.dial/com.yulong.android.contacts.dial.DialActivity,com.yulong.android.contacts/com.yulong.android.contacts.dial.DialActivity,com.android.dialer/com.android.dialer.DialtactsActivity,com.android.mms/com.yulong.android.contacts.dial.DialActivity,com.yulong.coolmessage/com.yulong.android.contacts.dial.DialActivity</string>
     <string name="config_icon_com.duomi.android">com.android.music,com.coolpad.music</string>
     <string name="config_icon_com.tencent.qqlive">com.mediatek.videoplayer/com.mediatek.videoplayer.MovieListActivity,com.android.music/com.android.music.VideoBrowserActivity,com.yulong.android.videoplayer</string>
     <string name="config_icon_com.UCMobile">com.android.browser,com.qihoo.browser</string>

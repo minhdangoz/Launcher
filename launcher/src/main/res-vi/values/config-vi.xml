@@ -43,8 +43,10 @@
         <item>com.calendar.UI</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
     </array>
 
+    <string name="config_icon_com.cootek.smartdialer">com.android.contacts/com.android.contacts.activities.DialtactsActivity,com.android.dialer/com.android.dialer.DialtactsActivity,com.android.dialer/com.android.dialer.TwelveKeyDialer</string>
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.android.bbkmusic,com.android.music,com.android.mediacenter</string>
     <string name="config_icon_com.UCMobile">com.vivo.browser,com.android.browser</string>
