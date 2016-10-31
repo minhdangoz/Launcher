@@ -19,6 +19,35 @@
     </array>
     <array name="config_lbk_load_keywords">
         <item>vivo X7,vivoX7</item>
+        <item>vivoX7Plus,vivoX7</item>
+        <item>vivoX6SA,vivoX7</item>
+        <item>vivoXplay5A,vivoX7</item>
+        <item>vivoXplay5,vivoX7</item>
+        <item>vivoY55A,vivoX7</item>
+        <item>vivoY55,vivoX7</item>
+        <item>vivoV3Max,vivoX7</item>
+        <item>vivoV3mA,vivoX7</item>
+        <item>vivoV3MaxA,vivoX7</item>
+        <item>vivoX6SPlusA,vivoX7</item>
+        <item>vivoX6SPlusD,vivoX7</item>
+        <item>vivoV3,vivoX7</item>
+        <item>vivoY37,vivoX7</item>
+        <item>vivoY937,vivoX7</item>
+        <item>vivoX5MaxL,vivoX7</item>
+        <item>vivoX5Maxv,vivoX7</item>
+        <item>vivoX5MaxS,vivoX7</item>
+        <item>vivoX6A,vivoX7</item>
+        <item>vivoX6D,vivoX7</item>
+        <item>vivoX6,vivoX7</item>
+        <item>vivoY51A,vivoY51A</item>
+        <item>vivoY51N,vivoY51A</item>
+        <item>vivoY35A,vivoY51A</item>
+        <item>vivoY35,vivoY51A</item>
+        <item>vivoY31,vivoY51A</item>
+        <item>vivoY51,vivoY51A</item>
+        <item>vivoY51L,vivoY51A</item>
+        <item>vivoY31A,vivoY51A</item>
+        <item>vivoY35L,vivoY51A</item>
     </array>
     <array name="config_theme_load_icon_mask_padding">
         <item>default,10</item>

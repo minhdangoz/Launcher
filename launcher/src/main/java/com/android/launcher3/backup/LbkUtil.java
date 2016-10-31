@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 
 import com.android.launcher3.LauncherAppState;
@@ -248,11 +247,9 @@ public class LbkUtil {
 	}
 
 	public static File getBuildModelLbkFileFromPreloadDirectory() {
-		LauncherLog.i(TAG, "getLbkFileFromPreloadDirectory start!!!");
 		Context context = LauncherAppState.getInstance().getContext();
 		if (!TextUtils.isEmpty(LauncherApplication.mModellbkValue)) {
 			String name = new StringBuilder(LauncherApplication.mModellbkValue).append(".lbk").toString();
-			Log.d("hw ","getBuildModelLbkFileFromPreloadDirectory : " + name);
 			File cacheFile = new File(context.getCacheDir(), name);
 			if (cacheFile.exists()) {
 				return cacheFile;

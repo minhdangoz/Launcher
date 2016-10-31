@@ -13,7 +13,14 @@
         <item>default,0</item>
     </array>
     <array name="config_lbk_load_keywords">
-        <item>OPPO R9 Plusm A,OPPOR9m</item>
+        <item>OPPOR9PlusmA,OPPOR9m</item>
+        <item>OPPOR9m,OPPOR9m</item>
+        <item>OPPOR9tm,OPPOR9m</item>
+        <item>OPPOR9km,OPPOR9m</item>
+        <item>OPPOR9PlustmA,OPPOR9m</item>
+        <item>OPPOA37m,OPPOR9m</item>
+        <item>OPPOA59S,OPPOR9m</item>
+        <item>OPPOA59m,OPPOR9m</item>
     </array>
     <array name="app_disguise_list">
         <item>com.miguan.market</item>
@@ -36,7 +43,7 @@
         <item>default,true</item>
     </array>
 
-    <string name="config_icon_com.cootek.smartdialer">com.android.dialer/com.android.dialer.DialtactsActivity,com.android.contacts/com.android.contacts.DialtactsActivityAlias</string>
+    <string name="config_icon_com.cootek.smartdialer">com.android.dialer/com.android.dialer.DialtactsActivity,</string>
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.oppo.music</string>
     <string name="config_icon_com.UCMobile">com.android.browser</string>

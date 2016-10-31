@@ -53,7 +53,7 @@ public class LauncherApplication extends KLauncherApplication {
         String[] keywords = getResources().getStringArray(R.array.config_lbk_load_keywords);
         for (String keyword : keywords) {
             String[] modelTheme = keyword.split(",");
-            if (Build.MODEL.contains(modelTheme[0])) {
+            if (Build.MODEL.replaceAll(" ","").contains(modelTheme[0])) {
                 mModellbkValue = modelTheme[1];
                 break;
             }
