@@ -29,6 +29,7 @@ import com.klauncher.kinflow.search.model.SearchEnum;
 import com.klauncher.kinflow.weather.listener.RecyclerItemClickListener;
 import com.klauncher.launcher.R;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,10 +179,16 @@ public class SearchActivity extends Activity implements OnClickListener{
                     String searchContext = editSearch.getText().toString();
                     String hintContext = (String) editSearch.getHint();
                     String context = TextUtils.isEmpty(searchContext)?hintContext:searchContext;
+                    String encodeContent = null;
+                    try {
+                        encodeContent = URLEncoder.encode(context, "UTF-8");
+                    }catch (Exception e) {
+                        encodeContent = context;
+                    }
                     if (TextUtils.isEmpty(context)) {
                         Toast.makeText(this, "请输入搜索词", Toast.LENGTH_SHORT).show();
                     } else {
-                        CommonUtils.getInstance().openHotWord(this,Const.URL_SEARCH_WITH_BAIDU + context);
+                        CommonUtils.getInstance().openHotWord(this, Const.URL_SEARCH_WITH_BAIDU + encodeContent);
                     }
                 } else if (searchOrCancle.getTag().equals("cancle")) {
                     finish();

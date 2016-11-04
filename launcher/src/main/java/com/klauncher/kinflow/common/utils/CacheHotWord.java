@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.klauncher.kinflow.search.model.HotWord;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,7 +80,12 @@ public class CacheHotWord {
 
 
     private HotWord getDefaultHotWord() {
-        return new HotWord(String.valueOf(-4), "热词", Const.URL_SEARCH_WITH_BAIDU + "热词",HotWord.TYPE_BAIDU);
+        String encodeContent = "热词";
+        try {
+            encodeContent = URLEncoder.encode(encodeContent, "UTF-8");
+        }catch (Exception e) {
+        }
+        return new HotWord(String.valueOf(-4), "热词", Const.URL_SEARCH_WITH_BAIDU + encodeContent,HotWord.TYPE_BAIDU);
     }
 
     /**

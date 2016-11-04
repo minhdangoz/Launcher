@@ -6,6 +6,8 @@ import android.os.Parcelable;
 
 import com.klauncher.kinflow.common.utils.Const;
 
+import java.net.URLEncoder;
+
 /**
  * Created by xixionghui on 2016/3/15.
  */
@@ -25,26 +27,36 @@ public class HotWord implements Parcelable {
     private static HotWord defaultHotWord1 = new HotWord(
             String.valueOf(-1),
             defaultHotword1,
-            Const.URL_SEARCH_WITH_BAIDU + defaultHotword1
-            ,TYPE_BAIDU);
+            Const.URL_SEARCH_WITH_BAIDU + encodeString(defaultHotword1),
+            TYPE_BAIDU);
 
     private static HotWord defaultHotWord2 = new HotWord(
             String.valueOf(-2),
             defaultHotword2,
-            Const.URL_SEARCH_WITH_BAIDU + defaultHotword2,
+            Const.URL_SEARCH_WITH_BAIDU + encodeString(defaultHotword2),
             TYPE_BAIDU);
 
     private static HotWord hintHotWord = new HotWord(
             String.valueOf(-3),
             defaultHotword3,
-            Const.URL_SEARCH_WITH_BAIDU + defaultHotword3,
+            Const.URL_SEARCH_WITH_BAIDU + encodeString(defaultHotword3),
             TYPE_BAIDU);
 
     private static HotWord topHotWord = new HotWord(
             String.valueOf(-4),
             defaultHotword4,
-            Const.URL_SEARCH_WITH_BAIDU + defaultHotword4,
+            Const.URL_SEARCH_WITH_BAIDU + encodeString(defaultHotword4),
             TYPE_BAIDU);
+
+    private static String encodeString (String content){
+        String encodeUtf8String = null;
+        try {
+            encodeUtf8String =URLEncoder.encode(content,"UTF-8");
+        } catch (Exception e) {
+            encodeUtf8String = content;
+        }
+        return encodeUtf8String;
+    }
 
     public static HotWord getDefaultHotWord1() {
         return defaultHotWord1;
