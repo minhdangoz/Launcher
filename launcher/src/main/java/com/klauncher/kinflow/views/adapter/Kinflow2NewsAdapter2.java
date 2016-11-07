@@ -495,8 +495,8 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                         String finalOpenComponent_Head0Imapge =  sougouSearchArticle.openByOrder(mContext);
                         if (!TextUtils.isEmpty(finalOpenComponent_Head0Imapge))
                             PingManager.getInstance().reportUserAction4NewsOpen(
-                                    PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO,
-                                    String.valueOf(CardIdMap.CARD_TYPE_NEWS_TT_REDIAN),
+                                    PingManager.VALUE_CARD_CONTENT_FROM_SOUGOUSOUSOU,
+                                    String.valueOf(CardIdMap.CARD_TYPE_NEWS_SOUGOU_SEARCH_NEWS),
                                     finalOpenComponent_Head0Imapge,
                                     getPosition()
                             );
@@ -517,8 +517,8 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                         String finalOpenComponent_Head1Imapge =  sougouSearchArticle.openByOrder(mContext);
                         if (!TextUtils.isEmpty(finalOpenComponent_Head1Imapge))
                             PingManager.getInstance().reportUserAction4NewsOpen(
-                                    PingManager.VALUE_CARD_CONTENT_FROM_JINRITOUTIAO,
-                                    String.valueOf(CardIdMap.CARD_TYPE_NEWS_TT_REDIAN),
+                                    PingManager.VALUE_CARD_CONTENT_FROM_SOUGOUSOUSOU,
+                                    String.valueOf(CardIdMap.CARD_TYPE_NEWS_SOUGOU_SEARCH_NEWS),
                                     finalOpenComponent_Head1Imapge,
                                     getPosition()
                             );

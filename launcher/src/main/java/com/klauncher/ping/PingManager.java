@@ -285,6 +285,7 @@ public class PingManager {
     public static final String VALUE_HOTWORD_CONTENT_FROM_SHENMA= "shenma";
     public static final String VALUE_CARD_CONTENT_FROM_YIDIANZIXUN= "yiDianZiXun";
     public static final String VALUE_CARD_CONTENT_FROM_JINRITOUTIAO= "jinRiTouTiao";
+    public static final String VALUE_CARD_CONTENT_FROM_SOUGOUSOUSOU= "souGouSouSuo";
     public static final String VALUE_NAVIGATION_TYPE_CONTENT = "navigationContent";
     public static final String VALUE_NAVIGATION_TYPE_WEB = "navigationWeb";
 

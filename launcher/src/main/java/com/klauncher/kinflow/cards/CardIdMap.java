@@ -52,6 +52,10 @@ public class CardIdMap {
         public static final int CARD_TYPE_NEWS_YD_JIANSHEN = 367;
         public static final int CARD_TYPE_NEWS_YD_LVYOU = 368;
 
+        //新闻分类----搜狗搜索
+        public static final int CARD_TYPE_NEWS_SOUGOU_SEARCH_NEWS = 380;//2016年11月07日11:35分,与潘商定搜狗搜索的新闻为380
+
+
     public static final int CARD_TYPE_SKIP_AMAP_DIANYING = 501;
     public static final int CARD_TYPE_SKIP_AMAP_YULE = 502;
 
