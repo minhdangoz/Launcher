@@ -423,9 +423,15 @@ public class PingManager {
         pingMap.put(KEY_CARD_CONTENT_FROM, fromName);
         pingMap.put(KEY_CARD_SECOND_TYPE_ID,cardSecondTypeId);
         pingMap.put(KEY_PULL_UP_APP_PACKAGENAME,pullUpAppPackageName);
-        pingMap.put(POSITION_IN_LIST,String.valueOf(position));
+        pingMap.put(POSITION_IN_LIST, String.valueOf(position));
         ////添加事件tag
-        MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_NEWS_OPEN,pingMap);
+        MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_NEWS_OPEN, pingMap);
+//        KinflowLog.e("click_open_card_news:"+"\n"
+//                +"cardContentFrom="+fromName
+//                +" , cardSecondTypeId="+cardSecondTypeId
+//                +" , pullUpAppPackageName="+pullUpAppPackageName
+//                +" , position_in_list="+String.valueOf(position)
+//        );
         return  pingMap;
     }
 
