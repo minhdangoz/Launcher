@@ -8,6 +8,7 @@ import android.util.Log;
 import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.kinflow.cards.CardIdMap;
 import com.klauncher.kinflow.cards.model.CardInfo;
+import com.klauncher.kinflow.cards.model.server.AdControl;
 import com.klauncher.kinflow.cards.model.server.NewsOpenControl;
 import com.klauncher.kinflow.cards.model.server.ServerControlManager;
 import com.klauncher.kinflow.cards.model.server.ServerController;
@@ -29,6 +30,7 @@ import com.klauncher.kinflow.utilities.FileUtils;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData;
 import com.klauncher.kinflow.views.recyclerView.data.YokmobBanner;
+import com.klauncher.kinflow.views.recyclerView.data.YokmobComparator;
 import com.klauncher.kinflow.weather.model.Weather;
 
 import org.json.JSONArray;
@@ -42,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Semaphore;
 
 //import com.kyview.natives.NativeAdInfo;
@@ -249,7 +252,7 @@ public class MainControl {
                     }
 
                     log("====================组织数据,准备更新新闻和广告部分=====================");
-                    List<BaseRecyclerViewAdapterData> updateData = combinationData(ServerControlManager.getInstance().getServerController().getNewsOpenControlList(), mJinRiTouTiaoArticleList, mSougouSearchArticleList);
+                    List<BaseRecyclerViewAdapterData> updateData = combinationData(mJinRiTouTiaoArticleList, mSougouSearchArticleList);
                     if (CollectionsUtils.collectionIsNull(updateData)) {
                         log("没有获取到数据,所有不在更新新闻和广告");
                     } else {
@@ -399,78 +402,153 @@ public class MainControl {
     private final NavigationContentHandler mNavigationContentHandler = new NavigationContentHandler(this);
     private final ConfigHandler mConfigHandler = new ConfigHandler(this);
 
-    private List<BaseRecyclerViewAdapterData> combinationData(List<NewsOpenControl> newsOpenControlList, List<JinRiTouTiaoArticle> jrttDataList, List<SougouSearchArticle> sougouDataList) {
-        baseRecyclerViewAdapterDataList.clear();
-        //如果获取到的新闻控制器为空,则使用缓存
-        if (CollectionsUtils.collectionIsNull(newsOpenControlList)) {
+    private List<BaseRecyclerViewAdapterData> combinationData(List<JinRiTouTiaoArticle> jrttDataList, List<SougouSearchArticle> sougouDataList) {
 
+        try {
+            baseRecyclerViewAdapterDataList.clear();
+            //获取新闻控制器&&广告控制器
+            List<NewsOpenControl> newsOpenControlList = new ArrayList<>();
+            List<AdControl> adControlList = new ArrayList<>();
             try {
-                InputStream is = KLauncherApplication.mKLauncherApplication.getAssets().open("default_server_control");
-                String json = FileUtils.loadStringFromStream(is);
-                JSONObject localJsonRoot = new JSONObject(json);
-                JSONArray newsOpenControlLocalJsonArray = localJsonRoot.optJSONArray("news");
-                int newsOpenControlLocalJsonLength = newsOpenControlLocalJsonArray.length();
-                for (int x = 0; x < newsOpenControlLocalJsonLength; x++) {
-                    newsOpenControlList.add(new NewsOpenControl(newsOpenControlLocalJsonArray.optJSONObject(x)));
+                newsOpenControlList = ServerControlManager.getInstance().getServerController().getNewsOpenControlList();
+                adControlList = ServerControlManager.getInstance().getServerController().getAdControlList();
+            } catch (Exception e) {
+                KinflowLog.e("ServerControlManager在获取后台控制器的新闻控制器和广告控制器时出错:"+e.getMessage());
+            }
+
+            //如果获取到的新闻控制器为空,则使用缓存
+            if (CollectionsUtils.collectionIsNull(newsOpenControlList)) {
+                try {
+                    InputStream is = KLauncherApplication.mKLauncherApplication.getAssets().open("default_server_control");
+                    String json = FileUtils.loadStringFromStream(is);
+                    JSONObject localJsonRoot = new JSONObject(json);
+                    JSONArray newsOpenControlLocalJsonArray = localJsonRoot.optJSONArray("news");
+                    int newsOpenControlLocalJsonLength = newsOpenControlLocalJsonArray.length();
+                    for (int x = 0; x < newsOpenControlLocalJsonLength; x++) {
+                        newsOpenControlList.add(new NewsOpenControl(newsOpenControlLocalJsonArray.optJSONObject(x)));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
 
-        }
-        //穿插数据计算综合
-        List<BaseRecyclerViewAdapterData> baseDataTotalList = new ArrayList<>();
-        //计算新闻条数
-        int jrttSize = jrttDataList.size();
-        int sougouSize = sougouDataList.size();
-        if (jrttSize > sougouSize) {
-            for (int i = 0; i < sougouSize; i++) {
-                baseDataTotalList.add(jrttDataList.get(i));//先添加今日头条数据
-                baseDataTotalList.add(sougouDataList.get(i));//后添加搜狗数据
+            if (CollectionsUtils.collectionIsNull(adControlList)) {//如果获取到的广告控制器为空,则使用缓存,如果缓存数据为空则使用默认
+                try {
+                    InputStream is = KLauncherApplication.mKLauncherApplication.getAssets().open("default_server_control");
+                    String json = FileUtils.loadStringFromStream(is);
+                    JSONObject localJsonRoot = new JSONObject(json);
+                    JSONArray adOpenControlLocalJsonArray = localJsonRoot.optJSONArray("ads");
+                    int adOpenControlLocalJsonLength = adOpenControlLocalJsonArray.length();
+                    for (int y = 0; y < adOpenControlLocalJsonLength; y++) {
+                        adControlList.add(new AdControl(adOpenControlLocalJsonArray.getJSONObject(y)));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-            baseDataTotalList.addAll(jrttDataList.subList(sougouSize, jrttSize));//添加多出来的今日头条部分
-        } else {
-            for (int j = 0; j < jrttSize; j++) {
-                baseDataTotalList.add(jrttDataList.get(j));
-                baseDataTotalList.add(sougouDataList.get(j));
+            //穿插数据计算综合
+            List<BaseRecyclerViewAdapterData> baseDataTotalList = new ArrayList<>();
+            //计算新闻条数
+            int jrttSize = jrttDataList.size();
+            int sougouSize = sougouDataList.size();
+            if (jrttSize > sougouSize) {
+                for (int i = 0; i < sougouSize; i++) {
+                    baseDataTotalList.add(jrttDataList.get(i));//先添加今日头条数据
+                    baseDataTotalList.add(sougouDataList.get(i));//后添加搜狗数据
+                }
+                baseDataTotalList.addAll(jrttDataList.subList(sougouSize, jrttSize));//添加多出来的今日头条部分
+            } else {
+                for (int j = 0; j < jrttSize; j++) {
+                    baseDataTotalList.add(jrttDataList.get(j));
+                    baseDataTotalList.add(sougouDataList.get(j));
+                }
+                baseDataTotalList.addAll(sougouDataList.subList(jrttSize, sougouSize));//添加多出来的搜狗搜索部分
             }
-            baseDataTotalList.addAll(sougouDataList.subList(jrttSize, sougouSize));//添加多出来的搜狗搜索部分
-        }
-        //根据长度遍历赋值
-        List<BaseRecyclerViewAdapterData> resultDataList = new ArrayList<>();
-        if (baseDataTotalList.size() > newsOpenControlList.size()) {//新闻条数多余控制器条数
-            for (int x = 0; x < newsOpenControlList.size(); x++) {
-                BaseRecyclerViewAdapterData baseData = baseDataTotalList.get(x);
-                baseData.setOpenOptions(newsOpenControlList.get(x).getNewsOpenOptions());
-                resultDataList.add(baseData);
+            //根据长度遍历赋值
+            List<BaseRecyclerViewAdapterData> resultDataList = new ArrayList<>();
+            if (baseDataTotalList.size() > newsOpenControlList.size()) {//新闻条数多余控制器条数
+                for (int x = 0; x < newsOpenControlList.size(); x++) {
+                    BaseRecyclerViewAdapterData baseData = baseDataTotalList.get(x);
+                    baseData.setOpenOptions(newsOpenControlList.get(x).getNewsOpenOptions());
+                    resultDataList.add(baseData);
+                }
+            } else {//新闻条数<=控制器条数
+                for (int y = 0; y < baseDataTotalList.size(); y++) {
+                    BaseRecyclerViewAdapterData baseData = baseDataTotalList.get(y);
+                    baseData.setOpenOptions(newsOpenControlList.get(y).getNewsOpenOptions());
+                    resultDataList.add(baseData);
+                }
             }
-        } else {//新闻条数<=控制器条数
-            for (int y = 0; y < baseDataTotalList.size(); y++) {
-                BaseRecyclerViewAdapterData baseData = baseDataTotalList.get(y);
-                baseData.setOpenOptions(newsOpenControlList.get(y).getNewsOpenOptions());
-                resultDataList.add(baseData);
+
+            //大图广告部分==========
+            List<YokmobBanner> yokmobBannerList = new ArrayList<>();
+            yokmobBannerList.add(YokmobBanner.getDefaultYokmobBanner());//先加入高德地图
+            for (int z = 0; z < adControlList.size(); z++) {//加入后台控制的banner广告
+                AdControl adControl = adControlList.get(z);//获取广告控制器
+    //            KinflowLog.e("集成广告,广告控制器如下:\n"+adControl.toString());
+                YokmobBanner yokmobBanner = YokmobBanner.getCommmonYokmobBanner();
+                int sid = 0;
+                try {
+                    sid = Integer.valueOf(adControl.getAdSID());
+                    switch (sid) {
+                        case AdControl.SID_FROM_EXTRAS_INFO:
+                            Map<String,String> adExtra2ImageUrlMap = adControl.adExtra2ImageUrl();
+                            yokmobBanner.setBannerType(YokmobBanner.BANNER_TYPE_COMMON);
+                            yokmobBanner.setImageUrl(adExtra2ImageUrlMap.get(AdControl.KEY_IMAGE_URL));
+                            yokmobBanner.setClickUrl(adExtra2ImageUrlMap.get(AdControl.KEY_IMAGE_CLICK_URL));
+                            yokmobBanner.setOrder(adControl.getAdOrder());
+                            yokmobBanner.setOpenOptions(adControl.getAdOpenOptions());
+                            break;
+                        case AdControl.SID_FROM_OUR_AD_PLATFORM:
+                            break;
+                        case AdControl.SID_FROM_BAIDU_AD:
+                            break;
+                        case AdControl.SID_FROM_ADVIE_AD:
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (Exception e) {
+                    yokmobBanner.setImageUrl(AdControl.defaultImageUrl);
+                    yokmobBanner.setClickUrl(AdControl.defaultClickImageUrl);
+                    yokmobBanner.setBannerType(YokmobBanner.BANNER_TYPE_COMMON);
+
+                }
+                //将yokmob添加到
+                yokmobBannerList.add(yokmobBanner);
             }
+            //2.对广告集合yokmobBannerList进行排序
+            Collections.sort(yokmobBannerList, YokmobComparator.getInstance());
+            //3.遍历排序后的yokmobBannerList并加入到最终
+            int yokmobBannerListSize = yokmobBannerList.size();
+            int newsDataListSize = resultDataList.size();
+            if (newsDataListSize>0) {//新闻条数大于0
+                for (int l = 0; l < yokmobBannerListSize; l++) {
+                    YokmobBanner yokmobBanner = yokmobBannerList.get(l);
+                    int yokMobBannerOrder = yokmobBanner.getOrder();
+                    if (yokMobBannerOrder<newsDataListSize) {//要插入的广告的位置,小于新闻条数,可以正常插入
+                        resultDataList.add(yokMobBannerOrder,yokmobBanner);
+                    }else {//要插入的广告的位置,大于新闻条数,插入到最后
+                        resultDataList.add(yokmobBanner);
+                    }
+                }
+            }
+            //返回数据
+            return resultDataList;
+        } catch (Exception e) {
+            KinflowLog.e("集成数据时出错,今日头条+搜狗搜索+高德导航+banner广告等一起集合时出错:"+e.getMessage()+"\n尝试仅仅集合新闻");
+            List<BaseRecyclerViewAdapterData> errorResultDataList = new ArrayList<>();
+            return errorResultDataList;
         }
 
-        //==============大图广告部分==============
-
-        if (resultDataList.size()>=5) {
-            try {
-                resultDataList.add(4,YokmobBanner.getDefaultYokmobBanner());//放到第9位置
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (0<resultDataList.size()&&resultDataList.size()<5) {
-            try {
-                resultDataList.add(YokmobBanner.getDefaultYokmobBanner());//最后一个位置
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        //返回数据
-        return resultDataList;
     }
 
     /**

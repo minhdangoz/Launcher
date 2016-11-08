@@ -120,8 +120,8 @@ public class BaseRecyclerViewAdapterData {
         }
     }
 
-    private static final String INNER_BROWSER_PACKAGENAME = "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower";
-    private static final String CLIENT_SCHEMA = "xxx/www";
+    public static final String INNER_BROWSER_PACKAGENAME = "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower";
+    public static final String CLIENT_SCHEMA = "xxx/www";
 
     public String openByOrder (Context context) {
 
@@ -140,6 +140,9 @@ public class BaseRecyclerViewAdapterData {
                         SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) this;
                         String articleUrl = TextUtils.isEmpty(sougouSearchArticle.getLink()) ? sougouSearchArticle.getOpen_link() : sougouSearchArticle.getLink();
                         KinflowBrower.openUrl(context, articleUrl);
+                    } else if (this.kinflowConentType == TYPE_BANNER) {
+                        YokmobBanner yokmobBanner = (YokmobBanner) this;
+                        KinflowBrower.openUrl(context,yokmobBanner.clickUrl);
                     }
                     finalOpenComponent = BuildConfig.APPLICATION_ID;
                 }else if (openComponentName.equals(CLIENT_SCHEMA)) {//用新闻对应的客户端打开
@@ -152,6 +155,9 @@ public class BaseRecyclerViewAdapterData {
                         SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) this;
                         context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(sougouSearchArticle.getSchema())));
                         finalOpenComponent = Const.SOUGOU_packageName;
+                    } else if (this.kinflowConentType == TYPE_BANNER) {
+                        YokmobBanner yokmobBanner = (YokmobBanner) this;
+                        context.startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(yokmobBanner.getClickUrl())));
                     }
                 }else {//用浏览器打开
                     String articleUrl = "http://m.hao123.com/?union=1&from=1012581h&tn=ops1012581h";
@@ -161,6 +167,9 @@ public class BaseRecyclerViewAdapterData {
                     } else if (this.kinflowConentType == TYPE_NEWS_SOUGOU) {
                         SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) this;
                         articleUrl = TextUtils.isEmpty(sougouSearchArticle.getOpen_link())? sougouSearchArticle.getLink() : sougouSearchArticle.getOpen_link();
+                    } else if (this.kinflowConentType == TYPE_BANNER) {
+                        YokmobBanner yokmobBanner = (YokmobBanner) this;
+                        articleUrl = yokmobBanner.getClickUrl();//文章的详情页,其实就是banner的点击跳转的页
                     }
                     String[] cns = getOpenOptions().get(i).split("/");
                     ComponentName componentName = new ComponentName(cns[0],cns[1]);
@@ -186,14 +195,21 @@ public class BaseRecyclerViewAdapterData {
     }
 
     private String openWithInnerBrowser(Context context) {
-        if (this.kinflowConentType == TYPE_NEWS_JINRITOUTIAO) {
-            JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle) this;
-            String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
-            KinflowBrower.openUrl(context,articleUrl);
-        } else if (this.kinflowConentType == TYPE_NEWS_SOUGOU) {
-            SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) this;
-            String articleUrl = TextUtils.isEmpty(sougouSearchArticle.getLink()) ? sougouSearchArticle.getOpen_link() : sougouSearchArticle.getLink();
-            KinflowBrower.openUrl(context, articleUrl);
+        try {
+            if (this.kinflowConentType == TYPE_NEWS_JINRITOUTIAO) {
+                JinRiTouTiaoArticle jinRiTouTiaoArticle = (JinRiTouTiaoArticle) this;
+                String articleUrl = TextUtils.isEmpty(jinRiTouTiaoArticle.getArticle_url()) ? jinRiTouTiaoArticle.getUrl() : jinRiTouTiaoArticle.getArticle_url();
+                KinflowBrower.openUrl(context,articleUrl);
+            } else if (this.kinflowConentType == TYPE_NEWS_SOUGOU) {
+                SougouSearchArticle sougouSearchArticle = (SougouSearchArticle) this;
+                String articleUrl = TextUtils.isEmpty(sougouSearchArticle.getLink()) ? sougouSearchArticle.getOpen_link() : sougouSearchArticle.getLink();
+                KinflowBrower.openUrl(context, articleUrl);
+            } else if (this.kinflowConentType == TYPE_BANNER) {
+                YokmobBanner yokmobBanner = (YokmobBanner) this;
+                KinflowBrower.openUrl(context,yokmobBanner.getClickUrl());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return BuildConfig.APPLICATION_ID;
     }

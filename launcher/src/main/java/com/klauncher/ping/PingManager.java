@@ -12,6 +12,7 @@ import android.util.Log;
 import com.dl.statisticalanalysis.MobileStatistics;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
+import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.utilities.LogUtil;
 
 import java.io.File;
@@ -468,6 +469,10 @@ public class PingManager {
         Map<String, String> pingMap = new HashMap<>();
         pingMap.put(KEY_CLICK_BIG_IMAGE_TYPE,bigImageClickType);
         pingMap.put(KEY_CLICK_BIG_IMAGE_URL,imageUrl);
+        KinflowLog.e("click_big_image:\n"
+                        + KEY_CLICK_BIG_IMAGE_TYPE+" : "+bigImageClickType+"\n"
+                        + KEY_CLICK_BIG_IMAGE_URL+" : "+imageUrl+"\n"
+        );
         MobileStatistics.onEvent(USER_ACTION_CLICK_CARD_BIG_IMAGE,pingMap);
         return pingMap;
     }

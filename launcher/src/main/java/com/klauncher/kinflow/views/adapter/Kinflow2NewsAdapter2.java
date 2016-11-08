@@ -118,11 +118,28 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
 
                     @Override
                     public void onClick(View v) {
+                        //区分不同的banner大图
+                        YokmobBanner yokmobBanner = (YokmobBanner) mElementList.get(getPosition());
+                        KinflowLog.e("被点击的yokmob信息如下:\n"+yokmobBanner.toString());
+
                         try {
-                            Uri arroundPoi_yuLe = amapSkipManager.getArroundPoi("娱乐");
-                            amapSkipManager.skip2Amap(arroundPoi_yuLe);
-                            String clickType = PingManager.VALUE_BIG_IMAGE_CLICK_TYPE_GAODE_YULE;
-                            String imageUrl = arroundPoi_yuLe.toString();
+                            String clickType = "";
+                            String imageUrl = "";
+                            switch (yokmobBanner.getBannerType()) {
+                                case YokmobBanner.BANNER_TYPE_GAODE:
+                                    Uri arroundPoi_yuLe = amapSkipManager.getArroundPoi("娱乐");
+                                    amapSkipManager.skip2Amap(arroundPoi_yuLe);
+                                    clickType = PingManager.VALUE_BIG_IMAGE_CLICK_TYPE_GAODE_YULE;
+                                    imageUrl = arroundPoi_yuLe.toString();
+                                    break;
+                                case YokmobBanner.BANNER_TYPE_COMMON:
+                                    yokmobBanner.openByOrder(mContext);
+                                    clickType = PingManager.VALUE_BIG_IMAGE_CLICK_TYPE_YOKMOB;
+                                    imageUrl = yokmobBanner.getImageUrl();
+                                    break;
+                                default:
+                                    break;
+                            }
                             PingManager.getInstance().reportUserAction4BigImage(clickType,imageUrl);
                         } catch (Exception e) {
                             e.printStackTrace();

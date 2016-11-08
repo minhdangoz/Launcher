@@ -63,7 +63,7 @@ public class KinflowBrower extends Activity {
         webSettings.setLoadsImagesAutomatically(true);
 
 
-        mWebView.setWebViewClient(new KinfowWebClient());
+        mWebView.setWebViewClient(new KinfowWebClient(this));
 
 
     }

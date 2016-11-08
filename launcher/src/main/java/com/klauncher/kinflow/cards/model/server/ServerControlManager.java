@@ -29,7 +29,7 @@ import okhttp3.Response;
  * @date 创建时间: 16/10/14 上午11:09
  * @Description 直接对外提供打开方式列表.内部异步获取打开方式列表.
  * 有了广告控制,需要修改的地方:
- * 1.assets 广告加入;
+ * 1.assets 广告加入---默认不加入;
  * 2.ServerController实体类的isNull方法.
  * 3.本类的getDefaultServerControl方法解析;
  * 4.MainControl.combinationData方法
@@ -104,7 +104,7 @@ public class ServerControlManager {
         try {
             ServerController defaultServerController = new ServerController();
             List<NewsOpenControl> newsOpenControlList = new ArrayList<>();
-//        List<AdControl> adControlList = new ArrayList<>();
+            List<AdControl> adControlList = new ArrayList<>();
             InputStream is = KLauncherApplication.mKLauncherApplication.getAssets().open("default_server_control");
             String json = FileUtils.loadStringFromStream(is);
             JSONObject localJsonRoot = new JSONObject(json);
@@ -115,8 +115,14 @@ public class ServerControlManager {
                 newsOpenControlList.add(new NewsOpenControl(newsOpenControlLocalJsonArray.optJSONObject(x)));
             }
             //解析广告部分---等添加广告控制后,这里再添加代码,先预留位置
+            JSONArray adOpenControlLocalJsonArray = localJsonRoot.optJSONArray("ads");
+            int adOpenControlLocalJsonLength = adOpenControlLocalJsonArray.length();
+            for (int y = 0; y < adOpenControlLocalJsonLength; y++) {
+                adControlList.add(new AdControl(adOpenControlLocalJsonArray.getJSONObject(y)));
+            }
             //返回数据
             defaultServerController.setNewsOpenControlList(newsOpenControlList);
+            defaultServerController.setAdControlList(adControlList);
             return defaultServerController;
         } catch (Exception e) {
             KinflowLog.w("ServerControlManager.getDefaultServerControl出错 : " + e.getMessage());
@@ -129,6 +135,7 @@ public class ServerControlManager {
             //创建请求对象
             Request request = new Request.Builder()
                     .url(Const.KINFLOW2_SERVER_CONTROL)
+//                    .url(Const.KINFLOW2_SERVER_CONTROL_TEST)
                     .build();
 
             client.newCall(request).enqueue(new Callback() {
