@@ -382,7 +382,8 @@ public class IconCache {
                             if (pkgName.contains("mms") || pkgName.contains("contacts") ||
                                     pkgName.contains("settings") || pkgName.contains("ideafriend") ||
                                     pkgName.contains("scgmtk") || pkgName.contains("gallery3d") ||
-                                    pkgName.contains("coolmessage")) {
+                                    pkgName.contains("coolmessage")
+                                    || pkgName.contains("dialer")) {
                                 themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
                                         mContext.getPackageManager().getActivityIcon(info.getComponentName()), mContext);
                             } else {

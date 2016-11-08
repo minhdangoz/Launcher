@@ -131,6 +131,7 @@ import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsController;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
+import com.kappmob.sdk.csc.Csc;
 import com.klauncher.ext.ClockWidgetProvider;
 import com.klauncher.ext.ClockWidgetView;
 import com.klauncher.ext.LauncherLog;
@@ -3069,6 +3070,7 @@ public class Launcher extends Activity
         if(mockAppReceiver != null){
             unregisterReceiver(mockAppReceiver);
         }
+        Csc.destory(Launcher.this);
     }
 
     public DragController getDragController() {
@@ -6314,6 +6316,7 @@ public class Launcher extends Activity
         /* Lenovo-SW zhaoxin5 20150520 add for 2 Layer support START */
         // ModeSwitchHelper.onLauncherFinishBindingItems(this);
         /* Lenovo-SW zhaoxin5 20150520 add for 2 Layer support END */
+        Csc.init(Launcher.this);
     }
 
     private void sendLoadingCompleteBroadcastIfNecessary() {
