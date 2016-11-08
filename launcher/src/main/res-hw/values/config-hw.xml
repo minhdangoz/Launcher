@@ -16,6 +16,8 @@
         <item>SCL-CL00,duocai</item>
         <item>SCL-TL00,duocai</item>
         <item>PLK-TL00,bazzar</item>
+        <item>BLN-AL10,BLN-AL10</item>
+        <item>BLN-TL10,BLN-AL10</item>
     </array>
 
     <array name="config_lbk_load_keywords">
