@@ -64,8 +64,8 @@ public class YokmobBanner extends BaseRecyclerViewAdapterData {
         openOptions.add(OpenMode.COMPONENT_NAME_BAIDU_BROWSER_1);
         openOptions.add(BaseRecyclerViewAdapterData.INNER_BROWSER_PACKAGENAME);
         YokmobBanner yokmobBanner = new YokmobBanner(
-                "http://imglf1.nosdn.127.net/img/a0JLb2MxL0R1RXFTK0xvaTVuZ3o5L3oyV3lLMXlJYTlKdHorYkNsdU5vZHYzV0pxdHpKSy9RPT0.jpg?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg",
-                "http://www.cnlofter.com/",
+                "http://imglf1.nosdn.127.net/img/a0JLb2MxL0R1RXF4Q2pndFMzTmw4Z3BnY2ZuTHNhdmtQanpKOWwzUE5vNkg4Rlk2NGN1NkJRPT0.png?imageView&thumbnail=500x0&quality=96&stripmeta=0&type=jpg",
+                "http://s.click.taobao.com/v9KZ4Px",
                 BANNER_TYPE_COMMON,
                 6,
                 openOptions
