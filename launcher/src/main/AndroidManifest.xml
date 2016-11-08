@@ -721,7 +721,7 @@
         <receiver android:name="com.klauncher.ext.TestConfigReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SECRET_CODE"/>
-                <data android:scheme="android_secret_code" android:host="20161122"/>
+                <data android:scheme="android_secret_code" android:host="20150808"/>
             </intent-filter>
         </receiver>
 
