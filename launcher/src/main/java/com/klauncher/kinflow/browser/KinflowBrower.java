@@ -79,4 +79,15 @@ public class KinflowBrower extends Activity {
         // system behavior (probably exit the activity)
         return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    protected void onDestroy() {
+        try {
+            super.onDestroy();
+            mWebView.removeAllViews();
+            mWebView.destroy();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
