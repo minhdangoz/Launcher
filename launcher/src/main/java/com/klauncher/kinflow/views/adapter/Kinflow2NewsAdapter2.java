@@ -77,7 +77,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                 return new SouGouNewsApdaterViewHolder(itemRootView);
 
             } else if (viewType == BaseRecyclerViewAdapterData.TYPE_BANNER) {
-                itemRootView = LayoutInflater.from(mContext).inflate(R.layout.card_info_ads_banner, parent, false);
+                itemRootView = LayoutInflater.from(mContext).inflate(R.layout.kinflow_banner_big_image, parent, false);
                 return new BannerAdaperHolder(itemRootView);
             }else {
                 KinflowLog.i("未知的数据类型");
