@@ -4308,7 +4308,7 @@ public class Launcher extends Activity
             int folderHeight = (int)(screenHeight*0.9);
             int folderMargTop = (int)(screenHeight*0.1);
             //加载初始化推荐应用
-            folder.initAPUS(info.folderId,false);
+//            folder.initAPUS(info.folderId,false);
             //DragLayer.LayoutParams params = new  DragLayer.LayoutParams(folderWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
             DragLayer.LayoutParams params = new  DragLayer.LayoutParams(folderWidth, folderHeight);
             LogUtil.d("wqh_Folder",folderWidth+" x "+folderHeight);

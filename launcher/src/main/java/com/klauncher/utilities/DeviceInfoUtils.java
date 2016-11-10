@@ -36,10 +36,15 @@ public class DeviceInfoUtils {
 
     //获取device_imei
     public static String getIMEI(Context ctx) {
-        TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
-        String imei = tm.getDeviceId();
-        Log.d(TAG,"getIMEI : " + imei);
-        return imei == null ? "" : imei;
+        try {
+            TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+            String imei = tm.getDeviceId();
+            Log.d(TAG,"getIMEI : " + imei);
+            return imei == null ? "" : imei;
+        }catch (Exception e){
+            return "";
+        }
+
     }
 
     //获取系统软件版本号

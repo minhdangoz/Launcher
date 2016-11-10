@@ -885,6 +885,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                 }
 
                 setFocusOnFirstChild();
+                initAPUS(currentFoldId, false);
             }
         });
         openFolderAnim.start();
@@ -1668,15 +1669,15 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         Resources res = getResources();
         //Lenovo-sw zhangyj19 add 2015/07/08 modify folder default row and line
         LogUtil.d("config_folderMaxRow","config_folderMaxRow = "+res.getInteger(R.integer.config_folderMaxRow));
-        /*int scrollHeight =  (int) (getPaddingTop() + getPaddingBottom() +
+        int scrollHeight =  (int) (getPaddingTop() + getPaddingBottom() +
                 (res.getInteger(R.integer.config_folderMaxRow) * mContent.getCellHeight()) +
-                (3 * mContent.getHeightGap())) ;*/
+                (2 * mContent.getHeightGap())) ;
         //与屏幕高度比较
         WindowManager wm = (WindowManager) mLauncher.getSystemService(Context.WINDOW_SERVICE);
         int width = wm.getDefaultDisplay().getWidth();//屏幕宽度
         int height = wm.getDefaultDisplay().getHeight();
         LogUtil.d("getScrollHeight()","height = "+height);
-        int scrollHeight = height - (getPaddingTop() + getPaddingBottom() + mFolderNameHeight  + mAdApkContainHeight+dip2px(mLauncher,100));
+//        int scrollHeight = height - (getPaddingTop() + getPaddingBottom() + mFolderNameHeight  + mAdApkContainHeight+dip2px(mLauncher,100));
         LogUtil.d("getScrollHeight()","scrollHeight"+scrollHeight);
         //动态计算scrollView
        /* LogUtil.d("getScrollHeight","folderheight ="+(getPaddingTop() + getPaddingBottom() + mFolderNameHeight + scrollHeight + mAdApkContainHeight));
