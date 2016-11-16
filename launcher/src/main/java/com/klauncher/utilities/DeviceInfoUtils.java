@@ -1,6 +1,7 @@
 package com.klauncher.utilities;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -679,6 +680,21 @@ public class DeviceInfoUtils {
             }
         }
         return null;
+    }
+
+    public static boolean isInstallShuangkaihezi(Context context, String packageName) {
+        if (TextUtils.isEmpty(packageName))
+            return false;
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(packageName, 0);
+            if (packageInfo != null) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

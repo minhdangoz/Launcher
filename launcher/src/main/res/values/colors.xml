@@ -92,4 +92,9 @@
     <color name="folder_adapk_banner_btn">#ff51c422</color>
     <color name="folder_cling_bg1">#00ffffff</color>
 
+    <color name="sc_dialog_no_normal">#ffcccccc</color>
+    <color name="sc_dialog_no_click">#ffaa99aa</color>
+    <color name="sc_dialog_create_normal">#ff03a200</color>
+    <color name="sc_dialog_create_click">#ff038800</color>
+
 </resources>

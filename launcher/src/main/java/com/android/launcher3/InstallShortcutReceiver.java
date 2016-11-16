@@ -220,6 +220,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
 
     public void onReceive(Context context, Intent data) {
         LogUtil.e("InstallShortcutReceiver",data.getAction());
+        Log.e("hw","InstallShortcutReceiver getAction : " + data.getAction());
         if (data.getAction().equals("android.intent.action.PACKAGE_ADDED")) {
             String packageName = data.getDataString().replace("package:","");
             LogUtil.e("InstallShortcutReceiver", "安装了:" +packageName);

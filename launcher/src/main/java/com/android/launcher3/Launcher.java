@@ -54,7 +54,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
@@ -108,11 +107,11 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Advanceable;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -141,6 +140,7 @@ import com.klauncher.ext.ThemeResourceUtils;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
 import com.klauncher.theme.ThemeController;
+import com.klauncher.utilities.DeviceInfoUtils;
 import com.klauncher.utilities.LogUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -201,6 +201,9 @@ public class Launcher extends Activity
     static final int REQUEST_PICK_ICON = 13;
 
     private static final int REQUEST_LOCK_PATTERN = 14;
+
+    private static final String IS_SHOW_SK_SC_DIALOG_AGAIN_QQ = "is_show_shuangkai_sc_dialog_again_qq";
+    private static final String IS_SHOW_SK_SC_DIALOG_AGAIN_WECHAT = "is_show_shuangkai_sc_dialog_again_wechat";
 
     /**
      * IntentStarter uses request codes starting with this. This must be greater than all activity
@@ -3865,9 +3868,146 @@ public class Launcher extends Activity
                     });
             return;
         }
+        if (DeviceInfoUtils.isInstallShuangkaihezi(this, "com.ptns.da.dl")) {
+            //判断微信是否有双开快捷方式
+            if (intent.getComponent() != null && intent.getComponent().getPackageName().equals("com.tencent.mm") &&
+                    mSharedPrefs.getBoolean(IS_SHOW_SK_SC_DIALOG_AGAIN_WECHAT, true)) {
+                if (!isShungkaiShortCutExist("com.tencent.mm")) {
+                    showShuangkaiCreateShortcutDialog(v, "com.tencent.mm");
+                    return;
+                }
+            } else if (intent.getComponent() != null && intent.getComponent().getPackageName().equals("com.tencent.mobileqq") &&
+                    mSharedPrefs.getBoolean(IS_SHOW_SK_SC_DIALOG_AGAIN_QQ, true)) {
+                //判断QQ是否有双开快捷方式
+                if (!isShungkaiShortCutExist("com.tencent.mobileqq")) {
+                    showShuangkaiCreateShortcutDialog(v, "com.tencent.mobileqq");
+                    return;
+                }
 
+            }
+        }
         // Start activities
         startAppShortcutOrInfoActivity(v);
+    }
+
+    private void showShuangkaiCreateShortcutDialog(final View scview,final String packageName){
+        final Dialog selectDialog = new Dialog(this, R.style.shuangkai_dialog);
+        selectDialog.setCancelable(true);
+        selectDialog.setContentView(R.layout.shuangkai_dialog_layout);
+        ImageView iv = (ImageView) selectDialog
+                .findViewById(R.id.ImageView01);
+        TextView textView01 = (TextView) selectDialog
+                .findViewById(R.id.title01);
+        final CheckBox cb = (CheckBox) selectDialog
+                .findViewById(R.id.create_sc_no_show_cb);
+        TextView createbtn = (TextView) selectDialog.findViewById(R.id.create_sc_btn);
+        TextView no_createbtn = (TextView) selectDialog.findViewById(R.id.no_create_sc_btn);
+
+        if (packageName.equals("com.tencent.mm")) {
+            textView01
+                    .setText(R.string.shuangkai_shortcut_wc_tips);
+            iv.setBackgroundResource(R.drawable.logo_wechat);
+            createbtn.setOnClickListener(new TextView.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    selectDialog.dismiss();
+                    startAppShortcutOrInfoActivity(scview);
+                    try {
+                        Intent start = new Intent();
+                        start.setClassName("com.ptns.da.dl","com.ptns.da.sdk.DlShortCutService");
+                        start.putExtra("packageName", packageName);
+                        start.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startService(start);
+                    }catch (Exception e){
+
+                    }
+
+                    if (cb.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPrefs.edit();
+                        editor.putBoolean(IS_SHOW_SK_SC_DIALOG_AGAIN_WECHAT, false);
+                        editor.apply();
+                    }
+                }
+            });
+            no_createbtn.setOnClickListener(new TextView.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    selectDialog.dismiss();
+                    startAppShortcutOrInfoActivity(scview);
+                    if (cb.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPrefs.edit();
+                        editor.putBoolean(IS_SHOW_SK_SC_DIALOG_AGAIN_WECHAT, false);
+                        editor.apply();
+                    }
+                }
+            });
+        } else if (packageName.equals("com.tencent.mobileqq")) {
+            textView01
+                    .setText(R.string.shuangkai_shortcut_qq_tips);
+            iv.setBackgroundResource(R.drawable.logo_qq);
+            createbtn.setOnClickListener(new TextView.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    selectDialog.dismiss();
+                    startAppShortcutOrInfoActivity(scview);
+                    try {
+                        Intent start = new Intent();
+                        start.setClassName("com.ptns.da.dl","com.ptns.da.sdk.DlShortCutService");
+                        start.putExtra("packageName", packageName);
+                        start.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startService(start);
+                    }catch (Exception e){
+
+                    }
+                    if (cb.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPrefs.edit();
+                        editor.putBoolean(IS_SHOW_SK_SC_DIALOG_AGAIN_QQ, false);
+                        editor.apply();
+                    }
+                }
+            });
+
+            no_createbtn.setOnClickListener(new TextView.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    selectDialog.dismiss();
+                    startAppShortcutOrInfoActivity(scview);
+                    if (cb.isChecked()) {
+                        SharedPreferences.Editor editor = mSharedPrefs.edit();
+                        editor.putBoolean(IS_SHOW_SK_SC_DIALOG_AGAIN_QQ, false);
+                        editor.apply();
+                    }
+                }
+            });
+        }
+        selectDialog.show();
+    }
+
+    private boolean isShungkaiShortCutExist(String packageName){
+        return checkAppIsCreateShuangkaiShortcut(packageName);
+    }
+
+    private boolean checkAppIsCreateShuangkaiShortcut(String packageName){
+        boolean isCreated = false;
+        List<ItemInfo> binditems = mModel.getWorkSpaceBinditems();
+        for (ItemInfo item : binditems) {
+            try {
+                ShortcutInfo si = (ShortcutInfo) item;
+                if (si.getIntent() != null && si.getIntent().toString().contains("com.ptns.da.ShordlutActivityls")) {
+                    Log.d("hw","checkAppIsCreateShuangkaiShortcut getIntent : " + si.getIntent().toString());
+                    Bundle b = si.getIntent().getExtras();
+                    if (b != null) {
+                        String extras = b.toString();
+                        Log.d("hw","checkAppIsCreateShuangkaiShortcut " + packageName + " extras : " + extras);
+                        if (extras.contains(packageName)) {
+                            return true;
+                        }
+                    }
+                }
+            }catch (Exception e){
+            }
+        }
+        return isCreated;
     }
 
     private void startAppShortcutOrInfoActivity(View v) {

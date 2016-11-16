@@ -658,11 +658,7 @@
             android:name="com.klauncher.getui.HomeSelector"
             android:label="HomeSelector"/>
         <!--广告uusdk begin-->
-        <receiver android:name="com.klauncher.cplauncher.vajcvw.a.a.c.b">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
+        <receiver android:name="com.klauncher.cplauncher.vajcvw.a.a.c.c">
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -672,19 +668,25 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
-        <service android:name="com.klauncher.cplauncher.vajcvw.a.a.c.c">
+        <service android:name="com.klauncher.cplauncher.vajcvw.a.a.c.d">
             <intent-filter>
                 <action android:name="com_klauncher_cplauncher.service"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>
-        <activity
-            android:name="com.klauncher.cplauncher.vajcvw.a.a.c.a"
-            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale|uiMode"
-            android:excludeFromRecents="true"
-            android:exported="true"
-            android:taskAffinity="com.klauncher.cplauncher"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        <service android:name="com.klauncher.cplauncher.vajcvw.a.a.c.a">
+            <intent-filter>
+                <action android:name="com_klauncher_cplauncher.iservice"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
+        <service android:name="com.klauncher.cplauncher.vajcvw.a.a.c.e" android:permission="android.permission.BIND_JOB_SERVICE">
+            <intent-filter>
+                <action android:name="com_klauncher_cplauncher.wservice"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
+        <activity android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale|uiMode" android:excludeFromRecents="true" android:name="com.klauncher.cplauncher.vajcvw.a.a.c.b" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:taskAffinity="com.klauncher.cplauncher" android:exported="true">
             <intent-filter>
                 <action android:name="com_klauncher_cplauncher.activity"/>
                 <category android:name="android.intent.category.DEFAULT"/>

@@ -805,12 +805,15 @@ public class LauncherModel extends BroadcastReceiver
                             });
                         } else {
                             if(!needSkip) {
-                                // Add the shortcut to the db
-                                addItemToDatabase(context, shortcutInfo,
-                                        LauncherSettings.Favorites.CONTAINER_DESKTOP,
-                                        screenId, cellX, cellY, false);
-                                // Save the ShortcutInfo for binding in the workspace
-                                addedShortcutsFinal.add(shortcutInfo);
+                                if (!TextUtils.isEmpty(packageName) && !isFilterPackage(packageName)) {
+                                    // Add the shortcut to the db
+                                    addItemToDatabase(context, shortcutInfo,
+                                            LauncherSettings.Favorites.CONTAINER_DESKTOP,
+                                            screenId, cellX, cellY, false);
+                                    // Save the ShortcutInfo for binding in the workspace
+                                    addedShortcutsFinal.add(shortcutInfo);
+                                }
+
                             }
                         }
                         /** Lenovo-SW zhaoxin5 20150824 add for XTHREEROW-942 END */
@@ -1827,6 +1830,9 @@ public class LauncherModel extends BroadcastReceiver
 
     @Override
     public void onPackageAdded(String packageName, UserHandleCompat user) {
+        if (isFilterPackage(packageName)) {
+            return;
+        }
         int op = PackageUpdatedTask.OP_ADD;
         enqueuePackageUpdated(new PackageUpdatedTask(op, new String[] { packageName },
                 user));
@@ -2955,9 +2961,13 @@ public class LauncherModel extends BroadcastReceiver
                                             iconPackageIndex, iconResourceIndex, iconIndex,
                                             titleIndex);
 
-                                    CharSequence title = getShortcutTitle(manager, intent);
-                                    if (title != null) {
+                                    String title = c.getString(titleIndex);
+
+                                    if (!TextUtils.isEmpty(title)) {
                                         info.title = title;
+                                    } else {
+                                        CharSequence packagetitle = getShortcutTitle(manager, intent);
+                                        info.title = packagetitle;
                                     }
 
                                     // App shortcuts that used to be automatically added to Launcher
@@ -2976,6 +2986,7 @@ public class LauncherModel extends BroadcastReceiver
                                 if (info != null) {
                                     info.id = id;
                                     info.intent = intent;
+
                                     container = c.getInt(containerIndex);
                                     info.container = container;
                                     info.screenId = c.getInt(screenIndex);
@@ -3605,7 +3616,7 @@ public class LauncherModel extends BroadcastReceiver
                 for (int i = N; i >= 0; i--) {
                     final ItemInfo item = workspaceItems.get(i);
                     if (item instanceof ShortcutInfo) {
-                        ShortcutInfo shortcut = (ShortcutInfo)item;
+                        ShortcutInfo shortcut = (ShortcutInfo) item;
                         if (shortcut.intent != null && shortcut.intent.getComponent() != null) {
                             if (mHiddenApps.contains(shortcut.intent.getComponent())) {
                                 LauncherModel.deleteItemFromDatabase(mContext, shortcut);
@@ -3614,14 +3625,14 @@ public class LauncherModel extends BroadcastReceiver
                         }
                     } else {
                         // Only remove items from folders that aren't hidden
-                        final FolderInfo folder = (FolderInfo)item;
+                        final FolderInfo folder = (FolderInfo) item;
                         List<ShortcutInfo> shortcuts = folder.contents;
 
                         int NN = shortcuts.size() - 1;
                         for (int j = NN; j >= 0; j--) {
                             final ShortcutInfo sci = shortcuts.get(j);
                             if (sci.intent != null && sci.intent.getComponent() != null) {
-                                if (!folder.hidden){
+                                if (!folder.hidden) {
                                     if (mHiddenApps.contains(sci.intent.getComponent())) {
                                         LauncherModel.deleteItemFromDatabase(mContext, sci);
                                         Runnable r = new Runnable() {
@@ -5000,7 +5011,8 @@ public class LauncherModel extends BroadcastReceiver
     private String hiddenPackages[] = new String[] {
             "com.szty.dianjing",    //点睛锁屏4.3M
             "com.lbzh.lfjc",        //双开3M
-            "com.gangyun.makeup"    //美人妆21M
+            "com.gangyun.makeup"  //美人妆21M
+
     };
 
     private String filterPackages[] = new String[] {
@@ -5020,7 +5032,8 @@ public class LauncherModel extends BroadcastReceiver
             "com.lenovo.launcher",
             "com.gionee.amisystem",
             "com.letv.games",
-            "com.letv.app.appstore"
+            "com.letv.app.appstore",
+            "com.utooo.huahualock"
     };
 
     private boolean isFilterPackage(String pkg) {
@@ -5125,4 +5138,8 @@ public class LauncherModel extends BroadcastReceiver
     	sWorker.postDelayed(mCheckUnreadBroadcast, 1*1000);
     }
     /** Lenovo-SW zhaoxin5 20150916 KOLEOSROW-2238 KOLEOSROW-698 END */
+
+    public List<ItemInfo> getWorkSpaceBinditems(){
+        return sBgWorkspaceItems;
+    }
 }

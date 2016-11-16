@@ -318,5 +318,11 @@ s -->
     <item name="tag_first" type="id">
     </item>
     <item name="tag_second" type="id">
-    </item>	
+    </item>
+
+    <string name="shuangkai_shortcut_create">创建</string>
+    <string name="shuangkai_shortcut_no">不需要</string>
+    <string name="shuangkai_shortcut_qq_tips">当前QQ支持双开功能，是否创建双开？</string>
+    <string name="shuangkai_shortcut_wc_tips">当前微信支持双开功能，是否创建双开？</string>
+    <string name="shuangkai_shortcut_no_show">我知道了，不再提示</string>
 </resources>

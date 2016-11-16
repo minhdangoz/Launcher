@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bgDialog"
+    android:layout_width="260dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="12dp"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical" >
+
+        <ImageView
+            android:id="@+id/ImageView01"
+            android:layout_width="36dp"
+            android:layout_height="36dp"/>
+
+        <TextView
+            android:id="@+id/title01"
+            android:layout_marginLeft="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff000000"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!--<ScrollView-->
+        <!--android:id="@+id/ScrollView01"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="140px"-->
+        <!--android:background="#0000" >-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/TextView01"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="#0000"-->
+            <!--android:textColor="#ffe9feff" >-->
+        <!--</TextView>-->
+    <!--</ScrollView>-->
+    <LinearLayout
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <CheckBox
+            android:id="@+id/create_sc_no_show_cb"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+            android:text="@string/shuangkai_shortcut_no_show"
+            android:textSize="13sp"
+            android:textColor="#ff999999" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/no_create_sc_btn"
+            android:layout_width="130dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_height="42dp"
+            android:textColor="#ff000000"
+            android:textSize="14sp"
+            android:background="@drawable/sc_dialog_no_selector"
+            android:text="@string/shuangkai_shortcut_no" >
+        </TextView>
+        <TextView
+            android:id="@+id/create_sc_btn"
+            android:layout_width="130dp"
+            android:layout_height="42dp"
+            android:textSize="14sp"
+            android:textColor="#ffffffff"
+            android:background="@drawable/sc_dialog_create_selector"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/shuangkai_shortcut_create">
+        </TextView>
+    </LinearLayout>
+</LinearLayout>
