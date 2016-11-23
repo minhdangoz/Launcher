@@ -1,7 +1,10 @@
 package com.klauncher.utilities;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -114,26 +117,85 @@ public class DeviceInfoUtils {
      */
     public static String getDeviceInfo(Context context) {
         StringBuffer sb = new StringBuffer();
-        sb.append("型号：" + Build.MODEL + "\n");
-        sb.append("IMEI: " + getIMEI(context) + "\n");
-        sb.append("主板：" + Build.BOARD + "\n");
-        sb.append("系统启动程序版本号：" + Build.BOOTLOADER + "\n");
-        sb.append("系统定制商：" + Build.BRAND + "\n");
-        sb.append("cpu指令集：" + Build.CPU_ABI + "\n");
-        sb.append("cpu指令集2 ：" + Build.CPU_ABI2 + "\n");
-        sb.append("设备：" + Build.DEVICE + "\n");
-        sb.append("显示屏参数：" + Build.DISPLAY + "\n");
-        sb.append("硬件识别码：" + Build.FINGERPRINT + "\n");
-        sb.append("硬件名称：" + Build.HARDWARE + "\n");
-        sb.append("HOST: " + Build.HOST + "\n");
-        sb.append("修订版本id：" + Build.ID + "\n");
-        sb.append("厂商：" + Build.MANUFACTURER + "\n");
-        sb.append("硬件序列号： " + Build.SERIAL + "\n");
-        sb.append("产品：" + Build.PRODUCT + "\n");
-        sb.append("描述Build的标签：" + Build.TAGS + "\n");
-        sb.append("USER: " + Build.USER + "\n");
+        sb.append("设备名称： " + Build.MODEL+"\n");
+        sb.append("imei： " + getIMEI(context) + "\n");
+        sb.append("androidid： " + getAndroidId(context) + "\n");
+        sb.append("安装路径： " + context.getPackageResourcePath() + "\n");
+        sb.append(" -----------------------------------------------------------------------------------------" + "\n");
+        sb.append("包名： " + context.getPackageName() + "\n");
+        sb.append("版本名： " + getVersionName(context) + "\n");
+        sb.append("版本号： " + getVersionCode(context) + "\n");
+        sb.append("分辨率： " + getSCreenWidth(context) + "*" + getScreenHeight(context)+"\n");
+        sb.append("系统板本： " + Build.VERSION.RELEASE+ "("+Build.VERSION.SDK_INT +")"+"\n");
+        sb.append("签名hashcode： " + checkAPPHashCode(context) + "\n");
+        sb.append("安装应用权限： " + isSystemApp(context) + "\n");
+        Log.d("ConfigActivity","getConfigInfos : " + sb.toString());
 
         return sb.toString();
+    }
+
+    private static String getAndroidId(Context context){
+        String m_szAndroidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return m_szAndroidID;
+    }
+    private static String getVersionName(Context context)
+    {
+        // 获取packagemanager的实例
+        PackageManager packageManager = context.getPackageManager();
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageInfo packInfo = null;
+        try {
+            packInfo = packageManager.getPackageInfo(context.getPackageName(),0);
+            String versionName = packInfo.versionName;
+            return versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static boolean isSystemApp(Context context) {
+
+        PackageInfo pInfo = null;
+        try {
+            pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return ((pInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private static String getVersionCode(Context context)
+    {
+        // 获取packagemanager的实例
+        PackageManager packageManager = context.getPackageManager();
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageInfo packInfo = null;
+        try {
+            packInfo = packageManager.getPackageInfo(context.getPackageName(),0);
+            String versionCode = String.valueOf(packInfo.versionCode);
+            return versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    static String checkAPPHashCode(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(),
+                            PackageManager.GET_SIGNATURES);
+            Signature[] signs = packageInfo.signatures;
+            Signature sign = signs[0];
+
+            int hashcode = sign.hashCode();
+            return String.valueOf(hashcode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "-1";
     }
 /* 手机基础信息 end*/
 

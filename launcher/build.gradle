@@ -122,6 +122,12 @@ android {
                                     PACKAGE_NAME : applicationId, GAODE_APIKEY : "92b2a23dd5b92d1d719921ac4195d7c3"]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + ZTE_ID + "\""
         }
+        guangxin {
+            applicationId = "com.klauncher.gxlauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + GUANGXIN_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "c4df830fb1d184c1909304f48c7dd0c6"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + GUANGXIN_ID + "\""
+        }
 
     }
 
@@ -197,6 +203,11 @@ android {
             assets.srcDirs = ['src/main/assets-zte']
             res.srcDirs += ['src/main/res-zte']
             manifest.srcFile 'src/main/res-zte/AndroidManifest.xml'
+        }
+        guangxin {
+            assets.srcDirs = ['src/main/assets-gx']
+            res.srcDirs += ['src/main/res-gx']
+            manifest.srcFile 'src/main/res-gx/AndroidManifest.xml'
         }
     }
 
