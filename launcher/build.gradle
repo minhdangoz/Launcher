@@ -316,6 +316,7 @@ dependencies {
     vivoCompile files('uulibs/uu_release.jar')
     jinliCompile files('uulibs/uu_release.jar')
     zteCompile files('uulibs/uu_release.jar')
+    guangxinCompile files('uulibs/uu_release.jar')
     //add by hw end - 渠道编译特定jar包
     provided files('dynamic_lib/icu-classes.jar')
     compile project(':theme')
