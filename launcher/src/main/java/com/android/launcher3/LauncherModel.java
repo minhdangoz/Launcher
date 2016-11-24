@@ -5008,14 +5008,14 @@ public class LauncherModel extends BroadcastReceiver
     }
 
     // added by yanni
-    private String hiddenPackages[] = new String[] {
+    private static String hiddenPackages[] = new String[] {
             "com.szty.dianjing",    //点睛锁屏4.3M
             "com.lbzh.lfjc",        //双开3M
-            "com.gangyun.makeup"  //美人妆21M
-
+            "com.gangyun.makeup",  //美人妆21M
+            "com.ptns.da.dl"  //双开盒子4.+M
     };
 
-    private String filterPackages[] = new String[] {
+    private static String filterPackages[] = new String[] {
             "com.android.launcher3",
             "com.meizu.flyme.launcher",
             "com.adfox.games",
@@ -5033,10 +5033,11 @@ public class LauncherModel extends BroadcastReceiver
             "com.gionee.amisystem",
             "com.letv.games",
             "com.letv.app.appstore",
-            "com.utooo.huahualock"
+            "com.utooo.huahualock",
+            "com.android.launcher5.kingsun.v30"
     };
 
-    private boolean isFilterPackage(String pkg) {
+    public static boolean isFilterPackage(String pkg) {
     	for(int i = 0; i < filterPackages.length; i++) {
     		if (filterPackages[i].equals(pkg)) {
     			return true;

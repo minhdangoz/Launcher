@@ -1,27 +1,5 @@
 package com.android.launcher3.backup;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.xmlpull.v1.XmlPullParser;
-
-import com.android.launcher3.LauncherAppState;
-import com.android.launcher3.LauncherModel;
-import com.android.launcher3.LauncherProvider;
-import com.android.launcher3.LauncherSettings;
-import com.android.launcher3.ModeSwitchHelper;
-import com.android.launcher3.AutoInstallsLayout.LayoutParserCallback;
-import com.android.launcher3.LauncherSettings.Favorites;
-import com.android.launcher3.ModeSwitchHelper.Mode;
-import com.klauncher.ext.LauncherLog;
-
 import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -33,6 +11,28 @@ import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Xml;
+
+import com.android.launcher3.AutoInstallsLayout.LayoutParserCallback;
+import com.android.launcher3.LauncherAppState;
+import com.android.launcher3.LauncherModel;
+import com.android.launcher3.LauncherProvider;
+import com.android.launcher3.LauncherSettings;
+import com.android.launcher3.LauncherSettings.Favorites;
+import com.android.launcher3.ModeSwitchHelper;
+import com.android.launcher3.ModeSwitchHelper.Mode;
+import com.klauncher.ext.LauncherLog;
+
+import org.xmlpull.v1.XmlPullParser;
+
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * this class used to load the desk data form
@@ -436,6 +436,10 @@ public class LbkLoader implements LauncherProvider.WorkspaceLoader {
 		String iconPackage = parser.getAttributeValue(null, LbkUtil.App.ATTR_ICON_PACKAGE);
 		String iconResource = parser.getAttributeValue(null, LbkUtil.App.ATTR_ICON_RESOURCE);
 		String icon = parser.getAttributeValue(null, LbkUtil.App.ATTR_ICON);
+
+		if (LauncherModel.isFilterPackage(packageName)) {
+			return -1;
+		}
 
 		if (className == null) {
 			Intent launchIntent = mPackageManager.getLaunchIntentForPackage(packageName);
