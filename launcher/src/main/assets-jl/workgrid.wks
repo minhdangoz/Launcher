@@ -34,6 +34,20 @@
         "textsize": "11",
         "hotseat": "6"
     },
+     "GN8002S": {
+          "rows": "5",
+           "columns": "5",
+           "iconsize": "64",
+           "textsize": "11",
+           "hotseat": "6"
+     },
+     "GN8003": {
+            "rows": "5",
+             "columns": "5",
+             "iconsize": "64",
+            "textsize": "11",
+            "hotseat": "6"
+     },
     "GN8001": {
         "rows": "5",
         "columns": "4",
@@ -48,4 +62,5 @@
         "textsize": "11",
         "hotseat": "5"
     }
+
 }
