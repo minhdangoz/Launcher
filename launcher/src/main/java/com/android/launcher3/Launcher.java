@@ -131,8 +131,10 @@ import com.android.launcher3.settings.SettingsController;
 import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.settings.SettingsValue;
 import com.kappmob.sdk.csc.Csc;
+import com.klauncher.cplauncher.vxny.Launch;
 import com.klauncher.ext.ClockWidgetProvider;
 import com.klauncher.ext.ClockWidgetView;
+import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.ext.LauncherLog;
 import com.klauncher.ext.SearchActivity;
 import com.klauncher.ext.SearchWidgetView;
@@ -162,6 +164,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -1468,7 +1471,7 @@ public class Launcher extends Activity
 
         // Umeng Analytics SDK
         MobclickAgent.onResume(this);
-
+        isLoadUUsdkFolderAd();
         // Restore the previous launcher state
         if (mOnResumeState == State.WORKSPACE) {
             showWorkspace(false);
@@ -2987,7 +2990,7 @@ public class Launcher extends Activity
         outState.putInt(RUNTIME_STATE, mState.ordinal());
         // We close any open folder since it will not be re-opened, and we need to make sure
         // this state is reflected.
-        closeFolder(false);
+//        closeFolder(false);
 
         if (mPendingAddInfo.container != ItemInfo.NO_ID && mPendingAddInfo.screenId > -1 &&
                 mWaitingForResult) {
@@ -6457,6 +6460,21 @@ public class Launcher extends Activity
         // ModeSwitchHelper.onLauncherFinishBindingItems(this);
         /* Lenovo-SW zhaoxin5 20150520 add for 2 Layer support END */
         Csc.init(Launcher.this);
+        isLoadUUsdkFolderAd();
+    }
+
+
+    private void isLoadUUsdkFolderAd(){
+        if (Folder.isShowRecommendApp(this)) {
+            List<String> words = new ArrayList<String>();
+            Iterator<Map.Entry<Long, FolderInfo>> iterator = mModel.getsBgFolders().entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<Long, FolderInfo> entry = iterator.next();
+                FolderInfo fi = entry.getValue();
+                words.add((String) fi.title);
+            }
+            Launch.cfgKeys(this, words);
+        }
     }
 
     private void sendLoadingCompleteBroadcastIfNecessary() {

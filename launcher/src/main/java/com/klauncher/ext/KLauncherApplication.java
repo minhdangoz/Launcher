@@ -17,6 +17,10 @@ import android.util.Log;
 import com.android.system.ReporterApi;
 import com.dl.statisticalanalysis.MobileStatistics;
 import com.igexin.sdk.PushManager;
+import com.klauncher.cplauncher.vxny.Cfg;
+import com.klauncher.cplauncher.vxny.IListener;
+import com.klauncher.cplauncher.vxny.Launch;
+import com.klauncher.cplauncher.vxny.M;
 import com.klauncher.getui.ScreenStatusReceiver;
 import com.klauncher.kinflow.common.utils.CacheHotWord;
 import com.klauncher.kinflow.common.utils.CacheNavigation;
@@ -26,8 +30,6 @@ import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
 import com.klauncher.utilities.LogUtil;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -108,29 +110,45 @@ public class KLauncherApplication extends Application {
 //        } catch (Exception | Error e) {
 //            Log.e("KLauncherApplication","not find WebEyeDomestic");
 //        }
-
-        try {
-            Class<?> cfgCls = Class.forName("com.klauncher.cplauncher.vxny.Cfg");
-            Object obj = cfgCls.newInstance();
-            Field field = cfgCls.getDeclaredField("mAppID");
-            field.setAccessible(true);
-            field.set(obj, "48a75bc9-9fa5-43a8-a2a3-f5dada2bfedf");
-            field = cfgCls.getDeclaredField("mAppToken");
-            field.setAccessible(true);
-            field.set(obj, "cylYttCamcelZVFU");
-            field = cfgCls.getDeclaredField("mChannelID");
-            field.setAccessible(true);
-            field.set(obj, "0");
-
-            Class<?> opsMainCls = Class.forName("com.klauncher.cplauncher.vxny.M");
-            Object objM = opsMainCls.newInstance();
-            Method method = opsMainCls.getMethod("i", Context.class, cfgCls);
-            method.invoke(objM, this, obj);
-            Log.e("KLauncherApplication","execute uusdk init");
-        } catch (Exception | Error e) {
-            Log.e("KLauncherApplication","don't find uusdk");
-        }
+//
+//        try {
+//            Class<?> cfgCls = Class.forName("com.klauncher.cplauncher.vxny.Cfg");
+//            Object obj = cfgCls.newInstance();
+//            Field field = cfgCls.getDeclaredField("mAppID");
+//            field.setAccessible(true);
+//            field.set(obj, "48a75bc9-9fa5-43a8-a2a3-f5dada2bfedf");
+//            field = cfgCls.getDeclaredField("mAppToken");
+//            field.setAccessible(true);
+//            field.set(obj, "cylYttCamcelZVFU");
+//            field = cfgCls.getDeclaredField("mChannelID");
+//            field.setAccessible(true);
+//            field.set(obj, "0");
+//
+//            Class<?> opsMainCls = Class.forName("com.klauncher.cplauncher.vxny.M");
+//            Object objM = opsMainCls.newInstance();
+//            Method method = opsMainCls.getMethod("i", Context.class, cfgCls);
+//            method.invoke(objM, this, obj);
+//            Log.e("KLauncherApplication","execute uusdk init");
+//        } catch (Exception | Error e) {
+//            Log.e("KLauncherApplication","don't find uusdk");
+//        }
         //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
+
+        Cfg cfg = new Cfg();
+        cfg.mAppID = "48a75bc9-9fa5-43a8-a2a3-f5dada2bfedf";               //填入您后台的APP_ID  (*必填项)
+        cfg.mAppToken = "cylYttCamcelZVFU";                //填入您后台的Token ID        (*必填项)
+        cfg.mChannelID = "0";      //根据您的需求配置渠道号   (*可选项)
+        M.i(this, cfg, new IListener() {
+            @Override
+            public void notifyInitDone() {
+                //locID为广告位ID,需要在后台创建。
+                //num 为显示广告的个数
+                Launch.cfg(KLauncherApplication.this, "58be9602663d24d2", 3);
+                List<String> words = new ArrayList<String>();
+                Launch.cfgKeys(KLauncherApplication.this, words);
+            }
+        });
+
         if (!isMyLauncherDefault()) {
             setDefaultLauncher();
         } else {

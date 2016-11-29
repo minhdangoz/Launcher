@@ -74,6 +74,8 @@ import com.android.launcher3.settings.SettingsProvider;
 import com.klauncher.biddingos.distribute.data.AppInfoDataManager;
 import com.klauncher.biddingos.distribute.model.*;
 import com.klauncher.biddingos.impl.AdHelplerImpl;
+import com.klauncher.cplauncher.vxny.Launch;
+import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.launcher.R;
 import com.klauncher.myview.AdApkPagerAdapter;
 import com.klauncher.myview.CirclePageIndicator;
@@ -1820,6 +1822,12 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         if (mPlusIcon.getParent() != null) {
             mContent.removeView(mPlusIcon);
         }
+        if (isShowRecommendApp(mLauncher)) {
+            View v = ll_adapks_contain.getChildAt(0);
+            if(v != null && v.getTag() != null && v.getTag().equals("uuview")){
+                ll_adapks_contain.removeViewAt(0);
+            }
+        }
         mDragController.removeDropTarget((DropTarget) this);
         clearFocus();
         mFolderIcon.requestFocus();
@@ -2246,6 +2254,23 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
      * 初始化 pingxiaotong 请求 显示 广告应用
      */
     public void initAPUS(String foldid, boolean isfresh) {
+
+        if (isShowRecommendApp(mLauncher)) {
+            if (Launch.has(mLauncher, (String) mInfo.title)) {
+                View view = Launch.buildV(mLauncher, (String) mInfo.title);
+                view.setTag("uuview");
+                view.setBackgroundColor(Color.TRANSPARENT);
+                //将该view加入文件夹界面的布局中
+                ll_adapks_contain.setVisibility(View.VISIBLE);
+                relativeAdApkTop.setVisibility(View.GONE);
+                vp_adapk_pager.setVisibility(View.GONE);
+                view_placeholder.setVisibility(View.GONE);
+                ll_adapks_contain.addView(view, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//                ll_adapks_contain.setVisibility(View.VISIBLE);
+            }
+            return;
+        }
+
         //刷新不隐藏
         if(isfresh) {
             ll_adapks_contain.setVisibility(View.GONE);
@@ -2658,6 +2683,10 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         returnValue = filesize.divide(kilobyte, 2, BigDecimal.ROUND_UP)
                 .floatValue();
         return (returnValue + "KB");
+    }
+
+    public static boolean isShowRecommendApp(Context context){
+        return context.getResources().getBoolean(R.bool.is_show_folder_recommend_app);
     }
 
 }

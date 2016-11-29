@@ -5143,4 +5143,8 @@ public class LauncherModel extends BroadcastReceiver
     public List<ItemInfo> getWorkSpaceBinditems(){
         return sBgWorkspaceItems;
     }
+
+    public HashMap<Long, FolderInfo> getsBgFolders(){
+        return sBgFolders;
+    }
 }
