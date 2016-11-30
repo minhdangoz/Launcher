@@ -2272,77 +2272,77 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         }
 
         //刷新不隐藏
-        if(isfresh) {
-            ll_adapks_contain.setVisibility(View.GONE);
-            relativeAdApkTop.setVisibility(View.INVISIBLE);
-            vp_adapk_pager.setVisibility(View.INVISIBLE);
-            view_placeholder.setVisibility(View.VISIBLE);
-        }
-
-        mConnectivityManager = (ConnectivityManager) mLauncher.getSystemService(Context.CONNECTIVITY_SERVICE);
-        netInfo = mConnectivityManager.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isAvailable()) {
-            currentFoldId = foldid;
-            //清楚上次缓存  解决 已经安装 推广中还有这个应用的bug
-            clearCacheData();
-            //先用缓存数据
-            //appInfoList.addAll(AdHelper.getCacheAppInfo(foldid));
-            //setAndrefushApkItems(appInfoList);
-            /*//demo 测试 begin
-            com.klauncher.biddingos.distribute.model.AppInfo appInfo = new AppInfo();
-            appInfo.setApp_id("0001");
-            appInfo.setApp_download_url("http://wap.apk.anzhi.com/data3/apk/201509/25/59b889fe34ff222aa82ebc7ab582aeac_33177100.apk");
-            appInfo.setApp_logo("http://pic36.nipic.com/20131128/11748057_141932278338_2.jpg");
-            appInfo.setApp_name("测试应用");
-            appInfoList.add(appInfo);
-            //demo 测试 end*/
-            //请求网络数据 刷新数据
-            new AppInfoDataManager(mLauncher, 0, foldid).requestAppInfoList(new AppInfoDataManager.AppInfoCallback() {
-                @Override
-                public void onSuccess(List<com.klauncher.biddingos.distribute.model.AppInfo> appList) {
-                    LogUtil.e("wqh_Folder", "initAPUS onSuccess");
-                    if (null == appList || appList.size() == 0) {
-                        LogUtil.e("wqh_Folder", "initAPUS onSuccess 获取AppInfoList失败");
-                        ll_adapks_contain.setVisibility(View.GONE);
-                        view_placeholder.setVisibility(View.VISIBLE);
-                    } else {
-                        LogUtil.e("wqh_Folder", "initAPUS onSuccess 获取AppInfoList成功");
-                        LogUtil.e("wqh_Folder","size ="+appList.size());
-                        for (int i = 0; i < appList.size(); i++) {
-                            Log.e("wqh_Folder", "onSuccess: " + appList.get(i).toString());
-                        }
-                        //添加数据 测试 RecommendBannerScreenView  RecommendAppsThumbnailView
-                        //demo 测试 begin
-                       /* for (int i = 0; i < 4; i++) {
-                            com.klauncher.biddingos.distribute.model.AppInfo appInfo = new com.klauncher.biddingos.distribute.model.AppInfo();
-                            appInfo.setApp_id("000" + i);
-                            appInfo.setApp_download_url("http://wap.apk.anzhi.com/data3/apk/201509/25/59b889fe34ff222aa82ebc7ab582aeac_33177100.apk");
-                            appInfo.setApp_logo("http://pic36.nipic.com/20131128/11748057_141932278338_2.jpg");
-                            appInfo.setApp_name("测试应用");
-                            appList.add(appInfo);
-                        }*/
-                        //demo 测试 end
-                        appInfoList.clear();
-                        appInfoList.addAll(appList);
-                        setAndrefushApkItems(appInfoList);
-                    }
-                }
-
-                @Override
-                public void onFail() {
-                    LogUtil.e("wqh_Folder", "initAPUS onFail 获取AppInfoList失败");
-                    ll_adapks_contain.setVisibility(View.GONE);
-                    view_placeholder.setVisibility(View.VISIBLE);
-
-                }
-            });
-
-
-        } else {
-            //隐藏广告
-            ll_adapks_contain.setVisibility(View.GONE);
-            view_placeholder.setVisibility(View.VISIBLE);
-        }
+//        if(isfresh) {
+//            ll_adapks_contain.setVisibility(View.GONE);
+//            relativeAdApkTop.setVisibility(View.INVISIBLE);
+//            vp_adapk_pager.setVisibility(View.INVISIBLE);
+//            view_placeholder.setVisibility(View.VISIBLE);
+//        }
+//
+//        mConnectivityManager = (ConnectivityManager) mLauncher.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        netInfo = mConnectivityManager.getActiveNetworkInfo();
+//        if (netInfo != null && netInfo.isAvailable()) {
+//            currentFoldId = foldid;
+//            //清楚上次缓存  解决 已经安装 推广中还有这个应用的bug
+//            clearCacheData();
+//            //先用缓存数据
+//            //appInfoList.addAll(AdHelper.getCacheAppInfo(foldid));
+//            //setAndrefushApkItems(appInfoList);
+//            /*//demo 测试 begin
+//            com.klauncher.biddingos.distribute.model.AppInfo appInfo = new AppInfo();
+//            appInfo.setApp_id("0001");
+//            appInfo.setApp_download_url("http://wap.apk.anzhi.com/data3/apk/201509/25/59b889fe34ff222aa82ebc7ab582aeac_33177100.apk");
+//            appInfo.setApp_logo("http://pic36.nipic.com/20131128/11748057_141932278338_2.jpg");
+//            appInfo.setApp_name("测试应用");
+//            appInfoList.add(appInfo);
+//            //demo 测试 end*/
+//            //请求网络数据 刷新数据
+//            new AppInfoDataManager(mLauncher, 0, foldid).requestAppInfoList(new AppInfoDataManager.AppInfoCallback() {
+//                @Override
+//                public void onSuccess(List<com.klauncher.biddingos.distribute.model.AppInfo> appList) {
+//                    LogUtil.e("wqh_Folder", "initAPUS onSuccess");
+//                    if (null == appList || appList.size() == 0) {
+//                        LogUtil.e("wqh_Folder", "initAPUS onSuccess 获取AppInfoList失败");
+//                        ll_adapks_contain.setVisibility(View.GONE);
+//                        view_placeholder.setVisibility(View.VISIBLE);
+//                    } else {
+//                        LogUtil.e("wqh_Folder", "initAPUS onSuccess 获取AppInfoList成功");
+//                        LogUtil.e("wqh_Folder","size ="+appList.size());
+//                        for (int i = 0; i < appList.size(); i++) {
+//                            Log.e("wqh_Folder", "onSuccess: " + appList.get(i).toString());
+//                        }
+//                        //添加数据 测试 RecommendBannerScreenView  RecommendAppsThumbnailView
+//                        //demo 测试 begin
+//                       /* for (int i = 0; i < 4; i++) {
+//                            com.klauncher.biddingos.distribute.model.AppInfo appInfo = new com.klauncher.biddingos.distribute.model.AppInfo();
+//                            appInfo.setApp_id("000" + i);
+//                            appInfo.setApp_download_url("http://wap.apk.anzhi.com/data3/apk/201509/25/59b889fe34ff222aa82ebc7ab582aeac_33177100.apk");
+//                            appInfo.setApp_logo("http://pic36.nipic.com/20131128/11748057_141932278338_2.jpg");
+//                            appInfo.setApp_name("测试应用");
+//                            appList.add(appInfo);
+//                        }*/
+//                        //demo 测试 end
+//                        appInfoList.clear();
+//                        appInfoList.addAll(appList);
+//                        setAndrefushApkItems(appInfoList);
+//                    }
+//                }
+//
+//                @Override
+//                public void onFail() {
+//                    LogUtil.e("wqh_Folder", "initAPUS onFail 获取AppInfoList失败");
+//                    ll_adapks_contain.setVisibility(View.GONE);
+//                    view_placeholder.setVisibility(View.VISIBLE);
+//
+//                }
+//            });
+//
+//
+//        } else {
+//            //隐藏广告
+//            ll_adapks_contain.setVisibility(View.GONE);
+//            view_placeholder.setVisibility(View.VISIBLE);
+//        }
 
     }
 
