@@ -24,6 +24,13 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -32,6 +39,9 @@ import android.widget.Toast;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
+import com.klauncher.theme.ThemeUtils;
+import com.klauncher.theme.Utilities;
+import com.klauncher.theme.ziptheme.ZipThemeUtils;
 import com.klauncher.utilities.LogUtil;
 
 import org.json.JSONObject;
@@ -43,13 +53,16 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import static com.klauncher.theme.ziptheme.ZipThemeUtils.loadDrawable;
+
 public class InstallShortcutReceiver extends BroadcastReceiver {
     private static final String TAG = "InstallShortcutReceiver";
     private static final boolean DBG = false;
 
     public static final String ACTION_INSTALL_SHORTCUT =
             "com.android.launcher.action.INSTALL_SHORTCUT";
-
+    public static final String ACTION_INSTALL_KLAUNCHER_SHORTCUT =
+            "com.klauncher.launcher.action.INSTALL_SHORTCUT";
     public static final String DATA_INTENT_KEY = "intent.data";
     public static final String LAUNCH_INTENT_KEY = "intent.launch";
     public static final String NAME_KEY = "name";
@@ -235,8 +248,9 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
 //                    PingManager.USER_ACTION_UNINSTALL, packageName);
 
         }
+//        ||!ACTION_INSTALL_KLAUNCHER_SHORTCUT.equals(data.getAction()
         //监听不到 ACTION_INSTALL_SHORTCUT 广播
-        if (!ACTION_INSTALL_SHORTCUT.equals(data.getAction())) {
+        if (!ACTION_INSTALL_KLAUNCHER_SHORTCUT.equals(data.getAction())) {
             return;
         }
 
@@ -257,6 +271,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
         Intent.ShortcutIconResource iconResource = null;
         try {
             icon = data.getParcelableExtra(Intent.EXTRA_SHORTCUT_ICON);
+            icon=correctShortcutIcon(context,icon);
             iconResource = data.getParcelableExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE);
         }catch (ClassCastException e) {
             return;
@@ -278,6 +293,64 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
         if (!mUseInstallQueue && !launcherNotLoaded) {
             flushInstallQueue(context);
         }
+    }
+
+    /**
+     * 修正快捷方式图标
+     *
+     * @param context
+     * @param icon
+     * @return Bitmap
+     */
+    private Bitmap correctShortcutIcon(Context context, Bitmap icon) {
+        Bitmap[] themes = ThemeUtils.getThemeIconBg();
+        if(null==themes[0]||null==themes[1]||null==themes[2]){
+            ZipThemeUtils.setThemeIconBg(context);
+        }
+        Bitmap result=null;
+        int standardWidth = 0;
+        if(null!=themes[2]){
+            result= Utilities.composeIcon(new BitmapDrawable(context.getResources(),icon), themes[0], themes[1], themes[2], context);
+            Drawable standardDrawable = loadDrawable(ThemeUtils.THEME_ICON_MASK_NAME, context);
+            standardWidth = standardDrawable.getIntrinsicWidth();
+        }
+        if(null==result){
+            result=icon;
+            LauncherAppState app = LauncherAppState.getInstance();
+            DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
+            standardWidth = grid.iconSizePx;
+        }
+        if(result.getWidth()>standardWidth){
+            result = getRoundedCornerBitmap(result, 10f);
+        }
+        return result;
+
+    }
+    /**
+     * @features 功    能：转化为圆角图片
+     * @param bitmap
+     * @param roundPx 角度
+     * @return Bitmap
+     */
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
+
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), android.graphics.Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        return output;
     }
 
     static void enableInstallQueue() {
@@ -310,7 +383,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
                 /** Lenovo-SW zhaoxin5 20151014 PASSIONROW-2195	START */
                 final boolean exists = LauncherModel.shortcutExists(context, name, intent, true);
                 /** Lenovo-SW zhaoxin5 20151014 PASSIONROW-2195	END */
-                
+
                 //final boolean allowDuplicate = data.getBooleanExtra(Launcher.EXTRA_SHORTCUT_DUPLICATE, true);
 
                 // If the intent specifies a package, make sure the package exists
