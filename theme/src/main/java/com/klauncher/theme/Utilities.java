@@ -560,6 +560,90 @@ public class Utilities {
             return null;
         }
     }
+    public static  Bitmap composeShortcutIcon(Drawable icon,Bitmap bg,Bitmap fg,Bitmap mask,Context context){
+        try {
+            synchronized (sCanvas) {
+                if (sIconWidth == -1) {
+                    initStatics(context);
+                }
+
+                if (icon == null) {
+                    icon = context.getResources().getDrawable(R.drawable.nothing);
+                }
+                int width = (int) (sIconWidth);
+                int height = (int) (sIconHeight);
+
+                // icon.
+                if (icon instanceof PaintDrawable) {
+                    PaintDrawable painter = (PaintDrawable) icon;
+                    painter.setIntrinsicWidth(width);
+                    painter.setIntrinsicHeight(height);
+                } else if (icon instanceof BitmapDrawable) {
+                    // Ensure the bitmap has a density.
+                    BitmapDrawable bitmapDrawable = (BitmapDrawable) icon;
+                    Bitmap bitmap = bitmapDrawable.getBitmap();
+                    if (bitmap.getDensity() == Bitmap.DENSITY_NONE) {
+                        bitmapDrawable.setTargetDensity(context.getResources().getDisplayMetrics());
+                    }
+                }
+
+                // width and height
+                int sourceWidth = icon.getIntrinsicWidth();
+                int sourceHeight = icon.getIntrinsicHeight();
+
+                if (sourceWidth > 0 && sourceHeight > 0) {
+                    final float ratio = (float) sourceWidth / sourceHeight;
+                    if (sourceWidth > sourceHeight) {
+                        height = (int) (width / ratio);
+                    } else if (sourceHeight > sourceWidth) {
+                        width = (int) (height * ratio);
+                    }
+                }
+
+                int textureWidth = sIconWidth + sIconMaskPadding;
+                int textureHeight = sIconHeight + sIconMaskPadding;
+
+                // draw icon
+                final Bitmap bitmap = Bitmap.createBitmap(textureWidth , textureHeight,
+                        Bitmap.Config.ARGB_8888);
+                final Canvas canvas = sCanvas;
+                canvas.setBitmap(bitmap);
+
+                final int left = (textureWidth - width) / 2;
+                final int top = (textureHeight - height) / 2;
+                sOldBounds.set(icon.getBounds());
+                icon.setBounds(left, top, left + width, top + height);
+                icon.draw(canvas);
+                icon.setBounds(sOldBounds);
+
+                // draw mask, background and foreground.
+                if (mask != null) {
+                    sIconPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+                    canvas.drawBitmap(resizeImage(mask,bitmap.getWidth(),bitmap.getHeight()), 0f, 0f, sIconPaint);
+                }
+
+                if (bg != null) {
+                    sIconPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN  ));
+                    canvas.drawBitmap(resizeImage(bg,bitmap.getWidth(),bitmap.getHeight()), 0f, 0f, sIconPaint);
+                }
+//                if (mask != null) {
+//                    sIconPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+//                    canvas.drawBitmap(resizeImage(mask,bitmap.getWidth(),bitmap.getHeight()), 0f, 0f, sIconPaint);
+//                }
+//                if (fg != null) {
+//                    canvas.drawBitmap(fg, 0f, 0f, null);
+//                }
+                canvas.setBitmap(null);
+                return bitmap;
+            }
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
 
     //使用Bitmap加Matrix来缩放
     public static Bitmap resizeImage(Bitmap bitmap, int w, int h)

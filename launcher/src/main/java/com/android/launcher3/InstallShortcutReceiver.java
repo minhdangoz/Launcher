@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -30,7 +31,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -52,8 +52,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
-import static com.klauncher.theme.ziptheme.ZipThemeUtils.loadDrawable;
 
 public class InstallShortcutReceiver extends BroadcastReceiver {
     private static final String TAG = "InstallShortcutReceiver";
@@ -294,7 +292,6 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
             flushInstallQueue(context);
         }
     }
-
     /**
      * 修正快捷方式图标
      *
@@ -303,28 +300,23 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
      * @return Bitmap
      */
     private Bitmap correctShortcutIcon(Context context, Bitmap icon) {
+        Resources resources = context.getResources();
         Bitmap[] themes = ThemeUtils.getThemeIconBg();
         if(null==themes[0]||null==themes[1]||null==themes[2]){
             ZipThemeUtils.setThemeIconBg(context);
         }
         Bitmap result=null;
-        int standardWidth = 0;
         if(null!=themes[2]){
-            result= Utilities.composeIcon(new BitmapDrawable(context.getResources(),icon), themes[0], themes[1], themes[2], context);
-            Drawable standardDrawable = loadDrawable(ThemeUtils.THEME_ICON_MASK_NAME, context);
-            standardWidth = standardDrawable.getIntrinsicWidth();
+            result=Utilities.composeShortcutIcon(new BitmapDrawable(resources,icon),themes[0],themes[1],themes[2],context);
         }
-        if(null==result){
-            result=icon;
-            LauncherAppState app = LauncherAppState.getInstance();
-            DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
-            standardWidth = grid.iconSizePx;
-        }
-        if(result.getWidth()>standardWidth){
-            result = getRoundedCornerBitmap(result, 10f);
+        else{
+            Bitmap themeBitmap = Utilities.createIconBitmapForZipTheme(new BitmapDrawable(
+                    resources, icon), context);
+            Bitmap themeBitmap1 = com.android.launcher3.Utilities.createIconBitmap(new BitmapDrawable(resources, themeBitmap), context);
+            Bitmap cornerBitmap = getRoundedCornerBitmap(themeBitmap1, 20f);
+            result=cornerBitmap;
         }
         return result;
-
     }
     /**
      * @features 功    能：转化为圆角图片
