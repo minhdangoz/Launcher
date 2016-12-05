@@ -804,8 +804,9 @@ public class LauncherModel extends BroadcastReceiver
                                 }
                             });
                         } else {
-                            if(!needSkip) {
-                                if (!TextUtils.isEmpty(packageName) && !isFilterPackage(packageName)) {
+                            if (!needSkip) {
+                                if (!TextUtils.isEmpty(packageName) &&
+                                        !(isFilterPackage(packageName) && !shortcutInfo.getIntent().toString().contains("com.ptns.da.ShordlutActivityls"))) {
                                     // Add the shortcut to the db
                                     addItemToDatabase(context, shortcutInfo,
                                             LauncherSettings.Favorites.CONTAINER_DESKTOP,
