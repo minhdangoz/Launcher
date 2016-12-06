@@ -16,7 +16,7 @@ public class Const {
      * 百度
      */
     public static final String BAIDU_APIKEY = "2f08b705803233298c235eedb74b84ab";//百度apiKey:应该没用了
-    public static final String BAIDU_TRADE_ID_HOTWORD = "1010445i";//百度ID
+    public static final String BAIDU_TRADE_ID_HOTWORD = "1019327a";//百度ID
     public static final String HOTWORD_TYPE_SHISHI ="shishi";
     public static final String HOTWORD_TYPE_DIANYING ="dianying";
     public static final String HOTWORD_TYPE_ZONGYI ="zongyi";
