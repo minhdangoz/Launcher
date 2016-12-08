@@ -887,7 +887,10 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                 }
 
                 setFocusOnFirstChild();
-                initAPUS(currentFoldId, false);
+                if (mLauncher.getWorkspace().getState() == Workspace.State.NORMAL) {
+                    initAPUS(currentFoldId, false);
+                }
+
             }
         });
         openFolderAnim.start();
