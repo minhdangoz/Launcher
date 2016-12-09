@@ -1,19 +1,24 @@
 package com.klauncher.kinflow.weather;
 
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -21,6 +26,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.kinflow.common.utils.DeviceState;
+import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.launcher.R;
 import com.klauncher.utilities.DeviceInfoUtils;
 import com.klauncher.utilities.WeakAsyncTask;
@@ -43,7 +49,7 @@ import okhttp3.Response;
 /**
  * Created by hw on 16-8-12.
  */
-public class Kinflow2Weather extends FrameLayout {
+public class Kinflow2Weather extends FrameLayout implements View.OnClickListener{
 
     private final static String TAG = "Kinflow2Weather";
 
@@ -113,6 +119,22 @@ public class Kinflow2Weather extends FrameLayout {
     };
 
     MyHandler myHandler;
+
+    @Override
+    public void onClick(View v) {
+        try {
+            ComponentName cn = new ComponentName("cn.etouch.ecalendar","cn.etouch.ecalendar.ECalendar");
+
+            Intent target = new Intent(Intent.ACTION_VIEW);
+            target.setComponent(cn);
+            getMContext().startActivity(target);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getMContext(),"请先下载中华万年历",Toast.LENGTH_LONG).show();
+        }catch (Exception e) {
+            KinflowLog.e("天气模块在启动调用中华万年历时，出现未知错误："+e.getMessage());
+        }
+
+    }
 
     private static class MyHandler extends Handler {
         WeakReference mClockWidget;
@@ -300,6 +322,8 @@ public class Kinflow2Weather extends FrameLayout {
             filter.addAction(Intent.ACTION_TIME_TICK);
             getMContext().registerReceiver(receiver, filter);
             Log.d(TAG, "Kinflow2Weather: onEnabled...");
+
+            setOnClickListener(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
