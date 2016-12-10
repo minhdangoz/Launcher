@@ -185,6 +185,8 @@ public class CommonShareData {
                 public void run() {
 
                     try {
+                        //记录档次请求时间
+                        CommonShareData.putString(REFRESH_INTERVAL,String.valueOf(Calendar.getInstance().getTimeInMillis()));
                         if (isOver4hour()) {
                             //清空今日头条缓存
                             resetArticleBehot();
@@ -211,6 +213,15 @@ public class CommonShareData {
      */
     private static boolean isOver4hour() {
         Calendar latestModifiedCalendar = DateUtils.getInstance().millis2Calendar(CommonShareData.getString(Const.KEY_CARD_CLEAR_OFFSET, "0"));//默认最后更新时间为0
+        latestModifiedCalendar.add(Calendar.SECOND, 14400);//14400S=4hour
+        if (latestModifiedCalendar.before(Calendar.getInstance())) return true;
+        return false;
+    }
+
+
+    public static final String REFRESH_INTERVAL = "refresh_interval";
+    public static boolean refreshInterval4hour(){
+        Calendar latestModifiedCalendar = DateUtils.getInstance().millis2Calendar(CommonShareData.getString(REFRESH_INTERVAL, "0"));//默认最后更新时间为0
         latestModifiedCalendar.add(Calendar.SECOND, 14400);//14400S=4hour
         if (latestModifiedCalendar.before(Calendar.getInstance())) return true;
         return false;

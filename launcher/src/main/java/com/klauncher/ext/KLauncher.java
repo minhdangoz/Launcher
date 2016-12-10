@@ -456,10 +456,10 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                 } else {//用户不允许使用网络
                     showFirstUseKinflowHint();
                 }
-            }
-//            else {
+            } else {
 //                log("不是第一次使用信息流界面,啥也不做");
-//            }
+                autoRequestData();
+            }
         } catch (Exception e) {
             log("scrollToKinflow时发生错误:" + e.getMessage());
         }
@@ -495,6 +495,17 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             });
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void autoRequestData(){
+        //网络可用---判断是啥网络
+        if (NetworkUtils.isMobile(this)) {//移动网络
+            if (CommonShareData.refreshInterval4hour()){//请求一次数据之前：判断距离上次清空数据缓存是否超过4个小时，如果超过则清空数据缓存并记录一次当前时间
+                requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
+            }
+        }else if (NetworkUtils.isWifi(this)) {//wifi网络
+            requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
         }
     }
 

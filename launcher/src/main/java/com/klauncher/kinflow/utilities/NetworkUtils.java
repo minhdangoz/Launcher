@@ -36,4 +36,27 @@ public class NetworkUtils {
         }
         return false;
     }
+
+    public static boolean isWifi(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (null == cm)
+            return false;
+        NetworkInfo networkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (null == networkInfo)
+            return false;
+        return NetworkInfo.State.CONNECTED == networkInfo.getState();
+    }
+
+    /**
+     * 判断是否是移动网路连接
+     */
+    public static boolean isMobile(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (null == cm)
+            return false;
+        NetworkInfo networkInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (null == networkInfo)
+            return false;
+        return NetworkInfo.State.CONNECTED == networkInfo.getState();
+    }
 }
