@@ -302,7 +302,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
     private Bitmap correctShortcutIcon(Context context, Bitmap icon) {
         Resources resources = context.getResources();
         Bitmap[] themes = ThemeUtils.getThemeIconBg();
-        if(null==themes[0]||null==themes[1]||null==themes[2]){
+        if(null==themes[0]||null==themes[2]){
             ZipThemeUtils.setThemeIconBg(context);
         }
         Bitmap result=null;
@@ -310,11 +310,19 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
             result=Utilities.composeShortcutIcon(new BitmapDrawable(resources,icon),themes[0],themes[1],themes[2],context);
         }
         else{
-            Bitmap themeBitmap = Utilities.createIconBitmapForZipTheme(new BitmapDrawable(
-                    resources, icon), context);
-            Bitmap themeBitmap1 = com.android.launcher3.Utilities.createIconBitmap(new BitmapDrawable(resources, themeBitmap), context);
-            Bitmap cornerBitmap = getRoundedCornerBitmap(themeBitmap1, 20f);
-            result=cornerBitmap;
+            themes = ThemeUtils.getThemeScIconBg();
+            if(null==themes[0]||null==themes[2]){
+                ZipThemeUtils.setThemeScIconBg(context);
+            }
+            if (null != themes[2]) {
+                result = Utilities.composeShortcutIcon(new BitmapDrawable(resources, icon), themes[0], themes[1], themes[2], context);
+            } else {
+                Bitmap themeBitmap = Utilities.createIconBitmapForZipTheme(new BitmapDrawable(
+                        resources, icon), context);
+                Bitmap themeBitmap1 = com.android.launcher3.Utilities.createIconBitmap(new BitmapDrawable(resources, themeBitmap), context);
+                Bitmap cornerBitmap = getRoundedCornerBitmap(themeBitmap1, 20f);
+                result=cornerBitmap;
+            }
         }
         return result;
     }

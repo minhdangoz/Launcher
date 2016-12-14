@@ -81,7 +81,28 @@ public class ZipThemeUtils {
             drawable = loadDrawable(ThemeUtils.THEME_ICON_MASK_NAME, launcherApplication);
             ThemeUtils.sThemeBgBitmap[2] = resizeDrawable(drawable, width, launcherApplication);
         }
-        
+    }
+
+    public static void setThemeScIconBg(Context launcherApplication) {
+
+        ThemeUtils.sThemeScBgBitmap[0] = null;
+        ThemeUtils.sThemeScBgBitmap[1] = null;
+        ThemeUtils.sThemeScBgBitmap[2] = null;
+
+        int width = Utilities.getIconWidth(launcherApplication);
+        Drawable drawable = loadDrawable(ThemeUtils.THEME_SC_ICON_BG_NAME, launcherApplication);
+        if (drawable == null) {
+            ThemeUtils.sThemeScBgBitmap[0] = null;
+            ThemeUtils.sThemeScBgBitmap[1] = null;
+            ThemeUtils.sThemeScBgBitmap[2] = null;
+        } else {
+            ThemeLog.i("xixia", "setThemeIconBg not null");
+            ThemeUtils.sThemeScBgBitmap[0] = resizeDrawable(drawable, width, launcherApplication);
+            drawable = loadDrawable(ThemeUtils.THEME_SC_ICON_FG_NAME, launcherApplication);
+            ThemeUtils.sThemeScBgBitmap[1] = resizeDrawable(drawable, width, launcherApplication);
+            drawable = loadDrawable(ThemeUtils.THEME_SC_ICON_MASK_NAME, launcherApplication);
+            ThemeUtils.sThemeScBgBitmap[2] = resizeDrawable(drawable, width, launcherApplication);
+        }
     }
 	
     private static Bitmap resizeDrawable(Drawable drawable, int width, Context launcherApplication) {

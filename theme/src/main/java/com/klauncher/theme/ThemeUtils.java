@@ -25,11 +25,20 @@ public class ThemeUtils {
     public static final String THEME_ICON_FG_NAME = "theme_appfg";
     public static final String THEME_ICON_MASK_NAME = "theme_appmask";
 
+    public static final String THEME_SC_ICON_BG_NAME = "theme_sc_appbg";
+    public static final String THEME_SC_ICON_FG_NAME = "theme_sc_appfg";
+    public static final String THEME_SC_ICON_MASK_NAME = "theme_sc_appmask";
+
 	public static final String RESOURCE_DRAWABLE_TYPE = "drawable";
 	
     public static Bitmap sThemeBgBitmap[] = new Bitmap[3];
     public static Bitmap[] getThemeIconBg() {
     	return sThemeBgBitmap;
+    }
+
+    public static Bitmap sThemeScBgBitmap[] = new Bitmap[3];
+    public static Bitmap[] getThemeScIconBg() {
+        return sThemeScBgBitmap;
     }
     
     // package name --> get resource.
