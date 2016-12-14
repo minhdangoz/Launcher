@@ -188,6 +188,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name="com.klauncher.ext.SkConnectVivo">
+            <intent-filter>
+                <action android:name="android.intent.action.skconnect"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <!--
         <activity
             android:name="com.android.launcher3.LauncherWallpaperPickerActivity"
