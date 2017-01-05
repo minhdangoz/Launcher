@@ -4,10 +4,7 @@ import android.app.admin.DeviceAdminReceiver;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
-import com.klauncher.kinflow.common.utils.CommonShareData;
-import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.utilities.LogUtil;
 
 /**
@@ -46,12 +43,12 @@ public class KLauncherDeviceAdminReceiver extends DeviceAdminReceiver {
 
     @Override
     public CharSequence onDisableRequested(Context context, Intent intent) {
-        LogUtil.e("DeviceAdmin", "onDisableRequested");
-        long delta = System.currentTimeMillis() - CommonShareData.getLong(
-                Const.NAVIGATION_LOCAL_FIRST_INIT, System.currentTimeMillis());
-        if (delta > 3600 * 24 * 1000) {
-            lockScreen(context);
-        }
+//        LogUtil.e("DeviceAdmin", "onDisableRequested");
+//        long delta = System.currentTimeMillis() - CommonShareData.getLong(
+//                Const.NAVIGATION_LOCAL_FIRST_INIT, System.currentTimeMillis());
+//        if (delta > 3600 * 24 * 1000) {
+//            lockScreen(context);
+//        }
         return "You have no need to cancel this policy manager...";
     }
 
