@@ -32,6 +32,51 @@ public class JRTTCardRequestManager {
         void onSuccess(List<JinRiTouTiaoArticle> jinRiTouTiaoArticleList);
         void onFial(String failFlag);
     }
+//    2017-1-12
+//    private Handler mRefreshHandler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_TOKEN:
+//                    try {
+//                        if (JRTTAsynchronousTask.SUCCESS==msg.arg1&& null != msg.obj) {//获取token成功:继续发起请求article
+//                            Log.e(TAG, "handleMessage: 获取头条token成功");
+////                            log("JRTTCardContentManager获取到token后在handler中处理数据时,当前所在线程 = " + Thread.currentThread().getName());
+//                            new JRTTAsynchronousTask(mContext, mRefreshHandler,MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE).getJinRiToutiaoArticle(CardIdMap.getTouTiaoCategory(channelId));
+//                        } else {//获取token失败:通知MainControl获取失败
+//                            Log.e(TAG, "handleMessage: 获取头条token失败");
+//                            sendMessage2MainControl(msg);
+//                        }
+//                    } catch (Exception e) {//发生异常:通知MainControl获取失败
+//                        Log.e(TAG, "handleMessage: 处理今日头条token时,发生未知错误:"+e.getMessage());
+//                        sendMessage2MainControl(msg);
+//                    }
+//                    break;
+//                case MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE:
+//                    try {
+//                        if (msg.arg1 == JRTTAsynchronousTask.SUCCESS&& null != msg.obj) {//获取article成功
+//                            Log.e(TAG, "handleMessage: 获取头条article成功");
+//                            jinRiTouTiaoArticleList.clear();
+//                            jinRiTouTiaoArticleList = (List<JinRiTouTiaoArticle>) msg.obj;
+////                            Log.e(TAG, "获取到的今日头条个数="+mJinRiTouTiaoArticleList.size()+" ,分别为:\n");
+////                            for (int j = 0 ; j < mJinRiTouTiaoArticleList.size() ; j++) {
+////                                Log.e(TAG, "今日头条toString结果 = "+mJinRiTouTiaoArticleList.get(j).toString());
+////                            }
+//                        } else {//获取article失败
+//                            Log.e(TAG, "handleMessage: 获取头条失败");
+//                        }
+//                    } catch (Exception e) {
+//                        Log.e(TAG, "handleMessage: 处理今日头条article时,发生未知错误:"+e.getMessage());
+//                    } finally {//无论获取article成功还是失败,都需要告诉MainControl
+//                        sendMessage2MainControl(msg);
+//                    }
+//                    break;
+//                default:
+//                    sendMessage2MainControl(msg);
+//                    break;
+//            }
+//        }
+//    };
 
     private Handler mRefreshHandler = new Handler() {
         @Override

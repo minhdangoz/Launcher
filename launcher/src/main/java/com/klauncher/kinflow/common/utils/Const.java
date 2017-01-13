@@ -25,6 +25,7 @@ public class Const {
     public static final String HOTWORD_TYPE_TITAN ="titan";
     public static final String HOTWORD_TYPE_TIYU ="tiyu";
     public static final String HOTWORD_TYPE_SHUMA ="shuma";
+    public static final String AD_KCONTROL_INTERVAL = "http://api.kxcontrol.com:666/v1/config/funclist?cid="+BuildConfig.KCONTROL_KNEWS_ID+"&param=interval";;
     public static String URL_HOT_WORD = "http://api.m.baidu.com/?type=hot&c="+HOTWORD_TYPE_SHISHI+"&from="+ BAIDU_TRADE_ID_HOTWORD;
     public static String URL_SEARCH_WITH_BAIDU = "http://m.baidu.com/s?from="+ BAIDU_TRADE_ID_HOTWORD +"&word=";//最后面需要拼接关键字
 
@@ -89,7 +90,13 @@ public class Const {
     public static final String CONFIG_TEST = "http://test.api.klauncher.com/kplatform/v2/config?cid=1001_2101_10100000000";
     public static final String CONFIG = REALEASE_HOST+"/v2/config?cid="+REALEASE_CID;
     public static final String KINFLOW2_SERVER_CONTROL_TEST = "http://test.api.klauncher.com/kplatform/v1/news/mobile?cid=1001_2101_10100000000";
+
     public static final String KINFLOW2_SERVER_CONTROL = REALEASE_HOST+"/v1/news/mobile?cid="+REALEASE_CID;
+//    KINFLOW2_SERVER_CONTROL测试的渠道
+//    public static final String KINFLOW2_SERVER_CONTROL_TEST2="http://api.klauncher.com/v1/ad/mobile?cid=9001_2101_20100000000";//模拟测试
+//    public static final String KINFLOW2_SERVER_CONTROL = KINFLOW2_SERVER_CONTROL_TEST;
+
+
     public static final String KINFLOW2_NAVIGATION_WEB = REALEASE_HOST+"/v1/webnav/mobile?cid="+REALEASE_CID;
     public static final String KINFLOW2_NAVIGATION_CONTENT = REALEASE_HOST+"/v1/contentnav/mobile?cid="+REALEASE_CID;
 

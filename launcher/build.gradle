@@ -243,12 +243,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "PING_DOMAIN", "\"http://ping.klauncher.com\""
             buildConfigField "String", "PUSH_DOMAIN", "\"http://api.klauncher.com/v1\""
+            buildConfigField "String","KCONTROL_KNEWS_ID","\"" + KCONTROL_ID + "\"";
         }
         debug {
             minifyEnabled false
             signingConfig  signingConfigs.debug
             buildConfigField "String", "PING_DOMAIN", "\"http://ping.klauncher.com\""
             buildConfigField "String", "PUSH_DOMAIN", "\"http://api.klauncher.com/v1\""
+            buildConfigField "String","KCONTROL_KNEWS_ID","\"" + KCONTROL_ID + "\"";
         }
     }
 }
@@ -293,7 +295,7 @@ task applyGoogleServiceByProperty {
 
 dependencies {
     compile(name: 'delong-reporter', ext: 'aar')
-    compile fileTree(dir: 'libs', exclude: 'android-support-v4.jar', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], exclude: 'android-support-v4.jar', dir: 'libs')
     def currentFlavor = getCurrentFlavor()
     println "currentFlavor : " + currentFlavor
     //    if (currentFlavor.equals("coolpad") || currentFlavor.equals("lenovo")) {
@@ -342,5 +344,7 @@ dependencies {
     //===============
     compile 'com.android.support:design:22.2.1'
     compile files('libs/kappcsc.jar')
+    compile files('libs/adx.jar')
+    compile 'com.android.support:support-v4:23.0.1'//ADX-SDK用到
 }
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }
