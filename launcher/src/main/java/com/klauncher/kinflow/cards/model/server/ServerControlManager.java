@@ -3,10 +3,12 @@ package com.klauncher.kinflow.cards.model.server;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.klauncher.biddingos.commons.utils.LogUtils;
 import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.kinflow.common.utils.Const;
 import com.klauncher.kinflow.utilities.FileUtils;
 import com.klauncher.kinflow.utilities.KinflowLog;
+import com.klauncher.kinflow.utilities.PreferenceUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,6 +38,9 @@ import okhttp3.Response;
  * 5.CacheServerController.getServerController
  */
 public class ServerControlManager {
+
+
+
     private Context mContext;
     private static ServerControlManager mServerControllerManager = new ServerControlManager();
     private final OkHttpClient client = new OkHttpClient.Builder()
@@ -47,10 +52,22 @@ public class ServerControlManager {
     public static ServerControlManager getInstance(){
         return mServerControllerManager;
     }
-
+    private static final String TAG = ServerControlManager.class.getSimpleName();
+    private static final String FILE_AD_PREFRENCE = "FILE_AD_PREFRENCE";
+    private static final String KEY_AD_INTERVAL = "KEY_AD_INTERVAL";
+    public static final String LOAD_MORE_INDEX = "LOAD_MORE_INDEX";
+    /**
+     * 后台控制从ADX-SDK取广告的标志
+     */
+    public static final String FLAG_ADX_SDK = "#";
+    private static final int INTERVAL_DEFAULT =5 ;//默认间隔5条新闻插入广告
     public void init(Context context) {
         setContext(context);
         CacheServerController.getInstance().init(getContext());
+
+        //初始化预先请求新闻和广告和间隔到本地
+        requestServerController();
+        requestAdInterval();
     }
 
     private void setContext(Context context) {
@@ -73,6 +90,7 @@ public class ServerControlManager {
             ServerController serverController = getLocalServerControl();
             //发起请求,请求最新数据
             requestServerController();
+            requestAdInterval();//请求新闻插入广告的间隔
             return serverController;
         } catch (Exception e) {
             KinflowLog.w("ServerControlManager.getServerController出错 : " + e.getMessage());
@@ -179,6 +197,66 @@ public class ServerControlManager {
             KinflowLog.w("ServerControlManager.requestServerController出错 : " + e.getMessage());
         }
 
+    }
+
+    private void logError(String msg){
+            LogUtils.e(TAG,msg);
+    }
+
+    /**
+     * 请求Kcontrol 获取新闻间隔
+     */
+    public  void requestAdInterval(){
+        final Request request = new Request.Builder().url(Const.AD_KCONTROL_INTERVAL).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                logError("ServerControlManager.requestAdInterval: call=" + call.toString() + "  错误信息=" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                if(!response.isSuccessful()){
+                    logError("ServerControlManager.requestAdInterval获取数据失败onResponse,响应失败");
+                    response.body().close();
+                    return;
+                }
+                try {
+
+                    String result = response.body().string();
+                    JSONObject root=new JSONObject(result);
+                    String intervalStr = root.getString("interval");
+                    int interval = Integer.parseInt(intervalStr);
+                    saveAdInterval(interval);
+                }catch (Throwable throwable){
+                    logError("ServerControlManager.requestAdInterval "+throwable.getMessage());
+                    response.body().close();
+                    return;
+                }
+
+            }
+        });
+    }
+
+    /**
+     * 保存请求到的interval
+     *
+     * @param interval
+     */
+    public void saveAdInterval(int interval) {
+        PreferenceUtil.write(getContext(), FILE_AD_PREFRENCE, KEY_AD_INTERVAL, interval);
+    }
+
+    /**
+     * 读取最新缓存的interval
+     *
+     * @return
+     */
+    public int getLocalAdInterval() {
+        int defaultInterval = INTERVAL_DEFAULT;
+        return PreferenceUtil.readInt(getContext(), FILE_AD_PREFRENCE, KEY_AD_INTERVAL,
+                defaultInterval);
     }
 
     private void parseServerController(String responseJsonStr) {

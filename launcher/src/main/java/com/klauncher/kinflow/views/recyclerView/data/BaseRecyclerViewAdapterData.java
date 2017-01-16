@@ -28,6 +28,7 @@ public class BaseRecyclerViewAdapterData {
     public static final int TYPE_BANNER = 11;
     public static final int TYPE_NEWS_JINRITOUTIAO = 12;
     public static final int TYPE_NEWS_SOUGOU = 13;
+    public static final int TYPE_ADX_BANNER = 14;//ADX-SDK拿到的广告
 
     public int kinflowConentType;
     public int order;

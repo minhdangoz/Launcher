@@ -20,8 +20,10 @@ import com.klauncher.kinflow.cards.model.sougou.SougouSearchArticle;
 import com.klauncher.kinflow.cards.model.toutiao.JinRiTouTiaoArticle;
 import com.klauncher.kinflow.common.task.JRTTAsynchronousTask;
 import com.klauncher.kinflow.common.utils.DateUtils;
+import com.klauncher.kinflow.utilities.KBannerAdUtil;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.views.recyclerView.adapter.BaseRecyclerViewAdapter;
+import com.klauncher.kinflow.views.recyclerView.data.AdxSdkBanner;
 import com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData;
 import com.klauncher.kinflow.views.recyclerView.data.YokmobBanner;
 import com.klauncher.kinflow.views.recyclerView.viewHolder.BaseRecyclerViewHolder;
@@ -79,7 +81,12 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
             } else if (viewType == BaseRecyclerViewAdapterData.TYPE_BANNER) {
                 itemRootView = LayoutInflater.from(mContext).inflate(R.layout.kinflow_banner_big_image, parent, false);
                 return new BannerAdaperHolder(itemRootView);
-            }else {
+            }
+            else if(viewType == BaseRecyclerViewAdapterData.TYPE_ADX_BANNER){ //来自ADX-SDK的广告
+                itemRootView = LayoutInflater.from(mContext).inflate(R.layout.item_banner_adx, parent, false);
+                return new AdBannerAdxViewHolder(itemRootView);
+            }
+            else {
                 KinflowLog.i("未知的数据类型");
                 return null;
             }
@@ -160,6 +167,52 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                 e.printStackTrace();
             }
 
+        }
+    }
+
+    public  class AdBannerAdxViewHolder extends  BaseRecyclerViewHolder<BaseRecyclerViewAdapterData> {
+
+        RelativeLayout adxContainer;
+
+        public AdBannerAdxViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void initView(View itemRootView) {
+//            adxContainer= (RelativeLayout) itemRootView.findViewById(R.id.adx_container);
+            adxContainer= (RelativeLayout) itemRootView;
+        }
+
+        @Override
+        public void bundData2View(BaseRecyclerViewAdapterData modelData) {
+
+            if(modelData instanceof AdxSdkBanner){
+//                AdxSdkBanner banner= (AdxSdkBanner) modelData;
+//                View adxView = banner.getAdxView();
+//                if(null!=adxView){
+//                    adxContainer.removeAllViews();
+//                    ViewParent viewParent = adxView.getParent();
+//                    if (null != viewParent) {
+//                        ViewGroup parent = (ViewGroup) viewParent;
+//                        parent.removeView(adxView);
+//                    }
+//                    if(adxView.getVisibility()!=View.GONE){
+//                        itemRootView.setVisibility(View.VISIBLE);
+//                        adxContainer.addView(adxView,new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT));
+//                    }
+//                    else{
+//                        itemRootView.setVisibility(View.GONE);
+//                    }
+////                    adxContainer.addView(adxView,new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT));
+//
+//
+//                }
+
+                adxContainer.removeAllViews();
+                KBannerAdUtil.addKBannerAdView(mContext,null,adxContainer);
+
+            }
         }
     }
 

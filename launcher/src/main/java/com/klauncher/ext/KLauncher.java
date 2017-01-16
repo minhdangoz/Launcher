@@ -358,7 +358,10 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         //新闻体部分
         mNewsBodyRecyclerView = (RecyclerView) kinflowRootView.findViewById(R.id.kinflow_body);
         mNewsBodyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         mNewsBodyRecyclerView.addItemDecoration(new ItemDecorationDivider(this, LinearLayoutManager.VERTICAL));
+
+
 //        mNewsBodyRecyclerView.addOnScrollListener(mHidingScrollListener);
 
 //        kinflow2NewsAdapter = new Kinflow2NewsAdapter(this,null);
@@ -379,11 +382,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         //注册监听
         CacheNavigation.getInstance().registerOnSharedPreferenceChangeListener(this);
 //        CacheLocation.getInstance().registerOnSharedPreferenceChangeListener(this);//此版本已没有天气模块,但是保留天气模块相关代码
-        //初始化下拉刷新
-        mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
 
+        //初始化下拉刷新
+        mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
             @Override
-            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+            public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);//用户允许信息流使用网络
                 if (userAllowKinflowUseNet) {//用户允许使用网络
                     startTime = System.currentTimeMillis();
@@ -394,11 +397,30 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                     showFirstUseKinflowHint();
                 }
             }
+
+            /**上滑
+             * @param refreshView
+             */
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
+
+                boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData.KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);//用户允许信息流使用网络
+                if (userAllowKinflowUseNet) {//用户允许使用网络
+                    startTime = System.currentTimeMillis();
+                    Log.e("上滑","下拉刷新的开始时间:"+startTime);
+                    requestKinflowData( MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE,  MessageFactory.MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE);
+//                    requestKinflowData(MessageFactory.REQUEST_SOUGOU_SEARCH_ARTICLE);
+                } else {//用户不允许使用网络
+                    showFirstUseKinflowHint();
+                }
+
+            }
         });
 
         mScrollView = mPullRefreshScrollView.getRefreshableView();
         mScrollView.setFillViewport(true);
-        mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);//关闭加载更多
+//        mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);//关闭加载更多
+        mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.BOTH);
         //
         //注册网络监听
         IntentFilter filter = new IntentFilter();
@@ -988,15 +1010,28 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         }
 
     }
+//    2017-1-12
+//    @Override
+//    public void onNewsAndAdUpdate(List<BaseRecyclerViewAdapterData> baseRecyclerViewAdapterDataList) {
+//        mNewsBodyRecyclerView.removeAllViews();
+//        /*
+//        YokmobBanner yokmobBanner = new YokmobBanner("http://www.opgirl.cn/delong/images/0.jpg","http://m.998pa.com/meinv/xinggan/");
+//        baseRecyclerViewAdapterDataList.add(3,yokmobBanner);
+//        */
+//        mKinflow2NewsAdapter2.updateAdapter(baseRecyclerViewAdapterDataList);
+//    }
 
     @Override
     public void onNewsAndAdUpdate(List<BaseRecyclerViewAdapterData> baseRecyclerViewAdapterDataList) {
-        mNewsBodyRecyclerView.removeAllViews();
+        //改为追加数据
+//        mNewsBodyRecyclerView.removeAllViews();
         /*
         YokmobBanner yokmobBanner = new YokmobBanner("http://www.opgirl.cn/delong/images/0.jpg","http://m.998pa.com/meinv/xinggan/");
         baseRecyclerViewAdapterDataList.add(3,yokmobBanner);
         */
-        mKinflow2NewsAdapter2.updateAdapter(baseRecyclerViewAdapterDataList);
+
+//        mKinflow2NewsAdapter2.updateAdapter(baseRecyclerViewAdapterDataList);
+        mKinflow2NewsAdapter2.appendAdapter(baseRecyclerViewAdapterDataList);
     }
 
     @Override

@@ -40,6 +40,19 @@ public abstract class BaseRecyclerViewAdapter<E,T extends BaseRecyclerViewHolder
             mElementList.addAll(elementList);
         }
     }
+    /**
+     *
+     * @param elementList
+     * @param isAppend 是否追加
+     */
+    protected void updateElementList(List<E> elementList,boolean isAppend) {
+        if (!CollectionsUtils.collectionIsNull(elementList)) {
+            if(!isAppend){
+                mElementList.clear();
+            }
+            mElementList.addAll(elementList);
+        }
+    }
 
     /**
      * 老方法更新adapter
@@ -50,6 +63,14 @@ public abstract class BaseRecyclerViewAdapter<E,T extends BaseRecyclerViewHolder
         notifyDataSetChanged();//Notify any registered observers that the data set has changed.
     }
 
+    /**
+     * 追加数据
+     * @param elementList
+     */
+    public void appendAdapter(List<E> elementList){
+        updateElementList(elementList,true);
+        notifyItemRangeInserted(mElementList.size(),elementList.size());
+    }
 
 
     @Override
