@@ -81,7 +81,7 @@ public class KBannerAdUtil {
             }
         });
         parent.addView(ad, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams
-                .MATCH_PARENT));
+                .WRAP_CONTENT));
         ad.loadAd();
         return ad;
     }

@@ -195,7 +195,6 @@ public class JRTTCardRequestManager {
         }
     }
 
-
     private Handler mMoreHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
