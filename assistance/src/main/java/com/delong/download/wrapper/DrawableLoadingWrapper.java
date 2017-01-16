@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.delong.download.R;
-import com.delong.download.bean.ServerAppInfo;
+import com.delong.assistance.bean.ServerAppInfo;
 import com.delong.download.utils.AppUtils;
 import com.delong.download.utils.ImageUtils;
 

@@ -3,7 +3,7 @@ package com.delong.download;
 import android.text.TextUtils;
 
 
-import com.delong.download.bean.ServerAppInfo;
+import com.delong.assistance.bean.ServerAppInfo;
 
 import java.util.ArrayList;
 import java.util.List;

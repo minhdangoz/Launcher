@@ -34,8 +34,8 @@ dependencies {
 
     compile 'com.android.support:recyclerview-v7:23.2.1'
     //文件下载
-    compile 'com.liulishuo.filedownloader:library:1.0.0'
-    //图片加载
+    compile 'com.liulishuo.filedownloader:library:1.2.2'
+    //图片加载.0.0
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
     compile 'io.reactivex:rxandroid:1.0.1'

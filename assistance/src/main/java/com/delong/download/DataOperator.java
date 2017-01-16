@@ -3,7 +3,7 @@ package com.delong.download;
 
 import android.content.Context;
 
-import com.delong.download.bean.ServerAppInfo;
+import com.delong.assistance.bean.ServerAppInfo;
 import com.delong.download.db.AppsDao;
 import com.delong.download.utils.AppUtils;
 

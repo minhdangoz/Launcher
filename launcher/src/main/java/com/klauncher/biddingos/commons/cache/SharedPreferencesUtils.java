@@ -21,6 +21,7 @@ public class SharedPreferencesUtils {
     public static final String KEY_LAST_TIME_POST = "lasttimepost";
     public static final String KEY_FLOWADS = "organicAds";
     public static final String KEY_LAST_TIME_REFRESH = "lasttime";
+    public static final String KEY_LAST_CHECK_TIME = "last_check_time";
     public static SharedPreferences pkg = null;
     public static SharedPreferences events = null;
     public static SharedPreferences download = null;
@@ -75,6 +76,16 @@ public class SharedPreferencesUtils {
 
         SharedPreferences.Editor editor = download.edit();
         editor.putString(key, AESUtils.encode(Setting.SECRET, value));
+        editor.commit();
+    }
+
+    public static long getAdsCheckLastTime() {
+        return flowAds.getLong(KEY_LAST_CHECK_TIME, -1);
+    }
+
+    public static void setAdsCheckTime(long time) {
+        SharedPreferences.Editor editor = flowAds.edit();
+        editor.putLong(KEY_LAST_CHECK_TIME, time);
         editor.commit();
     }
 

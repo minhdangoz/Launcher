@@ -1,7 +1,8 @@
 package com.delong.assistance.api;
 
 
-import com.delong.download.bean.RecommendAppList;
+import com.delong.assistance.bean.RecommendAppList;
+import com.delong.assistance.bean.UpgradeInfo;
 
 import java.util.Map;
 
@@ -18,5 +19,8 @@ public interface AssistService {
 
     @GET("launcher/recommend/guesslove")
     Observable<RecommendAppList> getAdList(@QueryMap Map<String, String> commonParams, @Query("category") String category, @Query("platform") String platform);
+
+    @GET("launcher/update")
+    Observable<UpgradeInfo> checkUpgrade(@QueryMap Map<String, String> commonParams, @Query("category") int ver_code , @Query("platform") String platform);
 
 }

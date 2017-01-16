@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.delong.download.bean.ServerAppInfo;
+import com.delong.assistance.bean.ServerAppInfo;
 import com.delong.download.db.AppsDao;
 import com.delong.download.receiver.SystemBroadcastReceiver;
 import com.delong.download.utils.NetWorkUtils;

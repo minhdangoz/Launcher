@@ -233,4 +233,9 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="ToastAnimation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/anim_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_fade_out</item>
+    </style>
+
 </resources>

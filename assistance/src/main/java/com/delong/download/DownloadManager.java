@@ -4,7 +4,7 @@ package com.delong.download;
 import android.content.Context;
 import android.view.View;
 
-import com.delong.download.bean.ServerAppInfo;
+import com.delong.assistance.bean.ServerAppInfo;
 import com.delong.download.db.AppsDao;
 import com.delong.download.utils.NetWorkUtils;
 import com.delong.download.view.CustomDialog;

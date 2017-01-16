@@ -8,10 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.delong.floatwindow.utils.Utils;
-import com.miguan.market.R;
-import com.miguan.market.app_business.clean.ui.RubbishCleanFragment;
-import com.miguan.market.databinding.CleanTipsBinding;
+import com.klauncher.launcher.R;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -178,7 +175,7 @@ public class FloatToast {
             params = (WindowManager.LayoutParams) tnParamsField.get(mTN);
             params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                     | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-            params.windowAnimations = R.style.CleanToastAnimation;
+            params.windowAnimations = R.style.ToastAnimation;
             Field tnNextViewField = mTN.getClass().getDeclaredField("mNextView");
             tnNextViewField.setAccessible(true);
             tnNextViewField.set(mTN, toast.getView());
@@ -187,7 +184,7 @@ public class FloatToast {
             e.printStackTrace();
         }
         if (isMatchParent) {
-            toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.FILL_VERTICAL, 0, 0);
+            toast.setGravity(Gravity.FILL_HORIZONTAL | Gravity.TOP, 0, 0);
         } else {
             toast.setGravity(Gravity.LEFT | Gravity.TOP, x, y);
         }

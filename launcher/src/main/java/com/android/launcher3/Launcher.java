@@ -142,6 +142,7 @@ import com.klauncher.ext.ThemeResourceUtils;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
 import com.klauncher.theme.ThemeController;
+import com.klauncher.upgrade.UpgradeHelper;
 import com.klauncher.utilities.DeviceInfoUtils;
 import com.klauncher.utilities.LogUtil;
 import com.umeng.analytics.MobclickAgent;

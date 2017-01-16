@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 
-import com.delong.download.bean.AppInfo;
-import com.delong.download.bean.ServerAppInfo;
+import com.delong.assistance.bean.AppInfo;
+import com.delong.assistance.bean.ServerAppInfo;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,7 +8,7 @@ import android.support.v4.util.SparseArrayCompat;
 import com.delong.assistance.config.OkHttpFactory;
 import com.delong.download.BuildConfig;
 import com.delong.download.DownloadManager;
-import com.delong.download.api.AssistService;
+import com.delong.assistance.api.AssistService;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonParser;

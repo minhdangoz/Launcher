@@ -4,6 +4,9 @@ android {
     compileSdkVersion 21
     buildToolsVersion "23.0.2"
 
+    dataBinding {
+        enabled = true
+    }
 
     defaultConfig {
         minSdkVersion 17
@@ -344,7 +347,6 @@ dependencies {
     //===============
     compile 'com.android.support:design:22.2.1'
     compile files('libs/kappcsc.jar')
-    compile files('libs/adx.jar')
-    compile 'com.android.support:support-v4:23.0.1'//ADX-SDK用到
+    compile project(path: ':adviertisement')
 }
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }

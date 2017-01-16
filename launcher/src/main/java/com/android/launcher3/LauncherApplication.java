@@ -19,6 +19,7 @@ package com.android.launcher3;
 import android.os.Build;
 import android.util.Log;
 
+import com.delong.assistance.AssistanceServiceApi;
 import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.launcher.R;
 import com.klauncher.theme.ThemeController;
@@ -40,6 +41,9 @@ public class LauncherApplication extends KLauncherApplication {
         if (isMultiProgressInit()) {
             return;
         }
+
+        AssistanceServiceApi.init(this);
+
         if(mLogArray == null)
         	mLogArray = new String[mLoglength];
         LAUNCHER_SHOW_UNREAD_NUMBER = getResources().getBoolean(

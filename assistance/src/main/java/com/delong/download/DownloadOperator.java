@@ -1,6 +1,6 @@
 package com.delong.download;
 
-import com.delong.download.bean.ServerAppInfo;
+import com.delong.assistance.bean.ServerAppInfo;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 
 /**

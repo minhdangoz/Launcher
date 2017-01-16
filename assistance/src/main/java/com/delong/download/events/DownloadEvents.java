@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 import com.delong.download.DownloadManager;
 import com.delong.download.R;
-import com.delong.download.bean.ServerAppInfo;
+import com.delong.assistance.bean.ServerAppInfo;
 import com.delong.download.utils.AppUtils;
 
 import java.io.File;

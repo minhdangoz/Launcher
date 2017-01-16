@@ -5,4 +5,15 @@ package com.delong.assistance.bean;
  */
 
 public class UpgradeInfo {
+
+    public int upgrade_flag;
+
+    public int new_ver_code;
+
+    public long apk_size;
+
+    public String apk_url;
+
+    public String explain;
+
 }
