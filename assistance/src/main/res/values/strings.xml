@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SimpleDownload</string>
+    <string name="dialog_default_title">提示</string>
+    <string name="dialog_btn_ok">确定</string>
+    <string name="dialog_btn_cancel">取消</string>
+    <string name="msg_confirm_start_download">当前是非WIFI网络, 安装应用会消耗移动流量, 是否继续安装?</string>
+    <string name="msg_network_unavailable">当前网络连接不可用, 请检查网络连接</string>
+    <string name="tips_file_not_exist">安装包不存在……</string>
+    <string name="tips_app_not_exist">该应用不存在……</string>
+</resources>

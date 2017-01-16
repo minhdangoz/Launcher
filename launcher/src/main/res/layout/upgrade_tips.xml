@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:background="@drawable/clean_rect_bg"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_clean_tips" />
+
+        <TextView
+            android:id="@+id/cleanCount"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="2dp"
+            android:lines="2"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/md_white"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/deep_clean"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="深度清理"
+            android:textColor="@color/md_white" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/ic_more_right" />
+
+
+    </LinearLayout>
+</layout>
