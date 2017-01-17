@@ -104,3 +104,8 @@
 -dontwarn okio.**
 
 -dontwarn kotlin.**
+
+#ADX-SDK
+-keepattributes *Annotation*
+-dontwarn com.kapp.mob.adx**b
+-keep public class com.kapp.mob.adx.** {*;}
