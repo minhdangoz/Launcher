@@ -81,3 +81,26 @@
 #导航
 -keep class com.amap.api.navi.**{*;}
 -keep class com.autonavi.**{*;}
+
+#glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+    **[] $VALUES;
+    public *;
+}
+
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-dontwarn okhttp3.**
+
+-dontwarn com.fasterxml.jackson.databind.ext.DOMSerializer
+-keep class com.fasterxml.jackson.** { *; }
+
+-keep class com.delong.assistance.bean.** { *; }
+
+-dontwarn rx.internal.util.**
+-keep class rx.** {*;}
+
+-dontwarn okio.**
+
+-dontwarn kotlin.**
