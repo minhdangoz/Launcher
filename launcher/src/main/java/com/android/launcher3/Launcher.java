@@ -310,7 +310,7 @@ public class Launcher extends Activity
 
     private LayoutInflater mInflater;
 
-    private Workspace mWorkspace;
+    protected Workspace mWorkspace;
     private View mLauncherView;
     private View mPageIndicators;
     private DragLayer mDragLayer;

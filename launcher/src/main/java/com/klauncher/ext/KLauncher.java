@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PersistableBundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -134,6 +135,8 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     private MainControl mMainControl;
 
     private boolean mNetworkConnected = true;
+
+    private static final Handler HANDLER=new Handler();
     long startTime, endTime;
     private BroadcastReceiver mWifiChangeReceiver = new BroadcastReceiver() {
         @Override
@@ -393,16 +396,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-//                boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData
-// .KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);//用户允许信息流使用网络
-//                if (userAllowKinflowUseNet) {//用户允许使用网络
-//                    startTime = System.currentTimeMillis();
-//                    Log.e("下拉刷新","下拉刷新的开始时间:"+startTime);
-//                    requestKinflowData(MessageFactory.REQUEST_ALL_KINFLOW);
-////                    requestKinflowData(MessageFactory.REQUEST_SOUGOU_SEARCH_ARTICLE);
-//                } else {//用户不允许使用网络
-//                    showFirstUseKinflowHint();
-//                }
                 onPullForKinflowData(MainControl.LoadType.REFRESH, MessageFactory.REQUEST_ALL_KINFLOW);
             }
 
@@ -411,18 +404,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
              */
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-//
-//                boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData
-// .KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);//用户允许信息流使用网络
-//                if (userAllowKinflowUseNet) {//用户允许使用网络
-//                    startTime = System.currentTimeMillis();
-//                    Log.e("上滑","下拉刷新的开始时间:"+startTime);
-//                    requestKinflowData( MessageFactory.MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE,  MessageFactory
-// .MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE);
-////                    requestKinflowData(MessageFactory.REQUEST_SOUGOU_SEARCH_ARTICLE);
-//                } else {//用户不允许使用网络
-//                    showFirstUseKinflowHint();
-//                }
                 onPullForKinflowData(MainControl.LoadType.LOAD_MORE, MessageFactory
                         .MESSAGE_WHAT_OBTAIN_TOUTIAO_API_ARTICLE, MessageFactory
                         .MESSAGE_WHAT_OBTAIN_SOUGOU_SEARCH_ARTICLE);
@@ -469,6 +450,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
      * @param msgWhats
      */
     private void onPullForKinflowData(int loadType, int... msgWhats) {
+
+        if(mWorkspace.isPageMoving()){
+            return;
+        }
+
         boolean userAllowKinflowUseNet = CommonShareData.getBoolean(CommonShareData
                 .KEY_USER_ALWAYS_ALLOW_KINFLOW_USE_NET, false);//用户允许信息流使用网络
         if (userAllowKinflowUseNet) {//用户允许使用网络
@@ -483,6 +469,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     public void scrollToKinflow() {
         //super.scrollToKinflow();
+
         //初始化 是否试用 fasle
         PingManager.sIsKinflowIsUsed = false;
         LogUtil.e("sIsKinflowIsUsed", "scrollToKinflow" + PingManager.sIsKinflowIsUsed);
@@ -553,14 +540,25 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         }
     }
     private void autoRequestData() {
-        //网络可用---判断是啥网络
-        if (NetworkUtils.isMobile(this)) {//移动网络
-            if (CommonShareData.refreshInterval4hour()) {//请求一次数据之前：判断距离上次清空数据缓存是否超过4个小时，如果超过则清空数据缓存并记录一次当前时间
-                requestKinflowData(MainControl.LoadType.REFRESH, MessageFactory.REQUEST_ALL_KINFLOW);
+        HANDLER.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if(mWorkspace.isPageMoving()){
+                    return;
+                }
+
+                //网络可用---判断是啥网络
+                if (NetworkUtils.isMobile(KLauncher.this)) {//移动网络
+                    if (CommonShareData.refreshInterval4hour()) {//请求一次数据之前：判断距离上次清空数据缓存是否超过4个小时，如果超过则清空数据缓存并记录一次当前时间
+                        requestKinflowData(MainControl.LoadType.REFRESH, MessageFactory.REQUEST_ALL_KINFLOW);
+                    }
+                } else if (NetworkUtils.isWifi(KLauncher.this)) {//wifi网络
+                    requestKinflowData(MainControl.LoadType.REFRESH, MessageFactory.REQUEST_ALL_KINFLOW);
+                }
             }
-        } else if (NetworkUtils.isWifi(this)) {//wifi网络
-            requestKinflowData(MainControl.LoadType.REFRESH, MessageFactory.REQUEST_ALL_KINFLOW);
-        }
+        },1000);
+
     }
 
     private void showFirstConnectedNetHint(final int... msgWhats) {
@@ -661,39 +659,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             e.printStackTrace();
         }
     }
-
-
-//    2017-1-16
-//    /**
-//     * 请求信息流数据
-//     * @param msgWhats 为请求的数据类型
-//     *                  全部类型:
-//     *                  MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
-//                        MessageFactory.MESSAGE_WHAT_OBTAION_NAVIGATION,
-//                        MessageFactory.MESSAGE_WHAT_OBTAION_CARD,
-//                        MessageFactory.MESSAGE_WHAT_OBTAIN_CONFIG
-//                       热词类型:
-//                        MessageFactory.MESSAGE_WHAT_OBTAION_HOTWORD,
-//                       card类型&&config类型同上
-//     */
-//    private void requestKinflowData (int... msgWhats) {
-//        try {
-//            //用户是否允许信息流使用网络发起请求
-//            //二,用户允许信息流使用网络
-//            if (NetworkUtils.isNetworkAvailable(KLauncher.this)) {//用户允许信息流使用网络并且当前网络可用
-////                mMainControl.asynchronousRequest(msgWhats);
-//                mMainControl.asynchronousRequest_kinflow2(msgWhats);
-//            } else {//用户允许信息流使用网络但是当前网络不可用
-//                Toast.makeText(KLauncher.this, KLauncher.this.getResources().getString(R.string
-// .kinflow_string_connection_error), Toast.LENGTH_SHORT).show();
-//                onCompleted();
-//            }
-//        } catch (Exception e) {
-//            Log.e(TAG, "requestKinflowData: 请求数据失败");
-//            onCompleted();
-//        }
-//
-//    }
 
     /**
      * 请求信息流数据
@@ -935,6 +900,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
      */
     @Override
     public void onWeatherUpdate(Weather weatherObject) {
+
+        if(mWorkspace.isPageMoving()){
+            return;
+        }
+
         tv_temperature.setText(weatherObject.getTemp());
         tv_city.setText(weatherObject.getCity());
         tv_weather.setText(weatherObject.getWeather());
@@ -1014,10 +984,11 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         Log.e("下拉刷新", "下拉刷新耗时:" + String.valueOf(endTime - startTime) + "\n" +
                 "===================================================================" + "\n");
     }
-
-
     @Override
     public void onHotWordUpdate(List<HotWord> hotWordList) {
+        if(mWorkspace.isPageMoving()){
+            return;
+        }
         try {
             //更新热词
             if (null != hotWordList && hotWordList.size() != 0) {
@@ -1046,21 +1017,26 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
     @Override
     public void onNavigationUpdate(List<Navigation> navigationList) {
         log("onGlobalCategoryNavigationUpdate: 开始更新网页导航");
+        if(mWorkspace.isPageMoving()){
+            return;
+        }
         try {
             if (null != navigationList && navigationList.size() != 0) {
                 NavigationAdapter2 adapter = (NavigationAdapter2) mNavigationRecyclerView.getAdapter();
                 adapter.updateNavigationList(navigationList);
-                adapter.notifyDataSetChanged();
+//                adapter.notifyDataSetChanged();
             }
         } catch (Exception e) {
             log("onNavigationUpdate: 更新导航时出错:" + e.getMessage());
         }
 
     }
-
     @Override
     public void onGlobalCategoryNavigationUpdate(List<Navigation> navigationList) {
         log("onGlobalCategoryNavigationUpdate: 开始更新全局导航");
+        if(mWorkspace.isPageMoving()){
+            return;
+        }
         try {
             if (null != navigationList && navigationList.size() != 0) {
                 if (navigationList.size() > 5) navigationList = navigationList.subList(0, 5);
@@ -1071,13 +1047,16 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             log("onGlobalCategoryNavigationUpdate: 更新全局导航时出错:" + e.getMessage());
         }
     }
-
     /**
      * kinflow1使用onCardInfoUpdate更新内容,kinflow2使用onNewsAndAdUpdate更新内容
      *
      * @param cardInfoList
      */
     public void onCardInfoUpdate(List<CardInfo> cardInfoList) {
+        if(mWorkspace.isPageMoving()){
+            return;
+        }
+
         try {
             //kinflow1:更新CardsAdapter
             if (null != cardInfoList && cardInfoList.size() != 0) {
@@ -1091,35 +1070,26 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         }
 
     }
-//    2017-1-12
-//    @Override
-//    public void onNewsAndAdUpdate(List<BaseRecyclerViewAdapterData> baseRecyclerViewAdapterDataList) {
-//        mNewsBodyRecyclerView.removeAllViews();
-//        /*
-//        YokmobBanner yokmobBanner = new YokmobBanner("http://www.opgirl.cn/delong/images/0.jpg","http://m.998pa
-// .com/meinv/xinggan/");
-//        baseRecyclerViewAdapterDataList.add(3,yokmobBanner);
-//        */
-//        mKinflow2NewsAdapter2.updateAdapter(baseRecyclerViewAdapterDataList);
-//    }
-
     @Override
-    public void onNewsAndAdUpdate(List<BaseRecyclerViewAdapterData> baseRecyclerViewAdapterDataList, boolean append) {
+    public void onNewsAndAdUpdate(final List<BaseRecyclerViewAdapterData> baseRecyclerViewAdapterDataList, final boolean append) {
+        if(mWorkspace.isPageMoving()){
+            return;
+        }
         onCompleted();
-        try {
-            //延迟防止出现刷新视图卡顿的情况
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if (append) {
-            mKinflow2NewsAdapter2.appendAdapter(baseRecyclerViewAdapterDataList);
-        } else {
-            mNewsBodyRecyclerView.removeAllViews();
-            mKinflow2NewsAdapter2.updateAdapter(baseRecyclerViewAdapterDataList);
-            scrollToTop();
-        }
-
+       HANDLER.postDelayed(new Runnable() {
+           @Override
+           public void run() {
+               if(mWorkspace.isPageMoving()){
+                   return;
+               }
+               if (append) {
+                   mKinflow2NewsAdapter2.appendAdapter(baseRecyclerViewAdapterDataList);
+               } else {
+                   mKinflow2NewsAdapter2.updateAdapter(baseRecyclerViewAdapterDataList);
+//                   scrollToTop();
+               }
+           }
+       },500); //延迟防止出现刷新视图卡顿的情况
     }
 
     private void scrollToTop() {

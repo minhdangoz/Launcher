@@ -639,7 +639,7 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
         }
     }
 
-    protected boolean isPageMoving() {
+    public boolean isPageMoving() {
         return mIsPageMoving;
     }
 
