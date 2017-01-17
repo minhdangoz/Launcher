@@ -78,7 +78,6 @@ public class JRTTAsynchronousTask {
         this.mHandler = handler;
         this.mMessage = MessageFactory.createMessage(messageWhat);
     }
-
     public void accessToken() {
         mMessage.arg1 = UNKNOW_ERROR;
         Response response = null;

@@ -188,27 +188,6 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
         public void bundData2View(BaseRecyclerViewAdapterData modelData) {
 
             if(modelData instanceof AdxSdkBanner){
-//                AdxSdkBanner banner= (AdxSdkBanner) modelData;
-//                View adxView = banner.getAdxView();
-//                if(null!=adxView){
-//                    adxContainer.removeAllViews();
-//                    ViewParent viewParent = adxView.getParent();
-//                    if (null != viewParent) {
-//                        ViewGroup parent = (ViewGroup) viewParent;
-//                        parent.removeView(adxView);
-//                    }
-//                    if(adxView.getVisibility()!=View.GONE){
-//                        itemRootView.setVisibility(View.VISIBLE);
-//                        adxContainer.addView(adxView,new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT));
-//                    }
-//                    else{
-//                        itemRootView.setVisibility(View.GONE);
-//                    }
-////                    adxContainer.addView(adxView,new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT));
-//
-//
-//                }
-
                 adxContainer.removeAllViews();
                 KBannerAdUtil.addKBannerAdView(mContext,null,adxContainer);
 
