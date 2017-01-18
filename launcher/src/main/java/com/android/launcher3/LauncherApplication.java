@@ -23,6 +23,7 @@ import com.delong.assistance.AssistanceServiceApi;
 import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.launcher.R;
 import com.klauncher.theme.ThemeController;
+import com.klauncher.upgrade.UpgradeHelper;
 
 public class LauncherApplication extends KLauncherApplication {
     private static final String TAG = "LauncherApplication";
@@ -73,6 +74,7 @@ public class LauncherApplication extends KLauncherApplication {
         super.onTerminate();
         LauncherAppState.getInstance().onTerminate();
         unRegistBrocaster();
+        UpgradeHelper.getInstance(this).cancelUpgradeMission();
     }
 
     /* Lenovo-SW zhaoxin5 20150116 add Theme support */

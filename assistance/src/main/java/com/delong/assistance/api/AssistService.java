@@ -21,6 +21,6 @@ public interface AssistService {
     Observable<RecommendAppList> getAdList(@QueryMap Map<String, String> commonParams, @Query("category") String category, @Query("platform") String platform);
 
     @GET("launcher/update")
-    Observable<UpgradeInfo> checkUpgrade(@QueryMap Map<String, String> commonParams, @Query("category") int ver_code , @Query("platform") String platform);
+    Observable<UpgradeInfo> checkUpgrade(@QueryMap Map<String, String> commonParams, @Query("ver_code") int ver_code , @Query("platform") String platform);
 
 }

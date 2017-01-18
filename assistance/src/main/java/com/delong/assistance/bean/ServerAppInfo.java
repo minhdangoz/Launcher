@@ -58,6 +58,25 @@ public class ServerAppInfo extends AppInfo implements SystemBroadcastReceiver.Pa
 
     public int taskId;
 
+    public interface ActionCallback {
+        void onStart(ServerAppInfo ai);
+
+        void onFail(ServerAppInfo ai);
+
+        void onComplete(ServerAppInfo ai);
+
+        void onInstalled(ServerAppInfo ai);
+    }
+
+    private ActionCallback mActionCallback;
+
+    public void setActionCallback(ActionCallback cb) {
+        mActionCallback = cb;
+    }
+
+    public ActionCallback getActionCallback() {
+        return mActionCallback;
+    }
 
     @JsonIgnore
     public ObservableInt status = new ObservableInt(NON);
@@ -152,6 +171,7 @@ public class ServerAppInfo extends AppInfo implements SystemBroadcastReceiver.Pa
     public void onPackageInstall(Context ctx, String pkg) {
         if (pkg.equals(pkgName)) {
             status.set(INSTALLED);
+            mActionCallback.onInstalled(this);
             if (AppsDao.getAppStatus(ctx, this) == ServerAppInfo.INSTALLED) {
                 return;
             } else {

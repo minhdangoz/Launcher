@@ -39,6 +39,7 @@ public class DownloadListener extends FileDownloadListener implements SystemBroa
     protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
         //添加到数据库
         boolean insert = AppsDao.insert(mContext, appInfo);
+        appInfo.getActionCallback().onStart(appInfo);
 
     }
 
@@ -60,7 +61,7 @@ public class DownloadListener extends FileDownloadListener implements SystemBroa
         }
         installApk(mContext, DownloadManager.getFileName(appInfo.appName));
         appInfos.remove(appInfo);
-
+        appInfo.getActionCallback().onComplete(appInfo);
     }
 
     private void installApk(Context context, String filePath) {
@@ -87,6 +88,7 @@ public class DownloadListener extends FileDownloadListener implements SystemBroa
     @Override
     protected void error(BaseDownloadTask task, Throwable e) {
         appInfo.status.set(ServerAppInfo.PAUSE);
+        appInfo.getActionCallback().onFail(appInfo);
     }
 
     @Override
