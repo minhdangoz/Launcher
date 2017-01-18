@@ -32,7 +32,7 @@
         <item>sogou.mobile.explorer</item>
         <item>com.tencent.qqpimsecure</item>
         <item>cn.etouch.ecalendar</item>
-        <item>com.calendar.UI</item>
+        <item>com.moji.mjweather</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
         <item>com.cootek.smartdialer</item>
@@ -54,7 +54,7 @@
     <string name="config_icon_sogou.mobile.explorer">com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.letv.android.supermanager</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
-    <string name="config_icon_com.calendar.UI">sina.mobile.tianqitongletv,com.letv.android.weather</string>
+    <string name="config_icon_com.moji.mjweather">sina.mobile.tianqitongletv,com.letv.android.weather</string>
     <string name="config_icon_com.dl.explorer">com.letv.android.filemanager,com.mediatek.filemanager,com.android.qrdfileexplorer</string>
 
     <bool name="kinflow_switch_default">false</bool>

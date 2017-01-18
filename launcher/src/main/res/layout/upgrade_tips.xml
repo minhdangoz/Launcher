@@ -11,70 +11,85 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/color_black"
             android:text="发现新版本"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/color_black"
                 android:id="@+id/version_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
+                android:layout_marginLeft="10dp"
                 android:id="@+id/apk_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:textColor="@color/color_black"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <TextView
+            android:layout_marginBottom="5dp"
             android:id="@+id/upgrade_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:maxLines="5"
             android:ellipsize="end"
-            android:lines="1"
-            android:textSize="12sp" />
+            android:textColor="@color/color_black"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
             android:gravity="right"
             android:orientation="horizontal">
 
             <TextView
+                android:padding="3dp"
                 android:id="@+id/btn_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="稍后"
                 android:textColor="#9d9fa7"
-                android:textSize="12sp" />
+                android:textSize="15sp" />
 
             <TextView
+                android:padding="3dp"
                 android:id="@+id/btn_install"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
                 android:text="安装"
                 android:textColor="#163ef1"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
     </LinearLayout>
