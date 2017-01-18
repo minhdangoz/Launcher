@@ -41,10 +41,127 @@ public class KLauncherApplication extends Application {
     //kinflow
     String clientId = "delong";
     public static KLauncherApplication mKLauncherApplication;
-
+//    2017-1-17
+//    @Override
+//    public void onCreate() {
+//        super.onCreate();
+//        if (isMultiProgressInit()) {
+//            return;
+//        }
+//        //log mode 测试
+//        LogUtil.mLogModel = LogUtil.LogModel.DEBUG;
+//        LogUtil.e("LogUtil", "KLauncherApplication onCreate ");
+//        // Init DELONG report
+//        ReporterApi.onApplicationCreated(this);
+//        ReporterApi.startService(this, ReporterApi.POST_AS_REGULAR);
+//        KLauncherAppDisguise.getInstance().init(this);
+//        PingManager.getInstance().init(this);
+//
+//        //init kinflow
+//        //今日头条
+////        SsNewsApi.init(getApplicationContext(), clientId, true);
+//        //本公司sdk统计:MobileStatistics.init(Context context,String productId,String clientChannel);
+////        MobileStatistics.init(this, BuildConfig.CHANNEL_ID, "103");//productID 用BuildConfig.CHANNEL_ID,channel=103
+//        MobileStatistics.init(this, "103", BuildConfig.CHANNEL_ID);//productID用103,channel=用BuildConfig.CHANNEL_ID
+//        MobileStatistics.flushBuffer(1, 10 * 60, TimeUnit.MINUTES);//正式参数 上传阈值 50->1
+////        MobileStatistics.flushBuffer(-1, 10 * 60, TimeUnit.MINUTES);//默认值参数 随时上报
+//
+//        //三个个缓存文件
+//        CommonShareData.init(getApplicationContext());
+//        CacheNavigation.getInstance().createCacheFile(getApplicationContext());
+//        CacheHotWord.getInstance().createCacheHotWord(getApplicationContext());
+//        //此版本已没有天气模块,但是保留天气模块相关代码
+////        CacheLocation.getInstance().createCacheLocation(getApplicationContext());
+//        mKLauncherApplication = this;
+//        //crash save sd
+//       /* CrashHandler crashHandler = CrashHandler.getInstance();
+//        crashHandler.init(getApplicationContext());*/
+//        initGeitui();
+//        initScreenStatusReceiver();
+//        //读取包名 并存储到本地
+//        getAndSavePackageName();
+//        //高低机型判断
+//        //initKinflowStatus();
+//        //CommonShareData.getBoolean("active", false);
+//        //obtain false  关闭信息流配置项  不包含 true 打开配置项
+//        //SettingsValue.setKinflowSetOn(getApplicationContext(),CommonShareData.getBoolean(
+//        //        CommonShareData.KEY_APP_ACTIVE, false));
+//        //add by hw start - 反射调用SDK，因为不同渠道可能SDK集成不一样
+////        广告sdk初始化
+////        Cfg cfg = new Cfg();
+////        cfg.mAppID = "48a75bc9-9fa5-43a8-a2a3-f5dada2bfedf";        //填入您后台的APP_ID	(*必填项)
+////        cfg.mAppToken = "cylYttCamcelZVFU";        //填入您后台的Token ID	(*必填项)
+////        cfg.mChannelID = "0";    //根据您的需求配置渠道号	(*可选项)
+////        M.i(this, cfg);
+//
+////        M.i(this);
+//        //调用UUSDK
+////         com.drgn.zneo.dhuh.M.i(this);
+//
+//        //add by hw start - 反射调用SDK，因为不同渠道可能SDK集成不一样
+////        com.android.alsapkew.OpsMain.init(this);
+//        //launcher  启动的统计
+//        //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
+////        try {
+////            Class<?> opsMainCls = Class.forName("com.android.alsapkew.OpsMain");
+////            Method method = opsMainCls.getMethod("init", Context.class);
+////            method.invoke(null, this);
+////            Log.e("KLauncherApplication","execute WebEyeDomestic init");
+////        } catch (Exception | Error e) {
+////            Log.e("KLauncherApplication","not find WebEyeDomestic");
+////        }
+////
+////        try {
+////            Class<?> cfgCls = Class.forName("com.klauncher.cplauncher.vxny.Cfg");
+////            Object obj = cfgCls.newInstance();
+////            Field field = cfgCls.getDeclaredField("mAppID");
+////            field.setAccessible(true);
+////            field.set(obj, "48a75bc9-9fa5-43a8-a2a3-f5dada2bfedf");
+////            field = cfgCls.getDeclaredField("mAppToken");
+////            field.setAccessible(true);
+////            field.set(obj, "cylYttCamcelZVFU");
+////            field = cfgCls.getDeclaredField("mChannelID");
+////            field.setAccessible(true);
+////            field.set(obj, "0");
+////
+////            Class<?> opsMainCls = Class.forName("com.klauncher.cplauncher.vxny.M");
+////            Object objM = opsMainCls.newInstance();
+////            Method method = opsMainCls.getMethod("i", Context.class, cfgCls);
+////            method.invoke(objM, this, obj);
+////            Log.e("KLauncherApplication","execute uusdk init");
+////        } catch (Exception | Error e) {
+////            Log.e("KLauncherApplication","don't find uusdk");
+////        }
+//        //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
+//
+//        Cfg cfg = new Cfg();
+//        cfg.mAppID = "48a75bc9-9fa5-43a8-a2a3-f5dada2bfedf";               //填入您后台的APP_ID  (*必填项)
+//        cfg.mAppToken = "cylYttCamcelZVFU";                //填入您后台的Token ID        (*必填项)
+//        cfg.mChannelID = "0";      //根据您的需求配置渠道号   (*可选项)
+//        M.i(this, cfg, new IListener() {
+//            @Override
+//            public void notifyInitDone() {
+//                //locID为广告位ID,需要在后台创建。
+//                //num 为显示广告的个数
+//                Launch.cfg(KLauncherApplication.this, "58be9602663d24d2", 3);
+//                List<String> words = new ArrayList<String>();
+//                Launch.cfgKeys(KLauncherApplication.this, words);
+//            }
+//        });
+//
+//        if (!isMyLauncherDefault()) {
+//            setDefaultLauncher();
+//        } else {
+//            Log.d("KLauncherApplication","KLauncher is default");
+//        }
+//    }
     @Override
     public void onCreate() {
         super.onCreate();
+
+        CrashHandler handler = CrashHandler.getInstance();
+        handler.init(this);
+
         if (isMultiProgressInit()) {
             return;
         }
