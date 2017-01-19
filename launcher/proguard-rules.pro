@@ -97,6 +97,7 @@
 -keep class com.fasterxml.jackson.** { *; }
 
 -keep class com.delong.assistance.bean.** { *; }
+-keep class com.delong.assistance.api.** { *; }
 
 -dontwarn rx.internal.util.**
 -keep class rx.** {*;}
