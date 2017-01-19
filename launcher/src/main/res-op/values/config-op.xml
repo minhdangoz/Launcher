@@ -55,5 +55,5 @@
 
     <bool name="kinflow_switch_default">false</bool>
     <bool name="kinflow_switch_default_forever">false</bool>
-    <bool name="is_show_folder_recommend_app">false</bool>
+    <bool name="is_show_folder_recommend_app">true</bool>
 </resources>

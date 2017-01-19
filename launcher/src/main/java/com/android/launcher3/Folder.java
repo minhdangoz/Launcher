@@ -2331,7 +2331,6 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                         if (recommendAppResponse != null
                                 && recommendAppResponse.apps != null
                                 && !recommendAppResponse.apps.isEmpty()) {
-
                             AppPool.getInstance().setAppsStatus(recommendAppResponse.apps);
                             DataOperator.removeInstalledApp(recommendAppResponse.apps, mLauncher);
 
