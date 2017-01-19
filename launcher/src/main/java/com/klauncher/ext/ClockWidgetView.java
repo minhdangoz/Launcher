@@ -71,7 +71,7 @@ public class ClockWidgetView extends FrameLayout {
                 if (aMapLocation.getErrorCode() == 0) {
                     if (ClockWidgetView.this.aMapLocation != null) {
                         double moveDistance = gps2m(ClockWidgetView.this.aMapLocation.getLatitude(), ClockWidgetView.this.aMapLocation.getLongitude(), aMapLocation.getLatitude(), aMapLocation.getLongitude());
-                        if(moveDistance > 5*1000){
+                        if(moveDistance < 5*1000){
                             return;
                         }
                     }
