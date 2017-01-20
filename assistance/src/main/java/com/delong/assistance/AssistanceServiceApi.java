@@ -33,7 +33,7 @@ public class AssistanceServiceApi {
 
     final static String DEBUG_API = "http://testapi.delonghutong.com/";
 
-    final static String PUBLISH_API = "http://testapi.delonghutong.com/";
+    final static String PUBLISH_API = "http://klauncher.miguanapp.com/";
 
     private static final SparseArrayCompat<Object> mGlobalObjects = new SparseArrayCompat<>();
 

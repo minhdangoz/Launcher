@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.delong.assistance.bean.ServerAppInfo;
 import com.dl.statisticalanalysis.MobileStatistics;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
@@ -519,4 +520,24 @@ public class PingManager {
         }
         return src32;
     }
+
+    public static final String ACTION_FOLDER_AD_DOWNLOAD_START = "action_folder_ad_download_start";
+    public static final String ACTION_FOLDER_AD_DOWNLOAD_FAIL = "action_folder_ad_download_fail";
+    public static final String ACTION_FOLDER_AD_DOWNLOAD_COMPLETE = "action_folder_ad_download_complete";
+    public static final String ACTION_FOLDER_AD_DOWNLOAD_INSTALLED = "action_folder_ad_download_installed";
+    private static final String KEY_PKG_NAME = "pkg_name";
+    private static final String KEY_VERSION_CODE = "version_code";
+    private static final String KEY_CRC = "crc";
+    private static final String KEY_MD5 = "md5";
+
+    public void reportFolderAdAction(String action, ServerAppInfo ai) {
+        Map<String, String> pingMap = new HashMap<>();
+        pingMap.put(KEY_PKG_NAME, ai.pkgName);
+        pingMap.put(KEY_VERSION_CODE, String.valueOf(ai.versionCode));
+        pingMap.put(KEY_CRC, ai.crc);
+        pingMap.put(KEY_MD5, ai.fileMd5);
+
+        MobileStatistics.onEvent(action, pingMap);
+    }
+
 }

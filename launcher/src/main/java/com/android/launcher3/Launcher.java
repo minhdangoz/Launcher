@@ -677,6 +677,8 @@ public class Launcher extends Activity
 //        applyDefaultTheme();
         //vivo error
         registerAppWidgetReceiver();
+
+        UpgradeHelper.getInstance(this).startUpgradeMission();
     }
 
     @Override
@@ -2483,7 +2485,7 @@ public class Launcher extends Activity
                         PackageManager packageManager = getPackageManager();
                         if (packageManager != null) {
                             Intent intent = null;
-                            intent = packageManager.getLaunchIntentForPackage("com.calendar.UI");
+                            intent = packageManager.getLaunchIntentForPackage("com.moji.mjweather");
                             if (intent != null && intent.getComponent() != null) {
                                 startActivity(intent);
                             }
@@ -6238,7 +6240,7 @@ public class Launcher extends Activity
                     PackageManager packageManager = getPackageManager();
                     if (packageManager != null) {
                         Intent intent = null;
-                        intent = packageManager.getLaunchIntentForPackage("com.calendar.UI");
+                        intent = packageManager.getLaunchIntentForPackage("com.moji.mjweather");
                         if (intent != null && intent.getComponent() != null) {
                             startActivity(intent);
                         }

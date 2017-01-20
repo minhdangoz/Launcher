@@ -6,14 +6,20 @@ package com.delong.assistance.bean;
 
 public class UpgradeInfo {
 
-    public int upgrade_flag;
+    public int upgradeFlag;
 
-    public int new_ver_code;
+    public int newVerCode;
 
-    public long apk_size;
+    public String newVerName;
 
-    public String apk_url;
+    public long apkSize;
+
+    public String apkUrl;
 
     public String explain;
+
+    public int focusUpgrade;
+
+    public String filePath;
 
 }

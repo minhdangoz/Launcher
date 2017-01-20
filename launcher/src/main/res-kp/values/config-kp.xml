@@ -34,7 +34,7 @@
         <item>sogou.mobile.explorer</item>
         <item>com.tencent.qqpimsecure</item>
         <item>cn.etouch.ecalendar</item>
-        <item>com.calendar.UI</item>
+        <item>com.moji.mjweather</item>
         <item>com.ss.android.article.news</item>
         <item>com.dl.explorer</item>
         <item>com.cootek.smartdialer</item>
@@ -46,7 +46,7 @@
     <string name="config_icon_com.UCMobile">com.android.browser,com.qihoo.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.yulong.android.security,com.qiku.android.cloudsync</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar,com.yulong.android.calendar</string>
-    <string name="config_icon_com.calendar.UI">com.chinamobile.mcloud,com.icoolme.android.weather</string>
+    <string name="config_icon_com.moji.mjweather">com.chinamobile.mcloud,com.icoolme.android.weather</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.yulong.android.coolmart</string>
     <string name="config_icon_com.miguan.market">com.yulong.android.gamecenter</string>
     <string name="config_icon_com.dl.explorer">com.mediatek.filemanager,com.android.qrdfileexplorer,com.yulong.android.filebrowser,com.sprd.fileexplorer</string>

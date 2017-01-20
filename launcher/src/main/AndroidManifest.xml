@@ -399,6 +399,23 @@
                 <action android:name="android.intent.action.TIME_TICK"/>
             </intent-filter>
         </receiver>
+
+        <receiver android:name="com.klauncher.upgrade.UpgradeReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_ON" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.klauncher.action.ACTION_UPGRADE" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name="com.klauncher.ext.ClockWidgetService"
             android:exported="false"/>

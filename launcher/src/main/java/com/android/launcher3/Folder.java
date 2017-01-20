@@ -74,12 +74,12 @@ import android.widget.Toast;
 import com.android.launcher3.FolderInfo.FolderListener;
 import com.android.launcher3.settings.SettingsProvider;
 import com.delong.assistance.AssistanceServiceApi;
+import com.delong.assistance.bean.RecommendAppList;
+import com.delong.assistance.bean.ServerAppInfo;
 import com.delong.assistance.config.HttpAction;
 import com.delong.assistance.config.RxFactory;
 import com.delong.download.AppPool;
 import com.delong.download.DataOperator;
-import com.delong.assistance.bean.RecommendAppList;
-import com.delong.assistance.bean.ServerAppInfo;
 import com.delong.download.databinding.ItemAppInfoBinding;
 import com.delong.download.events.DownloadEvents;
 import com.klauncher.biddingos.commons.cache.SharedPreferencesUtils;
@@ -300,17 +300,17 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                     if (intent != null && intent.getComponent() != null) {
                         try {
                             PingManager.getInstance().reportUserAction4ClickFolderPlus(mPlusPackages[i]);
-                            if (i == 0) {
-                                Intent intentMiguan = new Intent("com.miguan.market.service.START_PAGE");
-                                intentMiguan.setPackage("com.miguan.market");
-                                if (mLauncher.getPackageManager().resolveService(intentMiguan, 0) != null) {
-                                    intentMiguan.putExtra("key_class", intent.getComponent().getClassName());//Activity class 名称
-                                    intentMiguan.putExtra("key_bundle", new Bundle());// 需要传递的内部参数，如果没有直接new一个新的Bundle类即可
-                                    mLauncher.startService(intentMiguan);
-                                }
-                            } else {
+//                            if (i == 0) {
+//                                Intent intentMiguan = new Intent("com.miguan.market.service.START_PAGE");
+//                                intentMiguan.setPackage("com.miguan.market");
+//                                if (mLauncher.getPackageManager().resolveService(intentMiguan, 0) != null) {
+//                                    intentMiguan.putExtra("key_class", intent.getComponent().getClassName());//Activity class 名称
+//                                    intentMiguan.putExtra("key_bundle", new Bundle());// 需要传递的内部参数，如果没有直接new一个新的Bundle类即可
+//                                    mLauncher.startService(intentMiguan);
+//                                }
+//                            } else {
                                 mLauncher.startActivity(intent);
-                            }
+//                            }
                         } catch (Exception e) {
                             Log.d(TAG, "Folder plus icon can not start exception : " + e.toString());
                         }
@@ -2331,7 +2331,6 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
                         if (recommendAppResponse != null
                                 && recommendAppResponse.apps != null
                                 && !recommendAppResponse.apps.isEmpty()) {
-
                             AppPool.getInstance().setAppsStatus(recommendAppResponse.apps);
                             DataOperator.removeInstalledApp(recommendAppResponse.apps, mLauncher);
 
@@ -2421,6 +2420,27 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             final ServerAppInfo appInfo = appInfoList.get(i);
             final ItemAppInfoBinding binding = DataBindingUtil.inflate(mInflater, R.layout.item_app_info, this, false);
             binding.setInfo(appInfo);
+            appInfo.setActionCallback(new ServerAppInfo.ActionCallback() {
+                @Override
+                public void onStart(ServerAppInfo ai) {
+                    PingManager.getInstance().reportFolderAdAction(PingManager.ACTION_FOLDER_AD_DOWNLOAD_START, ai);
+                }
+
+                @Override
+                public void onFail(ServerAppInfo ai) {
+                    PingManager.getInstance().reportFolderAdAction(PingManager.ACTION_FOLDER_AD_DOWNLOAD_FAIL, ai);
+                }
+
+                @Override
+                public void onComplete(ServerAppInfo ai) {
+                    PingManager.getInstance().reportFolderAdAction(PingManager.ACTION_FOLDER_AD_DOWNLOAD_COMPLETE, ai);
+                }
+
+                @Override
+                public void onInstalled(ServerAppInfo ai) {
+                    PingManager.getInstance().reportFolderAdAction(PingManager.ACTION_FOLDER_AD_DOWNLOAD_INSTALLED, ai);
+                }
+            });
             binding.rootView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {

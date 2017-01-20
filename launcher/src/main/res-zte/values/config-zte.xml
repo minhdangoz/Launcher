@@ -38,7 +38,7 @@
         <item>sogou.mobile.explorer</item>
         <item>com.tencent.qqpimsecure</item>
         <item>cn.etouch.ecalendar</item>
-        <item>com.calendar.UI</item>
+        <item>com.moji.mjweather</item>
         <item>com.ss.android.article.news</item>
         <item>com.cootek.smartdialer</item>
     </array>
@@ -52,7 +52,7 @@
     <string name="config_icon_com.UCMobile">com.ume.browser,com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.zte.heartyservice</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
-    <string name="config_icon_com.calendar.UI">com.moji.zteweather</string>
+    <string name="config_icon_com.moji.mjweather">com.moji.zteweather</string>
 
     <bool name="kinflow_switch_default">true</bool>
     <bool name="kinflow_switch_default_forever">false</bool>
