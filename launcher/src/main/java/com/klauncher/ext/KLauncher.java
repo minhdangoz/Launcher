@@ -1085,6 +1085,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
                if (append) {
                    mKinflow2NewsAdapter2.appendAdapter(baseRecyclerViewAdapterDataList);
                } else {
+                   mNewsBodyRecyclerView.removeAllViews();
                    mKinflow2NewsAdapter2.updateAdapter(baseRecyclerViewAdapterDataList);
 //                   scrollToTop();
                }
