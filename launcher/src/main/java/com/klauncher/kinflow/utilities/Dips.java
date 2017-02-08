@@ -38,4 +38,12 @@ public class Dips {
         final DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return displayMetrics.densityDpi;
     }
+    /**
+     * @param context
+     * @param i
+     * @return
+     */
+    public static int asDp(Context context, int i) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, i, context.getResources().getDisplayMetrics());
+    }
 }

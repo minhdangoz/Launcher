@@ -189,7 +189,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
 
             if(modelData instanceof AdxSdkBanner){
                 adxContainer.removeAllViews();
-                KBannerAdUtil.addKBannerAdView(mContext,null,adxContainer);
+                KBannerAdUtil.addKBannerAdView(mContext,null,itemView,adxContainer);
 
             }
         }
