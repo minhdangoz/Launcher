@@ -97,10 +97,10 @@ public class KBannerAdUtil {
     public static KBannerAd addKBannerAdView(final Context context, final View onFailView, final View root, final ViewGroup parent) {
 
         Object cache = root.getTag();
-        if(null!=cache&&cache instanceof KBannerAd){
+        if(null!=cache&&cache instanceof BannerHolder){
             logDebug("addKBannerAdView() 有缓存");
-            KBannerAd cacheAd=(KBannerAd)cache;
-            setItemHeight(context, root);
+            KBannerAd cacheAd= ((BannerHolder) cache).bannerAd;
+            setItemHeight(context, root, ((BannerHolder) cache).width, ((BannerHolder) cache).height);
             parent.addView(cacheAd, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams
                     .WRAP_CONTENT));
             return cacheAd;
@@ -119,10 +119,14 @@ public class KBannerAdUtil {
             }
 
             @Override
-            public void onAdReady() {
+            public void onAdReady(int w, int h) {
                 logDebug("getKBannerAdView() onAdReady...");
-                root.setTag(ad);
-                setItemHeight(context, root);
+                BannerHolder bh = new BannerHolder();
+                bh.bannerAd = ad;
+                bh.width = w;
+                bh.height = h;
+                root.setTag(bh);
+                setItemHeight(context, root, w, h);
             }
 
             @Override
@@ -152,12 +156,24 @@ public class KBannerAdUtil {
         ad.loadAd();
         return ad;
     }
-    private static void setItemHeight(Context context, View root) {
-        int rootHeight = Dips.asDp(context, 172);
-        logDebug("setItemHeight() rootHeight=" + rootHeight);
+    private static void setItemHeight(Context context, View root, int w, int h) {
+        int rootHeight = Dips.asDp(context, 100);
         ViewGroup.LayoutParams layoutParams = root.getLayoutParams();
+        int rootWidth = layoutParams.width;
+//        int rootHeight = ;
+        if (rootWidth > w) {
+            rootHeight = rootWidth * h / w;
+        }
+        logDebug("setItemHeight() rootHeight=" + rootHeight);
+
         layoutParams.height=rootHeight;
         root.setLayoutParams(layoutParams);
+    }
+
+    static class BannerHolder{
+        KBannerAd bannerAd;
+        int width;
+        int height;
     }
     /**
      * 返回占位的单个广告
