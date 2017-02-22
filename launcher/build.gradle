@@ -12,7 +12,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 21
         //版本号
-        versionCode 1610211203
+        versionCode 1702131030
         //版本名称
         versionName "2.0.8"
         multiDexEnabled true
@@ -70,6 +70,12 @@ android {
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + LENOVO_ID, WE_OPS_ID: KAPP_OPS_ID,
                                     PACKAGE_NAME : applicationId, GAODE_APIKEY : "9b50ea44354f9eb0b3dd7322c8cd5ad7"]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LENOVO_ID + "\""
+        }
+        haixin {
+            applicationId = "com.klauncher.hxlauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + HAIXIN_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "9b50ea44354f9eb0b3dd7322c8cd5ad7"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + HAIXIN_ID + "\""
         }
         coolpad {
             applicationId = "com.klauncher.cplauncher"
@@ -161,6 +167,11 @@ android {
             assets.srcDirs = ['src/main/assets-lx']
             res.srcDirs += ['src/main/res-lx']
             manifest.srcFile 'src/main/res-lx/AndroidManifest.xml'
+        }
+        haixin {
+            assets.srcDirs = ['src/main/assets-hx']
+            res.srcDirs += ['src/main/res-hx']
+            manifest.srcFile 'src/main/res-hx/AndroidManifest.xml'
         }
         coolpad {
             assets.srcDirs = ['src/main/assets-kp']
@@ -312,6 +323,7 @@ dependencies {
     huaweiCompile files('libs/uu_release.jar')
     huaweishuajiCompile files('libs/uu_release.jar')
     lenovoCompile files('libs/uu_release.jar')
+    haixinCompile files('libs/uu_release.jar')
     coolpadCompile files('libs/uu_release.jar')
     meizuCompile files('libs/uu_release.jar')
     samsungCompile files('libs/uu_release.jar')
