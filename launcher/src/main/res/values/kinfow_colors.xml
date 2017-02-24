@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_black">#000000</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="kinflow_color_transparent">#00000000</color>
+
+    <color name="kinflow_color_background_main">@android:color/darker_gray</color>
+    <color name="kinflow_color_typeface_main">@color/color_white</color>
+    <color name="kinflow_color_main_serach_frame_background">#E0E0E0</color>
+    <color name="kinflow_color_search_hotword_color">#666</color>
+    <color name="kinflow_color_main_transparent_background">#2000</color>
+
+    <color name="kinflow_color_serachActivity_item_background_1">#F8EAEA</color>
+    <color name="kinflow_color_serachActivity_item_background_2">#F7F5E9</color>
+    <color name="kinflow_color_serachActivity_item_background_3">#EBF6F8</color>
+    <color name="kinflow_color_serachActivity_item_background_4">#F5EAF8</color>
+    <color name="kinflow_color_serachActivity_item_background_5">#F7F5E9</color>
+    <color name="kinflow_color_serachActivity_item_background_6">#EAF1F7</color>
+    <color name="kinflow_color_serachActivity_item_background_7">#F2EAF7</color>
+    <color name="kinflow_color_serachActivity_item_background_8">#EFF7EA</color>
+
+    <string-array name="color_list">
+        <item>#F8EAEA</item>
+        <item>#F7F5E9</item>
+        <item>#EBF6F8</item>
+        <item>#F5EAF8</item>
+        <item>#F7F5E9</item>
+        <item>#EAF1F7</item>
+        <item>#F2EAF7</item>
+        <item>#EFF7EA</item>
+    </string-array>
+
+    <color name="kinflow_color_card_split_line_background">#EEE</color>
+
+    <!--Kinflow第二版-->
+    <!--<color name="kinflow_title_background">#57ADE3</color>-->
+    <!--<color name="kinflow_title_background">#29588F</color>-->
+    <color name="kinflow_title_background">#51A7C9</color>
+    <color name="kinflow_all_category_backgroud_color">#52A4D7</color><!--82  164 215-->
+    <color name="kinflow_all_shortcut_backgroud_color">#F2F2F2</color><!--242 242 242-->
+</resources>

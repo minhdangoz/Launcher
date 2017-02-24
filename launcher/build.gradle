@@ -1,0 +1,364 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "23.0.2"
+
+    dataBinding {
+        enabled = true
+    }
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 21
+        //版本号
+        versionCode 1702131030
+        //版本名称
+        versionName "2.0.8"
+        multiDexEnabled true
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_7
+            targetCompatibility JavaVersion.VERSION_1_7
+        }
+    }
+    lintOptions {
+        abortOnError false
+        //disable 'MissingTranslation', 'ExtraTranslation'
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/maven/com.squareup.okhttp/okhttp/pom.xml'
+        exclude 'META-INF/maven/com.squareup.okhttp/okhttp/pom.properties'
+        exclude 'META-INF/maven/com.squareup.okio/okio/pom.xml'
+        exclude 'META-INF/maven/com.squareup.okio/okio/pom.properties'
+    }
+    dexOptions {
+        javaMaxHeapSize '2G'
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+    productFlavors{
+        xiaomi {
+            applicationId = "com.klauncher.xmlauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + XIAOMI_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "8af58aada560ffa2ee58ac73104004a2"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + XIAOMI_ID + "\""
+        }
+        huawei {
+            applicationId = "com.klauncher.hwlauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + HUAWEI_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "f5d07a9f1781e253d020d7fc119e6e37"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + HUAWEI_ID + "\""
+        }
+        huaweishuaji {
+            applicationId = "com.klauncher.hwlauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + HUAWEI_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "f5d07a9f1781e253d020d7fc119e6e37"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + HUAWEI_ID + "\""
+        }
+        lenovo {
+            applicationId = "com.klauncher.lxlauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + LENOVO_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "9b50ea44354f9eb0b3dd7322c8cd5ad7"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LENOVO_ID + "\""
+        }
+        haixin {
+            applicationId = "com.klauncher.hxlauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + HAIXIN_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "9b50ea44354f9eb0b3dd7322c8cd5ad7"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + HAIXIN_ID + "\""
+        }
+        coolpad {
+            applicationId = "com.klauncher.cplauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + COOLPAD_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "a272d2be9e44330c22fad4cbd1472612"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + COOLPAD_ID + "\""
+        }
+        meizu {
+            applicationId = "com.klauncher.mzlauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + MEIZU_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "c66d16bd781730bcb3f29fe68a0344a9"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + MEIZU_ID + "\""
+        }
+        samsung {
+            applicationId = "com.klauncher.sxlauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + SAMSUNG_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "8346fdc09edf3c1cd4f96a9d52f37af1"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + SAMSUNG_ID + "\""
+        }
+        oppo {
+            applicationId = "com.klauncher.oplauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + OPPO_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "6aa2664cdc85069faf657c7758b2e1f5"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + OPPO_ID + "\""
+        }
+        leshi {
+            applicationId = "com.klauncher.lslauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + LESHI_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "1ebdc184de969ec2cf2ee5b617f3579b"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LESHI_ID + "\""
+        }
+        letv {
+            applicationId = "com.klauncher.lslauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + LESHI_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "1ebdc184de969ec2cf2ee5b617f3579b"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + LESHI_ID + "\""
+        }
+        vivo {
+            applicationId = "com.klauncher.vilauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + VIVO_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "0e8553c0aa77b18bc6fc06db1a95a497"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + VIVO_ID + "\""
+        }
+        jinli {
+            applicationId = "com.klauncher.jllauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + JINLI_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "46734729fc507b4813aca9e4cc7618aa"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + JINLI_ID + "\""
+        }
+        zte {
+            applicationId = "com.klauncher.ztelauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + ZTE_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "92b2a23dd5b92d1d719921ac4195d7c3"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + ZTE_ID + "\""
+        }
+        guangxin {
+            applicationId = "com.klauncher.gxlauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + GUANGXIN_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "c4df830fb1d184c1909304f48c7dd0c6"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + GUANGXIN_ID + "\""
+        }
+
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            resources.srcDirs = ['src/main/res']
+            assets.srcDirs = ['src/main/assets']
+            res.srcDirs = ['src/main/res']
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+        }
+        xiaomi {
+            assets.srcDirs = ['src/main/assets-xm']
+            res.srcDirs += ['src/main/res-xm']
+            manifest.srcFile 'src/main/res-xm/AndroidManifest.xml'
+        }
+        huawei {
+            assets.srcDirs = ['src/main/assets-hw']
+            res.srcDirs += ['src/main/res-hw']
+            manifest.srcFile 'src/main/res-hw/AndroidManifest.xml'
+        }
+        huaweishuaji {
+            assets.srcDirs = ['src/main/assets-hwsj']
+            res.srcDirs += ['src/main/res-hwsj']
+            manifest.srcFile 'src/main/res-hwsj/AndroidManifest.xml'
+        }
+        lenovo {
+            assets.srcDirs = ['src/main/assets-lx']
+            res.srcDirs += ['src/main/res-lx']
+            manifest.srcFile 'src/main/res-lx/AndroidManifest.xml'
+        }
+        haixin {
+            assets.srcDirs = ['src/main/assets-hx']
+            res.srcDirs += ['src/main/res-hx']
+            manifest.srcFile 'src/main/res-hx/AndroidManifest.xml'
+        }
+        coolpad {
+            assets.srcDirs = ['src/main/assets-kp']
+            res.srcDirs += ['src/main/res-kp']
+            manifest.srcFile 'src/main/res-kp/AndroidManifest.xml'
+        }
+        meizu {
+            assets.srcDirs = ['src/main/assets-mz']
+            res.srcDirs += ['src/main/res-mz']
+            manifest.srcFile 'src/main/res-mz/AndroidManifest.xml'
+        }
+        samsung {
+            assets.srcDirs = ['src/main/assets-sx']
+            res.srcDirs += ['src/main/res-sx']
+            manifest.srcFile 'src/main/res-sx/AndroidManifest.xml'
+        }
+        oppo {
+            assets.srcDirs = ['src/main/assets-op']
+            res.srcDirs += ['src/main/res-op']
+            manifest.srcFile 'src/main/res-op/AndroidManifest.xml'
+        }
+        leshi {
+            assets.srcDirs = ['src/main/assets-ls']
+            res.srcDirs += ['src/main/res-ls']
+            manifest.srcFile 'src/main/res-ls/AndroidManifest.xml'
+        }
+        letv {
+            assets.srcDirs = ['src/main/assets-letv']
+            res.srcDirs += ['src/main/res-letv']
+            manifest.srcFile 'src/main/res-letv/AndroidManifest.xml'
+        }
+        vivo {
+            assets.srcDirs = ['src/main/assets-vi']
+            res.srcDirs += ['src/main/res-vi']
+            manifest.srcFile 'src/main/res-vi/AndroidManifest.xml'
+        }
+        jinli {
+            assets.srcDirs = ['src/main/assets-jl']
+            res.srcDirs += ['src/main/res-jl']
+            manifest.srcFile 'src/main/res-jl/AndroidManifest.xml'
+        }
+        zte {
+            assets.srcDirs = ['src/main/assets-zte']
+            res.srcDirs += ['src/main/res-zte']
+            manifest.srcFile 'src/main/res-zte/AndroidManifest.xml'
+        }
+        guangxin {
+            assets.srcDirs = ['src/main/assets-gx']
+            res.srcDirs += ['src/main/res-gx']
+            manifest.srcFile 'src/main/res-gx/AndroidManifest.xml'
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
+    signingConfigs {
+        //keystore info
+        release {
+            storeFile file(STORE_PATH)
+            storePassword STORE_PASSWORD
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+        }
+        debug {
+            storeFile file(STORE_PATH_DEBUG)
+            storePassword STORE_PASSWORD_DEBUG
+            keyAlias KEY_ALIAS_DEBUG
+            keyPassword KEY_PASSWORD_DEBUG
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            signingConfig  signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "PING_DOMAIN", "\"http://ping.klauncher.com\""
+            buildConfigField "String", "PUSH_DOMAIN", "\"http://api.klauncher.com/v1\""
+            buildConfigField "String","KCONTROL_KNEWS_ID","\"" + KCONTROL_ID + "\"";
+        }
+        debug {
+            minifyEnabled false
+            signingConfig  signingConfigs.debug
+            buildConfigField "String", "PING_DOMAIN", "\"http://ping.klauncher.com\""
+            buildConfigField "String", "PUSH_DOMAIN", "\"http://api.klauncher.com/v1\""
+            buildConfigField "String","KCONTROL_KNEWS_ID","\"" + KCONTROL_ID + "\"";
+        }
+    }
+}
+
+//add by hw start - 渠道编译特定jar包
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+def String getCurrentFlavor() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+
+    Pattern pattern;
+
+    if (tskReqStr.contains("assemble"))
+        pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    else
+        pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
+
+    Matcher matcher = pattern.matcher(tskReqStr)
+
+    if (matcher.find())
+        return matcher.group(1).toLowerCase()
+    else {
+        println "NO MATCH FOUND"
+        return "";
+    }
+}
+
+gradle.projectsEvaluated {
+    preBuild.dependsOn(applyGoogleServiceByProperty)
+}
+// Then check on the parameter, which comes from the command line
+task applyGoogleServiceByProperty {
+    println getCurrentFlavor();
+    def flavorType = ""
+    flavorType = getCurrentFlavor();
+    if (flavorType.equals("payedCn")) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+}
+
+dependencies {
+    compile(name: 'delong-reporter', ext: 'aar')
+    compile fileTree(include: ['*.jar'], exclude: 'android-support-v4.jar', dir: 'libs')
+    def currentFlavor = getCurrentFlavor()
+    println "currentFlavor : " + currentFlavor
+    //    if (currentFlavor.equals("coolpad") || currentFlavor.equals("lenovo")) {
+
+    //    } else {
+
+    //
+
+    //    }
+    xiaomiCompile files('libs/uu_release.jar')
+    huaweiCompile files('libs/uu_release.jar')
+    huaweishuajiCompile files('libs/uu_release.jar')
+    lenovoCompile files('libs/uu_release.jar')
+    haixinCompile files('libs/uu_release.jar')
+    coolpadCompile files('libs/uu_release.jar')
+    meizuCompile files('libs/uu_release.jar')
+    samsungCompile files('libs/uu_release.jar')
+    oppoCompile files('libs/uu_release.jar')
+    leshiCompile files('libs/uu_release.jar')
+    letvCompile files('libs/uu_release.jar')
+    vivoCompile files('libs/uu_release.jar')
+    jinliCompile files('libs/uu_release.jar')
+    zteCompile files('libs/uu_release.jar')
+    guangxinCompile files('libs/uu_release.jar')
+    //add by hw end - 渠道编译特定jar包
+    provided files('dynamic_lib/icu-classes.jar')
+    compile project(':theme')
+    compile project(':notifier')
+    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    //kinflow
+
+    //compile fileTree(include: ['*.jar'], exclude: 'android-support-v4.jar', dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:cardview-v7:21.0.3'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile(name: 'statisticalanalysis-release', ext: 'aar')
+    compile(name: 'getuiadrecelibrary-release', ext: 'aar')
+    //opmain 精简
+
+    //    compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
+    compile files('libs/KappAdSdk_v2.1.jar')
+    compile project(':biddingoslib')
+    compile files('libs/AMap_Location_V3.00_20160922.jar')
+    //===============
+    compile 'com.android.support:design:22.2.1'
+    compile files('libs/kappcsc.jar')
+    compile project(path: ':assistance')
+}
+//configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }

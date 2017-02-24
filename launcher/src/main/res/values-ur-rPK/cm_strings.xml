@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2014 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+--><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    
+    <string name="launcher_preference">ترجیح</string>
+    <string name="multi_select_full">یہ پوری کی جا چکی ہے۔</string>
+    <string name="wallpaper_show_theme_center">موضوع</string>
+    <string name="wallpaper_other_app">دیگر</string>
+    <string name="editmode_add_widget">وجیٹس منتخب کریں</string>
+    <string name="editmode_set_wallpaper">وال پیپر منتخب کریں</string>
+    <string name="quick_share_target_label">شراکت کریں</string>
+    <string name="quick_share_searching_label">تلاش کررہا ہے...</string>
+    <string name="quick_share_to">شراکت کریں \"%s\" سے</string>
+    <string name="home_screen_settings">ہوم اسکرین کی ترتیبات</string>
+    <string name="drawer_settings">دراز کی ترتیبات</string>
+    <string name="loading_worksapce">لوڈ ہو رہا ہے</string>
+    <string name="menu_desktop_settings">ہوم اسکرین ترتیبات</string>
+    <string name="normal_settings">بنیادی ترتیبات</string>
+    <string name="extend_settings">توسیعی ترتیبات </string>
+    <string name="workspace_loop_settings_title">ہوم اسکرین کے ذریعے سائیکل کریں</string>
+    <string name="kinflow_turn_setting">Kinflow setting</string>
+    <string name="menu_sense_settings">"بیک اپ اور بحالی"</string>
+    <string name="local_backup">مقامی بیک اپ</string>
+    <string name="no_profile_num">کوئی مقامی بیک اپ نہیں</string>
+    <string name="local_restore">مقامی بحالی</string>
+    <string name="local_backup_process_msg">ہوم اسکرین کا بیک اپ لے رہا ہے، براہ کرم انتظار کریں</string>
+    <string name="local_backup_msg_other">یہ بیک اپ پچھلے بیک اپ کو برتحریر کر دیگا</string>
+    <string name="local_backup_toast_ok">بیک اپ مکمل</string>
+    <string name="no_profile_num_restore_toast">براہ کرم پہلے بیک اپ لیں</string>
+    <string name="local_location">بیک اپ کو ذخیرہ کریں یہاں: SD کارڈ</string>
+    <string name="backup_toast_fail">بیک اپ پراسیس کے دوران خرابی، براہ کرم دوبارہ کوشش کریں</string>
+    <string name="restore_toast_fail">بحالی پراسیس کے دوران خرابی، براہ کرم دوبارہ کوشش کریں</string>
+    <string name="lastest_backup_tips">آخری بیک اپ کا وقت: %s</string>
+    <string name="backup_preference_before_yesterday">دو دن قبل</string>
+    <string name="backup_preference_today">آج</string>
+    <string name="backup_preference_yesterday">کل</string>
+    <string name="local_backup_msg_first">موجودہ ہوم اسکرین کا بیک اپ لے رہا ہے بیک اپ کے دوران براہ کرم کوئی اور عمل نا کریں.</string>
+    <string name="local_restore_msg">ہوم اسکرین بحال کرنے کے لئے پچھلے بیک اپ کا استعمال کریں</string>
+    <string name="auto_reorder_title">"آئیکنز خودکار طریقے سے ترتیب دیں" </string>
+    <string name="auto_reorder_summary">"استعمال کرتے وقت آئیکنز اوپری-بائیں کونے کی طرف سے ترتیب دئے جائیںگے"</string>
+    <string name="scroll_effect_text">سکرالنگ اثر</string>
+    <string name="scrolling_wallpaper">سکرالنگ وال پیپر</string>
+    <string name="multi_selecting_tips">منظم کرنے کے لئے اپپ آئیکن کو چھوئیں</string>
+    <string name="desktop_style">ڈیفالٹ لانچر</string>
+    <string name="select_item_count">%s منتخب</string>
+    <string name="dockview_out_of_space">یہ بھرا ہوا ہے</string>
+    <string name="drawer_sorting_text">چھانٹ رہا ہے موڈ</string>
+    <string name="sort_mode_title">عنوان</string>
+    <string name="sort_mode_launch_count">لانچ شمار</string>
+    <string name="sort_mode_install_time">نصب وقت</string>
+
+    
+    <!-- 从XLauncher升级后首次启动提示框 -->
+	<string name="workspace_cling_longpress_title_migrate_from_xlauncher">"لوڈ، اتارنا Android اور Vibeui دو شیلیوں"</string>
+	<string name="workspace_cling_longpress_description_migrate_from_xlauncher">"خود کی طرف سے ڈیسک ٹاپ ترجیح میں تبدیلی سٹائل"</string>    
+</resources>

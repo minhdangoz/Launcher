@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="52.0dip"
+    android:orientation="horizontal"
+    android:id="@+id/search_widget_bar"
+    android:layout_margin="@dimen/search_widget_margin"
+    android:padding="@dimen/search_widget_padding"
+    android:background="@drawable/search_bg_black">
+
+    <!-- Global search icon -->
+    <TextView
+        style="@style/SearchButton"
+        android:id="@+id/search_hint"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="@string/search_widget_hint"
+        android:textSize="16sp"
+        android:textColor="#9fff"
+        android:src="@drawable/ic_home_search_normal_holo"
+        android:contentDescription="@string/accessibility_search_button" />
+
+    <!-- search icon -->
+    <ImageView
+        style="@style/SearchButton"
+        android:id="@+id/search_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_search"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/accessibility_voice_search_button" />
+</LinearLayout>

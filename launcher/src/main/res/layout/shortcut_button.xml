@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+        android:id="@+id/shortcut_button"
+        style="@style/kinflow_shortcut_button_style">
+</Button>

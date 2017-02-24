@@ -1,0 +1,66 @@
+{
+    "4x4": {
+        "rows":  "4",
+        "columns": "4",
+        "iconsize": "52",
+        "textsize": "11",
+        "hotseat": "5"
+    },
+    "5x4": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "60",
+        "textsize": "11",
+        "hotseat": "5"
+    },
+    "6x4": {
+        "rows": "6",
+        "columns": "4",
+        "iconsize": "58",
+        "textsize": "11",
+        "hotseat": "5"
+    },
+    "6x5": {
+        "rows": "6",
+        "columns": "5",
+        "iconsize": "72",
+        "textsize": "14",
+        "hotseat": "6"
+    },
+    "GN8002": {
+        "rows": "5",
+        "columns": "5",
+        "iconsize": "64",
+        "textsize": "11",
+        "hotseat": "6"
+    },
+     "GN8002S": {
+          "rows": "5",
+           "columns": "5",
+           "iconsize": "64",
+           "textsize": "11",
+           "hotseat": "6"
+     },
+     "GN8003": {
+            "rows": "5",
+             "columns": "5",
+             "iconsize": "64",
+            "textsize": "11",
+            "hotseat": "6"
+     },
+    "GN8001": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "68",
+        "textsize": "11",
+        "hotseat": "5"
+    },
+    "F100": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "68",
+        "textsize": "11",
+        "hotseat": "5"
+    }
+
+}

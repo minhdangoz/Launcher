@@ -1,0 +1,51 @@
+{
+    "4x4": {
+        "rows": "4",
+        "columns": "4",
+        "iconsize": "52",
+        "textsize": "11",
+        "hotseat": "5"
+    },
+    "5x4": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "51",
+        "textsize": "11",
+        "hotseat": "5"
+    },
+    "6x4": {
+        "rows": "6",
+        "columns": "4",
+        "iconsize": "58",
+        "textsize": "11",
+        "hotseat": "5"
+    },
+    "6x5": {
+        "rows": "6",
+        "columns": "5",
+        "iconsize": "72",
+        "textsize": "14",
+        "hotseat": "6"
+    },
+    "OPPO A30": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "58",
+        "textsize": "13",
+        "hotseat": "5"
+    },
+    "OPPO A33m": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "62",
+        "textsize": "13",
+        "hotseat": "5"
+    },
+    "OPPO A37m": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "53",
+        "textsize": "13",
+        "hotseat": "5"
+    }
+}

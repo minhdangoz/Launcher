@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2014 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+--><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+        <string name="launcher_preference">प्राधान्य</string>
+    <string name="multi_select_full">ते भरले गेले आहे.</string>
+    <string name="wallpaper_show_theme_center">थीम</string>
+    <string name="wallpaper_other_app">इतर</string>
+    <string name="editmode_add_widget">विजेट निवडा</string>
+    <string name="editmode_set_wallpaper">वॉलपेपर निवडा</string>
+    <string name="quick_share_target_label">शेअर करा</string>
+    <string name="quick_share_searching_label">शोधत आहे…</string>
+    <string name="quick_share_to">यांच्याशी \"%s\" शेअर करा</string>
+<string name="home_screen_settings">होम स्क्रिन सेटिंग्ज</string>
+<string name="drawer_settings">आदेशक सेटिंग्ज</string>
+<string name="scrolling_wallpaper">वॉलपेपर स्क्रोल करत आहे</string>
+<string name="scroll_effect_text">संक्रमण ऍनिमेशन</string>
+<string name="multi_selecting_tips">संगठीत करण्यासाठी अनुप्रयोग चिन्हाला स्पर्श करा</string>
+<string name="desktop_style">डिफॉल्ट लॉन्चर</string>
+</resources>

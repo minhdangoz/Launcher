@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search_activity_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="92dp"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="19dp"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp">
+
+        <com.klauncher.ext.CleanableEditText
+            android:id="@+id/search_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:background="@drawable/search_bg_white"
+            android:drawableRight="@drawable/ic_clean"
+            android:hint="@string/search_widget_hint"
+            android:imeOptions="actionSearch"
+            android:minHeight="@dimen/search_edit_height"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:layout_marginRight="16dp"/>
+
+        <!-- search icon -->
+        <ImageView
+            android:id="@+id/search_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="6dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/accessibility_voice_search_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_search" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#4fff" />
+</LinearLayout>

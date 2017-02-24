@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical">
+
+    <!--温度数字-->
+    <TextView
+        android:id="@+id/temperature"
+        style="@style/kinflow_commont_match_parent_height"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:text="@string/kinflow_string_city_temperature"
+        android:textColor="@color/kinflow_color_typeface_main"
+        android:textSize="@dimen/kinfow_dimen_weather_temperature" />
+
+    <TextView
+        android:id="@+id/temperature_symbol"
+        style="@style/kinflow_commont_wrap_content"
+        android:layout_toRightOf="@id/temperature"
+        android:paddingTop="@dimen/kinfow_dimen_weather_temperature_symbol_paddingTop"
+        android:text="o"
+        android:textColor="@color/kinflow_color_typeface_main"
+        android:textSize="@dimen/kinfow_dimen_weather_temperature_symbol"
+        android:textStyle="bold" />
+
+    <TableLayout
+        style="@style/kinflow_commont_match_parent_height"
+        android:layout_marginLeft="@dimen/kinfow_dimen_weather_temperature_space_city"
+        android:layout_toRightOf="@id/temperature_symbol"
+        android:gravity="center">
+
+        <TableRow style="@style/kinflow_commont_match_parent_height">
+
+            <TextView
+                android:id="@+id/city"
+                android:text="@string/kinflow_string_city_name"
+                android:textColor="@color/kinflow_color_typeface_main"
+                android:textSize="@dimen/kinfow_dimen_weather_city_weather_typeface_size" />
+
+
+        </TableRow>
+
+        <TableRow style="@style/kinflow_commont_match_parent_height">
+
+            <TextView
+                android:id="@+id/weather"
+                android:gravity="center"
+                android:text="@string/kinflow_string_city_weather"
+                android:textColor="@color/kinflow_color_typeface_main"
+                android:textSize="@dimen/kinfow_dimen_weather_city_weather_typeface_size" />
+        </TableRow>
+        <!--
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="36"
+                android:textSize="16sp" />
+
+            <TextView
+                android:text="空气优"
+                android:textSize="16sp" />
+        </TableRow>
+        -->
+    </TableLayout>
+
+    <ImageView
+        android:id="@+id/weather_type"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/sunny"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>

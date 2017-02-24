@@ -1,0 +1,48 @@
+<resources>
+    <integer name="config_workspaceDefaultScreen">1</integer>
+    <integer name="config_workspaceInstalledAppStartScreen">1</integer>
+    <item name="config_folder_background_ratio" format="float" type="dimen">0.75</item>
+    <item name="config_folder_iconsize_ratio" format="float" type="dimen">1</item>
+    <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0.66</item>
+    <array name="config_theme_load_keywords">
+    </array>
+
+    <array name="config_theme_load_icon_mask_padding">
+        <item>default,0</item>
+    </array>
+    <array name="config_lbk_load_keywords">
+    </array>
+    <array name="config_disable_hotseat_allapp">
+        <item>default,true</item>
+    </array>
+
+    <array name="app_disguise_list">
+        <item>com.miguan.market</item>
+        <item>com.tencent.android.qqdownloader</item>
+        <item>com.alex.nuclear</item>
+        <item>cn.kuwo.player</item>
+        <item>com.tencent.qqlive</item>
+        <item>com.tencent.mtt</item>
+        <item>com.UCMobile</item>
+        <item>sogou.mobile.explorer</item>
+        <item>com.tencent.qqpimsecure</item>
+        <item>cn.etouch.ecalendar</item>
+        <item>com.moji.mjweather</item>
+        <item>com.ss.android.article.news</item>
+        <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
+    </array>
+
+    <string name="config_icon_com.cootek.smartdialer">com.android.contacts/com.android.dialer.DialtactsActivity</string>
+    <string name="config_icon_com.miguan.market">com.samsung.android.game.gamehome</string>
+    <string name="config_icon_cn.kuwo.player">com.sec.android.app.music,com.samsung.android.app.music.chn</string>
+    <string name="config_icon_com.tencent.android.qqdownloader">com.sec.android.app.samsungapps</string>
+    <string name="config_icon_com.tencent.qqlive">com.samsung.video,com.samsung.everglades.video,com.samsung.android.video,com.samsung.android.onlinevideo</string>
+    <string name="config_icon_com.UCMobile">com.android.browser,com.sec.android.app.sbrowser</string>
+    <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
+    <string name="config_icon_com.dl.explorer">com.sec.android.app.myfiles</string>
+
+    <bool name="kinflow_switch_default">true</bool>
+    <bool name="kinflow_switch_default_forever">false</bool>
+    <bool name="is_show_folder_recommend_app">true</bool>
+</resources>

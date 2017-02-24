@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="lancher_setting_preference_textsize">19dp</dimen>
+    <dimen name="lancher_setting_switchpreference_textsize">19dp</dimen>
+</resources>

@@ -1,0 +1,68 @@
+<resources>
+    <integer name="config_workspaceDefaultScreen">1</integer>
+    <integer name="config_workspaceInstalledAppStartScreen">1</integer>
+    <item name="config_folder_background_ratio" format="float" type="dimen">0.75</item>
+    <item name="config_folder_iconsize_ratio" format="float" type="dimen">1</item>
+    <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0.66</item>
+    <array name="config_theme_load_keywords">
+        <item>HUAWEI RIO-AL00,yongheng</item>
+        <item>HUAWEI RIO-UL00,yongheng</item>
+        <item>HUAWEI RIO-TL00,yongheng</item>
+        <item>HUAWEI NXT-AL10,yongheng</item>
+        <item>HUAWEI MT7-TL10,yongheng</item>
+        <item>HUAWEI MT7-TL00,yongheng</item>
+        <item>HUAWEI M2-803L,yongheng</item>
+        <item>SCL-AL00,duocai</item>
+        <item>SCL-CL00,duocai</item>
+        <item>SCL-TL00,duocai</item>
+        <item>PLK-TL00,bazzar</item>
+        <item>BLN-AL10,BLN-AL10</item>
+        <item>BLN-TL10,BLN-AL10</item>
+    </array>
+
+    <array name="config_lbk_load_keywords">
+    </array>
+
+    <array name="config_theme_load_icon_mask_padding">
+        <item>default,0</item>
+    </array>
+
+    <array name="config_disable_hotseat_allapp">
+        <item>default,true</item>
+    </array>
+
+    <array name="app_disguise_list">
+        <item>com.miguan.market</item>
+        <item>com.tencent.android.qqdownloader</item>
+        <item>com.alex.nuclear</item>
+        <item>cn.kuwo.player</item>
+        <item>com.tencent.qqlive</item>
+        <item>com.tencent.mtt</item>
+        <item>com.UCMobile</item>
+        <item>sogou.mobile.explorer</item>
+        <item>com.tencent.qqpimsecure</item>
+        <item>cn.etouch.ecalendar</item>
+        <item>com.moji.mjweather</item>
+        <item>com.ss.android.article.news</item>
+        <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
+    </array>
+
+    <string name="config_icon_com.cootek.smartdialer">com.android.contacts/com.android.contacts.activities.DialtactsActivity,com.android.dialer/com.android.dialer.DialtactsActivity</string>
+    <string name="config_icon_com.miguan.market">com.huawei.gamecenter</string>
+    <string name="config_icon_com.tencent.android.qqdownloader">com.huawei.appmarket</string>
+    <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
+    <string name="config_icon_cn.kuwo.player">com.android.mediacenter</string>
+    <string name="config_icon_com.tencent.qqlive">com.huawei.hwvplayer,com.huawei.hwvplayer.youku</string>
+    <string name="config_icon_com.tencent.mtt">com.android.browser,com.seal.browser</string>
+    <string name="config_icon_com.tencent.qqpimsecure">com.huawei.systemmanager</string>
+    <string name="config_icon_cn.etouch.ecalendar">com.android.calendar,com.android.qidian.calendar</string>
+    <string name="config_icon_com.moji.mjweather">com.huawei.android.totemweather</string>
+    <string name="config_icon_com.dl.explorer">com.huawei.hidisk</string>
+
+    <bool name="kinflow_switch_default">true</bool>
+    <bool name="kinflow_switch_default_forever">false</bool>
+    <bool name="is_show_folder_recommend_app">true</bool>
+
+</resources>
+

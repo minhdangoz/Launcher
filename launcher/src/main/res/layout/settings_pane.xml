@@ -1,0 +1,95 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@android:color/transparent"
+    android:layout_height="match_parent" >
+	<!-- Lenovo-SW zhaoxin5 20150119 change the menu style -->
+    <LinearLayout
+        android:id="@+id/settings_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|bottom"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/settings_pane_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/settings_pane_top_padding" >
+
+            <!-- Lenovo-SW zhaoxin5 20150119 change the menu style -->
+            <!-- <ImageView
+                android:id="@+id/settings_drag_arrow"
+                android:layout_width="@dimen/overview_panel_button_spacing"
+                android:layout_height="@dimen/overview_panel_button_spacing"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:background="@drawable/launcheranimatedarrow_00000"/> -->
+			<!-- Lenovo-SW zhaoxin5 20150119 change the menu style -->
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/overview_panel_bottom_padding"
+                android:paddingTop="@dimen/overview_panel_list_padding" >
+
+                <TextView
+                    android:id="@+id/wallpaper_button_android"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/SettingsPaneButton"
+                    android:drawableTop="@drawable/wallpaper_button"
+                    android:text="@string/wallpaper_button_text" />
+                
+                <TextView
+                    android:id="@+id/widget_button_android"
+                    style="@style/SettingsPaneButton"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/widget_button"
+                    android:text="@string/widget_button_text" />
+
+                <TextView
+                    android:id="@+id/preference_button_android"
+                    style="@style/SettingsPaneButton"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/preference_button"
+                    android:text="@string/launcher_preference" />
+
+                <TextView
+                    android:id="@+id/settings_button_android"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/SettingsPaneButton"
+                    android:drawableTop="@drawable/setting_button"
+                    android:text="@string/settings_button_text" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <view
+            class="com.android.launcher3.list.PinnedHeaderListView"
+            android:id="@+id/settings_home_screen_listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:fastScrollEnabled="true"
+            android:layout_weight="1"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dark_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_dark"
+        android:visibility="gone" />
+</FrameLayout>

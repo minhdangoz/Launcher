@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2014 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+--><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="launcher_preference">ప్రాధాన్యత</string>
+    <string name="multi_select_full">ఇది నిండింది.</string>
+    <string name="wallpaper_show_theme_center">థీమ్</string>
+    <string name="wallpaper_other_app">ఇతరాలు</string>
+    <string name="editmode_add_widget">విడ్జెట్‌లు ఎంచుకోండి</string>
+    <string name="editmode_set_wallpaper">వాల్‌పేపర్ ఎంచుకోండి</string>
+    <string name="quick_share_target_label">భాగస్వామ్యం చేయి</string>
+    <string name="quick_share_searching_label">శోధిస్తోంది...</string>
+    <string name="quick_share_to">\"%s\"ని దీనికి భాగస్వామ్యం చేయి</string>
+<string name="home_screen_settings">హోం స్క్రీన్ సెట్టింగులు</string>
+<string name="drawer_settings">డ్రాయర్ సెట్టింగులు</string>
+<string name="scrolling_wallpaper">వాల్ పేపర్ స్క్రోలింగ్</string>
+<string name="scroll_effect_text">ట్రాన్సిషన్ యానిమేషన్</string>
+<string name="multi_selecting_tips">క్రమబద్ద్దం చేయడానికి యాప్ చిహ్నాన్ని తాకండి</string>
+<string name="desktop_style">డీఫాల్ట్ లాంచర్</string>
+</resources>

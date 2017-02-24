@@ -1,0 +1,46 @@
+网觉桌面
+12.9 日开发任务：
+1. 多分辨率适配
+2. 应用布局适配
+3. 主题支持
+wqh 16.04.25
+1.第一次打开和关闭信息流上报
+2.添加开机启动服务 正常添加快捷方式（wifi 默认桌面）桌面启动后 隐藏默认桌面快捷方式
+wqh 160714
+1.个推数据处理格式
+新闻  type =2  title  content url 不为空   showStatistUrl  clickStatistUrl 显示 点击事件统计url
+{
+    "type": "2",
+    "title": "北京今午后至夜间有中到大雨",
+    "content": "降雨时间长累计雨量大，影响晚高峰",
+    "icon": "http://img5.cache.netease.com/stock/2016/5/17/20160517105113c0206.jpg",
+    "pkgname": "pkgname",
+    "startActname": "startActname",
+    "url": "http://money.163.com/16/0517/06/BN8H48B2002526O3.html",
+    "showStatistUrl": "http://debug.mobads.baidu.com/mopt/show?uuid=b0ba9f9f-b6b1-48b7-9c0c-78a25aeacc00",
+    "clickStatistUrl": "http://debug.mobads.baidu.com/mopt/click?uuid=b0ba9f9f-b6b1-48b7-9c0c-78a25aeacc00"
+}
+baner 新闻 icon  url 不为空 图片新闻展示
+{
+    "type": "2",
+    "title": "",
+    "content": "",
+    "icon": "http://pic33.nipic.com/20130913/13008390_223449507127_2.jpg",
+    "pkgname": "pkgname",
+    "startActname": "startActname",
+    "url": "http://money.163.com/16/0517/06/BN8H48B2002526O3.html",
+    "showStatistUrl": "http://debug.mobads.baidu.com/mopt/show?uuid=b0ba9f9f-b6b1-48b7-9c0c-78a25aeacc00",
+    "clickStatistUrl": "http://debug.mobads.baidu.com/mopt/click?uuid=b0ba9f9f-b6b1-48b7-9c0c-78a25aeacc00"
+}
+APP 打开下载 type = 1
+{
+    "type": "1",
+    "title": "今日头条",标题
+    "content": "今日头条",内容
+    "icon": "http://pic33.nipic.com/20130913/13008390_223449507127_2.jpg",图标
+    "pkgname": "com.ss.android.article.news",包名
+    "startActname": "com.ss.android.article.news.activity.SplashActivity",类名
+    "url": "http://money.163.com/16/0517/06/BN8H48B2002526O3.html",下载地址
+    "showStatistUrl": "http://debug.mobads.baidu.com/mopt/show?uuid=b0ba9f9f-b6b1-48b7-9c0c-78a25aeacc00",
+    "clickStatistUrl": "http://debug.mobads.baidu.com/mopt/click?uuid=b0ba9f9f-b6b1-48b7-9c0c-78a25aeacc00"
+}

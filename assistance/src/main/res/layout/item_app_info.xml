@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data class="ItemAppInfoBinding">
+
+        <variable
+            name="info"
+            type="com.delong.assistance.bean.ServerAppInfo" />
+
+    </data>
+
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+
+        <RelativeLayout
+            android:id="@+id/root_view"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/appIcon"
+                appInfo="@{info}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
+
+            <com.delong.download.view.CircleProgressView
+                progress="@{info.progress}"
+                status="@{info.status}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/appIcon"
+                android:layout_alignLeft="@id/appIcon"
+                android:layout_alignRight="@id/appIcon"
+                android:layout_alignTop="@id/appIcon"
+                android:layout_centerHorizontal="true"
+                android:visibility="@{info.getVisible(info.status,true),default= invisible}"
+                app:cpv_bg="#88000000"
+                app:cpv_center_color="#ffffff"
+                app:cpv_pause_color="#1FA0DC"
+                app:cpv_progress_color="#1FA0DC"
+                app:cpv_progress_width="8dp"
+                app:cpv_stroke_color="#ffffff"
+                app:cpv_stroke_width="1dp"
+                app:cpv_text_color="#1FA0DC"
+                app:cpv_text_size="0.3" />
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignRight="@id/appIcon"
+                android:layout_below="@id/appIcon"
+                android:layout_marginRight="-6dp"
+                android:layout_marginTop="-18dp"
+                android:src="@mipmap/ic_download"
+                android:visibility="@{info.getDownloadIconVisisble(info.status),default = invisible}" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/appIcon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="@{info.appName}"
+                android:textColor="@color/md_white" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</layout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.launcher3.WallpaperListViewSwitcher
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wallpaper_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:inAnimation="@anim/slide_in_bottom"
+    android:outAnimation="@anim/slide_out_bottom"
+    >
+
+    <com.android.launcher3.WallpaperListHorizontalRecyclerView
+        android:id="@+id/preload_wallpaper_list_first"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.android.launcher3.WallpaperListHorizontalRecyclerView
+        android:id="@+id/other_wallpaper_list_second"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</com.android.launcher3.WallpaperListViewSwitcher>

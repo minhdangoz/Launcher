@@ -1,0 +1,96 @@
+<resources>
+    <integer name="config_workspaceDefaultScreen">0</integer>
+    <integer name="config_workspaceInstalledAppStartScreen">1</integer>
+    <item name="config_folder_background_ratio" format="float" type="dimen">0</item>
+    <item name="config_folder_iconsize_ratio" format="float" type="dimen">0</item>
+    <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0</item>
+    <array name="config_theme_load_keywords">
+        <!--<item>HUAWEI RIO-AL00,yongheng</item>
+        <item>HUAWEI RIO-UL00,yongheng</item>
+        <item>HUAWEI RIO-TL00,yongheng</item>
+        <item>HUAWEI NXT-AL10,yongheng</item>
+        <item>HUAWEI MT7-TL10,yongheng</item>
+        <item>HUAWEI MT7-TL00,yongheng</item>
+        <item>HUAWEI M2-803L,yongheng</item>
+        <item>SCL-AL00,duocai</item>
+        <item>SCL-CL00,duocai</item>
+        <item>SCL-TL00,duocai</item>
+        <item>PLK-TL00,bazzar</item>-->
+    </array>
+    <array name="config_lbk_load_keywords">
+        <item>vivoX9,vivoX7</item>
+        <item>vivoX9Plus,vivoX7</item>
+        <item>vivoY67,vivoX7</item>
+        <item>vivoY66,vivoX7</item>
+        <item>vivoX7,vivoX7</item>
+        <item>vivoX7Plus,vivoX7</item>
+        <item>vivoX6SA,vivoX7</item>
+        <item>vivoXplay5A,vivoX7</item>
+        <item>vivoXplay5,vivoX7</item>
+        <item>vivoY55A,vivoX7</item>
+        <item>vivoY55,vivoX7</item>
+        <item>vivoV3Max,vivoX7</item>
+        <item>vivoV3mA,vivoX7</item>
+        <item>vivoV3MaxA,vivoX7</item>
+        <item>vivoX6SPlusA,vivoX7</item>
+        <item>vivoX6SPlusD,vivoX7</item>
+        <item>vivoV3,vivoX7</item>
+        <item>vivoY37,vivoX7</item>
+        <item>vivoY937,vivoX7</item>
+        <item>vivoX5MaxL,vivoX7</item>
+        <item>vivoX5Maxv,vivoX7</item>
+        <item>vivoX5MaxS,vivoX7</item>
+        <item>vivoX6A,vivoX7</item>
+        <item>vivoX6D,vivoX7</item>
+        <item>vivoX6,vivoX7</item>
+        <item>vivoY51A,vivoY51A</item>
+        <item>vivoY51N,vivoY51A</item>
+        <item>vivoY35A,vivoY51A</item>
+        <item>vivoY35,vivoY51A</item>
+        <item>vivoY31,vivoY51A</item>
+        <item>vivoY51,vivoY51A</item>
+        <item>vivoY51L,vivoY51A</item>
+        <item>vivoY31A,vivoY51A</item>
+        <item>vivoY35L,vivoY51A</item>
+    </array>
+    <array name="config_theme_load_icon_mask_padding">
+        <item>default,10</item>
+    </array>
+
+    <array name="config_disable_hotseat_allapp">
+        <item>default,true</item>
+    </array>
+
+    <array name="app_disguise_list">
+        <item>com.miguan.market</item>
+        <item>com.tencent.android.qqdownloader</item>
+        <item>com.alex.nuclear</item>
+        <item>cn.kuwo.player</item>
+        <item>com.tencent.qqlive</item>
+        <item>com.tencent.mtt</item>
+        <item>com.UCMobile</item>
+        <item>sogou.mobile.explorer</item>
+        <item>com.tencent.qqpimsecure</item>
+        <item>cn.etouch.ecalendar</item>
+        <item>cn.etouch.ecalendar.cpa</item>
+        <item>com.moji.mjweather</item>
+        <item>com.ss.android.article.news</item>
+        <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
+    </array>
+
+    <string name="config_icon_com.cootek.smartdialer">com.android.contacts/com.android.contacts.activities.DialtactsActivity,com.android.dialer/com.android.dialer.DialtactsActivity,com.android.dialer/com.android.dialer.TwelveKeyDialer</string>
+    <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
+    <string name="config_icon_cn.kuwo.player">com.android.bbkmusic,com.android.music,com.android.mediacenter</string>
+    <string name="config_icon_com.UCMobile">com.vivo.browser,com.android.browser</string>
+    <string name="config_icon_com.tencent.qqpimsecure">com.iqoo.secure</string>
+    <string name="config_icon_cn.etouch.ecalendar">com.bbk.calendar,com.android.calendar</string>
+    <string name="config_icon_cn.etouch.ecalendar.cpa">com.bbk.calendar,com.android.calendar</string>
+    <string name="config_icon_com.moji.mjweather">com.vivo.weather</string>
+    <string name="config_icon_com.dl.explorer">com.android.filemanager,com.mediatek.filemanager,com.android.qrdfileexplorer</string>
+
+    <bool name="kinflow_switch_default">false</bool>
+    <bool name="kinflow_switch_default_forever">false</bool>
+    <bool name="is_show_folder_recommend_app">true</bool>
+
+</resources>

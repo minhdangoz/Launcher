@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="invisible" >
+	
+    <ImageView 
+        android:id="@+id/quick_share_app_iv"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:scaleType="fitXY"
+        />
+    <TextView 
+        android:id="@+id/quick_share_app_tip"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/workspace_icon_text_color"
+        />
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="3dp">
+        <com.android.launcher3.QuickShareGridView
+            android:id="@+id/quick_share_grid_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" 
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+        	android:background="@drawable/screenpanel">
+        </com.android.launcher3.QuickShareGridView>
+        <TextView
+            android:id="@+id/quick_share_loading_tip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            />
+    </FrameLayout>
+
+</LinearLayout>

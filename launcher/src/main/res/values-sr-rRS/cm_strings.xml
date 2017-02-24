@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2014 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+--><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="wallpaper_show_theme_center">"Tema"</string>
+<string name="wallpaper_other_app">Ostali</string>
+<string name="quick_share_target_label">"Deli"</string>
+<string name="quick_share_searching_label">Pretraga...</string>
+<string name="loading_worksapce">"Učitavanje..."</string>
+<string name="launcher_preference">Željene postavke</string>
+<string name="multi_select_full">Ispunjeno je.</string>
+<string name="select_item_count">Izabrano: %1$d</string>
+<string name="editmode_add_widget">Izaberite vidžete</string>
+<string name="editmode_set_wallpaper">Izaberite tapet</string>
+<string name="cannot_be_placed_on_dockview_folder">Nije moguće grupno pomeranje direktorijuma</string>
+<string name="cannot_be_placed_on_dockview">Nije moguće grupno pomeranje vidžeta</string>
+<string name="dockview_out_of_space">Bilo je puno</string>
+<string name="folder_out_of_space">"Direktorijum je pun"</string>
+<string name="auto_reorder_state">Automatska promena rasporeda</string>
+<string name="switch_2_single_layer_shortcut">VIBEUI</string>
+<string name="switch_2_double_layer_shortcut">Android</string>
+<string name="switch_2_single_layer_toast">prelaz na VIBEUI stil</string>
+<string name="switch_2_double_layer_toast">prelaz na Android stil</string>
+<string name="quick_share_to">Podeli \„%s\“ sa</string>
+<string name="backup_settings">NAPR. REZ. KOPIJU I VRATI</string>
+<string name="backup">Rezervna kopija</string>
+<string name="restore">Vraćanje</string>
+<string name="backuping">Izrađuje se rezervna kopija...</string>
+<string name="backup_msg_start">Ovim se prepisuje prethodna rezervna kopija.</string>
+<string name="backup_msg_complete">Kopiranje završeno.</string>
+<string name="home_screen_settings">Podešavanja početnog ekrana</string>
+<string name="drawer_settings">Podešavanje fioke</string>
+<string name="scrolling_wallpaper">Tapet se pomera sa ekranom</string>
+<string name="scroll_effect_text">Animacija okretanja stranice za radnu površinu</string>
+<string name="multi_selecting_tips">Dodirnite ikonu aplikacije radi organizacije</string>
+<string name="desktop_style">Podrazumevano pokretanje</string>
+
+<!-- 从XLauncher升级后首次启动提示框 -->
+<string name="workspace_cling_longpress_title_migrate_from_xlauncher">"Подршка Андроид и Вибеуи два стила"</string>
+<string name="workspace_cling_longpress_description_migrate_from_xlauncher">"Промена стил у стоном предност од себе"</string>
+</resources>

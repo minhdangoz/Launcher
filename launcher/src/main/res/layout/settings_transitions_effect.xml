@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical" 
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/settings_bg_color"
+        >
+    <ImageView
+        android:id="@+id/settings_transition_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:adjustViewBounds="true"
+        android:layout_alignParentEnd="false"
+        android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/settings_transitions_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:splitMotionEvents="false"
+        android:background="@android:color/white"/>
+</LinearLayout>

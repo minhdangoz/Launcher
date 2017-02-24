@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2014 The CyanogenMod Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+--><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Application name -->
+    <string name="cm_application_name">Launcher3</string>
+    <!-- App version -->
+    <string name="application_version" translatable="false">1.0</string>
+
+    <string name="home_screen_settings">Home screen settings</string>
+    <string name="drawer_settings">Drawer settings</string>
+    <string name="app_settings">APP SETTINGS</string>
+
+    <!-- Settings states -->
+    <string name="setting_state_on">ON</string>
+    <string name="setting_state_off">OFF</string>
+
+    <!-- Themes button -->
+    <string name="themes_button_text">Themes</string>
+
+    <string name="scrolling_page_outlines">Page outlines</string>
+    <string name="scrolling_fade_adjacent">Fade side pages</string>
+
+    <!-- Wallpaper scroll effect -->
+    <string name="scrolling_wallpaper">Wallpaper scrolling</string>
+
+    <!-- Dynamic Grid -->
+    <string name="grid_size_text">Grid size</string>
+    <string name="grid_size_comfortable">Comfortable</string>
+    <string name="grid_size_cozy">Cozy</string>
+    <string name="grid_size_condensed">Condensed</string>
+    <string name="grid_size_custom">Custom (<xliff:g id="rows">%1$d</xliff:g> \u00d7 <xliff:g id="columns">%2$d</xliff:g>)</string>
+    <string name="preferences_interface_homescreen_custom">Select custom size</string>
+
+    <!-- Folder titles -->
+    <string name="google_title" translatable="false">Google</string>
+
+    <!-- Scroll effect -->
+    <string name="scroll_effect_text">Transition animation</string>
+
+    <!-- Drawer sorting mode -->
+    <string name="drawer_sorting_text">Sorting mode</string>
+
+    <string name="sort_mode_title">Title</string>
+    <string name="sort_mode_launch_count">Launch count</string>
+    <string name="sort_mode_install_time">Install time</string>
+
+    <!-- Home screen search bar -->
+    <string name="home_screen_search_text">Search bar</string>
+
+    <!-- Larger icons -->
+    <string name="larger_icons_text">Larger icons</string>
+
+    <!-- Icon labels -->
+    <string name="icon_labels">Icon labels</string>
+    <string name="icon_labels_show">Show</string>
+    <string name="icon_labels_hide">Hide</string>
+
+    <!-- Protected apps -->
+    <string name="protected_app_settings">Protected apps</string>
+
+    <!-- Dialog -->
+    <string name="dialog_confirm">Confirm</string>
+
+    <!-- Drawer type -->
+    <string name="drawer_type">Layout</string>
+
+    <string name="drawer_type_drawer">Vertical</string>
+    <string name="drawer_type_pager">Paged</string>
+
+    <string name="setting_state_disabled">DISABLED</string>
+
+    <!-- Search Manager doesn't exist -->
+    <string name="search_activity_not_found">A search activity could not be found!</string>
+    
+    <!-- Folder titles -->
+    <string name="tools_title" translatable="false">Tools</string>
+
+    <!-- Lenovo-sw:yuanyl2, Add edit mode function. Begin. -->
+    <string name="add_new_empty_page" translatable="false">Add a new empty page</string>
+    <string name="delete_empty_page" translatable="false">Delete empty page</string>
+    <string name="launcher_preference">Preference</string>
+    <string name="multi_select_full">It has been fulled.</string>
+    <string name="wallpaper_show_theme_center">Theme</string>
+    <string name="wallpaper_other_app">Others</string>
+    <string name="select_item_count">%1$d selected</string>
+    <string name="multi_selecting_tips">Touch an app icon to organize</string>
+    <string name="editmode_add_widget">Select widgets</string>
+    <string name="editmode_set_wallpaper">Select wallpaper</string>
+    <string name="cannot_be_placed_on_dockview_folder">Cannot batch move folders</string>
+    <string name="cannot_be_placed_on_dockview">Cannot batch move widgets</string>
+    <string name="dockview_out_of_space">It has been full</string>
+    <string name="folder_out_of_space">"Folder is full"</string>
+    <!-- Lenovo-sw:yuanyl2, Add edit mode function. End. -->
+
+    <!--Lenovo-sw:yuanyl2, Add setting function. Begin. -->
+    <string name="desktop_style">Default launcher</string>
+    <string name="switch_2_single_layer_shortcut" translatable="false">iOS</string>
+    <string name="switch_2_double_layer_shortcut" translatable="false">Android</string>
+    <string name="switch_2_single_layer_toast">switch to iOS style</string>
+    <string name="switch_2_double_layer_toast">switch to Android style</string>
+    <string name="quick_share_target_label">Share</string>
+    <string name="quick_share_searching_label">Searching...</string><!-- Lenovo-SW zhaoxin5 20150702 LANCHROW-191 -->
+    <string name="quick_share_to">Share \"%s\" to</string>
+    <!--Lenovo-sw:yuanyl2, Add setting function. End. -->
+
+    <!--Backup and restore-->
+    <!-- Lenovo-SW zhangyj19 20150806 add setting function start -->
+    <string name="menu_desktop_settings">"Homescreen settings"</string>
+    <string name="menu_sense_settings">"Backup and recovery"</string>
+    <string name="local_backup">Local backup</string>
+    <string name="local_restore">Local restore</string>
+    <string name="local_backup_process_msg">Backing up the home screen content... Please wait.</string>
+    <string name="local_backup_msg_other">This will overwrite the previous backup.</string>
+    <string name="local_backup_toast_ok">Backup completed.</string>
+    <string name="no_profile_num">No backup</string>
+    <string name="no_profile_num_restore_toast">Please backup first.</string>
+    <string name="local_location">Location: SD card </string>
+    <string name="backup_toast_fail">Backup failed, please retry.</string>
+    <string name="restore_toast_fail">Restore failed, please retry.</string>
+    <string name="lastest_backup_tips">Last backup: %s</string>
+    <string name="backup_preference_before_yesterday">The day before yesterday </string>
+    <string name="backup_preference_today">Today </string>
+    <string name="backup_preference_yesterday">Yesterday </string>
+    <string name="local_backup_msg_first">Backing up the home screen content... Please wait.Backing up the home screen content... Please wait. </string>
+    <string name="local_restore_msg">Restore homescreen from back up?</string>
+    <string name="auto_reorder_title">"Auto arrange icons"</string>
+    <string name="normal_settings">General settings</string>
+    <string name="auto_reorder_summary">"Automatically arranges all icons starting from the top left corner"</string>
+    <string name="extend_settings">Advanced settings</string>
+    <string name="workspace_loop_settings_title">Homescreen carousel scrolling</string>
+    <string name="kinflow_turn_setting">Kinflow Switch</string>
+    <!-- Lenovo-SW zhangyj19 20150806 add setting function end -->
+    <!--Loading dialog -->
+    <string name="loading_worksapce">Loading...</string>
+    <!-- Search widget -->
+    <string name="search_widget">App Search</string>
+    <string name="search_no_data">No results</string>
+    <string name="search_tip">Quickly find an app</string>
+    
+    <!-- 从XLauncher升级后首次启动提示框 -->
+	<string name="workspace_cling_longpress_title_migrate_from_xlauncher">"Support Android and iOS two styles"</string>
+	<string name="workspace_cling_longpress_description_migrate_from_xlauncher">"Change style in the desktop preference by yourself"</string>
+
+    <!--Search widget-->
+    <string name="search_widget_name">WebEye Search</string>
+    <string name="search_widget_hint">Search</string>
+
+    <string name="clock_widget_name">DeskClock</string>
+</resources>

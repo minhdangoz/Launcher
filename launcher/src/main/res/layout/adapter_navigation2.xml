@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@drawable/kinflow_shortcut_background_selector"
+              android:orientation="vertical">
+
+    <com.klauncher.kinflow.views.commonViews.ShapedImageView
+        android:id="@+id/navigation_icon"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_gravity="center"
+        app:round_radius="4dp"
+        app:shape_mode="round_rect"
+        android:src="@drawable/refresh"/>
+
+    <TextView
+        android:id="@+id/navigation_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="导航"
+        android:textColor="@color/color_black"
+        android:textSize="12sp"/>
+</LinearLayout>

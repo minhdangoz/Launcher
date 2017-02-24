@@ -1,0 +1,55 @@
+<resources>
+    <integer name="config_workspaceDefaultScreen">1</integer>
+    <integer name="config_workspaceInstalledAppStartScreen">1</integer>
+    <bool name="config_readIconFromSystem">true</bool>
+    <bool name="config_enableDigital_clock">true</bool>
+    <item name="config_folder_background_ratio" format="float" type="dimen">0</item>
+    <item name="config_folder_iconsize_ratio" format="float" type="dimen">0</item>
+    <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0</item>
+
+    <array name="config_theme_load_keywords">
+        <item>Lenovo K,vibeui</item>
+        <item>Lenovo A2,mirage</item>
+    </array>
+
+    <array name="config_theme_load_icon_mask_padding">
+        <item>default,0</item>
+    </array>
+    <array name="config_lbk_load_keywords">
+    </array>
+    <array name="app_disguise_list">
+        <item>com.miguan.market</item>
+        <item>com.tencent.android.qqdownloader</item>
+        <item>com.alex.nuclear</item>
+        <item>cn.kuwo.player</item>
+        <item>com.tencent.qqlive</item>
+        <item>com.tencent.mtt</item>
+        <item>com.UCMobile</item>
+        <item>sogou.mobile.explorer</item>
+        <item>com.tencent.qqpimsecure</item>
+        <item>cn.etouch.ecalendar</item>
+        <item>com.moji.mjweather</item>
+        <item>com.ss.android.article.news</item>
+        <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
+    </array>
+
+    <array name="config_disable_hotseat_allapp">
+        <item>default,true</item>
+    </array>
+
+    <string name="config_icon_com.cootek.smartdialer">com.lenovo.ideafriend/com.lenovo.ideafriend.alias.DialtactsActivity,com.android.dialer/com.android.dialer.DialtactsActivity,com.android.dialer/com.android.dialer.dialpad,com.android.dialer/com.android.dialer.HQDialtactsActivity</string>
+    <string name="config_icon_com.miguan.market">com.lenovo.gameworldphone</string>
+    <string name="config_icon_com.tencent.android.qqdownloader">com.lenovo.leos.appstore</string>
+    <string name="config_icon_cn.kuwo.player">com.lenovo.music,com.android.music</string>
+    <string name="config_icon_com.tencent.qqlive">com.lenovo.videoplayer,com.lenovo.video,com.ontim.videoplayer,com.mediatek.videoplayer,com.android.music/com.android.music.video.MovieListActivity,com.hipad.video</string>
+    <string name="config_icon_com.UCMobile">com.lenovo.browser,com.android.browser</string>
+    <string name="config_icon_com.tencent.qqpimsecure">com.lenovo.safecenter,com.lenovo.security</string>
+    <string name="config_icon_cn.etouch.ecalendar">com.lenovo.calendar,com.android.calendar</string>
+    <string name="config_icon_com.moji.mjweather">sina.mobile.tianqitong</string>
+    <string name="config_icon_com.dl.explorer">com.lenovo.FileBrowser,com.mediatek.filemanager,com.cyanogenmod.filemanager</string>
+
+    <bool name="kinflow_switch_default">true</bool>
+    <bool name="kinflow_switch_default_forever">false</bool>
+    <bool name="is_show_folder_recommend_app">true</bool>
+</resources>

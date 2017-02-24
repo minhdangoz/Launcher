@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<string name="application_name">Iniciador 3</string>
+<string name="home">Início</string>
+<string name="uid_name">Aplicativos principais do Android</string>
+<string name="activity_not_found">O aplicativo não está instalado.</string>
+<string name="safemode_shortcut_error">Aplicativo baixado desativado no modo seguro</string>
+<string name="widgets_tab_label">Widgets</string>
+<string name="widget_adder">Widgets</string>
+<string name="toggle_weight_watcher">Mostrar mem</string>
+<string name="long_press_widget_to_add">Tocar e manter pressionado para escolher um widget.</string>
+<string name="market">Comprar</string>
+<string name="widget_dims_format">%1$d × %2$d</string>
+<string name="external_drop_widget_error">Não foi possível soltar o item na tela inicial.</string>
+<string name="external_drop_widget_pick_title">Escolha o widget para criar</string>
+<string name="rename_folder_label">Nome da pasta</string>
+<string name="rename_folder_title">Renomear pasta</string>
+<string name="rename_action">OK</string>
+<string name="cancel_action">Cancelar</string>
+<string name="menu_item_add_item">Adicionar à tela inicial</string>
+<string name="group_applications">Aplicativos</string>
+<string name="group_shortcuts">Atalhos</string>
+<string name="group_widgets">Widgets</string>
+<string name="completely_out_of_space">Não há mais espaço em suas telas iniciais.</string>
+<string name="out_of_space">Não há mais espaço nessa tela inicial.</string>
+<string name="hotseat_out_of_space">Não há mais espaço na bandeja de favoritos</string>
+<string name="invalid_hotseat_item">Esse widget é muito grande para a bandeja de favoritos</string>
+<string name="shortcut_installed">Atalho \"<xliff:g id="name">%s</xliff:g>\" criado.</string>
+<string name="shortcut_uninstalled">O atalho \"<xliff:g id="name">%s</xliff:g>\" foi removido.</string>
+<string name="shortcut_duplicate">Atalho \"<xliff:g id="name">%s</xliff:g>\" já existe.</string>
+<string name="title_select_shortcut">Escolher atalho</string>
+<string name="title_select_application">Escolher aplicativo</string>
+<string name="all_apps_button_label">Aplicativos</string>
+<string name="all_apps_home_button_label">Início</string>
+<string name="delete_zone_label_workspace">Remover</string>
+<string name="delete_zone_label_all_apps">Desinstalar</string>
+<string name="delete_target_label">Remover</string>
+<string name="delete_target_uninstall_label">Desinstalar</string>
+<string name="info_target_label">Informações de aplicativo</string>
+<string name="accessibility_search_button">Pesquisar</string>
+<string name="accessibility_voice_search_button">Pesquisa de voz</string>
+<string name="accessibility_all_apps_button">Aplicativos</string>
+<string name="accessibility_delete_button">Remover</string>
+<string name="delete_zone_label_all_apps_system_app">Desinstalar atualização</string>
+<string name="cab_menu_delete_app">Desinstalar aplicativo</string>
+<string name="cab_menu_app_info">Detalhes de aplicativo</string>
+<string name="cab_app_selection_text">1 aplicativo selecionado</string>
+<string name="cab_widget_selection_text">1 widget selecionado</string>
+<string name="cab_folder_selection_text">1 pasta selecionada</string>
+<string name="cab_shortcut_selection_text">1 atalho selecionado</string>
+<string name="permlab_install_shortcut">instalar atalhos</string>
+<string name="permdesc_install_shortcut">Permite que um aplicativo adicione atalhos sem a intervenção do usuário.</string>
+<string name="permlab_uninstall_shortcut">desinstalar atalhos</string>
+<string name="permdesc_uninstall_shortcut">Permite que o aplicativo remova atalhos sem a intervenção do usuário.</string>
+<string name="permlab_read_settings">ler configurações e atalhos na tela inicial</string>
+<string name="permdesc_read_settings">Permite que o aplicativo leia as configurações e atalhos na tela inicial.</string>
+<string name="permlab_write_settings">gravar configurações e atalhos da tela inicial</string>
+<string name="permdesc_write_settings">Permite que o aplicativo altere as configurações e atalhos na tela inicial.</string>
+<string name="gadget_error_text">Problema ao carregar widget</string>
+<string name="gadget_setup_text">Configuração</string>
+<string name="uninstall_system_app_text">Este é um aplicativo do sistema e não pode ser desinstalado.</string>
+<string name="dream_name">Iniciador Rocket</string>
+<string name="folder_hint_text">Pasta sem nome</string>
+<string name="workspace_description_format">Tela inicial %1$d</string>
+<string name="default_scroll_format">Página %1$d de %2$d</string>
+<string name="workspace_scroll_format">Tela inicial %1$d de %2$d</string>
+<string name="apps_customize_apps_scroll_format">Página de aplicativos %1$d de %2$d</string>
+<string name="apps_customize_widgets_scroll_format">Página de widgets %1$d de %2$d</string>
+<string name="first_run_cling_title">Bem-vindo(a)</string>
+<string name="first_run_cling_description">Sinta-se em casa.</string>
+<string name="first_run_cling_create_screens_hint">Crie mais telas para aplicativos e pastas</string>
+<string name="migration_cling_title">Crie seus ícones de aplicativo</string>
+<string name="migration_cling_description">Importar ícones e pastas de suas telas iniciais antigas?</string>
+<string name="migration_cling_copy_apps">COPIAR ÍCONES</string>
+<string name="migration_cling_use_default">INICIAR DE NOVO</string>
+<string name="workspace_cling_title">Organize seu espaço</string>
+<string name="workspace_cling_move_item">Toque e mantenha o dedo no segundo plano para gerenciar o papel de parede, widgets e configurações.</string>
+<string name="workspace_cling_longpress_title">Planos de fundo, widgets e configurações</string>
+<string name="workspace_cling_longpress_description">Toque e mantenha o dedo sobre o segundo plano para personalizar</string>
+<string name="workspace_cling_longpress_dismiss">ENTENDI</string>
+<string name="folder_cling_title">Aqui está uma pasta</string>
+<string name="folder_cling_create_folder">Para criar uma assim, toque e mantenha o dedo sobre um aplicativo e depois mova-o sobre outro.</string>
+<string name="cling_dismiss">OK</string>
+<string name="folder_opened">Pasta aberta, <xliff:g id="width">%1$d</xliff:g> by <xliff:g id="height">%2$d</xliff:g></string>
+<string name="folder_tap_to_close">Toque para fechar a pasta</string>
+<string name="folder_tap_to_rename">Toque para salvar o novo nome</string>
+<string name="folder_closed">Pasta fechada</string>
+<string name="folder_renamed">Pasta renomeada para <xliff:g id="name">%1$s</xliff:g></string>
+<string name="folder_name">"Pasta"</string>
+<string name="folder_name_format">Pasta: <xliff:g id="name">%1$s</xliff:g></string>
+<string name="widget_button_text">Widgets</string>
+<string name="wallpaper_button_text">Planos de fundo</string>
+<string name="settings_button_text">Configurações</string>
+<string name="package_state_enqueued">Aguardando</string>
+<string name="package_state_downloading">Baixando</string>
+<string name="package_state_installing">Instalando</string>
+<string name="package_state_unknown">Desconhecida</string>
+<string name="package_state_error">Não restaurado</string>
+<string name="abandoned_clean_all">Remover tudo</string>
+<string name="abandoned_clean_this">Remover</string>
+<string name="abandoned_search">Pesquisar</string>
+<string name="abandoned_promises_title">Esse aplicativo não está instalado</string>
+<string name="abandoned_promise_explanation">O aplicativo para esse ícone não está instalado.
+        Você pode removê-lo ou pesquisar pelo aplicativo e instalá-lo manualmente.
+    </string>
+</resources>

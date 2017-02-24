@@ -1,0 +1,57 @@
+<resources>
+    <integer name="config_workspaceDefaultScreen">1</integer>
+    <integer name="config_workspaceInstalledAppStartScreen">1</integer>
+    <bool name="config_readIconFromSystem">true</bool>
+    <bool name="config_enableDigital_clock">true</bool>
+    <item name="config_folder_background_ratio" format="float" type="dimen">0</item>
+    <item name="config_folder_iconsize_ratio" format="float" type="dimen">0</item>
+    <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0</item>
+    <array name="config_theme_load_keywords">
+        <item>1501_M02,1501_M02</item>
+        <item>C106,C106</item>
+    </array>
+
+    <array name="config_lbk_load_keywords">
+    </array>
+
+    <array name="config_theme_load_icon_mask_padding">
+        <item>default,0</item>
+    </array>
+
+    <array name="config_disable_hotseat_allapp">
+        <item>C106,false</item>
+        <item>default,true</item>
+    </array>
+
+    <array name="app_disguise_list">
+        <item>com.miguan.market</item>
+        <item>com.tencent.android.qqdownloader</item>
+        <item>com.alex.nuclear</item>
+        <item>com.duomi.android</item>
+        <item>com.tencent.qqlive</item>
+        <item>com.tencent.mtt</item>
+        <item>com.UCMobile</item>
+        <item>sogou.mobile.explorer</item>
+        <item>com.tencent.qqpimsecure</item>
+        <item>cn.etouch.ecalendar</item>
+        <item>com.moji.mjweather</item>
+        <item>com.ss.android.article.news</item>
+        <item>com.dl.explorer</item>
+        <item>com.cootek.smartdialer</item>
+    </array>
+
+    <string name="config_icon_com.cootek.smartdialer">com.yulong.android.contacts.dial/com.yulong.android.contacts.dial.DialActivity,com.yulong.android.contacts/com.yulong.android.contacts.dial.DialActivity,com.android.dialer/com.android.dialer.DialtactsActivity,com.android.mms/com.yulong.android.contacts.dial.DialActivity,com.yulong.coolmessage/com.yulong.android.contacts.dial.DialActivity</string>
+    <string name="config_icon_com.duomi.android">com.android.music,com.coolpad.music</string>
+    <string name="config_icon_com.tencent.qqlive">com.mediatek.videoplayer/com.mediatek.videoplayer.MovieListActivity,com.android.music/com.android.music.VideoBrowserActivity,com.yulong.android.videoplayer</string>
+    <string name="config_icon_com.UCMobile">com.android.browser,com.qihoo.browser</string>
+    <string name="config_icon_com.tencent.qqpimsecure">com.yulong.android.security,com.qiku.android.cloudsync</string>
+    <string name="config_icon_cn.etouch.ecalendar">com.android.calendar,com.yulong.android.calendar</string>
+    <string name="config_icon_com.moji.mjweather">com.chinamobile.mcloud,com.icoolme.android.weather</string>
+    <string name="config_icon_com.tencent.android.qqdownloader">com.yulong.android.coolmart</string>
+    <string name="config_icon_com.miguan.market">com.yulong.android.gamecenter</string>
+    <string name="config_icon_com.dl.explorer">com.mediatek.filemanager,com.android.qrdfileexplorer,com.yulong.android.filebrowser,com.sprd.fileexplorer</string>
+
+    <bool name="kinflow_switch_default">true</bool>
+    <bool name="kinflow_switch_default_forever">false</bool>
+    <bool name="is_show_folder_recommend_app">true</bool>
+</resources>

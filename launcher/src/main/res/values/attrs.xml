@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* Copyright 2008, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<resources>
+
+    <!-- DrawableStateProxyView specific attributes. These attributes are used to customize
+         a DrawableStateProxyView view in XML files. -->
+    <declare-styleable name="DrawableStateProxyView">
+        <!-- The source view to delegate touch presses events to. -->
+        <attr name="sourceViewId" format="integer" />
+    </declare-styleable>
+
+    <!-- Page Indicator specific attributes. -->
+    <declare-styleable name="PageIndicator">
+        <attr name="windowSize" format="integer"  />
+    </declare-styleable>
+
+    <!-- Workspace specific attributes. These attributes are used to customize
+         the workspace in XML files. -->
+    <declare-styleable name="Workspace">
+        <!-- The first screen the workspace should display. -->
+        <attr name="defaultScreen" format="integer"  />
+        <!-- The number of horizontal cells in the CellLayout -->
+        <attr name="cellCountX" format="integer"  />
+        <!-- The number of vertical cells in the CellLayout -->
+        <attr name="cellCountY" format="integer"  />
+    </declare-styleable>
+    
+    <!-- Hotseat specific attributes. These attributes are used to customize
+         the hotseat in XML files. -->
+    <declare-styleable name="Hotseat">
+        <!-- The number of horizontal cells in the CellLayout -->
+        <attr name="cellCountX" />
+        <!-- The number of vertical cells in the CellLayout -->
+        <attr name="cellCountY" />
+    </declare-styleable>
+
+    <!-- CellLayout specific attributes. These attributes are used to customize
+         a CellLayout view in XML files. -->
+    <declare-styleable name="CellLayout">
+        <!-- The width of a single cell -->
+        <attr name="cellWidth" format="dimension"  />
+        <!-- The height of a single cell -->
+        <attr name="cellHeight" format="dimension"  />
+        <!-- An override for the width and height gap to allow users to specify
+             a specific size for the page using spacing instead of resolving the
+             spacing from the width of the page -->
+        <attr name="widthGap" format="dimension" />
+        <attr name="heightGap" format="dimension" />
+        <!-- The max gap size for each dimension -->
+        <attr name="maxGap" format="dimension" />
+    </declare-styleable>
+
+    <!-- StrokedTextView specific attributes. -->
+    <declare-styleable name="StrokedTextView">
+        <!-- The color of the stroke outline -->
+        <attr name="strokeColor" format="color" />
+        <!-- The color of the text -->
+        <attr name="strokeTextColor" format="color" />
+        <!-- The width of the stroke -->
+        <attr name="strokeWidth" format="float" />
+    </declare-styleable>
+
+    <!-- HolographicLinearLayout specific attributes. -->
+    <declare-styleable name="HolographicLinearLayout">
+        <!-- The source view to generate and apply the drawable states to/from -->
+        <attr name="sourceImageViewId" format="integer" />
+        <attr name="stateHotwordOn" format="boolean" />
+    </declare-styleable>
+
+    <!-- PagedView specific attributes. These attributes are used to customize
+         a PagedView view in XML files. -->
+    <declare-styleable name="PagedView">
+        <!-- A spacing override for the icons within a page -->
+        <attr name="pageLayoutWidthGap" format="dimension" />
+        <attr name="pageLayoutHeightGap" format="dimension" />
+
+        <!-- The page indicator for this workspace -->
+        <attr name="pageIndicator" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="BubbleTextView">
+        <!-- A spacing override for the icons within a page -->
+        <attr name="customShadows" format="boolean" />
+    </declare-styleable>
+
+    <!-- AppsCustomizePagedView specific attributes.  These attributes are used to
+         customize an AppsCustomizePagedView in xml files. -->
+    <declare-styleable name="AppsCustomizePagedView">
+        <!-- Max number of cells of applications horizontally -->
+        <attr name="maxAppCellCountX" format="integer" />
+        <!-- Max number of cells of applications vertically -->
+        <attr name="maxAppCellCountY" format="integer" />
+        <!-- Horizontal spacing between widgets and wallpapers -->
+        <attr name="widgetCellWidthGap" format="dimension" />
+        <!-- Vertical spacing between widgets -->
+        <attr name="widgetCellHeightGap" format="dimension" />
+        <!-- Number of widgets horizontally -->
+        <attr name="widgetCountX" format="integer" />
+        <!-- Number of widgets vertically -->
+        <attr name="widgetCountY" format="integer" />
+    </declare-styleable>
+
+    <!-- XML attributes used by default_workspace.xml -->
+    <declare-styleable name="Favorite">
+        <attr name="className" format="string" />
+        <attr name="packageName" format="string" />
+        <attr name="container" format="string" />
+        <attr name="screen" format="string" />
+        <attr name="x" format="string" />
+        <attr name="y" format="string" />
+        <attr name="spanX" format="string" />
+        <attr name="spanY" format="string" />
+        <attr name="icon1" format="reference" />
+        <attr name="title1" format="reference" />
+        <attr name="uri" format="string" />
+    </declare-styleable>
+    <declare-styleable name="Extra">
+        <attr name="key" format="string" />
+        <attr name="value" format="string" />
+    </declare-styleable>
+    <declare-styleable name="Include">
+        <attr name="workspace" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="PreloadIconDrawable">
+        <attr name="background1" format="reference" />
+        <attr name="ringOutset" format="dimension" />
+        <attr name="indicatorSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SlidingUpPanelLayout">
+        <attr name="panelHeight" format="dimension" />
+        <attr name="shadowHeight" format="dimension" />
+        <attr name="paralaxOffset" format="dimension" />
+        <attr name="fadeColor" format="color" />
+        <attr name="flingVelocity" format="integer" />
+        <attr name="dragView" format="reference" />
+        <attr name="overlay" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="AutofitTextView">
+        <attr name="minTextSize" format="dimension" />
+        <attr name="precision" format="float" />
+        <attr name="sizeToFit" format="boolean" />
+    </declare-styleable>
+    <!--kinflow add-->
+    <declare-styleable name="PullToRefresh">
+
+        <!-- A drawable to use as the background of the Refreshable View -->
+        <attr name="ptrRefreshableViewBackground" format="reference|color" />
+
+        <!-- A drawable to use as the background of the Header and Footer Loading Views -->
+        <attr name="ptrHeaderBackground" format="reference|color" />
+
+        <!-- Text Color of the Header and Footer Loading Views -->
+        <attr name="ptrHeaderTextColor" format="reference|color" />
+
+        <!-- Text Color of the Header and Footer Loading Views Sub Header -->
+        <attr name="ptrHeaderSubTextColor" format="reference|color" />
+
+        <!-- Mode of Pull-to-Refresh that should be used -->
+        <attr name="ptrMode">
+            <flag name="disabled" value="0x0" />
+            <flag name="pullFromStart" value="0x1" />
+            <flag name="pullFromEnd" value="0x2" />
+            <flag name="both" value="0x3" />
+            <flag name="manualOnly" value="0x4" />
+
+            <!-- These last two are depreacted -->
+            <flag name="pullDownFromTop" value="0x1" />
+            <flag name="pullUpFromBottom" value="0x2" />
+        </attr>
+
+        <!-- Whether the Indicator overlay(s) should be used -->
+        <attr name="ptrShowIndicator" format="reference|boolean" />
+
+        <!-- Drawable to use as Loading Indicator. Changes both Header and Footer. -->
+        <attr name="ptrDrawable" format="reference" />
+
+        <!-- Drawable to use as Loading Indicator in the Header View. Overrides value set in ptrDrawable. -->
+        <attr name="ptrDrawableStart" format="reference" />
+
+        <!-- Drawable to use as Loading Indicator in the Footer View. Overrides value set in ptrDrawable. -->
+        <attr name="ptrDrawableEnd" format="reference" />
+
+        <!-- Whether Android's built-in Over Scroll should be utilised for Pull-to-Refresh. -->
+        <attr name="ptrOverScroll" format="reference|boolean" />
+
+        <!-- Base text color, typeface, size, and style for Header and Footer Loading Views -->
+        <attr name="ptrHeaderTextAppearance" format="reference" />
+
+        <!-- Base text color, typeface, size, and style for Header and Footer Loading Views Sub Header -->
+        <attr name="ptrSubHeaderTextAppearance" format="reference" />
+
+        <!-- Style of Animation should be used displayed when pulling. -->
+        <attr name="ptrAnimationStyle">
+            <flag name="rotate" value="0x0" />
+            <flag name="flip" value="0x1" />
+        </attr>
+
+        <!-- Whether the user can scroll while the View is Refreshing -->
+        <attr name="ptrScrollingWhileRefreshingEnabled" format="reference|boolean" />
+
+        <!--
+        	Whether PullToRefreshListView has it's extras enabled. This allows the user to be
+        	able to scroll while refreshing, and behaves better. It acheives this by adding
+        	Header and/or Footer Views to the ListView.
+        -->
+        <attr name="ptrListViewExtrasEnabled" format="reference|boolean" />
+
+        <!--
+        	Whether the Drawable should be continually rotated as you pull. This only
+        	takes effect when using the 'Rotate' Animation Style.
+        -->
+        <attr name="ptrRotateDrawableWhilePulling" format="reference|boolean" />
+
+        <!-- BELOW HERE ARE DEPRECEATED. DO NOT USE. -->
+        <attr name="ptrAdapterViewBackground" format="reference|color" />
+        <attr name="ptrDrawableTop" format="reference" />
+        <attr name="ptrDrawableBottom" format="reference" />
+    </declare-styleable>
+
+    <!-- wqh add ViewPager Indicator -->
+    <declare-styleable name="CirclePageIndicator">
+
+        <!-- Whether or not the indicators should be centered. -->
+        <attr name="centered" format="boolean" />
+        <!-- Color of the filled circle that represents the current page. -->
+        <attr name="fillColor" format="color" />
+        <!-- Color of the filled circles that represents pages. -->
+        <attr name="pageColor" format="color" />
+        <!-- Orientation of the indicator. -->
+        <attr name="android:orientation" />
+        <!-- Radius of the circles. This is also the spacing between circles. -->
+        <attr name="radius" format="dimension" />
+        <!-- Whether or not the selected indicator snaps to the circles. -->
+        <attr name="snap" format="boolean" />
+        <!-- Color of the open circles. -->
+        <attr name="circlepageindicator_strokeColor" format="color" />
+        <!-- Width of the stroke used to draw the circles. -->
+        <attr name="circlepageindicator_strokeWidth" format="dimension" />
+        <!-- View background -->
+        <attr name="android:background" />
+    </declare-styleable>
+    <!-- Style of the circle indicator. -->
+    <attr name="vpiCirclePageIndicatorStyle" format="reference" />
+
+</resources>

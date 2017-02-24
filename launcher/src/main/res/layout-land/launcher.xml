@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2007 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!-- Full screen view projects under the status bar and contains the background -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:launcher="http://schemas.android.com/apk/res-auto/com.android.launcher3"
+
+    android:id="@+id/launcher"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/workspace_bg">
+
+    <com.android.launcher3.DragLayer
+        android:id="@+id/drag_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <com.android.launcher3.FocusIndicatorView
+            android:id="@+id/focus_indicator"
+            android:layout_width="52dp"
+            android:layout_height="52dp" />
+
+        <!-- The workspace contains 5 screens of cells -->
+        <com.android.launcher3.Workspace
+            android:id="@+id/workspace"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            launcher:defaultScreen="@integer/config_workspaceDefaultScreen" />
+
+        <include layout="@layout/hotseat"
+            android:id="@+id/hotseat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end" />
+
+        <include
+            android:id="@+id/search_drop_target_bar"
+            layout="@layout/search_drop_target_bar" />
+
+        <!-- <include layout="@layout/overview_panel"
+            android:id="@+id/overview_panel"
+            android:visibility="gone" /> -->
+	    <!-- Lenovo_SW zhaoxin5 20150731 XTHREEROW-420 KOLEOSROW-389 
+	    	添加横屏布局支持,以免切换到横屏状态下Launcher挂了的 -->
+        <include layout="@layout/apps_customize_pane"
+            android:id="@+id/apps_customize_pane"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" />
+		<!-- Lenovo-SW zhaoxin5 20150820 XTHREEROW-1020 
+			 添加Android模式下的Overview布局
+			 免得从照相机中退出因为没有相应布局元素导致Launcher挂了
+		 -->
+        <include layout="@layout/overview_panel"
+            android:id="@+id/overview_panel"
+            android:visibility="gone" />
+        
+        <include layout="@layout/multi_select_panel"
+            android:id="@+id/multi_select_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:visibility="invisible" />
+
+        <include layout="@layout/editing_entry_panel"
+            android:id="@+id/editing_entry_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editing_panel_height"
+            android:layout_gravity="bottom"
+            android:visibility="gone" />
+
+        <include layout = "@layout/settings"
+            android:id="@+id/settings_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+	    <!-- Lenovo_SW zhaoxin5 20150731 XTHREEROW-420 KOLEOSROW-389 
+	    	添加横屏布局支持,以免切换到横屏状态下Launcher挂了的 -->
+        
+        <include layout="@layout/app_drawer_container"
+            android:id="@+id/app_drawer_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+        
+	    <!-- Lenovo-SW zhaoxin5 20150617 add for qucik share START -->
+	    <include 
+	        layout="@layout/quick_share_zone"
+	    	android:id="@+id/quick_share_zone"
+	        />
+	    <!-- Lenovo-SW zhaoxin5 20150617 add for qucik share END -->        
+    </com.android.launcher3.DragLayer>
+</FrameLayout>

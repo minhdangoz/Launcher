@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/first_news_yidian"
+    android:layout_width="match_parent"
+    android:layout_height="102dp"
+    android:gravity="center_vertical"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentRight="true"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="86dp"
+        android:layout_weight="0.7"
+        android:layout_marginRight="12dp"
+        >
+
+        <TextView
+            android:id="@+id/yidian_news_publish_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="6dp"
+            android:text="11:57" />
+
+        <TextView
+            android:id="@+id/yidian_news_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/yidian_news_publish_time"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textColor="@color/color_black"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/yidian_image"
+        android:layout_width="0dp"
+        android:layout_weight="0.3"
+        android:layout_height="@dimen/kinflow_dimen_card_image_height"
+        android:layout_alignParentRight="true"
+        android:background="#eee" />
+</LinearLayout>

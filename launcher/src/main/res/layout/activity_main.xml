@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.handmark.pulltorefresh.library.PullToRefreshScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pull_refresh_scrollview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="20dp"
+    android:scrollbars="none"
+    ptr:ptrAnimationStyle="flip"
+    ptr:ptrMode="both">
+
+
+    <RelativeLayout
+        style="@style/kinflow_commont_match_parent_all"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <!--天气-->
+        <include
+            android:id="@+id/weather_header"
+            layout="@layout/weather_header"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/hot_word_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="16dp"
+            android:singleLine="true"
+            android:text="时事热点"
+            android:textColor="@color/kinflow_color_typeface_main"
+            android:textSize="16sp"
+            />
+
+        <RelativeLayout
+            android:id="@+id/search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hot_word_top"
+            >
+
+            <RelativeLayout
+                style="@style/kinflow_commont_match_parent_width"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/border_search">
+
+                <ImageView
+                    android:id="@+id/search_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/baidu"/>
+
+
+                <ImageView
+                    android:id="@+id/search_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/search"/>
+
+                <TextView
+                    android:id="@+id/search_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toLeftOf="@id/search_icon"
+                    android:layout_toRightOf="@id/search_mode"
+                    android:gravity="center_vertical"
+                    android:hint="@string/kinflow_string_search_hint"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <!--随机热词-->
+        <RelativeLayout
+            android:id="@+id/random_news_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/kinfow_dimen_search_layout_height"
+            android:layout_below="@id/search_layout"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="12dp"
+            android:paddingRight="8dp">
+
+            <ImageView
+                android:id="@+id/refresh_hotWord"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:src="@drawable/refresh"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/refresh_hotWord"
+                android:stretchColumns="0,1">
+
+                <TextView
+                    android:id="@+id/hot_word_1"
+                    style="@style/kinflow_commont_wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:textColor="@color/kinflow_color_typeface_main"
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:id="@+id/hot_word_2"
+                    style="@style/kinflow_commont_wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:textColor="@color/kinflow_color_typeface_main"
+                    android:textSize="14sp"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <!--Navigataion部分-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/navigation_recyclerView"
+            style="@style/kinflow_commont_match_parent_width"
+            android:layout_below="@id/random_news_line"
+            android:layout_marginTop="12dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:textColor="@color/kinflow_color_typeface_main"/>
+
+        <!-- Card部分 -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/scroll_view_cards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/navigation_recyclerView"
+            android:paddingBottom="32dp"/>
+    </RelativeLayout>
+</com.handmark.pulltorefresh.library.PullToRefreshScrollView>
