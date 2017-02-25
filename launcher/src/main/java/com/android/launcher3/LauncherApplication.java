@@ -19,11 +19,11 @@ package com.android.launcher3;
 import android.os.Build;
 import android.util.Log;
 
-import com.delong.assistance.AssistanceServiceApi;
 import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.launcher.R;
 import com.klauncher.theme.ThemeController;
-import com.klauncher.upgrade.UpgradeHelper;
+
+//import com.delong.assistance.AssistanceServiceApi;
 
 public class LauncherApplication extends KLauncherApplication {
     private static final String TAG = "LauncherApplication";
@@ -43,7 +43,7 @@ public class LauncherApplication extends KLauncherApplication {
             return;
         }
 
-        AssistanceServiceApi.init(this);
+//        AssistanceServiceApi.init(this);
 
         if(mLogArray == null)
         	mLogArray = new String[mLoglength];
@@ -74,7 +74,7 @@ public class LauncherApplication extends KLauncherApplication {
         super.onTerminate();
         LauncherAppState.getInstance().onTerminate();
         unRegistBrocaster();
-        UpgradeHelper.getInstance(this).cancelUpgradeMission();
+//        UpgradeHelper.getInstance(this).cancelUpgradeMission();
     }
 
     /* Lenovo-SW zhaoxin5 20150116 add Theme support */

@@ -359,6 +359,6 @@ dependencies {
     //===============
     compile 'com.android.support:design:22.2.1'
     compile files('libs/kappcsc.jar')
-    compile project(path: ':assistance')
+//    compile project(path: ':assistance')
 }
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }

@@ -9,7 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import com.delong.assistance.bean.ServerAppInfo;
+//import com.delong.assistance.bean.ServerAppInfo;
 import com.dl.statisticalanalysis.MobileStatistics;
 import com.klauncher.kinflow.navigation.model.Navigation;
 import com.klauncher.kinflow.search.model.HotWord;
@@ -530,14 +530,14 @@ public class PingManager {
     private static final String KEY_CRC = "crc";
     private static final String KEY_MD5 = "md5";
 
-    public void reportFolderAdAction(String action, ServerAppInfo ai) {
-        Map<String, String> pingMap = new HashMap<>();
-        pingMap.put(KEY_PKG_NAME, ai.pkgName);
-        pingMap.put(KEY_VERSION_CODE, String.valueOf(ai.versionCode));
-        pingMap.put(KEY_CRC, ai.crc);
-        pingMap.put(KEY_MD5, ai.fileMd5);
-
-        MobileStatistics.onEvent(action, pingMap);
-    }
+//    public void reportFolderAdAction(String action, ServerAppInfo ai) {
+//        Map<String, String> pingMap = new HashMap<>();
+//        pingMap.put(KEY_PKG_NAME, ai.pkgName);
+//        pingMap.put(KEY_VERSION_CODE, String.valueOf(ai.versionCode));
+//        pingMap.put(KEY_CRC, ai.crc);
+//        pingMap.put(KEY_MD5, ai.fileMd5);
+//
+//        MobileStatistics.onEvent(action, pingMap);
+//    }
 
 }

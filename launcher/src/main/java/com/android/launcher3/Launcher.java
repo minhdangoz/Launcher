@@ -678,7 +678,7 @@ public class Launcher extends Activity
         //vivo error
         registerAppWidgetReceiver();
 
-        UpgradeHelper.getInstance(this).startUpgradeMission();
+//        UpgradeHelper.getInstance(this).startUpgradeMission();
     }
 
     @Override
