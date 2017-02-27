@@ -110,6 +110,22 @@ public class DeviceInfoUtils {
         return String.valueOf(height);
     }
 
+    //获取屏幕宽度
+    public static int getSCreenWidthInt(Context ctx) {
+        WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+        Log.d(TAG,"getSCreenWidth : " +String.valueOf(width));
+        return width;
+    }
+
+    //获取屏幕高度
+    public static int getScreenHeightInt(Context ctx) {
+        WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        Log.d(TAG,"getScreenHeight : " +String.valueOf(height));
+        return height;
+    }
+
     /**
      * 获取设备信息,可根据需要自行截取要使用的
      *
