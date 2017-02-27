@@ -27,7 +27,7 @@
         <item>com.miguan.market</item>
         <item>com.tencent.android.qqdownloader</item>
         <item>com.alex.nuclear</item>
-        <item>com.duomi.android</item>
+        <item>cn.kuwo.player</item>
         <item>com.tencent.qqlive</item>
         <item>com.tencent.mtt</item>
         <item>com.UCMobile</item>
@@ -41,9 +41,9 @@
     </array>
 
     <string name="config_icon_com.cootek.smartdialer">com.yulong.android.contacts.dial/com.yulong.android.contacts.dial.DialActivity,com.yulong.android.contacts/com.yulong.android.contacts.dial.DialActivity,com.android.dialer/com.android.dialer.DialtactsActivity,com.android.mms/com.yulong.android.contacts.dial.DialActivity,com.yulong.coolmessage/com.yulong.android.contacts.dial.DialActivity</string>
-    <string name="config_icon_com.duomi.android">com.android.music,com.coolpad.music</string>
+    <string name="config_icon_cn.kuwo.player">com.android.music,com.coolpad.music</string>
     <string name="config_icon_com.tencent.qqlive">com.mediatek.videoplayer/com.mediatek.videoplayer.MovieListActivity,com.android.music/com.android.music.VideoBrowserActivity,com.yulong.android.videoplayer</string>
-    <string name="config_icon_com.UCMobile">com.android.browser,com.qihoo.browser</string>
+    <string name="config_icon_sogou.mobile.explorer">com.android.browser,com.qihoo.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.yulong.android.security,com.qiku.android.cloudsync</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar,com.yulong.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">com.chinamobile.mcloud,com.icoolme.android.weather</string>

@@ -77,7 +77,7 @@
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.android.music</string>
     <string name="config_icon_com.tencent.qqlive">com.gionee.video</string>
-    <string name="config_icon_com.UCMobile">com.android.browser</string>
+    <string name="config_icon_sogou.mobile.explorer">com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.gionee.softmanager</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">com.coolwind.weather</string>
