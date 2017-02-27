@@ -4,10 +4,15 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
-import com.kapp.mob.adx.KBannerAd;
-import com.kapp.mob.adx.KBannerAdListener;
+import com.baidu.mobad.feeds.BaiduNative;
+import com.baidu.mobad.feeds.NativeErrorCode;
+import com.baidu.mobad.feeds.NativeResponse;
+import com.baidu.mobad.feeds.RequestParameters;
+import com.baidu.mobads.AdView;
 import com.klauncher.kinflow.views.recyclerView.data.AdxSdkBanner;
+import com.klauncher.utilities.DeviceInfoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +24,9 @@ import java.util.List;
  */
 
 public class KBannerAdUtil {
+
+    private static boolean isLunbo = true;
+
     private KBannerAdUtil() {
     }
 
@@ -30,6 +38,9 @@ public class KBannerAdUtil {
             Log.d(TAG, msg);
         }
     }
+
+
+
 
 //    /**
 //     * 获取单个广告的View
@@ -94,87 +105,96 @@ public class KBannerAdUtil {
      * @param parent
      * @return
      */
-    public static KBannerAd addKBannerAdView(final Context context, final View onFailView, final View root, final ViewGroup parent) {
+    public static void addKBannerAdView(final Context context, final View onFailView, final View root, final ViewGroup parent) {
 
+        final int rootWidth = DeviceInfoUtils.getSCreenWidthInt(context) -2 * Dips.dipsToIntPixels(16, context);
+        final int rootHeight = rootWidth / 2 + Dips.dipsToIntPixels(12, context);
         Object cache = root.getTag();
-        if(null!=cache&&cache instanceof BannerHolder){
+        if(null!=cache&&cache instanceof WebView){
             logDebug("addKBannerAdView() 有缓存");
-            KBannerAd cacheAd= ((BannerHolder) cache).bannerAd;
-            setItemHeight(context, root, ((BannerHolder) cache).width, ((BannerHolder) cache).height);
+            WebView cacheAd= (WebView) cache;
+            setItemHeight(context, root, rootWidth, rootHeight);
             parent.addView(cacheAd, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams
                     .WRAP_CONTENT));
-            return cacheAd;
+            return;
         }
 
-        final KBannerAd ad = new KBannerAd(context, "1016", "10013", "5");
-        ad.setLisetner(new KBannerAdListener() {
-            @Override
-            public void onAdSwitch() {
-                logDebug("getKBannerAdView() onAdSwitch...");
-            }
+        final ViewGroup.LayoutParams layoutParams = parent.getLayoutParams();
 
-            @Override
-            public void onAdShow(String s) {
-                logDebug("getKBannerAdView() onAdShow..." + s);
-            }
+        /**
+         * Step 1. 创建BaiduNative对象，参数分别为：
+         * 上下文context，广告位ID, BaiduNativeNetworkListener监听（监听广告请求的成功与失败）
+         * 注意：请将YOUR_AD_PALCE_ID替换为自己的广告位ID
+         */
 
-            @Override
-            public void onAdReady(int w, int h) {
-                logDebug("getKBannerAdView() onAdReady...");
-                BannerHolder bh = new BannerHolder();
-                bh.bannerAd = ad;
-                bh.width = w;
-                bh.height = h;
-                root.setTag(bh);
-                setItemHeight(context, root, w, h);
-            }
+        //klauncher2 申请test appid 和 placeid
+//        AdView.setAppSid(context, "a7482f81");
+//        String placeId = "3420062";
+//        if (isLunbo) {
+//            placeId = "3420062";
+//        } else {
+//            placeId = "3433910";
+//        }
 
-            @Override
-            public void onAdFailed(String s) {
-                logDebug("getKBannerAdView() onAdFailed..." + s);
-                ad.removeAllViews();
-//                2017-1-11 去掉，改为没有默认广告
-//                ad.addView(onFailView, new KBannerAd.LayoutParams(KBannerAd.LayoutParams.MATCH_PARENT, KBannerAd
-//                        .LayoutParams.MATCH_PARENT));
-                ViewGroup.LayoutParams layoutParams = parent.getLayoutParams();
-                layoutParams.height=0;
-                parent.setLayoutParams(layoutParams);
-            }
+        //正式上线前用 fcda70a4 appid 以及 3410166 的轮播信息流placeid, 3418992 橱窗信息信息流placeid
+        AdView.setAppSid(context, "fcda70a4");
+        String placeId = "3410166";
+        if (isLunbo) {
+            placeId = "3410166";
+        } else {
+            placeId = "3418992";
+        }
 
-            @Override
-            public void onAdClick() {
-                logDebug("getKBannerAdView() onAdClick...");
-            }
+        isLunbo = !isLunbo;
 
-            @Override
-            public void onAdClose() {
-                logDebug("getKBannerAdView() onAdClose...");
-            }
-        });
-        parent.addView(ad, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams
-                .WRAP_CONTENT));
-        ad.loadAd();
-        return ad;
+        BaiduNative baidu = new BaiduNative(context, placeId,
+                new BaiduNative.BaiduNativeNetworkListener() {
+
+                    @Override
+                    public void onNativeFail(NativeErrorCode arg0) {
+                        layoutParams.height=0;
+                        parent.setLayoutParams(layoutParams);
+                    }
+
+                    @Override
+                    public void onNativeLoad(List<NativeResponse> arg0) {
+                        if (arg0 != null && arg0.size() > 0) {
+//                            nrAdList = arg0;
+                            NativeResponse mNrAd = arg0.get(0);
+                            if (mNrAd.getMaterialType() == NativeResponse.MaterialType.HTML) {
+                                WebView webView = mNrAd.getWebView();
+                                root.setTag(webView);
+                                setItemHeight(context, root, rootWidth, rootHeight);
+                                parent.addView(webView, new ViewGroup.LayoutParams(rootWidth, rootHeight));
+                            } else {
+                                layoutParams.height=0;
+                                parent.setLayoutParams(layoutParams);
+                            }
+                        }
+                    }
+
+                });
+        RequestParameters requestParameters = new RequestParameters.Builder()
+                .setWidth(rootWidth)
+                .setHeight(rootHeight)
+                .downloadAppConfirmPolicy(
+                        RequestParameters.DOWNLOAD_APP_CONFIRM_ONLY_MOBILE) // 用户点击下载类广告时，是否弹出提示框让用户选择下载与否
+                .build();
+
+        baidu.makeRequest(requestParameters);
     }
-    private static void setItemHeight(Context context, View root, int w, int h) {
-        int rootHeight = Dips.asDp(context, 100);
-        ViewGroup.LayoutParams layoutParams = root.getLayoutParams();
-        int rootWidth = layoutParams.width;
-//        int rootHeight = ;
-        if (rootWidth > w) {
-            rootHeight = rootWidth * h / w;
-        }
-        logDebug("setItemHeight() rootHeight=" + rootHeight);
 
-        layoutParams.height=rootHeight;
+
+    private static void setItemHeight(Context context, View root, int w, int h) {
+//        int rootHeight = Dips.asDp(context, 160);
+        ViewGroup.LayoutParams layoutParams = root.getLayoutParams();
+//        int rootWidth = layoutParams.width;
+//        logDebug("setItemHeight() rootHeight=" + rootHeight);
+        layoutParams.width = w;
+        layoutParams.height=h;
         root.setLayoutParams(layoutParams);
     }
 
-    static class BannerHolder{
-        KBannerAd bannerAd;
-        int width;
-        int height;
-    }
     /**
      * 返回占位的单个广告
      * @return
