@@ -47,7 +47,7 @@ public class KLauncherDeviceAdminReceiver extends DeviceAdminReceiver {
 //        long delta = System.currentTimeMillis() - CommonShareData.getLong(
 //                Const.NAVIGATION_LOCAL_FIRST_INIT, System.currentTimeMillis());
 //        if (delta > 3600 * 24 * 1000) {
-//            lockScreen(context);
+        lockScreen(context);
 //        }
         return "You have no need to cancel this policy manager...";
     }
