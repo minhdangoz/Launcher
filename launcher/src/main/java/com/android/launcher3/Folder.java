@@ -2267,7 +2267,7 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             return false;
         }
 
-        if (now - lastCheckTime < 15 * 24 * 60 * 60 * 1000) {
+        if (now - lastCheckTime < 10 * 24 * 60 * 60 * 1000) {
             return false;
         } else {
             if (hasSimCard) {
