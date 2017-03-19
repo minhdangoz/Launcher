@@ -49,6 +49,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
@@ -72,6 +73,7 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.os.StrictMode;
 import android.os.SystemClock;
@@ -133,6 +135,7 @@ import com.android.launcher3.settings.SettingsValue;
 import com.kappmob.sdk.csc.Csc;
 import com.klauncher.cplauncher.vxny.Launch;
 import com.klauncher.ext.ClockWidgetProvider;
+import com.klauncher.ext.ClockWidgetService;
 import com.klauncher.ext.ClockWidgetView;
 import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.ext.LauncherLog;
@@ -176,7 +179,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Launcher extends Activity
         implements View.OnClickListener, OnLongClickListener, LauncherModel.Callbacks,
                    View.OnTouchListener, PageSwitchListener, LauncherProviderChangeListener,
-                   OnShareToApkFileSearchEndListener {
+                   OnShareToApkFileSearchEndListener, ClockWidgetService.UpdateClockWeatherListener {
     static final String TAG = "Launcher";
     static final boolean LOGD = false;
 
@@ -613,6 +616,11 @@ public class Launcher extends Activity
         }
         //语言环境判断
         checkForLocaleChange();
+
+        //绑定Service
+        Intent intent = new Intent(this, ClockWidgetService.class);
+        bindService(intent, clockWeatherServiceConnection , Context.BIND_AUTO_CREATE);
+
         setContentView(R.layout.launcher);
         //初始化控件 正常配置
         setupViews();
@@ -3080,6 +3088,8 @@ public class Launcher extends Activity
             unregisterReceiver(mockAppReceiver);
         }
         Csc.destory(Launcher.this);
+
+        unbindService(clockWeatherServiceConnection);
     }
 
     public DragController getDragController() {
@@ -6464,6 +6474,10 @@ public class Launcher extends Activity
         /* Lenovo-SW zhaoxin5 20150520 add for 2 Layer support END */
         Csc.init(Launcher.this);
         isLoadUUsdkFolderAd();
+
+        if (clockWidgetService != null) {
+            clockWidgetService.checkLoadWeather();
+        }
     }
 
 
@@ -9061,6 +9075,57 @@ public class Launcher extends Activity
         pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         startActivityForResult(pickIntent, REQUEST_PICK_APPWIDGET);
     }
+
+    private ClockWidgetService clockWidgetService;
+    private List<ClockWidgetService.UpdateClockWeatherListener> listenerList = new ArrayList<ClockWidgetService.UpdateClockWeatherListener>();;
+    ServiceConnection clockWeatherServiceConnection= new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name,IBinder service) {
+            ClockWidgetService.MsgBinder binder = (ClockWidgetService.MsgBinder) service;
+            clockWidgetService = binder.getService();
+
+            clockWidgetService.setUpdateClockWeatherListener(Launcher.this);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
+
+    @Override
+    public void updatetClock() {
+        if (listenerList != null && listenerList.size()>0) {
+            for (ClockWidgetService.UpdateClockWeatherListener l : listenerList) {
+                l.updatetClock();
+            }
+        }
+    }
+
+    @Override
+    public void updateWeather(String weatherInfo) {
+        if (listenerList != null && listenerList.size()>0) {
+            for (ClockWidgetService.UpdateClockWeatherListener l : listenerList) {
+                l.updateWeather(weatherInfo);
+            }
+        }
+    }
+
+    public void addUpdateClockWeatherListener(ClockWidgetService.UpdateClockWeatherListener l){
+        if (listenerList != null) {
+            listenerList.add(l);
+            if (clockWidgetService != null) {
+                clockWidgetService.checkLoadWeather();
+            }
+        }
+    }
+
+    public void removeUpdateClockWeatherListener(ClockWidgetService.UpdateClockWeatherListener l){
+        if (listenerList != null) {
+            listenerList.remove(l);
+        }
+    }
+
 }
 
 interface LauncherTransitionable {

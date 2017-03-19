@@ -94,6 +94,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.igexin.push.config.l.g;
+
 /**
  * The workspace is a wide area with a wallpaper and a finite number of pages.
  * Each page contains a number of icons, folders or widgets the user can
@@ -319,6 +321,7 @@ public class Workspace extends SmoothPagedView
     private boolean mShowSearchBar;
     private boolean mShowOutlines;
     private boolean mHideIconLabels;
+    private boolean mHideIconHotseat;
 
     /**
      * Used to inflate the Workspace from XML.
@@ -355,6 +358,7 @@ public class Workspace extends SmoothPagedView
         mHideIconLabels = SettingsProvider.getBoolean(context,
                 SettingsProvider.SETTINGS_UI_HOMESCREEN_HIDE_ICON_LABELS,
                 R.bool.preferences_interface_homescreen_hide_icon_labels_default);
+        mHideIconHotseat = context.getResources().getBoolean(R.bool.preferences_interface_homescreen_hide_icon_labels_hotseat);
         mWorkspaceFadeInAdjacentScreens = SettingsProvider.getBoolean(context,
                 SettingsProvider.SETTINGS_UI_HOMESCREEN_SCROLLING_FADE_ADJACENT,
                 R.bool.preferences_interface_homescreen_scrolling_fade_adjacent_default);
@@ -1117,8 +1121,12 @@ public class Workspace extends SmoothPagedView
             // Lenovo-SW zhaoxin5 20150902 show folder name when in hotseat START
             if (child instanceof FolderIcon && LauncherAppState.getInstance().isCurrentAndroidMode()) {
                 ((FolderIcon) child).setTextVisible(false);
+            } else if (child instanceof BubbleTextView) {
+                ((BubbleTextView) child).setTextVisibility(!mHideIconHotseat);
             }
             // Lenovo-SW zhaoxin5 20150902 show folder name when in hotseat END
+
+
 
             if (computeXYFromRank) {
                 x = mLauncher.getHotseat().getCellXFromOrder((int) screenId);

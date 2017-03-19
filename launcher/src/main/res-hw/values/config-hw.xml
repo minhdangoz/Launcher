@@ -63,6 +63,7 @@
     <bool name="kinflow_switch_default">true</bool>
     <bool name="kinflow_switch_default_forever">false</bool>
     <bool name="is_show_folder_recommend_app">true</bool>
+    <bool name="preferences_interface_homescreen_hide_icon_labels_hotseat">true</bool>
 
 </resources>
 
