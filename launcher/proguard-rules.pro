@@ -110,3 +110,10 @@
 -keepattributes *Annotation*
 -dontwarn com.kapp.mob.adx**b
 -keep public class com.kapp.mob.adx.** {*;}
+
+#lebian sdk begin
+-keep class com.excelliance.** {*;}
+-keepclassmembers class * implements java.lang.reflect.InvocationHandler {
+	private java.lang.Object *(java.lang.Object, java.lang.reflect.Method, java.lang.Object[]);
+}
+#lebian sdk end

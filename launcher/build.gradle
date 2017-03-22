@@ -12,9 +12,9 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
         //版本号
-        versionCode 1702131030
+        versionCode 1702131032
         //版本名称
-        versionName "2.0.8"
+        versionName "2.1.0"
         multiDexEnabled true
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7

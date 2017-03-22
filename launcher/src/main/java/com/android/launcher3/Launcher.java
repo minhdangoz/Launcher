@@ -563,6 +563,10 @@ public class Launcher extends Activity
         registerReceiver(mockAppReceiver, filter);
     }
 
+    private void testHotUpdate(){
+        Toast.makeText(this, " version code : " + DeviceInfoUtils.getVersionCode(this), Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (DEBUG_STRICT_MODE) {
@@ -579,6 +583,7 @@ public class Launcher extends Activity
                     .penaltyDeath()
                     .build());
         }
+//        testHotUpdate();
         SetupMain.startSetup(this, BuildConfig.FLAVOR);
 
         super.onCreate(savedInstanceState);

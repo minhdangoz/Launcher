@@ -154,7 +154,7 @@ public class DeviceInfoUtils {
         String m_szAndroidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         return m_szAndroidID;
     }
-    private static String getVersionName(Context context)
+    public static String getVersionName(Context context)
     {
         // 获取packagemanager的实例
         PackageManager packageManager = context.getPackageManager();
@@ -182,7 +182,7 @@ public class DeviceInfoUtils {
         return false;
     }
 
-    private static String getVersionCode(Context context)
+    public static String getVersionCode(Context context)
     {
         // 获取packagemanager的实例
         PackageManager packageManager = context.getPackageManager();
