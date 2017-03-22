@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bei"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/hw_agreement"
+        android:textSize="24sp"
+        android:layout_marginTop="70dp"
+        android:textColor="#ff444444"
+        android:text="@string/hw_agreement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_marginTop="35dp"
+        android:background="#55666666"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></View>
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:text="@string/hw_agreement_yinsi"
+        android:textSize="18sp"
+        android:textColor="#ff444444"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textColor="#ff666666"
+        android:textSize="12sp"
+        android:text="@string/hw_agreement_yinsi_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/hw_agreement_yes"
+                android:textColor="#ff666666"
+                android:paddingLeft="8dp"
+                android:textSize="14sp"
+                android:checked="true"
+                android:button="@drawable/radiobtn"
+                android:layout_centerVertical="true"
+                android:text="@string/hw_agreement_agree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/hw_agreement_no"
+                android:text="@string/hw_agreement_agree_no"
+                android:paddingLeft="8dp"
+                android:textColor="#ff666666"
+                android:textSize="14sp"
+                android:button="@drawable/radiobtn"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    <View
+        android:layout_marginTop="15dp"
+        android:background="#55666666"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></View>
+
+        <TextView
+            android:text="@string/hw_agreement_weather_locate"
+            android:textSize="18sp"
+            android:textColor="#ff444444"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="@string/hw_agreement_weather_locate_detail"
+            android:textColor="#ff666666"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_marginTop="20dp"
+            android:background="#55666666"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+    <Button
+        android:id="@+id/hw_agreement_forward"
+        android:background="@drawable/btn_blue_sel"
+        android:text="@string/hw_forward"
+        android:layout_weight="1"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/hw_agreement_next"
+        android:text="@string/hw_next"
+        android:layout_weight="1"
+        android:background="@drawable/btn_blue_sel"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    </LinearLayout>
+</RelativeLayout>

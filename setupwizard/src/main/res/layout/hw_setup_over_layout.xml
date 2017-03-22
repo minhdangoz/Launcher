@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/bei"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:textSize="32sp"
+        android:textColor="#ff25c0c7"
+        android:text="@string/hw_setup_over"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <ImageView
+        android:background="@drawable/logo"
+        android:layout_centerInParent="true"
+        android:scaleType="fitXY"
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_blue_sel"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="32dp"
+        android:id="@+id/hw_setup_start"
+        android:text="@string/hw_setup_start"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+
+    <TextView
+        android:layout_above="@id/hw_setup_start"
+        android:text="@string/hw_setup_detail"
+        android:textColor="#ff444444"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/bei"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/hw_wifi_setupimg"
+        android:background="@drawable/setup_illustration_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="155dp" />
+
+    <TextView
+        android:id="@+id/hw_wifi_sel"
+        android:layout_below="@id/hw_wifi_setupimg"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:paddingLeft="45dp"
+        android:paddingBottom="15dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/setup_illustration_tile"
+        android:text="@string/hw_wifi_select"
+        android:layout_width="match_parent"
+        android:layout_height="55dp" />
+
+    <TextView
+        android:id="@+id/hw_wifi_kg"
+        android:layout_below="@id/hw_wifi_sel"
+        android:background="#ffdfdfdf"
+        android:textSize="16sp"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="#ff444444"
+        android:text="@string/hw_wifi_kg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/hw_wifi_kg_rl"
+        android:layout_below="@id/hw_wifi_kg"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:text="@string/hw_wifi"
+            android:layout_marginLeft="20dp"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:drawablePadding="6dp"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/stat_sys_wifi_signal_4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <com.klauncher.setupwizard.hw.CheckSwitchButton
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:id="@+id/hw_wifi_switch"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/hw_wifi_list"
+        android:layout_below="@id/hw_wifi_kg_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:visibility="gone"
+        ></android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:background="#ffdfdfdf"
+        android:layout_height="60dp">
+        <TextView
+            android:id="@+id/hw_wifi_back"
+            android:textColor="#ff444444"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/ic_ab_back_small_emui"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/hw_wifi_next"
+            android:textColor="#ff555555"
+            android:textSize="18sp"
+            android:text="@string/hw_wifi_jump"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:drawableRight="@drawable/ic_ab_back_right_small_emui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

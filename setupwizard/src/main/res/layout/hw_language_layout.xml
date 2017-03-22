@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bei"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="@string/hw_language_select"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="30dp"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+    <TextView
+        android:id="@+id/hw_zh_jt"
+        android:textSize="18sp"
+        android:text="@string/hw_language_zhhk"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <View
+            android:background="#55666666"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"></View>
+
+    <TextView
+        android:id="@+id/hw_en"
+        android:textSize="18sp"
+        android:text="@string/hw_language_zh"
+        android:textColor="#ff25c0c7"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <View
+            android:layout_marginTop="15dp"
+            android:background="#55666666"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"></View>
+
+    <TextView
+        android:id="@+id/hw_zh_ft"
+        android:text="@string/hw_language_en"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/hw_language_next"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="30dp"
+        android:text="@string/hw_next"
+        android:background="@drawable/btn_blue_sel"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="55dp" />
+
+    <TextView
+        android:id="@+id/hw_call"
+        android:text="@string/hw_language_call"
+        android:textColor="#ff555555"
+        android:textSize="16sp"
+        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/ic_emergency_call"
+        android:layout_above="@id/hw_language_next"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
