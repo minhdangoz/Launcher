@@ -144,6 +144,18 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+    <!-- lebian sdk permission begin -->
+    <uses-permission android:name="android.permission.GET_DETAILED_TASKS" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- lebian sdk permission end -->
     <!--baidu mssp permission start-->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -160,7 +172,7 @@
     <!--baidu mssp permission end-->
 
     <application
-        android:name="com.android.launcher3.LauncherApplication"
+        android:name="com.excelliance.open.LBApplication"
         android:backupAgent="com.android.launcher3.LauncherBackupAgentHelper"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher_home"
@@ -770,10 +782,497 @@
         </intent-filter>
         </service>
 
+        <!-- 将manifest中所有的lb_target_pkgname替换为您的包名 -->
+
+        <!-- lebian sdk components begin -->
+        <meta-data android:name="ClientChId" android:value="${CHANNEL_ID}" />
+        <meta-data android:name="MainChId" android:value="65331" />
+
+        <service
+            android:name="com.excelliance.lbsdk.debug.LBSdkCrashReportService"
+            android:exported="false"
+            android:process=":lebian.bugreport" >
+            <intent-filter>
+                <action android:name="com.excelliance.lbsdk.debug.action.CRASH_REPORT" />
+                <action android:name="com.excelliance.kxqp.platform.action.CRASH_REPORT" />
+            </intent-filter>
+        </service>
+        <activity
+            android:name="com.excelliance.open.NextChapter"
+            android:configChanges="orientation|screenSize"
+            android:process=":lbmain"
+            android:screenOrientation="portrait"
+            android:theme="@style/lebian_main_app_theme">
+            <intent-filter>
+                <action android:name="com.excelliance.open.action.startNextChapter" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.excelliance.open.PromptActivity"
+            android:configChanges="orientation|screenSize"
+            android:process=":lbmain"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="com.excelliance.open.action.startPromptActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name="com.excelliance.lbsdk.base.BGReceiver"
+            android:process=":lebian.base">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.excelliance.open.action.appstate" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.excelliance.open.action.queryUpdate" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.excelliance.open.action.ss" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <data android:scheme="file" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:exported="true"
+            android:name="com.excelliance.lbsdk.base.BaseService"
+            android:process=":lebian.base">
+            <intent-filter>
+                <action android:name="com.excelliance.lbsdk.action.BaseService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.excelliance.lbsdk.main.BGService"
+            android:process=":lebian.dns">
+            <intent-filter>
+                <action android:name="com.excelliance.open.action.gameverchk" />
+                <action android:name="com.excelliance.open.action.apkverchk" />
+                <action android:name="com.excelliance.open.action.dmchk" />
+                <action android:name="com.excelliance.open.action.fw" />
+                <action android:name="com.excelliance.open.action.bwbxdla"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.excelliance.open.NEXT_CHAPTER" />
+                <action android:name="com.excelliance.open.action.PLAT_DO" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.excelliance.lbsdk.action.BGService" />
+            </intent-filter>
+        </service>
+
+        <meta-data android:name="lbvmlaunchmode" android:value="HU" />
+        <activity
+            android:name="com.excelliance.kxqp.platform.PubTrampolineActivity"
+            android:theme="@style/Lebian.Theme.TrampolineActivity"
+            android:taskAffinity=":platform.TrampolineActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:process=":lbcore"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.TrampolineActivity"
+            android:theme="@style/Lebian.Theme.TrampolineActivity"
+            android:taskAffinity=":platform.TrampolineActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":lbcore"></activity>
+        <receiver
+            android:name="com.excelliance.kxqp.platform.TrampolineReceiver"
+            android:exported="false"
+            android:process=":lbcore"></receiver>
+
+        <service
+            android:name="com.excelliance.kxqp.platform.TrampolineService"
+            android:exported="false"
+            android:process=":lbcore"></service>
+        <service
+            android:name="com.excelliance.kxqp.platform.TrampolineService$EmptyService"
+            android:exported="false"
+            android:process=":lbcore"></service>
+        <service
+            android:name="com.excelliance.kxqp.platform.JobProxyService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process=":lbcore"></service>
+
+        <activity
+            android:name="com.excelliance.kxqp.platform.ChooserActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnCloseSystemDialogs="true"
+            android:process=":lbcore"
+            android:taskAffinity=":platform.settings"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.ChooseTypeAndAccountActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:process=":lbcore"
+            android:taskAffinity=":platform.settings"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.ChooseAccountTypeActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:process=":lbcore"
+            android:taskAffinity=":platform.settings"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog"></activity>
+
+        <provider
+            android:name="com.excelliance.kxqp.platform.PluginManagerProvider"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.platform.PluginManagerProvider"
+            android:exported="false"
+            android:process=":lbcore"></provider>
+        <service
+            android:name="com.excelliance.kxqp.platform.PluginManagerService"
+            android:exported="false"
+            android:process=":lbcore"></service>
+        <provider
+            android:name="com.excelliance.lbsdk.LBInitProvider$PCore"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.LBInitProvider.PCore"
+            android:initOrder="9999"
+            android:exported="false"
+            android:process=":lbcore">
+        </provider>
+
+        <!--$P00-->
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxy$P00"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Lebian.Theme.ActivityProxy"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxyT$P00"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Lebian.Theme.ActivityProxyT"></activity>
+
+        <service
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ServiceProxy$P00"
+            android:exported="false"></service>
+        <provider
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy$P00"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy.P00"
+            android:exported="false"></provider>
+        <receiver
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ReceiverProxy$P00"
+            android:exported="false"></receiver>
+        <provider
+            android:name="com.excelliance.lbsdk.LBInitProvider$P00"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.LBInitProvider.P00"
+            android:initOrder="9999"
+            android:exported="false">
+        </provider>
+
+        <!--$P01-->
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxy$P01"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P01"
+            android:theme="@style/Lebian.Theme.ActivityProxy"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxyT$P01"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P01"
+            android:theme="@style/Lebian.Theme.ActivityProxyT"></activity>
+
+        <service
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ServiceProxy$P01"
+            android:exported="false"
+            android:process=":platform.gameplugin.P01"></service>
+        <provider
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy$P01"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy.P01"
+            android:exported="false"
+            android:process=":platform.gameplugin.P01"></provider>
+        <receiver
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ReceiverProxy$P01"
+            android:exported="false"
+            android:process=":platform.gameplugin.P01"></receiver>
+        <provider
+            android:name="com.excelliance.lbsdk.LBInitProvider$P01"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.LBInitProvider.P01"
+            android:initOrder="9999"
+            android:exported="false"
+            android:process=":platform.gameplugin.P01">
+        </provider>
+
+        <!--$P02-->
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxy$P02"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P02"
+            android:theme="@style/Lebian.Theme.ActivityProxy"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxyT$P02"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P02"
+            android:theme="@style/Lebian.Theme.ActivityProxyT"></activity>
+
+        <service
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ServiceProxy$P02"
+            android:exported="false"
+            android:process=":platform.gameplugin.P02"></service>
+        <provider
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy$P02"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy.P02"
+            android:exported="false"
+            android:process=":platform.gameplugin.P02"></provider>
+        <receiver
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ReceiverProxy$P02"
+            android:exported="false"
+            android:process=":platform.gameplugin.P02"></receiver>
+        <provider
+            android:name="com.excelliance.lbsdk.LBInitProvider$P02"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.LBInitProvider.P02"
+            android:initOrder="9999"
+            android:exported="false"
+            android:process=":platform.gameplugin.P02">
+        </provider>
+
+        <!--$P03-->
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxy$P03"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P03"
+            android:theme="@style/Lebian.Theme.ActivityProxy"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxyT$P03"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P03"
+            android:theme="@style/Lebian.Theme.ActivityProxyT"></activity>
+
+        <service
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ServiceProxy$P03"
+            android:exported="false"
+            android:process=":platform.gameplugin.P03"></service>
+        <provider
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy$P03"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy.P03"
+            android:exported="false"
+            android:process=":platform.gameplugin.P03"></provider>
+        <receiver
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ReceiverProxy$P03"
+            android:exported="false"
+            android:process=":platform.gameplugin.P03"></receiver>
+        <provider
+            android:name="com.excelliance.lbsdk.LBInitProvider$P03"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.LBInitProvider.P03"
+            android:initOrder="9999"
+            android:exported="false"
+            android:process=":platform.gameplugin.P03">
+        </provider>
+
+        <!--$P04-->
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxy$P04"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P04"
+            android:theme="@style/Lebian.Theme.ActivityProxy"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxyT$P04"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P04"
+            android:theme="@style/Lebian.Theme.ActivityProxyT"></activity>
+
+        <service
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ServiceProxy$P04"
+            android:exported="false"
+            android:process=":platform.gameplugin.P04"></service>
+        <provider
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy$P04"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy.P04"
+            android:exported="false"
+            android:process=":platform.gameplugin.P04"></provider>
+        <receiver
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ReceiverProxy$P04"
+            android:exported="false"
+            android:process=":platform.gameplugin.P04"></receiver>
+        <provider
+            android:name="com.excelliance.lbsdk.LBInitProvider$P04"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.LBInitProvider.P04"
+            android:initOrder="9999"
+            android:exported="false"
+            android:process=":platform.gameplugin.P04">
+        </provider>
+
+        <!--$P05-->
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxy$P05"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P05"
+            android:theme="@style/Lebian.Theme.ActivityProxy"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxyT$P05"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P05"
+            android:theme="@style/Lebian.Theme.ActivityProxyT"></activity>
+
+        <service
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ServiceProxy$P05"
+            android:exported="false"
+            android:process=":platform.gameplugin.P05"></service>
+        <provider
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy$P05"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy.P05"
+            android:exported="false"
+            android:process=":platform.gameplugin.P05"></provider>
+        <receiver
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ReceiverProxy$P05"
+            android:exported="false"
+            android:process=":platform.gameplugin.P05"></receiver>
+        <provider
+            android:name="com.excelliance.lbsdk.LBInitProvider$P05"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.LBInitProvider.P05"
+            android:initOrder="9999"
+            android:exported="false"
+            android:process=":platform.gameplugin.P05">
+        </provider>
+
+        <!--$P06-->
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxy$P06"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P06"
+            android:theme="@style/Lebian.Theme.ActivityProxy"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxyT$P06"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P06"
+            android:theme="@style/Lebian.Theme.ActivityProxyT"></activity>
+
+        <service
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ServiceProxy$P06"
+            android:exported="false"
+            android:process=":platform.gameplugin.P06"></service>
+        <provider
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy$P06"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy.P06"
+            android:exported="false"
+            android:process=":platform.gameplugin.P06"></provider>
+        <receiver
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ReceiverProxy$P06"
+            android:exported="false"
+            android:process=":platform.gameplugin.P06"></receiver>
+        <provider
+            android:name="com.excelliance.lbsdk.LBInitProvider$P06"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.LBInitProvider.P06"
+            android:initOrder="9999"
+            android:exported="false"
+            android:process=":platform.gameplugin.P06">
+        </provider>
+
+        <!--$P07-->
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxy$P07"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P07"
+            android:theme="@style/Lebian.Theme.ActivityProxy"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxyT$P07"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P07"
+            android:theme="@style/Lebian.Theme.ActivityProxyT"></activity>
+
+        <service
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ServiceProxy$P07"
+            android:exported="false"
+            android:process=":platform.gameplugin.P07"></service>
+        <provider
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy$P07"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy.P07"
+            android:exported="false"
+            android:process=":platform.gameplugin.P07"></provider>
+        <receiver
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ReceiverProxy$P07"
+            android:exported="false"
+            android:process=":platform.gameplugin.P07"></receiver>
+        <provider
+            android:name="com.excelliance.lbsdk.LBInitProvider$P07"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.LBInitProvider.P07"
+            android:initOrder="9999"
+            android:exported="false"
+            android:process=":platform.gameplugin.P07">
+        </provider>
+
+        <!--$P08-->
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxy$P08"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P08"
+            android:theme="@style/Lebian.Theme.ActivityProxy"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxyT$P08"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P08"
+            android:theme="@style/Lebian.Theme.ActivityProxyT"></activity>
+
+        <service
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ServiceProxy$P08"
+            android:exported="false"
+            android:process=":platform.gameplugin.P08"></service>
+        <provider
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy$P08"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy.P08"
+            android:exported="false"
+            android:process=":platform.gameplugin.P08"></provider>
+        <receiver
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ReceiverProxy$P08"
+            android:exported="false"
+            android:process=":platform.gameplugin.P08"></receiver>
+        <provider
+            android:name="com.excelliance.lbsdk.LBInitProvider$P08"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.LBInitProvider.P08"
+            android:initOrder="9999"
+            android:exported="false"
+            android:process=":platform.gameplugin.P08">
+        </provider>
+
+        <!--$P09-->
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxy$P09"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P09"
+            android:theme="@style/Lebian.Theme.ActivityProxy"></activity>
+        <activity
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ActivityProxyT$P09"
+            android:configChanges="orientation|screenSize"
+            android:process=":platform.gameplugin.P09"
+            android:theme="@style/Lebian.Theme.ActivityProxyT"></activity>
+
+        <service
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ServiceProxy$P09"
+            android:exported="false"
+            android:process=":platform.gameplugin.P09"></service>
+        <provider
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy$P09"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.platform.proxy.gameplugin.ContentProviderProxy.P09"
+            android:exported="false"
+            android:process=":platform.gameplugin.P09"></provider>
+        <receiver
+            android:name="com.excelliance.kxqp.platform.proxy.gameplugin.ReceiverProxy$P09"
+            android:exported="false"
+            android:process=":platform.gameplugin.P09"></receiver>
+        <provider
+            android:name="com.excelliance.lbsdk.LBInitProvider$P09"
+            android:authorities="${PACKAGE_NAME}:com.excelliance.kxqp.LBInitProvider.P09"
+            android:initOrder="9999"
+            android:exported="false"
+            android:process=":platform.gameplugin.P09">
+        </provider>
+        <!-- lebian sdk components end -->
+
+        <!-- baidu mssp sdk components start -->
         <activity	android:name="com.baidu.mobads.AppActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"	/>
-
+        <!-- baidu mssp sdk components end -->
     </application>
 
 

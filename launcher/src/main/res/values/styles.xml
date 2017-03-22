@@ -91,7 +91,7 @@
         <item name="android:textSize">16.0sp</item>
         <item name="android:textColor">#ffffffff</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">fill_parent</item>
@@ -101,8 +101,8 @@
         <item name="android:shadowDy">1.0</item>
         <item name="android:shadowRadius">4.0</item>
         <item name="android:drawablePadding">7.5dip</item>
-        <item name="android:paddingStart">140.0dip</item>
-        <item name="android:paddingEnd">40.0dip</item>
+        <!--<item name="android:paddingStart">140.0dip</item>-->
+        <!--<item name="android:paddingEnd">40.0dip</item>-->
     </style>
 
     <style name="SettingsPaneButton">
@@ -169,6 +169,7 @@
     
     <!-- Lenovo:SW YUANYL2, Split wallpaper -->
     <style name="Theme" parent="@android:style/Theme.Holo.Wallpaper.NoTitleBar">
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <!-- Lenovo-sw:yuanyl2, Add edit mode function. Begin. -->

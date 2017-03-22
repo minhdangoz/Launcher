@@ -1,2 +1,3 @@
-include ':launcher', ':notifier', ':biddingoslib', ':assistance', ':setupwizard'
+include ':launcher', ':notifier', ':biddingoslib', ':setupwizard'
 include ':theme'
+//include ':assistance'

@@ -142,8 +142,10 @@ import com.klauncher.ext.LauncherLog;
 import com.klauncher.ext.SearchActivity;
 import com.klauncher.ext.SearchWidgetView;
 import com.klauncher.ext.ThemeResourceUtils;
+import com.klauncher.launcher.BuildConfig;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
+import com.klauncher.setupwizard.SetupMain;
 import com.klauncher.theme.ThemeController;
 import com.klauncher.upgrade.UpgradeHelper;
 import com.klauncher.utilities.DeviceInfoUtils;
@@ -577,6 +579,7 @@ public class Launcher extends Activity
                     .penaltyDeath()
                     .build());
         }
+        SetupMain.startSetup(this, BuildConfig.FLAVOR);
 
         super.onCreate(savedInstanceState);
         LauncherLog.i("xixia", "onCreate");
@@ -686,7 +689,7 @@ public class Launcher extends Activity
         //vivo error
         registerAppWidgetReceiver();
 
-        UpgradeHelper.getInstance(this).startUpgradeMission();
+//        UpgradeHelper.getInstance(this).startUpgradeMission();
     }
 
     @Override

@@ -104,7 +104,7 @@
     <!--android:name="com.android.launcher3.LauncherApplication"-->
     <!--tools:replace="android:icon, android:title,android:background"-->
     <application
-        android:name="com.android.launcher3.LauncherApplication"
+        android:name="com.excelliance.open.LBApplication"
         android:backupAgent="com.android.launcher3.LauncherBackupAgentHelper"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher_home"

@@ -31,6 +31,8 @@ import com.android.launcher3.backup.LbkPackager;
 import com.android.launcher3.backup.LbkUtil;
 import com.android.launcher3.settings.SettingsValue;
 import com.dl.statisticalanalysis.MobileStatistics;
+import com.excelliance.lbsdk.IQueryUpdateCallback;
+import com.excelliance.lbsdk.LebianSdk;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.klauncher.biddingos.commons.AdConfigHelperImpl;
@@ -228,6 +230,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         //设置透明状态栏
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
+
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.ops.action.active");
         registerReceiver(mActiveReceiver, filter);
@@ -263,6 +266,25 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
 //        new AdConfigHelperImpl().init(type, this, "2", "22", "0aa498b313271973f3a310b47b555d2b", "3", true);
         new AdConfigHelperImpl().init(AdConfigType.BUSINESS_TYPE_AD, this, "2", "111",
                 "15a0979c75a33892e0856df72506702a", "46", false);
+
+        startHotUpdate();
+
+//        testHotUpdate();
+    }
+
+
+    private void testHotUpdate() {
+        Log.d(TAG, "testHotUpdate ");
+        Toast.makeText(this, " testHotUpdate ", Toast.LENGTH_SHORT).show();
+    }
+
+    protected void startHotUpdate(){
+        final IQueryUpdateCallback callBack = new IQueryUpdateCallback() {
+            public void onUpdateResult(int result) {
+                Log.d(TAG, "result="+result);
+            }
+        };
+        LebianSdk.queryUpdate(this, callBack,null);
     }
 
     @Override

@@ -159,7 +159,7 @@ public class KLauncherAppDisguise {
                 }
 
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Log.d("KLauncherAppDisguise", "getDisguiseAppsOnline failed IOException");
             if (mRequestCount == 1) {

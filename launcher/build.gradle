@@ -9,7 +9,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 14
         targetSdkVersion 21
         //版本号
         versionCode 1702131030
@@ -338,6 +338,7 @@ dependencies {
     provided files('dynamic_lib/icu-classes.jar')
     compile project(':theme')
     compile project(':notifier')
+    compile project(':setupwizard')
     compile 'com.android.support:recyclerview-v7:23.2.1'
     compile 'com.umeng.analytics:analytics:latest.integration'
     //kinflow
@@ -359,7 +360,8 @@ dependencies {
     //===============
     compile 'com.android.support:design:22.2.1'
     compile files('libs/kappcsc.jar')
-    compile project(path: ':assistance')
+    //    compile project(path: ':assistance')
+    compile files('libs/lebianbase.jar')
     compile files('libs/Baidu_MobAds_SDK.jar')
 }
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }

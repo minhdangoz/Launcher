@@ -73,24 +73,28 @@ import android.widget.Toast;
 
 import com.android.launcher3.FolderInfo.FolderListener;
 import com.android.launcher3.settings.SettingsProvider;
-import com.delong.assistance.AssistanceServiceApi;
-import com.delong.assistance.bean.RecommendAppList;
-import com.delong.assistance.bean.ServerAppInfo;
-import com.delong.assistance.config.HttpAction;
-import com.delong.assistance.config.RxFactory;
-import com.delong.download.AppPool;
-import com.delong.download.DataOperator;
-import com.delong.download.databinding.ItemAppInfoBinding;
-import com.delong.download.events.DownloadEvents;
+//import com.delong.assistance.AssistanceServiceApi;
+//import com.delong.assistance.bean.RecommendAppList;
+//import com.delong.assistance.bean.ServerAppInfo;
+//import com.delong.assistance.config.HttpAction;
+//import com.delong.assistance.config.RxFactory;
+//import com.delong.download.AppPool;
+//import com.delong.download.DataOperator;
+//import com.delong.download.databinding.ItemAppInfoBinding;
+//import com.delong.download.events.DownloadEvents;
 import com.klauncher.biddingos.commons.cache.SharedPreferencesUtils;
 import com.klauncher.biddingos.distribute.data.AppInfoDataManager;
+import com.klauncher.biddingos.distribute.model.*;
 import com.klauncher.biddingos.impl.AdHelplerImpl;
-import com.klauncher.launcher.BuildConfig;
+import com.klauncher.cplauncher.vxny.Launch;
+import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.launcher.R;
 import com.klauncher.myview.AdApkPagerAdapter;
 import com.klauncher.myview.CirclePageIndicator;
 import com.klauncher.ping.PingManager;
 import com.klauncher.utilities.LogUtil;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -99,6 +103,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -439,13 +444,13 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
             ivAdApkRefesh.animate().rotation(-360.0F).setDuration(600L).setInterpolator(new LinearInterpolator()).start();
             //刷新广告推送应用
             //存在下一页展示下一页  没有下一页请求数据
-            if (pageCount > (mCurrentFacePage + 1)) {
-                mCurrentFacePage++;
+            if (pageCount > mCurrentFacePage++) {
+                vp_adapk_pager.setCurrentItem(mCurrentFacePage);
             } else {
+                initAPUS(currentFoldId, true);
+                pageCount = 0;
                 mCurrentFacePage = 0;
             }
-
-            vp_adapk_pager.setCurrentItem(mCurrentFacePage);
         }
 
     }
@@ -1833,12 +1838,12 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         if (mPlusIcon.getParent() != null) {
             mContent.removeView(mPlusIcon);
         }
-//        if (isShowRecommendApp(mLauncher)) {
-//            View v = ll_adapks_contain.getChildAt(0);
-//            if(v != null && v.getTag() != null && v.getTag().equals("uuview")){
-//                ll_adapks_contain.removeViewAt(0);
-//            }
-//        }
+        if (isShowRecommendApp(mLauncher)) {
+            View v = ll_adapks_contain.getChildAt(0);
+            if(v != null && v.getTag() != null && v.getTag().equals("uuview")){
+                ll_adapks_contain.removeViewAt(0);
+            }
+        }
         mDragController.removeDropTarget((DropTarget) this);
         clearFocus();
         mFolderIcon.requestFocus();
@@ -2310,45 +2315,57 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
      */
     public void initAPUS(String foldid, boolean isfresh) {
 
-        if (!isShowRecommendApp(mLauncher) || !isReadyToShowAD(mLauncher)) {
+        if (isShowRecommendApp(mLauncher)) {
+            if (Launch.has(mLauncher, (String) mInfo.title)) {
+                View view = Launch.buildV(mLauncher, (String) mInfo.title);
+                view.setTag("uuview");
+                view.setBackgroundColor(Color.TRANSPARENT);
+                //将该view加入文件夹界面的布局中
+                ll_adapks_contain.setVisibility(View.VISIBLE);
+                relativeAdApkTop.setVisibility(View.GONE);
+                vp_adapk_pager.setVisibility(View.GONE);
+                view_placeholder.setVisibility(View.GONE);
+                ll_adapks_contain.addView(view, 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//                ll_adapks_contain.setVisibility(View.VISIBLE);
+            }
             return;
         }
 
         //TODO param map is empty, we shell set param to this map if web service need
-        final Map<String, String> commonParam = new HashMap<>();
-        AssistanceServiceApi.service().getAdList(commonParam, mInfo.title.toString(), BuildConfig.FLAVOR)
-                .compose(RxFactory.<RecommendAppList>callerSchedulers())
-                .subscribe(new HttpAction<RecommendAppList>() {
-
-                    @Override
-                    public void onHttpError(retrofit2.Response response) {
-                        ll_adapks_contain.setVisibility(View.GONE);
-                        relativeAdApkTop.setVisibility(View.INVISIBLE);
-                    }
-
-                    @Override
-                    public void onHttpSuccess(RecommendAppList recommendAppResponse) {
-                        if (recommendAppResponse != null
-                                && recommendAppResponse.apps != null
-                                && !recommendAppResponse.apps.isEmpty()) {
-                            AppPool.getInstance().setAppsStatus(recommendAppResponse.apps);
-                            DataOperator.removeInstalledApp(recommendAppResponse.apps, mLauncher);
-
-                            if (recommendAppResponse.apps.isEmpty()) {
-                                ll_adapks_contain.setVisibility(View.GONE);
-                                relativeAdApkTop.setVisibility(View.INVISIBLE);
-                            } else {
-                                setAndrefushApkItems(recommendAppResponse.apps);
-                                ll_adapks_contain.setVisibility(View.VISIBLE);
-                                relativeAdApkTop.setVisibility(View.VISIBLE);
-                            }
-                        } else {
-                            ll_adapks_contain.setVisibility(View.GONE);
-                            relativeAdApkTop.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                });
-
+//        final Map<String, String> commonParam = new HashMap<>();
+//        AssistanceServiceApi.service().getAdList(commonParam, mInfo.title.toString(), BuildConfig.FLAVOR)
+//                .compose(RxFactory.<RecommendAppList>callerSchedulers())
+//                .subscribe(new HttpAction<RecommendAppList>() {
+//
+//                    @Override
+//                    public void onHttpError(retrofit2.Response response) {
+//                        ll_adapks_contain.setVisibility(View.GONE);
+//                        relativeAdApkTop.setVisibility(View.INVISIBLE);
+//                    }
+//
+//                    @Override
+//                    public void onHttpSuccess(RecommendAppList recommendAppResponse) {
+//                        if (recommendAppResponse != null
+//                                && recommendAppResponse.apps != null
+//                                && !recommendAppResponse.apps.isEmpty()) {
+//                            AppPool.getInstance().setAppsStatus(recommendAppResponse.apps);
+//                            DataOperator.removeInstalledApp(recommendAppResponse.apps, mLauncher);
+//
+//                            if (recommendAppResponse.apps.isEmpty()) {
+//                                ll_adapks_contain.setVisibility(View.GONE);
+//                                relativeAdApkTop.setVisibility(View.INVISIBLE);
+//                            } else {
+//                                setAndrefushApkItems(recommendAppResponse.apps);
+//                                ll_adapks_contain.setVisibility(View.VISIBLE);
+//                                relativeAdApkTop.setVisibility(View.VISIBLE);
+//                            }
+//                        } else {
+//                            ll_adapks_contain.setVisibility(View.GONE);
+//                            relativeAdApkTop.setVisibility(View.INVISIBLE);
+//                        }
+//                    }
+//                });
+//
     }
 
     private void clearCacheData(){
@@ -2357,107 +2374,107 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
 
     private int mCurrentFacePage = 0;// 广告应用选择索引
     private int pageCount = 0;
+//
+//    /**
+//     * 刷新设置
+//     */
+//    public synchronized void setAndrefushApkItems(List<ServerAppInfo> appInfoList) {
+//        //广告数量
+//        int adCount = appInfoList.size();
+//        LogUtil.e("wqh_Folder","adCount"+adCount);
+//        //余数
+//        int  adRemainder = adCount % 3;
+//        int adPageCount = (adCount - adRemainder) / (int) 3;
+//        //缩略图view 列表
+//        List<View> lv = new ArrayList<View>();
+//        for (int i = 0; i < adPageCount; i++) {
+//            //缩略图列表
+//            lv.add(getSingleAdPage(appInfoList, i));
+//        }
+//        //单独添加 最后一页
+//        if(adRemainder>0){
+//            lv.add(getSingleAdPage(appInfoList, adPageCount));
+//        }
+//        AdApkPagerAdapter adapter = new AdApkPagerAdapter(lv);
+//        vp_adapk_pager.setAdapter(adapter);
+//        vp_adapk_pager.setCurrentItem(mCurrentFacePage);
+//        //分发广告页数
+//        pageCount = lv.size();
+//        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.adapk_indicator);
+//        indicator.setViewPager(vp_adapk_pager);
+//        adapter.notifyDataSetChanged();
+//        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                mCurrentFacePage = position;
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
+//    }
 
-    /**
-     * 刷新设置
-     */
-    public synchronized void setAndrefushApkItems(List<ServerAppInfo> appInfoList) {
-        //广告数量
-        int adCount = appInfoList.size();
-        LogUtil.e("wqh_Folder","adCount"+adCount);
-        //余数
-        int  adRemainder = adCount % 3;
-        int adPageCount = (adCount - adRemainder) / (int) 3;
-        //缩略图view 列表
-        List<View> lv = new ArrayList<View>();
-        for (int i = 0; i < adPageCount; i++) {
-            //缩略图列表
-            lv.add(getSingleAdPage(appInfoList, i));
-        }
-        //单独添加 最后一页
-        if(adRemainder>0){
-            lv.add(getSingleAdPage(appInfoList, adPageCount));
-        }
-        AdApkPagerAdapter adapter = new AdApkPagerAdapter(lv);
-        vp_adapk_pager.setAdapter(adapter);
-        vp_adapk_pager.setCurrentItem(mCurrentFacePage);
-        //分发广告页数
-        pageCount = lv.size();
-        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.adapk_indicator);
-        indicator.setViewPager(vp_adapk_pager);
-        adapter.notifyDataSetChanged();
-        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mCurrentFacePage = position;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
-
-    private View getSingleAdPage(List<ServerAppInfo> appInfoList, int page) {
-
-        LinearLayout layout = new LinearLayout(mLauncher);
-        layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setBackgroundColor(Color.TRANSPARENT);
-        layout.setWeightSum(3.0f);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.weight = 1.0f;
-
-        int adSize = appInfoList.size();
-        int setFlag = -1;
-
-        for (int i = page * 3; i <= Math.min(page * 3 + 2, adSize - 1); i++) {
-            final ServerAppInfo appInfo = appInfoList.get(i);
-            final ItemAppInfoBinding binding = DataBindingUtil.inflate(mInflater, R.layout.item_app_info, this, false);
-            binding.setInfo(appInfo);
-            appInfo.setActionCallback(new ServerAppInfo.ActionCallback() {
-                @Override
-                public void onStart(ServerAppInfo ai) {
-                    PingManager.getInstance().reportFolderAdAction(PingManager.ACTION_FOLDER_AD_DOWNLOAD_START, ai);
-                }
-
-                @Override
-                public void onFail(ServerAppInfo ai) {
-                    PingManager.getInstance().reportFolderAdAction(PingManager.ACTION_FOLDER_AD_DOWNLOAD_FAIL, ai);
-                }
-
-                @Override
-                public void onComplete(ServerAppInfo ai) {
-                    PingManager.getInstance().reportFolderAdAction(PingManager.ACTION_FOLDER_AD_DOWNLOAD_COMPLETE, ai);
-                }
-
-                @Override
-                public void onInstalled(ServerAppInfo ai) {
-                    PingManager.getInstance().reportFolderAdAction(PingManager.ACTION_FOLDER_AD_DOWNLOAD_INSTALLED, ai);
-                }
-            });
-            binding.rootView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DownloadEvents.download(mLauncher, appInfo);
-                }
-            });
-            layout.addView(binding.getRoot(), layoutParams);
-        }
-
-        int fillSeatNum = 3 - layout.getChildCount();
-
-        for (int i = 0; i < fillSeatNum; i++) {
-            layout.addView(new View(mLauncher), layoutParams);
-        }
-
-        return layout;
-    }
+//    private View getSingleAdPage(List<ServerAppInfo> appInfoList, int page) {
+//
+//        LinearLayout layout = new LinearLayout(mLauncher);
+//        layout.setOrientation(LinearLayout.HORIZONTAL);
+//        layout.setBackgroundColor(Color.TRANSPARENT);
+//        layout.setWeightSum(3.0f);
+//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        layoutParams.weight = 1.0f;
+//
+//        int adSize = appInfoList.size();
+//        int setFlag = -1;
+//
+//        for (int i = page * 3; i <= Math.min(page * 3 + 2, adSize - 1); i++) {
+//            final ServerAppInfo appInfo = appInfoList.get(i);
+//            final ItemAppInfoBinding binding = DataBindingUtil.inflate(mInflater, R.layout.item_app_info, this, false);
+//            binding.setInfo(appInfo);
+//            appInfo.setActionCallback(new ServerAppInfo.ActionCallback() {
+//                @Override
+//                public void onStart(ServerAppInfo ai) {
+//                    PingManager.getInstance().reportFolderAdAction(PingManager.ACTION_FOLDER_AD_DOWNLOAD_START, ai);
+//                }
+//
+//                @Override
+//                public void onFail(ServerAppInfo ai) {
+//                    PingManager.getInstance().reportFolderAdAction(PingManager.ACTION_FOLDER_AD_DOWNLOAD_FAIL, ai);
+//                }
+//
+//                @Override
+//                public void onComplete(ServerAppInfo ai) {
+//                    PingManager.getInstance().reportFolderAdAction(PingManager.ACTION_FOLDER_AD_DOWNLOAD_COMPLETE, ai);
+//                }
+//
+//                @Override
+//                public void onInstalled(ServerAppInfo ai) {
+//                    PingManager.getInstance().reportFolderAdAction(PingManager.ACTION_FOLDER_AD_DOWNLOAD_INSTALLED, ai);
+//                }
+//            });
+//            binding.rootView.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    DownloadEvents.download(mLauncher, appInfo);
+//                }
+//            });
+//            layout.addView(binding.getRoot(), layoutParams);
+//        }
+//
+//        int fillSeatNum = 3 - layout.getChildCount();
+//
+//        for (int i = 0; i < fillSeatNum; i++) {
+//            layout.addView(new View(mLauncher), layoutParams);
+//        }
+//
+//        return layout;
+//    }
 
     public PopupWindow bannerPopuWindow;//banner windoow 框
     private int popupWindowWidth, popupWindowHeight;

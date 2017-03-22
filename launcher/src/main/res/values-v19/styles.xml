@@ -21,5 +21,6 @@
     <style name="Theme" parent="@android:style/Theme.Holo.Wallpaper.NoTitleBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 </resources>

@@ -62,6 +62,7 @@ import com.android.launcher3.compat.PackageInstallerCompat.PackageInstallInfo;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.settings.SettingsProvider;
+import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.ext.LauncherLog;
 import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.kinflow.common.utils.Const;
@@ -5035,7 +5036,8 @@ public class LauncherModel extends BroadcastReceiver
             "com.letv.games",
             "com.letv.app.appstore",
             "com.utooo.huahualock",
-            "com.android.launcher5.kingsun.v30"
+            "com.android.launcher5.kingsun.v30",
+            "com.android.bglauncher"
     };
 
     public static boolean isFilterPackage(String pkg) {
@@ -5044,6 +5046,10 @@ public class LauncherModel extends BroadcastReceiver
     			return true;
     		}
     	}
+
+//        if (isHomeApp(pkg)) {
+//            return true;
+//        }
         // yanni: 隐藏icon15天,此处建议icon个数不超过3
         long delta = System.currentTimeMillis() - CommonShareData.getLong(
                 Const.NAVIGATION_LOCAL_FIRST_INIT, System.currentTimeMillis());
@@ -5058,6 +5064,20 @@ public class LauncherModel extends BroadcastReceiver
     }
     /* Lenovo-SW zhaoxin5 20150116 add for theme support END */
 
+//    private static boolean isHomeApp(String pkg) {
+//        PackageManager packageManager = LauncherAppState.getContext().getPackageManager();
+//        // 属性
+//        Intent intent = new Intent(Intent.ACTION_MAIN);
+//        intent.addCategory(Intent.CATEGORY_HOME);
+//        List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(intent,
+//                PackageManager.MATCH_DEFAULT_ONLY);
+//        for (ResolveInfo ri : resolveInfo) {
+//            if (TextUtils.equals(pkg, ri.activityInfo.packageName)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     /** Lenovo-SW zhaoxin5 20150824 add for XTHREEROW-942 START */
     boolean checkPositionIsEmpty(ShortcutInfo sInfo, Context context, final ArrayList<Long> workspaceScreens) {
