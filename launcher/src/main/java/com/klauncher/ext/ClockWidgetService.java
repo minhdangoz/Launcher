@@ -352,7 +352,7 @@ public class ClockWidgetService extends Service {
     }
 
     OkHttpClient client = new OkHttpClient();
-    private static final String appEncryptKey= "online:hltq+(^g&%~vd+10003";
+    private static final String appEncryptKey= "6_HOja73md[<SRjM";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     String postGetWeather(String json) throws IOException {
@@ -423,7 +423,7 @@ public class ClockWidgetService extends Service {
         urlBuild.append(DeviceInfoUtils.getNT(getApplicationContext()));
         urlBuild.append("&");
         urlBuild.append("pid=");
-        urlBuild.append("10003");
+        urlBuild.append("10006");
         urlBuild.append("&");
         urlBuild.append("sv=");
         urlBuild.append(DeviceInfoUtils.getSoftwareVersion(getApplicationContext()));
@@ -476,7 +476,7 @@ public class ClockWidgetService extends Service {
         urlBuild.append(DeviceInfoUtils.getNT(getApplicationContext()));
         urlBuild.append("&");
         urlBuild.append("pid=");
-        urlBuild.append("10003");
+        urlBuild.append("10006");
         urlBuild.append("&");
         urlBuild.append("sv=");
         urlBuild.append(DeviceInfoUtils.getSoftwareVersion(getApplicationContext()));
