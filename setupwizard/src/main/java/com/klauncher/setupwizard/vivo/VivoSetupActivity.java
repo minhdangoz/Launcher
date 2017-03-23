@@ -28,7 +28,7 @@ public class VivoSetupActivity extends Activity {
             Log.e(TAG, "no vivo default setupwizard");
         }
 
-        mDefault = new ComponentName("com.huawei.hwstartupguide", "com.huawei.hwstartupguide.LanguageSelectActivity");
+        mDefault = getComponentName();
         mPm = getApplicationContext().getPackageManager();
         disableComponent(mDefault);
     }
