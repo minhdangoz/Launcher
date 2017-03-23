@@ -68,10 +68,10 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="30dp"
         android:text="@string/hw_next"
-        android:background="@drawable/btn_blue_sel"
+        android:background="@drawable/btn_sel"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="55dp" />
+        android:layout_height="45dp" />
 
     <TextView
         android:id="@+id/hw_call"

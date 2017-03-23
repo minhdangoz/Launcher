@@ -109,7 +109,7 @@
         android:layout_height="50dp">
     <Button
         android:id="@+id/hw_agreement_forward"
-        android:background="@drawable/btn_blue_sel"
+        android:background="@drawable/btn_sel"
         android:text="@string/hw_forward"
         android:layout_weight="1"
         android:layout_marginRight="15dp"
@@ -120,7 +120,7 @@
         android:id="@+id/hw_agreement_next"
         android:text="@string/hw_next"
         android:layout_weight="1"
-        android:background="@drawable/btn_blue_sel"
+        android:background="@drawable/btn_sel"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="15dp"

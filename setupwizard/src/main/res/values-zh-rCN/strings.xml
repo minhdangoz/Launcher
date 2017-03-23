@@ -20,7 +20,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!--huawei string start-->
-    <string name="hw_next">下一步</string>
+    <string name="hw_next">下一页</string>
     <string name="hw_forward">上一步</string>
 
     <string name="hw_language_select">选择语言和地区</string>
@@ -30,10 +30,12 @@
     <string name="hw_language_call">紧急呼叫</string>
 
 
-    <string name="hw_wifi_select">选择WLAN网络</string>
+    <string name="hw_wifi_select">选择WLAN</string>
+    <string name="hw_wifi_settings">WLAN设置</string>
     <string name="hw_wifi_kg">开关</string>
     <string name="hw_wifi">WLAN</string>
     <string name="hw_wifi_jump">跳过</string>
+    <string name="hw_wifi_pre_step">上一步</string>
 
     <string name="hw_agreement">协议与条款</string>
     <string name="hw_agreement_yinsi">华为隐私政策</string>
@@ -47,6 +49,7 @@
     <string name="hw_setup_over">配置完成</string>
     <string name="hw_setup_start">开始使用</string>
     <string name="hw_setup_detail">花粉俱乐部是为华为官方唯一的交流平台。花粉俱乐部提供最新华为产品和服务资讯，ROM包资源，玩机技巧等，并开展丰富多彩的线上线上交流活动，是华为聆听用户最真实声音的窗口。</string>
+    <string name="security">安全</string>
     <!--huawei string end-->
 
 

@@ -20,7 +20,8 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!--huawei string start-->
-    <string name="hw_language_select">select language \&amp; region</string>
+
+   <!-- <string name="hw_language_select">select language \&amp; region</string>
     <string name="hw_language_call">Emergency call</string>
     <string name="hw_language_next">Next</string>
     <string name="hw_language_zhhk">中文（繁体）</string>
@@ -31,6 +32,7 @@
     <string name="hw_wifi_kg">Switch</string>
     <string name="hw_wifi">WLAN</string>
     <string name="hw_wifi_jump">SKIP</string>
+    <string name="security">security</string>
 
     <string name="hw_agreement">协议与条款</string>
     <string name="hw_agreement_yinsi">华为隐私政策</string>
@@ -40,8 +42,12 @@
     <string name="hw_agreement_weather_locate">天气位置服务</string>
     <string name="hw_agreement_weather_locate_detail">开启定位服务，并允许天气通过 GPS 或基站获取您的位置信息，为您提供所在城市的天气情况。您可在天气设置中关闭当前位置，或在系统设置中关闭定位服务。</string>
     <string name="hw_agreement_next">跳过</string>
+    <string name="hw_wifi_pre_step">Previous step</string>
 
     <string name="hw_setup_over">配置完成</string>
+    <string name="hw_wifi_settings">WLAN Settings</string>-->
+
+
 
     <!--huawei string end-->
 

@@ -1,16 +1,54 @@
 <resources>
     <!--huawei string start-->
     <!--huawei string start-->
-    <string name="hw_language_select">选择语言和地区</string>
+
+
+    <string name="hw_language_select">Select language \&amp;\&#38;\&amp; region</string>
+    <string name="hw_language_call">Emergency call</string>
+    <string name="hw_language_next">Next</string>
+    <string name="hw_language_zhhk">中文（繁体）</string>
+    <string name="hw_language_zh">中文（简体）</string>
+    <string name="hw_language_en">English</string>
+
+    <string name="hw_wifi_select">Select WLAN network</string>
+    <string name="hw_wifi_kg">Switch</string>
+    <string name="hw_wifi">WLAN</string>
+    <string name="hw_wifi_jump">SKIP</string>
+    <string name="security">security</string>
+
+   <!-- <string name="hw_language_select">选择语言和地区</string>
     <string name="hw_language_zhhk">中文（繁体）</string>
     <string name="hw_language_zh">中文（简体）</string>
     <string name="hw_language_en">English</string>
     <string name="hw_language_call">紧急呼叫</string>
     <string name="hw_language_next">下一步</string>
 
-    <string name="hw_wifi_select">选择wifi</string>
+    <string name="hw_wifi_select">选择WLAN</string>
     <string name="hw_wifi_kg">开关</string>
     <string name="hw_wifi">WLAN</string>
+    <string name="security">安全</string>
+    <string name="hw_wifi_settings">WLAN设置</string>-->
+
+
+    <string name="hw_next">Next</string>
+    <string name="hw_forward">Previous</string>
+
+    <string name="hw_wifi_settings">WLAN Settings</string>
+    <string name="hw_wifi_pre_step">Previous Step</string>
+
+    <string name="hw_agreement">Terms and Conditions</string>
+    <string name="hw_agreement_yinsi">Huawei Privacy Policy</string>
+    <string name="hw_agreement_yinsi_detail">Huawei highly values  your personal and  privacy.\n Please do not submit or provide any personal or private data to Huawei before reading,understanding and agreeing to this Policy.</string>
+    <string name="hw_agreement_agree">Agree</string>
+    <string name="hw_agreement_agree_no">Disagree</string>
+    <string name="hw_agreement_weather_locate">Weather location service</string>
+    <string name="hw_agreement_weather_locate_detail">To provide you with the latest weather information about your city,turn on your location service and allow the weather app to get your location information using GPS or the cellular network.You can turn off current location from weather settings or location access from system settings.</string>
+    <string name="hw_agreement_next">Skip</string>
+
+    <string name="hw_setup_over">Configuration successful</string>
+    <string name="hw_setup_start">Begin</string>
+    <string name="hw_setup_detail">Huawei Club is the only official communication platform of Huawei.You can find information about the latest Huawei products and services,ROM of resources,games,etc.,and participate in a number of online and offline interactive activities.Huawei Club is Huawei\&#8216;s window to you.</string>
+
     <!--huawei string end-->
 
     <!--huawei string end-->
