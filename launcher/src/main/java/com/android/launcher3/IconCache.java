@@ -39,6 +39,7 @@ import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.compat.UserManagerCompat;
 import com.klauncher.ext.KLauncherAppDisguise;
+import com.klauncher.launcher.BuildConfig;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -384,8 +385,16 @@ public class IconCache {
                                     pkgName.contains("scgmtk") || pkgName.contains("gallery3d") ||
                                     pkgName.contains("coolmessage")
                                     || pkgName.contains("dialer")) {
-                                themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
-                                        mContext.getPackageManager().getActivityIcon(info.getComponentName()), mContext);
+//                                Log.d("hw","pkgName : " + pkgName + " " +info.getComponentName().toString());
+
+                                if (TextUtils.equals(BuildConfig.FLAVOR, "jinli") && info.getComponentName().toString().contains("PeopleActivity")) {
+                                    themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
+                                            mContext.getPackageManager().getApplicationIcon(info.getActivityInfo().packageName), mContext);
+                                } else {
+                                    themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
+                                            mContext.getPackageManager().getActivityIcon(info.getComponentName()), mContext);
+                                }
+
                             } else {
                                 themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
                                         mContext.getPackageManager().getApplicationIcon(info.getActivityInfo().packageName), mContext);

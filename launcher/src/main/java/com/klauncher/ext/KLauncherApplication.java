@@ -28,6 +28,7 @@ import com.klauncher.kinflow.common.utils.CommonShareData;
 import com.klauncher.launcher.BuildConfig;
 import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
+import com.klauncher.utilities.DeviceInfoUtils;
 import com.klauncher.utilities.LogUtil;
 
 import java.util.ArrayList;
@@ -251,16 +252,24 @@ public class KLauncherApplication extends Application {
 //        }
         //add by hw end - 反射调用SDK，因为不同渠道可能SDK集成不一样
 
+//        Cfg cfg = new Cfg();
+//        cfg.mAppID = "48a75bc9-9fa5-43a8-a2a3-f5dada2bfedf";               //填入您后台的APP_ID  (*必填项)
+//        cfg.mAppToken = "cylYttCamcelZVFU";                //填入您后台的Token ID        (*必填项)
+//        cfg.mChannelID = "0";      //根据您的需求配置渠道号   (*可选项)
+
+
+        //new appid and token 170323
         Cfg cfg = new Cfg();
-        cfg.mAppID = "48a75bc9-9fa5-43a8-a2a3-f5dada2bfedf";               //填入您后台的APP_ID  (*必填项)
-        cfg.mAppToken = "cylYttCamcelZVFU";                //填入您后台的Token ID        (*必填项)
-        cfg.mChannelID = "0";      //根据您的需求配置渠道号   (*可选项)
+        cfg.mAppID = "723a71ec-d599-4ed6-81b4-c4df99dfceb9";               //填入您后台的APP_ID  (*必填项)
+        cfg.mAppToken = "f08e61858436674c";                //填入您后台的Token ID        (*必填项)
+        cfg.mChannelID = DeviceInfoUtils.getVersionCode(this);      //根据您的需求配置渠道号   (*可选项)
+
         M.i(this, cfg, new IListener() {
             @Override
             public void notifyInitDone() {
                 //locID为广告位ID,需要在后台创建。
                 //num 为显示广告的个数
-                Launch.cfg(KLauncherApplication.this, "58be9602663d24d2", 3);
+                Launch.cfg(KLauncherApplication.this, "33d55cb2daf7bbf2", 3);
                 List<String> words = new ArrayList<String>();
                 Launch.cfgKeys(KLauncherApplication.this, words);
             }
