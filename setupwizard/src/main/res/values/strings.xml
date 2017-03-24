@@ -1,7 +1,5 @@
 <resources>
     <!--huawei string start-->
-    <!--huawei string start-->
-
 
     <string name="hw_language_select">Select language \&amp;\&#38;\&amp; region</string>
     <string name="hw_language_call">Emergency call</string>
@@ -15,20 +13,6 @@
     <string name="hw_wifi">WLAN</string>
     <string name="hw_wifi_jump">SKIP</string>
     <string name="security">security</string>
-
-   <!-- <string name="hw_language_select">选择语言和地区</string>
-    <string name="hw_language_zhhk">中文（繁体）</string>
-    <string name="hw_language_zh">中文（简体）</string>
-    <string name="hw_language_en">English</string>
-    <string name="hw_language_call">紧急呼叫</string>
-    <string name="hw_language_next">下一步</string>
-
-    <string name="hw_wifi_select">选择WLAN</string>
-    <string name="hw_wifi_kg">开关</string>
-    <string name="hw_wifi">WLAN</string>
-    <string name="security">安全</string>
-    <string name="hw_wifi_settings">WLAN设置</string>-->
-
 
     <string name="hw_next">Next</string>
     <string name="hw_forward">Previous</string>
@@ -51,5 +35,26 @@
 
     <!--huawei string end-->
 
-    <!--huawei string end-->
+
+    <!--oppo string start-->
+    <string name="op_language_select">Language Selection</string>
+    <string name="op_simple_chinese">简体中文</string>
+    <string name="op_traditional_chinese">繁体中文</string>
+    <string name="op_english">English</string>
+    <string name="op_page_resume">Continue</string>
+
+    <string name="op_wifi_tittle">Connect to Wi-Fi</string>
+    <string name="op_wifi_sub_tittle">Wi-Fi nectworks</string>
+    <string name="op_skip">Skip</string>
+    <string name="op_terms_tittle">Terms of Use</string>
+    <string name="op_user_experience_program">Join in the \"User Experience Program\"</string>
+    <string name="op_user_experience_detail">We will collect statistics on your use of various product functions to improve the product and service.The collection process will be in compliance with our privacy</string>
+    <string name="op_user_protocol">User Agreement</string>
+    <string name="op_privacy_policy">Privacy Policy</string>
+    <string name="op_user_agreement">I have read and agree to the above terms of use</string>
+    <string name="op_setup_compeled_tittle">Welcome to OPPO</string>
+    <string name="op_start">start using</string>
+    <!--oppo string end-->
+
+
 </resources>

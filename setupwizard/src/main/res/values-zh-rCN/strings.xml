@@ -53,5 +53,24 @@
     <!--huawei string end-->
 
 
+    <!--oppo string start-->
+    <string name="op_language_select">选择语言</string>
+    <string name="op_simple_chinese">简体中文</string>
+    <string name="op_traditional_chinese">繁体中文</string>
+    <string name="op_english">English</string>
+    <string name="op_page_resume">继续</string>
+
+    <string name="op_wifi_tittle">连接WLAN</string>
+    <string name="op_wifi_sub_tittle">WLAN网络</string>
+    <string name="op_skip">跳过</string>
+    <string name="op_terms_tittle">使用条款</string>
+    <string name="op_user_experience_program">加入\"用户体验计划\"</string>
+    <string name="op_user_experience_detail">我们会统计您对各项功能的使用情况，以提升产品和服务。整个过程将遵循隐私政策</string>
+    <string name="op_user_protocol">用户协议</string>
+    <string name="op_privacy_policy">隐私政策</string>
+    <string name="op_user_agreement">我已阅读并同意上述使用条款</string>
+    <string name="op_setup_compeled_tittle">欢迎使用\nOPPO手机</string>
+    <string name="op_start">开始使用</string>
+    <!--oppo string end-->
 
 </resources>

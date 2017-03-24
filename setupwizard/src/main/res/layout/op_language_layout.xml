@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white">
+
+
+    <TextView
+        android:id="@+id/tittle"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="@string/op_language_select"
+        android:textColor="@color/custem_text_black"
+        android:textSize="30sp"/>
+
+    <com.klauncher.setupwizard.common.PullToScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tittle"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <View
+                style="@style/Op_common_line"
+                />
+
+            <RelativeLayout
+                android:id="@+id/container_simple_chinese"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/op_simple_chinese"
+                    android:textColor="@color/custem_text_black"
+                    android:textSize="@dimen/custem_text_size"/>
+
+                <ImageView
+                    android:id="@+id/tick_simple_chinese"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/op_tick"/>
+
+            </RelativeLayout>
+
+            <View
+                style="@style/Op_common_line"
+                />
+
+            <RelativeLayout
+                android:id="@+id/container_traditional_chinese"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/op_traditional_chinese"
+                    android:textColor="@color/custem_text_black"
+                    android:textSize="@dimen/custem_text_size"/>
+
+                <ImageView
+                    android:id="@+id/tick_traditional_chinese"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/op_tick"/>
+
+            </RelativeLayout>
+
+            <View
+                style="@style/Op_common_line"
+                />
+
+            <RelativeLayout
+                android:id="@+id/container_english"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/op_english"
+                    android:textColor="@color/custem_text_black"
+                    android:textSize="@dimen/custem_text_size"/>
+
+                <ImageView
+                    android:id="@+id/tick_english"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/op_tick"/>
+
+            </RelativeLayout>
+
+            <View
+                style="@style/Op_common_line"
+                />
+        </LinearLayout>
+
+
+    </com.klauncher.setupwizard.common.PullToScrollView>
+
+    <TextView
+        android:id="@+id/tv_page_resume"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/op_buttom_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/op_page_resume"
+        android:textColor="@color/op_custem_green"
+        android:textSize="@dimen/custem_text_size"/>
+</RelativeLayout>

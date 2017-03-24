@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/op_turn_left"/>
+
+        <TextView
+            android:id="@+id/tittle"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="@string/op_terms_tittle"
+            android:textColor="@color/custem_text_black"
+            android:textSize="30sp"/>
+
+        <View
+            style="@style/Op_common_line"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/op_user_experience_program"
+            android:textColor="@color/custem_text_black"
+            android:textSize="@dimen/custem_text_size"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="50dp"
+                android:text="@string/op_user_experience_detail"
+                android:textColor="@color/custem_text_dark_gray"
+                android:textSize="@dimen/custem_small_text_size"/>
+
+            <com.suke.widget.SwitchButton
+                android:id="@+id/switch_button"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                app:sb_checked_color="@color/op_custem_green"
+                app:sb_show_indicator="false"/>
+        </RelativeLayout>
+
+        <View
+            style="@style/Op_common_line"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/op_user_protocol"
+                android:textColor="@color/custem_text_black"
+                android:textSize="@dimen/custem_text_size"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/op_turn_right"/>
+        </RelativeLayout>
+
+        <View
+            style="@style/Op_common_line"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/op_privacy_policy"
+                android:textColor="@color/custem_text_black"
+                android:textSize="@dimen/custem_text_size"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/op_turn_right"/>
+        </RelativeLayout>
+
+        <View
+            style="@style/Op_common_line"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/op_tick"
+                android:button="@null"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/op_user_agreement"
+                android:textColor="@color/custem_text_dark_gray"
+                android:textSize="@dimen/custem_small_text_size"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_page_resume"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/op_buttom_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/op_page_resume"
+        android:textColor="@color/op_custem_green"
+        android:textSize="@dimen/custem_text_size"/>
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.klauncher.setupwizard.hw;
+package com.klauncher.setupwizard.oppo;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,72 +15,50 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.klauncher.setupwizard.R;
 import com.klauncher.setupwizard.common.WifiInfoManager;
+import com.klauncher.setupwizard.hw.DividerItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by hw on 17-3-21.
+ * description：Oppo wifi设置
+ * <br>author：caowugao
+ * <br>time： 2017/03/24 12:52
  */
-
-public class HwWifiSettings extends Activity implements View.OnClickListener, WifiInfoManager.OnWifiListener {
+public class OpWifiSettings extends Activity implements View.OnClickListener, WifiInfoManager.OnWifiListener {
 
     private RecyclerView recyclerView;
     private MyRecyclerAdapter recycleAdapter;
-    //    private WifiManager wifiManager;
-//    private List<ScanResult> list;
 
-    private CheckSwitchButton switchButton;
 
-    private TextView backTv;
-    private TextView nextTv;
     private WifiInfoManager manager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hw_wifi_layout);
-//        wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-//        list = wifiManager.getScanResults();
+        setContentView(R.layout.op_wifi_layout);
         manager = new WifiInfoManager(this);
         manager.init();
         manager.setOnWifiListener(this);
-        initUi();
+        initViews();
+        manager.openWifi();
     }
 
-    private void initUi() {
-        backTv = (TextView) findViewById(R.id.hw_wifi_back);
-        nextTv = (TextView) findViewById(R.id.hw_wifi_next);
-        backTv.setOnClickListener(this);
-        nextTv.setOnClickListener(this);
-        switchButton = (CheckSwitchButton) findViewById(R.id.hw_wifi_switch);
-        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-//                    wifiManager.setWifiEnabled(true);
-                    manager.openWifi();
-                } else {
-//                    wifiManager.setWifiEnabled(false);
-                    manager.closeWifi();
-                    recyclerView.setVisibility(View.GONE);
-                }
-            }
-        });
-//        if (wifiManager.isWifiEnabled()) {
-        if (manager.isWifiEnabled()) {
-            switchButton.setChecked(true);
-        } else {
-            switchButton.setChecked(false);
-        }
-        recyclerView = (RecyclerView) findViewById(R.id.hw_wifi_list);
-//        recycleAdapter = new MyRecyclerAdapter(HwWifiSettings.this, list);
+    private void initViews() {
+
+        View back = findViewById(R.id.iv_back);
+        View resume = findViewById(R.id.tv_page_resume);
+        back.setOnClickListener(this);
+        resume.setOnClickListener(this);
+
+        recyclerView = (RecyclerView) findViewById(R.id.op_wifi_list);
+//        recycleAdapter = new MyRecyclerAdapter(OpWifiSettings.this, list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         //设置布局管理器
         recyclerView.setLayoutManager(layoutManager);
@@ -96,11 +74,11 @@ public class HwWifiSettings extends Activity implements View.OnClickListener, Wi
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.hw_wifi_back) {
+        if (i == R.id.iv_back) {
             finish();
-        } else if (i == R.id.hw_wifi_next) {
+        } else if (i == R.id.tv_page_resume) {
             Intent intent = new Intent();
-            intent.setClass(this, HwAgreement.class);
+            intent.setClass(this, OpAgreement.class);
             startActivity(intent);
         }
     }
@@ -145,7 +123,14 @@ public class HwWifiSettings extends Activity implements View.OnClickListener, Wi
         if (recyclerView.getVisibility() != View.VISIBLE) {
             recyclerView.setVisibility(View.VISIBLE);
         }
-        recycleAdapter = new MyRecyclerAdapter(HwWifiSettings.this, results);
+
+        List<ScanResult> filter = new ArrayList<>();
+        for (ScanResult result : results) {
+            if (null != result.SSID && !"".equals(result.SSID)) {
+                filter.add(result);
+            }
+        }
+        recycleAdapter = new MyRecyclerAdapter(OpWifiSettings.this, filter);
         recyclerView.setAdapter(recycleAdapter);
     }
 
@@ -198,39 +183,39 @@ public class HwWifiSettings extends Activity implements View.OnClickListener, Wi
             int sigLevel = WifiManager.calculateSignalLevel(
                     scanResult.level, 100);
             if (sigLevel > 90) {
-                holder.signalTv.setImageDrawable(getResources().getDrawable(R.drawable.hw_stat_sys_wifi_signal_4));
+                holder.signalTv.setImageDrawable(getResources().getDrawable(R.drawable.op_ic_wifi_lock_signal_4));
             } else if (sigLevel > 80) {
-                holder.signalTv.setImageDrawable(getResources().getDrawable(R.drawable.hw_stat_sys_wifi_signal_3));
+                holder.signalTv.setImageDrawable(getResources().getDrawable(R.drawable.op_ic_wifi_lock_signal_3));
             } else if (sigLevel > 60) {
-                holder.signalTv.setImageDrawable(getResources().getDrawable(R.drawable.hw_stat_sys_wifi_signal_2));
+                holder.signalTv.setImageDrawable(getResources().getDrawable(R.drawable.op_ic_wifi_lock_signal_2));
             } else if (sigLevel > 40) {
-                holder.signalTv.setImageDrawable(getResources().getDrawable(R.drawable.hw_stat_sys_wifi_signal_1));
+                holder.signalTv.setImageDrawable(getResources().getDrawable(R.drawable.op_ic_wifi_lock_signal_1));
             } else
-                holder.signalTv.setImageDrawable(getResources().getDrawable(R.drawable.hw_stat_sys_wifi_signal_0));
+                holder.signalTv.setImageDrawable(getResources().getDrawable(R.drawable.op_ic_wifi_lock_signal_1));
         }
 
-    //重写onCreateViewHolder方法，返回一个自定义的ViewHolder
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //重写onCreateViewHolder方法，返回一个自定义的ViewHolder
+        @Override
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = inflater.inflate(R.layout.hw_wifi_item_layout, parent, false);
-        MyViewHolder holder = new MyViewHolder(view);
-        return holder;
-    }
+            View view = inflater.inflate(R.layout.op_wifi_item_layout, parent, false);
+            MyViewHolder holder = new MyViewHolder(view);
+            return holder;
+        }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+        class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nameTv;
-        //            TextView protectTv;
-        ImageView signalTv;
+            TextView nameTv;
+            //            TextView protectTv;
+            ImageView signalTv;
 
-        public MyViewHolder(View view) {
-            super(view);
-            nameTv = (TextView) view.findViewById(R.id.hw_wifi_item_name);
+            public MyViewHolder(View view) {
+                super(view);
+                nameTv = (TextView) view.findViewById(R.id.wifi_item_name);
 //                protectTv=(TextView) view.findViewById(R.id.hw_wifi_item_protect);
-            signalTv = (ImageView) view.findViewById(R.id.hw_wifi_item_signal);
-        }
+                signalTv = (ImageView) view.findViewById(R.id.wifi_item_signal);
+            }
 
+        }
     }
-}
 }

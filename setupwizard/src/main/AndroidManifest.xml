@@ -34,7 +34,18 @@
             android:enabled="true"
             android:exported="true"
             ></service>
-
+        <activity android:name=".oppo.OppoLanguageSettings"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            ></activity>
+        <activity android:name=".oppo.OpWifiSettings"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            ></activity>
+        <activity android:name=".oppo.OpAgreement"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            ></activity>
+        <activity android:name=".oppo.OpSetupComplete"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            ></activity>
     </application>
 
 </manifest>

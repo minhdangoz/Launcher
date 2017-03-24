@@ -2,5 +2,7 @@
 <resources>
     <color name="custem_text_black">#262626</color>
     <color name="custem_text_dark_gray">#616161</color>
-
+    <color name="line_gray">#11000000</color>
+    <color name="hw_custem_green">#ff25c0c7</color>
+    <color name="op_custem_green">#2D9F96</color>
 </resources>

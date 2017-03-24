@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+    >
+
+    <LinearLayout
+        android:id="@+id/tittle_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/op_turn_left"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+
+            <TextView
+                android:id="@+id/hw_wifi_sel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingBottom="5dp"
+                android:text="@string/op_wifi_tittle"
+                android:textColor="@color/custem_text_black"
+                android:textSize="25sp"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="@string/op_wifi_sub_tittle"
+            android:textColor="#ff444444"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/op_wifi_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tittle_container"
+        android:layout_marginBottom="80dp"
+        android:scrollbars="vertical"
+        />
+
+    <!--android:background="#ffdfdfdf"-->
+
+    <TextView
+        android:id="@+id/tv_page_resume"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/op_buttom_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/op_skip"
+        android:textColor="@color/op_custem_green"
+        android:textSize="@dimen/custem_text_size"/>
+</RelativeLayout>

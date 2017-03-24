@@ -39,9 +39,10 @@ public class SetupMain {
                 } else if (TextUtils.equals(flavor, OPPO_FLAVOR)) {
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
     }
+
 }
