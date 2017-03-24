@@ -272,6 +272,7 @@ public class KLauncherApplication extends Application {
                 Launch.cfg(KLauncherApplication.this, "33d55cb2daf7bbf2", 3);
                 List<String> words = new ArrayList<String>();
                 Launch.cfgKeys(KLauncherApplication.this, words);
+                Log.d("KLauncherApplication"," kappmob notifyInitDone");
             }
         });
 
