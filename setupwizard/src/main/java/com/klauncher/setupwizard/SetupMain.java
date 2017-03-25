@@ -20,6 +20,8 @@ public class SetupMain {
 
     public static final String SP_SETUP_START = "sp_setup_start";
 
+    public static final String SP_SETUP_OVER = "sp_setup_over";
+
     private static final String HUAWEI_FLAVOR = "huawei";
     private static final String VIVO_FLAVOR = "vivo";
     private static final String OPPO_FLAVOR = "oppo";
@@ -27,7 +29,7 @@ public class SetupMain {
     public static void startSetup(Context context, String flavor) {
         try {
             SharedPreferences sharedPreferences = context.getSharedPreferences(SP_SETUP, Context.MODE_PRIVATE);
-            if (sharedPreferences.getBoolean(SP_SETUP_START, false)) {
+            if (sharedPreferences.getBoolean(SP_SETUP_START, false) && !sharedPreferences.getBoolean(SP_SETUP_OVER, false)) {
 
                 if (TextUtils.equals(flavor, HUAWEI_FLAVOR)) {
                     Intent intent = new Intent();

@@ -2,11 +2,15 @@ package com.klauncher.setupwizard.vivo;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import static com.klauncher.setupwizard.SetupMain.SP_SETUP;
+import static com.klauncher.setupwizard.SetupMain.SP_SETUP_OVER;
 import static com.klauncher.setupwizard.SetupMain.TAG;
 
 /**
@@ -19,6 +23,9 @@ public class VivoSetupActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = getSharedPreferences(SP_SETUP, Context.MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean(SP_SETUP_OVER, true).commit();
+
         try {
             Intent setup = new Intent();
             setup.setClassName("com.vivo.setupwizard","com.vivo.setupwizard.MainActivity");
@@ -29,6 +36,7 @@ public class VivoSetupActivity extends Activity {
         }
 
         mDefault = getComponentName();
+        Log.e(TAG, "mDefault : " + mDefault.toString());
         mPm = getApplicationContext().getPackageManager();
         disableComponent(mDefault);
     }

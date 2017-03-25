@@ -3,9 +3,11 @@ package com.klauncher.setupwizard.hw;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +16,9 @@ import com.klauncher.setupwizard.R;
 import com.klauncher.setupwizard.common.ConfigurationUtil;
 
 import java.util.Locale;
+
+import static com.klauncher.setupwizard.SetupMain.SP_SETUP;
+import static com.klauncher.setupwizard.SetupMain.SP_SETUP_OVER;
 
 
 /**
@@ -38,6 +43,9 @@ public class HwLanguageSettings extends Activity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = getSharedPreferences(SP_SETUP, Context.MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean(SP_SETUP_OVER, true).commit();
+
         setContentView(R.layout.hw_language_layout);
         tvSimpleChinese = (TextView) findViewById(R.id.tv_simple_chinese);
         tvTraditionChinese = (TextView) findViewById(R.id.tv_tradition_chinese);
@@ -119,5 +127,13 @@ public class HwLanguageSettings extends Activity implements View.OnClickListener
         if (null != HANDLER) {
             HANDLER.removeCallbacks(resumeRun);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

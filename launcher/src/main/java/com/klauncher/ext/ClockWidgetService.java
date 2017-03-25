@@ -124,8 +124,8 @@ public class ClockWidgetService extends Service {
         }
     }
 
-    private static final String WEATHER_LOCATE_SERVER = "http://tq.91.com/api/";
-    private static final String WEATHER_INFO_SERVER = "http://tq.91.com/foreignApi/";
+    private static final String WEATHER_LOCATE_SERVER = "http://tq.ifjing.com/api/";
+    private static final String WEATHER_INFO_SERVER = "http://tq.ifjing.com/foreignApi/";
 
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
@@ -442,7 +442,7 @@ public class ClockWidgetService extends Service {
         urlBuild.append(unixTime);
         urlBuild.append("&");
         urlBuild.append("sign=");
-        urlBuild.append(DeviceInfoUtils.Md5Encode(unixTime + appEncryptKey));
+        urlBuild.append(DeviceInfoUtils.Md5Encode(unixTime + appEncryptKey + "10006"));
         Log.d(TAG,"post : makeWeatherUrl :  " + urlBuild.toString());
         return urlBuild.toString();
     }
@@ -495,7 +495,7 @@ public class ClockWidgetService extends Service {
         urlBuild.append(unixTime);
         urlBuild.append("&");
         urlBuild.append("sign=");
-        urlBuild.append(DeviceInfoUtils.Md5Encode(unixTime + appEncryptKey));
+        urlBuild.append(DeviceInfoUtils.Md5Encode(unixTime + appEncryptKey + "10006"));
         Log.d(TAG,"post : makeWeatherUrl :  " + urlBuild.toString());
         return urlBuild.toString();
     }
