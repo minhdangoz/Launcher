@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.klauncher.setupwizard.hw.HwLanguageSettings;
-import com.klauncher.setupwizard.oppo.OppoLanguageSettings;
 import com.klauncher.setupwizard.vivo.VivoSetupActivity;
 
 /**
@@ -40,9 +39,9 @@ public class SetupMain {
                     intent.setClass(context, VivoSetupActivity.class);
                     context.startActivity(intent);
                 } else if (TextUtils.equals(flavor, OPPO_FLAVOR)) {
-                    Intent intent = new Intent();
-                    intent.setClass(context, OppoLanguageSettings.class);
-                    context.startActivity(intent);
+//                    Intent intent = new Intent();
+//                    intent.setClass(context, OppoLanguageSettings.class);
+//                    context.startActivity(intent);
                 }
             }
         } catch (Exception e) {

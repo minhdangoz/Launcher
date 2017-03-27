@@ -17,16 +17,20 @@
         </activity>
 
         <activity android:name=".hw.HwLanguageSettings"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             ></activity>
 
         <activity android:name=".hw.HwWifiSettings"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait"
             ></activity>
         <activity android:name=".hw.HwAgreement"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             ></activity>
         <activity android:name=".hw.HwSetupComplete"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             ></activity>
 
