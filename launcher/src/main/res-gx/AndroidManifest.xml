@@ -118,7 +118,7 @@
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
     <!--广告sdk end-->
     <application
-        android:name="com.android.launcher3.LauncherApplication"
+        android:name="com.excelliance.open.LBApplication"
         android:backupAgent="com.android.launcher3.LauncherBackupAgentHelper"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher_home"
