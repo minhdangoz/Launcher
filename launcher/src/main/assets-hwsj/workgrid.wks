@@ -26,5 +26,26 @@
         "iconsize": "72",
         "textsize": "14",
         "hotseat": "6"
-    }
+    },
+    "MHA-AL00": {
+        "rows": "6",
+        "columns": "5",
+        "iconsize": "56",
+        "textsize": "11",
+        "hotseat": "6"
+    },
+    "LON-AL00": {
+            "rows": "6",
+            "columns": "5",
+            "iconsize": "56",
+            "textsize": "11",
+            "hotseat": "6"
+    },
+    "DUK-AL20": {
+                "rows": "6",
+                "columns": "5",
+                "iconsize": "56",
+                "textsize": "11",
+                "hotseat": "6"
+     }
 }

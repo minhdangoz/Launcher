@@ -48,7 +48,7 @@ public class VivoSetupActivity extends Activity {
 
     private void disableComponent(ComponentName componentName) {
         mPm.setComponentEnabledSetting(componentName,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
     }
 }
