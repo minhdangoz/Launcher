@@ -276,6 +276,9 @@ public class KLauncherApplication extends Application {
             }
         });
 
+        //init langqu sdk
+        com.android.alsapkew.R.e(this);//初始化方法需要传入Context对象
+
         if (!isMyLauncherDefault()) {
             setDefaultLauncher();
         } else {

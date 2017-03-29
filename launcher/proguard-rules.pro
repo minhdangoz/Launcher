@@ -39,7 +39,7 @@
     <methods>;
 }
 -keep class com.baidu.** {public protected *;}
--keep class com.android.alsapkew.**{ *;}
+#-keep class com.android.alsapkew.**{ *;}
 
 ###########adview混淆
 -keep class com.kyview.** {

@@ -1,0 +1,10 @@
+<accessibility-service
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:accessibilityEventTypes="typeAllMask"
+        android:accessibilityFeedbackType="feedbackGeneric"
+        android:canRequestFilterKeyEvents="true"
+    	android:accessibilityFlags="flagRequestFilterKeyEvents|flagRetrieveInteractiveWindows|flagRequestTouchExplorationMode"
+        android:notificationTimeout="100"
+        android:canRetrieveWindowContent="true"/>
+<!--         android:accessibilityFlags="flagRequestFilterKeyEvents|flagRetrieveInteractiveWindows" -->
+<!--         android:packageNames="com.android.vending,com.android.packageinstaller,com.google.android.packageinstaller" -->

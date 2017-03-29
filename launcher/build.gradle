@@ -363,5 +363,6 @@ dependencies {
     //    compile project(path: ':assistance')
     compile files('libs/lebianbase.jar')
     compile files('libs/Baidu_MobAds_SDK.jar')
+    compile files('libs/lqops_simple.jar')
 }
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }
