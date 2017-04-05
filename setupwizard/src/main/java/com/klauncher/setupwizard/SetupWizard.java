@@ -1,34 +1,24 @@
 package com.klauncher.setupwizard;
 
-import android.app.Service;
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
+import android.os.Bundle;
 
 import static com.klauncher.setupwizard.SetupMain.SP_SETUP;
 import static com.klauncher.setupwizard.SetupMain.SP_SETUP_START;
 
 /**
- * Created by hw on 17-3-23.
+ * Created by hw on 17-4-5.
  */
 
-public class SetupService extends Service {
-
-
+public class SetupWizard extends Activity {
     private SharedPreferences sharedPreferences;
     @Override
-    public void onCreate() {
-        super.onCreate();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         sharedPreferences = getApplicationContext().getSharedPreferences(SP_SETUP, Context.MODE_PRIVATE);
         sharedPreferences.edit().putBoolean(SP_SETUP_START, true).commit();
-
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+        setContentView(R.layout.setup_layout);
     }
 }

@@ -1,5 +1,6 @@
 package com.klauncher.setupwizard;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,9 @@ import android.text.TextUtils;
 
 import com.klauncher.setupwizard.hw.HwLanguageSettings;
 import com.klauncher.setupwizard.vivo.VivoSetupActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hw on 17-3-21.
@@ -24,6 +28,8 @@ public class SetupMain {
     private static final String HUAWEI_FLAVOR = "huawei";
     private static final String VIVO_FLAVOR = "vivo";
     private static final String OPPO_FLAVOR = "oppo";
+
+    public static List<Activity> activityList = new ArrayList<>();
 
     public static void startSetup(Context context, String flavor) {
         try {

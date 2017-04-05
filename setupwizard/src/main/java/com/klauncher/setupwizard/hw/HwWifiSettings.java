@@ -1,6 +1,5 @@
 package com.klauncher.setupwizard.hw;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
@@ -19,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.klauncher.setupwizard.BaseActivity;
 import com.klauncher.setupwizard.R;
 import com.klauncher.setupwizard.common.WifiInfoManager;
 
@@ -28,7 +28,7 @@ import java.util.List;
  * Created by hw on 17-3-21.
  */
 
-public class HwWifiSettings extends Activity implements View.OnClickListener, WifiInfoManager.OnWifiListener {
+public class HwWifiSettings extends BaseActivity implements View.OnClickListener, WifiInfoManager.OnWifiListener {
 
     private RecyclerView recyclerView;
     private MyRecyclerAdapter recycleAdapter;

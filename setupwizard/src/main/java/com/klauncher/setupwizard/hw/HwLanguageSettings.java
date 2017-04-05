@@ -1,6 +1,5 @@
 package com.klauncher.setupwizard.hw;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.klauncher.setupwizard.BaseActivity;
 import com.klauncher.setupwizard.R;
 import com.klauncher.setupwizard.common.ConfigurationUtil;
 
@@ -25,7 +25,7 @@ import static com.klauncher.setupwizard.SetupMain.SP_SETUP_OVER;
  * Created by hw on 17-3-20.
  */
 
-public class HwLanguageSettings extends Activity implements View.OnClickListener {
+public class HwLanguageSettings extends BaseActivity implements View.OnClickListener {
 
     private TextView tvSimpleChinese;
     private TextView tvTraditionChinese;
