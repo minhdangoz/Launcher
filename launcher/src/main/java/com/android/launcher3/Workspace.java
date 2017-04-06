@@ -49,10 +49,12 @@ import android.graphics.Region.Op;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.v4.view.ViewCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
@@ -3625,7 +3627,9 @@ public class Workspace extends SmoothPagedView
             }
         }
 
-        dropAnim(dropTargetLayout);
+        if (!TextUtils.equals(Build.MODEL, "VTR-AL00")) {
+            dropAnim(dropTargetLayout);
+        }
 
         int snapScreen = -1;
         boolean resizeOnDrop = false;
@@ -6547,7 +6551,7 @@ public class Workspace extends SmoothPagedView
         }
 
         final float A = (float) (-10f * Math.sqrt(4f / mDensity));
-        ValueAnimator anim = ValueAnimator.ofFloat(0f, 1.5f);
+        ValueAnimator anim = ValueAnimator.ofFloat(0f, 1f);
         anim.setDuration(300);
         anim.setStartDelay(100);
         anim.setInterpolator(new LinearInterpolator());

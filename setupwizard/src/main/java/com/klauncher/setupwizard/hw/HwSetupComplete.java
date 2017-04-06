@@ -1,10 +1,10 @@
 package com.klauncher.setupwizard.hw;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.klauncher.setupwizard.BaseActivity;
 import com.klauncher.setupwizard.R;
 
 
@@ -12,7 +12,7 @@ import com.klauncher.setupwizard.R;
  * Created by hw on 17-3-22.
  */
 
-public class HwSetupComplete extends BaseActivity {
+public class HwSetupComplete extends Activity {
 
     private Button startBtn;
 
@@ -30,7 +30,7 @@ public class HwSetupComplete extends BaseActivity {
 //                    setup.setClassName("com.klauncher.hwlauncher","com.klauncher.ext.KLauncher");
 //                    setup.putExtra("fromSetupwizard", true);
 //                    startActivity(setup);
-                    finishAll();
+                    finish();
                 }catch (Exception e){
                 }
             }

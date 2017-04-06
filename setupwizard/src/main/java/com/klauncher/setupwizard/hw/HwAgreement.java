@@ -75,7 +75,7 @@ public class HwAgreement extends BaseActivity implements View.OnClickListener{
             Intent intent = new Intent();
             intent.setClass(this, HwSetupComplete.class);
             startActivity(intent);
-
+            finishAll();
         }
     }
 }
