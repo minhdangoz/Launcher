@@ -16,9 +16,15 @@ public class SetupWizard extends Activity {
     private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         sharedPreferences = getApplicationContext().getSharedPreferences(SP_SETUP, Context.MODE_PRIVATE);
         sharedPreferences.edit().putBoolean(SP_SETUP_START, true).commit();
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.setup_layout);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        finish();
     }
 }
