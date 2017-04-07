@@ -18,6 +18,7 @@
         <item>PLK-TL00,bazzar</item>
         <item>BLN-AL10,BLN-AL10</item>
         <item>BLN-TL10,BLN-AL10</item>
+        <item>VTR-AL00,VTR-AL00</item>
     </array>
 
     <array name="config_lbk_load_keywords">
@@ -53,7 +54,7 @@
     <string name="config_icon_com.tencent.android.qqdownloader">com.huawei.appmarket</string>
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.android.mediacenter</string>
-    <string name="config_icon_com.tencent.qqlive">com.huawei.hwvplayer,com.huawei.hwvplayer.youku</string>
+    <string name="config_icon_com.tencent.qqlive">com.huawei.hwvplayer,com.huawei.hwvplayer.youku,com.huawei.himovie</string>
     <string name="config_icon_com.UCMobile">com.android.browser,com.seal.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.huawei.systemmanager</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar,com.android.qidian.calendar</string>

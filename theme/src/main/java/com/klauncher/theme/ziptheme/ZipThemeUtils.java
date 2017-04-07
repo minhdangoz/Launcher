@@ -234,7 +234,7 @@ public class ZipThemeUtils {
                     String[] resName = new String[2];
                     ThemeUtils.parseResourceName(iconName, resName, packageName);
                     Drawable drawable = loadDrawable(resName[0], context);
-                    Log.d(TAG,"resName[0] : " + resName[0] + " packageName " + packageName);
+                    Log.e(TAG,"resName[0] : " + resName[0] + " packageName " + packageName);
                     if (drawable == null && resName[1] != null && !resName[1].equals(resName[0])) {
                         drawable = loadDrawable(resName[1], context);
                     }
