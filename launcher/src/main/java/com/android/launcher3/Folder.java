@@ -403,6 +403,13 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         ivAdApkRefesh.setOnClickListener(this);
         framelayout_adapks_contain = (FrameLayout) findViewById(R.id.framelayout_adapks_contain);
         framelayout_adapks_contain.measure(measureSpec, measureSpec);
+        framelayout_adapks_contain.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mLauncher.closeFolder();
+                return false;
+            }
+        });
         ll_adapks_contain = (LinearLayout) findViewById(R.id.ll_adapks_contain);
         ll_adapks_contain.measure(measureSpec, measureSpec);
         mAdApkContainHeight = ll_adapks_contain.getMeasuredHeight();
