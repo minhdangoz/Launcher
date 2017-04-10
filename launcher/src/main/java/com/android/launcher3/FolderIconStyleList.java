@@ -8,21 +8,23 @@
  */
 package com.android.launcher3;
 
-import java.util.ArrayList;
-
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
 import com.android.launcher3.FolderIcon.FolderRingAnimator;
+import com.klauncher.launcher.BuildConfig;
 import com.klauncher.launcher.R;
+
+import java.util.ArrayList;
 
 /**
  * 
@@ -52,21 +54,21 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 
 	public PreviewItemDrawingParams computePreviewItemDrawingParams(int index, PreviewItemDrawingParams params) {
 		Configuration config = mLauncher.getResources().getConfiguration();
-		if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
-			if (index == 0) {
-				index = 2;
-			} else if (index == 2) {
-				index = 0;
-			} else if (index == 3) {
-				index = 5;
-			} else if (index == 5) {
-				index = 3;
-			} else if (index == 6) {
-				index = 8;
-			} else if (index == 8) {
-				index = 6;
-			}
-		}
+//		if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+//			if (index == 0) {
+//				index = 2;
+//			} else if (index == 2) {
+//				index = 0;
+//			} else if (index == 3) {
+//				index = 5;
+//			} else if (index == 5) {
+//				index = 3;
+//			} else if (index == 6) {
+//				index = 8;
+//			} else if (index == 8) {
+//				index = 6;
+//			}
+//		}
 		int index_order = index;
 		index = mNumItems - index - 1;
 		float r = (index * 1.0f) / (mNumItems - 1);
@@ -79,15 +81,51 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 		float totalScale = 0;
 		final int overlayAlpha = (int) (80 * (1 - r));
 
-		if (0 <= index_order && index_order < 3) { // 0 1 2
-			transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX);
-			transY = 4 * mOffsetX;
-		} else if (2 <= index_order && index_order < 6) { // 3 4 5
-			transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX);
-			transY = 4 * mOffsetX + 1 * (mMaxPerspectiveShift + mOffsetX);
-		} else if (6 <= index_order && index_order < 9) { // 6 7 8
-			transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX);
-			transY = 4 * mOffsetX + 2 * (mMaxPerspectiveShift + mOffsetX);
+		if (TextUtils.equals(BuildConfig.FLAVOR, "vivo")) {
+			if (0 <= index_order && index_order < 3) { // 0 1 2
+//			transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX);
+				if (index_order == 0) {
+					transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX) + 5;
+				} else if (index_order == 1) {
+					transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX) ;
+				} else {
+					transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX) -8;
+				}
+				transY = 4 * mOffsetX + 3;
+			} else if (3 <= index_order && index_order < 6) { // 3 4 5
+//			transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX);
+				if (index_order == 3) {
+					transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX) + 5;
+				} else if (index_order == 4) {
+					transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX) ;
+				} else {
+					transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX) -8;
+				}
+
+				transY = 4 * mOffsetX + 1 * (mMaxPerspectiveShift + mOffsetX) - 5;
+			} else if (6 <= index_order && index_order < 9) { // 6 7 8
+//			transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX);
+				if (index_order == 6) {
+					transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX) + 5;
+				} else if (index_order == 7) {
+					transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX);
+				} else {
+					transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX) -8;
+				}
+
+				transY = 4 * mOffsetX + 2 * (mMaxPerspectiveShift + mOffsetX) - 9;
+			}
+		} else {
+			if (0 <= index_order && index_order < 3) { // 0 1 2
+				transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX);
+				transY = 4 * mOffsetX;
+			} else if (3 <= index_order && index_order < 6) { // 3 4 5
+				transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX);
+				transY = 4 * mOffsetX + 1 * (mMaxPerspectiveShift + mOffsetX);
+			} else if (6 <= index_order && index_order < 9) { // 6 7 8
+				transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX);
+				transY = 4 * mOffsetX + 2 * (mMaxPerspectiveShift + mOffsetX);
+			}
 		}
 		totalScale = mBaselineIconScale * 1 - 0.1f;
 		if (params == null) {
