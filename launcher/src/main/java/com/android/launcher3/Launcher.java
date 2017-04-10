@@ -137,7 +137,6 @@ import com.klauncher.cplauncher.vxny.Launch;
 import com.klauncher.ext.ClockWidgetProvider;
 import com.klauncher.ext.ClockWidgetService;
 import com.klauncher.ext.ClockWidgetView;
-import com.klauncher.ext.KLauncherApplication;
 import com.klauncher.ext.LauncherLog;
 import com.klauncher.ext.SearchActivity;
 import com.klauncher.ext.SearchWidgetView;
@@ -147,7 +146,6 @@ import com.klauncher.launcher.R;
 import com.klauncher.ping.PingManager;
 import com.klauncher.setupwizard.SetupMain;
 import com.klauncher.theme.ThemeController;
-import com.klauncher.upgrade.UpgradeHelper;
 import com.klauncher.utilities.DeviceInfoUtils;
 import com.klauncher.utilities.LogUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -4468,22 +4466,22 @@ public class Launcher extends Activity
             WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
             int screenWidth = wm.getDefaultDisplay().getWidth();
             int screenHeight = wm.getDefaultDisplay().getHeight();
-            int folderWidth = 3*grid.folderCellWidthPx;
-            int folderHeight = (int)(screenHeight*0.9);
-            int folderMargTop = (int)(screenHeight*0.1);
+            int folderWidth = 3 * grid.folderCellWidthPx;
+            int folderHeight = (int)(screenHeight * 0.9);
+            int folderMargTop = (int)(screenHeight * 0.1);
             //加载初始化推荐应用
 //            folder.initAPUS(info.folderId,false);
             //DragLayer.LayoutParams params = new  DragLayer.LayoutParams(folderWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
             DragLayer.LayoutParams params = new  DragLayer.LayoutParams(folderWidth, folderHeight);
-            LogUtil.d("wqh_Folder",folderWidth+" x "+folderHeight);
+
             //左右边距
-            int  margin = (screenWidth - 3*grid.folderCellWidthPx)/2;
+            int margin = (screenWidth - 3 * grid.folderCellWidthPx) / 2;
             /*params.gravity = Gravity.CENTER_VERTICAL;
             params.setMargins(margin,folderMargTop,margin,0);*/
-            params.gravity = Gravity.BOTTOM;
+            params.gravity = Gravity.TOP;
             //params.gravity = Gravity.CENTER_VERTICAL;
             //params.setMargins(margin,50,margin,0);
-            params.setMargins(margin,100,margin,0);
+            params.setMargins(margin, (int) Utilities.convertDpToPixel(100, getBaseContext()), margin, 0);
 //            params.setMargins(margin,folderMargTop,margin,0);
             mDragLayer.addView(folder,params);
             mDragController.addDropTarget((DropTarget) folder);
