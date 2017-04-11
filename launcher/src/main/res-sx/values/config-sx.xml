@@ -38,7 +38,7 @@
     <string name="config_icon_cn.kuwo.player">com.sec.android.app.music,com.samsung.android.app.music.chn</string>
     <string name="config_icon_com.tencent.android.qqdownloader">com.sec.android.app.samsungapps</string>
     <string name="config_icon_com.tencent.qqlive">com.samsung.video,com.samsung.everglades.video,com.samsung.android.video,com.samsung.android.onlinevideo</string>
-    <string name="config_icon_sogou.mobile.explorer">com.android.browser,com.sec.android.app.sbrowser</string>
+    <string name="config_icon_com.UCMobile">com.android.browser,com.sec.android.app.sbrowser</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
     <string name="config_icon_com.dl.explorer">com.sec.android.app.myfiles</string>
 

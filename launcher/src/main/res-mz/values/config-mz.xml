@@ -48,7 +48,7 @@
     <string name="config_icon_cn.kuwo.player">com.meizu.media.music</string>
     <string name="config_icon_com.tencent.qqlive">com.meizu.media.video</string>
     <string name="config_icon_cn.ninegame.gamemanager">com.meizu.flyme.gamecenter</string>
-    <string name="config_icon_sogou.mobile.explorer">com.android.browser</string>
+    <string name="config_icon_com.UCMobile">com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.meizu.safe</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">com.meizu.flyme.weather</string>

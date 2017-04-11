@@ -41,7 +41,7 @@
     <string name="config_icon_cn.kuwo.player">com.android.music</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.android.mobilemanager</string>
     <string name="config_icon_com.tencent.qqlive">com.sec.android.videoplayer</string>
-    <string name="config_icon_sogou.mobile.explorer">com.daohangforxiuzhuo,com.android.browser</string>
+    <string name="config_icon_com.UCMobile">com.daohangforxiuzhuo,com.android.browser</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
     <string name="config_icon_com.dl.explorer">com.uniscope.myfile</string>
 

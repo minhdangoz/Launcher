@@ -47,7 +47,7 @@
     <string name="config_icon_com.cootek.smartdialer">com.android.dialer/com.android.dialer.DialtactsActivity,com.android.contacts/com.android.contacts.DialtactsActivityAlias</string>
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.oppo.music</string>
-    <string name="config_icon_com.tencent.mtt">com.android.browser</string>
+    <string name="config_icon_com.UCMobile">com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.color.safecenter,com.coloros.safecenter</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">com.oppo.weather,com.coloros.weather</string>

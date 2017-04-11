@@ -51,7 +51,7 @@
     <string name="config_icon_com.tencent.android.qqdownloader">com.letv.app.appstore</string>
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">com.android.music,com.android.mediacenter</string>
-    <string name="config_icon_sogou.mobile.explorer">com.android.browser</string>
+    <string name="config_icon_com.UCMobile">com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.letv.android.supermanager</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">sina.mobile.tianqitongletv,com.letv.android.weather</string>

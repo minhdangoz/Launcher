@@ -49,7 +49,7 @@
     <string name="config_icon_com.alex.nuclear">com.huawei.KoBackup</string>
     <string name="config_icon_cn.kuwo.player">cn.zte.music,com.imusic.musicplayer,com.android.music</string>
     <string name="config_icon_com.tencent.qqlive">com.zte.videoplayer</string>
-    <string name="config_icon_sogou.mobile.explorer">com.ume.browser,com.android.browser</string>
+    <string name="config_icon_com.UCMobile">com.ume.browser,com.android.browser</string>
     <string name="config_icon_com.tencent.qqpimsecure">com.zte.heartyservice</string>
     <string name="config_icon_cn.etouch.ecalendar">com.android.calendar</string>
     <string name="config_icon_com.moji.mjweather">com.moji.zteweather</string>
