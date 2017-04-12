@@ -3627,7 +3627,7 @@ public class Workspace extends SmoothPagedView
             }
         }
 
-        if (!TextUtils.equals(Build.MODEL, "VTR-AL00")) {
+        if (!TextUtils.equals(Build.MODEL, "VTR-AL00") && !TextUtils.equals(Build.MODEL, "DUK-AL20")) {
             dropAnim(dropTargetLayout);
         }
 
