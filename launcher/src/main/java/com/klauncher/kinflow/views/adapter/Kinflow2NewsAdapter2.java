@@ -79,10 +79,15 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
                 return new SouGouNewsApdaterViewHolder(itemRootView);
 
             } else if (viewType == BaseRecyclerViewAdapterData.TYPE_BANNER) {
-                itemRootView = LayoutInflater.from(mContext).inflate(R.layout.kinflow_banner_big_image, parent, false);
-                return new BannerAdaperHolder(itemRootView);
+//                itemRootView = LayoutInflater.from(mContext).inflate(R.layout.kinflow_banner_big_image, parent, false);
+//                return new BannerAdaperHolder(itemRootView);
+                //banner全面切换MSSP 信息流资源
+                Log.d("hw","TYPE_BANNER");
+                itemRootView = LayoutInflater.from(mContext).inflate(R.layout.item_banner_adx, parent, false);
+                return new AdBannerAdxViewHolder(itemRootView);
             }
             else if(viewType == BaseRecyclerViewAdapterData.TYPE_ADX_BANNER){ //来自ADX-SDK的广告
+                Log.d("hw","TYPE_ADX_BANNER");
                 itemRootView = LayoutInflater.from(mContext).inflate(R.layout.item_banner_adx, parent, false);
                 return new AdBannerAdxViewHolder(itemRootView);
             }
@@ -92,6 +97,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
             }
         } catch (Exception e) {
             KinflowLog.w("Kinflow2NewsAdapter2.onCreateViewHolder时出错:"+e.getMessage());
+            e.printStackTrace();
             return null;
         }
 
@@ -188,6 +194,7 @@ public class Kinflow2NewsAdapter2 extends BaseRecyclerViewAdapter<BaseRecyclerVi
         public void bundData2View(BaseRecyclerViewAdapterData modelData) {
 
             if(modelData instanceof AdxSdkBanner){
+                Log.d("hw","AdBannerAdxViewHolder bundData2View");
                 adxContainer.removeAllViews();
                 KBannerAdUtil.addKBannerAdView(mContext,null,itemView,adxContainer);
 

@@ -4,10 +4,15 @@
     <item name="config_folder_background_ratio" format="float" type="dimen">0.75</item>
     <item name="config_folder_iconsize_ratio" format="float" type="dimen">1</item>
     <item name="config_folder_preview_offsety_ratio" format="float" type="dimen">0.66</item>
+    <!--theme 前面需要 空格-->
     <array name="config_theme_load_keywords">
+        <item>Hisense A2,Hisense A2</item>
     </array>
 
+    <!--lbk 前面不需要 空格-->
     <array name="config_lbk_load_keywords">
+        <item>HisenseM30,Hisense M30</item>
+        <item>HisenseA2,Hisense A2</item>
     </array>
 
     <array name="config_theme_load_icon_mask_padding">
@@ -48,6 +53,8 @@
     <bool name="kinflow_switch_default">true</bool>
     <bool name="kinflow_switch_default_forever">false</bool>
     <bool name="is_show_folder_recommend_app">true</bool>
+
+    <!--<bool name="preferences_interface_homescreen_hide_icon_labels_hotseat">true</bool>-->
 
 </resources>
 

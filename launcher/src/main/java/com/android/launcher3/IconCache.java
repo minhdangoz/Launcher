@@ -396,8 +396,14 @@ public class IconCache {
                                 }
 
                             } else {
-                                themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
-                                        mContext.getPackageManager().getApplicationIcon(info.getActivityInfo().packageName), mContext);
+                                if (TextUtils.equals(BuildConfig.FLAVOR, "haixin") && info.getComponentName().toString().contains("RearSelfieActivity")) {
+                                    themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
+                                            mContext.getPackageManager().getActivityIcon(info.getComponentName()), mContext);
+                                } else {
+                                    themeBmp = com.klauncher.theme.Utilities.createIconBitmapForZipTheme(
+                                            mContext.getPackageManager().getApplicationIcon(info.getActivityInfo().packageName), mContext);
+                                }
+
                             }
                         }
                     }

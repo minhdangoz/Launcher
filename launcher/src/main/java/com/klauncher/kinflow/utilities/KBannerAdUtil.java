@@ -27,6 +27,17 @@ public class KBannerAdUtil {
 
     private static boolean isLunbo = true;
 
+    private static int type = 0;
+
+    private static String[] msspMsgFlow = {
+            "3410166",
+            "3799287",
+            "3799288",
+            "3803123",
+            "3803141",
+            "3803145"
+    };
+
     private KBannerAdUtil() {
     }
 
@@ -106,11 +117,12 @@ public class KBannerAdUtil {
      * @return
      */
     public static void addKBannerAdView(final Context context, final View onFailView, final View root, final ViewGroup parent) {
-
+        Log.d("hw","addKBannerAdView 1 ");
         final int rootWidth = DeviceInfoUtils.getSCreenWidthInt(context) -2 * Dips.dipsToIntPixels(16, context);
         final int rootHeight = rootWidth / 2 + Dips.dipsToIntPixels(12, context);
         Object cache = root.getTag();
         if(null!=cache&&cache instanceof WebView){
+            Log.d("hw","cache ");
             logDebug("addKBannerAdView() 有缓存");
             WebView cacheAd= (WebView) cache;
             setItemHeight(context, root, rootWidth, rootHeight);
@@ -138,15 +150,12 @@ public class KBannerAdUtil {
 
         //正式上线前用 fcda70a4 appid 以及 3410166 的轮播信息流placeid, 3418992 橱窗信息信息流placeid
         AdView.setAppSid(context, "fcda70a4");
-        String placeId = "3410166";
-        if (isLunbo) {
-            placeId = "3410166";
-        } else {
-            placeId = "3418992";
+        String placeId = msspMsgFlow[type];
+        type++;
+        if (type == msspMsgFlow.length) {
+            type = 0;
         }
-
-        isLunbo = !isLunbo;
-
+        Log.d("hw","placeId : " + placeId);
         BaiduNative baidu = new BaiduNative(context, placeId,
                 new BaiduNative.BaiduNativeNetworkListener() {
 

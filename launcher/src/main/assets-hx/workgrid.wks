@@ -26,5 +26,12 @@
         "iconsize": "72",
         "textsize": "14",
         "hotseat": "6"
+    },
+    "Hisense A2": {
+        "rows": "5",
+        "columns": "4",
+        "iconsize": "56",
+        "textsize": "12",
+        "hotseat": "5"
     }
 }

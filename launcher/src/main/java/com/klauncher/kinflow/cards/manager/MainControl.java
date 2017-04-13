@@ -31,7 +31,6 @@ import com.klauncher.kinflow.utilities.KBannerAdUtil;
 import com.klauncher.kinflow.utilities.KinflowLog;
 import com.klauncher.kinflow.views.recyclerView.data.AdxSdkBanner;
 import com.klauncher.kinflow.views.recyclerView.data.BaseRecyclerViewAdapterData;
-import com.klauncher.kinflow.views.recyclerView.data.YokmobBanner;
 import com.klauncher.kinflow.weather.model.Weather;
 import com.klauncher.utilities.LogUtil;
 
@@ -917,48 +916,48 @@ public class MainControl {
             List<BaseRecyclerViewAdapterData> banners = new ArrayList<>();//存放本次返回的所有广告
 //            List<YokmobBanner> yokmobBannerList = new ArrayList<>();
 //            yokmobBannerList.add(YokmobBanner.getDefaultYokmobBanner());//先加入高德地图
-            banners.add(YokmobBanner.getDefaultYokmobBanner());
+//            banners.add(YokmobBanner.getDefaultYokmobBanner());
             int adControlSize = adControlList.size();
             for (int z = 0; z < adControlSize; z++) {//加入后台控制的banner广告
                 AdControl adControl = adControlList.get(z);//获取广告控制器
 
                 Map<String, String> aiMap = adControl.adExtra2ImageUrl();
-                if (aiMap.get(AdControl.KEY_IMAGE_URL).equals(ServerControlManager.FLAG_ADX_SDK)) {//来自ADX-SDK的广告控制
+//                if (aiMap.get(AdControl.KEY_IMAGE_URL).equals(ServerControlManager.FLAG_ADX_SDK)) {//来自ADX-SDK的广告控制
                     banners.add(KBannerAdUtil.getKBannerAdForPlaceholder());
-                } else {
-                    //            KinflowLog.e("集成广告,广告控制器如下:\n"+adControl.toString());
-                    YokmobBanner yokmobBanner = YokmobBanner.getCommmonYokmobBanner();
-                    int sid = 0;
-                    try {
-                        sid = Integer.valueOf(adControl.getAdSID());
-                        switch (sid) {
-                            case AdControl.SID_FROM_EXTRAS_INFO:
-//                            Map<String,String> adExtra2ImageUrlMap = adControl.adExtra2ImageUrl();
-                                yokmobBanner.setBannerType(YokmobBanner.BANNER_TYPE_COMMON);
-                                yokmobBanner.setImageUrl(aiMap.get(AdControl.KEY_IMAGE_URL));
-                                yokmobBanner.setClickUrl(aiMap.get(AdControl.KEY_IMAGE_CLICK_URL));
-                                yokmobBanner.setOrder(adControl.getAdOrder());
-                                yokmobBanner.setOpenOptions(adControl.getAdOpenOptions());
-                                break;
-                            case AdControl.SID_FROM_OUR_AD_PLATFORM:
-                                break;
-                            case AdControl.SID_FROM_BAIDU_AD:
-                                break;
-                            case AdControl.SID_FROM_ADVIE_AD:
-                                break;
-                            default:
-                                break;
-                        }
-                    } catch (Exception e) {
-                        yokmobBanner.setImageUrl(AdControl.defaultImageUrl);
-                        yokmobBanner.setClickUrl(AdControl.defaultClickImageUrl);
-                        yokmobBanner.setBannerType(YokmobBanner.BANNER_TYPE_COMMON);
-
-                    }
-                    //将yokmob添加到
-//                    yokmobBannerList.add(yokmobBanner);
-                    banners.add(yokmobBanner);
-                }
+//                } else {
+//                    //            KinflowLog.e("集成广告,广告控制器如下:\n"+adControl.toString());
+//                    YokmobBanner yokmobBanner = YokmobBanner.getCommmonYokmobBanner();
+//                    int sid = 0;
+//                    try {
+//                        sid = Integer.valueOf(adControl.getAdSID());
+//                        switch (sid) {
+//                            case AdControl.SID_FROM_EXTRAS_INFO:
+////                            Map<String,String> adExtra2ImageUrlMap = adControl.adExtra2ImageUrl();
+//                                yokmobBanner.setBannerType(YokmobBanner.BANNER_TYPE_COMMON);
+//                                yokmobBanner.setImageUrl(aiMap.get(AdControl.KEY_IMAGE_URL));
+//                                yokmobBanner.setClickUrl(aiMap.get(AdControl.KEY_IMAGE_CLICK_URL));
+//                                yokmobBanner.setOrder(adControl.getAdOrder());
+//                                yokmobBanner.setOpenOptions(adControl.getAdOpenOptions());
+//                                break;
+//                            case AdControl.SID_FROM_OUR_AD_PLATFORM:
+//                                break;
+//                            case AdControl.SID_FROM_BAIDU_AD:
+//                                break;
+//                            case AdControl.SID_FROM_ADVIE_AD:
+//                                break;
+//                            default:
+//                                break;
+//                        }
+//                    } catch (Exception e) {
+//                        yokmobBanner.setImageUrl(AdControl.defaultImageUrl);
+//                        yokmobBanner.setClickUrl(AdControl.defaultClickImageUrl);
+//                        yokmobBanner.setBannerType(YokmobBanner.BANNER_TYPE_COMMON);
+//
+//                    }
+//                    //将yokmob添加到
+////                    yokmobBannerList.add(yokmobBanner);
+//                    banners.add(yokmobBanner);
+//                }
             }
             //2.对广告集合yokmobBannerList进行排序
 //            Collections.sort(yokmobBannerList, YokmobComparator.getInstance());
