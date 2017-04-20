@@ -354,7 +354,7 @@ dependencies {
     //opmain 精简
 
     //    compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-    compile files('libs/KappAdSdk_v2.1.jar')
+//    compile files('libs/KappAdSdk_v2.1.jar')
     compile project(':biddingoslib')
     compile files('libs/AMap_Location_V3.00_20160922.jar')
     //===============
