@@ -14,6 +14,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
@@ -87,9 +88,9 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 				if (index_order == 0) {
 					transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX) + 5;
 				} else if (index_order == 1) {
-					transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX) ;
+					transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX);
 				} else {
-					transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX) -8;
+					transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX) - 8;
 				}
 				transY = 4 * mOffsetX + 3;
 			} else if (3 <= index_order && index_order < 6) { // 3 4 5
@@ -97,9 +98,9 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 				if (index_order == 3) {
 					transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX) + 5;
 				} else if (index_order == 4) {
-					transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX) ;
+					transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX);
 				} else {
-					transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX) -8;
+					transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX) - 8;
 				}
 
 				transY = 4 * mOffsetX + 1 * (mMaxPerspectiveShift + mOffsetX) - 5;
@@ -110,9 +111,20 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 				} else if (index_order == 7) {
 					transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX);
 				} else {
-					transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX) -8;
+					transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX) - 8;
 				}
 
+				transY = 4 * mOffsetX + 2 * (mMaxPerspectiveShift + mOffsetX) - 9;
+			}
+		} else if (Build.MODEL.equals("GN3001") || Build.MODEL.equals("GN5001S")) {
+			if (0 <= index_order && index_order < 3) { // 0 1 2
+				transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX);
+				transY = 4 * mOffsetX - 9;
+			} else if (3 <= index_order && index_order < 6) { // 3 4 5
+				transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX);
+				transY = 4 * mOffsetX + 1 * (mMaxPerspectiveShift + mOffsetX) - 9;
+			} else if (6 <= index_order && index_order < 9) { // 6 7 8
+				transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX);
 				transY = 4 * mOffsetX + 2 * (mMaxPerspectiveShift + mOffsetX) - 9;
 			}
 		} else {
@@ -195,7 +207,13 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 			mTotalWidth = totalSize;
 
 			final int previewSize = mIcon.mPreviewBackground.getLayoutParams().height;
-			final int previewPadding = FolderRingAnimator.sPreviewPadding;
+			int previewPadding = FolderRingAnimator.sPreviewPadding;
+			if (Build.MODEL.equals("GN3001") || Build.MODEL.equals("GN5001S")) {
+//            lp.topMargin = grid.folderBackgroundOffset;
+				previewPadding = FolderRingAnimator.sPreviewPadding + 4;
+			} else {
+				previewPadding = FolderRingAnimator.sPreviewPadding;
+			}
 
 			mAvailableSpaceInPreview = (previewSize - 2 * previewPadding);
 			// cos(45) = 0.707 + ~= 0.1) = 0.8f

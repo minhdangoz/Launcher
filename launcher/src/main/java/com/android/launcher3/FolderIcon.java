@@ -25,6 +25,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -150,9 +151,15 @@ public class FolderIcon extends FrameLayout implements FolderListener {
         // Offset the preview background to center this view accordingly
         icon.mPreviewBackground = (ImageView) icon.findViewById(R.id.preview_background);
         lp = (FrameLayout.LayoutParams) icon.mPreviewBackground.getLayoutParams();
-        lp.topMargin = grid.folderBackgroundOffset;
-        lp.width = grid.folderIconSizePx;
-        lp.height = grid.folderIconSizePx;
+        if (Build.MODEL.equals("GN3001") || Build.MODEL.equals("GN5001S")) {
+//            lp.topMargin = grid.folderBackgroundOffset;
+            lp.width = grid.folderIconSizePx + 15;
+            lp.height = grid.folderIconSizePx + 15;
+        } else {
+            lp.topMargin = grid.folderBackgroundOffset;
+            lp.width = grid.folderIconSizePx;
+            lp.height = grid.folderIconSizePx;
+        }
 
         icon.setTag(folderInfo);
         icon.setOnClickListener(launcher);
