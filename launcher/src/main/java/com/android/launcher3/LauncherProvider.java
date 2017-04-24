@@ -57,6 +57,7 @@ import com.android.launcher3.AutoInstallsLayout.LayoutParserCallback;
 import com.android.launcher3.FolderTitle.FolderTitleColumns;
 import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.ModeSwitchHelper.Mode;
+import com.android.launcher3.backup.CommonLoader;
 import com.android.launcher3.backup.LbkLoader;
 import com.android.launcher3.backup.LbkUtil;
 import com.android.launcher3.compat.UserHandleCompat;
@@ -448,6 +449,8 @@ public class LauncherProvider extends ContentProvider {
             //从xml中解析 创建数据库
             WorkspaceLoader loader = AutoInstallsLayout.get(getContext(),
                     mOpenHelper.mAppWidgetHost, mOpenHelper);
+            //通用版loader
+            WorkspaceLoader commonLoader = null;
             //从备份回复
             /** Lenovo-SW zhaoxin5 20150711 add for recovery from lbk support START */
             if (loader == null && ((flags & LauncherModel.LOADER_FLAG_RECOVERY_FROM_LBK) != 0)) {
@@ -464,6 +467,7 @@ public class LauncherProvider extends ContentProvider {
             	// VIBEUI模式下才加载LBK文件
                 LauncherLog.i("xixia", "loadDefaultFavoritesIfNecessary from LBK file");
                 loader = LbkLoader.getPreLoadLBKLoader(getContext(), mOpenHelper.mAppWidgetHost, mOpenHelper);
+                commonLoader = new CommonLoader(getContext(), mOpenHelper);
             }
             /** Lenovo-SW zhaoxin5 20150728 add for first load from preload LBK sopport END */
             
@@ -494,6 +498,10 @@ public class LauncherProvider extends ContentProvider {
             SharedPreferences.Editor editor = sp.edit().remove(EMPTY_DATABASE_CREATED);
             //解析 将xml配置项 加载到数据库中
             mOpenHelper.loadFavorites(mOpenHelper.getWritableDatabase(), loader);
+            //解析通用版xml，并加载到数据库中
+            if (commonLoader != null) {
+                commonLoader.loadLayout(mOpenHelper.getWritableDatabase(), null);
+            }
             editor.commit();
         }
     }

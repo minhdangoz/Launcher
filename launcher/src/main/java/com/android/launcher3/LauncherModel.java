@@ -550,7 +550,8 @@ public class LauncherModel extends BroadcastReceiver
 
         return CellLayout.findVacantCell(xy, 1, 1, xCount, yCount, occupied);
     }
-    static Pair<Long, int[]> findNextAvailableIconSpace(Context context, String name,
+
+    public static Pair<Long, int[]> findNextAvailableIconSpace(Context context, String name,
                                                         Intent launchIntent,
                                                         int firstScreenIndex,
                                                         ArrayList<Long> workspaceScreens) {
@@ -1715,7 +1716,7 @@ public class LauncherModel extends BroadcastReceiver
      * Update the order of the workspace screens in the database. The array list contains
      * a list of screen ids in the order that they should appear.
      */
-    void updateWorkspaceScreenOrder(Context context, final ArrayList<Long> screens) {
+    public static void updateWorkspaceScreenOrder(Context context, final ArrayList<Long> screens) {
         // Log to disk
         Launcher.addDumpLog(TAG, "11683562 - updateWorkspaceScreenOrder()", true);
         Launcher.addDumpLog(TAG, "11683562 -   screens: " + TextUtils.join(", ", screens), true);
@@ -2085,6 +2086,63 @@ public class LauncherModel extends BroadcastReceiver
                 mLoaderTask.stopLocked();
             }
         }
+    }
+
+    public static void loadWorkspaceAppComponentNamesDb(Context context, List<ComponentName> appIntents) {
+        final ContentResolver contentResolver = context.getContentResolver();
+        final Uri screensUri = LauncherSettings.Favorites.CONTENT_URI;
+
+        final Cursor sc = contentResolver.query(screensUri,
+                new String[]{LauncherSettings.Favorites.INTENT},
+                LauncherSettings.Favorites.ITEM_TYPE + "=?",
+                new String[]{String.valueOf(LauncherSettings.Favorites.ITEM_TYPE_APPLICATION)},
+                null);
+        try {
+            final int intentIndex = sc.getColumnIndexOrThrow(LauncherSettings.Favorites.INTENT);
+            while (sc.moveToNext()) {
+                try {
+                    String intentStr = sc.getString(intentIndex);
+                    if (TextUtils.isEmpty(intentStr)) {
+                        continue;
+                    }
+
+                    ComponentName componentName = Intent.parseUri(intentStr, 0).getComponent();
+                    if (componentName != null) {
+                        appIntents.add(componentName);
+                    }
+                } catch (Exception e) {
+                    Launcher.addDumpLog(TAG, "App items loading interrupted"
+                            + " - invalid intent: " + e, true);
+                }
+            }
+        } finally {
+            if (sc != null) {
+                sc.close();
+            }
+        }
+    }
+
+    public static ArrayList<Long> loadWorkspaceScreenIdsDb(Context context) {
+        final ContentResolver contentResolver = context.getContentResolver();
+        final Uri screensUri = LauncherSettings.WorkspaceScreens.CONTENT_URI;
+
+        // Get screens ordered by rank.
+        final Cursor sc = contentResolver.query(screensUri, null, null, null, null);
+        ArrayList<Long> screenIds = new ArrayList<Long>();
+        try {
+            final int idIndex = sc.getColumnIndexOrThrow(LauncherSettings.WorkspaceScreens._ID);
+            while (sc.moveToNext()) {
+                try {
+                    screenIds.add(sc.getLong(idIndex));
+                } catch (Exception e) {
+                    Launcher.addDumpLog(TAG, "Desktop items loading interrupted"
+                            + " - invalid screens: " + e, true);
+                }
+            }
+        } finally {
+            sc.close();
+        }
+        return screenIds;
     }
 
     /** Loads the workspace screens db into a map of Rank -> ScreenId */

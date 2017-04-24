@@ -34,6 +34,8 @@ public class LbkUtil {
     public final static String DESC_FILE = "desc.xml";
     public final static String VIBEUI_BACKUP_LBK = "vibeui_backup.lbk";
     public final static String ANDROID_BACKUP_LBK = "android_backup.lbk";
+	public final static String COMMON_FILE = "common.lbk";
+
     public final static String getBackupLBKName() {
     	if(LauncherAppState.getInstance().getCurrentLayoutMode() == Mode.ANDROID) {
     		return ANDROID_BACKUP_LBK;
@@ -173,6 +175,44 @@ public class LbkUtil {
 		}
 		
 		return data;
+	}
+
+	/**
+	 * 加载 Assets 中lbk文件（通用版）
+	 * @param fileName
+	 * @return
+	 */
+	public static File getCommonLbkFileFromPreloadDirectory(String fileName) {
+		LauncherLog.i(TAG, "getCommonLbkFileFromPreloadDirectory start!!!");
+
+		Context context = LauncherAppState.getInstance().getContext();
+		File cacheFile = new File(context.getCacheDir(), fileName);
+		if (cacheFile.exists()) {
+			return cacheFile;
+		}
+
+		InputStream inputStream = null;
+		FileOutputStream outputStream = null;
+		try {
+			inputStream = context.getAssets().open(fileName);
+			outputStream = new FileOutputStream(cacheFile);
+
+			byte[] buf = new byte[1024];
+			int len;
+			while ((len = inputStream.read(buf)) > 0) {
+				outputStream.write(buf, 0, len);
+			}
+		} catch (IOException e) {
+			return null;
+		} finally {
+			if (inputStream != null) {
+				try { inputStream.close(); } catch (IOException e) {}
+			}
+			if (outputStream != null) {
+				try { outputStream.close(); } catch (IOException e) {}
+			}
+		}
+		return cacheFile;
 	}
 
 	/**
