@@ -240,7 +240,7 @@ public class AutoInstallsLayout implements WorkspaceLoader {
         return parsers;
     }
 
-    public interface TagParser {
+    private interface TagParser {
         /**
          * Parses the tag and adds to the db
          * @return the id of the row added or -1;

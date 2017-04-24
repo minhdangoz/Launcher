@@ -166,7 +166,7 @@ public class LauncherSettings {
          *
          * @return The unique content URL for the specified row.
          */
-        public static Uri getContentUri(long id, boolean notify) {
+        static Uri getContentUri(long id, boolean notify) {
             return Uri.parse("content://" + LauncherProvider.AUTHORITY +
                     "/" + LauncherProvider.TABLE_FAVORITES + "/" + id + "?" +
                     LauncherProvider.PARAMETER_NOTIFY + "=" + notify);
