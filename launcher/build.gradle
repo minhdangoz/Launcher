@@ -83,6 +83,12 @@ android {
                                     PACKAGE_NAME : applicationId, GAODE_APIKEY : "a272d2be9e44330c22fad4cbd1472612"]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + COOLPAD_ID + "\""
         }
+        meitu {
+            applicationId = "com.klauncher.mtlauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + MEITU_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "c66d16bd781730bcb3f29fe68a0344a9"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + MEITU_ID + "\""
+        }
         meizu {
             applicationId = "com.klauncher.mzlauncher"
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + MEIZU_ID, WE_OPS_ID: KAPP_OPS_ID,
@@ -177,6 +183,11 @@ android {
             assets.srcDirs = ['src/main/assets-kp']
             res.srcDirs += ['src/main/res-kp']
             manifest.srcFile 'src/main/res-kp/AndroidManifest.xml'
+        }
+        meitu {
+            assets.srcDirs = ['src/main/assets-mt']
+            res.srcDirs += ['src/main/res-mt']
+            manifest.srcFile 'src/main/res-mt/AndroidManifest.xml'
         }
         meizu {
             assets.srcDirs = ['src/main/assets-mz']
@@ -319,21 +330,23 @@ dependencies {
     //
 
     //    }
-    xiaomiCompile files('libs/uu_release.jar')
-    huaweiCompile files('libs/uu_release.jar')
-    huaweishuajiCompile files('libs/uu_release.jar')
-    lenovoCompile files('libs/uu_release.jar')
-    haixinCompile files('libs/uu_release.jar')
-    coolpadCompile files('libs/uu_release.jar')
-    meizuCompile files('libs/uu_release.jar')
-    samsungCompile files('libs/uu_release.jar')
-    oppoCompile files('libs/uu_release.jar')
-    leshiCompile files('libs/uu_release.jar')
-    letvCompile files('libs/uu_release.jar')
-    vivoCompile files('libs/uu_release.jar')
-    jinliCompile files('libs/uu_release.jar')
-    zteCompile files('libs/uu_release.jar')
-    guangxinCompile files('libs/uu_release.jar')
+//    xiaomiCompile files('libs/uu_release.jar')
+//    huaweiCompile files('libs/uu_release.jar')
+//    huaweishuajiCompile files('libs/uu_release.jar')
+//    lenovoCompile files('libs/uu_release.jar')
+//    haixinCompile files('libs/uu_release.jar')
+//    coolpadCompile files('libs/uu_release.jar')
+//    meizuCompile files('libs/uu_release.jar')
+//    samsungCompile files('libs/uu_release.jar')
+//    oppoCompile files('libs/uu_release.jar')
+//    leshiCompile files('libs/uu_release.jar')
+//    letvCompile files('libs/uu_release.jar')
+//    vivoCompile files('libs/uu_release.jar')
+//    jinliCompile files('libs/uu_release.jar')
+//    zteCompile files('libs/uu_release.jar')
+//    guangxinCompile files('libs/uu_release.jar')
+
+    compile files('libs/uu_release.jar')
     //add by hw end - 渠道编译特定jar包
     provided files('dynamic_lib/icu-classes.jar')
     compile project(':theme')

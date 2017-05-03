@@ -43,6 +43,7 @@ import android.widget.TextView;
 import com.android.launcher3.DropTarget.DragObject;
 import com.android.launcher3.FolderInfo.FolderListener;
 import com.android.launcher3.settings.SettingsProvider;
+import com.klauncher.launcher.BuildConfig;
 import com.klauncher.launcher.R;
 import com.klauncher.theme.ziptheme.ZipThemeUtils;
 import com.klauncher.utilities.DeviceInfoUtils;
@@ -155,6 +156,9 @@ public class FolderIcon extends FrameLayout implements FolderListener {
 //            lp.topMargin = grid.folderBackgroundOffset;
             lp.width = grid.folderIconSizePx + 15;
             lp.height = grid.folderIconSizePx + 15;
+        } else if (BuildConfig.FLAVOR.equals("meitu")) {
+            lp.width = grid.folderIconSizePx ;
+            lp.height = grid.folderIconSizePx + 20;
         } else {
             lp.topMargin = grid.folderBackgroundOffset;
             lp.width = grid.folderIconSizePx;

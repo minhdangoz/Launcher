@@ -243,9 +243,12 @@ public class LauncherProvider extends ContentProvider {
             ContentProviderResult[] result =  super.applyBatch(operations);
             db.setTransactionSuccessful();
             return result;
+        } catch (Exception e){
+
         } finally {
             db.endTransaction();
         }
+        return null;
     }
 
     /* LENOVO:yuanyl2 : Add for Multi-Language folder supported BEGIN*/

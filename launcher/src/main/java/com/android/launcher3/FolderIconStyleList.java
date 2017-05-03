@@ -127,6 +127,50 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 				transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX);
 				transY = 4 * mOffsetX + 2 * (mMaxPerspectiveShift + mOffsetX) - 9;
 			}
+		} else if (TextUtils.equals(BuildConfig.FLAVOR, "meitu")) {
+//			if (0 <= index_order && index_order < 3) { // 0 1 2
+//				transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX);
+//				transY = 4 * mOffsetX;
+//			} else if (3 <= index_order && index_order < 6) { // 3 4 5
+//				transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX);
+//				transY = 4 * mOffsetX + 1 * (mMaxPerspectiveShift + mOffsetX);
+//			} else if (6 <= index_order && index_order < 9) { // 6 7 8
+//				transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX);
+//				transY = 4 * mOffsetX + 2 * (mMaxPerspectiveShift + mOffsetX);
+//			}
+			if (0 <= index_order && index_order < 3) { // 0 1 2
+//			transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX);
+				if (index_order == 0) {
+					transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX) + 5;
+				} else if (index_order == 1) {
+					transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX);
+				} else {
+					transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX) - 8;
+				}
+				transY = 4 * mOffsetX;
+			} else if (3 <= index_order && index_order < 6) { // 3 4 5
+//			transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX);
+				if (index_order == 3) {
+					transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX) + 5;
+				} else if (index_order == 4) {
+					transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX);
+				} else {
+					transX = 4 * mOffsetX + (index_order - 3) * (mMaxPerspectiveShift + mOffsetX) - 8;
+				}
+
+				transY = 4 * mOffsetX + 1 * (mMaxPerspectiveShift + mOffsetX);
+			} else if (6 <= index_order && index_order < 9) { // 6 7 8
+//			transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX);
+				if (index_order == 6) {
+					transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX) + 5;
+				} else if (index_order == 7) {
+					transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX);
+				} else {
+					transX = 4 * mOffsetX + (index_order - 6) * (mMaxPerspectiveShift + mOffsetX) - 8;
+				}
+
+				transY = 4 * mOffsetX + 2 * (mMaxPerspectiveShift + mOffsetX);
+			}
 		} else {
 			if (0 <= index_order && index_order < 3) { // 0 1 2
 				transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX);
@@ -211,6 +255,8 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 			if (Build.MODEL.equals("GN3001") || Build.MODEL.equals("GN5001S")) {
 //            lp.topMargin = grid.folderBackgroundOffset;
 				previewPadding = FolderRingAnimator.sPreviewPadding + 4;
+			} else if (BuildConfig.FLAVOR.equals("meitu")) {
+				previewPadding = FolderRingAnimator.sPreviewPadding + 8;
 			} else {
 				previewPadding = FolderRingAnimator.sPreviewPadding;
 			}
@@ -229,7 +275,13 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 			mPreviewOffsetX = (mTotalWidth - previewSize) / 2 - 2;
 			TypedValue outValue = new TypedValue();
 			mResources.getValue(R.dimen.config_folder_preview_offsety_ratio, outValue, true);
-			mPreviewOffsetY = mIcon.getPaddingTop() + (int)(previewPadding * outValue.getFloat());
+
+			if (BuildConfig.FLAVOR.equals("meitu")) {
+				mPreviewOffsetY = mIcon.getPaddingTop() + (int)((FolderRingAnimator.sPreviewPadding -16)  * outValue.getFloat());
+			} else {
+				mPreviewOffsetY = mIcon.getPaddingTop() + (int)(previewPadding * outValue.getFloat());
+			}
+
 		}
 	}
 
