@@ -116,7 +116,7 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 
 				transY = 4 * mOffsetX + 2 * (mMaxPerspectiveShift + mOffsetX) - 9;
 			}
-		} else if (Build.MODEL.equals("GN3001") || Build.MODEL.equals("GN5001S")) {
+		} else if (Build.MODEL.equals("GN3001") || Build.MODEL.equals("GN5001S") || Build.MODEL.equals("GN5003")) {
 			if (0 <= index_order && index_order < 3) { // 0 1 2
 				transX = 4 * mOffsetX + index_order * (mMaxPerspectiveShift + mOffsetX);
 				transY = 4 * mOffsetX - 9;
@@ -252,7 +252,8 @@ public class FolderIconStyleList extends FolderIconStyleBase {
 
 			final int previewSize = mIcon.mPreviewBackground.getLayoutParams().height;
 			int previewPadding = FolderRingAnimator.sPreviewPadding;
-			if (Build.MODEL.equals("GN3001") || Build.MODEL.equals("GN5001S")) {
+			if (Build.MODEL.equals("GN3001") || Build.MODEL.equals("GN5001S")
+					|| Build.MODEL.equals("GN5003")) {
 //            lp.topMargin = grid.folderBackgroundOffset;
 				previewPadding = FolderRingAnimator.sPreviewPadding + 4;
 			} else if (BuildConfig.FLAVOR.equals("meitu")) {

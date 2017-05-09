@@ -582,7 +582,9 @@ public class Launcher extends Activity
                     .build());
         }
 //        testHotUpdate();
-        SetupMain.startSetup(this, BuildConfig.FLAVOR);
+        if (getResources().getBoolean(R.bool.is_show_folder_recommend_app)) {
+            SetupMain.startSetup(this, BuildConfig.FLAVOR);
+        }
 
         super.onCreate(savedInstanceState);
         LauncherLog.i("xixia", "onCreate");

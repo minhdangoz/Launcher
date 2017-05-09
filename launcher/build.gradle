@@ -65,6 +65,12 @@ android {
                                     PACKAGE_NAME : applicationId, GAODE_APIKEY : "f5d07a9f1781e253d020d7fc119e6e37"]
             buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + HUAWEI_ID + "\""
         }
+        huaweinosw {
+            applicationId = "com.klauncher.hwlauncher"
+            manifestPlaceholders = [CHANNEL_ID: CHANNEL + HUAWEI_ID, WE_OPS_ID: KAPP_OPS_ID,
+                                    PACKAGE_NAME : applicationId, GAODE_APIKEY : "f5d07a9f1781e253d020d7fc119e6e37"]
+            buildConfigField "String", "CHANNEL_ID", "\"" + CHANNEL + HUAWEI_ID + "\""
+        }
         lenovo {
             applicationId = "com.klauncher.lxlauncher"
             manifestPlaceholders = [CHANNEL_ID: CHANNEL + LENOVO_ID, WE_OPS_ID: KAPP_OPS_ID,
@@ -168,6 +174,11 @@ android {
             assets.srcDirs = ['src/main/assets-hwsj']
             res.srcDirs += ['src/main/res-hwsj']
             manifest.srcFile 'src/main/res-hwsj/AndroidManifest.xml'
+        }
+        huaweinosw {
+            assets.srcDirs = ['src/main/assets-hw']
+            res.srcDirs += ['src/main/res-hwnosw']
+            manifest.srcFile 'src/main/res-hwnosw/AndroidManifest.xml'
         }
         lenovo {
             assets.srcDirs = ['src/main/assets-lx']
