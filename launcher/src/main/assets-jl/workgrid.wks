@@ -61,6 +61,13 @@
         "iconsize": "68",
         "textsize": "11",
         "hotseat": "5"
+    },
+    "GN5003": {
+            "rows": "5",
+            "columns": "4",
+            "iconsize": "72",
+            "textsize": "12",
+            "hotseat": "5"
     }
 
 }

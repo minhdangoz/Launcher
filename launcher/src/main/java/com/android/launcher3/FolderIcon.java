@@ -152,8 +152,7 @@ public class FolderIcon extends FrameLayout implements FolderListener {
         // Offset the preview background to center this view accordingly
         icon.mPreviewBackground = (ImageView) icon.findViewById(R.id.preview_background);
         lp = (FrameLayout.LayoutParams) icon.mPreviewBackground.getLayoutParams();
-        if (Build.MODEL.equals("GN3001") || Build.MODEL.equals("GN5001S")
-                || Build.MODEL.equals("GN5003")) {
+        if (Build.MODEL.equals("GN3001") || Build.MODEL.equals("GN5001S")) {
 //            lp.topMargin = grid.folderBackgroundOffset;
             lp.width = grid.folderIconSizePx + 15;
             lp.height = grid.folderIconSizePx + 15;

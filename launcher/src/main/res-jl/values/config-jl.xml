@@ -10,6 +10,7 @@
         <item>GN8003,GN8002</item>
         <item>GN8001,GN8001</item>
         <item>F100,F100</item>
+        <item>GN5003,GN5003</item>
         <!--<item>HUAWEI RIO-TL00,yongheng</item>
         <item>HUAWEI NXT-AL10,yongheng</item>
         <item>HUAWEI MT7-TL10,yongheng</item>
@@ -48,6 +49,7 @@
     <array name="config_theme_load_icon_mask_padding">
         <item>default,0</item>
         <item>GN8001,100</item>
+        <item>GN5003,30</item>
     </array>
 
     <array name="config_disable_hotseat_allapp">
