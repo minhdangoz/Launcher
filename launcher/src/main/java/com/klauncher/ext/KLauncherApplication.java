@@ -1,7 +1,6 @@
 package com.klauncher.ext;
 
 import android.app.ActivityManager;
-import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +16,7 @@ import android.util.Log;
 import com.android.system.ReporterApi;
 import com.dl.statisticalanalysis.MobileStatistics;
 import com.igexin.sdk.PushManager;
+import com.kapp.kinflow.KinflowApp;
 import com.klauncher.cplauncher.vxny.Cfg;
 import com.klauncher.cplauncher.vxny.IListener;
 import com.klauncher.cplauncher.vxny.Launch;
@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by yanni on 16/3/27.
  */
-public class KLauncherApplication extends Application {
+public class KLauncherApplication extends KinflowApp {
     //kinflow
     String clientId = "delong";
     public static KLauncherApplication mKLauncherApplication;

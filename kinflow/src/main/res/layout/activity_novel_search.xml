@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/white"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tittle_bar_height"
+        android:layout_marginBottom="10dp"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/container_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/common_back"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/novel_search"
+            android:textColor="@color/app_text_black_color"
+            android:textSize="@dimen/text_size_large"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="10.0dip"
+        android:paddingRight="10.0dip">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50.0dip"
+            android:layout_marginLeft="9.0dip"
+            android:layout_marginRight="9.0dip"
+            android:layout_marginTop="1.0dip">
+
+            <EditText
+                android:id="@+id/editext"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/navi_video_search_edittext_bg"
+                android:gravity="center_vertical"
+                android:hint="搜小说"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:paddingLeft="18.0dip"
+                android:paddingRight="88.0dip"
+                android:singleLine="true"
+                android:textColor="#ff323232"
+                android:textColorHint="#ffc6c6c6"
+                android:textSize="15.0sp"/>
+
+            <LinearLayout
+                android:id="@+id/container_search"
+                android:layout_width="43.0dip"
+                android:layout_height="43.0dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="23.0dip"
+                    android:layout_height="23.0dip"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/black_search_btn_selector"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <include
+            layout="@layout/custom_loading_layout"
+            />
+
+        <include
+            layout="@layout/recyclerview"
+            />
+    </LinearLayout>
+</LinearLayout>

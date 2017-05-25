@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/custom_balck_bg"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    >
+
+    <include
+        layout="@layout/search_bar"
+        />
+
+    <com.kapp.kinflow.view.PullToRefreshView
+        android:id="@+id/ptrFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/nest_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/header_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:overScrollMode="never"
+                        android:scrollbarStyle="outsideOverlay"
+                        android:scrollbars="vertical"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/custom_translucent"
+                        android:padding="8dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/tv_refresh"
+                            style="@style/custom_content_tittle_style"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:drawablePadding="8dp"
+                            android:gravity="center"
+                            android:text="@string/refresh_hint"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_add_card"
+                            style="@style/custom_content_tittle_style"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:drawablePadding="8dp"
+                            android:gravity="center"
+                            android:text="@string/add_card"
+                            />
+
+                    </RelativeLayout>
+
+                    <include
+                        layout="@layout/recyclerview"
+                        />
+                </LinearLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+        </ScrollView>
+    </com.kapp.kinflow.view.PullToRefreshView>
+</LinearLayout>

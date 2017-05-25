@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="theme_color">#ff2d8dd2</color>
+    <color name="text_color">#f78e16</color>
+
+    <color name="colorPrimaryIcons">#FFFFFF</color>
+    <color name="colorPrimaryLight">#CFD8DC</color>
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#727272</color>
+    <color name="divider">#B6B6B6</color>
+
+    <!--transparent-->
+    <color name="container_background">#EBEBEB</color>
+    <color name="item_background">#FAFAFA</color>
+
+    <color name="primary_text_white">#deffffff</color>
+    <!--87%white-->
+    <color name="primary_text">#de000000</color>
+    <!--87%black-->
+    <color name="secondary_text">#8a000000</color>
+    <!--54%black-->
+    <color name="tertiary_text">#8a000000</color>
+    <!--54%black-->
+    <color name="image_place_holder">#DFDFDF</color>
+    <color name="image_place_holder_night">#272B2F</color>
+    <!--87%white-->
+    <color name="progress_bar_unfinished">#D4D4D4</color>
+</resources>

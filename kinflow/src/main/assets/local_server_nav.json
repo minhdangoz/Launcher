@@ -1,0 +1,274 @@
+{
+  "wnavs": [
+    {
+      "nu": "http://m.021.com/?mid=wy050",
+      "no": "1",
+      "nn": "头条",
+      "localIcon": "1.png",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://m.hao123.com/?union=1&from=1012581h&tn=ops1012581h",
+      "no": "2",
+      "nn": "hao123",
+      "localIcon": "2.png",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://s.iyd.cn/mobile/book/index/shanghaikxh5/055800029",
+      "no": "3",
+      "nn": "爱阅读",
+      "localIcon": "3.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://jump.luna.58.com/i/29Rv",
+      "no": "4",
+      "nn": "招聘",
+      "localIcon": "4.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://jump.luna.58.com/i/29Rx",
+      "no": "5",
+      "nn": "二手车",
+      "localIcon": "5.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://jump.luna.58.com/i/29Qy",
+      "no": "6",
+      "nn": "找房子",
+      "localIcon": "6.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://cpu.baidu.com/1021/c316cbd0",
+      "no": "7",
+      "nn": "百度新闻",
+      "localIcon": "7.png",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://www.shulin6.com",
+      "no": "8",
+      "nn": "小说大全",
+      "localIcon": "8.png",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://jump.luna.58.com/i/29Ry",
+      "no": "9",
+      "nn": "家政",
+      "localIcon": "9.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://jump.luna.58.com/i/29Q7",
+      "no": "10",
+      "nn": "58同城",
+      "localIcon": "10.png",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://kzhuomian.ikanshu.cn/",
+      "no": "11",
+      "nn": "中文书城",
+      "localIcon": "11.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://jump.luna.58.com/i/29Rz",
+      "no": "12",
+      "nn": "二手物品",
+      "localIcon": "12.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://jump.luna.58.com/i/29Rw",
+      "no": "13",
+      "nn": "宠物",
+      "localIcon": "13.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://www.cnlofter.com/",
+      "no": "14",
+      "nn": "美图",
+      "localIcon": "14.png",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://m.2345.com/?sc_delong",
+      "no": "15",
+      "nn": "导航",
+      "localIcon": "15.png",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "https://sina.cn/?from=wap",
+      "no": "16",
+      "nn": "新浪",
+      "localIcon": "16.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://3g.163.com/touch/all?nav=2&dataversion=A&version=v_standard",
+      "no": "17",
+      "nn": "网易",
+      "localIcon": "17.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "https://m.taobao.com/?sprefer=sypc00#index",
+      "no": "18",
+      "nn": "淘宝",
+      "localIcon": "18.png",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "https://www.tmall.com/?spm=a21bo.50862.201859.1.fJ3KlB",
+      "no": "19",
+      "nn": "天猫",
+      "localIcon": "19.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://m.vip.com/?source=www",
+      "no": "20",
+      "nn": "唯品会",
+      "localIcon": "20.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "https://m.jd.com/?usid=FVYT3IM5AHOXM3FSBLGHUM557I5DT4XXHOJH4L2HVBUSVA2OE37NYH23LQBDPZRPJVI2BKWCUO7XHDXUJ4KDAREERI&utm_source=www.jd.com&utm_medium=tuiguang&utm_campaign=t_pcmtiaozhuan_pcmtiaozhuan",
+      "no": "21",
+      "nn": "京东",
+      "localIcon": "21.png",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "https://m.suning.com/",
+      "no": "22",
+      "nn": "苏宁",
+      "localIcon": "22.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://m.yhd.com/2?tracker_u=10498211440",
+      "no": "23",
+      "nn": "1号店",
+      "localIcon": "23.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "https://m.tuniu.com/?p=1400&cmpid=mkt_06002401&utm_source=baidu&utm_medium=brand&utm_campaign=brand#form_http",
+      "no": "24",
+      "nn": "途牛",
+      "localIcon": "24.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://m.ctrip.com/html5/?sourceid=1623",
+      "no": "25",
+      "nn": "携程",
+      "localIcon": "25.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "https://m.hupu.com/",
+      "no": "26",
+      "nn": "虎扑",
+      "localIcon": "26.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://m.sohu.com/",
+      "no": "27",
+      "nn": "搜狐",
+      "localIcon": "27.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://i.ifeng.com/?ch=ifengweb_2014",
+      "no": "28",
+      "nn": "凤凰网",
+      "localIcon": "28.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://m.10jqka.com.cn/stockpage/hs_300033/#&atab=geguNews",
+      "no": "29",
+      "nn": "同花顺",
+      "localIcon": "29.png",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    },
+    {
+      "nu": "http://www.youku.com/",
+      "no": "30",
+      "nn": "优酷",
+      "localIcon": "30.jpg",
+      "ops": [
+        "com.klauncher.launcher/com.klauncher.kinflow.browser.KinflowBrower"
+      ]
+    }
+  ]
+}

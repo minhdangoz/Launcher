@@ -1,0 +1,86 @@
+<resources>
+    <string name="app_name">TestPullToLibrary</string>
+    <string name="change_content">换一换</string>
+    <string name="more_news">更多新闻</string>
+    <string name="loading">正在加载...</string>
+    <string name="refresh_hint">分钟前刷新</string>
+
+    <string name="pull_to_refresh_pull_label">下拉刷新</string>
+    <string name="pull_to_refresh_header_last_time">最后更新时间 : </string>
+    <string name="pull_to_refresh_release_label">松开后刷新</string>
+    <string name="pull_to_refresh_refreshing_label">正在刷新\u2026</string>
+    <string name="pull_to_refresh_footer_release_label">松开后加载</string>
+    <string name="pull_to_refresh_footer_pull_label">上拉加载更多</string>
+    <string name="pull_to_refresh_footer_refreshing_label">正在加载中\u2026</string>
+    <string name="pushmsg_center_no_more_msg">已经到底啦</string>
+
+    <string name="card_delete">删除</string>
+    <string name="card_top">置顶</string>
+    <string name="card_share">分享</string>
+    <string name="search_hint">快捷搜索网页、应用、视频</string>
+    <string name="hot_search">热门搜索</string>
+    <string name="add_card">添加卡片</string>
+    <string name="card_manager">管理</string>
+    <string name="card_headlines">头条资讯</string>
+    <string name="card_headlines_subtittle">你关心的，才是头条</string>
+    <string name="constellation_fortune">星座运势</string>
+    <string name="more_constellation">更多运势</string>
+    <string name="card_constellation_fortune_subtittle">星座资讯，运势了如指掌</string>
+    <string name="card_happy_moment">开心一刻</string>
+    <string name="more_happy">更多开心</string>
+    <string name="card_happy_moment_subtittle">人生苦短，必须笑的灿烂</string>
+    <string name="card_top_games">热门游戏</string>
+    <string name="more_game_news">更多游戏新闻</string>
+    <string name="card_top_games_subtittle">最in游戏，不一样的体验</string>
+    <string name="add">添加</string>
+    <string name="added">已添加</string>
+    <string name="manage_card_tittle">管理卡片</string>
+
+    <string name="status_not_download">下载</string>
+    <string name="status_installed">打开</string>
+    <string name="status_unknown">未知状态</string>
+
+
+    <!--requestdata start-->
+    <string name="toutiao">头条</string>
+    <string name="toutiao_category">toutiao</string>
+
+    <string name="constellation">星座</string>
+    <string name="constellation_category">xingzuo</string>
+
+    <string name="happy">笑话</string>
+    <string name="happy_category">xiaohua</string>
+
+    <string name="game">游戏</string>
+    <string name="game_category">youxi</string>
+    <!--requestdata end-->
+    <string name="no_data">无数据</string>
+    <string name="card_site_navi">网址导航</string>
+    <string name="more_site_navi">更多网址</string>
+    <string name="more_site_page_tittle">网址大全</string>
+    <string name="category_url">分类网址</string>
+
+    <string name="daily_mito">每日美图</string>
+    <string name="previous_pic">上一张</string>
+    <string name="next_pic">下一张</string>
+    <string name="more">更多</string>
+
+    <string name="real_time_hot_spots">实时热点</string>
+    <string name="recommend">推荐</string>
+    <string name="mine">我的</string>
+    <string name="novels">小说推荐</string>
+    <string name="author">作者</string>
+    <string name="edite">编辑</string>
+    <string name="unfinished">未完结</string>
+    <string name="finished">已完结</string>
+    <string name="novel_card">小说阅读</string>
+    <string name="more_novel">更多小说</string>
+    <string name="novel_search">小说搜索</string>
+    <string name="novel_detail">小说详情</string>
+    <string name="add_bookshelf">加入书架</string>
+    <string name="read">阅读</string>
+    <string name="cancel">取消</string>
+    <string name="brand_offers">品牌优惠</string>
+    <string name="more_brand_offers">更多精品</string>
+    <string name="load_fail">加载失败</string>
+</resources>

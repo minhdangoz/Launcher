@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+//apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'com.jakewharton.butterknife'
+android {
+    compileSdkVersion 24
+    buildToolsVersion "25.0.0"
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            buildConfigField "String","CHANNEL_ID","\"" + CHANNEL_COMMON + "\"";
+        }
+        debug{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            buildConfigField "String","CHANNEL_ID","\"" + CHANNEL_COMMON + "\"";
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+//    compile 'com.android.support:appcompat-v7:24.2.1'
+    testCompile 'junit:junit:4.12'
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
+
+//    compile 'com.jakewharton:butterknife:8.2.1'
+//    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+
+//    compile 'com.jakewharton:butterknife:8.4.0'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+//    apt 'com.jakewharton:butterknife-compiler:8.4.0' // 修改的地方 把annotationProcessor改为apt
+    compile 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+
+    //    compile 'com.squareup.okhttp3:okhttp:3.5.0'
+    //    compile 'com.apkfuns.logutils:library:1.4.2'
+//    debugCompile 'com.antfortune.freeline:runtime:0.8.7'
+//    releaseCompile 'com.antfortune.freeline:runtime-no-op:0.8.7'
+//    testCompile 'com.antfortune.freeline:runtime-no-op:0.8.7'
+    compile project(':knews')
+}

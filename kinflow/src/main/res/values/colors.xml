@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="app_text_primary_color">#555555</color>
+    <color name="app_separator_line_color">#dcdcdc</color>
+    <color name="app_text_black_color">#404040</color>
+    <color name="common_light_gray">#EBEBEB</color>
+    <!--<color name="custom_translucent">#434866</color>-->
+    <color name="custom_translucent">@color/kinflow_card_main_color</color>
+    <!--<color name="custom_deep_translucent">#394050</color>-->
+    <color name="custom_deep_translucent">@color/kinflow_page_bg</color>
+    <color name="search_bar_bg">@color/custom_translucent</color>
+    <color name="search_hint">#b7b7b7</color>
+
+    <!--<color name="custom_balck_bg">#312641</color>-->
+    <color name="custom_balck_bg">@color/kinflow_page_bg</color>
+    <color name="custom_balck_second_bg">#2B2C2D</color>
+    <color name="custom_gray">#F4F4F4</color>
+    <color name="custom_deep_gray">#DEDEDE</color>
+    <color name="custom_yellow">#FFB400</color>
+    <!--<color name="app_text_blue_color">#136B89</color>-->
+    <color name="app_text_blue_color">@color/app_text_blue_light_color</color>
+    <color name="app_text_blue_light_color">#03BBD7</color>
+
+    <color name="bg_novel_gray">#EEEDEF</color>
+    <color name="kinflow_card_main_color">#24444C</color>
+    <color name="kinflow_page_bg">#092B35</color>
+    <color name="kinflow_card_title_bg">#173941</color>
+    <color name="kinflow_search_page_bg">#0A0A0C</color>
+
+</resources>

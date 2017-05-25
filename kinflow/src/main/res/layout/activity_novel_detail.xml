@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_novel_gray"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tittle_bar_height"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/white"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/container_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/common_back"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/novel_detail"
+            android:textColor="@color/app_text_black_color"
+            android:textSize="@dimen/text_size_large"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/container_loading"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="10.0dip"
+        android:paddingRight="10.0dip"
+        android:visibility="gone">
+
+        <include
+            layout="@layout/theme_shop_v6_loading_style_mid"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="20.0dip"
+            android:gravity="center"
+            android:text="加载中"
+            android:textColor="#ff666666"
+            android:textSize="14.0sp"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12.0dip"
+        android:orientation="horizontal"
+        android:paddingLeft="10.0dip"
+        android:paddingRight="10.0dip">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="90.0dip"
+            android:layout_height="110.0dip"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginTop="2.0dip"
+            android:background="#ffffffff"
+            android:padding="1.0dip"
+            android:src="@drawable/jrtt_new_big_bg"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="15.0dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2.0dip"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="央企重组刺激股价暴涨 布局七大投资主线"
+                android:textColor="#ff3c3c3c"
+                android:textSize="16.0sp"/>
+
+            <TextView
+                android:id="@+id/tv_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9.0dip"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="作者"
+                android:textColor="#ff3c3c3c"
+                android:textSize="12.0sp"/>
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9.0dip"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="央企重组刺激股价暴涨 布局七大投资主线"
+                android:textColor="#ff3c3c3c"
+                android:textSize="14.0sp"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="7.0dip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_read"
+                    android:layout_width="80.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="0.0dip"
+                    android:background="@drawable/white_btn_selector"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:paddingLeft="15.0dip"
+                    android:paddingRight="15.0dip"
+                    android:singleLine="true"
+                    android:text="@string/read"
+                    android:textColor="#ff3c3c3c"
+                    android:textSize="14.0sp"/>
+
+                <TextView
+                    android:id="@+id/tv_add"
+                    android:layout_width="80.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10.0dip"
+                    android:background="@drawable/purple_btn_selector"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:paddingLeft="5.0dip"
+                    android:paddingRight="5.0dip"
+                    android:singleLine="true"
+                    android:text="@string/add_bookshelf"
+                    android:textColor="#ffffffff"
+                    android:textSize="14.0sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5.0dip"
+        android:layout_marginTop="10.0dip"
+        android:paddingLeft="20.0dip"
+        android:paddingRight="20.0dip"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/book_detail_abstract_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容简介"
+                    android:textColor="#ff3c3c3c"
+                    android:textSize="16.0sp"/>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10.0dip"
+                    android:layout_marginRight="10.0dip"
+                    android:layout_toRightOf="@id/book_detail_abstract_title"
+                    android:background="#ffd4d4d4"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_simple_introduction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10.0dip"
+                android:lineSpacingExtra="4.0dip"
+                android:text="央企重组刺激股价暴涨 布局七大投资主线"
+                android:textColor="#ff767676"
+                android:textSize="14.0sp"/>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15.0dip">
+
+                <TextView
+                    android:id="@+id/book_detail_chapter_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容目录"
+                    android:textColor="#ff3c3c3c"
+                    android:textSize="16.0sp"/>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10.0dip"
+                    android:layout_marginRight="10.0dip"
+                    android:layout_toRightOf="@id/book_detail_chapter_title"
+                    android:background="#ffd4d4d4"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/container_chapter"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="3.0dip"
+                android:orientation="vertical"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

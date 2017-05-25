@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">knews</string>
+
+    <string name="loading">加载中…</string>
+    <string name="no_more">没有更多了</string>
+    <!-- 共享过度动画 -->
+    <string name="transition_photos">transition_animation_news_photos</string>
+    <!--提示信息-->
+    <string name="unknow_request_message_id">未知的请求Message</string>
+    <string name="server_no_response">服务端没有响应Response==null</string>
+    <string name="execute_request_error">执行请求时发生错误</string>
+    <string name="weak_reference_is_null">弱引用为空，不能更新数据</string>
+    <string name="crash_msg">很抱歉，出现异常了，我们会尽快修复</string>
+
+
+    <string name="photo_collections">%1$s</string>
+    <string name="click_refresh">点击刷新</string>
+</resources>

@@ -335,28 +335,24 @@ dependencies {
     def currentFlavor = getCurrentFlavor()
     println "currentFlavor : " + currentFlavor
     //    if (currentFlavor.equals("coolpad") || currentFlavor.equals("lenovo")) {
-
     //    } else {
-
     //
-
     //    }
-//    xiaomiCompile files('libs/uu_release.jar')
-//    huaweiCompile files('libs/uu_release.jar')
-//    huaweishuajiCompile files('libs/uu_release.jar')
-//    lenovoCompile files('libs/uu_release.jar')
-//    haixinCompile files('libs/uu_release.jar')
-//    coolpadCompile files('libs/uu_release.jar')
-//    meizuCompile files('libs/uu_release.jar')
-//    samsungCompile files('libs/uu_release.jar')
-//    oppoCompile files('libs/uu_release.jar')
-//    leshiCompile files('libs/uu_release.jar')
-//    letvCompile files('libs/uu_release.jar')
-//    vivoCompile files('libs/uu_release.jar')
-//    jinliCompile files('libs/uu_release.jar')
-//    zteCompile files('libs/uu_release.jar')
-//    guangxinCompile files('libs/uu_release.jar')
-
+    //    xiaomiCompile files('libs/uu_release.jar')
+    //    huaweiCompile files('libs/uu_release.jar')
+    //    huaweishuajiCompile files('libs/uu_release.jar')
+    //    lenovoCompile files('libs/uu_release.jar')
+    //    haixinCompile files('libs/uu_release.jar')
+    //    coolpadCompile files('libs/uu_release.jar')
+    //    meizuCompile files('libs/uu_release.jar')
+    //    samsungCompile files('libs/uu_release.jar')
+    //    oppoCompile files('libs/uu_release.jar')
+    //    leshiCompile files('libs/uu_release.jar')
+    //    letvCompile files('libs/uu_release.jar')
+    //    vivoCompile files('libs/uu_release.jar')
+    //    jinliCompile files('libs/uu_release.jar')
+    //    zteCompile files('libs/uu_release.jar')
+    //    guangxinCompile files('libs/uu_release.jar')
     compile files('libs/uu_release.jar')
     //add by hw end - 渠道编译特定jar包
     provided files('dynamic_lib/icu-classes.jar')
@@ -366,7 +362,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.2.1'
     compile 'com.umeng.analytics:analytics:latest.integration'
     //kinflow
-
     //compile fileTree(include: ['*.jar'], exclude: 'android-support-v4.jar', dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:21.0.3'
@@ -376,9 +371,8 @@ dependencies {
     compile(name: 'statisticalanalysis-release', ext: 'aar')
     compile(name: 'getuiadrecelibrary-release', ext: 'aar')
     //opmain 精简
-
     //    compile files('libs/lqops_AdSDK_V2_WebEye_Active_android.jar')
-//    compile files('libs/KappAdSdk_v2.1.jar')
+    //    compile files('libs/KappAdSdk_v2.1.jar')
     compile project(':biddingoslib')
     compile files('libs/AMap_Location_V3.00_20160922.jar')
     //===============
@@ -388,5 +382,6 @@ dependencies {
     compile files('libs/lebianbase.jar')
     compile files('libs/Baidu_MobAds_SDK.jar')
     compile files('libs/lqops_gdt.jar')
+    compile project(':kinflow')
 }
 //configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }

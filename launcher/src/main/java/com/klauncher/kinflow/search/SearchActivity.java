@@ -96,7 +96,7 @@ public class SearchActivity extends Activity implements OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_kinflow_search);
         initView();
 
 //        hintHotWord = getIntent().getParcelableExtra(HITN_HOT_WORD_KEY);

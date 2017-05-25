@@ -405,7 +405,7 @@ public class Launcher extends Activity
     private Dialog mTransitionEffectDialog;
 
     protected LauncherModel mModel;
-    private IconCache mIconCache;
+    protected IconCache mIconCache;
     private boolean mUserPresent = true;
     private boolean mVisible = false;
     private boolean mHasFocus = false;
