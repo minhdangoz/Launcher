@@ -1,5 +1,6 @@
 package com.kapp.kinflow;
 
+import com.kapp.kinflow.business.beans.HeaderAppBean;
 import com.kapp.kinflow.business.holder.ConstellationCardViewHolder;
 import com.kapp.kinflow.business.holder.DailyMitoCardViewHolder;
 import com.kapp.kinflow.business.holder.HappyCardViewHolder;
@@ -7,6 +8,8 @@ import com.kapp.kinflow.business.holder.HeadlinesCardViewHolder;
 import com.kapp.kinflow.business.holder.HotGameCardViewHolder;
 import com.kapp.kinflow.business.holder.RealTimeCardViewHolder;
 import com.kapp.kinflow.business.holder.SiteNavigationCardViewHolder;
+
+import java.util.ArrayList;
 
 /**
  * description：新版信息流卡片接口回调
@@ -89,4 +92,11 @@ public interface IKinflowCardCallback {
      * @return String
      */
     String getDailyMitoMoreUrl();
+
+    /**
+     * 推荐应用
+     *
+     * @return
+     */
+    ArrayList<HeaderAppBean> getRecommendApps();
 }

@@ -41,6 +41,7 @@ import butterknife.OnClick;
 
 public class MoreSiteActivity extends Activity {
 
+
     @BindView(R2.id.container_back)
     LinearLayout containerBack;
     @BindView(R2.id.header_recyclerview)
@@ -53,6 +54,8 @@ public class MoreSiteActivity extends Activity {
     RecyclerView contentRecyclerview;
     @BindView(R2.id.nestScrollview)
     NestedScrollView nestScrollview;
+    private static final String KEY_APPS = "key_apps";
+    private static final String KEY_DATA = "key_data";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,8 +84,12 @@ public class MoreSiteActivity extends Activity {
         }
     }
 
-    public static void launch(Context context) {
+    public static void launch(Context context, ArrayList<HeaderAppBean> apps) {
         Intent intent = new Intent(context, MoreSiteActivity.class);
+//        intent.putParcelableArrayListExtra(KEY_APPS, apps);
+        Bundle bundle = new Bundle();
+//        bundle.putSerializable(KEY_APPS, apps);
+//        intent.putExtra(KEY_DATA, bundle);
         context.startActivity(intent);
     }
 
@@ -94,8 +101,15 @@ public class MoreSiteActivity extends Activity {
             headerList.add(new HeaderAppBean(null, "应用" + i, null));
         }
         IItemFactory factory = new MoreSiteHeaderAppItemFactory();
-        RecycleViewCommonAdapter headerAdapter = new RecycleViewCommonAdapter(headerList, headerRecyclerview, factory);
+        RecycleViewCommonAdapter headerAdapter = new RecycleViewCommonAdapter(headerList, headerRecyclerview,
+                factory);
         headerRecyclerview.setAdapter(headerAdapter);
+
+//        Bundle bundleExtra = getIntent().getBundleExtra(KEY_DATA);
+//        ArrayList<Parcelable> apps = (ArrayList<Parcelable>) bundleExtra.getSerializable(KEY_APPS);
+//        IItemFactory factory = new MoreSiteHeaderAppItemFactory();
+//        RecycleViewCommonAdapter headerAdapter = new RecycleViewCommonAdapter(apps, headerRecyclerview, factory);
+//        headerRecyclerview.setAdapter(headerAdapter);
 
 
         size = 10;

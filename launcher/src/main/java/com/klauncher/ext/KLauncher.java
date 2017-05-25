@@ -1974,6 +1974,14 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         return dailyMitoMoreUrl;
     }
 
+    @Override
+    public ArrayList<HeaderAppBean> getRecommendApps() {
+        if (null == headerAdapter) {
+            return null;
+        }
+        return (ArrayList<HeaderAppBean>) headerAdapter.getNormalDatas();
+    }
+
     public void scrollToPositionWithOffset(int position, int offset) {
         if (null == recyclerview) {
             return;
@@ -2744,19 +2752,6 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
         super.bindItems(shortcuts, start, end, forceAnimateIcons);
         // TODO: 2017/5/25 0025 这里处理头部应用
 
-//        //顶部app应用
-//        String emptyString = "";
-//        int size = 8;
-//        List<HeaderAppBean> headerList = new ArrayList<>(size);
-//        for (int i = 0; i < size; i++) {
-//            headerList.add(new HeaderAppBean(null, "应用" + i, null));
-//        }
-//        IItemFactory factory = new HeaderAppItemFactory();
-//        headerAdapter = new RecycleViewCommonAdapter(headerList, headerRecyclerview, factory);
-//        headerRecyclerview.setAdapter(headerAdapter);
-
-
-//        mIconCache
         int size = 8;
         int i = 0;
         List<HeaderAppBean> headerList = new ArrayList<>(size);

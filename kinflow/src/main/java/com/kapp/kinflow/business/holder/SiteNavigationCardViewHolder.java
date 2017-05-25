@@ -15,6 +15,7 @@ import com.kapp.kinflow.IKinflowCardCallback;
 import com.kapp.kinflow.R;
 import com.kapp.kinflow.business.activity.MoreSiteActivity;
 import com.kapp.kinflow.business.adapter.SiteNaviItemFactory;
+import com.kapp.kinflow.business.beans.HeaderAppBean;
 import com.kapp.kinflow.business.beans.SiteNavigationCardBean;
 import com.kapp.kinflow.view.recyclerview.IItemFactory;
 import com.kapp.kinflow.view.recyclerview.adapter.RecycleViewCommonAdapter;
@@ -22,6 +23,7 @@ import com.kapp.kinflow.view.recyclerview.event.RecycleViewEvent;
 import com.kapp.kinflow.view.recyclerview.model.BaseItemBean;
 import com.kapp.knews.common.browser.KinflowBrower;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -86,7 +88,15 @@ public class SiteNavigationCardViewHolder extends BaseCustomViewHolder {
     }
 
     private void doMore(Context context) {
-        MoreSiteActivity.launch(context);
+
+        if (context instanceof IKinflowCardCallback) {
+            IKinflowCardCallback callback = (IKinflowCardCallback) context;
+            ArrayList<HeaderAppBean> recommendApps = callback.getRecommendApps();
+            if (null != recommendApps) {
+                MoreSiteActivity.launch(context, recommendApps);
+            }
+        }
+
     }
 
     private void doChange() {

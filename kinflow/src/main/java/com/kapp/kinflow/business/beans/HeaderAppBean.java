@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 
 import com.kapp.kinflow.view.recyclerview.model.BaseItemBean;
 
+import java.io.Serializable;
+
 
 /**
  * description：头部应用列表
@@ -12,7 +14,7 @@ import com.kapp.kinflow.view.recyclerview.model.BaseItemBean;
  * <br>time： 2017/04/19 20:20
  */
 
-public class HeaderAppBean extends BaseItemBean {
+public class HeaderAppBean extends BaseItemBean implements Serializable{
     public Bitmap icon;
     public String name;
     public Intent startIntent;
