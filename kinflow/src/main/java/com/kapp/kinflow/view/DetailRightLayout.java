@@ -10,11 +10,18 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kapp.kinflow.R;
-import com.kapp.kinflow.R2;
+import com.kapp.kinflow.business.beans.WordLinkBean;
+import com.kapp.knews.base.imagedisplay.glide.GlideDisplay;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,7 +33,7 @@ import java.util.List;
 
 public class DetailRightLayout extends FrameLayout implements View.OnClickListener {
 
-    private LinearLayout containerCategory;
+    private RelativeLayout containerCategory;
     private ImageView ivCategory;
     private TextView tvCategory;
     private TextView tvUpOne;
@@ -44,6 +51,7 @@ public class DetailRightLayout extends FrameLayout implements View.OnClickListen
     private OnDetailRightItemClickListener listener;
     private LinearLayout containerRight;
     private DetailRightData data;
+    private View lineExtra;
 
     public DetailRightLayout(Context context) {
         super(context);
@@ -75,7 +83,7 @@ public class DetailRightLayout extends FrameLayout implements View.OnClickListen
 
 
     private void findViews(View root) {
-        containerCategory = (LinearLayout) root.findViewById(R.id.container_category);
+        containerCategory = (RelativeLayout) root.findViewById(R.id.container_category);
         ivCategory = (ImageView) root.findViewById(R.id.iv_category);
         tvCategory = (TextView) root.findViewById(R.id.tv_category);
         containerRight = (LinearLayout) root.findViewById(R.id.container_right);
@@ -85,7 +93,10 @@ public class DetailRightLayout extends FrameLayout implements View.OnClickListen
         tvDownOne = (TextView) root.findViewById(R.id.tv_down_one);
         tvDownTwo = (TextView) root.findViewById(R.id.tv_down_two);
         tvDownThree = (TextView) root.findViewById(R.id.tv_down_three);
+
         containerExtra = (LinearLayout) root.findViewById(R.id.container_extra);
+        lineExtra = root.findViewById(R.id.line_extra);
+
         tvExtraOne = (TextView) root.findViewById(R.id.tv_extra_one);
         tvExtraTwo = (TextView) root.findViewById(R.id.tv_extra_two);
         tvExtraThree = (TextView) root.findViewById(R.id.tv_extra_three);
@@ -113,64 +124,72 @@ public class DetailRightLayout extends FrameLayout implements View.OnClickListen
 
     private void fillData(DetailRightData data) {
         if (null != data) {
+            if (null == data.extraDatas) {
+                containerCategory.setBackgroundResource(R.drawable.launcher_navigation_category_bg);
+            } else {
+                containerCategory.setBackgroundResource(R.drawable.launcher_navigation_category_bg_more);
+            }
             if (0 != data.bigImageResId) {
                 ivCategory.setImageResource(data.bigImageResId);
             }
+            if (null != data.bigImageUrl && !"".equals(data.bigImageUrl)) {
+                GlideDisplay.getInstance().display(getContext(), ivCategory, data.bigImageUrl);
+            }
             if (null != data.bigText) {
-                tvCategory.setText(data.bigText);
+                tvCategory.setText("[" + data.bigText + "]");
             }
             if (0 != data.bigTextResId) {
-                tvCategory.setText(getResources().getString(data.bigTextResId));
+                tvCategory.setText("[" + getResources().getString(data.bigTextResId) + "]");
             }
             fillRightData(data.rightDatas);
             fillExtraData(data.extraDatas);
         }
     }
 
-    private void fillExtraData(List<String> extraDatas) {
+    private void fillExtraData(List<WordLinkBean> extraDatas) {
         if (null == extraDatas) {
             return;
         }
         int size = extraDatas.size();
         for (int i = 0; i < size; i++) {
-            String item = extraDatas.get(i);
+            WordLinkBean item = extraDatas.get(i);
             if (null == item) {
                 continue;
             }
             if (0 == i) {
-                tvExtraOne.setText(item);
+                tvExtraOne.setText(item.text);
             } else if (1 == i) {
-                tvExtraTwo.setText(item);
+                tvExtraTwo.setText(item.text);
             } else if (2 == i) {
-                tvExtraThree.setText(item);
+                tvExtraThree.setText(item.text);
             } else if (3 == i) {
-                tvExtraFour.setText(item);
+                tvExtraFour.setText(item.text);
             } else {
                 break;
             }
         }
     }
 
-    private void fillRightData(List<String> rightDatas) {
+    private void fillRightData(List<WordLinkBean> rightDatas) {
         if (null != rightDatas) {
             int size = rightDatas.size();
             for (int i = 0; i < size; i++) {
-                String item = rightDatas.get(i);
+                WordLinkBean item = rightDatas.get(i);
                 if (null == item) {
                     continue;
                 }
                 if (0 == i) {
-                    tvUpOne.setText(item);
+                    tvUpOne.setText(item.text);
                 } else if (1 == i) {
-                    tvUpTwo.setText(item);
+                    tvUpTwo.setText(item.text);
                 } else if (2 == i) {
-                    tvUpThree.setText(item);
+                    tvUpThree.setText(item.text);
                 } else if (3 == i) {
-                    tvDownOne.setText(item);
+                    tvDownOne.setText(item.text);
                 } else if (4 == i) {
-                    tvDownTwo.setText(item);
+                    tvDownTwo.setText(item.text);
                 } else if (5 == i) {
-                    tvDownThree.setText(item);
+                    tvDownThree.setText(item.text);
                 } else {
                     break;
                 }
@@ -186,22 +205,59 @@ public class DetailRightLayout extends FrameLayout implements View.OnClickListen
         public int bigImageResId;
         public String bigText;
         public int bigTextResId;
-        public List<String> rightDatas;
-        public List<String> extraDatas;
+        public List<WordLinkBean> rightDatas;
+        public List<WordLinkBean> extraDatas;
+        public String bigImageUrl;
+        private static final int MAX_RIGHT_SIZE = 6;
+        private static final int MAX_EXTRA_SIZE = 4;
 
-        public DetailRightData(int bigImageResId, String bigText, List<String> rightDatas, List<String> extraDatas) {
-            this.bigImageResId = bigImageResId;
+
+        public DetailRightData(String bigImageUrl, String bigText, List<WordLinkBean> rightDatas, List<WordLinkBean>
+                extraDatas) {
+            this.bigImageUrl = bigImageUrl;
             this.bigText = bigText;
             this.rightDatas = rightDatas;
             this.extraDatas = extraDatas;
         }
+
+        public DetailRightData(JSONObject jsonObject) {
+            try {
+                bigText = jsonObject.getString("category");
+                bigImageUrl = jsonObject.getString("icon");
+                JSONArray childrens = jsonObject.getJSONArray("children");
+                int length = childrens.length();
+                length = length > MAX_RIGHT_SIZE + MAX_EXTRA_SIZE ? MAX_RIGHT_SIZE + MAX_EXTRA_SIZE : length;
+                int realRightSize = length > MAX_RIGHT_SIZE ? MAX_RIGHT_SIZE : length;
+                int realExtraSize = length - realRightSize;
+                rightDatas = new ArrayList<>(realRightSize);
+                if (realExtraSize > 0) {
+                    extraDatas = new ArrayList<>(realExtraSize);
+                }
+                for (int i = 0; i < length; i++) {
+                    JSONObject itemJson = childrens.getJSONObject(i);
+                    String name = itemJson.getString("name");
+                    String landingpage = itemJson.getString("landingpage");
+                    WordLinkBean wordLinkBean = new WordLinkBean(name, landingpage);
+                    if (i < MAX_RIGHT_SIZE) {
+                        rightDatas.add(wordLinkBean);
+                    } else {
+                        extraDatas.add(wordLinkBean);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 
     public int getRightItemCount() {
         if (null == data) {
             return 0;
         }
-        List<String> rightDatas = data.rightDatas;
+        List<WordLinkBean> rightDatas = data.rightDatas;
         return null == rightDatas ? 0 : rightDatas.size();
     }
 
@@ -209,7 +265,7 @@ public class DetailRightLayout extends FrameLayout implements View.OnClickListen
         if (null == data) {
             return 0;
         }
-        List<String> extraDatas = data.extraDatas;
+        List<WordLinkBean> extraDatas = data.extraDatas;
         return null == extraDatas ? 0 : extraDatas.size();
     }
 
@@ -218,50 +274,81 @@ public class DetailRightLayout extends FrameLayout implements View.OnClickListen
         if (null == listener) {
             return;
         }
-        switch (view.getId()) {
-            case R2.id.container_category:
-                listener.onBigItemClick(view);
-                toggleVisibleExtraViews();
-                break;
-            case R2.id.tv_up_one:
-                listener.onRightItemClick(containerRight, 0, getRightItemCount(), view);
-                break;
-            case R2.id.tv_up_two:
-                listener.onRightItemClick(containerRight, 1, getRightItemCount(), view);
-                break;
-            case R2.id.tv_up_three:
-                listener.onRightItemClick(containerRight, 2, getRightItemCount(), view);
-                break;
-            case R2.id.tv_down_one:
-                listener.onRightItemClick(containerRight, 3, getRightItemCount(), view);
-                break;
-            case R2.id.tv_down_two:
-                listener.onRightItemClick(containerRight, 4, getRightItemCount(), view);
-                break;
-            case R2.id.tv_down_three:
-                listener.onRightItemClick(containerRight, 5, getRightItemCount(), view);
-                break;
-            case R2.id.tv_extra_one:
-                listener.onExtraItemClick(containerExtra, 0, getExtraItemCount(), view);
-                break;
-            case R2.id.tv_extra_two:
-                listener.onExtraItemClick(containerExtra, 1, getExtraItemCount(), view);
-                break;
-            case R2.id.tv_extra_three:
-                listener.onExtraItemClick(containerExtra, 2, getExtraItemCount(), view);
-                break;
-            case R2.id.tv_extra_four:
-                listener.onExtraItemClick(containerExtra, 3, getExtraItemCount(), view);
-                break;
+//        switch (view.getId()) {
+//            case R2.id.container_category:
+//                listener.onBigItemClick(view);
+//                toggleVisibleExtraViews();
+//                break;
+//            case R2.id.tv_up_one:
+//                listener.onRightItemClick(containerRight, 0, getRightItemCount(), view);
+//                break;
+//            case R2.id.tv_up_two:
+//                listener.onRightItemClick(containerRight, 1, getRightItemCount(), view);
+//                break;
+//            case R2.id.tv_up_three:
+//                listener.onRightItemClick(containerRight, 2, getRightItemCount(), view);
+//                break;
+//            case R2.id.tv_down_one:
+//                listener.onRightItemClick(containerRight, 3, getRightItemCount(), view);
+//                break;
+//            case R2.id.tv_down_two:
+//                listener.onRightItemClick(containerRight, 4, getRightItemCount(), view);
+//                break;
+//            case R2.id.tv_down_three:
+//                listener.onRightItemClick(containerRight, 5, getRightItemCount(), view);
+//                break;
+//            case R2.id.tv_extra_one:
+//                listener.onExtraItemClick(containerExtra, 0, getExtraItemCount(), view);
+//                break;
+//            case R2.id.tv_extra_two:
+//                listener.onExtraItemClick(containerExtra, 1, getExtraItemCount(), view);
+//                break;
+//            case R2.id.tv_extra_three:
+//                listener.onExtraItemClick(containerExtra, 2, getExtraItemCount(), view);
+//                break;
+//            case R2.id.tv_extra_four:
+//                listener.onExtraItemClick(containerExtra, 3, getExtraItemCount(), view);
+//                break;
+//        }
+
+        int id = view.getId();
+        if (id == R.id.container_category) {
+            listener.onBigItemClick(view);
+            toggleVisibleExtraViews();
+        } else if (id == R.id.tv_up_one) {
+            listener.onRightItemClick(containerRight, 0, getRightItemCount(), view);
+        } else if (id == R.id.tv_up_two) {
+            listener.onRightItemClick(containerRight, 1, getRightItemCount(), view);
+        } else if (id == R.id.tv_up_three) {
+            listener.onRightItemClick(containerRight, 2, getRightItemCount(), view);
+        } else if (id == R.id.tv_down_one) {
+            listener.onRightItemClick(containerRight, 3, getRightItemCount(), view);
+        } else if (id == R.id.tv_down_two) {
+            listener.onRightItemClick(containerRight, 4, getRightItemCount(), view);
+        } else if (id == R.id.tv_down_three) {
+            listener.onRightItemClick(containerRight, 5, getRightItemCount(), view);
+        } else if (id == R.id.tv_extra_one) {
+            listener.onExtraItemClick(containerExtra, 0, getExtraItemCount(), view);
+        } else if (id == R.id.tv_extra_two) {
+            listener.onExtraItemClick(containerExtra, 1, getExtraItemCount(), view);
+        } else if (id == R.id.tv_extra_three) {
+            listener.onExtraItemClick(containerExtra, 2, getExtraItemCount(), view);
+        } else if (id == R.id.tv_extra_four) {
+            listener.onExtraItemClick(containerExtra, 3, getExtraItemCount(), view);
         }
     }
 
     private void toggleVisibleExtraViews() {
+        if (null == data.extraDatas) {
+            return;
+        }
         int visibility = containerExtra.getVisibility();
         if (visibility == GONE) {
             containerExtra.setVisibility(VISIBLE);
+            lineExtra.setVisibility(VISIBLE);
         } else if (visibility == VISIBLE) {
             containerExtra.setVisibility(GONE);
+            lineExtra.setVisibility(GONE);
         }
     }
 

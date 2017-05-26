@@ -9,9 +9,11 @@ import android.widget.Toast;
 import com.kapp.kinflow.R;
 import com.kapp.kinflow.R2;
 import com.kapp.kinflow.business.beans.MoreSiteContentItemBean;
+import com.kapp.kinflow.business.beans.WordLinkBean;
 import com.kapp.kinflow.view.DetailRightLayout;
 import com.kapp.kinflow.view.recyclerview.BaseItemFactory;
 import com.kapp.kinflow.view.recyclerview.IItemFactory;
+import com.kapp.knews.common.browser.KinflowBrower;
 
 import java.util.List;
 
@@ -48,8 +50,9 @@ public class MoreSiteItemFactory extends BaseItemFactory<MoreSiteContentItemBean
 
 //                int screenH = ScreenUtil.getScreenH(holder.itemView.getContext());
 //                int height= ScreenUnitUtil.asDp(180);
-                int height= FrameLayout.LayoutParams.WRAP_CONTENT;
-                FrameLayout.LayoutParams layoutParams=new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,height);
+                int height = FrameLayout.LayoutParams.WRAP_CONTENT;
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams
+                        .MATCH_PARENT, height);
                 holder.detailRightLayout.setLayoutParams(layoutParams);
 
                 holder.detailRightLayout.setData(bean.uiData);
@@ -64,17 +67,19 @@ public class MoreSiteItemFactory extends BaseItemFactory<MoreSiteContentItemBean
 
                     @Override
                     public void onRightItemClick(ViewGroup parent, int position, int itemCount, View view) {
-                        List<String> rightClickUrls = bean.rightClickUrls;
-                        if (null != rightClickUrls) {
-                            showShortToast(view.getContext(), rightClickUrls.get(position));
+                        WordLinkBean wordLinkBean = bean.uiData.rightDatas.get(position);
+                        if (null != wordLinkBean) {
+//                            showShortToast(view.getContext(), wordLinkBean);
+                            KinflowBrower.openUrl(view.getContext(), wordLinkBean.url);
                         }
                     }
 
                     @Override
                     public void onExtraItemClick(ViewGroup parent, int position, int itemCount, View view) {
-                        List<String> extraClickUrls = bean.extraClickUrls;
-                        if (null != extraClickUrls) {
-                            showShortToast(view.getContext(), extraClickUrls.get(position));
+                        WordLinkBean wordLinkBean = bean.uiData.extraDatas.get(position);
+                        if (null != wordLinkBean) {
+//                            showShortToast(view.getContext(), extraClickUrls.get(position));
+                            KinflowBrower.openUrl(view.getContext(), wordLinkBean.url);
                         }
                     }
                 });

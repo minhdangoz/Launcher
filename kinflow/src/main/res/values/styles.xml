@@ -2,10 +2,10 @@
 
     <!-- Base application theme. -->
     <!--<style name="AppTheme" parent="Theme.AppCompat.Light">-->
-        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+    <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--<item name="colorAccent">@color/colorAccent</item>-->
     <!--</style>-->
 
     <style name="custom_content_tittle_style">
@@ -17,6 +17,7 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/custom_content_tittle_text_size</item>
     </style>
+
     <style name="kinflow_header_app" parent="custom_content_tittle_style">
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/text_size_small</item>
@@ -69,5 +70,17 @@
     <style name="BookSize">
         <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">80dp</item>
+    </style>
+
+    <style name="VerticalLine">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/common_light_gray</item>
+    </style>
+
+    <style name="HorizontalLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/common_light_gray</item>
     </style>
 </resources>

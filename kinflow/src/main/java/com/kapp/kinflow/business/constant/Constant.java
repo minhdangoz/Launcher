@@ -3,6 +3,7 @@ package com.kapp.kinflow.business.constant;
 import android.util.Log;
 
 import com.kapp.kinflow.business.util.UrlUtil;
+import com.kapp.knews.repository.utils.Const;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +56,15 @@ public class Constant {
      */
 //    public static final String DAILY_MITO_CTROL_URL = "http://www.opgirl.cn/native/list?did=6";
     public static final String DAILY_MITO_CTROL_URL = "http://opapi.cnlofter.com/native/list";
+
+    /**
+     * 百度热词
+     */
+    public static final String HOT_WORD_BAIDU_URL = Const.URL_HOT_WORD;
+    /**
+     * 神马热词
+     */
+    public static final String HOT_WORD_SHENMA_URL = Const.SHEN_MA_HOTWORD_24;
 
     //
 //    public static String getDailyMitoUrl(int id) {

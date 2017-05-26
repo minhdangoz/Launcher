@@ -21,11 +21,16 @@ import com.kapp.kinflow.business.adapter.MoreSiteHeaderAppItemFactory;
 import com.kapp.kinflow.business.adapter.MoreSiteItemFactory;
 import com.kapp.kinflow.business.beans.HeaderAppBean;
 import com.kapp.kinflow.business.beans.MoreSiteContentItemBean;
+import com.kapp.kinflow.business.util.FileUtil;
 import com.kapp.kinflow.view.DetailRightLayout;
 import com.kapp.kinflow.view.recyclerview.IItemFactory;
 import com.kapp.kinflow.view.recyclerview.adapter.RecycleViewCommonAdapter;
 import com.kapp.kinflow.view.recyclerview.layoutmanager.FullyGridLayoutManager;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +47,7 @@ import butterknife.OnClick;
 public class MoreSiteActivity extends Activity {
 
 
+    private static final String FILE_TEST_JSON = "local_sites_all.json";
     @BindView(R2.id.container_back)
     LinearLayout containerBack;
     @BindView(R2.id.header_recyclerview)
@@ -55,7 +61,6 @@ public class MoreSiteActivity extends Activity {
     @BindView(R2.id.nestScrollview)
     NestedScrollView nestScrollview;
     private static final String KEY_APPS = "key_apps";
-    private static final String KEY_DATA = "key_data";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,14 +92,11 @@ public class MoreSiteActivity extends Activity {
     public static void launch(Context context, ArrayList<HeaderAppBean> apps) {
         Intent intent = new Intent(context, MoreSiteActivity.class);
 //        intent.putParcelableArrayListExtra(KEY_APPS, apps);
-        Bundle bundle = new Bundle();
-//        bundle.putSerializable(KEY_APPS, apps);
-//        intent.putExtra(KEY_DATA, bundle);
         context.startActivity(intent);
     }
 
     private void initData() {
-        //顶部app应用
+//        顶部app应用
         int size = 8;
         List<HeaderAppBean> headerList = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
@@ -105,26 +107,31 @@ public class MoreSiteActivity extends Activity {
                 factory);
         headerRecyclerview.setAdapter(headerAdapter);
 
-//        Bundle bundleExtra = getIntent().getBundleExtra(KEY_DATA);
-//        ArrayList<Parcelable> apps = (ArrayList<Parcelable>) bundleExtra.getSerializable(KEY_APPS);
+//        ArrayList<HeaderAppBean> apps = getIntent().getParcelableArrayListExtra(KEY_APPS);
 //        IItemFactory factory = new MoreSiteHeaderAppItemFactory();
 //        RecycleViewCommonAdapter headerAdapter = new RecycleViewCommonAdapter(apps, headerRecyclerview, factory);
 //        headerRecyclerview.setAdapter(headerAdapter);
 
-
-        size = 10;
-        List<MoreSiteContentItemBean> contentList = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            DetailRightLayout.DetailRightData detailRightData = getDetailRightData();
-            List<String> rightClickUrls = getRightClickUrls(detailRightData.rightDatas.size());
-            List<String> extraClickUrls = geExtraClickUrls(detailRightData.extraDatas.size());
-            MoreSiteContentItemBean bean = new MoreSiteContentItemBean(detailRightData, rightClickUrls, extraClickUrls);
-            contentList.add(bean);
+        try {
+            String string = FileUtil.readFileFromAssets(this, FILE_TEST_JSON);
+            JSONObject jsonObject = new JSONObject(string);
+            JSONArray data = jsonObject.getJSONArray("data");
+             size = data.length();
+            List<MoreSiteContentItemBean> contentList = new ArrayList<>(size);
+            for (int i = 0; i < size; i++) {
+                JSONObject itemJson = data.getJSONObject(i);
+                DetailRightLayout.DetailRightData uiData = new DetailRightLayout.DetailRightData(itemJson);
+                contentList.add(new MoreSiteContentItemBean(uiData));
+            }
+            IItemFactory contentFactory = new MoreSiteItemFactory();
+            RecycleViewCommonAdapter contentAdapter = new RecycleViewCommonAdapter(contentList, contentRecyclerview,
+                    contentFactory);
+            contentRecyclerview.setAdapter(contentAdapter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        IItemFactory contentFactory = new MoreSiteItemFactory();
-        RecycleViewCommonAdapter contentAdapter = new RecycleViewCommonAdapter(contentList, contentRecyclerview,
-                contentFactory);
-        contentRecyclerview.setAdapter(contentAdapter);
     }
 
     private List<String> getRightClickUrls(int size) {
@@ -149,21 +156,21 @@ public class MoreSiteActivity extends Activity {
         return results;
     }
 
-    private DetailRightLayout.DetailRightData getDetailRightData() {
-        int size = 6;
-        List<String> rightDatas = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            rightDatas.add("right" + i);
-        }
-        size = 2;
-        List<String> extraDatas = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            extraDatas.add("extra" + i);
-        }
-        DetailRightLayout.DetailRightData data = new DetailRightLayout.DetailRightData(R.mipmap.ic_launcher,
-                "bigText", rightDatas, extraDatas);
-        return data;
-    }
+//    private DetailRightLayout.DetailRightData getDetailRightData() {
+//        int size = 6;
+//        List<String> rightDatas = new ArrayList<>(size);
+//        for (int i = 0; i < size; i++) {
+//            rightDatas.add("right" + i);
+//        }
+//        size = 2;
+//        List<String> extraDatas = new ArrayList<>(size);
+//        for (int i = 0; i < size; i++) {
+//            extraDatas.add("extra" + i);
+//        }
+//        DetailRightLayout.DetailRightData data = new DetailRightLayout.DetailRightData(R.mipmap.ic_launcher,
+//                "bigText", rightDatas, extraDatas);
+//        return data;
+//    }
 
     private void initViews() {
         nestScrollview.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);//防止parameter must be a

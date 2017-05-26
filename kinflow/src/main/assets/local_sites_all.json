@@ -1,0 +1,76 @@
+{
+    "data": [
+        {
+            "category": "综合",
+            "icon": "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1688422151,805266835&fm=23&gp=0.jpg",
+            "children": [
+                {
+                    "name": "房产",
+                    "landingpage": "http://sz.58.com/fuzhuangzl/?utm_source=sem_sg_pc&spm=54463007016.11654776154&utm_campaign=sell&utm_medium=cpc"
+                },
+                {
+                    "name": "唯品会",
+                    "landingpage": "http://www.vip.com/"
+                },
+                {
+                    "name": "房产",
+                    "landingpage": "http://sz.58.com/fuzhuangzl/?utm_source=sem_sg_pc&spm=54463007016.11654776154&utm_campaign=sell&utm_medium=cpc"
+                },
+                {
+                    "name": "唯品会",
+                    "landingpage": "http://www.vip.com/"
+                },
+                {
+                    "name": "房产",
+                    "landingpage": "http://sz.58.com/fuzhuangzl/?utm_source=sem_sg_pc&spm=54463007016.11654776154&utm_campaign=sell&utm_medium=cpc"
+                }
+            ]
+        },
+        {
+            "category": "新闻",
+            "icon": "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3825796278,736506652&fm=23&gp=0.jpg",
+            "children": [
+                {
+                    "name": "腾讯新闻",
+                    "landingpage": "http://news.qq.com/"
+                },
+                {
+                    "name": "网易新闻",
+                    "landingpage": "http://news.163.com/"
+                },
+                {
+                    "name": "腾讯新闻",
+                    "landingpage": "http://news.qq.com/"
+                },
+                {
+                    "name": "网易新闻",
+                    "landingpage": "http://news.163.com/"
+                },
+                {
+                    "name": "腾讯新闻",
+                    "landingpage": "http://news.qq.com/"
+                },
+                {
+                    "name": "网易新闻",
+                    "landingpage": "http://news.163.com/"
+                },
+                {
+                    "name": "腾讯新闻",
+                    "landingpage": "http://news.qq.com/"
+                },
+                {
+                    "name": "网易新闻",
+                    "landingpage": "http://news.163.com/"
+                },
+                {
+                    "name": "腾讯新闻",
+                    "landingpage": "http://news.qq.com/"
+                },
+                {
+                    "name": "网易新闻",
+                    "landingpage": "http://news.163.com/"
+                }
+            ]
+        }
+    ]
+}

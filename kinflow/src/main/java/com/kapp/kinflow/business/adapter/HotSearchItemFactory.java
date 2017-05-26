@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.kapp.kinflow.R;
 import com.kapp.kinflow.R2;
-import com.kapp.kinflow.business.beans.SingleTextBean;
+import com.kapp.kinflow.business.beans.WordLinkBean;
 import com.kapp.kinflow.view.recyclerview.BaseItemFactory;
 import com.kapp.kinflow.view.recyclerview.IItemFactory;
 
@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  * <br>time： 2017/04/20 11:36
  */
 
-public class HotSearchItemFactory extends BaseItemFactory<SingleTextBean, HotSearchItemFactory.HotSearchHolder> {
+public class HotSearchItemFactory extends BaseItemFactory<WordLinkBean, HotSearchItemFactory.HotSearchHolder> {
 
 
     @Override
@@ -36,11 +36,11 @@ public class HotSearchItemFactory extends BaseItemFactory<SingleTextBean, HotSea
     }
 
     @Override
-    public void onBindNormalViewHolder(HotSearchHolder holder, List<SingleTextBean> beanList, int position, int
+    public void onBindNormalViewHolder(HotSearchHolder holder, List<WordLinkBean> beanList, int position, int
             viewType) {
-        SingleTextBean singleTextBean = beanList.get(position);
-        if (null != singleTextBean) {
-            holder.tvWord.setText(singleTextBean.text);
+        WordLinkBean bean = beanList.get(position);
+        if (null != bean) {
+            holder.tvWord.setText(bean.text);
         }
 
     }

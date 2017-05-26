@@ -5,4 +5,6 @@
           android:layout_width="match_parent"
           android:layout_height="@dimen/hot_search_item_height"
           android:gravity="left|center_vertical"
+          android:padding="10dp"
+          android:textColor="@color/common_light_gray"
     />
