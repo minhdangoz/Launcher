@@ -503,6 +503,7 @@ public class KLauncher extends Launcher implements SharedPreferences.OnSharedPre
             public void onHeaderRefresh(PullToRefreshView view) {
                 view.postDelayed(new Runnable() {
                     public void run() {
+                        onRefreshClick(null);
                         ptrFrame.onHeaderRefreshComplete();
                     }
                 }, 1000);
